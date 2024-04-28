@@ -26,6 +26,10 @@ Disclaimer: These are worst case tests.  Average performance is probably much hi
 
 # Development
 
+For local development follow [prerequisites](#prerequisites) and for
+containerized development in VS Code follow [Dev
+Container](#vs-code-dev-container).
+
 ## Prerequisites
 
 The instructions below are cursory and may be out of date; the most up-to-date instructions for compiling Soar from source will always be the CI build scripts. You can find them [here](.github/workflows/build.yml).
@@ -57,7 +61,9 @@ To compile the extra SML wrapper libs, you will need the following:
 
 The project supports generating compile_commands.json, which can be used by e.g. VSCode with the C/C++ plugin to provide IntelliSense. To generate this file, run scons with the `cdb` target:
 
-   python3 scons/scons.py --scu --opt --verbose cdb
+```bash
+python3 scons/scons.py --scu --opt --verbose cdb
+```
 
 Note for M-series Mac users: you'll want to make sure you're compiling for ARM64, not x86_64. Sometimes users have Python installed in compatibility mode, leading to compiles for the wrong architecture. You can check which architecture your Python is built for using this:
 
@@ -68,6 +74,11 @@ import sysconfig
 
 You can also check your `clang`'s default compile target using `clang --version`.
 
+## VS Code Dev Container
+
+An Ubuntu based Dev Container for VS Code is provided including build
+dependencies. Open the Dev Container and build the project.
+
 # License
 
-Soar is available under the following [LICENSE](https://github.com/SoarGroup/Soar/blob/development/LICENSE.md).  This license is [BSD](http://opensource.org/licenses/BSD-2-Clause)
+Soar is available under the following [LICENSE](https://github.com/SoarGroup/Soar/blob/development/LICENSE.md). This license is [BSD](http://opensource.org/licenses/BSD-2-Clause)
