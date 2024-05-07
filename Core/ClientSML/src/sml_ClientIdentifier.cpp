@@ -292,30 +292,32 @@ void Identifier::SetSymbol(IdentifierSymbol* p_ID)
 }
 
 /*************************************************************
-* @brief Returns the n-th WME that has the given attribute
-*        and this identifier as its parent (or NULL).
-*
-* @param pAttribute     The name of the attribute to match
-* @param index          0 based index of values for this attribute
-*                      (> 0 only needed for multi-valued attributes)
-*************************************************************/
-WMElement* Identifier::FindByAttribute(char const* pAttribute, int index) const
+ * @brief Returns the n-th WME that has the given attribute
+ *        and this identifier as its parent (or NULL).
+ *
+ * @param pAttribute     The name of the attribute to match
+ * @param index          0 based index of values for this attribute
+ *                      (> 0 only needed for multi-valued attributes)
+ * @exception std::invalid_argument when attribute is no child of WME.
+ *************************************************************/
+WMElement *Identifier::FindByAttribute(char const *pAttribute, int index) const
 {
-    for (ChildrenConstIter iter = m_pSymbol->m_Children.begin() ; iter != m_pSymbol->m_Children.end() ; iter++)
+    for (ChildrenConstIter iter = m_pSymbol->m_Children.begin(); iter != m_pSymbol->m_Children.end(); iter++)
     {
-        WMElement* pWME = *iter ;
-        
+        WMElement *pWME = *iter;
+
         if (IsStringEqualIgnoreCase(pWME->GetAttribute(), pAttribute))
         {
             if (index == 0)
             {
-                return pWME ;
+                return pWME;
             }
-            index-- ;
+            index--;
         }
     }
-    
-    return NULL ;
+
+    std::string err_msg = "[Error]: " + this->m_AttributeName + " has no child attribute: " + std::string(pAttribute);
+    throw std::invalid_argument(err_msg);
 }
 
 /*************************************************************
