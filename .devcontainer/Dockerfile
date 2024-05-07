@@ -4,16 +4,19 @@ RUN apt-get update
 
 RUN apt-get install -y \
     build-essential \
-    pkgconf \
+    cmake \
+    gdb \
+    libswt-gtk-4-java \
     openjdk-11-jdk \
-    swig \
+    pkgconf \
     python3-dev \
     python3-pip \
-    libswt-gtk-4-java \
-    gdb
+    swig
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tcl-dev
 
-RUN pip install scons
+RUN pip install \
+    cpplint \
+    scons
 
-ENV LD_LIBRARY_PATH=/workspaces/Soar/out:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/local/lib/:/workspaces/Soar/out:$LD_LIBRARY_PATH

@@ -5,12 +5,13 @@
     "customizations": {
     "vscode": {
         "extensions": [
-            "ms-vscode.cpptools",
-            "ms-python.python",
-            "editorconfig.editorconfig",
             "bdegrend.soar",
-            "soartech.soar-language-support",
-            "cschlosser.doxdoc"
+            "cschlosser.doxdoc",
+            "editorconfig.editorconfig",
+            "ms-python.python",
+            "ms-vscode.cmake-tools",
+            "ms-vscode.cpptools",
+            "soartech.soar-language-support"
         ]
     }
   }
