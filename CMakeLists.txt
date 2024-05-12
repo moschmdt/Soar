@@ -16,7 +16,7 @@ set(SOURCES
     Core/SoarKernel/SoarKernel.cxx
     Core/SoarKernel/sqlite/sqlite3.c
     Core/shared/shared.cxx
-    Core/CLI/CommandLineInterface.cxx
+    # Core/CLI/CommandLineInterface.cxx
 )
 
 file(GLOB_RECURSE HEADERS

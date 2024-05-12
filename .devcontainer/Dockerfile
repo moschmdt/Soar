@@ -6,6 +6,7 @@ RUN apt-get install -y \
     build-essential \
     cmake \
     gdb \
+    git \
     libswt-gtk-4-java \
     openjdk-11-jdk \
     pkgconf \
