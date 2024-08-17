@@ -7,6 +7,8 @@ set(CMAKE_CXX_CPPLINT "cpplint")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
+include(GNUInstallDirs)
+
 # Add your source files
 set(SOURCES
     Core/ClientSML/ClientSML.cxx
@@ -16,6 +18,7 @@ set(SOURCES
     Core/SoarKernel/SoarKernel.cxx
     Core/SoarKernel/sqlite/sqlite3.c
     Core/shared/shared.cxx
+
     # Core/CLI/CommandLineInterface.cxx
 )
 
@@ -40,8 +43,7 @@ file(GLOB_RECURSE HEADERS
     "Core/SoarKernel/src/soar_representation/*.h"
     "Core/SoarKernel/src/visualizer/*.h"
     "Core/shared/*.h"
-    )
-
+)
 
 # Set include directories
 include_directories(
@@ -77,7 +79,24 @@ set_target_properties(Soar
     PUBLIC_HEADER "${HEADERS}")
 
 # Specify installation directory for the library and headers
+# install(TARGETS Soar
+# LIBRARY DESTINATION lib
+# PUBLIC_HEADER DESTINATION include/Soar
+# )
+
+# This only sets up the install structure, but no installation happens yet.
 install(TARGETS Soar
-    LIBRARY DESTINATION lib
-    PUBLIC_HEADER DESTINATION include/Soar
+    EXPORT SoarTarget
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+install(EXPORT SoarTarget
+    FILE SoarTargets.cmake
+    NAMESPACE Soar::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Soar
 )
