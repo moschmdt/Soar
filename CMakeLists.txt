@@ -46,34 +46,34 @@ file(GLOB_RECURSE HEADERS
 )
 
 # Set include directories
-include_directories(
-    Core/CLI/src
-    Core/ClientSML/src
-    Core/ConnectionSML/src
-    Core/ElementXML/src
-    Core/KernelSML/src
-    Core/SoarKernel/sqlite
-    Core/SoarKernel/src/debug_code
-    Core/SoarKernel/src/decision_process
-    Core/SoarKernel/src/episodic_memory
-    Core/SoarKernel/src/explanation_based_chunking
-    Core/SoarKernel/src/explanation_memory
-    Core/SoarKernel/src/interface
-    Core/SoarKernel/src/output_manager
-    Core/SoarKernel/src/parsing
-    Core/SoarKernel/src/reinforcement_learning
-    Core/SoarKernel/src/semantic_memory
-    Core/SoarKernel/src/shared
-    Core/SoarKernel/src/soar_representation
-    Core/SoarKernel/src/visualizer
-    Core/shared
-)
-
+# include_directories(
+# )
 add_compile_definitions(NO_SVS)
 
 # Add executable/library target
 add_library(Soar SHARED ${SOURCES})
-target_include_directories(Soar PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(Soar PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/CLI/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/ClientSML/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/ConnectionSML/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/ElementXML/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/KernelSML/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/sqlite>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/debug_code>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/decision_process>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/episodic_memory>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/explanation_based_chunking>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/explanation_memory>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/interface>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/output_manager>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/parsing>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/reinforcement_learning>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/semantic_memory>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/shared>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/soar_representation>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/visualizer>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/shared>
+)
 set_target_properties(Soar
     PROPERTIES
     PUBLIC_HEADER "${HEADERS}")
@@ -81,7 +81,6 @@ set_target_properties(Soar
 # Specify installation directory for the library and headers
 # install(TARGETS Soar
 # LIBRARY DESTINATION lib
-# PUBLIC_HEADER DESTINATION include/Soar
 # )
 
 # This only sets up the install structure, but no installation happens yet.
@@ -91,6 +90,7 @@ install(TARGETS Soar
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
