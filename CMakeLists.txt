@@ -18,8 +18,7 @@ set(SOURCES
     Core/SoarKernel/SoarKernel.cxx
     Core/SoarKernel/sqlite/sqlite3.c
     Core/shared/shared.cxx
-
-    # Core/CLI/CommandLineInterface.cxx
+    Core/CLI/CommandLineInterface.cxx
 )
 
 file(GLOB_RECURSE HEADERS
@@ -45,9 +44,6 @@ file(GLOB_RECURSE HEADERS
     "Core/shared/*.h"
 )
 
-# Set include directories
-# include_directories(
-# )
 add_compile_definitions(NO_SVS)
 
 # Add executable/library target
@@ -77,11 +73,6 @@ target_include_directories(Soar PUBLIC
 set_target_properties(Soar
     PROPERTIES
     PUBLIC_HEADER "${HEADERS}")
-
-# Specify installation directory for the library and headers
-# install(TARGETS Soar
-# LIBRARY DESTINATION lib
-# )
 
 # This only sets up the install structure, but no installation happens yet.
 install(TARGETS Soar
