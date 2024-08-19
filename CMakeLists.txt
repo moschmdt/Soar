@@ -86,7 +86,7 @@ install(TARGETS Soar
 
 install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(EXPORT SoarTarget
+install(EXPORT SoarTargets
     FILE SoarTargets.cmake
     NAMESPACE Soar::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Soar
