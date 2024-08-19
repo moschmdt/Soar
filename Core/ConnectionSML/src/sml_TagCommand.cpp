@@ -13,9 +13,6 @@
 
 #include "sml_TagCommand.h"
 
-using namespace sml ;
+using namespace sml;
 
-TagCommand::TagCommand()
-{
-    SetTagNameFast(sml_Names::kTagCommand) ;
-}
+TagCommand::TagCommand() { SetTagNameFast(sml_Names::kTagCommand); }

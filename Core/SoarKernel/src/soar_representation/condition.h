@@ -39,50 +39,44 @@
 ------------------------------------------------------------------- */
 
 /* --- info on conditions used for backtracing (and by the rete) --- */
-typedef struct bt_info_struct
-{
-    wme* wme_;                      /* the actual wme that was matched */
-    goal_stack_level level;         /* level (at firing time) of the id of the wme */
-    preference* trace;              /* preference for BT, or NIL */
+typedef struct bt_info_struct {
+  wme* wme_;              /* the actual wme that was matched */
+  goal_stack_level level; /* level (at firing time) of the id of the wme */
+  preference* trace;      /* preference for BT, or NIL */
 } bt_info;
 
 /* --- info on conditions used only by the reorderer --- */
-typedef struct reorder_info_struct
-{
-    cons* vars_requiring_bindings;         /* used only during reordering */
-    struct condition_struct* next_min_cost;  /* used only during reordering */
+typedef struct reorder_info_struct {
+  cons* vars_requiring_bindings;          /* used only during reordering */
+  struct condition_struct* next_min_cost; /* used only during reordering */
 } reorder_info;
 
 /* --- info on negated conjunctive conditions only --- */
-typedef struct ncc_info_struct
-{
-    struct condition_struct* top;
-    struct condition_struct* bottom;
+typedef struct ncc_info_struct {
+  struct condition_struct* top;
+  struct condition_struct* bottom;
 } ncc_info;
 
 /* --- finally, the structure of a condition --- */
-typedef struct condition_struct
-{
-    ConditionType               type;
-    bool                        already_in_tc;                    /* used only by cond_is_in_tc stuff */
-    bool                        test_for_acceptable_preference;   /* for pos/neg conds only. Not NCCs */
-    struct condition_struct*    next, *prev;
+typedef struct condition_struct {
+  ConditionType type;
+  bool already_in_tc;                  /* used only by cond_is_in_tc stuff */
+  bool test_for_acceptable_preference; /* for pos/neg conds only. Not NCCs */
+  struct condition_struct *next, *prev;
 
-    union condition_main_data_union
-    {
-        struct
-        {
-            test                id_test;
-            test                attr_test;
-            test                value_test;
-        } tests;                                /* for positive, negative cond's only */
-        ncc_info                ncc;            /* for negative conjunctive conds only */
-    } data;
-    bt_info                     bt;             /* backtrace info for top-level positive cond's:
-                                                   used by chunking and the rete */
-    reorder_info                reorder;        /* used only during reordering */
-    instantiation*              inst;
-    instantiation*              explain_inst;
+  union condition_main_data_union {
+    struct {
+      test id_test;
+      test attr_test;
+      test value_test;
+    } tests;      /* for positive, negative cond's only */
+    ncc_info ncc; /* for negative conjunctive conds only */
+  } data;
+  bt_info bt;           /* backtrace info for top-level positive cond's:
+                           used by chunking and the rete */
+  reorder_info reorder; /* used only during reordering */
+  instantiation* inst;
+  instantiation* explain_inst;
 
 } condition;
 
@@ -90,27 +84,36 @@ typedef struct condition_struct
 /* Utilities for conditions */
 /* ------------------------ */
 
-condition*  make_condition(agent* thisAgent, test pId = NULL, test pAttr = NULL, test pValue = NULL);
-uint32_t    hash_condition(agent* thisAgent, condition* cond);
-condition*  copy_condition(agent* thisAgent, condition* cond, bool pUnify_variablization_identity = false, bool pStripLiteralConjuncts = false, bool pCopyInstantiation = false, bool pStripGoalImpasseTests = false);
-void        copy_condition_list(agent* thisAgent, condition* top_cond, condition** dest_top,
-                         condition** dest_bottom, bool pUnify_variablization_identity = false, bool pStripLiteralConjuncts = false,
-                         bool pCopyInstantiation = false, bool pStripGoalImpasseTests = false);
-void        deallocate_condition(agent* thisAgent, condition*& cond);
-void        deallocate_condition_list(agent* thisAgent, condition*& cond_list);
+condition* make_condition(agent* thisAgent, test pId = NULL, test pAttr = NULL,
+                          test pValue = NULL);
+uint32_t hash_condition(agent* thisAgent, condition* cond);
+condition* copy_condition(agent* thisAgent, condition* cond,
+                          bool pUnify_variablization_identity = false,
+                          bool pStripLiteralConjuncts = false,
+                          bool pCopyInstantiation = false,
+                          bool pStripGoalImpasseTests = false);
+void copy_condition_list(agent* thisAgent, condition* top_cond,
+                         condition** dest_top, condition** dest_bottom,
+                         bool pUnify_variablization_identity = false,
+                         bool pStripLiteralConjuncts = false,
+                         bool pCopyInstantiation = false,
+                         bool pStripGoalImpasseTests = false);
+void deallocate_condition(agent* thisAgent, condition*& cond);
+void deallocate_condition_list(agent* thisAgent, condition*& cond_list);
 
-void        add_bound_variables_in_condition(agent* thisAgent, condition* c, tc_number tc, cons** var_list);
-void        unmark_variables_and_free_list(agent* thisAgent, cons* var_list);
+void add_bound_variables_in_condition(agent* thisAgent, condition* c,
+                                      tc_number tc, cons** var_list);
+void unmark_variables_and_free_list(agent* thisAgent, cons* var_list);
 
-int         condition_count(condition* pCond);
-bool        conditions_are_equal(condition* c1, condition* c2);
-bool        canonical_cond_greater(condition* c1, condition* c2);
+int condition_count(condition* pCond);
+bool conditions_are_equal(condition* c1, condition* c2);
+bool canonical_cond_greater(condition* c1, condition* c2);
 
-inline int64_t count_conditions(condition* top_cond)
-{
-    int64_t count = 0;
-    for (condition* cond = top_cond; cond; cond = cond->next, count++) {}
-    return count;
+inline int64_t count_conditions(condition* top_cond) {
+  int64_t count = 0;
+  for (condition* cond = top_cond; cond; cond = cond->next, count++) {
+  }
+  return count;
 }
 
 #endif

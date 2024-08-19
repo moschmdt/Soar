@@ -1,7 +1,7 @@
-/*************************************************************************
+/*
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
 /* ======================================================================
                                 trace.h
@@ -42,20 +42,21 @@
 #include "kernel.h"
 
 /* trace format type restrictions */
-#define FOR_ANYTHING_TF 0          /* format applies to any object */
-#define FOR_STATES_TF 1            /* format applies only to states */
-#define FOR_OPERATORS_TF 2         /* format applies only to operators */
+#define FOR_ANYTHING_TF 0  /* format applies to any object */
+#define FOR_STATES_TF 1    /* format applies only to states */
+#define FOR_OPERATORS_TF 2 /* format applies only to operators */
 
 extern void init_tracing(agent* thisAgent);
-extern bool add_trace_format(agent* thisAgent, bool stack_trace, int type_restriction,
-                             Symbol* name_restriction, const char* format_string);
-extern bool remove_trace_format(agent* thisAgent, bool stack_trace, int type_restriction,
-                                Symbol* name_restriction);
+extern bool add_trace_format(agent* thisAgent, bool stack_trace,
+                             int type_restriction, Symbol* name_restriction,
+                             const char* format_string);
+extern bool remove_trace_format(agent* thisAgent, bool stack_trace,
+                                int type_restriction, Symbol* name_restriction);
 extern void print_all_trace_formats(agent* thisAgent, bool stack_trace);
 extern void print_all_trace_formats_tcl(bool stack_trace);
 extern void print_object_trace(agent* thisAgent, Symbol* object);
-extern void print_stack_trace(agent* thisAgent, Symbol* object, Symbol* state, int slot_type,
-                              bool allow_cycle_counts);
+extern void print_stack_trace(agent* thisAgent, Symbol* object, Symbol* state,
+                              int slot_type, bool allow_cycle_counts);
 
 extern char* help_on_trace_format_escapes[];
 

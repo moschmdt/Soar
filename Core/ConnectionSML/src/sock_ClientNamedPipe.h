@@ -16,27 +16,25 @@
 
 #include "sock_NamedPipe.h"
 
-namespace sock
-{
+namespace sock {
 
-    class ClientNamedPipe : public NamedPipe
-    {
-        public:
-            ClientNamedPipe();
-            virtual ~ClientNamedPipe();
-            
-            /////////////////////////////////////////////////////////////////////
-            // Function name  : ClientNamedPipe::ConnectToServer
-            //
-            // Return type    : bool
-            // Argument       : char* pPipeName
-            //
-            // Description    : Connect to a server
-            //
-            /////////////////////////////////////////////////////////////////////
-            bool    ConnectToServer(char const* pipeName) ;
-    };
-    
-} // Namespace
+class ClientNamedPipe : public NamedPipe {
+ public:
+  ClientNamedPipe();
+  virtual ~ClientNamedPipe();
 
-#endif // CLIENT_NAMED_PIPE_H
+  /////////////////////////////////////////////////////////////////////
+  // Function name  : ClientNamedPipe::ConnectToServer
+  //
+  // Return type    : bool
+  // Argument       : char* pPipeName
+  //
+  // Description    : Connect to a server
+  //
+  /////////////////////////////////////////////////////////////////////
+  bool ConnectToServer(char const* pipeName);
+};
+
+}  // namespace sock
+
+#endif  // CLIENT_NAMED_PIPE_H

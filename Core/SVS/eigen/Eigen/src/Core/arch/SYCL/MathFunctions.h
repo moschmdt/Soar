@@ -10,13 +10,13 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*****************************************************************
+/*
  * MathFunctions.h
  *
  * \brief:
  *  MathFunctions
  *
- *****************************************************************/
+ */
 
 #ifndef EIGEN_MATH_FUNCTIONS_SYCL_H
 #define EIGEN_MATH_FUNCTIONS_SYCL_H
@@ -106,7 +106,7 @@ SYCL_PRSQRT(cl::sycl::cl_float4)
 SYCL_PRSQRT(cl::sycl::cl_double2)
 #undef SYCL_PRSQRT
 
-/** \internal \returns the hyperbolic sine of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic sine of \a a (coeff-wise) */
 #define SYCL_PSIN(packet_type)                                         \
   template <>                                                          \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type psin<packet_type>( \
@@ -118,7 +118,7 @@ SYCL_PSIN(cl::sycl::cl_float4)
 SYCL_PSIN(cl::sycl::cl_double2)
 #undef SYCL_PSIN
 
-/** \internal \returns the hyperbolic cosine of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic cosine of \a a (coeff-wise) */
 #define SYCL_PCOS(packet_type)                                         \
   template <>                                                          \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type pcos<packet_type>( \
@@ -130,7 +130,7 @@ SYCL_PCOS(cl::sycl::cl_float4)
 SYCL_PCOS(cl::sycl::cl_double2)
 #undef SYCL_PCOS
 
-/** \internal \returns the hyperbolic tan of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic tan of \a a (coeff-wise) */
 #define SYCL_PTAN(packet_type)                                         \
   template <>                                                          \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type ptan<packet_type>( \
@@ -142,7 +142,7 @@ SYCL_PTAN(cl::sycl::cl_float4)
 SYCL_PTAN(cl::sycl::cl_double2)
 #undef SYCL_PTAN
 
-/** \internal \returns the hyperbolic sine of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic sine of \a a (coeff-wise) */
 #define SYCL_PASIN(packet_type)                                         \
   template <>                                                           \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type pasin<packet_type>( \
@@ -154,7 +154,7 @@ SYCL_PASIN(cl::sycl::cl_float4)
 SYCL_PASIN(cl::sycl::cl_double2)
 #undef SYCL_PASIN
 
-/** \internal \returns the hyperbolic cosine of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic cosine of \a a (coeff-wise) */
 #define SYCL_PACOS(packet_type)                                         \
   template <>                                                           \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type pacos<packet_type>( \
@@ -166,7 +166,7 @@ SYCL_PACOS(cl::sycl::cl_float4)
 SYCL_PACOS(cl::sycl::cl_double2)
 #undef SYCL_PACOS
 
-/** \internal \returns the hyperbolic tan of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic tan of \a a (coeff-wise) */
 #define SYCL_PATAN(packet_type)                                         \
   template <>                                                           \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type patan<packet_type>( \
@@ -178,7 +178,7 @@ SYCL_PATAN(cl::sycl::cl_float4)
 SYCL_PATAN(cl::sycl::cl_double2)
 #undef SYCL_PATAN
 
-/** \internal \returns the hyperbolic sine of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic sine of \a a (coeff-wise) */
 #define SYCL_PSINH(packet_type)                                         \
   template <>                                                           \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type psinh<packet_type>( \
@@ -190,7 +190,7 @@ SYCL_PSINH(cl::sycl::cl_float4)
 SYCL_PSINH(cl::sycl::cl_double2)
 #undef SYCL_PSINH
 
-/** \internal \returns the hyperbolic cosine of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic cosine of \a a (coeff-wise) */
 #define SYCL_PCOSH(packet_type)                                         \
   template <>                                                           \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type pcosh<packet_type>( \
@@ -202,7 +202,7 @@ SYCL_PCOSH(cl::sycl::cl_float4)
 SYCL_PCOSH(cl::sycl::cl_double2)
 #undef SYCL_PCOSH
 
-/** \internal \returns the hyperbolic tan of \a a (coeff-wise) */
+/* \internal \returns the hyperbolic tan of \a a (coeff-wise) */
 #define SYCL_PTANH(packet_type)                                         \
   template <>                                                           \
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE packet_type ptanh<packet_type>( \

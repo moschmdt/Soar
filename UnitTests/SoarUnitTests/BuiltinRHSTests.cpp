@@ -2,7 +2,4 @@
 
 #include "BuiltinRHSTests.hpp"
 
-void BuiltinRHSTests::testString()
-{
-    runTest("testString", 0);
-}
+void BuiltinRHSTests::testString() { runTest("testString", 0); }

@@ -1,22 +1,22 @@
 #ifndef VIEWER_H
 #define VIEWER_H
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <GL/glfw.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define PAN_FACTOR  1.0e-1
-#define GRID_LINES  10
+#define PAN_FACTOR 1.0e-1
+#define GRID_LINES 10
 #define MAX_COMMAND 4096
-#define FONT_WIDTH  6
+#define FONT_WIDTH 6
 #define FONT_HEIGHT 12
-#define PI          3.141592654
-#define FOVY_MIN    5
-#define FOVY_MAX    175
-#define FOVY_DEF    60
-#define NEAR_CLIP   0.1
-#define FAR_CLIP    100.0
-#define NLAYERS     10
+#define PI 3.141592654
+#define FOVY_MIN 5
+#define FOVY_MAX 175
+#define FOVY_DEF 60
+#define NEAR_CLIP 0.1
+#define FAR_CLIP 100.0
+#define NLAYERS 10
 
 typedef GLdouble real;
 typedef real vec3[3];
@@ -24,66 +24,66 @@ typedef real vec4[4];
 typedef real quaternion[4];
 
 typedef struct Camera {
-	quaternion q;
-	vec3 pos;
-	real rot_mat[16];
-	real fovy;
-	int ortho;
-	real orthoy;
+  quaternion q;
+  vec3 pos;
+  real rot_mat[16];
+  real fovy;
+  int ortho;
+  real orthoy;
 } camera;
 
 typedef struct Geometry {
-	char *name;
-	int layer;
-	double line_width;
-	
-	vec3 pos;
-	vec3 axis;
-	real angle;
-	vec3 scale;
-	vec3 color;
-	
-	/* for polyhedrons */
-	real *vertices;
-	GLuint *indexes;
-	int ninds;
-	real *normals;
-	
-	/* for spheres */
-	GLUquadricObj *quadric;
-	real radius;
-	
-	/* for text */
-	char *text;
-	
-	struct Geometry *next;
+  char *name;
+  int layer;
+  double line_width;
+
+  vec3 pos;
+  vec3 axis;
+  real angle;
+  vec3 scale;
+  vec3 color;
+
+  /* for polyhedrons */
+  real *vertices;
+  GLuint *indexes;
+  int ninds;
+  real *normals;
+
+  /* for spheres */
+  GLUquadricObj *quadric;
+  real radius;
+
+  /* for text */
+  char *text;
+
+  struct Geometry *next;
 } geometry;
 
 typedef struct Layer {
-	/* drawing options */
-	int lighting;
-	int flat;
-	int clear_depth;
-	int draw_names;
-	int wireframe;
-	
-	/*
-	 storage for various matrices between object drawing and label drawing
-	*/
-	GLint last_view[4];
-	real last_modelview[16], last_projection[16];
+  /* drawing options */
+  int lighting;
+  int flat;
+  int clear_depth;
+  int draw_names;
+  int wireframe;
+
+  /*
+   storage for various matrices between object drawing and label drawing
+  */
+  GLint last_view[4];
+  real last_modelview[16], last_projection[16];
 } layer;
 
 typedef struct Scene {
-	char *name;
-	geometry *geoms;
-	struct Scene *next;
+  char *name;
+  geometry *geoms;
+  struct Scene *next;
 } scene;
 
 typedef struct Semaphore {
-	GLFWmutex mutex;
-	GLFWcond cond;
-	int count;
+  GLFWmutex mutex;
+  GLFWcond cond;
+  int count;
 } semaphore;
 
 extern GLFWmutex scene_lock;
@@ -110,7 +110,8 @@ int delete_scenes(char *pattern);
 int match_scenes(char *pattern, scene **scns, int n);
 void init_scene(scene *s, char *name);
 void destroy_scene(scene *s);
-void request_screenshot(char *path, int i);  /* 0 = from keyboard, 1 = from input */
+void request_screenshot(char *path,
+                        int i); /* 0 = from keyboard, 1 = from input */
 
 geometry *find_or_add_geom(scene *s, char *name);
 int delete_geoms(scene *s, char *pattern);

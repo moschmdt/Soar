@@ -10,26 +10,24 @@
 
 #include "kernel.h"
 
-class production_record
-{
-        friend class Explanation_Memory;
+class production_record {
+  friend class Explanation_Memory;
 
-    public:
+ public:
+  production_record(){};
+  ~production_record(){};
 
-        production_record() {};
-        ~production_record() {};
+  void init(agent* pAgent, production* pProd);
+  void clean_up();
 
-        void init(agent* pAgent, production* pProd);
-        void clean_up();
+  condition* get_lhs() { return lhs_conds; }
+  action* get_rhs() { return rhs_actions; }
+  bool was_generated() { return (lhs_conds != NULL); }
 
-        condition*  get_lhs() { return lhs_conds; }
-        action*     get_rhs() { return rhs_actions; }
-        bool        was_generated() { return (lhs_conds != NULL); }
-
-    private:
-        agent*      thisAgent;
-        condition*  lhs_conds;
-        action*     rhs_actions;
+ private:
+  agent* thisAgent;
+  condition* lhs_conds;
+  action* rhs_actions;
 };
 
 #endif /* CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_PRODUCTION_RECORD_H_ */

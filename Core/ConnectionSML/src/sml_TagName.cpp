@@ -13,9 +13,6 @@
 
 #include "sml_TagName.h"
 
-using namespace sml ;
+using namespace sml;
 
-TagName::TagName()
-{
-    this->SetTagNameFast(sml_Names::kTagName) ;
-}
+TagName::TagName() { this->SetTagNameFast(sml_Names::kTagName); }

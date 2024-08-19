@@ -1,58 +1,58 @@
 #ifndef PRODUCTION_H
 #define PRODUCTION_H
 
-#include "kernel.h"
-#include "stl_typedefs.h"
-
 #include <map>
 #include <set>
 
-typedef struct production_struct
-{
-    ProductionType                  type;
-    Symbol*                         name;
-    struct rete_node_struct*        p_node;                     /* NIL if it's not in the rete */
-    char*                           original_rule_name;
-    char*                           documentation;              /* pointer to memory block, or NIL */
-    char*                           filename;                   /* name of source file, or NIL. */
-    SupportType                     declared_support;
-    action*                         action_list;                /* RHS actions */
-    cons*                           rhs_unbound_variables;      /* RHS vars not bound on LHS */
-    int                             OPERAND_which_assert_list;
-    bool                            trace_firings;              /* used by pwatch */
-    uint64_t                        reference_count;
-    uint64_t                        firing_count;
-    struct instantiation_struct*    instantiations;             /* dll of inst's in MS */
-    struct production_struct        *next, *prev;
+#include "kernel.h"
+#include "stl_typedefs.h"
 
-    uint64_t                        naming_depth;
-    bool                            explain_its_chunks;
-    bool                            save_for_justification_explanation;
-    byte                            interrupt;
-    uint64_t                        p_id;
+typedef struct production_struct {
+  ProductionType type;
+  Symbol* name;
+  struct rete_node_struct* p_node; /* NIL if it's not in the rete */
+  char* original_rule_name;
+  char* documentation; /* pointer to memory block, or NIL */
+  char* filename;      /* name of source file, or NIL. */
+  SupportType declared_support;
+  action* action_list;         /* RHS actions */
+  cons* rhs_unbound_variables; /* RHS vars not bound on LHS */
+  int OPERAND_which_assert_list;
+  bool trace_firings; /* used by pwatch */
+  uint64_t reference_count;
+  uint64_t firing_count;
+  struct instantiation_struct* instantiations; /* dll of inst's in MS */
+  struct production_struct *next, *prev;
 
-    struct
-    {
-        bool interrupt_break : 1;
-        bool already_fired : 1;         /* RPM test workaround for bug #139 */
-        bool rl_rule : 1;                   /* if true, is a Soar-RL rule */
-    };
+  uint64_t naming_depth;
+  bool explain_its_chunks;
+  bool save_for_justification_explanation;
+  byte interrupt;
+  uint64_t p_id;
 
-    double rl_update_count;       /* number of (potentially fractional) updates to this rule */
-    unsigned int rl_ref_count;    /* number of states referencing this rule in prev_op_rl_rules list */
+  struct {
+    bool interrupt_break : 1;
+    bool already_fired : 1; /* RPM test workaround for bug #139 */
+    bool rl_rule : 1;       /* if true, is a Soar-RL rule */
+  };
 
-    // Per-input memory parameters for delta bar delta algorithm
-    double rl_delta_bar_delta_beta;
-    double rl_delta_bar_delta_h;
+  double rl_update_count; /* number of (potentially fractional) updates to this
+                             rule */
+  unsigned int rl_ref_count; /* number of states referencing this rule in
+                                prev_op_rl_rules list */
 
-    double rl_ecr;                // expected current reward (discounted reward)
-    double rl_efr;                // expected future reward (discounted next state)
-    double rl_gql;                // second value for implementation of GQ(\lambda)
+  // Per-input memory parameters for delta bar delta algorithm
+  double rl_delta_bar_delta_beta;
+  double rl_delta_bar_delta_h;
 
-    condition* rl_template_conds;
+  double rl_ecr;  // expected current reward (discounted reward)
+  double rl_efr;  // expected future reward (discounted next state)
+  double rl_gql;  // second value for implementation of GQ(\lambda)
 
-    int      duplicate_chunks_this_cycle;
-    uint64_t last_duplicate_dc;
+  condition* rl_template_conds;
+
+  int duplicate_chunks_this_cycle;
+  uint64_t last_duplicate_dc;
 
 } production;
 
@@ -65,11 +65,10 @@ typedef struct production_struct
 ======================================================================== */
 
 /* This structure is used to break ties in favor of non-multi-attributes */
-typedef struct multi_attributes_struct
-{
-    Symbol* symbol;
-    int64_t value;
-    struct multi_attributes_struct* next;
+typedef struct multi_attributes_struct {
+  Symbol* symbol;
+  int64_t value;
+  struct multi_attributes_struct* next;
 } multi_attribute;
 
 void init_production_utilities(agent* thisAgent);
@@ -119,14 +118,13 @@ void add_symbol_to_tc(agent* thisAgent, Symbol* sym, tc_number tc,
                       cons** id_list, cons** var_list);
 void add_cond_to_tc(agent* thisAgent, condition* c, tc_number tc,
                     cons** id_list, cons** var_list);
-void add_action_to_tc(agent* thisAgent, action* a, tc_number tc,
-                      cons** id_list, cons** var_list);
+void add_action_to_tc(agent* thisAgent, action* a, tc_number tc, cons** id_list,
+                      cons** var_list);
 bool cond_is_in_tc(agent* thisAgent, condition* cond, tc_number tc);
 bool action_is_in_tc(action* a, tc_number tc);
 
 void add_all_variables_in_condition_list(agent* thisAgent, condition* cond_list,
-        tc_number tc, cons** var_list);
-
+                                         tc_number tc, cons** var_list);
 
 /* -------------------------------------------------------------------
                          Production Management
@@ -156,33 +154,30 @@ void add_all_variables_in_condition_list(agent* thisAgent, condition* cond_list,
     say.  Normally deallocate_production() should be invoked only via
     the production_remove_ref() macro.
 ------------------------------------------------------------------- */
-ProdReorderFailureType reorder_and_validate_lhs_and_rhs(agent*                    thisAgent,
-                                                        condition**               lhs_top,
-                                                        action**                  rhs_top,
-                                                        bool                      reorder_nccs,
-                                                        matched_symbol_list*      ungrounded_syms = NULL,
-                                                        bool                      add_ungrounded_lhs = false,
-                                                        bool                      add_ungrounded_rhs = false
-);
+ProdReorderFailureType reorder_and_validate_lhs_and_rhs(
+    agent* thisAgent, condition** lhs_top, action** rhs_top, bool reorder_nccs,
+    matched_symbol_list* ungrounded_syms = NULL,
+    bool add_ungrounded_lhs = false, bool add_ungrounded_rhs = false);
 
-production* make_production(agent* thisAgent, ProductionType type,
-                                   Symbol* name, char* original_rule_name,
-                                   condition** lhs_top, action** rhs_top,
-                                   bool reorder_nccs, preference* results);
+production* make_production(agent* thisAgent, ProductionType type, Symbol* name,
+                            char* original_rule_name, condition** lhs_top,
+                            action** rhs_top, bool reorder_nccs,
+                            preference* results);
 
 void deallocate_production(agent* thisAgent, production* prod);
-void excise_production(agent* thisAgent, production* prod, bool print_sharp_sign = true, bool cacheProdForExplainer = false);
-void excise_all_productions_of_type(agent* thisAgent, byte type, bool print_sharp_sign, bool cacheProdForExplainer = false);
-void excise_all_productions(agent* thisAgent, bool print_sharp_sign, bool cacheProdForExplainer = false);
+void excise_production(agent* thisAgent, production* prod,
+                       bool print_sharp_sign = true,
+                       bool cacheProdForExplainer = false);
+void excise_all_productions_of_type(agent* thisAgent, byte type,
+                                    bool print_sharp_sign,
+                                    bool cacheProdForExplainer = false);
+void excise_all_productions(agent* thisAgent, bool print_sharp_sign,
+                            bool cacheProdForExplainer = false);
 
-inline void production_add_ref(production* p)
-{
-    (p)->reference_count++;
-}
+inline void production_add_ref(production* p) { (p)->reference_count++; }
 
-inline void production_remove_ref(agent* thisAgent, production* p)
-{
-    if (--(p->reference_count) == 0) deallocate_production(thisAgent, p);
+inline void production_remove_ref(agent* thisAgent, production* p) {
+  if (--(p->reference_count) == 0) deallocate_production(thisAgent, p);
 }
 
 #endif

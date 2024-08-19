@@ -100,9 +100,12 @@ class epmem_graph_statement_container;
 class epmem_param_container;
 class epmem_stat_container;
 class epmem_timer_container;
-typedef int64_t epmem_node_id;  // represents a unique node identifier in the episodic store
-typedef uint64_t epmem_hash_id; // represents a unique temporal hash in the episodic store
-typedef uint64_t epmem_time_id; // represents a unique episode identifier in the episodic store
+typedef int64_t
+    epmem_node_id;  // represents a unique node identifier in the episodic store
+typedef uint64_t
+    epmem_hash_id;  // represents a unique temporal hash in the episodic store
+typedef uint64_t epmem_time_id;  // represents a unique episode identifier in
+                                 // the episodic store
 
 class RL_Manager;
 class rl_param_container;
@@ -128,37 +131,40 @@ typedef union ltm_value_union ltm_value;
 typedef uint64_t smem_hash_id;  // represents a temporal hash
 typedef struct smem_weighted_cue_element_struct smem_weighted_cue_element;
 
-namespace sml
-{
-    class Kernel;
-    class Agent;
-    class AgentSML;
-}
+namespace sml {
+class Kernel;
+class Agent;
+class AgentSML;
+}  // namespace sml
 
 namespace soar_module {
-    class sqlite_database;
-    class sqlite_statement;
-    class timer;
-}
+class sqlite_database;
+class sqlite_statement;
+class timer;
+}  // namespace soar_module
 namespace soar {
-    class Lexer;
-    class Lexeme;
+class Lexer;
+class Lexeme;
+}  // namespace soar
+
+namespace cli {
+class CommandLineInterface;
+
 }
 
-namespace cli
-{
-    class CommandLineInterface;
-
-}
-
-/* Three utility functions to help break when a soar symbol or wme is encountered.  If you set
- * your debugger to always break on these, you can just add them to stop Soar at the point where
- * problem structures are being processed.  Since we can throw these in anywhere, we're forward
- * declaring them here so that we don't need to include debug.h everywhere.*/
-extern void debug_set_mode_info(trace_mode_info mode_info[num_trace_modes], bool pEnabled);
+/* Three utility functions to help break when a soar symbol or wme is
+ * encountered.  If you set your debugger to always break on these, you can just
+ * add them to stop Soar at the point where problem structures are being
+ * processed.  Since we can throw these in anywhere, we're forward declaring
+ * them here so that we don't need to include debug.h everywhere.*/
+extern void debug_set_mode_info(trace_mode_info mode_info[num_trace_modes],
+                                bool pEnabled);
 extern void initialize_debug_trace(trace_mode_info mode_info[num_trace_modes]);
 extern void debug_trace_set(int dt_num, bool pEnable);
 extern void debug_trace_on();
-extern void debug_trace_off();extern bool break_if_wme_matches_string(wme *w, const char* match_id, const char* match_attr, const char* match_value);
+extern void debug_trace_off();
+extern bool break_if_wme_matches_string(wme* w, const char* match_id,
+                                        const char* match_attr,
+                                        const char* match_value);
 
 #endif /* CORE_SOARKERNEL_SRC_SHARED_FORWARD_H_ */

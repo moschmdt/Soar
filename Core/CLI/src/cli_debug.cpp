@@ -7,193 +7,155 @@
 
 ------------------------------------------------------------------ */
 
+#include <time.h>
 
-#include "cli_enums.h"
-#include "portability.h"
-
+#include "agent.h"
 #include "cli_CommandLineInterface.h"
 #include "cli_Commands.h"
-#include "agent.h"
+#include "cli_enums.h"
 #include "debug.h"
 #include "episodic_memory.h"
 #include "misc.h"
 #include "output_manager.h"
 #include "output_settings.h"
+#include "portability.h"
 #include "semantic_memory.h"
-#include "sml_Names.h"
 #include "sml_AgentSML.h"
+#include "sml_Names.h"
 #include "soar_instance.h"
-
-#include <time.h>
 
 using namespace cli;
 using namespace sml;
 
+bool CommandLineInterface::DoDebug(std::vector<std::string>* argv) {
+  agent* thisAgent = m_pAgentSML->GetSoarAgent();
+  bool result = false;
+  size_t numArgs = 0;
+  std::ostringstream tempString;
+  std::string err, sub_command;
 
-bool CommandLineInterface::DoDebug(std::vector< std::string >* argv)
-{
+  if (!argv) {
+    PrintCLIMessage(
+        "The debug command contains low-level technical debugging "
+        "commands.\n\nUse 'debug ?' to learn more about the debug command.");
+    return true;
+  }
 
-    agent* thisAgent = m_pAgentSML->GetSoarAgent();
-    bool result = false;
-    size_t numArgs = 0;
-    std::ostringstream tempString;
-    std::string err, sub_command;
-
-    if (!argv)
-    {
-        PrintCLIMessage("The debug command contains low-level technical debugging commands.\n\nUse 'debug ?' to learn more about the debug command.");
+  numArgs = argv->size() - 1;
+  sub_command = argv->front();
+  if (sub_command[0] == 't') {
+    if (numArgs < 1) {
+      return (SetError("You must submit a command that you'd like timed."));
+    }
+    argv->erase(argv->begin());
+    return DoTime(*argv);
+  }
+  if (numArgs == 1) {
+    if (sub_command[0] == 'e') {
+      std::string mode = argv->at(1);
+      int debug_type;
+      if (!from_string(debug_type, mode)) {
+        tempString.str("");
+        tempString << "Debug | Invalid value: " << mode;
+        SetError(tempString.str().c_str());
+        goto print_syntax;
+      } else {
+        debug_trace_set(debug_type, true);
         return true;
+      }
+    } else if (sub_command[0] == 'd') {
+      std::string mode = argv->at(1);
+      int debug_type;
+      if (!from_string(debug_type, mode)) {
+        tempString.str("");
+        tempString << "Debug | Invalid value: " << mode;
+        SetError(tempString.str().c_str());
+        goto print_syntax;
+      } else {
+        debug_trace_set(debug_type, false);
+        return true;
+      }
+    }
+  } else if (numArgs == 2) {
+    if (sub_command[0] == 'a') {
+      int blocks = 0;
+      if (!from_string(blocks, argv->at(2))) {
+        return SetError("Expected an integer (number of blocks).");
+      }
+
+      if (blocks < 1) {
+        return SetError("Expected a positive integer (number of blocks).");
+      }
+
+      return DoAllocate(argv->at(1), blocks);
+    } else if (sub_command[0] == 'p') {
+      std::string database_name = argv->at(1);
+      std::string table_name = argv->at(2);
+      if (database_name[0] == 'e') {
+        thisAgent->EpMem->epmem_db->print_table(table_name.c_str());
+      } else if (database_name[0] == 's') {
+        thisAgent->SMem->DB->print_table(table_name.c_str());
+      } else {
+        tempString.str("");
+        tempString << "Debug | Invalid database to print: " << sub_command
+                   << ".";
+        SetError(tempString.str().c_str());
+        goto print_syntax;
+      }
+    } else {
+      tempString.str("");
+      tempString << "Debug| Invalid command: " << sub_command << ".";
+      SetError(tempString.str().c_str());
+      goto print_syntax;
     }
 
-    numArgs = argv->size() - 1;
-    sub_command = argv->front();
-    if (sub_command[0] == 't')
-    {
-        if (numArgs < 1)
-        {
-            return (SetError("You must submit a command that you'd like timed."));
-        }
-        argv->erase(argv->begin());
-        return DoTime(*argv);
+    return result;
+  } else if (numArgs == 0) {
+    if (sub_command[0] == 'a') {
+      return DoAllocate(std::string(), 0);
+      return true;
     }
-    if (numArgs == 1)
-    {
-        if (sub_command[0] == 'e')
-        {
-            std::string mode = argv->at(1);
-            int debug_type;
-            if (!from_string(debug_type, mode))
-            {
-                tempString.str("");
-                tempString << "Debug | Invalid value: " << mode;
-                SetError(tempString.str().c_str());
-                goto print_syntax;
-            }
-            else
-            {
-                debug_trace_set(debug_type, true);
-                return true;
-            }
-        }
-        else if (sub_command[0] == 'd')
-        {
-            std::string mode = argv->at(1);
-            int debug_type;
-            if (!from_string(debug_type, mode))
-            {
-                tempString.str("");
-                tempString << "Debug | Invalid value: " << mode;
-                SetError(tempString.str().c_str());
-                goto print_syntax;
-            }
-            else
-            {
-                debug_trace_set(debug_type, false);
-                return true;
-            }
-        }
-    }
-    else if (numArgs == 2)
-    {
-        if (sub_command[0] == 'a')
-        {
-            int blocks = 0;
-            if (!from_string(blocks, argv->at(2)))
-            {
-                return SetError("Expected an integer (number of blocks).");
-            }
+    if (sub_command[0] == 'i') {
+      thisAgent->symbolManager->print_internal_symbols();
+      return true;
+    } else if (sub_command[0] == 'p') {
+      int port = m_pKernelSML->GetListenerPort();
 
-            if (blocks < 1)
-            {
-                return SetError("Expected a positive integer (number of blocks).");
-            }
-
-            return DoAllocate(argv->at(1), blocks);
-        }
-        else if (sub_command[0] == 'p')
-        {
-            std::string database_name = argv->at(1);
-            std::string table_name = argv->at(2);
-            if (database_name[0] == 'e')
-            {
-                thisAgent->EpMem->epmem_db->print_table(table_name.c_str());
-            }
-            else if (database_name[0] == 's')
-            {
-                thisAgent->SMem->DB->print_table(table_name.c_str());
-            }
-            else
-            {
-                tempString.str("");
-                tempString << "Debug | Invalid database to print: " << sub_command << ".";
-                SetError(tempString.str().c_str());
-                goto print_syntax;
-            }
-        }
-        else
-        {
-            tempString.str("");
-            tempString << "Debug| Invalid command: " << sub_command << ".";
-            SetError(tempString.str().c_str());
-            goto print_syntax;
-        }
-
-        return result;
-    }
-    else if (numArgs == 0)
-    {
-        if (sub_command[0] == 'a')
-        {
-            return DoAllocate(std::string(), 0);
-            return true;
-        }
-        if (sub_command[0] == 'i')
-        {
-            thisAgent->symbolManager->print_internal_symbols();
-            return true;
-        }
-        else if (sub_command[0] == 'p')
-        {
-
-            int port = m_pKernelSML->GetListenerPort();
-
-            if (m_RawOutput)
-            {
-                m_Result << port;
-            }
-            else
-            {
-                std::string temp;
-                AppendArgTag(sml_Names::kParamPort, sml_Names::kTypeInt, to_string(port, temp));
-            }            return true;
-        }
-        else if (sub_command[0] == '?')
-        {
-            PrintCLIMessage_Header("Debug Commands and Settings", 70);
-            PrintCLIMessage_Justify("allocate [pool blocks]", "Allocates extra memory to a memory pool", 70);
-            PrintCLIMessage_Justify("internal-symbols", "Prints symbol table", 70);
-            PrintCLIMessage_Justify("port", "Prints listening port", 70);
-            PrintCLIMessage_Justify("time <command> [args]", "Executes command and prints time spent", 70);
-        }
-        else
-        {
-            tempString.str("");
-            tempString << "Debug| Invalid command: " << sub_command << ".";
-            SetError(tempString.str().c_str());
-            goto print_syntax;
-        }
-
-        return result;
+      if (m_RawOutput) {
+        m_Result << port;
+      } else {
+        std::string temp;
+        AppendArgTag(sml_Names::kParamPort, sml_Names::kTypeInt,
+                     to_string(port, temp));
+      }
+      return true;
+    } else if (sub_command[0] == '?') {
+      PrintCLIMessage_Header("Debug Commands and Settings", 70);
+      PrintCLIMessage_Justify("allocate [pool blocks]",
+                              "Allocates extra memory to a memory pool", 70);
+      PrintCLIMessage_Justify("internal-symbols", "Prints symbol table", 70);
+      PrintCLIMessage_Justify("port", "Prints listening port", 70);
+      PrintCLIMessage_Justify("time <command> [args]",
+                              "Executes command and prints time spent", 70);
+    } else {
+      tempString.str("");
+      tempString << "Debug| Invalid command: " << sub_command << ".";
+      SetError(tempString.str().c_str());
+      goto print_syntax;
     }
 
-    tempString.str("");
-    tempString << "Debug| Invalid number of parameters (" << numArgs << ") to command " << sub_command << ".";
-    SetError(tempString.str().c_str());
+    return result;
+  }
+
+  tempString.str("");
+  tempString << "Debug| Invalid number of parameters (" << numArgs
+             << ") to command " << sub_command << ".";
+  SetError(tempString.str().c_str());
 
 print_syntax:
 
-    PrintCLIMessage("\nSyntax: Debug [command]");
-    return result;
+  PrintCLIMessage("\nSyntax: Debug [command]");
+  return result;
 }
 
 /**
@@ -205,72 +167,64 @@ print_syntax:
  * @param thisAgent         Agent to run
  * @param run_count     Number of decision cycles to run for
  */
-void CommandLineInterface::Run_DC(agent* thisAgent, int run_count)
-{
-    std::ostringstream tempString;
-    tempString << "MemCon| Running for " << run_count << " decision cycles.\n";
-    PrintCLIMessage(&tempString);
-    cli::Options opt;
-//    cli::OptionsData optionsData[] =
-//    {
-//        {'d', "decision",        cli::OPTARG_NONE},
-//        {'e', "elaboration",    cli::OPTARG_NONE},
-//        {'g', "goal",            cli::OPTARG_NONE},
-//        {'i', "interleave",        cli::OPTARG_REQUIRED},
-//        {'n', "noupdate",        cli::OPTARG_NONE},
-//        {'o', "output",            cli::OPTARG_NONE},
-//        {'p', "phase",            cli::OPTARG_NONE},
-//        {'s', "self",            cli::OPTARG_NONE},
-//        {'u', "update",            cli::OPTARG_NONE},
-//        {0, 0, cli::OPTARG_NONE}
-//    };
+void CommandLineInterface::Run_DC(agent* thisAgent, int run_count) {
+  std::ostringstream tempString;
+  tempString << "MemCon| Running for " << run_count << " decision cycles.\n";
+  PrintCLIMessage(&tempString);
+  cli::Options opt;
+  //    cli::OptionsData optionsData[] =
+  //    {
+  //        {'d', "decision",        cli::OPTARG_NONE},
+  //        {'e', "elaboration",    cli::OPTARG_NONE},
+  //        {'g', "goal",            cli::OPTARG_NONE},
+  //        {'i', "interleave",        cli::OPTARG_REQUIRED},
+  //        {'n', "noupdate",        cli::OPTARG_NONE},
+  //        {'o', "output",            cli::OPTARG_NONE},
+  //        {'p', "phase",            cli::OPTARG_NONE},
+  //        {'s', "self",            cli::OPTARG_NONE},
+  //        {'u', "update",            cli::OPTARG_NONE},
+  //        {0, 0, cli::OPTARG_NONE}
+  //    };
 
-    cli::RunBitset options(0);
-    DoRun(options, run_count, cli::RUN_INTERLEAVE_DEFAULT);
-
+  cli::RunBitset options(0);
+  DoRun(options, run_count, cli::RUN_INTERLEAVE_DEFAULT);
 }
-bool CommandLineInterface::DoAllocate(const std::string& pool, int blocks)
-{
-    if (pool.empty())
-    {
-        GetMemoryPoolStatistics(); // cli_stats.cpp
-        return true;
-    }
+bool CommandLineInterface::DoAllocate(const std::string& pool, int blocks) {
+  if (pool.empty()) {
+    GetMemoryPoolStatistics();  // cli_stats.cpp
+    return true;
+  }
 
-    agent* thisAgent = m_pAgentSML->GetSoarAgent();
-    if (thisAgent->memoryManager->add_block_to_memory_pool_by_name(pool, blocks))
-    {
-        m_Result << pool << " blocks increased by " << blocks;
-        return true;
-    }
+  agent* thisAgent = m_pAgentSML->GetSoarAgent();
+  if (thisAgent->memoryManager->add_block_to_memory_pool_by_name(pool,
+                                                                 blocks)) {
+    m_Result << pool << " blocks increased by " << blocks;
+    return true;
+  }
 
-    SetError("Could not allocate memory.  Probably a bad pool name: " + pool);
-    return false;
+  SetError("Could not allocate memory.  Probably a bad pool name: " + pool);
+  return false;
 }
 
-bool CommandLineInterface::DoTime(std::vector<std::string>& argv)
-{
+bool CommandLineInterface::DoTime(std::vector<std::string>& argv) {
+  soar_timer timer;
 
-    soar_timer timer;
+  timer.start();
 
-    timer.start();
+  // Execute command
+  bool ret = m_Parser.handle_command(argv);
 
-    // Execute command
-    bool ret = m_Parser.handle_command(argv);
+  timer.stop();
 
-    timer.stop();
+  double elapsed = timer.get_usec() / 1000000.0;
 
-    double elapsed = timer.get_usec() / 1000000.0;
-
-    // Print elapsed time and return
-    if (m_RawOutput)
-    {
-        m_Result << "\n(" << elapsed << "s) real";
-    }
-    else
-    {
-        std::string temp;
-        AppendArgTagFast(sml_Names::kParamRealSeconds, sml_Names::kTypeDouble, to_string(elapsed, temp));
-    }
-    return ret;
+  // Print elapsed time and return
+  if (m_RawOutput) {
+    m_Result << "\n(" << elapsed << "s) real";
+  } else {
+    std::string temp;
+    AppendArgTagFast(sml_Names::kParamRealSeconds, sml_Names::kTypeDouble,
+                     to_string(elapsed, temp));
+  }
+  return ret;
 }

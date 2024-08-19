@@ -1,7 +1,7 @@
-/*************************************************************************
+/*
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
 /*
  *=======================================================================
@@ -28,17 +28,16 @@
  * =======================================================================
  */
 
-
 /* Two points about this enumeration: a) The first entry is not */
 /* a valid callback because 0 is used to indicate an invalid or */
 /* missing callback and b) The last entry in the enum list      */
 /* indicates how many enums are defined.                        */
 
-#ifndef CALLBACK_H_INCLUDED         /* Avoid duplicate includes  */
+#ifndef CALLBACK_H_INCLUDED /* Avoid duplicate includes  */
 #define CALLBACK_H_INCLUDED
 
-#include "kernel.h"
 #include "Export.h"
+#include "kernel.h"
 
 /* --------------------------------------------------------------------
 
@@ -264,72 +263,63 @@
 #ifndef CALLBACK_H
 #define CALLBACK_H
 
-//typedef list * soar_callback_array[NUMBER_OF_CALLBACKS];
+// typedef list * soar_callback_array[NUMBER_OF_CALLBACKS];
 
 typedef const char* soar_callback_id;
 typedef void* soar_callback_data;
 typedef void* soar_call_data;
-typedef int    soar_callback_event_id;
+typedef int soar_callback_event_id;
 
 typedef struct agent_struct agent;
 
-typedef void (*soar_callback_fn)(agent*,
-                                 soar_callback_event_id,
-                                 soar_callback_data,
-                                 soar_call_data);
-typedef void (*soar_callback_free_fn)(soar_callback_data);  // JRV 2008 This is a function pointer used to free the user data but currently nobody uses it
+typedef void (*soar_callback_fn)(agent*, soar_callback_event_id,
+                                 soar_callback_data, soar_call_data);
+typedef void (*soar_callback_free_fn)(
+    soar_callback_data);  // JRV 2008 This is a function pointer used to free
+                          // the user data but currently nobody uses it
 typedef struct cons_struct cons;
 typedef cons cons;
 
 #include <string>
 
-typedef struct EXPORT callback_struct
-{
-    std::string           id;
-    soar_callback_fn      function;
-    soar_callback_data    data;
-    soar_callback_event_id eventid ;
-    soar_callback_free_fn free_function;
+typedef struct EXPORT callback_struct {
+  std::string id;
+  soar_callback_fn function;
+  soar_callback_data data;
+  soar_callback_event_id eventid;
+  soar_callback_free_fn free_function;
 } soar_callback;
 
-extern EXPORT void soar_add_callback(agent* thisAgent,
-                              SOAR_CALLBACK_TYPE,
-                              soar_callback_fn,
-                              soar_callback_event_id,
-                              soar_callback_data,
-                              soar_callback_free_fn,
-                              soar_callback_id);
+extern EXPORT void soar_add_callback(agent* thisAgent, SOAR_CALLBACK_TYPE,
+                                     soar_callback_fn, soar_callback_event_id,
+                                     soar_callback_data, soar_callback_free_fn,
+                                     soar_callback_id);
 extern EXPORT void soar_callback_data_free_string(soar_callback_data);
 extern EXPORT const char* soar_callback_enum_to_name(SOAR_CALLBACK_TYPE, bool);
 extern EXPORT SOAR_CALLBACK_TYPE soar_callback_name_to_enum(char*, bool);
 extern EXPORT void soar_destroy_callback(soar_callback*);
 extern EXPORT bool soar_exists_callback(agent*, SOAR_CALLBACK_TYPE);
-extern EXPORT soar_callback* soar_exists_callback_id(agent* the_agent,
-        SOAR_CALLBACK_TYPE callback_type,
-        soar_callback_id id);
+extern EXPORT soar_callback* soar_exists_callback_id(
+    agent* the_agent, SOAR_CALLBACK_TYPE callback_type, soar_callback_id id);
 extern void soar_init_callbacks(agent*);
-extern void soar_invoke_callbacks(agent* thisAgent,
-                                  SOAR_CALLBACK_TYPE,
+extern void soar_invoke_callbacks(agent* thisAgent, SOAR_CALLBACK_TYPE,
                                   soar_call_data);
-extern void soar_invoke_first_callback(agent* thisAgent,
-                                       SOAR_CALLBACK_TYPE,
+extern void soar_invoke_first_callback(agent* thisAgent, SOAR_CALLBACK_TYPE,
                                        soar_call_data);
-extern void soar_list_all_callbacks(agent*,
-                                    bool);
+extern void soar_list_all_callbacks(agent*, bool);
 extern void soar_list_all_callbacks_for_event(agent* thisAgent,
-        SOAR_CALLBACK_TYPE);
+                                              SOAR_CALLBACK_TYPE);
 extern void soar_pop_callback(agent* the_agent,
                               SOAR_CALLBACK_TYPE callback_type);
 extern void soar_push_callback(agent* the_agent,
                                SOAR_CALLBACK_TYPE callback_type,
-                               soar_callback_fn fn,
-                               soar_callback_data data,
+                               soar_callback_fn fn, soar_callback_data data,
                                soar_callback_free_fn free_fn);
 extern void soar_remove_all_monitorable_callbacks(agent* thisAgent);
-extern void soar_remove_all_callbacks_for_event(agent* thisAgent, SOAR_CALLBACK_TYPE);
-extern EXPORT void soar_remove_callback(agent* thisAgent,
-                                 SOAR_CALLBACK_TYPE,
-                                 soar_callback_id);
+extern void soar_remove_all_callbacks_for_event(agent* thisAgent,
+                                                SOAR_CALLBACK_TYPE);
+extern EXPORT void soar_remove_callback(agent* thisAgent, SOAR_CALLBACK_TYPE,
+                                        soar_callback_id);
 extern void soar_test_all_monitorable_callbacks(agent*);
 
 extern void soar_print_detailed_callback_stats();

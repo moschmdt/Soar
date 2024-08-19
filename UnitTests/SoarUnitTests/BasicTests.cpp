@@ -8,12 +8,8 @@
 
 #include "BasicTests.hpp"
 
-void BasicTests::testBasicElaborationAndMatch()
-{
-	runTest("testBasicElaborationAndMatch", 0);
+void BasicTests::testBasicElaborationAndMatch() {
+  runTest("testBasicElaborationAndMatch", 0);
 }
 
-void BasicTests::testInitialState()
-{
-	runTest("testInitialState", 0);
-}
+void BasicTests::testInitialState() { runTest("testInitialState", 0); }

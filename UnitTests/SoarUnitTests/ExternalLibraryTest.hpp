@@ -3,13 +3,12 @@
 
 #include "FunctionalTestHarness.hpp"
 
-class ExternalLibraryTest : public FunctionalTestHarness
-{
-public:
-    TEST_CATEGORY(ExternalLibraryTest);
+class ExternalLibraryTest : public FunctionalTestHarness {
+ public:
+  TEST_CATEGORY(ExternalLibraryTest);
 
-    TEST(testLoadLibrary, -1)
-    void testLoadLibrary();
+  TEST(testLoadLibrary, -1)
+  void testLoadLibrary();
 };
 
 #endif

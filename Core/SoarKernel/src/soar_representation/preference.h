@@ -1,7 +1,7 @@
-/*************************************************************************
+/*
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
 /* ---------------------------------------------------------------------
                      Preference Management Routines
@@ -37,9 +37,8 @@
 #ifndef PREFMEM_H
 #define PREFMEM_H
 
-#include "kernel.h"
-
 #include "instantiation.h"
+#include "kernel.h"
 #include "stl_typedefs.h"
 
 /* ------------------------------------------------------------------------
@@ -108,93 +107,112 @@
           (hence there's no way we'll ever want to BT through it)
 ------------------------------------------------------------------------ */
 
-typedef struct preference_struct
-{
-    PreferenceType                  type;               /* acceptable, better, etc. */
-    bool                            o_supported;        /* is the preference o-supported? */
-    bool                            in_tm;              /* is this currently in TM? */
-    bool                            on_goal_list;       /* is this pref on the list for its match goal */
-    goal_stack_level                level;
-    uint64_t                        reference_count;
-    Symbol*                         id;
-    Symbol*                         attr;
-    Symbol*                         value;
-    Symbol*                         referent;
+typedef struct preference_struct {
+  PreferenceType type; /* acceptable, better, etc. */
+  bool o_supported;    /* is the preference o-supported? */
+  bool in_tm;          /* is this currently in TM? */
+  bool on_goal_list;   /* is this pref on the list for its match goal */
+  goal_stack_level level;
+  uint64_t reference_count;
+  Symbol* id;
+  Symbol* attr;
+  Symbol* value;
+  Symbol* referent;
 
-    identity_set_quadruple          identities;                             /* identity sets for all four elements */
-    identity_quadruple              inst_identities;                        /* identities for a preferences in relation to instantiation that created*/
-    identity_quadruple              chunk_inst_identities;                  /* identities for a result preference in relation to chunk formed*/
-    rhs_quadruple                   rhs_func_inst_identities;               /* identities of syms in rhs functions*/
-    rhs_quadruple                   rhs_func_chunk_inst_identities;         /* identities of syms in chunk instantiation's rhs functions */
+  identity_set_quadruple identities; /* identity sets for all four elements */
+  identity_quadruple
+      inst_identities; /* identities for a preferences in relation to
+                          instantiation that created*/
+  identity_quadruple
+      chunk_inst_identities; /* identities for a result preference in relation
+                                to chunk formed*/
+  rhs_quadruple
+      rhs_func_inst_identities; /* identities of syms in rhs functions*/
+  rhs_quadruple
+      rhs_func_chunk_inst_identities; /* identities of syms in chunk
+                                         instantiation's rhs functions */
 
-    bool_quadruple                  was_unbound_vars;                       /* Whether a RHS variable is a newly created unbound RHS var.  Used by re-orderer */
-    action*                         parent_action;                          /* Action that created pref.  Used by the explainer */
+  bool_quadruple was_unbound_vars; /* Whether a RHS variable is a newly created
+                                      unbound RHS var.  Used by re-orderer */
+  action* parent_action; /* Action that created pref.  Used by the explainer */
 
-    struct slot_struct*             slot;
-    struct preference_struct*       next, *prev;                            /* dll of pref's of same type in same slot */
-    struct preference_struct*       all_of_slot_next, *all_of_slot_prev;    /* dll of all pref's in same slot */
-    struct preference_struct*       all_of_goal_next, *all_of_goal_prev;    /* dll of all pref's from the same match goal */
-    struct preference_struct*       next_clone, *prev_clone;                /* dll (without header) of cloned preferences (created when chunking) */
+  struct slot_struct* slot;
+  struct preference_struct *next,
+      *prev; /* dll of pref's of same type in same slot */
+  struct preference_struct *all_of_slot_next,
+      *all_of_slot_prev; /* dll of all pref's in same slot */
+  struct preference_struct *all_of_goal_next,
+      *all_of_goal_prev; /* dll of all pref's from the same match goal */
+  struct preference_struct *next_clone,
+      *prev_clone; /* dll (without header) of cloned preferences (created when
+                      chunking) */
 
-    struct instantiation_struct*    inst;
-    struct preference_struct*       inst_next, *inst_prev;
-    struct preference_struct*       next_candidate;
-    struct preference_struct*       next_result;
+  struct instantiation_struct* inst;
+  struct preference_struct *inst_next, *inst_prev;
+  struct preference_struct* next_candidate;
+  struct preference_struct* next_result;
 
-    unsigned int                    total_preferences_for_candidate;
-    double                          numeric_value;
-    bool                            rl_contribution;
-    double                          rl_rho;                                 /* ratio of target policy to behavior policy */
+  unsigned int total_preferences_for_candidate;
+  double numeric_value;
+  bool rl_contribution;
+  double rl_rho; /* ratio of target policy to behavior policy */
 
-    wme_set*                        wma_o_set;
+  wme_set* wma_o_set;
 } preference;
 
-preference* make_preference(agent* thisAgent, PreferenceType type, Symbol* id, Symbol* attr, Symbol* value, Symbol* referent = NULL,
-                                   const identity_quadruple &o_ids = identity_quadruple(0, 0, 0, 0),
-                                   const bool_quadruple &pWas_unbound_vars = bool_quadruple(false, false, false, false));
+preference* make_preference(
+    agent* thisAgent, PreferenceType type, Symbol* id, Symbol* attr,
+    Symbol* value, Symbol* referent = NULL,
+    const identity_quadruple& o_ids = identity_quadruple(0, 0, 0, 0),
+    const bool_quadruple& pWas_unbound_vars = bool_quadruple(false, false,
+                                                             false, false));
 preference* shallow_copy_preference(agent* thisAgent, preference* pPref);
 void cache_preference_if_necessary(agent* thisAgent, preference* pref);
-bool possibly_deallocate_preference_and_clones(agent* thisAgent, preference* pref, bool dont_cache = false);
-void deallocate_preference(agent* thisAgent, preference* pref, bool dont_cache = false);
-void deallocate_preference_contents(agent* thisAgent, preference* pref, bool dont_cache);
+bool possibly_deallocate_preference_and_clones(agent* thisAgent,
+                                               preference* pref,
+                                               bool dont_cache = false);
+void deallocate_preference(agent* thisAgent, preference* pref,
+                           bool dont_cache = false);
+void deallocate_preference_contents(agent* thisAgent, preference* pref,
+                                    bool dont_cache);
 bool add_preference_to_tm(agent* thisAgent, preference* pref);
 void remove_preference_from_tm(agent* thisAgent, preference* pref);
-bool remove_preference_from_clones_and_deallocate(agent* thisAgent, preference* pref);
-void process_o_rejects_and_deallocate_them(agent* thisAgent, preference* o_rejects, preference_list& bufdeallo);
-inline bool preference_is_unary(byte p) { return (p < 9);}
+bool remove_preference_from_clones_and_deallocate(agent* thisAgent,
+                                                  preference* pref);
+void process_o_rejects_and_deallocate_them(agent* thisAgent,
+                                           preference* o_rejects,
+                                           preference_list& bufdeallo);
+inline bool preference_is_unary(byte p) { return (p < 9); }
 inline bool preference_is_binary(byte p) { return (p > 8); }
-void clear_preference_list(agent* thisAgent, cons* &lPrefList);
+void clear_preference_list(agent* thisAgent, cons*& lPrefList);
 
-inline void preference_add_ref(preference* p)
-{
-    (p)->reference_count++;
+inline void preference_add_ref(preference* p) { (p)->reference_count++; }
+
+inline bool preference_remove_ref(agent* thisAgent, preference* p,
+                                  bool dont_cache = false) {
+  if ((p)->reference_count != 0) (p)->reference_count--;
+  if ((p)->reference_count == 0)
+    return possibly_deallocate_preference_and_clones(thisAgent, p, dont_cache);
+  return false;
 }
 
-inline bool preference_remove_ref(agent* thisAgent, preference* p, bool dont_cache = false)
-{
-    if ((p)->reference_count != 0) (p)->reference_count--;
-    if ((p)->reference_count == 0) return possibly_deallocate_preference_and_clones(thisAgent, p, dont_cache);
-    return false;
-}
+inline const char* preference_name(byte pNum) {
+  if (pNum == ACCEPTABLE_PREFERENCE_TYPE) return "acceptable";
+  if (pNum == REQUIRE_PREFERENCE_TYPE) return "require";
+  if (pNum == REJECT_PREFERENCE_TYPE) return "reject";
+  if (pNum == PROHIBIT_PREFERENCE_TYPE) return "prohibit";
+  if (pNum == RECONSIDER_PREFERENCE_TYPE) return "reconsider";
+  if (pNum == UNARY_INDIFFERENT_PREFERENCE_TYPE) return "unary indifferent";
+  if (pNum == UNARY_PARALLEL_PREFERENCE_TYPE) return "unary parallel";
+  if (pNum == BEST_PREFERENCE_TYPE) return "best";
+  if (pNum == WORST_PREFERENCE_TYPE) return "worst";
+  if (pNum == BINARY_INDIFFERENT_PREFERENCE_TYPE) return "binary indifferent";
+  if (pNum == BINARY_PARALLEL_PREFERENCE_TYPE) return "binary parallel";
+  if (pNum == BETTER_PREFERENCE_TYPE) return "better";
+  if (pNum == WORSE_PREFERENCE_TYPE) return "worse";
+  if (pNum == NUMERIC_INDIFFERENT_PREFERENCE_TYPE) return "numeric indifferent";
 
-inline const char* preference_name(byte pNum)
-{
-    if (pNum == ACCEPTABLE_PREFERENCE_TYPE) return "acceptable";
-    if (pNum == REQUIRE_PREFERENCE_TYPE) return "require";
-    if (pNum == REJECT_PREFERENCE_TYPE) return "reject";
-    if (pNum == PROHIBIT_PREFERENCE_TYPE) return "prohibit";
-    if (pNum == RECONSIDER_PREFERENCE_TYPE) return "reconsider";
-    if (pNum == UNARY_INDIFFERENT_PREFERENCE_TYPE) return "unary indifferent";
-    if (pNum == UNARY_PARALLEL_PREFERENCE_TYPE) return "unary parallel";
-    if (pNum == BEST_PREFERENCE_TYPE) return "best";
-    if (pNum == WORST_PREFERENCE_TYPE) return "worst";
-    if (pNum == BINARY_INDIFFERENT_PREFERENCE_TYPE) return "binary indifferent";
-    if (pNum == BINARY_PARALLEL_PREFERENCE_TYPE) return "binary parallel";
-    if (pNum == BETTER_PREFERENCE_TYPE) return "better";
-    if (pNum == WORSE_PREFERENCE_TYPE) return "worse";
-    if (pNum == NUMERIC_INDIFFERENT_PREFERENCE_TYPE) return "numeric indifferent";
-
-    return "illegal preference type";
+  return "illegal preference type";
 }
 
 #endif

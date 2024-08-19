@@ -1,14 +1,14 @@
 #ifndef PLATFORM_SPECIFIC
 #define PLATFORM_SPECIFIC
 
-#include <string>
 #include <float.h>
-#include <limits>
 #include <winsock2.h>
+
+#include <limits>
+#include <string>
 
 #undef min
 #undef max
-
 
 // socket
 #define SOCK SOCKET
@@ -20,8 +20,6 @@ void close_tcp_socket(SOCK sock);
 
 /* defined in C99 but not in MSVC */
 
-inline double nextafter(double x, double y) {
-	return _nextafter(x, y);
-}
+inline double nextafter(double x, double y) { return _nextafter(x, y); }
 
 #endif

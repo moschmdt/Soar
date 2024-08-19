@@ -5,13 +5,12 @@
 
 #include "FunctionalTestHarness.hpp"
 
-class BuiltinRHSTests : public FunctionalTestHarness
-{
-public:
-    TEST_CATEGORY(BuiltinRHSTests);
+class BuiltinRHSTests : public FunctionalTestHarness {
+ public:
+  TEST_CATEGORY(BuiltinRHSTests);
 
-    TEST(testString, -1)
-    void testString();
+  TEST(testString, -1)
+  void testString();
 };
 
 #endif /* BuiltinRHSTests_cpp */

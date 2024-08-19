@@ -13,9 +13,6 @@
 
 #include "sml_TagArg.h"
 
-using namespace sml ;
+using namespace sml;
 
-TagArg::TagArg()
-{
-    this->SetTagNameFast(sml_Names::kTagArg) ;
-}
+TagArg::TagArg() { this->SetTagNameFast(sml_Names::kTagArg); }

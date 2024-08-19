@@ -13,9 +13,6 @@
 
 #include "sml_TagWme.h"
 
-using namespace sml ;
+using namespace sml;
 
-TagWme::TagWme()
-{
-    this->SetTagNameFast(sml_Names::kTagWME) ;
-}
+TagWme::TagWme() { this->SetTagNameFast(sml_Names::kTagWME); }

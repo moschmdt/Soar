@@ -1,7 +1,7 @@
-/*************************************************************************
+/*
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
 /* ====================================================================
                             rhs_functions.h
@@ -31,44 +31,43 @@
 #ifndef RHS_FUNCTIONS_H
 #define RHS_FUNCTIONS_H
 
-#include "kernel.h"
-#include "Export.h"
-
 #include <map>
 #include <string>
 #include <vector>
 
-typedef Symbol* ((*rhs_function_routine)(agent* thisAgent, cons* args, void* user_data));
+#include "Export.h"
+#include "kernel.h"
+
+typedef Symbol*((*rhs_function_routine)(agent* thisAgent, cons* args,
+                                        void* user_data));
 
 typedef std::map<std::string, Symbol*> LinkMap;
-struct Link
-{
-	Symbol* from;
-	Symbol* attribute;
-	const char* linkTo;
+struct Link {
+  Symbol* from;
+  Symbol* attribute;
+  const char* linkTo;
 };
 typedef std::vector<Link> Links;
 
-typedef struct rhs_function_struct
-{
-    struct rhs_function_struct* next;
-    Symbol* name;
-    rhs_function_routine f;
-    int num_args_expected;     /* -1 means it can take any number of args */
-    bool can_be_rhs_value;
-    bool can_be_stand_alone_action;
-    bool literalize_arguments;
-    void* user_data;           /* Pointer to anything the user may want to pass into the function */
+typedef struct rhs_function_struct {
+  struct rhs_function_struct* next;
+  Symbol* name;
+  rhs_function_routine f;
+  int num_args_expected; /* -1 means it can take any number of args */
+  bool can_be_rhs_value;
+  bool can_be_stand_alone_action;
+  bool literalize_arguments;
+  void* user_data; /* Pointer to anything the user may want to pass into the
+                      function */
 } rhs_function;
 
-extern EXPORT void add_rhs_function(agent* thisAgent,
-                             Symbol* name,
-                             rhs_function_routine f,
-                             int num_args_expected,
-                             bool can_be_rhs_value,
-                             bool can_be_stand_alone_action,
-                             void* user_data,
-                             bool literalize_arguments = true);
+extern EXPORT void add_rhs_function(agent* thisAgent, Symbol* name,
+                                    rhs_function_routine f,
+                                    int num_args_expected,
+                                    bool can_be_rhs_value,
+                                    bool can_be_stand_alone_action,
+                                    void* user_data,
+                                    bool literalize_arguments = true);
 extern EXPORT void remove_rhs_function(agent* thisAgent, Symbol* name);
 extern EXPORT rhs_function* lookup_rhs_function(agent* thisAgent, Symbol* name);
 extern EXPORT void init_built_in_rhs_functions(agent* thisAgent);

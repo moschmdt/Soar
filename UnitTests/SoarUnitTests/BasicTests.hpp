@@ -11,16 +11,15 @@
 
 #include "FunctionalTestHarness.hpp"
 
-class BasicTests : public FunctionalTestHarness
-{
-public:
-	TEST_CATEGORY(BasicTests);
-	
-	TEST(testBasicElaborationAndMatch, -1)
-	void testBasicElaborationAndMatch();
-	
-	TEST(testInitialState, -1)
-	void testInitialState();
+class BasicTests : public FunctionalTestHarness {
+ public:
+  TEST_CATEGORY(BasicTests);
+
+  TEST(testBasicElaborationAndMatch, -1)
+  void testBasicElaborationAndMatch();
+
+  TEST(testInitialState, -1)
+  void testInitialState();
 };
 
 #endif /* BasicTests_cpp */

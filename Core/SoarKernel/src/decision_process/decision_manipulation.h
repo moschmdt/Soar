@@ -1,9 +1,9 @@
-/*************************************************************************
+/*
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/*
  *
  *  file:  decision_manipulation.h
  *
@@ -13,18 +13,17 @@
 #ifndef DECISION_MANIPULATION_H
 #define DECISION_MANIPULATION_H
 
-#include "kernel.h"
-
 #include <string>
+
+#include "kernel.h"
 
 //////////////////////////////////////////////////////////
 // select types
 //////////////////////////////////////////////////////////
 
-typedef struct select_info_struct
-{
-    bool select_enabled;
-    std::string select_operator;
+typedef struct select_info_struct {
+  bool select_enabled;
+  std::string select_operator;
 } select_info;
 
 //////////////////////////////////////////////////////////
@@ -41,7 +40,8 @@ void select_next_operator(agent* thisAgent, const char* operator_id);
 const char* select_get_operator(agent* thisAgent);
 
 // force selection, NULL on invalid selection choice
-preference* select_force(agent* thisAgent, preference* candidates, bool reinit = true);
+preference* select_force(agent* thisAgent, preference* candidates,
+                         bool reinit = true);
 
 //////////////////////////////////////////////////////////
 // predict functions
@@ -54,7 +54,8 @@ void predict_init(agent* thisAgent);
 void predict_srand_store_snapshot(agent* thisAgent);
 
 // restores a previously stored srand state, optionally clearing the old state
-void predict_srand_restore_snapshot(agent* thisAgent, bool clear_snapshot = true);
+void predict_srand_restore_snapshot(agent* thisAgent,
+                                    bool clear_snapshot = true);
 
 // sets the prediction
 void predict_set(agent* thisAgent, const char* prediction);
@@ -63,4 +64,3 @@ void predict_set(agent* thisAgent, const char* prediction);
 const char* predict_get(agent* thisAgent);
 
 #endif
-

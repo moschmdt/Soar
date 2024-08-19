@@ -10,46 +10,48 @@
 
 #include "TestCategory.hpp"
 
-TestRunner::TestRunner(TestCategory* c, std::function<void ()> f, std::condition_variable_any* v)
-: category(c), function(f), variable(v), kill(false), ready(false), done(false), failed(false)
-{
-    setCWDToEnv();
+TestRunner::TestRunner(TestCategory* c, std::function<void()> f,
+                       std::condition_variable_any* v)
+    : category(c),
+      function(f),
+      variable(v),
+      kill(false),
+      ready(false),
+      done(false),
+      failed(false) {
+  setCWDToEnv();
 }
 
-void TestRunner::run()
-{
-	std::mutex mutex;
-	std::unique_lock<std::mutex> lock(mutex);
-	variable->wait(lock, [this]{ return ready == true; });
+void TestRunner::run() {
+  std::mutex mutex;
+  std::unique_lock<std::mutex> lock(mutex);
+  variable->wait(lock, [this] { return ready == true; });
 
-	category->runner = this;
+  category->runner = this;
 
-	try
-	{
-		category->before();
-		function();
-		category->after(false);
-	}
-    catch (...)
-    {
-        std::exception_ptr e = std::current_exception();
+  try {
+    category->before();
+    function();
+    category->after(false);
+  } catch (...) {
+    std::exception_ptr e = std::current_exception();
 
-        failed = true;
+    failed = true;
 
-        try {
-            if (e) {
-                std::rethrow_exception(e);
-            }
-        } catch(const std::exception& e) {
-            failureMessage = e.what();
-        }
-
-        try
-        {
-            category->after(true);
-        } catch (...) {}
+    try {
+      if (e) {
+        std::rethrow_exception(e);
+      }
+    } catch (const std::exception& e) {
+      failureMessage = e.what();
     }
-	
-	done.store(true);
-	variable->notify_all();
+
+    try {
+      category->after(true);
+    } catch (...) {
+    }
+  }
+
+  done.store(true);
+  variable->notify_all();
 }

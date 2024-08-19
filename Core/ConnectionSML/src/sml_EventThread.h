@@ -21,22 +21,20 @@
 
 #include "thread_Thread.h"
 
-namespace sml
-{
+namespace sml {
 
 // Forward declarations
-    class Connection ;
-    
-    class EventThread : public soar_thread::Thread
-    {
-        protected:
-            Connection* m_pConnection ;
-            
-        public:
-            EventThread(Connection* pConnection) ;
-            void Run() ;
-    } ;
-    
-}
+class Connection;
+
+class EventThread : public soar_thread::Thread {
+ protected:
+  Connection* m_pConnection;
+
+ public:
+  EventThread(Connection* pConnection);
+  void Run();
+};
+
+}  // namespace sml
 
 #endif  // SML_EVENT_THREAD

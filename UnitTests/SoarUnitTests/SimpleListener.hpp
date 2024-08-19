@@ -5,24 +5,25 @@
 
 // Listen for remote commands and live
 // for "life" 10'ths of a second (e.g. 10 = live for 1 second)
-class SimpleListener
-{
-    public:
-        SimpleListener(int life);
+class SimpleListener {
+ public:
+  SimpleListener(int life);
 
-        int run(); // returns zero on success, nonzero failure
+  int run();  // returns zero on success, nonzero failure
 
-        static std::string MyClientMessageHandler(sml::smlRhsEventId id, void* pUserData, sml::Agent* pAgent, char const* pMessageType, char const* pMessage);
+  static std::string MyClientMessageHandler(sml::smlRhsEventId id,
+                                            void* pUserData, sml::Agent* pAgent,
+                                            char const* pMessageType,
+                                            char const* pMessage);
 
-    private:
-        int life;
+ private:
+  int life;
 
-        // Choose how to connect (usually use NewThread) but for
-        // testing currentThread can be helpful.
-        bool useCurrentThread;
+  // Choose how to connect (usually use NewThread) but for
+  // testing currentThread can be helpful.
+  bool useCurrentThread;
 
-        static bool shutdownMessageReceived;
+  static bool shutdownMessageReceived;
 };
 
-
-#endif // SIMPLE_LISTENER_H
+#endif  // SIMPLE_LISTENER_H

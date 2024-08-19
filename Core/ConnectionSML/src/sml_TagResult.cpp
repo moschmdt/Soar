@@ -13,13 +13,8 @@
 
 #include "sml_TagResult.h"
 
-using namespace sml ;
+using namespace sml;
 
-TagResult::TagResult(void)
-{
-    SetTagNameFast(sml_Names::kTagResult) ;
-}
+TagResult::TagResult(void) { SetTagNameFast(sml_Names::kTagResult); }
 
-TagResult::~TagResult(void)
-{
-}
+TagResult::~TagResult(void) {}

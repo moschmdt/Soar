@@ -64,7 +64,6 @@
 */
 #define STATE_DIFF_THRESH 0.001
 
-
 #define LASSO_LAMBDA 1e-8
 #define LASSO_TOL 1e-10
 #define LASSO_MAX_ITERS 50

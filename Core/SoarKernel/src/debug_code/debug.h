@@ -16,10 +16,10 @@
 
 #include "kernel.h"
 
-void debug_set_mode_info(trace_mode_info mode_info[num_trace_modes], bool pEnabled);
+void debug_set_mode_info(trace_mode_info mode_info[num_trace_modes],
+                         bool pEnabled);
 void initialize_debug_trace(trace_mode_info mode_info[num_trace_modes]);
 void debug_trace_set(int dt_num, bool pEnable);
 void debug_trace_on();
 void debug_trace_off();
 #endif
-

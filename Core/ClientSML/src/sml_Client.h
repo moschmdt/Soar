@@ -11,15 +11,15 @@
 #ifndef SML_CLIENT_SML_H
 #define SML_CLIENT_SML_H
 
-#include "sml_ClientKernel.h"
 #include "sml_ClientAgent.h"
-#include "sml_ClientStringElement.h"
-#include "sml_ClientIntElement.h"
+#include "sml_ClientAnalyzedXML.h"
+#include "sml_ClientEvents.h"
 #include "sml_ClientFloatElement.h"
 #include "sml_ClientIdentifier.h"
-#include "sml_ClientEvents.h"
-#include "sml_ClientXML.h"
+#include "sml_ClientIntElement.h"
+#include "sml_ClientKernel.h"
+#include "sml_ClientStringElement.h"
 #include "sml_ClientTraceXML.h"
-#include "sml_ClientAnalyzedXML.h"
+#include "sml_ClientXML.h"
 
-#endif //SML_CLIENT_SML_H
+#endif  // SML_CLIENT_SML_H

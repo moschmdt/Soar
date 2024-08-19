@@ -11,25 +11,22 @@
 // actually used to send data.
 //
 /////////////////////////////////////////////////////////////////
-#include "sock_ListenerSocket.h"
-#include "sml_Utils.h"
-#include "sock_OSspecific.h"
-#include "misc.h"
-
-#include <sstream>
 #include <stdio.h>
 
-using namespace sock ;
+#include <sstream>
+
+#include "misc.h"
+#include "sml_Utils.h"
+#include "sock_ListenerSocket.h"
+#include "sock_OSspecific.h"
+
+using namespace sock;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-ListenerSocket::~ListenerSocket()
-{
-
-}
-
+ListenerSocket::~ListenerSocket() {}
 
 /////////////////////////////////////////////////////////////////////
 // Function name  : ListenerSocket::CreateListener
@@ -41,148 +38,138 @@ ListenerSocket::~ListenerSocket()
 //                  on a specific port.
 //
 /////////////////////////////////////////////////////////////////////
-bool ListenerSocket::CreateListener(int port, bool local)
-{
-    CTDEBUG_ENTER_METHOD("ListenerSocket::CreateListener");
+bool ListenerSocket::CreateListener(int port, bool local) {
+  CTDEBUG_ENTER_METHOD("ListenerSocket::CreateListener");
 
-    // Should only call this once
-    if (m_hSocket)
-    {
-        sml::PrintDebug("Error: Already listening--closing the existing listener") ;
+  // Should only call this once
+  if (m_hSocket) {
+    sml::PrintDebug("Error: Already listening--closing the existing listener");
 
-        NET_CLOSESOCKET(m_hSocket) ;
-        m_hSocket = NO_CONNECTION ;
-    }
+    NET_CLOSESOCKET(m_hSocket);
+    m_hSocket = NO_CONNECTION;
+  }
 
-    SOCKET hListener = INVALID_SOCKET;
-    if (local)
-    {
+  SOCKET hListener = INVALID_SOCKET;
+  if (local) {
 #ifdef ENABLE_LOCAL_SOCKETS
-        hListener = socket(AF_UNIX, SOCK_STREAM, 0);
+    hListener = socket(AF_UNIX, SOCK_STREAM, 0);
 #endif
-    }
-    else
-    {
-        hListener = socket(AF_INET, SOCK_STREAM, 0) ;
-    }
+  } else {
+    hListener = socket(AF_INET, SOCK_STREAM, 0);
+  }
 
-    if (hListener == INVALID_SOCKET)
-    {
-        sml::PrintDebug("Error: Error creating the listener socket") ;
-        return false;
-    }
+  if (hListener == INVALID_SOCKET) {
+    sml::PrintDebug("Error: Error creating the listener socket");
+    return false;
+  }
 
-    // Record the listener socket so we'll clean
-    // up properly when the object is destroyed.
-    m_hSocket = hListener ;
+  // Record the listener socket so we'll clean
+  // up properly when the object is destroyed.
+  m_hSocket = hListener;
 
-    // Reuse the address for this socket
-    int reuse_addr = 1 ;
-    setsockopt(hListener, SOL_SOCKET, SO_REUSEADDR, (char*)&reuse_addr, sizeof(reuse_addr)) ;
+  // Reuse the address for this socket
+  int reuse_addr = 1;
+  setsockopt(hListener, SOL_SOCKET, SO_REUSEADDR, (char*)&reuse_addr,
+             sizeof(reuse_addr));
 
-    int res;
+  int res;
 
 #ifdef ENABLE_LOCAL_SOCKETS
-    if (local)
-    {
-        sockaddr_un local_address;
-        memset(&local_address, 0, sizeof(local_address));
-        local_address.sun_family = AF_UNIX;
-        if (port == -1)
-        {
-            // use PID
-            port = getpid();
-        }
-        SNPRINTF(local_address.sun_path, sizeof(local_address.sun_path), "%s%d", sock::GetLocalSocketDir().c_str(), port);
+  if (local) {
+    sockaddr_un local_address;
+    memset(&local_address, 0, sizeof(local_address));
+    local_address.sun_family = AF_UNIX;
+    if (port == -1) {
+      // use PID
+      port = getpid();
+    }
+    SNPRINTF(local_address.sun_path, sizeof(local_address.sun_path), "%s%d",
+             sock::GetLocalSocketDir().c_str(), port);
 
-        // set the name of the datasender
-        this->name = "file ";
-        this->name.append(local_address.sun_path);
+    // set the name of the datasender
+    this->name = "file ";
+    this->name.append(local_address.sun_path);
 
-        // BADBAD: should check to see if it's in use?
-        unlink(local_address.sun_path); // in case it already exists
+    // BADBAD: should check to see if it's in use?
+    unlink(local_address.sun_path);  // in case it already exists
 
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
 #endif
-        int len = SUN_LEN(&local_address);
+    int len = SUN_LEN(&local_address);
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
 
-        // create directory where socket file will live (if the directory already exists, this will fail, but we don't care)
-        res = mkdir(sock::GetLocalSocketDir().c_str(), 0700);
+    // create directory where socket file will live (if the directory already
+    // exists, this will fail, but we don't care)
+    res = mkdir(sock::GetLocalSocketDir().c_str(), 0700);
 
-        res = bind(hListener, (sockaddr*)&local_address, len) ;
+    res = bind(hListener, (sockaddr*)&local_address, len);
 
-        if (res != 0)
-        {
-            sml::PrintDebug("Error: Error binding the local listener socket to its file") ;
-            return false;
-        }
+    if (res != 0) {
+      sml::PrintDebug(
+          "Error: Error binding the local listener socket to its file");
+      return false;
     }
-    else
+  } else
 #endif
-    {
-        sockaddr_in address ;
-        memset(&address, 0, sizeof(address)) ;
-        address.sin_family = AF_INET ;  // Indicates the type of data in this structure
-        if (port == -1)
-        {
-            address.sin_port = 0;    // bind to any port
-        }
-        else
-        {
-            address.sin_port = htons(static_cast<unsigned short>(port)) ;
-        }
-        address.sin_addr.s_addr = htonl(INADDR_ANY) ;
-
-        // Bind the socket to the local port we're listening on
-        res = bind(hListener, (sockaddr*)&address, sizeof(address)) ;
-
-        if (res != 0)
-        {
-            sml::PrintDebug("Error: Error binding the listener socket to its port number") ;
-            return false;
-        }
-
-        if (port == -1)
-        {
-            memset(&address, 0, sizeof(address)) ;
-            socklen_t len = sizeof(address);
-            getsockname(m_hSocket, (sockaddr*)&address, &len);
-            port = ntohs(address.sin_port);
-        }
-
-        // set the name of the datasender
-        this->name = "port ";
-        std::string temp;
-        this->name.append(to_string(port, temp));
+  {
+    sockaddr_in address;
+    memset(&address, 0, sizeof(address));
+    address.sin_family =
+        AF_INET;  // Indicates the type of data in this structure
+    if (port == -1) {
+      address.sin_port = 0;  // bind to any port
+    } else {
+      address.sin_port = htons(static_cast<unsigned short>(port));
     }
+    address.sin_addr.s_addr = htonl(INADDR_ANY);
+
+    // Bind the socket to the local port we're listening on
+    res = bind(hListener, (sockaddr*)&address, sizeof(address));
+
+    if (res != 0) {
+      sml::PrintDebug(
+          "Error: Error binding the listener socket to its port number");
+      return false;
+    }
+
+    if (port == -1) {
+      memset(&address, 0, sizeof(address));
+      socklen_t len = sizeof(address);
+      getsockname(m_hSocket, (sockaddr*)&address, &len);
+      port = ntohs(address.sin_port);
+    }
+
+    // set the name of the datasender
+    this->name = "port ";
+    std::string temp;
+    this->name.append(to_string(port, temp));
+  }
 
 #ifdef NON_BLOCKING
-    bool ok = MakeSocketNonBlocking(hListener) ;
-    if (!ok)
-    {
-        sml::PrintDebug("Error: Error setting the listener socket to be non-blocking") ;
-        return false;
-    }
+  bool ok = MakeSocketNonBlocking(hListener);
+  if (!ok) {
+    sml::PrintDebug(
+        "Error: Error setting the listener socket to be non-blocking");
+    return false;
+  }
 #endif
 
-    const int kMaxBacklog = 10 ;
+  const int kMaxBacklog = 10;
 
-    // Listen for connections on this socket
-    res = listen(hListener, kMaxBacklog) ;
+  // Listen for connections on this socket
+  res = listen(hListener, kMaxBacklog);
 
-    if (res != 0)
-    {
-        sml::PrintDebug("Error: Error listening on the listener socket") ;
-        return false;
-    }
+  if (res != 0) {
+    sml::PrintDebug("Error: Error listening on the listener socket");
+    return false;
+  }
 
-    m_Port = port;
-    return true;
+  m_Port = port;
+  return true;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -197,35 +184,32 @@ bool ListenerSocket::CreateListener(int port, bool local)
 //                  NULL is returned if there is no new connection.
 //
 /////////////////////////////////////////////////////////////////////
-Socket* ListenerSocket::CheckForClientConnection()
-{
-    CTDEBUG_ENTER_METHOD("ListenerSocket::CheckForClientConnection");
+Socket* ListenerSocket::CheckForClientConnection() {
+  CTDEBUG_ENTER_METHOD("ListenerSocket::CheckForClientConnection");
 
-    // If this is a blocking socket make sure
-    // a connection is available before attempting to accept.
+  // If this is a blocking socket make sure
+  // a connection is available before attempting to accept.
 #ifndef NON_BLOCKING
-    if (!IsReadDataAvailable())
-    {
-        return NULL ;
-    }
+  if (!IsReadDataAvailable()) {
+    return NULL;
+  }
 #endif
 
-    //sml::PrintDebug("About to check for a connection") ;
-    SOCKET connectedSocket = accept(m_hSocket, NULL, NULL) ;
+  // sml::PrintDebug("About to check for a connection") ;
+  SOCKET connectedSocket = accept(m_hSocket, NULL, NULL);
 
-    // If we failed to find a valid socket we're done.
-    if (connectedSocket == INVALID_SOCKET)
-    {
-        return NULL ;
-    }
+  // If we failed to find a valid socket we're done.
+  if (connectedSocket == INVALID_SOCKET) {
+    return NULL;
+  }
 
-    //sml::PrintDebug("Received a connection") ;
+  // sml::PrintDebug("Received a connection") ;
 
-    // Create a generic CTSocket because once the connection has been
-    // made all sockets are both servers and clients.  No need to distinguish.
-    Socket* pConnection = new Socket(connectedSocket) ;
+  // Create a generic CTSocket because once the connection has been
+  // made all sockets are both servers and clients.  No need to distinguish.
+  Socket* pConnection = new Socket(connectedSocket);
 
-    pConnection->name = this->name;
+  pConnection->name = this->name;
 
-    return pConnection ;
+  return pConnection;
 }

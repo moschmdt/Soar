@@ -13,31 +13,26 @@
 #define SML_TAG_ERROR_H
 
 #include "ElementXML.h"
-#include "sml_Names.h"
 #include "misc.h"
+#include "sml_Names.h"
 
-namespace sml
-{
+namespace sml {
 
-    class TagError : public soarxml::ElementXML
-    {
-        public:
-            TagError(void);
-            ~TagError(void);
-            
-            void SetDescription(char const* pErrorMsg)
-            {
-                this->SetCharacterData(pErrorMsg) ;
-            }
-            
-            void SetErrorCode(int error)
-            {
-                char buf[TO_C_STRING_BUFSIZE];
-                this->AddAttributeFast(sml_Names::kErrorCode, to_c_string(error, buf)) ;
-            }
-            
-    };
-    
-}
+class TagError : public soarxml::ElementXML {
+ public:
+  TagError(void);
+  ~TagError(void);
+
+  void SetDescription(char const* pErrorMsg) {
+    this->SetCharacterData(pErrorMsg);
+  }
+
+  void SetErrorCode(int error) {
+    char buf[TO_C_STRING_BUFSIZE];
+    this->AddAttributeFast(sml_Names::kErrorCode, to_c_string(error, buf));
+  }
+};
+
+}  // namespace sml
 
 #endif  // SML_TAG_ERROR_H

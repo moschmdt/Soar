@@ -8,11 +8,10 @@
 
 #include <iostream>
 
-class serializable
-{
-    public:
-        virtual void serialize(std::ostream& os) const = 0;
-        virtual void unserialize(std::istream& is) = 0;
+class serializable {
+ public:
+  virtual void serialize(std::ostream& os) const = 0;
+  virtual void unserialize(std::istream& is) = 0;
 };
 
 #endif

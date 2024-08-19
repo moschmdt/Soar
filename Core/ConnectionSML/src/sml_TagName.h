@@ -15,20 +15,15 @@
 #include "ElementXML.h"
 #include "sml_Names.h"
 
-namespace sml
-{
+namespace sml {
 
-    class TagName : public soarxml::ElementXML
-    {
-        public:
-            TagName() ;
-            
-            void SetName(char const* pName)
-            {
-                this->SetCharacterData(pName) ;
-            }
-    } ;
-    
-}
+class TagName : public soarxml::ElementXML {
+ public:
+  TagName();
+
+  void SetName(char const* pName) { this->SetCharacterData(pName); }
+};
+
+}  // namespace sml
 
 #endif  // SML_TAG_NAME_H

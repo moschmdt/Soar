@@ -1,6 +1,7 @@
 #ifndef PLATFORM_SPECIFIC
 #define PLATFORM_SPECIFIC
 #include <math.h>
+
 #include <string>
 
 // socket

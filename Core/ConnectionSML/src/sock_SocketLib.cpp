@@ -11,21 +11,15 @@
 //
 /////////////////////////////////////////////////////////////////
 
-#include "sock_SocketLib.h"
 #include "sock_OSspecific.h"
+#include "sock_SocketLib.h"
 
-using namespace sock ;
+using namespace sock;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-SocketLib::SocketLib()
-{
-    InitializeOperatingSystemSocketLibrary() ;
-}
+SocketLib::SocketLib() { InitializeOperatingSystemSocketLibrary(); }
 
-SocketLib::~SocketLib()
-{
-    TerminateOperatingSystemSocketLibrary() ;
-}
+SocketLib::~SocketLib() { TerminateOperatingSystemSocketLibrary(); }

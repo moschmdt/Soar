@@ -10,17 +10,13 @@
 //
 /////////////////////////////////////////////////////////////////
 
-#include "sml_TagFilter.h"
 #include "sml_Names.h"
+#include "sml_TagFilter.h"
 
-using namespace sml ;
+using namespace sml;
 
-TagFilter::TagFilter()
-{
-    this->SetTagNameFast(sml_Names::kTagFilter) ;
-}
+TagFilter::TagFilter() { this->SetTagNameFast(sml_Names::kTagFilter); }
 
-void TagFilter::SetCommand(char const* pCommandLine)
-{
-    this->AddAttributeFast(sml_Names::kFilterCommand, pCommandLine) ;
+void TagFilter::SetCommand(char const* pCommandLine) {
+  this->AddAttributeFast(sml_Names::kFilterCommand, pCommandLine);
 }

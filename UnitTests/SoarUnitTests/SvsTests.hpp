@@ -9,51 +9,48 @@
 #ifndef SvsTests_cpp
 #define SvsTests_cpp
 
-#include "portability.h"
-
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
-
-#include "sml_Connection.h"
-#include "sml_Client.h"
-#include "sml_Utils.h"
-#include "thread_Event.h"
-#include "sml_Names.h"
 
 #include "FunctionalTestHarness.hpp"
+#include "portability.h"
+#include "sml_Client.h"
+#include "sml_Connection.h"
+#include "sml_Names.h"
+#include "sml_Utils.h"
+#include "thread_Event.h"
 
-class SvsTests : public FunctionalTestHarness
-{
-private:
-    sml::Agent* agent;
-    sml::Kernel* kernel;
+class SvsTests : public FunctionalTestHarness {
+ private:
+  sml::Agent* agent;
+  sml::Kernel* kernel;
 
-public:
-    TEST_CATEGORY(SvsTests);
-    void before() { setUp(); }
-    void setUp();
+ public:
+  TEST_CATEGORY(SvsTests);
+  void before() { setUp(); }
+  void setUp();
 
-	void after(bool caught) { tearDown(caught); }
-	void tearDown(bool caught);
+  void after(bool caught) { tearDown(caught); }
+  void tearDown(bool caught);
 
-    TEST(testEnableFromTopState, -1);
-    void testEnableFromTopState();
+  TEST(testEnableFromTopState, -1);
+  void testEnableFromTopState();
 
-    TEST(testEnableAndDisableInSubstatesFromTopState, -1);
-    void testEnableAndDisableInSubstatesFromTopState();
+  TEST(testEnableAndDisableInSubstatesFromTopState, -1);
+  void testEnableAndDisableInSubstatesFromTopState();
 
-    TEST(testCannotDisableInSubstate, -1);
-    void testCannotDisableInSubstate();
+  TEST(testCannotDisableInSubstate, -1);
+  void testCannotDisableInSubstate();
 
-    TEST(testEnableFromSubstate, -1);
-    void testEnableFromSubstate();
+  TEST(testEnableFromSubstate, -1);
+  void testEnableFromSubstate();
 
-    TEST(testEnableInSubstatesFromSubstate, -1);
-    void testEnableInSubstatesFromSubstate();
+  TEST(testEnableInSubstatesFromSubstate, -1);
+  void testEnableInSubstatesFromSubstate();
 
-    TEST(testSubstateWhenDisabledInSubstates, -1);
-    void testSubstateWhenDisabledInSubstates();
+  TEST(testSubstateWhenDisabledInSubstates, -1);
+  void testSubstateWhenDisabledInSubstates();
 };
 
 #endif /* SvsTests_cpp */

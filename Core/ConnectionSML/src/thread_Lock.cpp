@@ -23,29 +23,14 @@
 #include "thread_Lock.h"
 #include "thread_OSspecific.h"
 
-using namespace soar_thread ;
+using namespace soar_thread;
 
-Mutex::Mutex()
-{
-    m_Imp = MakeMutex() ;
-}
+Mutex::Mutex() { m_Imp = MakeMutex(); }
 
-Mutex::~Mutex()
-{
-    delete m_Imp ;
-}
+Mutex::~Mutex() { delete m_Imp; }
 
-void Mutex::Lock()
-{
-    m_Imp->Lock() ;
-}
+void Mutex::Lock() { m_Imp->Lock(); }
 
-void Mutex::Unlock()
-{
-    m_Imp->Unlock() ;
-}
+void Mutex::Unlock() { m_Imp->Unlock(); }
 
-bool Mutex::TryToLock()
-{
-    return m_Imp->TryToLock() ;
-}
+bool Mutex::TryToLock() { return m_Imp->TryToLock(); }

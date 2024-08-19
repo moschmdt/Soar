@@ -13,13 +13,8 @@
 
 #include "sml_TagError.h"
 
-using namespace sml ;
+using namespace sml;
 
-TagError::TagError(void)
-{
-    SetTagNameFast(sml_Names::kTagError) ;
-}
+TagError::TagError(void) { SetTagNameFast(sml_Names::kTagError); }
 
-TagError::~TagError(void)
-{
-}
+TagError::~TagError(void) {}

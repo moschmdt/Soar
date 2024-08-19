@@ -26,125 +26,126 @@
  *    if object a moves
  ****************************************************************/
 
-#include <iostream>
 #include <cassert>
-#include <string>
+#include <iostream>
 #include <map>
+#include <string>
+
 #include "filter.h"
+#include "filter_table.h"
+#include "scene.h"
 #include "sgnode.h"
 #include "sgnode_algs.h"
-#include "scene.h"
-#include "filter_table.h"
 
-typedef std::map<const filter_params*, sgnode*> element_map;
-
+typedef std::map<const filter_params *, sgnode *> element_map;
 
 class occlusion_filter : public typed_filter<double> {
-public:
-	occlusion_filter(Symbol *root, soar_interface *si, scene* scn, filter_input *input)
-	: typed_filter<double>(root, si, input), a(0), eye(0), scn(scn)
-	{}
+ public:
+  occlusion_filter(Symbol *root, soar_interface *si, scene *scn,
+                   filter_input *input)
+      : typed_filter<double>(root, si, input), a(0), eye(0), scn(scn) {}
 
-	~occlusion_filter(){
-		for(std::vector<view_line>::iterator i = view_lines.begin(); i != view_lines.end(); i++){
-			delete i->first;
-		}
-	}
+  ~occlusion_filter() {
+    for (std::vector<view_line>::iterator i = view_lines.begin();
+         i != view_lines.end(); i++) {
+      delete i->first;
+    }
+  }
 
-private:
-	// Gets the eye and target (a) nodes
-	bool initialize(const filter_params* params){
-		if(!get_filter_param(this, params, "a", a)){
-			set_status("expecting parameter a");
-			return false;
-		}
-		if(!get_filter_param(this, params, "eye", eye)){
-			eye = scn->get_node("eye");
-			if(eye == NULL){
-				set_status("expecting parameter eye");
-				return false;
-			}
-		}
-		calc_view_lines(a, eye, view_lines);
-		return true;
-	}
+ private:
+  // Gets the eye and target (a) nodes
+  bool initialize(const filter_params *params) {
+    if (!get_filter_param(this, params, "a", a)) {
+      set_status("expecting parameter a");
+      return false;
+    }
+    if (!get_filter_param(this, params, "eye", eye)) {
+      eye = scn->get_node("eye");
+      if (eye == NULL) {
+        set_status("expecting parameter eye");
+        return false;
+      }
+    }
+    calc_view_lines(a, eye, view_lines);
+    return true;
+  }
 
-	virtual bool update_outputs()
-	{
-		const filter_input* input = filter::get_input();
-		const filter_params* params;
+  virtual bool update_outputs() {
+    const filter_input *input = filter::get_input();
+    const filter_params *params;
 
-		bool changed = false;
+    bool changed = false;
 
-		// Added inputs
-		for (int i = input->first_added(); i < input->num_current(); ++i)
-		{
-			params = input->get_current(i);
-			if(!initialize(params)){
-				return false;
-			}
-			sgnode* b;
-			if(!get_filter_param(this, params, "b", b)){
-				set_status("expecting parameter b");
-				return false;
-			}
-			nodes[params] = b;
-			changed = true;
-		}
+    // Added inputs
+    for (int i = input->first_added(); i < input->num_current(); ++i) {
+      params = input->get_current(i);
+      if (!initialize(params)) {
+        return false;
+      }
+      sgnode *b;
+      if (!get_filter_param(this, params, "b", b)) {
+        set_status("expecting parameter b");
+        return false;
+      }
+      nodes[params] = b;
+      changed = true;
+    }
 
-		// Changed inputs
-		for (int i = 0; i < input->num_changed(); ++i)
-		{
-			params = input->get_changed(i);
-			sgnode* b;
-			if(!get_filter_param(this, params, "b", b)){
-				set_status("Error getting parameter b");
-				return false;
-			}
-			nodes[params] = b;
-			changed = true;
-		}
+    // Changed inputs
+    for (int i = 0; i < input->num_changed(); ++i) {
+      params = input->get_changed(i);
+      sgnode *b;
+      if (!get_filter_param(this, params, "b", b)) {
+        set_status("Error getting parameter b");
+        return false;
+      }
+      nodes[params] = b;
+      changed = true;
+    }
 
-		// Removed inputs
-		for (int i = 0; i < input->num_removed(); ++i)
-		{
-			params = input->get_removed(i);
-			nodes.erase(params);
-			changed = true;
-		}
+    // Removed inputs
+    for (int i = 0; i < input->num_removed(); ++i) {
+      params = input->get_removed(i);
+      nodes.erase(params);
+      changed = true;
+    }
 
-		if(changed){
-			std::vector<const sgnode*> occluders;
-			for(element_map::const_iterator i = nodes.begin(); i != nodes.end(); i++){
-				occluders.push_back(i->second);
-			}
-			double res = convex_occlusion(view_lines, occluders);
-			set_output(NULL, res);
-		}
+    if (changed) {
+      std::vector<const sgnode *> occluders;
+      for (element_map::const_iterator i = nodes.begin(); i != nodes.end();
+           i++) {
+        occluders.push_back(i->second);
+      }
+      double res = convex_occlusion(view_lines, occluders);
+      set_output(NULL, res);
+    }
 
-		return true;
-	}
+    return true;
+  }
 
-	scene* scn;
+  scene *scn;
 
-	sgnode* a;
-	sgnode* eye;
-	std::vector<view_line> view_lines; // Set of lines from eye to vertices of a
-	element_map nodes;  // Set of nodes to check as occluders
+  sgnode *a;
+  sgnode *eye;
+  std::vector<view_line> view_lines;  // Set of lines from eye to vertices of a
+  element_map nodes;                  // Set of nodes to check as occluders
 };
 
-filter *make_occlusion_filter(Symbol *root, soar_interface *si, scene *scn, filter_input *input) {
-	return new occlusion_filter(root, si, scn, input);
+filter *make_occlusion_filter(Symbol *root, soar_interface *si, scene *scn,
+                              filter_input *input) {
+  return new occlusion_filter(root, si, scn, input);
 }
 
 filter_table_entry *occlusion_filter_entry() {
-	filter_table_entry *e = new filter_table_entry;
-	e->name = "occlusion";
-	e->description = "Returns rough percentage of a occluded by nodes in set b from viewpoint of eye";
-	e->parameters["a"] = "Node to check the occlusion for";
-	e->parameters["b"] = "Set of nodes to check as occluders";
-	e->parameters["eye"] = "Node to act as the viewpoint to check for occlusion from";
-	e->create = &make_occlusion_filter;
-	return e;
+  filter_table_entry *e = new filter_table_entry;
+  e->name = "occlusion";
+  e->description =
+      "Returns rough percentage of a occluded by nodes in set b from viewpoint "
+      "of eye";
+  e->parameters["a"] = "Node to check the occlusion for";
+  e->parameters["b"] = "Set of nodes to check as occluders";
+  e->parameters["eye"] =
+      "Node to act as the viewpoint to check for occlusion from";
+  e->create = &make_occlusion_filter;
+  return e;
 }
-

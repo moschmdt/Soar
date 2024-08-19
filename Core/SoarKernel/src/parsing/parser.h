@@ -1,7 +1,7 @@
-/*************************************************************************
+/*
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
 /* ======================================================================
                               parser.h
@@ -22,10 +22,12 @@
 
 #include "kernel.h"
 
-void        init_parser(void);
-production* parse_production(agent* thisAgent, const char* prod_string, unsigned char* rete_addition_result);
-condition*  parse_lhs(agent* thisAgent, soar::Lexer* lexer);
-bool        parse_rhs(agent* thisAgent, soar::Lexer* lexer, action **dest_rhs);
-Symbol*     make_symbol_for_lexeme (agent* thisAgent, soar::Lexeme* lexeme, bool allow_lti);
+void init_parser(void);
+production* parse_production(agent* thisAgent, const char* prod_string,
+                             unsigned char* rete_addition_result);
+condition* parse_lhs(agent* thisAgent, soar::Lexer* lexer);
+bool parse_rhs(agent* thisAgent, soar::Lexer* lexer, action** dest_rhs);
+Symbol* make_symbol_for_lexeme(agent* thisAgent, soar::Lexeme* lexeme,
+                               bool allow_lti);
 
 #endif

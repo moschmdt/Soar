@@ -14,17 +14,14 @@
 #ifndef CT_SOCKET_LIB_H
 #define CT_SOCKET_LIB_H
 
-namespace sock
-{
+namespace sock {
 
-    class SocketLib
-    {
-        public:
-            SocketLib();
-            virtual ~SocketLib();
-    };
-    
-} // Namespace
+class SocketLib {
+ public:
+  SocketLib();
+  virtual ~SocketLib();
+};
 
-#endif // CT_SOCKET_LIB_H
+}  // namespace sock
 
+#endif  // CT_SOCKET_LIB_H

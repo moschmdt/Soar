@@ -10,7 +10,4 @@
 
 #include <iostream>
 
-void ExampleTests::testWaterJug()
-{
-	runTest("testWaterJug", -1);
-}
+void ExampleTests::testWaterJug() { runTest("testWaterJug", -1); }

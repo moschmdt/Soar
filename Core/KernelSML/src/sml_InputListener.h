@@ -12,44 +12,39 @@
 #ifndef INPUT_LISTENER_H
 #define INPUT_LISTENER_H
 
-#include "sml_KernelCallback.h"
-
 #include <map>
 
-namespace sml
-{
+#include "sml_KernelCallback.h"
 
-    class KernelSML ;
-    
-    class InputListener : public KernelCallback
-    {
-        protected:
-            KernelSML*      m_KernelSML ;
-            
-            void ProcessPendingInput(AgentSML* pAgentSML, int callbacktype) ;
-            
-        public:
-            InputListener()
-            {
-                m_KernelSML = 0 ;
-            }
-            
-            virtual ~InputListener()
-            {
-            }
-            
-            void Init(KernelSML* pKernelSML, AgentSML* pAgentSML);
-            
-            // Called when an event occurs in the kernel
-            virtual void OnKernelEvent(int eventID, AgentSML* pAgentSML, void* pCallData) ;
-            
-            // Register for the events that KernelSML itself needs to know about in order to work correctly.
-            void RegisterForKernelSMLEvents() ;
-            
-            // UnRegister for the events that KernelSML itself needs to know about in order to work correctly.
-            void UnRegisterForKernelSMLEvents() ;
-    } ;
-    
-}
+namespace sml {
+
+class KernelSML;
+
+class InputListener : public KernelCallback {
+ protected:
+  KernelSML* m_KernelSML;
+
+  void ProcessPendingInput(AgentSML* pAgentSML, int callbacktype);
+
+ public:
+  InputListener() { m_KernelSML = 0; }
+
+  virtual ~InputListener() {}
+
+  void Init(KernelSML* pKernelSML, AgentSML* pAgentSML);
+
+  // Called when an event occurs in the kernel
+  virtual void OnKernelEvent(int eventID, AgentSML* pAgentSML, void* pCallData);
+
+  // Register for the events that KernelSML itself needs to know about in order
+  // to work correctly.
+  void RegisterForKernelSMLEvents();
+
+  // UnRegister for the events that KernelSML itself needs to know about in
+  // order to work correctly.
+  void UnRegisterForKernelSMLEvents();
+};
+
+}  // namespace sml
 
 #endif

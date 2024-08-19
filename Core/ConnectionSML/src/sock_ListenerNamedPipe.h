@@ -16,24 +16,22 @@
 
 #include "sock_NamedPipe.h"
 
-namespace sock
-{
+namespace sock {
 
-    class ListenerNamedPipe : public NamedPipe
-    {
-        public:
-            ListenerNamedPipe();
-            virtual ~ListenerNamedPipe();
-            
-            // Creates a listener socket -- used by the server to create connections
-            bool    CreateListener(int port) ;
-            
-            // Check for an incoming client connection
-            // This call does not block.  If there is no pending connection it returns NULL immediately.
-            NamedPipe* CheckForClientConnection() ;
-    };
-    
-} // Namespace
+class ListenerNamedPipe : public NamedPipe {
+ public:
+  ListenerNamedPipe();
+  virtual ~ListenerNamedPipe();
 
-#endif // LISTENER_NAMED_PIPE_H
+  // Creates a listener socket -- used by the server to create connections
+  bool CreateListener(int port);
 
+  // Check for an incoming client connection
+  // This call does not block.  If there is no pending connection it returns
+  // NULL immediately.
+  NamedPipe* CheckForClientConnection();
+};
+
+}  // namespace sock
+
+#endif  // LISTENER_NAMED_PIPE_H

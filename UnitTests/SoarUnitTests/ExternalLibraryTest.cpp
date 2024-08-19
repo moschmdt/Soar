@@ -5,30 +5,32 @@
 
 bool success = false;
 
-void PrintCallbackHandler(sml::smlPrintEventId, void*, sml::Agent*, char const* pMessage)
-{
-    // std::cout << "Print handler called with message: " << pMessage << std::endl;
-    if (std::string(pMessage) == "myLibTest")
-    {
-        success = true;
-    }
+void PrintCallbackHandler(sml::smlPrintEventId, void*, sml::Agent*,
+                          char const* pMessage) {
+  // std::cout << "Print handler called with message: " << pMessage <<
+  // std::endl;
+  if (std::string(pMessage) == "myLibTest") {
+    success = true;
+  }
 }
 
-void ExternalLibraryTest::testLoadLibrary()
-{
-    // won't see the output from the library unless we turn on agent-writes
-    agent->ExecuteCommandLine("output agent-writes on");
-    // External library registers a single RHS function that returns "myRHSTest"; exec the
-    // RHS and check the returned string. If it's correct, then the lib was indeed loaded.
-    const std::string loadResult = kernel->LoadExternalLibrary("TestExternalLibraryLib");
-    assertTrue_msg(loadResult, loadResult.empty());
+void ExternalLibraryTest::testLoadLibrary() {
+  // won't see the output from the library unless we turn on agent-writes
+  agent->ExecuteCommandLine("output agent-writes on");
+  // External library registers a single RHS function that returns "myRHSTest";
+  // exec the RHS and check the returned string. If it's correct, then the lib
+  // was indeed loaded.
+  const std::string loadResult =
+      kernel->LoadExternalLibrary("TestExternalLibraryLib");
+  assertTrue_msg(loadResult, loadResult.empty());
 
-    agent->RegisterForPrintEvent(sml::smlEVENT_PRINT, PrintCallbackHandler, 0);
-    std::string spMessage = agent->ExecuteCommandLine("sp {test (state <s> ^superstate nil) --> (write (exec test))}");
-    assertTrue_msg(spMessage, agent->GetLastCommandLineResult());
+  agent->RegisterForPrintEvent(sml::smlEVENT_PRINT, PrintCallbackHandler, 0);
+  std::string spMessage = agent->ExecuteCommandLine(
+      "sp {test (state <s> ^superstate nil) --> (write (exec test))}");
+  assertTrue_msg(spMessage, agent->GetLastCommandLineResult());
 
-    kernel->RunAllAgents(1);
-    assertTrue_msg("Library RHS function did not fire", success);
+  kernel->RunAllAgents(1);
+  assertTrue_msg("Library RHS function did not fire", success);
 
-	// SoarHelper::init_check_to_find_refcount_leaks(agent);
+  // SoarHelper::init_check_to_find_refcount_leaks(agent);
 }

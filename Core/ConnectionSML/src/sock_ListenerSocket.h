@@ -14,33 +14,29 @@
 
 #include "sock_Socket.h"
 
-namespace sock
-{
+namespace sock {
 
-    class ListenerSocket : public Socket
-    {
-        public:
-            ListenerSocket() : m_Port(0) {}
-            virtual ~ListenerSocket();
-            
-            // Creates a listener socket -- used by the server to create connections
-            // Pass -1 to listen on any port, -1 and local = true to listen on pid-named local socket
-            bool CreateListener(int port, bool local = false);
-            
-            // Check for an incoming client connection
-            // This call does not block.  If there is no pending connection it returns NULL immediately.
-            Socket* CheckForClientConnection() ;
-            
-            int GetPort()
-            {
-                return m_Port;
-            }
-            
-        private:
-            int m_Port;
-    };
-    
-} // Namespace
+class ListenerSocket : public Socket {
+ public:
+  ListenerSocket() : m_Port(0) {}
+  virtual ~ListenerSocket();
 
-#endif // CT_LISTENER_SOCKET_H
+  // Creates a listener socket -- used by the server to create connections
+  // Pass -1 to listen on any port, -1 and local = true to listen on pid-named
+  // local socket
+  bool CreateListener(int port, bool local = false);
 
+  // Check for an incoming client connection
+  // This call does not block.  If there is no pending connection it returns
+  // NULL immediately.
+  Socket* CheckForClientConnection();
+
+  int GetPort() { return m_Port; }
+
+ private:
+  int m_Port;
+};
+
+}  // namespace sock
+
+#endif  // CT_LISTENER_SOCKET_H

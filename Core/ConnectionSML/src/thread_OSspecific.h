@@ -16,33 +16,30 @@ namespace soar_thread {
 // Methods for starting a thread
 typedef void (*ThreadFuncPtr)(void*);
 
-void BeginThread(ThreadFuncPtr inThreadFuncPtr,void* inParam) ;
+void BeginThread(ThreadFuncPtr inThreadFuncPtr, void* inParam);
 
 // Methods for creating a mutex
-class OSSpecificMutex
-{
-public:
-	virtual ~OSSpecificMutex() {} ;
-	virtual void Lock() = 0 ;
-	virtual void Unlock() = 0 ;
-	virtual bool TryToLock() = 0 ;
-} ;
+class OSSpecificMutex {
+ public:
+  virtual ~OSSpecificMutex(){};
+  virtual void Lock() = 0;
+  virtual void Unlock() = 0;
+  virtual bool TryToLock() = 0;
+};
 
-OSSpecificMutex* MakeMutex() ;
+OSSpecificMutex* MakeMutex();
 
 // Methods for creating an event
-class OSSpecificEvent
-{
-public:
-	virtual ~OSSpecificEvent() {} ;
-	virtual void WaitForEventForever() = 0 ;
-	virtual bool WaitForEvent(int seconds, int milliseconds) = 0 ;
-	virtual void TriggerEvent() = 0 ;
-} ;
+class OSSpecificEvent {
+ public:
+  virtual ~OSSpecificEvent(){};
+  virtual void WaitForEventForever() = 0;
+  virtual bool WaitForEvent(int seconds, int milliseconds) = 0;
+  virtual void TriggerEvent() = 0;
+};
 
-OSSpecificEvent* MakeEvent() ;
+OSSpecificEvent* MakeEvent();
 
-} // Namespace
+}  // namespace soar_thread
 
-
-#endif // THREAD_OS_SPECIFIC_H
+#endif  // THREAD_OS_SPECIFIC_H

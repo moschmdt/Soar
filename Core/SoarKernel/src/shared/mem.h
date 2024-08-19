@@ -1,24 +1,22 @@
-/*************************************************************************
+/*
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
-
+ */
 
 #ifndef MEM_H
 #define MEM_H
 
+#include <stdio.h>   // Needed for FILE token below
+#include <string.h>  // Needed for strlen, etc. below
+
 #include "kernel.h"
 
-#include <stdio.h>  // Needed for FILE token below
-#include <string.h>     // Needed for strlen, etc. below
-
 #ifndef _WIN32
+#include <stdlib.h>  // malloc
 #include <strings.h>
-#include <stdlib.h> // malloc
-#endif // !_WIN32
+#endif  // !_WIN32
 
 extern void init_memory_utilities(agent* thisAgent);
-
 
 /* ---------------- */
 /* string utilities */
@@ -27,54 +25,44 @@ extern void init_memory_utilities(agent* thisAgent);
 extern char* make_memory_block_for_string(agent* thisAgent, char const* s);
 extern void free_memory_block_for_string(agent* thisAgent, char* p);
 
-
 typedef void* growable_string;
 
-// voigtjr 11/2005: platform specific code (strlen/malloc/etc) should be in .cpp files!
-// except it can't be (?) because of the inline restriction
-inline char* savestring(char* x)
-{
-    return strcpy(static_cast<char*>(malloc(strlen(x) + 1)), (x));
+// voigtjr 11/2005: platform specific code (strlen/malloc/etc) should be in .cpp
+// files! except it can't be (?) because of the inline restriction
+inline char* savestring(char* x) {
+  return strcpy(static_cast<char*>(malloc(strlen(x) + 1)), (x));
 }
 
-inline int& memsize_of_growable_string(growable_string gs)
-{
-    return (*((int*)(gs)));
+inline int& memsize_of_growable_string(growable_string gs) {
+  return (*((int*)(gs)));
 }
 
-inline int& length_of_growable_string(growable_string gs)
-{
-    return (*(((int*)(gs)) + 1));
+inline int& length_of_growable_string(growable_string gs) {
+  return (*(((int*)(gs)) + 1));
 }
 
-inline char* text_of_growable_string(growable_string gs)
-{
-    return (((char*)(gs)) + 2 * sizeof(int*));
+inline char* text_of_growable_string(growable_string gs) {
+  return (((char*)(gs)) + 2 * sizeof(int*));
 }
 
 extern growable_string make_blank_growable_string(agent* thisAgent);
-extern void add_to_growable_string(agent* thisAgent, growable_string* gs, const char* string_to_add);
+extern void add_to_growable_string(agent* thisAgent, growable_string* gs,
+                                   const char* string_to_add);
 extern void free_growable_string(agent* thisAgent, growable_string gs);
-
-
-
-
 
 /* ------------------------- */
 /* Cons cell, list utilities */
 /* ------------------------- */
 
-typedef struct cons_struct
-{
-    void* first;
-    struct cons_struct* rest;
+typedef struct cons_struct {
+  void* first;
+  struct cons_struct* rest;
 } cons;
 
-typedef struct dl_cons_struct
-{
-    void* item;
-    struct dl_cons_struct* next;
-    struct dl_cons_struct* prev;
+typedef struct dl_cons_struct {
+  void* item;
+  struct dl_cons_struct* next;
+  struct dl_cons_struct* prev;
 } dl_cons;
 
 typedef dl_cons dl_list;
@@ -87,21 +75,25 @@ extern void free_list(agent* thisAgent, cons* the_list);
 /* Added a void* parameter to cons_test_fn, because remove_pwatch_test_fn(),
    one of the callback functions, requires a third parameter that points to a
    production. In the future, other callback functions of type cons_test_fn may
-   need parameters of different types, so a void pointer is best. -AJC (8/7/02) */
+   need parameters of different types, so a void pointer is best. -AJC (8/7/02)
+ */
 /* Added thisAgent to cons_test_fn type, because we are eliminating the
    global soar_agent. -AJC (8/7/02) */
-//typedef bool (*cons_test_fn)(cons *c);
+// typedef bool (*cons_test_fn)(cons *c);
 typedef bool (*cons_test_fn)(agent* thisAgent, cons* c, void* data);
 
 typedef bool (*dl_cons_test_fn)(dl_cons* dc, agent* thisAgent);
 
-/* Added a void* parameter to extract_list_elements, because remove_pwatch_test_fn(),
-   one of the callback functions, requires a third parameter that points to a
-   production. In the future, other callback functions of type cons_test_fn may
-   need parameters of different types, so a void pointer is best. -AJC (8/7/02) */
-extern cons* extract_list_elements(agent* thisAgent, cons** header, cons_test_fn f, void* data = 0);
+/* Added a void* parameter to extract_list_elements, because
+   remove_pwatch_test_fn(), one of the callback functions, requires a third
+   parameter that points to a production. In the future, other callback
+   functions of type cons_test_fn may need parameters of different types, so a
+   void pointer is best. -AJC (8/7/02) */
+extern cons* extract_list_elements(agent* thisAgent, cons** header,
+                                   cons_test_fn f, void* data = 0);
 
-extern dl_list* extract_dl_list_elements(agent* thisAgent, dl_list** header, dl_cons_test_fn f);
+extern dl_list* extract_dl_list_elements(agent* thisAgent, dl_list** header,
+                                         dl_cons_test_fn f);
 
 extern bool cons_equality_fn(agent*, cons* c, void* data);
 
@@ -111,40 +103,44 @@ extern bool cons_equality_fn(agent*, cons* c, void* data);
 
 extern uint32_t masks_for_n_low_order_bits[33];
 
-typedef uint32_t ((*hash_function)(void* item, short num_bits));
+typedef uint32_t((*hash_function)(void* item, short num_bits));
 
-typedef struct item_in_hash_table_struct
-{
-    struct item_in_hash_table_struct* next;
-    char data;
+typedef struct item_in_hash_table_struct {
+  struct item_in_hash_table_struct* next;
+  char data;
 } item_in_hash_table;
 
 typedef item_in_hash_table* bucket_array;
 
-typedef struct hash_table_struct
-{
-    int64_t count;            /* number of items in the table */
-    uint32_t size;            /* number of buckets */
-    short log2size;           /* log (base 2) of size */
-    short minimum_log2size;   /* table never shrinks below this size */
-    bucket_array* buckets;
-    hash_function h;          /* call this to hash or rehash an item */
+typedef struct hash_table_struct {
+  int64_t count;          /* number of items in the table */
+  uint32_t size;          /* number of buckets */
+  short log2size;         /* log (base 2) of size */
+  short minimum_log2size; /* table never shrinks below this size */
+  bucket_array* buckets;
+  hash_function h; /* call this to hash or rehash an item */
 } hash_table;
 
-extern struct hash_table_struct* make_hash_table(agent* thisAgent, short minimum_log2size,
-        hash_function h);
-extern void free_hash_table(agent* thisAgent, struct hash_table_struct* ht); /* RPM 6/09 */
-extern void remove_from_hash_table(agent* thisAgent, struct hash_table_struct* ht, void* item);
-extern void add_to_hash_table(agent* thisAgent, struct hash_table_struct* ht, void* item);
+extern struct hash_table_struct* make_hash_table(agent* thisAgent,
+                                                 short minimum_log2size,
+                                                 hash_function h);
+extern void free_hash_table(agent* thisAgent,
+                            struct hash_table_struct* ht); /* RPM 6/09 */
+extern void remove_from_hash_table(agent* thisAgent,
+                                   struct hash_table_struct* ht, void* item);
+extern void add_to_hash_table(agent* thisAgent, struct hash_table_struct* ht,
+                              void* item);
 
 typedef bool (*hash_table_callback_fn)(void* item);
 typedef bool (*hash_table_callback_fn2)(agent* thisAgent, void* item, void* f);
 
-extern void do_for_all_items_in_hash_table(agent* thisAgent, struct hash_table_struct* ht,
-        hash_table_callback_fn2 f, void* userdata);
+extern void do_for_all_items_in_hash_table(agent* thisAgent,
+                                           struct hash_table_struct* ht,
+                                           hash_table_callback_fn2 f,
+                                           void* userdata);
 extern void do_for_all_items_in_hash_bucket(struct hash_table_struct* ht,
-        hash_table_callback_fn f,
-        uint32_t hash_value);
+                                            hash_table_callback_fn f,
+                                            uint32_t hash_value);
 
 #endif
 
@@ -266,4 +262,3 @@ extern void do_for_all_items_in_hash_bucket(struct hash_table_struct* ht,
      iteration over the hash table items stops and the do_for_xxx()
      routine returns immediately.
 ====================================================================== */
-

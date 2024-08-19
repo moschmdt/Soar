@@ -1,3 +1,4 @@
+#include "src/cli_CommandLineInterface.cpp"
 #include "src/cli_alias.cpp"
 #include "src/cli_chunk.cpp"
 #include "src/cli_debug.cpp"
@@ -23,4 +24,3 @@
 #include "src/cli_trace.cpp"
 #include "src/cli_visualize.cpp"
 #include "src/cli_wm.cpp"
-#include "src/cli_CommandLineInterface.cpp"

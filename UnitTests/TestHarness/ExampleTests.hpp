@@ -11,13 +11,12 @@
 
 #include "FunctionalTestHarness.hpp"
 
-class ExampleTests : public FunctionalTestHarness
-{
-public:
-	TEST_CATEGORY(ExampleTests)
-	
-	TEST(testWaterJug, 5000)
-	void testWaterJug();
+class ExampleTests : public FunctionalTestHarness {
+ public:
+  TEST_CATEGORY(ExampleTests)
+
+  TEST(testWaterJug, 5000)
+  void testWaterJug();
 };
 
 #endif

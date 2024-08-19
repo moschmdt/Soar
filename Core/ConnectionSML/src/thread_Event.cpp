@@ -14,16 +14,8 @@
 
 #include "thread_Event.h"
 
-using namespace soar_thread ;
+using namespace soar_thread;
 
-Event::Event()
-{
-    m_Imp = MakeEvent() ;
-}
+Event::Event() { m_Imp = MakeEvent(); }
 
-Event::~Event()
-{
-    delete m_Imp ;
-}
-
-
+Event::~Event() { delete m_Imp; }

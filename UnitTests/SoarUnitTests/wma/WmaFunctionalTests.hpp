@@ -11,13 +11,12 @@
 
 #include "FunctionalTestHarness.hpp"
 
-class WmaFunctionalTests : public FunctionalTestHarness
-{
-public:
-	TEST_CATEGORY(WmaFunctionalTests);
-	
-	TEST(testSimpleActivation, -1);
-	void testSimpleActivation();
+class WmaFunctionalTests : public FunctionalTestHarness {
+ public:
+  TEST_CATEGORY(WmaFunctionalTests);
+
+  TEST(testSimpleActivation, -1);
+  void testSimpleActivation();
 };
 
 #endif /* WmaFunctionalTests_cpp */

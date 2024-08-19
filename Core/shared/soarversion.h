@@ -5,7 +5,8 @@
 #define _soar_str(s) #s
 
 /*
-Many places to change the version number (this list is shorter than it used to be):
+Many places to change the version number (this list is shorter than it used to
+be):
 
 Core/shared/soarversion.h (2 places)
 rename Java/Debugger/manifest1
@@ -19,18 +20,18 @@ soar-vars.bat in root
 #define MINOR_VERSION_NUMBER 6
 #define MICRO_VERSION_NUMBER 3
 #define GREEK_VERSION_NUMBER 0
-inline const char* VERSION_STRING()
-{
-    return _soar_xstr(MAJOR_VERSION_NUMBER) "." _soar_xstr(MINOR_VERSION_NUMBER) "."  _soar_xstr(MICRO_VERSION_NUMBER);
+inline const char* VERSION_STRING() {
+  return _soar_xstr(MAJOR_VERSION_NUMBER) "." _soar_xstr(
+      MINOR_VERSION_NUMBER) "." _soar_xstr(MICRO_VERSION_NUMBER);
 }
 
 #define SML_MAJOR_VERSION_NUMBER 9
 #define SML_MINOR_VERSION_NUMBER 6
 #define SML_MICRO_VERSION_NUMBER 3
 #define SML_GREEK_VERSION_NUMBER 0
-inline const char* SML_VERSION_STRING()
-{
-    return _soar_xstr(SML_MAJOR_VERSION_NUMBER) "." _soar_xstr(SML_MINOR_VERSION_NUMBER) "."  _soar_xstr(SML_MICRO_VERSION_NUMBER);
+inline const char* SML_VERSION_STRING() {
+  return _soar_xstr(SML_MAJOR_VERSION_NUMBER) "." _soar_xstr(
+      SML_MINOR_VERSION_NUMBER) "." _soar_xstr(SML_MICRO_VERSION_NUMBER);
 }
 
-#endif // SOARVERSION_H
+#endif  // SOARVERSION_H

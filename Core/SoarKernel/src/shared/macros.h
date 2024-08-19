@@ -1,7 +1,12 @@
 /* -------------- Macros for safe counters ------------*/
 
-#define increment_counter(counter) counter++; if (counter == 0) counter = 1;
-#define add_to_counter(counter, amt) uint64_t lastcnt = counter; counter += amt; if (counter < lastcnt) counter = amt;
+#define increment_counter(counter) \
+  counter++;                       \
+  if (counter == 0) counter = 1;
+#define add_to_counter(counter, amt) \
+  uint64_t lastcnt = counter;        \
+  counter += amt;                    \
+  if (counter < lastcnt) counter = amt;
 
 /* ---------------------------------------------------------------------
      Macros for Inserting and Removing Stuff from Doubly-Linked Lists
@@ -18,11 +23,13 @@
 /* This macro cannot be easily converted to an inline function.
    Some additional changes are required.
 */
-#define insert_at_head_of_dll(header,item,next_field_name,prev_field_name) { \
-        ((item)->next_field_name) = (header) ; \
-        ((item)->prev_field_name) = NIL ; \
-        if (header) ((header)->prev_field_name) = (item) ; \
-        (header) = (item) ; }
+#define insert_at_head_of_dll(header, item, next_field_name, prev_field_name) \
+  {                                                                           \
+    ((item)->next_field_name) = (header);                                     \
+    ((item)->prev_field_name) = NIL;                                          \
+    if (header) ((header)->prev_field_name) = (item);                         \
+    (header) = (item);                                                        \
+  }
 /*template <typename T>
 inline void insert_at_head_of_dll(T header, T item, T next_field_name,
                                   T prev_field_name)
@@ -36,14 +43,16 @@ inline void insert_at_head_of_dll(T header, T item, T next_field_name,
 /* This macro cannot be easily converted to an inline function.
    Some additional changes are required.
 */
-#define remove_from_dll(header,item,next_field_name,prev_field_name) { \
-        if ((item)->next_field_name) \
-            ((item)->next_field_name->prev_field_name) = ((item)->prev_field_name); \
-        if ((item)->prev_field_name) { \
-            ((item)->prev_field_name->next_field_name) = ((item)->next_field_name); \
-        } else { \
-            (header) = ((item)->next_field_name); \
-        } }
+#define remove_from_dll(header, item, next_field_name, prev_field_name)       \
+  {                                                                           \
+    if ((item)->next_field_name)                                              \
+      ((item)->next_field_name->prev_field_name) = ((item)->prev_field_name); \
+    if ((item)->prev_field_name) {                                            \
+      ((item)->prev_field_name->next_field_name) = ((item)->next_field_name); \
+    } else {                                                                  \
+      (header) = ((item)->next_field_name);                                   \
+    }                                                                         \
+  }
 /*template <typename T>
 inline void remove_from_dll(T header, T item, T next_field_name,
                             T prev_field_name)
@@ -60,16 +69,19 @@ inline void remove_from_dll(T header, T item, T next_field_name,
 /* This macro cannot be easily converted to an inline function.
    Some additional changes are required.
 */
-#define fast_remove_from_dll(header,item,typename,next_field_name,prev_field_name) { \
-        typename *tempnext, *tempprev; \
-        tempnext = (item)->next_field_name; \
-        tempprev = (item)->prev_field_name; \
-        if (tempnext) tempnext->prev_field_name = tempprev; \
-        if (tempprev) { \
-            tempprev->next_field_name = tempnext; \
-        } else { \
-            (header) = tempnext; } }
-
+#define fast_remove_from_dll(header, item, typename, next_field_name, \
+                             prev_field_name)                         \
+  {                                                                   \
+    typename *tempnext, *tempprev;                                    \
+    tempnext = (item)->next_field_name;                               \
+    tempprev = (item)->prev_field_name;                               \
+    if (tempnext) tempnext->prev_field_name = tempprev;               \
+    if (tempprev) {                                                   \
+      tempprev->next_field_name = tempnext;                           \
+    } else {                                                          \
+      (header) = tempnext;                                            \
+    }                                                                 \
+  }
 
 // Useful for converting enumerations to string
-#define stringify( name ) # name
+#define stringify(name) #name

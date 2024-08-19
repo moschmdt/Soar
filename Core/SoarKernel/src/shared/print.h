@@ -1,7 +1,7 @@
-/*************************************************************************
+/*
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
 /* ======================================================================
 
@@ -11,18 +11,18 @@
 
 #ifndef PRINT_H
 #define PRINT_H
-#include "kernel.h"
-
 #include <stdio.h>  // Needed for FILE token below
+
 #include <string>
 
-typedef struct wme_filter_struct
-{
-    Symbol* id;
-    Symbol* attr;
-    Symbol* value;
-    bool adds;
-    bool removes;
+#include "kernel.h"
+
+typedef struct wme_filter_struct {
+  Symbol* id;
+  Symbol* attr;
+  Symbol* value;
+  bool adds;
+  bool removes;
 } wme_filter;
 
 void print_phase(agent* thisAgent, const char* s, bool end_phase);
@@ -53,7 +53,8 @@ void filtered_print_wme_add(agent* thisAgent, wme* w);
    representation.  The rhs_value MUST NOT be a reteloc.
 ----------------------------------------------------------------------- */
 
-const std::string string_to_escaped_string(const char* s, char first_and_last_char);
+const std::string string_to_escaped_string(const char* s,
+                                           char first_and_last_char);
 
 /* -----------------------------------------------------------------------
              Print Condition List, Action List, Production
@@ -74,8 +75,10 @@ const std::string string_to_escaped_string(const char* s, char first_and_last_ch
 
 ----------------------------------------------------------------------- */
 
-void print_condition_list(agent* thisAgent, condition* conds, int indent, bool internal);
-void print_action_list(agent* thisAgent, action* actions, int indent, bool internal);
+void print_condition_list(agent* thisAgent, condition* conds, int indent,
+                          bool internal);
+void print_action_list(agent* thisAgent, action* actions, int indent,
+                       bool internal);
 void print_production(agent* thisAgent, production* p, bool internal);
 void print_consed_list_of_condition_wmes(agent* thisAgent, cons* c, int indent);
 void print_consed_list_of_conditions(agent* thisAgent, cons* c, int indent);
@@ -106,13 +109,12 @@ char preference_to_char(byte type);
 void print_preference(agent* thisAgent, preference* pref, bool add_lf = true);
 void print_wme(agent* thisAgent, wme* w);
 void print_wme_without_timetag(agent* thisAgent, wme* w);
-void print_instantiation_with_wmes(agent* thisAgent,
-        instantiation* inst,
-        wme_trace_type wtt,
-        int action);
+void print_instantiation_with_wmes(agent* thisAgent, instantiation* inst,
+                                   wme_trace_type wtt, int action);
 
 void print_list_of_conditions(agent* thisAgent, condition* cond);
 
-void print_sysparam_trace(agent* thisAgent, int64_t sysParamIndex, const char* format, ...);
+void print_sysparam_trace(agent* thisAgent, int64_t sysParamIndex,
+                          const char* format, ...);
 
 #endif
