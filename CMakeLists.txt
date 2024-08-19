@@ -76,7 +76,7 @@ set_target_properties(Soar
 
 # This only sets up the install structure, but no installation happens yet.
 install(TARGETS Soar
-    EXPORT SoarTarget
+    EXPORT SoarTargets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
