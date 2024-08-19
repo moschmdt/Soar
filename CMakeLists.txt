@@ -91,3 +91,5 @@ install(EXPORT SoarTargets
     NAMESPACE Soar::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Soar
 )
+
+add_library(Soar::Soar ALIAS Soar)
