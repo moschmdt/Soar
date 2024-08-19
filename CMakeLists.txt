@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(Soar VERSION 9.6.2)
 
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_CPPLINT "cpplint")
@@ -90,6 +91,23 @@ install(EXPORT SoarTargets
     FILE SoarTargets.cmake
     NAMESPACE Soar::
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Soar
+)
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+  "${CMAKE_CURRENT_BINARY_DIR}/SoarConfig.cmake"
+  INSTALL_DESTINATION "lib/cmake/Soar"
+  NO_SET_AND_CHECK_MACRO
+  NO_CHECK_REQUIRED_COMPONENTS_MACRO
+  )
+
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/SoarConfig.cmake
+  DESTINATION lib/cmake/MathFunctions
+  )
+
+export(EXPORT SoarTargets
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/SoarTargets.cmake"
 )
 
 add_library(Soar::Soar ALIAS Soar)
