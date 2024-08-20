@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \ingroup IterativeLinearSolvers_Module
+/** \ingroup IterativeLinearSolvers_Module
   * \brief A preconditioner based on the digonal entries
   *
   * This class allows to approximately solve for A.x = b problems assuming A is
@@ -77,7 +77,7 @@ class DiagonalPreconditioner {
     return factorize(mat);
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_impl(const Rhs& b, Dest& x) const {
     x = m_invdiag.array() * b.array();
@@ -101,7 +101,7 @@ class DiagonalPreconditioner {
   bool m_isInitialized;
 };
 
-/* \ingroup IterativeLinearSolvers_Module
+/** \ingroup IterativeLinearSolvers_Module
   * \brief Jacobi preconditioner for LeastSquaresConjugateGradient
   *
   * This class allows to approximately solve for A' A x  = A' b problems
@@ -175,7 +175,7 @@ class LeastSquareDiagonalPreconditioner
  protected:
 };
 
-/* \ingroup IterativeLinearSolvers_Module
+/** \ingroup IterativeLinearSolvers_Module
  * \brief A naive preconditioner which approximates any matrix as the identity
  * matrix
  *

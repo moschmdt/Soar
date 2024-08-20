@@ -30,7 +30,7 @@ EIGEN_DEVICE_FUNC void tridiagonalization_inplace(MatrixType& matA,
                                                   CoeffVectorType& hCoeffs);
 }  // namespace internal
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class Tridiagonalization
@@ -66,7 +66,7 @@ EIGEN_DEVICE_FUNC void tridiagonalization_inplace(MatrixType& matA,
 template <typename _MatrixType>
 class Tridiagonalization {
  public:
-  /* \brief Synonym for the template parameter \p _MatrixType. */
+  /** \brief Synonym for the template parameter \p _MatrixType. */
   typedef _MatrixType MatrixType;
 
   typedef typename MatrixType::Scalar Scalar;
@@ -108,13 +108,13 @@ class Tridiagonalization {
           typename Diagonal<const MatrixType, -1>::RealReturnType>::type,
       const Diagonal<const MatrixType, -1> >::type SubDiagonalReturnType;
 
-  /* \brief Return type of matrixQ() */
+  /** \brief Return type of matrixQ() */
   typedef HouseholderSequence<
       MatrixType, typename internal::remove_all<
                       typename CoeffVectorType::ConjugateReturnType>::type>
       HouseholderSequenceType;
 
-  /* \brief Default constructor.
+  /** \brief Default constructor.
    *
    * \param [in]  size  Positive integer, size of the matrix whose tridiagonal
    * decomposition will be computed.
@@ -131,7 +131,7 @@ class Tridiagonalization {
         m_hCoeffs(size > 1 ? size - 1 : 1),
         m_isInitialized(false) {}
 
-  /* \brief Constructor; computes tridiagonal decomposition of given matrix.
+  /** \brief Constructor; computes tridiagonal decomposition of given matrix.
    *
    * \param[in]  matrix  Selfadjoint matrix whose tridiagonal decomposition
    * is to be computed.
@@ -150,7 +150,7 @@ class Tridiagonalization {
     m_isInitialized = true;
   }
 
-  /* \brief Computes tridiagonal decomposition of given matrix.
+  /** \brief Computes tridiagonal decomposition of given matrix.
    *
    * \param[in]  matrix  Selfadjoint matrix whose tridiagonal decomposition
    * is to be computed.
@@ -176,7 +176,7 @@ class Tridiagonalization {
     return *this;
   }
 
-  /* \brief Returns the Householder coefficients.
+  /** \brief Returns the Householder coefficients.
    *
    * \returns a const reference to the vector of Householder coefficients
    *
@@ -197,7 +197,7 @@ class Tridiagonalization {
     return m_hCoeffs;
   }
 
-  /* \brief Returns the internal representation of the decomposition
+  /** \brief Returns the internal representation of the decomposition
    *
    *	\returns a const reference to a matrix with the internal representation
    *	         of the decomposition.
@@ -233,7 +233,7 @@ class Tridiagonalization {
     return m_matrix;
   }
 
-  /* \brief Returns the unitary matrix Q in the decomposition
+  /** \brief Returns the unitary matrix Q in the decomposition
    *
    * \returns object representing the matrix Q
    *
@@ -255,7 +255,7 @@ class Tridiagonalization {
         .setShift(1);
   }
 
-  /* \brief Returns an expression of the tridiagonal matrix T in the
+  /** \brief Returns an expression of the tridiagonal matrix T in the
    * decomposition
    *
    * \returns expression object representing the matrix T
@@ -278,7 +278,7 @@ class Tridiagonalization {
     return MatrixTReturnType(m_matrix.real());
   }
 
-  /* \brief Returns the diagonal of the tridiagonal matrix T in the
+  /** \brief Returns the diagonal of the tridiagonal matrix T in the
    * decomposition.
    *
    * \returns expression representing the diagonal of T
@@ -294,7 +294,7 @@ class Tridiagonalization {
    */
   DiagonalReturnType diagonal() const;
 
-  /* \brief Returns the subdiagonal of the tridiagonal matrix T in the
+  /** \brief Returns the subdiagonal of the tridiagonal matrix T in the
    * decomposition.
    *
    * \returns expression representing the subdiagonal of T
@@ -329,7 +329,7 @@ Tridiagonalization<MatrixType>::subDiagonal() const {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * Performs a tridiagonal decomposition of the selfadjoint matrix \a matA
  * in-place.
  *
@@ -399,7 +399,7 @@ template <typename MatrixType, int Size = MatrixType::ColsAtCompileTime,
           bool IsComplex = NumTraits<typename MatrixType::Scalar>::IsComplex>
 struct tridiagonalization_inplace_selector;
 
-/* \brief Performs a full tridiagonalization in place
+/** \brief Performs a full tridiagonalization in place
  *
  * \param[in,out]  mat  On input, the selfadjoint matrix whose tridiagonal
  *    decomposition is to be computed. Only the lower triangular part
@@ -450,7 +450,7 @@ EIGEN_DEVICE_FUNC void tridiagonalization_inplace(MatrixType& mat,
                                                        hcoeffs, extractQ);
 }
 
-/* \internal
+/** \internal
  * General full tridiagonalization
  */
 template <typename MatrixType, int Size, bool IsComplex>
@@ -473,7 +473,7 @@ struct tridiagonalization_inplace_selector {
   }
 };
 
-/* \internal
+/** \internal
  * Specialization for 3x3 real matrices.
  * Especially useful for plane fitting.
  */
@@ -514,7 +514,7 @@ struct tridiagonalization_inplace_selector<MatrixType, 3, false> {
   }
 };
 
-/* \internal
+/** \internal
  * Trivial specialization for 1x1 matrices
  */
 template <typename MatrixType, bool IsComplex>
@@ -531,7 +531,7 @@ struct tridiagonalization_inplace_selector<MatrixType, 1, IsComplex> {
   }
 };
 
-/* \internal
+/** \internal
  * \eigenvalues_module \ingroup Eigenvalues_Module
  *
  * \brief Expression type for return value of Tridiagonalization::matrixT()
@@ -542,7 +542,7 @@ template <typename MatrixType>
 struct TridiagonalizationMatrixTReturnType
     : public ReturnByValue<TridiagonalizationMatrixTReturnType<MatrixType> > {
  public:
-  /* \brief Constructor.
+  /** \brief Constructor.
    *
    * \param[in] mat The underlying dense matrix
    */

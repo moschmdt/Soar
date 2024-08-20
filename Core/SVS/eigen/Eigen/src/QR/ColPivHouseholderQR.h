@@ -24,7 +24,7 @@ struct traits<ColPivHouseholderQR<_MatrixType> > : traits<_MatrixType> {
 
 }  // end namespace internal
 
-/* \ingroup QR_Module
+/** \ingroup QR_Module
  *
  * \class ColPivHouseholderQR
  *
@@ -80,7 +80,7 @@ class ColPivHouseholderQR
   typedef typename PermutationType::StorageIndex PermIndexType;
 
  public:
-  /*
+  /**
    * \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
@@ -97,7 +97,7 @@ class ColPivHouseholderQR
         m_isInitialized(false),
         m_usePrescribedThreshold(false) {}
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -114,7 +114,7 @@ class ColPivHouseholderQR
         m_isInitialized(false),
         m_usePrescribedThreshold(false) {}
 
-  /* \brief Constructs a QR factorization from a given matrix
+  /** \brief Constructs a QR factorization from a given matrix
    *
    * This constructor computes the QR factorization of the matrix \a matrix by
    * calling the method compute(). It is a short cut for:
@@ -140,7 +140,7 @@ class ColPivHouseholderQR
     compute(matrix.derived());
   }
 
-  /* \brief Constructs a QR factorization from a given matrix
+  /** \brief Constructs a QR factorization from a given matrix
    *
    * This overloaded constructor is provided for \link InplaceDecomposition
    * inplace decomposition \endlink when \c MatrixType is a Eigen::Ref.
@@ -162,7 +162,7 @@ class ColPivHouseholderQR
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* This method finds a solution x to the equation Ax=b, where A is the matrix
+  /** This method finds a solution x to the equation Ax=b, where A is the matrix
    * of which *this is the QR decomposition, if any exists.
    *
    * \param b the right-hand-side of the equation to solve.
@@ -184,7 +184,7 @@ class ColPivHouseholderQR
   HouseholderSequenceType householderQ() const;
   HouseholderSequenceType matrixQ() const { return householderQ(); }
 
-  /* \returns a reference to the matrix where the Householder QR decomposition
+  /** \returns a reference to the matrix where the Householder QR decomposition
    * is stored
    */
   const MatrixType& matrixQR() const {
@@ -192,7 +192,7 @@ class ColPivHouseholderQR
     return m_qr;
   }
 
-  /* \returns a reference to the matrix where the result Householder QR is
+  /** \returns a reference to the matrix where the result Householder QR is
    * stored \warning The strict lower part of this matrix contains internal
    * values. Only the upper triangular part should be referenced. To get it, use
    * \code matrixR().template triangularView<Upper>() \endcode
@@ -209,13 +209,13 @@ class ColPivHouseholderQR
   template <typename InputType>
   ColPivHouseholderQR& compute(const EigenBase<InputType>& matrix);
 
-  /* \returns a const reference to the column permutation matrix */
+  /** \returns a const reference to the column permutation matrix */
   const PermutationType& colsPermutation() const {
     eigen_assert(m_isInitialized && "ColPivHouseholderQR is not initialized.");
     return m_colsPermutation;
   }
 
-  /* \returns the absolute value of the determinant of the matrix of which
+  /** \returns the absolute value of the determinant of the matrix of which
    * *this is the QR decomposition. It has only linear complexity
    * (that is, O(n) where n is the dimension of the square matrix)
    * as the QR decomposition has already been computed.
@@ -230,7 +230,7 @@ class ColPivHouseholderQR
    */
   typename MatrixType::RealScalar absDeterminant() const;
 
-  /* \returns the natural log of the absolute value of the determinant of the
+  /** \returns the natural log of the absolute value of the determinant of the
    * matrix of which *this is the QR decomposition. It has only linear
    * complexity (that is, O(n) where n is the dimension of the square matrix) as
    * the QR decomposition has already been computed.
@@ -244,7 +244,7 @@ class ColPivHouseholderQR
    */
   typename MatrixType::RealScalar logAbsDeterminant() const;
 
-  /* \returns the rank of the matrix of which *this is the QR decomposition.
+  /** \returns the rank of the matrix of which *this is the QR decomposition.
    *
    * \note This method has to determine which pivots should be considered
    * nonzero. For that, it uses the threshold value that you can control by
@@ -260,7 +260,7 @@ class ColPivHouseholderQR
     return result;
   }
 
-  /* \returns the dimension of the kernel of the matrix of which *this is the
+  /** \returns the dimension of the kernel of the matrix of which *this is the
    * QR decomposition.
    *
    * \note This method has to determine which pivots should be considered
@@ -272,7 +272,7 @@ class ColPivHouseholderQR
     return cols() - rank();
   }
 
-  /* \returns true if the matrix of which *this is the QR decomposition
+  /** \returns true if the matrix of which *this is the QR decomposition
    * represents an injective linear map, i.e. has trivial kernel; false
    * otherwise.
    *
@@ -285,7 +285,7 @@ class ColPivHouseholderQR
     return rank() == cols();
   }
 
-  /* \returns true if the matrix of which *this is the QR decomposition
+  /** \returns true if the matrix of which *this is the QR decomposition
    * represents a surjective linear map; false otherwise.
    *
    * \note This method has to determine which pivots should be considered
@@ -297,7 +297,7 @@ class ColPivHouseholderQR
     return rank() == rows();
   }
 
-  /* \returns true if the matrix of which *this is the QR decomposition is
+  /** \returns true if the matrix of which *this is the QR decomposition is
    * invertible.
    *
    * \note This method has to determine which pivots should be considered
@@ -309,7 +309,7 @@ class ColPivHouseholderQR
     return isInjective() && isSurjective();
   }
 
-  /* \returns the inverse of the matrix of which *this is the QR decomposition.
+  /** \returns the inverse of the matrix of which *this is the QR decomposition.
    *
    * \note If this matrix is not invertible, the returned matrix has undefined
    * coefficients. Use isInvertible() to first determine whether this matrix is
@@ -323,14 +323,14 @@ class ColPivHouseholderQR
   inline Index rows() const { return m_qr.rows(); }
   inline Index cols() const { return m_qr.cols(); }
 
-  /* \returns a const reference to the vector of Householder coefficients used
+  /** \returns a const reference to the vector of Householder coefficients used
    * to represent the factor \c Q.
    *
    * For advanced uses only.
    */
   const HCoeffsType& hCoeffs() const { return m_hCoeffs; }
 
-  /* Allows to prescribe a threshold to be used by certain methods, such as
+  /** Allows to prescribe a threshold to be used by certain methods, such as
    * rank(), who need to determine when pivots are to be considered nonzero.
    * This is not used for the QR decomposition itself.
    *
@@ -354,7 +354,7 @@ class ColPivHouseholderQR
     return *this;
   }
 
-  /* Allows to come back to the default behavior, letting Eigen use its default
+  /** Allows to come back to the default behavior, letting Eigen use its default
    * formula for determining the threshold.
    *
    * You should pass the special object Eigen::Default as parameter here.
@@ -367,7 +367,7 @@ class ColPivHouseholderQR
     return *this;
   }
 
-  /* Returns the threshold that will be used by certain methods such as rank().
+  /** Returns the threshold that will be used by certain methods such as rank().
    *
    * See the documentation of setThreshold(const RealScalar&).
    */
@@ -381,7 +381,7 @@ class ColPivHouseholderQR
                : NumTraits<Scalar>::epsilon() * RealScalar(m_qr.diagonalSize());
   }
 
-  /* \returns the number of nonzero pivots in the QR decomposition.
+  /** \returns the number of nonzero pivots in the QR decomposition.
    * Here nonzero is meant in the exact sense, not in a fuzzy sense.
    * So that notion isn't really intrinsically interesting, but it is
    * still useful when implementing algorithms.
@@ -393,12 +393,12 @@ class ColPivHouseholderQR
     return m_nonzero_pivots;
   }
 
-  /* \returns the absolute value of the biggest pivot, i.e. the biggest
+  /** \returns the absolute value of the biggest pivot, i.e. the biggest
    *          diagonal coefficient of R.
    */
   RealScalar maxPivot() const { return m_maxpivot; }
 
-  /* \brief Reports whether the QR factorization was successful.
+  /** \brief Reports whether the QR factorization was successful.
    *
    * \note This function always returns \c Success. It is provided for
    * compatibility with other factorization routines. \returns \c Success
@@ -457,7 +457,7 @@ ColPivHouseholderQR<MatrixType>::logAbsDeterminant() const {
   return m_qr.diagonal().cwiseAbs().array().log().sum();
 }
 
-/* Performs the QR factorization of the given matrix \a matrix. The result of
+/** Performs the QR factorization of the given matrix \a matrix. The result of
  * the factorization is stored into \c *this, and a reference to \c *this
  * is returned.
  *
@@ -582,7 +582,7 @@ void ColPivHouseholderQR<MatrixType>::computeInPlace() {
   }
 
   m_colsPermutation.setIdentity(PermIndexType(cols));
-  for (PermIndexType k = 0; k < size /*m_nonzero_pivots*/; ++k)
+  for (PermIndexType k = 0; k < size /**m_nonzero_pivots*/; ++k)
     m_colsPermutation.applyTranspositionOnTheRight(
         k, PermIndexType(m_colsTranspositions.coeff(k)));
 
@@ -664,7 +664,7 @@ struct Assignment<
 
 }  // end namespace internal
 
-/* \returns the matrix Q as a sequence of householder transformations.
+/** \returns the matrix Q as a sequence of householder transformations.
  * You can extract the meaningful part only by using:
  * \code qr.householderQ().setLength(qr.nonzeroPivots()) \endcode*/
 template <typename MatrixType>
@@ -674,7 +674,7 @@ ColPivHouseholderQR<MatrixType>::householderQ() const {
   return HouseholderSequenceType(m_qr, m_hCoeffs.conjugate());
 }
 
-/* \return the column-pivoting Householder QR decomposition of \c *this.
+/** \return the column-pivoting Householder QR decomposition of \c *this.
  *
  * \sa class ColPivHouseholderQR
  */

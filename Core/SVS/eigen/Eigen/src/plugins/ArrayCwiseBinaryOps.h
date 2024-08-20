@@ -1,5 +1,5 @@
 
-/* \returns an expression of the coefficient wise product of \c *this and \a
+/** \returns an expression of the coefficient wise product of \c *this and \a
  * other
  *
  * \sa MatrixBase::cwiseProduct
@@ -12,7 +12,7 @@ operator*(const EIGEN_CURRENT_STORAGE_BASE_CLASS<OtherDerived> &other) const {
       derived(), other.derived());
 }
 
-/* \returns an expression of the coefficient wise quotient of \c *this and \a
+/** \returns an expression of the coefficient wise quotient of \c *this and \a
  * other
  *
  * \sa MatrixBase::cwiseQuotient
@@ -27,7 +27,7 @@ operator/(const EIGEN_CURRENT_STORAGE_BASE_CLASS<OtherDerived> &other) const {
       const Derived, const OtherDerived>(derived(), other.derived());
 }
 
-/* \returns an expression of the coefficient-wise min of \c *this and \a other
+/** \returns an expression of the coefficient-wise min of \c *this and \a other
  *
  * Example: \include Cwise_min.cpp
  * Output: \verbinclude Cwise_min.out
@@ -36,7 +36,7 @@ operator/(const EIGEN_CURRENT_STORAGE_BASE_CLASS<OtherDerived> &other) const {
  */
 EIGEN_MAKE_CWISE_BINARY_OP(min, min)
 
-/* \returns an expression of the coefficient-wise min of \c *this and scalar \a
+/** \returns an expression of the coefficient-wise min of \c *this and scalar \a
  * other
  *
  * \sa max()
@@ -54,7 +54,7 @@ min
   return (min)(Derived::PlainObject::Constant(rows(), cols(), other));
 }
 
-/* \returns an expression of the coefficient-wise max of \c *this and \a other
+/** \returns an expression of the coefficient-wise max of \c *this and \a other
  *
  * Example: \include Cwise_max.cpp
  * Output: \verbinclude Cwise_max.out
@@ -63,7 +63,7 @@ min
  */
 EIGEN_MAKE_CWISE_BINARY_OP(max, max)
 
-/* \returns an expression of the coefficient-wise max of \c *this and scalar \a
+/** \returns an expression of the coefficient-wise max of \c *this and scalar \a
  * other
  *
  * \sa min()
@@ -81,7 +81,7 @@ max
   return (max)(Derived::PlainObject::Constant(rows(), cols(), other));
 }
 
-/* \returns an expression of the coefficient-wise absdiff of \c *this and \a
+/** \returns an expression of the coefficient-wise absdiff of \c *this and \a
  * other
  *
  * Example: \include Cwise_absolute_difference.cpp
@@ -91,7 +91,7 @@ max
  */
 EIGEN_MAKE_CWISE_BINARY_OP(absolute_difference, absolute_difference)
 
-/* \returns an expression of the coefficient-wise absolute_difference of \c
+/** \returns an expression of the coefficient-wise absolute_difference of \c
  * *this and scalar \a other
  *
  * \sa absolute_difference()
@@ -110,7 +110,7 @@ absolute_difference
                                                               other));
 }
 
-/* \returns an expression of the coefficient-wise power of \c *this to the
+/** \returns an expression of the coefficient-wise power of \c *this to the
  * given array of \a exponents.
  *
  * This function computes the coefficient-wise power.
@@ -123,7 +123,7 @@ EIGEN_MAKE_CWISE_BINARY_OP(pow, pow)
 #ifndef EIGEN_PARSED_BY_DOXYGEN
 EIGEN_MAKE_SCALAR_BINARY_OP_ONTHERIGHT(pow, pow)
 #else
-/* \returns an expression of the coefficients of \c *this rasied to the
+/** \returns an expression of the coefficients of \c *this rasied to the
  * constant power \a exponent
  *
  * \tparam T is the scalar type of \a exponent. It must be compatible with the
@@ -200,7 +200,7 @@ pow(const T &exponent) const;
     return d.R_OP(Derived::PlainObject::Constant(d.rows(), d.cols(), s)); \
   }
 
-/* \returns an expression of the coefficient-wise \< operator of *this and \a
+/** \returns an expression of the coefficient-wise \< operator of *this and \a
  * other
  *
  * Example: \include Cwise_less.cpp
@@ -210,7 +210,7 @@ pow(const T &exponent) const;
  */
 EIGEN_MAKE_CWISE_COMP_OP(operator<, LT)
 
-/* \returns an expression of the coefficient-wise \<= operator of *this and \a
+/** \returns an expression of the coefficient-wise \<= operator of *this and \a
  * other
  *
  * Example: \include Cwise_less_equal.cpp
@@ -220,7 +220,7 @@ EIGEN_MAKE_CWISE_COMP_OP(operator<, LT)
  */
 EIGEN_MAKE_CWISE_COMP_OP(operator<=, LE)
 
-/* \returns an expression of the coefficient-wise \> operator of *this and \a
+/** \returns an expression of the coefficient-wise \> operator of *this and \a
  * other
  *
  * Example: \include Cwise_greater.cpp
@@ -230,7 +230,7 @@ EIGEN_MAKE_CWISE_COMP_OP(operator<=, LE)
  */
 EIGEN_MAKE_CWISE_COMP_R_OP(operator>, operator<, LT)
 
-/* \returns an expression of the coefficient-wise \>= operator of *this and \a
+/** \returns an expression of the coefficient-wise \>= operator of *this and \a
  * other
  *
  * Example: \include Cwise_greater_equal.cpp
@@ -240,7 +240,7 @@ EIGEN_MAKE_CWISE_COMP_R_OP(operator>, operator<, LT)
  */
 EIGEN_MAKE_CWISE_COMP_R_OP(operator>=, operator<=, LE)
 
-/* \returns an expression of the coefficient-wise == operator of *this and \a
+/** \returns an expression of the coefficient-wise == operator of *this and \a
  * other
  *
  * \warning this performs an exact comparison, which is generally a bad idea
@@ -256,7 +256,7 @@ EIGEN_MAKE_CWISE_COMP_R_OP(operator>=, operator<=, LE)
  */
 EIGEN_MAKE_CWISE_COMP_OP(operator==, EQ)
 
-/* \returns an expression of the coefficient-wise != operator of *this and \a
+/** \returns an expression of the coefficient-wise != operator of *this and \a
  * other
  *
  * \warning this performs an exact comparison, which is generally a bad idea
@@ -279,7 +279,7 @@ EIGEN_MAKE_CWISE_COMP_OP(operator!=, NEQ)
 #ifndef EIGEN_PARSED_BY_DOXYGEN
 EIGEN_MAKE_SCALAR_BINARY_OP(operator+, sum)
 #else
-/* \returns an expression of \c *this with each coeff incremented by the
+/** \returns an expression of \c *this with each coeff incremented by the
  * constant \a scalar
  *
  * \tparam T is the scalar type of \a scalar. It must be compatible with the
@@ -293,7 +293,7 @@ EIGEN_MAKE_SCALAR_BINARY_OP(operator+, sum)
 template <typename T>
 const CwiseBinaryOp<internal::scalar_sum_op<Scalar, T>, Derived, Constant<T> >
 operator+(const T &scalar) const;
-/* \returns an expression of \a expr with each coeff incremented by the
+/** \returns an expression of \a expr with each coeff incremented by the
  * constant \a scalar
  *
  * \tparam T is the scalar type of \a scalar. It must be compatible with the
@@ -308,7 +308,7 @@ operator+(const T &scalar, const StorageBaseType &expr);
 #ifndef EIGEN_PARSED_BY_DOXYGEN
 EIGEN_MAKE_SCALAR_BINARY_OP(operator-, difference)
 #else
-/* \returns an expression of \c *this with each coeff decremented by the
+/** \returns an expression of \c *this with each coeff decremented by the
  * constant \a scalar
  *
  * \tparam T is the scalar type of \a scalar. It must be compatible with the
@@ -323,7 +323,7 @@ template <typename T>
 const CwiseBinaryOp<internal::scalar_difference_op<Scalar, T>, Derived,
                     Constant<T> >
 operator-(const T &scalar) const;
-/* \returns an expression of the constant matrix of value \a scalar decremented
+/** \returns an expression of the constant matrix of value \a scalar decremented
  * by the coefficients of \a expr
  *
  * \tparam T is the scalar type of \a scalar. It must be compatible with the
@@ -338,7 +338,7 @@ operator-(const T &scalar, const StorageBaseType &expr);
 #ifndef EIGEN_PARSED_BY_DOXYGEN
 EIGEN_MAKE_SCALAR_BINARY_OP_ONTHELEFT(operator/, quotient)
 #else
-/*
+/**
  * \brief Component-wise division of the scalar \a s by array elements of \a a.
  *
  * \tparam Scalar is the scalar type of \a x. It must be compatible with the
@@ -350,7 +350,7 @@ friend inline const CwiseBinaryOp<internal::scalar_quotient_op<T, Scalar>,
 operator/(const T &s, const StorageBaseType &a);
 #endif
 
-/* \returns an expression of the coefficient-wise ^ operator of *this and \a
+/** \returns an expression of the coefficient-wise ^ operator of *this and \a
  * other
  *
  * \warning this operator is for expression of bool only.
@@ -374,7 +374,7 @@ operator^(const EIGEN_CURRENT_STORAGE_BASE_CLASS<OtherDerived> &other) const {
 
 // NOTE disabled until we agree on argument order
 #if 0
-/* \cpp11 \returns an expression of the coefficient-wise polygamma function.
+/** \cpp11 \returns an expression of the coefficient-wise polygamma function.
   *
   * \specialfunctions_module
   *
@@ -392,7 +392,7 @@ polygamma(const EIGEN_CURRENT_STORAGE_BASE_CLASS<DerivedN> &n) const
 }
 #endif
 
-/* \returns an expression of the coefficient-wise zeta function.
+/** \returns an expression of the coefficient-wise zeta function.
  *
  * \specialfunctions_module
  *

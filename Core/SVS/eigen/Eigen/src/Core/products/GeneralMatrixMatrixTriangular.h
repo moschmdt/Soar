@@ -18,7 +18,7 @@ struct selfadjoint_rank1_update;
 
 namespace internal {
 
-/*
+/**
  * This file implements a general A * B product while
  * evaluating only one triangular part of the product.
  * This is a more general version of self adjoint product (C += A A^T)
@@ -30,7 +30,7 @@ template <typename LhsScalar, typename RhsScalar, typename Index, int mr,
           int nr, bool ConjLhs, bool ConjRhs, int ResInnerStride, int UpLo>
 struct tribb_kernel;
 
-/* Optimized matrix-matrix product evaluating only one triangular half */
+/** Optimized matrix-matrix product evaluating only one triangular half */
 template <typename Index, typename LhsScalar, int LhsStorageOrder,
           bool ConjugateLhs, typename RhsScalar, int RhsStorageOrder,
           bool ConjugateRhs, int ResStorageOrder, int ResInnerStride, int UpLo,

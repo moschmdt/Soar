@@ -82,7 +82,7 @@ class SparseLUTransposeView
   SparseLUTransposeView& operator=(const SparseLUTransposeView&);
 };
 
-/* \ingroup SparseLU_Module
+/** \ingroup SparseLU_Module
  * \class SparseLU
  *
  * \brief Sparse supernodal LU factorization for general matrices
@@ -195,7 +195,7 @@ class SparseLU
   void factorize(const MatrixType& matrix);
   void simplicialfactorize(const MatrixType& matrix);
 
-  /*
+  /**
    * Compute the symbolic and numeric factorization of the input sparse matrix.
    * The input matrix should be in column-major storage.
    */
@@ -206,7 +206,7 @@ class SparseLU
     factorize(matrix);
   }
 
-  /* \returns an expression of the transposed of the factored matrix.
+  /** \returns an expression of the transposed of the factored matrix.
    *
    * A typical usage is to solve for the transposed problem A^T x = b:
    * \code
@@ -225,7 +225,7 @@ class SparseLU
     return transposeView;
   }
 
-  /* \returns an expression of the adjoint of the factored matrix
+  /** \returns an expression of the adjoint of the factored matrix
    *
    * A typical usage is to solve for the adjoint problem A' x = b:
    * \code
@@ -248,10 +248,10 @@ class SparseLU
 
   inline Index rows() const { return m_mat.rows(); }
   inline Index cols() const { return m_mat.cols(); }
-  /* Indicate that the pattern of the input matrix is symmetric */
+  /** Indicate that the pattern of the input matrix is symmetric */
   void isSymmetric(bool sym) { m_symmetricmode = sym; }
 
-  /* \returns an expression of the matrix L, internally stored as supernodes
+  /** \returns an expression of the matrix L, internally stored as supernodes
    * The only operation available with this expression is the triangular solve
    * \code
    * y = b; matrixL().solveInPlace(y);
@@ -260,7 +260,7 @@ class SparseLU
   SparseLUMatrixLReturnType<SCMatrix> matrixL() const {
     return SparseLUMatrixLReturnType<SCMatrix>(m_Lstore);
   }
-  /* \returns an expression of the matrix U,
+  /** \returns an expression of the matrix U,
    * The only operation available with this expression is the triangular solve
    * \code
    * y = b; matrixU().solveInPlace(y);
@@ -274,23 +274,23 @@ class SparseLU
         m_Lstore, m_Ustore);
   }
 
-  /*
+  /**
    * \returns a reference to the row matrix permutation \f$ P_r \f$ such that
    * \f$P_r A P_c^T = L U\f$ \sa colsPermutation()
    */
   inline const PermutationType& rowsPermutation() const { return m_perm_r; }
-  /*
+  /**
    * \returns a reference to the column matrix permutation\f$ P_c^T \f$ such
    * that \f$P_r A P_c^T = L U\f$ \sa rowsPermutation()
    */
   inline const PermutationType& colsPermutation() const { return m_perm_c; }
-  /* Set the threshold used for a diagonal entry to be an acceptable pivot. */
+  /** Set the threshold used for a diagonal entry to be an acceptable pivot. */
   void setPivotThreshold(const RealScalar& thresh) {
     m_diagpivotthresh = thresh;
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* \returns the solution X of \f$ A X = B \f$ using the current decomposition
+  /** \returns the solution X of \f$ A X = B \f$ using the current decomposition
    * of A.
    *
    * \warning the destination matrix X in X = this->solve(B) must be
@@ -302,7 +302,7 @@ class SparseLU
   inline const Solve<SparseLU, Rhs> solve(const MatrixBase<Rhs>& B) const;
 #endif  // EIGEN_PARSED_BY_DOXYGEN
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the LU factorization reports a problem, zero
@@ -315,7 +315,7 @@ class SparseLU
     return m_info;
   }
 
-  /*
+  /**
    * \returns A string describing the type of error
    */
   std::string lastErrorMessage() const { return m_lastError; }
@@ -348,7 +348,7 @@ class SparseLU
     return true;
   }
 
-  /*
+  /**
    * \returns the absolute value of the determinant of the matrix of which
    * *this is the QR decomposition.
    *
@@ -377,7 +377,7 @@ class SparseLU
     return det;
   }
 
-  /* \returns the natural log of the absolute value of the determinant of the
+  /** \returns the natural log of the absolute value of the determinant of the
    * matrix of which **this is the QR decomposition
    *
    * \note This method is useful to work around the risk of overflow/underflow
@@ -404,7 +404,7 @@ class SparseLU
     return det;
   }
 
-  /* \returns A number representing the sign of the determinant
+  /** \returns A number representing the sign of the determinant
    *
    * \sa absDeterminant(), logAbsDeterminant()
    */
@@ -429,7 +429,7 @@ class SparseLU
     return det * m_detPermR * m_detPermC;
   }
 
-  /* \returns The determinant of the matrix.
+  /** \returns The determinant of the matrix.
    *
    * \sa absDeterminant(), logAbsDeterminant()
    */
@@ -494,7 +494,7 @@ class SparseLU
 };  // End class SparseLU
 
 // Functions needed by the anaysis phase
-/*
+/**
  * Compute the column permutation to minimize the fill-in
  *
  *  - Apply this permutation to the input matrix -
@@ -574,7 +574,7 @@ void SparseLU<MatrixType, OrderingType>::analyzePattern(const MatrixType& mat) {
 
 // Functions needed by the numerical factorization phase
 
-/*
+/**
  *  - Numerical factorization
  *  - Interleaved with the symbolic factorization
  * On exit,  info is
@@ -664,7 +664,7 @@ void SparseLU<MatrixType, OrderingType>::factorize(const MatrixType& matrix) {
   dense.setZero(maxpanel);
   ScalarVector tempv;
   tempv.setZero(internal::LUnumTempV(m, m_perfv.panel_size, m_perfv.maxsuper,
-                                     /*m_perfv.rowblk*/ m));
+                                     /**m_perfv.rowblk*/ m));
 
   // Compute the inverse of perm_c
   PermutationType iperm_c(m_perm_c.inverse());

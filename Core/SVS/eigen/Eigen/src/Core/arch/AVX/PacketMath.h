@@ -223,7 +223,7 @@ struct scalar_div_cost<double, true> {
   enum { value = 16 };
 };
 
-/* Proper support for integers is only provided by AVX2. In the meantime, we'll
+/** Proper support for integers is only provided by AVX2. In the meantime, we'll
    use SSE instructions and packets to deal with integers.
 template<> struct packet_traits<int>    : default_packet_traits
 {
@@ -317,28 +317,28 @@ EIGEN_STRONG_INLINE Packet4d pset1frombits<Packet4d>(uint64_t from) {
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet8f pzero(const Packet8f& /*a*/) {
+EIGEN_STRONG_INLINE Packet8f pzero(const Packet8f& /**a*/) {
   return _mm256_setzero_ps();
 }
 template <>
-EIGEN_STRONG_INLINE Packet4d pzero(const Packet4d& /*a*/) {
+EIGEN_STRONG_INLINE Packet4d pzero(const Packet4d& /**a*/) {
   return _mm256_setzero_pd();
 }
 template <>
-EIGEN_STRONG_INLINE Packet8i pzero(const Packet8i& /*a*/) {
+EIGEN_STRONG_INLINE Packet8i pzero(const Packet8i& /**a*/) {
   return _mm256_setzero_si256();
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet8f peven_mask(const Packet8f& /*a*/) {
+EIGEN_STRONG_INLINE Packet8f peven_mask(const Packet8f& /**a*/) {
   return _mm256_castsi256_ps(_mm256_set_epi32(0, -1, 0, -1, 0, -1, 0, -1));
 }
 template <>
-EIGEN_STRONG_INLINE Packet8i peven_mask(const Packet8i& /*a*/) {
+EIGEN_STRONG_INLINE Packet8i peven_mask(const Packet8i& /**a*/) {
   return _mm256_set_epi32(0, -1, 0, -1, 0, -1, 0, -1);
 }
 template <>
-EIGEN_STRONG_INLINE Packet4d peven_mask(const Packet4d& /*a*/) {
+EIGEN_STRONG_INLINE Packet4d peven_mask(const Packet4d& /**a*/) {
   return _mm256_castsi256_pd(_mm256_set_epi32(0, 0, -1, -1, 0, 0, -1, -1));
 }
 
@@ -466,8 +466,8 @@ EIGEN_STRONG_INLINE Packet4d pdiv<Packet4d>(const Packet4d& a,
   return _mm256_div_pd(a, b);
 }
 template <>
-EIGEN_STRONG_INLINE Packet8i pdiv<Packet8i>(const Packet8i& /*a*/,
-                                            const Packet8i& /*b*/) {
+EIGEN_STRONG_INLINE Packet8i pdiv<Packet8i>(const Packet8i& /**a*/,
+                                            const Packet8i& /**b*/) {
   eigen_assert(false && "packet integer division are not supported by AVX");
   return pset1<Packet8i>(0);
 }

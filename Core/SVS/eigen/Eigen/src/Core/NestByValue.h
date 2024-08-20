@@ -20,7 +20,7 @@ struct traits<NestByValue<ExpressionType> > : public traits<ExpressionType> {
 };
 }  // namespace internal
 
-/* \class NestByValue
+/** \class NestByValue
  * \ingroup Core_Module
  *
  * \brief Expression which must be nested by value
@@ -62,7 +62,7 @@ class NestByValue
   const ExpressionType m_expression;
 };
 
-/* \returns an expression of the temporary version of *this.
+/** \returns an expression of the temporary version of *this.
  */
 template <typename Derived>
 EIGEN_DEVICE_FUNC inline const NestByValue<Derived>

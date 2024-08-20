@@ -25,7 +25,7 @@ template <typename _LhsScalar, typename _RhsScalar, bool _ConjLhs = false,
           int _PacketSize = GEBPPacketFull>
 class gebp_traits;
 
-/* \internal \returns b if a<=0, and returns a otherwise. */
+/** \internal \returns b if a<=0, and returns a otherwise. */
 inline std::ptrdiff_t manage_caching_sizes_helper(std::ptrdiff_t a,
                                                   std::ptrdiff_t b) {
   return a <= 0 ? b : a;
@@ -76,7 +76,7 @@ const std::ptrdiff_t defaultL3CacheSize =
 #undef EIGEN_SET_DEFAULT_L2_CACHE_SIZE
 #undef EIGEN_SET_DEFAULT_L3_CACHE_SIZE
 
-/* \internal */
+/** \internal */
 struct CacheSizes {
   CacheSizes() : m_l1(-1), m_l2(-1), m_l3(-1) {
     int l1CacheSize, l2CacheSize, l3CacheSize;
@@ -91,7 +91,7 @@ struct CacheSizes {
   std::ptrdiff_t m_l3;
 };
 
-/* \internal */
+/** \internal */
 inline void manage_caching_sizes(Action action, std::ptrdiff_t* l1,
                                  std::ptrdiff_t* l2, std::ptrdiff_t* l3) {
   static CacheSizes m_cacheSizes;
@@ -113,7 +113,7 @@ inline void manage_caching_sizes(Action action, std::ptrdiff_t* l1,
   }
 }
 
-/* Helper for computeProductBlockingSizes.
+/** Helper for computeProductBlockingSizes.
  *
  * Given a m x k times k x n matrix product of scalar types \c LhsScalar and \c
  * RhsScalar, this function computes the blocking size parameters along the
@@ -291,7 +291,7 @@ void evaluateProductBlockingSizesHeuristic(Index& k, Index& m, Index& n,
       //    Here we allow one more sweep if this gives us a perfect match, thus
       //    the commented "-1"
       n = (n % nc) == 0 ? nc
-                        : (nc - Traits::nr * ((nc /*-1*/ - (n % nc)) /
+                        : (nc - Traits::nr * ((nc /**-1*/ - (n % nc)) /
                                               (Traits::nr * (n / nc + 1))));
     } else if (old_k == k) {
       // So far, no blocking at all, i.e., kc==k, and nc==n.
@@ -319,7 +319,7 @@ void evaluateProductBlockingSizesHeuristic(Index& k, Index& m, Index& n,
       else if (mc == 0)
         return;
       m = (m % mc) == 0 ? mc
-                        : (mc - Traits::mr * ((mc /*-1*/ - (m % mc)) /
+                        : (mc - Traits::mr * ((mc /**-1*/ - (m % mc)) /
                                               (Traits::mr * (m / mc + 1))));
     }
   }
@@ -342,7 +342,7 @@ inline bool useSpecificBlockingSizes(Index& k, Index& m, Index& n) {
   return false;
 }
 
-/* \brief Computes the blocking parameters for a m x k times k x n matrix
+/** \brief Computes the blocking parameters for a m x k times k x n matrix
  * product
  *
  * \param[in,out] k Input: the third dimension of the product. Output: the
@@ -440,7 +440,7 @@ struct packet_conditional<GEBPPacketHalf, T1, T2, T3> {
       typename unpacket_traits<typename packet_traits<Scalar>::half>::half>:: \
       type ScalarPacket
 
-/* Vectorization logic
+/** Vectorization logic
  *  real*real: unpack rhs to constant packets, ...
  *
  *  cd*cd : unpack rhs to (b_r,b_r), (b_i,b_i), mul to get (a_r b_r,a_i b_r)
@@ -717,7 +717,7 @@ class gebp_traits<std::complex<RealScalar>, RealScalar, _ConjLhs, false, Arch,
   }
 
   EIGEN_STRONG_INLINE void madd_impl(const LhsScalar& a, const RhsScalar& b,
-                                     ResScalar& c, RhsScalar& /*tmp*/,
+                                     ResScalar& c, RhsScalar& /**tmp*/,
                                      const false_type&) const {
     c += a * b;
   }
@@ -937,7 +937,7 @@ class gebp_traits<std::complex<RealScalar>, std::complex<RealScalar>, _ConjLhs,
   EIGEN_STRONG_INLINE
       typename enable_if<!is_same<RhsPacketType, RhsPacketx4>::value>::type
       madd(const LhsPacketType& a, const RhsPacketType& b,
-           DoublePacket<ResPacketType>& c, TmpType& /*tmp*/,
+           DoublePacket<ResPacketType>& c, TmpType& /**tmp*/,
            const LaneIdType&) const {
     c.first = padd(pmul(a, b.first), c.first);
     c.second = padd(pmul(a, b.second), c.second);
@@ -945,7 +945,7 @@ class gebp_traits<std::complex<RealScalar>, std::complex<RealScalar>, _ConjLhs,
 
   template <typename LaneIdType>
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacket& b,
-                                ResPacket& c, RhsPacket& /*tmp*/,
+                                ResPacket& c, RhsPacket& /**tmp*/,
                                 const LaneIdType&) const {
     c = cj.pmadd(a, b, c);
   }
@@ -1102,7 +1102,7 @@ class gebp_traits<RealScalar, std::complex<RealScalar>, false, _ConjRhs, Arch,
   }
 
   EIGEN_STRONG_INLINE void madd_impl(const LhsScalar& a, const RhsScalar& b,
-                                     ResScalar& c, RhsScalar& /*tmp*/,
+                                     ResScalar& c, RhsScalar& /**tmp*/,
                                      const false_type&) const {
     c += a * b;
   }
@@ -1125,7 +1125,7 @@ class gebp_traits<RealScalar, std::complex<RealScalar>, false, _ConjRhs, Arch,
  protected:
 };
 
-/* optimized General packed Block * packed Panel product kernel
+/** optimized General packed Block * packed Panel product kernel
  *
  * Mixing type logic: C += A * B
  *  |  A  |  B  | comments
@@ -1454,7 +1454,7 @@ struct lhs_process_one_packet {
   do {                                                                     \
     EIGEN_ASM_COMMENT("begin step of gebp micro kernel 1/half/quarterX1"); \
     EIGEN_ASM_COMMENT("Note: these asm comments work around bug 935!");    \
-    /* FIXME: why unaligned???? */                                         \
+    /** FIXME: why unaligned???? */                                         \
     traits.loadLhsUnaligned(&blA[(0 + 1 * K) * LhsProgress], A0);          \
     traits.loadRhs(&blB[(0 + K) * RhsProgress], B_0);                      \
     traits.madd(A0, B_0, C0, B_0, fix<0>);                                 \
@@ -1656,7 +1656,7 @@ gebp_kernel<LhsScalar, RhsScalar, Index, DataMapper, mr, nr, ConjugateLhs,
     internal::prefetch(blA + (3 * K + 16) * LhsProgress);                 \
     if (EIGEN_ARCH_ARM || EIGEN_ARCH_MIPS) {                              \
       internal::prefetch(blB + (4 * K + 16) * RhsProgress);               \
-    } /* Bug 953 */                                                       \
+    } /** Bug 953 */                                                       \
     traits.loadLhs(&blA[(0 + 3 * K) * LhsProgress], A0);                  \
     traits.loadLhs(&blA[(1 + 3 * K) * LhsProgress], A1);                  \
     traits.loadLhs(&blA[(2 + 3 * K) * LhsProgress], A2);                  \
@@ -2812,7 +2812,7 @@ struct gemm_pack_rhs<Scalar, Index, DataMapper, nr, RowMajor, Conjugate,
 
 }  // end namespace internal
 
-/* \returns the currently set level 1 cpu cache size (in bytes) used to
+/** \returns the currently set level 1 cpu cache size (in bytes) used to
  * estimate the ideal blocking size parameters. \sa setCpuCacheSize */
 inline std::ptrdiff_t l1CacheSize() {
   std::ptrdiff_t l1, l2, l3;
@@ -2820,7 +2820,7 @@ inline std::ptrdiff_t l1CacheSize() {
   return l1;
 }
 
-/* \returns the currently set level 2 cpu cache size (in bytes) used to
+/** \returns the currently set level 2 cpu cache size (in bytes) used to
  * estimate the ideal blocking size parameters. \sa setCpuCacheSize */
 inline std::ptrdiff_t l2CacheSize() {
   std::ptrdiff_t l1, l2, l3;
@@ -2828,7 +2828,7 @@ inline std::ptrdiff_t l2CacheSize() {
   return l2;
 }
 
-/* \returns the currently set level 3 cpu cache size (in bytes) used to
+/** \returns the currently set level 3 cpu cache size (in bytes) used to
 estimate the ideal blocking size paramete\ rs.
 * \sa setCpuCacheSize */
 inline std::ptrdiff_t l3CacheSize() {
@@ -2837,7 +2837,7 @@ inline std::ptrdiff_t l3CacheSize() {
   return l3;
 }
 
-/* Set the cpu L1 and L2 cache sizes (in bytes).
+/** Set the cpu L1 and L2 cache sizes (in bytes).
  * These values are use to adjust the size of the blocks
  * for the algorithms working per blocks.
  *

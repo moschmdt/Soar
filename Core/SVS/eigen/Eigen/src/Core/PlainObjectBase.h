@@ -69,18 +69,18 @@ namespace doxygen {
 // _Options, _MaxRows, _MaxCols> >, this is why we simply inherits MatrixBase,
 // though this does not make sense.
 
-/* This class is just a workaround for Doxygen and it does not not actually
+/** This class is just a workaround for Doxygen and it does not not actually
  * exist. */
 template <typename Derived>
 struct dense_xpr_base_dispatcher;
-/* This class is just a workaround for Doxygen and it does not not actually
+/** This class is just a workaround for Doxygen and it does not not actually
  * exist. */
 template <typename _Scalar, int _Rows, int _Cols, int _Options, int _MaxRows,
           int _MaxCols>
 struct dense_xpr_base_dispatcher<
     Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>>
     : public MatrixBase {};
-/* This class is just a workaround for Doxygen and it does not not actually
+/** This class is just a workaround for Doxygen and it does not not actually
  * exist. */
 template <typename _Scalar, int _Rows, int _Cols, int _Options, int _MaxRows,
           int _MaxCols>
@@ -90,7 +90,7 @@ struct dense_xpr_base_dispatcher<
 
 }  // namespace doxygen
 
-/* \class PlainObjectBase
+/** \class PlainObjectBase
  * \ingroup Core_Module
  * \brief %Dense storage base class for matrices and arrays.
  *
@@ -176,7 +176,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     return m_storage.cols();
   }
 
-  /* This is an overloaded version of
+  /** This is an overloaded version of
    * DenseCoeffsBase<Derived,ReadOnlyAccessors>::coeff(Index,Index) const
    * provided to by-pass the creation of an evaluator of the expression, thus
    * saving compilation efforts.
@@ -191,7 +191,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
       return m_storage.data()[rowId + colId * m_storage.rows()];
   }
 
-  /* This is an overloaded version of
+  /** This is an overloaded version of
    * DenseCoeffsBase<Derived,ReadOnlyAccessors>::coeff(Index) const provided to
    * by-pass the creation of an evaluator of the expression, thus saving
    * compilation efforts.
@@ -203,7 +203,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     return m_storage.data()[index];
   }
 
-  /* This is an overloaded version of
+  /** This is an overloaded version of
    * DenseCoeffsBase<Derived,WriteAccessors>::coeffRef(Index,Index) const
    * provided to by-pass the creation of an evaluator of the expression, thus
    * saving compilation efforts.
@@ -218,7 +218,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
       return m_storage.data()[rowId + colId * m_storage.rows()];
   }
 
-  /* This is an overloaded version of
+  /** This is an overloaded version of
    * DenseCoeffsBase<Derived,WriteAccessors>::coeffRef(Index) const provided to
    * by-pass the creation of an evaluator of the expression, thus saving
    * compilation efforts.
@@ -230,7 +230,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     return m_storage.data()[index];
   }
 
-  /* This is the const version of coeffRef(Index,Index) which is thus synonym
+  /** This is the const version of coeffRef(Index,Index) which is thus synonym
    * of coeff(Index,Index). It is provided for convenience. */
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE const Scalar& coeffRef(Index rowId, Index colId) const {
@@ -240,14 +240,14 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
       return m_storage.data()[rowId + colId * m_storage.rows()];
   }
 
-  /* This is the const version of coeffRef(Index) which is thus synonym of
+  /** This is the const version of coeffRef(Index) which is thus synonym of
    * coeff(Index). It is provided for convenience. */
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE const Scalar& coeffRef(Index index) const {
     return m_storage.data()[index];
   }
 
-  /* \internal */
+  /** \internal */
   template <int LoadMode>
   EIGEN_STRONG_INLINE PacketScalar packet(Index rowId, Index colId) const {
     return internal::ploadt<PacketScalar, LoadMode>(
@@ -256,13 +256,13 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
                                 : rowId + colId * m_storage.rows()));
   }
 
-  /* \internal */
+  /** \internal */
   template <int LoadMode>
   EIGEN_STRONG_INLINE PacketScalar packet(Index index) const {
     return internal::ploadt<PacketScalar, LoadMode>(m_storage.data() + index);
   }
 
-  /* \internal */
+  /** \internal */
   template <int StoreMode>
   EIGEN_STRONG_INLINE void writePacket(Index rowId, Index colId,
                                        const PacketScalar& val) {
@@ -273,24 +273,24 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
         val);
   }
 
-  /* \internal */
+  /** \internal */
   template <int StoreMode>
   EIGEN_STRONG_INLINE void writePacket(Index index, const PacketScalar& val) {
     internal::pstoret<Scalar, PacketScalar, StoreMode>(m_storage.data() + index,
                                                        val);
   }
 
-  /* \returns a const pointer to the data array of this matrix */
+  /** \returns a const pointer to the data array of this matrix */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const Scalar* data() const {
     return m_storage.data();
   }
 
-  /* \returns a pointer to the data array of this matrix */
+  /** \returns a pointer to the data array of this matrix */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar* data() {
     return m_storage.data();
   }
 
-  /* Resizes \c *this to a \a rows x \a cols matrix.
+  /** Resizes \c *this to a \a rows x \a cols matrix.
    *
    * This method is intended for dynamic-size matrices, although it is legal to
    * call it on any matrix as long as fixed dimensions are left unchanged. If
@@ -334,7 +334,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
 #endif
   }
 
-  /* Resizes \c *this to a vector of length \a size
+  /** Resizes \c *this to a vector of length \a size
    *
    * \only_for_vectors. This method does not work for
    * partially dynamic matrices when the static dimension is anything other
@@ -366,7 +366,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
 #endif
   }
 
-  /* Resizes the matrix, changing only the number of columns. For the parameter
+  /** Resizes the matrix, changing only the number of columns. For the parameter
    * of type NoChange_t, just pass the special value \c NoChange as in the
    * example below.
    *
@@ -378,7 +378,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
   EIGEN_DEVICE_FUNC
   inline void resize(NoChange_t, Index cols) { resize(rows(), cols); }
 
-  /* Resizes the matrix, changing only the number of rows. For the parameter of
+  /** Resizes the matrix, changing only the number of rows. For the parameter of
    * type NoChange_t, just pass the special value \c NoChange as in the example
    * below.
    *
@@ -390,7 +390,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
   EIGEN_DEVICE_FUNC
   inline void resize(Index rows, NoChange_t) { resize(rows, cols()); }
 
-  /* Resizes \c *this to have the same dimensions as \a other.
+  /** Resizes \c *this to have the same dimensions as \a other.
    * Takes care of doing all the checking that's needed.
    *
    * Note that copying a row-vector into a vector (and conversely) is allowed.
@@ -414,7 +414,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
       resize(other.rows(), other.cols());
   }
 
-  /* Resizes the matrix to \a rows x \a cols while leaving old values
+  /** Resizes the matrix to \a rows x \a cols while leaving old values
    * untouched.
    *
    * The method is intended for matrices of dynamic size. If you only want to
@@ -430,7 +430,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     internal::conservative_resize_like_impl<Derived>::run(*this, rows, cols);
   }
 
-  /* Resizes the matrix to \a rows x \a cols while leaving old values
+  /** Resizes the matrix to \a rows x \a cols while leaving old values
    * untouched.
    *
    * As opposed to conservativeResize(Index rows, Index cols), this version
@@ -444,7 +444,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     conservativeResize(rows, cols());
   }
 
-  /* Resizes the matrix to \a rows x \a cols while leaving old values
+  /** Resizes the matrix to \a rows x \a cols while leaving old values
    * untouched.
    *
    * As opposed to conservativeResize(Index rows, Index cols), this version
@@ -458,7 +458,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     conservativeResize(rows(), cols);
   }
 
-  /* Resizes the vector to \a size while retaining old values.
+  /** Resizes the vector to \a size while retaining old values.
    *
    * \only_for_vectors. This method does not work for
    * partially dynamic matrices when the static dimension is anything other
@@ -471,7 +471,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     internal::conservative_resize_like_impl<Derived>::run(*this, size);
   }
 
-  /* Resizes the matrix to \a rows x \a cols of \c other, while leaving old
+  /** Resizes the matrix to \a rows x \a cols of \c other, while leaving old
    * values untouched.
    *
    * The method is intended for matrices of dynamic size. If you only want to
@@ -489,7 +489,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
                                                                         other);
   }
 
-  /* This is a special case of the templated operator=. Its purpose is to
+  /** This is a special case of the templated operator=. Its purpose is to
    * prevent a default operator= from hiding the templated operator=.
    */
   EIGEN_DEVICE_FUNC
@@ -497,7 +497,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     return _set(other);
   }
 
-  /* \sa MatrixBase::lazyAssign() */
+  /** \sa MatrixBase::lazyAssign() */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& lazyAssign(
       const DenseBase<OtherDerived>& other) {
@@ -523,7 +523,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
   // FIXME is it still needed ?
-  /* \internal */
+  /** \internal */
   EIGEN_DEVICE_FUNC
   explicit PlainObjectBase(internal::constructor_without_unaligned_array_assert)
       : m_storage(internal::constructor_without_unaligned_array_assert()) {
@@ -545,7 +545,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
   }
 #endif
 
-  /* Copy constructor */
+  /** Copy constructor */
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE PlainObjectBase(const PlainObjectBase& other)
       : Base(), m_storage(other.m_storage) {}
@@ -557,7 +557,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
   }
 
 #if EIGEN_HAS_CXX11
-  /* \brief Construct a row of column vector with fixed size from an arbitrary
+  /** \brief Construct a row of column vector with fixed size from an arbitrary
    * number of coefficients. \cpp11
    *
    * \only_for_vectors
@@ -589,7 +589,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     static_cast<void>(x);
   }
 
-  /* \brief Constructs a Matrix or Array and initializes it by elements given
+  /** \brief Constructs a Matrix or Array and initializes it by elements given
    * by an initializer list of initializer lists \cpp11
    */
   EIGEN_DEVICE_FUNC
@@ -630,7 +630,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
   }
 #endif  // end EIGEN_HAS_CXX11
 
-  /* \sa PlainObjectBase::operator=(const EigenBase<OtherDerived>&) */
+  /** \sa PlainObjectBase::operator=(const EigenBase<OtherDerived>&) */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   PlainObjectBase(const DenseBase<OtherDerived>& other)
@@ -640,7 +640,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     _set_noalias(other);
   }
 
-  /* \sa PlainObjectBase::operator=(const EigenBase<OtherDerived>&) */
+  /** \sa PlainObjectBase::operator=(const EigenBase<OtherDerived>&) */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   PlainObjectBase(const EigenBase<OtherDerived>& other)
@@ -649,7 +649,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     resizeLike(other);
     *this = other.derived();
   }
-  /* \brief Copy constructor with in-place evaluation */
+  /** \brief Copy constructor with in-place evaluation */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   PlainObjectBase(const ReturnByValue<OtherDerived>& other) {
@@ -660,7 +660,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
   }
 
  public:
-  /* \brief Copies the generic expression \a other into *this.
+  /** \brief Copies the generic expression \a other into *this.
    * \copydetails DenseBase::operator=(const EigenBase<OtherDerived> &other)
    */
   template <typename OtherDerived>
@@ -671,7 +671,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     return this->derived();
   }
 
-  /* \name Map
+  /** \name Map
    * These are convenience functions returning Map objects. The Map() static
    * functions return unaligned Map objects, while the AlignedMap() functions
    * return aligned Map objects and thus should be called only with
@@ -833,7 +833,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
 #endif
 
  protected:
-  /* \internal Resizes *this in preparation for assigning \a other to it.
+  /** \internal Resizes *this in preparation for assigning \a other to it.
    * Takes care of doing all the checking that's needed.
    *
    * Note that copying a row-vector into a vector (and conversely) is allowed.
@@ -856,7 +856,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
 #endif
   }
 
-  /*
+  /**
    * \brief Copies the value of the expression \a other into \c *this with
    * automatic resizing.
    *
@@ -881,7 +881,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
     return this->derived();
   }
 
-  /* \internal Like _set() but additionally makes the assumption that no
+  /** \internal Like _set() but additionally makes the assumption that no
    * aliasing effect can happen (which is the case when creating a new matrix)
    * so one can enforce lazy evaluation.
    *
@@ -1059,7 +1059,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
 
  public:
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* \internal
+  /** \internal
    * \brief Override DenseBase::swap() since for dynamic-sized matrices
    * of same type it is enough to swap the data pointers.
    */
@@ -1072,7 +1072,7 @@ class PlainObjectBase : public internal::dense_xpr_base<Derived>::type
         this->derived(), other.derived());
   }
 
-  /* \internal
+  /** \internal
    * \brief const version forwarded to DenseBase::swap
    */
   template <typename OtherDerived>

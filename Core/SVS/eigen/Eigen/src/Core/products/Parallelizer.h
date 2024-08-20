@@ -18,7 +18,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal */
+/** \internal */
 inline void manage_multi_threading(Action action, int* v) {
   static int m_maxThreads = -1;
   EIGEN_UNUSED_VARIABLE(m_maxThreads)
@@ -43,7 +43,7 @@ inline void manage_multi_threading(Action action, int* v) {
 
 }  // namespace internal
 
-/* Must be call first when calling Eigen from multiple threads */
+/** Must be call first when calling Eigen from multiple threads */
 inline void initParallel() {
   int nbt;
   internal::manage_multi_threading(GetAction, &nbt);
@@ -51,7 +51,7 @@ inline void initParallel() {
   internal::manage_caching_sizes(GetAction, &l1, &l2, &l3);
 }
 
-/* \returns the max number of threads reserved for Eigen
+/** \returns the max number of threads reserved for Eigen
  * \sa setNbThreads */
 inline int nbThreads() {
   int ret;
@@ -59,7 +59,7 @@ inline int nbThreads() {
   return ret;
 }
 
-/* Sets the max number of threads reserved for Eigen
+/** Sets the max number of threads reserved for Eigen
  * \sa nbThreads */
 inline void setNbThreads(int v) {
   internal::manage_multi_threading(SetAction, &v);

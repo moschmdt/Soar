@@ -1,4 +1,4 @@
-/*
+/**
  * Stats_Tracker.h
  *
  *  Created on: Mar 13, 2017
@@ -131,4 +131,4 @@ class StatsTracker {
   }
 };
 
-#endif /* PERFORMANCETESTS_PERFORMANCETESTS_H_ */
+#endif /** PERFORMANCETESTS_PERFORMANCETESTS_H_ */

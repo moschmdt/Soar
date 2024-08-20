@@ -48,7 +48,7 @@ struct solve_assertion<CwiseUnaryOp<
 };
 }  // end namespace internal
 
-/* \class SolverBase
+/** \class SolverBase
  * \brief A base class for matrix decomposition and solvers
  *
  * \tparam Derived the actual type of the decomposition/solver.
@@ -101,14 +101,14 @@ class SolverBase : public EigenBase<Derived> {
                                                    : 2
   };
 
-  /* Default constructor */
+  /** Default constructor */
   SolverBase() {}
 
   ~SolverBase() {}
 
   using Base::derived;
 
-  /* \returns an expression of the solution x of \f$ A x = b \f$ using the
+  /** \returns an expression of the solution x of \f$ A x = b \f$ using the
    * current decomposition of A.
    */
   template <typename Rhs>
@@ -118,10 +118,10 @@ class SolverBase : public EigenBase<Derived> {
     return Solve<Derived, Rhs>(derived(), b.derived());
   }
 
-  /* \internal the return type of transpose() */
+  /** \internal the return type of transpose() */
   typedef typename internal::add_const<Transpose<const Derived> >::type
       ConstTransposeReturnType;
-  /* \returns an expression of the transposed of the factored matrix.
+  /** \returns an expression of the transposed of the factored matrix.
    *
    * A typical usage is to solve for the transposed problem A^T x = b:
    * \code x = dec.transpose().solve(b); \endcode
@@ -132,13 +132,13 @@ class SolverBase : public EigenBase<Derived> {
     return ConstTransposeReturnType(derived());
   }
 
-  /* \internal the return type of adjoint() */
+  /** \internal the return type of adjoint() */
   typedef typename internal::conditional<
       NumTraits<Scalar>::IsComplex,
       CwiseUnaryOp<internal::scalar_conjugate_op<Scalar>,
                    ConstTransposeReturnType>,
       ConstTransposeReturnType>::type AdjointReturnType;
-  /* \returns an expression of the adjoint of the factored matrix
+  /** \returns an expression of the adjoint of the factored matrix
    *
    * A typical usage is to solve for the adjoint problem A' x = b:
    * \code x = dec.adjoint().solve(b); \endcode

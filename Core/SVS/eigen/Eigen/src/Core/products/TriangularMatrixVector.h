@@ -176,7 +176,7 @@ EIGEN_DONT_INLINE void triangular_matrix_vector_product<
   }
 }
 
-/*
+/**
  * Wrapper to product_triangular_vector
  */
 

@@ -77,7 +77,7 @@ class XMLTrace {
     m_XML = NULL;
   }
 
-  /*
+  /**
    * @brief    Reinitialize this XML trace object so we can
    *           re-use it.
    */
@@ -95,13 +95,13 @@ class XMLTrace {
     m_pCurrentTag->AddRefOnHandle();
   }
 
-  /*
+  /**
    * @brief    Returns true if this tag contains no children
    *           (i.e. it has just been reset).
    */
   bool IsEmpty() { return (m_XML == NULL || m_XML->GetNumberChildren() == 0); }
 
-  /*
+  /**
    * @brief    Start a new tag.
    *
    * Subsequent calls to AddAttribute() will work with this tag
@@ -130,7 +130,7 @@ class XMLTrace {
     m_pCurrentTag->AddRefOnHandle();
   }
 
-  /*
+  /**
    * @brief    Terminate the current tag.
    *
    * The tag name is just used for error checking to make sure
@@ -153,7 +153,7 @@ class XMLTrace {
     MoveCurrentToParent();
   }
 
-  /*
+  /**
    * @brief    Adds an attribute to the current tag.
    *
    * NOTE: The attribute name must remain in scope forever (i.e. it should be
@@ -170,7 +170,7 @@ class XMLTrace {
     m_pCurrentTag->AddAttributeFast(pAttributeName, pValue);
   }
 
-  /*
+  /**
    * @brief Releases ownership of the underlying XML object.
    *
    *        The caller must call releaseRef() on this handle
@@ -194,7 +194,7 @@ class XMLTrace {
     return hXML;
   }
 
-  /*
+  /**
    * @brief Releases ownership of the underlying XML object.
    *
    * As for Detach() but returns an object rather than a handle.
@@ -208,7 +208,7 @@ class XMLTrace {
     return pResult;
   }
 
-  /*
+  /**
    * @brief    Occassionally it's helpful to be able to back up
    *           in the XML and add some extra elements.
    *

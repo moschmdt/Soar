@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * \brief Template functor for scalar/packet assignment
  *
  */
@@ -46,7 +46,7 @@ struct functor_traits<assign_op<DstScalar, SrcScalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor for scalar/packet assignment with addition
  *
  */
@@ -73,7 +73,7 @@ struct functor_traits<add_assign_op<DstScalar, SrcScalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor for scalar/packet assignment with subtraction
  *
  */
@@ -100,7 +100,7 @@ struct functor_traits<sub_assign_op<DstScalar, SrcScalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor for scalar/packet assignment with multiplication
  *
  */
@@ -127,7 +127,7 @@ struct functor_traits<mul_assign_op<DstScalar, SrcScalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor for scalar/packet assignment with diviving
  *
  */
@@ -154,7 +154,7 @@ struct functor_traits<div_assign_op<DstScalar, SrcScalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor for scalar/packet assignment with swapping
  *
  * It works as follow. For a non-vectorized evaluation loop, we have:

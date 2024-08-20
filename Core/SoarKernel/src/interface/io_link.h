@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* =======================================================================
+/** =======================================================================
                                  io_soar.h
 
                   General Soar I/O System Routines
@@ -48,9 +48,9 @@ extern void inform_output_module_of_wm_changes(agent* thisAgent,
                                                cons* wmes_being_removed);
 
 extern Symbol* get_next_io_symbol_from_text_input_line(
-    agent* thisAgent, char** text_read_position); /* in io.cpp */
+    agent* thisAgent, char** text_read_position); /** in io.cpp */
 
-/* =======================================================================
+/** =======================================================================
                             Input Functions
 
    Input functions take one parameter--a mode (integer) indicating why the
@@ -124,7 +124,7 @@ extern wme* add_input_wme(agent* thisAgent, Symbol* id, Symbol* attr,
                           Symbol* value);
 extern bool remove_input_wme(agent* thisAgent, wme* w);
 
-/* =======================================================================
+/** =======================================================================
                             Output Functions
 
    Output functions take two parameters--a mode (integer) indicating why the
@@ -162,19 +162,19 @@ extern bool remove_input_wme(agent* thisAgent, wme* w);
 ======================================================================= */
 
 typedef struct io_wme_struct {
-  struct io_wme_struct* next; /* points to next io_wme in the chain */
-  Symbol* id;                 /* id, attribute, and value of the wme */
+  struct io_wme_struct* next; /** points to next io_wme in the chain */
+  Symbol* id;                 /** id, attribute, and value of the wme */
   Symbol* attr;
   Symbol* value;
-  uint64_t timetag; /* DJP: Added.  Only guaranteed valid for an output wme. */
+  uint64_t timetag; /** DJP: Added.  Only guaranteed valid for an output wme. */
 } io_wme;
 
 typedef struct output_link_struct {
-  struct output_link_struct *next, *prev; /* dll of all existing links */
-  byte status;                            /* current xxx_OL_STATUS */
-  wme* link_wme;                          /* points to the output link wme */
-  cons* ids_in_tc;                        /* ids in TC(link) */
-  soar_callback* cb;                      /* corresponding output function */
+  struct output_link_struct *next, *prev; /** dll of all existing links */
+  byte status;                            /** current xxx_OL_STATUS */
+  wme* link_wme;                          /** points to the output link wme */
+  cons* ids_in_tc;                        /** ids in TC(link) */
+  soar_callback* cb;                      /** corresponding output function */
 } output_link;
 
 #define ADDED_OUTPUT_COMMAND 1

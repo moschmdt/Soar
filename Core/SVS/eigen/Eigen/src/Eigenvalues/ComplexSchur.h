@@ -21,7 +21,7 @@ template <typename MatrixType, bool IsComplex>
 struct complex_schur_reduce_to_hessenberg;
 }
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class ComplexSchur
@@ -62,12 +62,12 @@ class ComplexSchur {
     MaxColsAtCompileTime = MatrixType::MaxColsAtCompileTime
   };
 
-  /* \brief Scalar type for matrices of type \p _MatrixType. */
+  /** \brief Scalar type for matrices of type \p _MatrixType. */
   typedef typename MatrixType::Scalar Scalar;
   typedef typename NumTraits<Scalar>::Real RealScalar;
   typedef Eigen::Index Index;  ///< \deprecated since Eigen 3.3
 
-  /* \brief Complex scalar type for \p _MatrixType.
+  /** \brief Complex scalar type for \p _MatrixType.
    *
    * This is \c std::complex<Scalar> if #Scalar is real (e.g.,
    * \c float or \c double) and just \c Scalar if #Scalar is
@@ -75,7 +75,7 @@ class ComplexSchur {
    */
   typedef std::complex<RealScalar> ComplexScalar;
 
-  /* \brief Type for the matrices in the Schur decomposition.
+  /** \brief Type for the matrices in the Schur decomposition.
    *
    * This is a square matrix with entries of type #ComplexScalar.
    * The size is the same as the size of \p _MatrixType.
@@ -84,7 +84,7 @@ class ComplexSchur {
                  MaxRowsAtCompileTime, MaxColsAtCompileTime>
       ComplexMatrixType;
 
-  /* \brief Default constructor.
+  /** \brief Default constructor.
    *
    * \param [in] size  Positive integer, size of the matrix whose Schur
    * decomposition will be computed.
@@ -106,7 +106,7 @@ class ComplexSchur {
         m_matUisUptodate(false),
         m_maxIters(-1) {}
 
-  /* \brief Constructor; computes Schur decomposition of given matrix.
+  /** \brief Constructor; computes Schur decomposition of given matrix.
    *
    * \param[in]  matrix    Square matrix whose Schur decomposition is to be
    * computed. \param[in]  computeU  If true, both T and U are computed; if
@@ -128,7 +128,7 @@ class ComplexSchur {
     compute(matrix.derived(), computeU);
   }
 
-  /* \brief Returns the unitary matrix in the Schur decomposition.
+  /** \brief Returns the unitary matrix in the Schur decomposition.
    *
    * \returns A const reference to the matrix U.
    *
@@ -150,7 +150,7 @@ class ComplexSchur {
     return m_matU;
   }
 
-  /* \brief Returns the triangular matrix in the Schur decomposition.
+  /** \brief Returns the triangular matrix in the Schur decomposition.
    *
    * \returns A const reference to the matrix T.
    *
@@ -172,7 +172,7 @@ class ComplexSchur {
     return m_matT;
   }
 
-  /* \brief Computes Schur decomposition of given matrix.
+  /** \brief Computes Schur decomposition of given matrix.
     *
     * \param[in]  matrix  Square matrix whose Schur decomposition is to be
     computed.
@@ -200,7 +200,7 @@ class ComplexSchur {
   ComplexSchur& compute(const EigenBase<InputType>& matrix,
                         bool computeU = true);
 
-  /* \brief Compute Schur decomposition from a given Hessenberg matrix
+  /** \brief Compute Schur decomposition from a given Hessenberg matrix
    *  \param[in] matrixH Matrix in Hessenberg form H
    *  \param[in] matrixQ orthogonal matrix Q that transform a matrix A to H : A
    * = Q H Q^T \param computeU Computes the matriX U of the Schur vectors
@@ -223,7 +223,7 @@ class ComplexSchur {
                                       const OrthMatrixType& matrixQ,
                                       bool computeU = true);
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful, \c NoConvergence
    * otherwise.
@@ -233,7 +233,7 @@ class ComplexSchur {
     return m_info;
   }
 
-  /* \brief Sets the maximum number of iterations allowed.
+  /** \brief Sets the maximum number of iterations allowed.
    *
    * If not specified by the user, the maximum number of iterations is
    * m_maxIterationsPerRow times the size of the matrix.
@@ -243,10 +243,10 @@ class ComplexSchur {
     return *this;
   }
 
-  /* \brief Returns the maximum number of iterations. */
+  /** \brief Returns the maximum number of iterations. */
   Index getMaxIterations() { return m_maxIters; }
 
-  /* \brief Maximum number of iterations per row.
+  /** \brief Maximum number of iterations per row.
    *
    * If not otherwise specified, the maximum number of iterations is this number
    * times the size of the matrix. It is currently set to 30.
@@ -269,7 +269,7 @@ class ComplexSchur {
       MatrixType, NumTraits<Scalar>::IsComplex>;
 };
 
-/* If m_matT(i+1,i) is neglegible in floating point arithmetic
+/** If m_matT(i+1,i) is neglegible in floating point arithmetic
  * compared to m_matT(i,i) and m_matT(j,j), then set it to zero and
  * return true, else return false. */
 template <typename MatrixType>
@@ -284,7 +284,7 @@ inline bool ComplexSchur<MatrixType>::subdiagonalEntryIsNeglegible(Index i) {
   return false;
 }
 
-/* Compute the shift in the current QR iteration. */
+/** Compute the shift in the current QR iteration. */
 template <typename MatrixType>
 typename ComplexSchur<MatrixType>::ComplexScalar
 ComplexSchur<MatrixType>::computeShift(Index iu, Index iter) {
@@ -360,7 +360,7 @@ ComplexSchur<MatrixType>& ComplexSchur<MatrixType>::computeFromHessenberg(
 }
 namespace internal {
 
-/* Reduce given matrix to Hessenberg form */
+/** Reduce given matrix to Hessenberg form */
 template <typename MatrixType, bool IsComplex>
 struct complex_schur_reduce_to_hessenberg {
   // this is the implementation for the case IsComplex = true
@@ -428,7 +428,7 @@ void ComplexSchur<MatrixType>::reduceToTriangularForm(bool computeU) {
       --il;
     }
 
-    /* perform the QR step using Givens rotations. The first rotation
+    /** perform the QR step using Givens rotations. The first rotation
        creates a bulge; the (il+2,il) element becomes nonzero. This
        bulge is chased down to the bottom of the active submatrix. */
 

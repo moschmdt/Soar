@@ -10,7 +10,7 @@
 #define METIS_SUPPORT_H
 
 namespace Eigen {
-/*
+/**
  * Get the fill-reducing ordering from the METIS package
  *
  * If A is the original matrix and Ap is the permuted matrix,

@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@ namespace Eigen {
 
 namespace internal {
 
-/*
+/**
  * This file implements general matrix-vector multiplication using BLAS
  * gemv function via partial specialization of
  * general_matrix_vector_product::run(..) method for float, double,

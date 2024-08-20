@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "COPYING" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *
  *  file:  semantic_memory.h
  *
@@ -39,7 +39,7 @@ class SMem_Manager {
   friend smem_db_predicate<boolean>;
 
  public:
-  /* General methods */
+  /** General methods */
 
   SMem_Manager(agent* myAgent);
   ~SMem_Manager(){};
@@ -51,7 +51,7 @@ class SMem_Manager {
   void reinit();
   void reset_stats() { statistics->reset(); };
 
-  /* Basic database methods */
+  /** Basic database methods */
   void attach();
   bool connected();
   void reset(Symbol* state);
@@ -66,7 +66,7 @@ class SMem_Manager {
                    std::string** err_msg);
   void close();
 
-  /* Methods for smem CLI commands*/
+  /** Methods for smem CLI commands*/
   uint64_t lti_exists(uint64_t pLTI_ID);
   bool CLI_add(const char* str_to_LTMs, std::string** err_msg);
   bool CLI_query(const char* ltms, std::string** err_msg,
@@ -83,36 +83,36 @@ class SMem_Manager {
 
   void set_id_counter(uint64_t counter_value);
 
-  /* Methods for creating an instance of a LTM using STIs */
+  /** Methods for creating an instance of a LTM using STIs */
   void clear_instance_mappings();
   Symbol* get_current_iSTI_for_LTI(uint64_t pLTI_ID, goal_stack_level pLevel,
                                    char pChar = 'L');
 
-  /* Methods that brings in a portion or all of smem into an ltm_set data
+  /** Methods that brings in a portion or all of smem into an ltm_set data
    * structure */
   void create_store_set(ltm_set* store_set, uint64_t lti_id,
                         uint64_t depth = 1);
   void create_full_store_set(ltm_set* store_set);
   void clear_store_set(ltm_set* store_set);
 
-  /* Methods for printing/visualizing semantic memory */
+  /** Methods for printing/visualizing semantic memory */
   void print_store(std::string* return_val);
   void print_smem_object(uint64_t pLTI_ID, uint64_t depth,
                          std::string* return_val, bool history = false);
 
-  /* Where working memory activation needs to give smem information on
+  /** Where working memory activation needs to give smem information on
    * edgeweights */
   void invalidate_from_lti(uint64_t invalid_parent);
   void add_to_invalidate_from_lti_table(uint64_t invalid_parent);
   void batch_invalidate_from_lti();
 
-  /* I need access to a setting from within WMA, so I use a function to do it
+  /** I need access to a setting from within WMA, so I use a function to do it
    * instead of making settings public.*/
 
   bool edge_updating_on();
 
   smem_timer_container*
-      timers; /* The following remains public because used in run_soar.cpp */
+      timers; /** The following remains public because used in run_soar.cpp */
   std::map<uint64_t, uint64_t>* smem_in_wmem;
   smem_wma_map* smem_wmas;
   std::unordered_map<uint64_t, int64_t>* smem_spreaded_to;
@@ -134,15 +134,15 @@ class SMem_Manager {
   smem_stat_container* statistics;
   soar_module::sqlite_database* DB;
 
-  /* Temporary maps used when creating an instance of an LTM */
+  /** Temporary maps used when creating an instance of an LTM */
   id_to_sym_map lti_to_sti_map;
   sym_to_id_map iSti_to_lti_map;
 
-  /* Methods for smem link interface */
+  /** Methods for smem link interface */
   void clear_result(Symbol* state);
   void respond_to_cmd(bool store_only);
 
-  /* Utility methods for smem database */
+  /** Utility methods for smem database */
   void init_db();
   bool is_version_one_db();
   void update_schema_one_to_two();
@@ -153,7 +153,7 @@ class SMem_Manager {
   bool variable_get(smem_variable_key variable_id, int64_t* variable_value);
   wme_list* get_direct_augs_of_id(Symbol* id, tc_number tc = NIL);
 
-  /* Methods for database hashing */
+  /** Methods for database hashing */
   smem_hash_id hash_add_type(byte symbol_type);
   smem_hash_id hash_int(int64_t val, bool add_on_fail = true);
   smem_hash_id hash_float(double val, bool add_on_fail = true);
@@ -164,7 +164,7 @@ class SMem_Manager {
   void rhash__str(smem_hash_id hash_value, std::string& dest);
   Symbol* rhash_(byte symbol_type, smem_hash_id hash_value);
 
-  /* Methods for LTIs */
+  /** Methods for LTIs */
   uint64_t add_new_LTI();
   uint64_t add_specific_LTI(uint64_t lti_id);
   void get_lti_name(uint64_t pLTI_ID, std::string& lti_name) {
@@ -180,7 +180,7 @@ class SMem_Manager {
   id_set print_LTM(uint64_t pLTI_ID, double lti_act, std::string* return_val,
                    std::list<uint64_t>* history = NIL);
 
-  /* Methods for retrieving an LTM structure to be installed in STM */
+  /** Methods for retrieving an LTM structure to be installed in STM */
   void add_triple_to_recall_buffer(symbol_triple_list& my_list, Symbol* id,
                                    Symbol* attr, Symbol* value);
   void install_buffered_triple_list(Symbol* state, wme_set& cue_wmes,
@@ -197,7 +197,7 @@ class SMem_Manager {
                              symbol_triple_list& retrieval_wmes,
                              bool stripLTILinks = false);
 
-  /* Methods to update/store LTM in smem database */
+  /** Methods to update/store LTM in smem database */
   void deallocate_ltm(ltm_object* ltm, bool free_ltm = true);
   inline void count_child_connection(std::map<uint64_t, int64_t>* children,
                                      uint64_t child_lti_id);
@@ -219,11 +219,11 @@ class SMem_Manager {
                  bool remove_old_children, bool activate,
                  smem_storage_type store_type = store_level);
 
-  /* Methods for creating an instance of a LTM using STIs */
+  /** Methods for creating an instance of a LTM using STIs */
   uint64_t get_current_LTI_for_iSTI(Symbol* pSTI, bool useLookupTable,
                                     bool pOverwriteOldLinkToLTM);
 
-  /* Methods for queries */
+  /** Methods for queries */
   bool process_cue_wme(wme* w, bool pos_cue,
                        smem_prioritized_weighted_cue& weighted_pq,
                        MathQuery* mathQuery);
@@ -246,7 +246,7 @@ class SMem_Manager {
   soar_module::sqlite_statement* setup_web_crawl_spread(
       smem_weighted_cue_element* el);
 
-  /* Methods for supporting spreading activation */
+  /** Methods for supporting spreading activation */
   void child_spread(uint64_t lti_id,
                     std::map<uint64_t, std::list<std::pair<uint64_t, double>>*>&
                         lti_trajectories,

@@ -15,4 +15,4 @@
 #include "msdirent.h"
 #endif
 
-#endif /* portable_dirent_c */
+#endif /** portable_dirent_c */

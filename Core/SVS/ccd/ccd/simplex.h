@@ -1,4 +1,4 @@
-/*
+/**
  * libccd
  * ---------------------------------
  * Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
@@ -23,7 +23,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /** __cplusplus */
 
 struct _ccd_simplex_t {
   ccd_support_t ps[4];
@@ -44,7 +44,7 @@ _ccd_inline void ccdSimplexSet(ccd_simplex_t *s, size_t pos,
 _ccd_inline void ccdSimplexSetSize(ccd_simplex_t *s, int size);
 _ccd_inline void ccdSimplexSwap(ccd_simplex_t *s, size_t pos1, size_t pos2);
 
-/* INLINES */
+/** INLINES */
 
 _ccd_inline void ccdSimplexInit(ccd_simplex_t *s) { s->last = -1; }
 
@@ -87,7 +87,7 @@ _ccd_inline void ccdSimplexSwap(ccd_simplex_t *s, size_t pos1, size_t pos2) {
 }
 
 #ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
+} /** extern "C" */
+#endif /** __cplusplus */
 
-#endif /* __CCD_SIMPLEX_H__ */
+#endif /** __CCD_SIMPLEX_H__ */

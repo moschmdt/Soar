@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/*
+/**
  *
  * This file provides evaluators for partial reductions.
  * There are two modes:
@@ -36,7 +36,7 @@ namespace internal {
  *
  */
 
-/* logic deciding a strategy for unrolling of vectorized paths */
+/** logic deciding a strategy for unrolling of vectorized paths */
 template <typename Func, typename Evaluator>
 struct packetwise_redux_traits {
   enum {
@@ -50,25 +50,25 @@ struct packetwise_redux_traits {
   };
 };
 
-/* Value to be returned when size==0 , by default let's return 0 */
+/** Value to be returned when size==0 , by default let's return 0 */
 template <typename PacketType, typename Func>
 EIGEN_DEVICE_FUNC PacketType packetwise_redux_empty_value(const Func&) {
   return pset1<PacketType>(0);
 }
 
-/* For products the default is 1 */
+/** For products the default is 1 */
 template <typename PacketType, typename Scalar>
 EIGEN_DEVICE_FUNC PacketType
 packetwise_redux_empty_value(const scalar_product_op<Scalar, Scalar>&) {
   return pset1<PacketType>(1);
 }
 
-/* Perform the actual reduction */
+/** Perform the actual reduction */
 template <typename Func, typename Evaluator,
           int Unrolling = packetwise_redux_traits<Func, Evaluator>::Unrolling>
 struct packetwise_redux_impl;
 
-/* Perform the actual reduction with unrolling */
+/** Perform the actual reduction with unrolling */
 template <typename Func, typename Evaluator>
 struct packetwise_redux_impl<Func, Evaluator, CompleteUnrolling> {
   typedef redux_novec_unroller<Func, Evaluator, 0, Evaluator::SizeAtCompileTime>
@@ -77,7 +77,7 @@ struct packetwise_redux_impl<Func, Evaluator, CompleteUnrolling> {
 
   template <typename PacketType>
   EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE PacketType
-  run(const Evaluator& eval, const Func& func, Index /*size*/) {
+  run(const Evaluator& eval, const Func& func, Index /**size*/) {
     return redux_vec_unroller<Func, Evaluator, 0,
                               packetwise_redux_traits<Func, Evaluator>::
                                   OuterSize>::template run<PacketType>(eval,
@@ -85,7 +85,7 @@ struct packetwise_redux_impl<Func, Evaluator, CompleteUnrolling> {
   }
 };
 
-/* Add a specialization of redux_vec_unroller for size==0 at compiletime.
+/** Add a specialization of redux_vec_unroller for size==0 at compiletime.
  * This specialization is not required for general reductions, which is
  * why it is defined here.
  */
@@ -98,7 +98,7 @@ struct redux_vec_unroller<Func, Evaluator, Start, 0> {
   }
 };
 
-/* Perform the actual reduction for dynamic sizes */
+/** Perform the actual reduction for dynamic sizes */
 template <typename Func, typename Evaluator>
 struct packetwise_redux_impl<Func, Evaluator, NoUnrolling> {
   typedef typename Evaluator::Scalar Scalar;
@@ -212,7 +212,7 @@ struct evaluator<PartialReduxExpr<ArgType, MemberOp, Direction> >
                                         : int(PacketSize),
                   Direction == Vertical ? int(PacketSize)
                                         : int(ArgType::ColsAtCompileTime),
-                  true /* InnerPanel */>
+                  true /** InnerPanel */>
         PanelType;
 
     PanelType panel(m_arg, Direction == Vertical ? 0 : idx,

@@ -12,7 +12,7 @@
 namespace Eigen {
 namespace internal {
 
-/* \ingroup SparseLU_Module
+/** \ingroup SparseLU_Module
  * \class SparseLUImpl
  * Base class for sparseLU
  */

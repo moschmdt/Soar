@@ -21,7 +21,7 @@ struct traits<CwiseNullaryOp<NullaryOp, PlainObjectType> >
 
 }  // namespace internal
 
-/* \class CwiseNullaryOp
+/** \class CwiseNullaryOp
   * \ingroup Core_Module
   *
   * \brief Generic expression of a matrix where all coefficients are defined by
@@ -90,7 +90,7 @@ class CwiseNullaryOp : public internal::dense_xpr_base<
     return m_cols.value();
   }
 
-  /* \returns the functor representing the nullary operation */
+  /** \returns the functor representing the nullary operation */
   EIGEN_DEVICE_FUNC
   const NullaryOp& functor() const { return m_functor; }
 
@@ -100,7 +100,7 @@ class CwiseNullaryOp : public internal::dense_xpr_base<
   const NullaryOp m_functor;
 };
 
-/* \returns an expression of a matrix defined by a custom functor \a func
+/** \returns an expression of a matrix defined by a custom functor \a func
  *
  * The parameters \a rows and \a cols are the number of rows and of columns of
  * the returned matrix. Must be compatible with this MatrixBase type.
@@ -127,7 +127,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   return CwiseNullaryOp<CustomNullaryOp, PlainObject>(rows, cols, func);
 }
 
-/* \returns an expression of a matrix defined by a custom functor \a func
+/** \returns an expression of a matrix defined by a custom functor \a func
  *
  * The parameter \a size is the size of the returned vector.
  * Must be compatible with this MatrixBase type.
@@ -162,7 +162,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
     return CwiseNullaryOp<CustomNullaryOp, PlainObject>(size, 1, func);
 }
 
-/* \returns an expression of a matrix defined by a custom functor \a func
+/** \returns an expression of a matrix defined by a custom functor \a func
  *
  * This variant is only for fixed-size DenseBase types. For dynamic-size types,
  * you need to use the variants taking size arguments.
@@ -185,7 +185,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
                                                       ColsAtCompileTime, func);
 }
 
-/* \returns an expression of a constant matrix of value \a value
+/** \returns an expression of a constant matrix of value \a value
  *
  * The parameters \a rows and \a cols are the number of rows and of columns of
  * the returned matrix. Must be compatible with this DenseBase type.
@@ -206,7 +206,7 @@ EIGEN_DEVICE_FUNC
       rows, cols, internal::scalar_constant_op<Scalar>(value));
 }
 
-/* \returns an expression of a constant matrix of value \a value
+/** \returns an expression of a constant matrix of value \a value
  *
  * The parameter \a size is the size of the returned vector.
  * Must be compatible with this DenseBase type.
@@ -229,7 +229,7 @@ EIGEN_DEVICE_FUNC
       size, internal::scalar_constant_op<Scalar>(value));
 }
 
-/* \returns an expression of a constant matrix of value \a value
+/** \returns an expression of a constant matrix of value \a value
  *
  * This variant is only for fixed-size DenseBase types. For dynamic-size types,
  * you need to use the variants taking size arguments.
@@ -248,7 +248,7 @@ EIGEN_DEVICE_FUNC
       internal::scalar_constant_op<Scalar>(value));
 }
 
-/* \deprecated because of accuracy loss. In Eigen 3.3, it is an alias for
+/** \deprecated because of accuracy loss. In Eigen 3.3, it is an alias for
  * LinSpaced(Index,const Scalar&,const Scalar&)
  *
  * \only_for_vectors
@@ -269,7 +269,7 @@ DenseBase<Derived>::LinSpaced(Sequential_t, Index size, const Scalar& low,
       size, internal::linspaced_op<Scalar>(low, high, size));
 }
 
-/* \deprecated because of accuracy loss. In Eigen 3.3, it is an alias for
+/** \deprecated because of accuracy loss. In Eigen 3.3, it is an alias for
  * LinSpaced(const Scalar&,const Scalar&)
  *
  * \sa LinSpaced(const Scalar&, const Scalar&)
@@ -286,7 +286,7 @@ DenseBase<Derived>::LinSpaced(Sequential_t, const Scalar& low,
       internal::linspaced_op<Scalar>(low, high, Derived::SizeAtCompileTime));
 }
 
-/*
+/**
  * \brief Sets a linearly spaced vector.
  *
  * The function generates 'size' equally spaced values in the closed interval
@@ -321,7 +321,7 @@ DenseBase<Derived>::LinSpaced(Index size, const Scalar& low,
       size, internal::linspaced_op<Scalar>(low, high, size));
 }
 
-/*
+/**
  * \copydoc DenseBase::LinSpaced(Index, const Scalar&, const Scalar&)
  * Special version for fixed size types which does not require the size
  * parameter.
@@ -337,7 +337,7 @@ DenseBase<Derived>::LinSpaced(const Scalar& low, const Scalar& high) {
       internal::linspaced_op<Scalar>(low, high, Derived::SizeAtCompileTime));
 }
 
-/* \returns true if all coefficients in this matrix are approximately equal to
+/** \returns true if all coefficients in this matrix are approximately equal to
  * \a val, to within precision \a prec */
 template <typename Derived>
 EIGEN_DEVICE_FUNC bool DenseBase<Derived>::isApproxToConstant(
@@ -349,7 +349,7 @@ EIGEN_DEVICE_FUNC bool DenseBase<Derived>::isApproxToConstant(
   return true;
 }
 
-/* This is just an alias for isApproxToConstant().
+/** This is just an alias for isApproxToConstant().
  *
  * \returns true if all coefficients in this matrix are approximately equal to
  * \a value, to within precision \a prec */
@@ -359,7 +359,7 @@ EIGEN_DEVICE_FUNC bool DenseBase<Derived>::isConstant(
   return isApproxToConstant(val, prec);
 }
 
-/* Alias for setConstant(): sets all coefficients in this expression to \a val.
+/** Alias for setConstant(): sets all coefficients in this expression to \a val.
  *
  * \sa setConstant(), Constant(), class CwiseNullaryOp
  */
@@ -369,7 +369,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void DenseBase<Derived>::fill(
   setConstant(val);
 }
 
-/* Sets all coefficients in this expression to value \a val.
+/** Sets all coefficients in this expression to value \a val.
  *
  * \sa fill(), setConstant(Index,const Scalar&), setConstant(Index,Index,const
  * Scalar&), setZero(), setOnes(), Constant(), class CwiseNullaryOp, setZero(),
@@ -381,7 +381,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& DenseBase<Derived>::setConstant(
   return derived() = Constant(rows(), cols(), val);
 }
 
-/* Resizes to the given \a size, and sets all coefficients in this expression
+/** Resizes to the given \a size, and sets all coefficients in this expression
  * to the given value \a val.
  *
  * \only_for_vectors
@@ -399,7 +399,7 @@ PlainObjectBase<Derived>::setConstant(Index size, const Scalar& val) {
   return setConstant(val);
 }
 
-/* Resizes to the given size, and sets all coefficients in this expression to
+/** Resizes to the given size, and sets all coefficients in this expression to
  * the given value \a val.
  *
  * \param rows the new number of rows
@@ -420,7 +420,7 @@ PlainObjectBase<Derived>::setConstant(Index rows, Index cols,
   return setConstant(val);
 }
 
-/* Resizes to the given size, changing only the number of columns, and sets all
+/** Resizes to the given size, changing only the number of columns, and sets all
  * coefficients in this expression to the given value \a val. For the parameter
  * of type NoChange_t, just pass the special value \c NoChange.
  *
@@ -434,7 +434,7 @@ PlainObjectBase<Derived>::setConstant(NoChange_t, Index cols,
   return setConstant(rows(), cols, val);
 }
 
-/* Resizes to the given size, changing only the number of rows, and sets all
+/** Resizes to the given size, changing only the number of rows, and sets all
  * coefficients in this expression to the given value \a val. For the parameter
  * of type NoChange_t, just pass the special value \c NoChange.
  *
@@ -448,7 +448,7 @@ PlainObjectBase<Derived>::setConstant(Index rows, NoChange_t,
   return setConstant(rows, cols(), val);
 }
 
-/*
+/**
  * \brief Sets a linearly spaced vector.
  *
  * The function generates 'size' equally spaced values in the closed interval
@@ -473,7 +473,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& DenseBase<Derived>::setLinSpaced(
              newSize, internal::linspaced_op<Scalar>(low, high, newSize));
 }
 
-/*
+/**
  * \brief Sets a linearly spaced vector.
  *
  * The function fills \c *this with equally spaced values in the closed interval
@@ -497,7 +497,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& DenseBase<Derived>::setLinSpaced(
 
 // zero:
 
-/* \returns an expression of a zero matrix.
+/** \returns an expression of a zero matrix.
  *
  * The parameters \a rows and \a cols are the number of rows and of columns of
  * the returned matrix. Must be compatible with this MatrixBase type.
@@ -518,7 +518,7 @@ EIGEN_DEVICE_FUNC
   return Constant(rows, cols, Scalar(0));
 }
 
-/* \returns an expression of a zero vector.
+/** \returns an expression of a zero vector.
  *
  * The parameter \a size is the size of the returned vector.
  * Must be compatible with this MatrixBase type.
@@ -541,7 +541,7 @@ EIGEN_DEVICE_FUNC
   return Constant(size, Scalar(0));
 }
 
-/* \returns an expression of a fixed-size zero matrix or vector.
+/** \returns an expression of a fixed-size zero matrix or vector.
  *
  * This variant is only for fixed-size MatrixBase types. For dynamic-size types,
  * you need to use the variants taking size arguments.
@@ -558,7 +558,7 @@ EIGEN_DEVICE_FUNC
   return Constant(Scalar(0));
 }
 
-/* \returns true if *this is approximately equal to the zero matrix,
+/** \returns true if *this is approximately equal to the zero matrix,
  *          within the precision given by \a prec.
  *
  * Example: \include MatrixBase_isZero.cpp
@@ -578,7 +578,7 @@ EIGEN_DEVICE_FUNC bool DenseBase<Derived>::isZero(
   return true;
 }
 
-/* Sets all coefficients in this expression to zero.
+/** Sets all coefficients in this expression to zero.
  *
  * Example: \include MatrixBase_setZero.cpp
  * Output: \verbinclude MatrixBase_setZero.out
@@ -590,7 +590,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& DenseBase<Derived>::setZero() {
   return setConstant(Scalar(0));
 }
 
-/* Resizes to the given \a size, and sets all coefficients in this expression
+/** Resizes to the given \a size, and sets all coefficients in this expression
  * to zero.
  *
  * \only_for_vectors
@@ -608,7 +608,7 @@ PlainObjectBase<Derived>::setZero(Index newSize) {
   return setConstant(Scalar(0));
 }
 
-/* Resizes to the given size, and sets all coefficients in this expression to
+/** Resizes to the given size, and sets all coefficients in this expression to
  * zero.
  *
  * \param rows the new number of rows
@@ -627,7 +627,7 @@ PlainObjectBase<Derived>::setZero(Index rows, Index cols) {
   return setConstant(Scalar(0));
 }
 
-/* Resizes to the given size, changing only the number of columns, and sets all
+/** Resizes to the given size, changing only the number of columns, and sets all
  * coefficients in this expression to zero. For the parameter of type
  * NoChange_t, just pass the special value \c NoChange.
  *
@@ -640,7 +640,7 @@ PlainObjectBase<Derived>::setZero(NoChange_t, Index cols) {
   return setZero(rows(), cols);
 }
 
-/* Resizes to the given size, changing only the number of rows, and sets all
+/** Resizes to the given size, changing only the number of rows, and sets all
  * coefficients in this expression to zero. For the parameter of type
  * NoChange_t, just pass the special value \c NoChange.
  *
@@ -655,7 +655,7 @@ PlainObjectBase<Derived>::setZero(Index rows, NoChange_t) {
 
 // ones:
 
-/* \returns an expression of a matrix where all coefficients equal one.
+/** \returns an expression of a matrix where all coefficients equal one.
  *
  * The parameters \a rows and \a cols are the number of rows and of columns of
  * the returned matrix. Must be compatible with this MatrixBase type.
@@ -676,7 +676,7 @@ EIGEN_DEVICE_FUNC
   return Constant(rows, cols, Scalar(1));
 }
 
-/* \returns an expression of a vector where all coefficients equal one.
+/** \returns an expression of a vector where all coefficients equal one.
  *
  * The parameter \a newSize is the size of the returned vector.
  * Must be compatible with this MatrixBase type.
@@ -699,7 +699,7 @@ EIGEN_DEVICE_FUNC
   return Constant(newSize, Scalar(1));
 }
 
-/* \returns an expression of a fixed-size matrix or vector where all
+/** \returns an expression of a fixed-size matrix or vector where all
  * coefficients equal one.
  *
  * This variant is only for fixed-size MatrixBase types. For dynamic-size types,
@@ -717,7 +717,7 @@ EIGEN_DEVICE_FUNC
   return Constant(Scalar(1));
 }
 
-/* \returns true if *this is approximately equal to the matrix where all
+/** \returns true if *this is approximately equal to the matrix where all
  * coefficients are equal to 1, within the precision given by \a prec.
  *
  * Example: \include MatrixBase_isOnes.cpp
@@ -731,7 +731,7 @@ EIGEN_DEVICE_FUNC bool DenseBase<Derived>::isOnes(
   return isApproxToConstant(Scalar(1), prec);
 }
 
-/* Sets all coefficients in this expression to one.
+/** Sets all coefficients in this expression to one.
  *
  * Example: \include MatrixBase_setOnes.cpp
  * Output: \verbinclude MatrixBase_setOnes.out
@@ -743,7 +743,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& DenseBase<Derived>::setOnes() {
   return setConstant(Scalar(1));
 }
 
-/* Resizes to the given \a newSize, and sets all coefficients in this
+/** Resizes to the given \a newSize, and sets all coefficients in this
  * expression to one.
  *
  * \only_for_vectors
@@ -761,7 +761,7 @@ PlainObjectBase<Derived>::setOnes(Index newSize) {
   return setConstant(Scalar(1));
 }
 
-/* Resizes to the given size, and sets all coefficients in this expression to
+/** Resizes to the given size, and sets all coefficients in this expression to
  * one.
  *
  * \param rows the new number of rows
@@ -780,7 +780,7 @@ PlainObjectBase<Derived>::setOnes(Index rows, Index cols) {
   return setConstant(Scalar(1));
 }
 
-/* Resizes to the given size, changing only the number of rows, and sets all
+/** Resizes to the given size, changing only the number of rows, and sets all
  * coefficients in this expression to one. For the parameter of type NoChange_t,
  * just pass the special value \c NoChange.
  *
@@ -793,7 +793,7 @@ PlainObjectBase<Derived>::setOnes(Index rows, NoChange_t) {
   return setOnes(rows, cols());
 }
 
-/* Resizes to the given size, changing only the number of columns, and sets all
+/** Resizes to the given size, changing only the number of columns, and sets all
  * coefficients in this expression to one. For the parameter of type NoChange_t,
  * just pass the special value \c NoChange.
  *
@@ -808,7 +808,7 @@ PlainObjectBase<Derived>::setOnes(NoChange_t, Index cols) {
 
 // Identity:
 
-/* \returns an expression of the identity matrix (not necessarily square).
+/** \returns an expression of the identity matrix (not necessarily square).
  *
  * The parameters \a rows and \a cols are the number of rows and of columns of
  * the returned matrix. Must be compatible with this MatrixBase type.
@@ -830,7 +830,7 @@ EIGEN_DEVICE_FUNC
       rows, cols, internal::scalar_identity_op<Scalar>());
 }
 
-/* \returns an expression of the identity matrix (not necessarily square).
+/** \returns an expression of the identity matrix (not necessarily square).
  *
  * This variant is only for fixed-size MatrixBase types. For dynamic-size types,
  * you need to use the variant taking size arguments.
@@ -850,7 +850,7 @@ EIGEN_DEVICE_FUNC
       internal::scalar_identity_op<Scalar>());
 }
 
-/* \returns true if *this is approximately equal to the identity matrix
+/** \returns true if *this is approximately equal to the identity matrix
  *          (not necessarily square),
  *          within the precision given by \a prec.
  *
@@ -901,7 +901,7 @@ struct setIdentity_impl<Derived, true> {
 
 }  // end namespace internal
 
-/* Writes the identity expression (not necessarily square) into *this.
+/** Writes the identity expression (not necessarily square) into *this.
  *
  * Example: \include MatrixBase_setIdentity.cpp
  * Output: \verbinclude MatrixBase_setIdentity.out
@@ -914,7 +914,7 @@ MatrixBase<Derived>::setIdentity() {
   return internal::setIdentity_impl<Derived>::run(derived());
 }
 
-/* \brief Resizes to the given size, and writes the identity expression (not
+/** \brief Resizes to the given size, and writes the identity expression (not
  * necessarily square) into *this.
  *
  * \param rows the new number of rows
@@ -932,7 +932,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& MatrixBase<Derived>::setIdentity(
   return setIdentity();
 }
 
-/* \returns an expression of the i-th unit (basis) vector.
+/** \returns an expression of the i-th unit (basis) vector.
  *
  * \only_for_vectors
  *
@@ -947,7 +947,7 @@ EIGEN_DEVICE_FUNC
   return BasisReturnType(SquareMatrixType::Identity(newSize, newSize), i);
 }
 
-/* \returns an expression of the i-th unit (basis) vector.
+/** \returns an expression of the i-th unit (basis) vector.
  *
  * \only_for_vectors
  *
@@ -964,7 +964,7 @@ EIGEN_DEVICE_FUNC
   return BasisReturnType(SquareMatrixType::Identity(), i);
 }
 
-/* \returns an expression of the X axis unit vector (1{,0}^*)
+/** \returns an expression of the X axis unit vector (1{,0}^*)
  *
  * \only_for_vectors
  *
@@ -978,7 +978,7 @@ EIGEN_DEVICE_FUNC
   return Derived::Unit(0);
 }
 
-/* \returns an expression of the Y axis unit vector (0,1{,0}^*)
+/** \returns an expression of the Y axis unit vector (0,1{,0}^*)
  *
  * \only_for_vectors
  *
@@ -992,7 +992,7 @@ EIGEN_DEVICE_FUNC
   return Derived::Unit(1);
 }
 
-/* \returns an expression of the Z axis unit vector (0,0,1{,0}^*)
+/** \returns an expression of the Z axis unit vector (0,0,1{,0}^*)
  *
  * \only_for_vectors
  *
@@ -1006,7 +1006,7 @@ EIGEN_DEVICE_FUNC
   return Derived::Unit(2);
 }
 
-/* \returns an expression of the W axis unit vector (0,0,0,1)
+/** \returns an expression of the W axis unit vector (0,0,0,1)
  *
  * \only_for_vectors
  *
@@ -1020,7 +1020,7 @@ EIGEN_DEVICE_FUNC
   return Derived::Unit(3);
 }
 
-/* \brief Set the coefficients of \c *this to the i-th unit (basis) vector
+/** \brief Set the coefficients of \c *this to the i-th unit (basis) vector
  *
  * \param i index of the unique coefficient to be set to 1
  *
@@ -1039,7 +1039,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& MatrixBase<Derived>::setUnit(
   return derived();
 }
 
-/* \brief Resizes to the given \a newSize, and writes the i-th unit (basis)
+/** \brief Resizes to the given \a newSize, and writes the i-th unit (basis)
  * vector into *this.
  *
  * \param newSize the new size of the vector

@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* -- stats.h
+/** -- stats.h
  *
  *    This file used to be utilities.h, but most stuff seemed to fit better
  *    elsewhere.  There's code for two legacy experimental modes still in
@@ -52,7 +52,7 @@ extern void stats_db_store(agent* thisAgent, const uint64_t& dc_time,
                            const uint64_t& dc_firing_counts);
 extern void stats_close(agent* thisAgent);
 
-/* derived_kernel_time := Total of the time spent in the phases of the decision
+/** derived_kernel_time := Total of the time spent in the phases of the decision
 cycle, excluding Input Function, Output function, and pre-defined callbacks.
 This computed time should be roughly equal to total_kernel_time,
 as determined above. */

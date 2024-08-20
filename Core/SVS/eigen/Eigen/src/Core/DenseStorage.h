@@ -35,7 +35,7 @@ EIGEN_DEVICE_FUNC void check_static_allocation_size() {
 #endif
 }
 
-/* \internal
+/** \internal
  * Static array. If the MatrixOrArrayOptions require auto-alignment, the array
  * will be automatically aligned: to 16 bytes boundary if the total size is a
  * multiple of 16 bytes.
@@ -186,7 +186,7 @@ struct plain_array_helper {
 
 }  // end namespace internal
 
-/* \internal
+/** \internal
  *
  * \class DenseStorage
  * \ingroup Core_Module

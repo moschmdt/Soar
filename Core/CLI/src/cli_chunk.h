@@ -1,4 +1,4 @@
-/*
+/**
  * cli_explain.h
  *
  *  Created on: Dec 22, 2015
@@ -90,4 +90,4 @@ class ChunkCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CLI_CHUNK_H_ */
+#endif /** CLI_CHUNK_H_ */

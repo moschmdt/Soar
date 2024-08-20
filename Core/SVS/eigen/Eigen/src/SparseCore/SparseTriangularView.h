@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  *
  * \brief Base class for a triangular part in a \b sparse matrix
  *
@@ -61,12 +61,12 @@ class TriangularViewImpl<MatrixType, Mode, Sparse>
     this->solveInPlace(dst);
   }
 
-  /* Applies the inverse of \c *this to the dense vector or matrix \a other,
+  /** Applies the inverse of \c *this to the dense vector or matrix \a other,
    * "in-place" */
   template <typename OtherDerived>
   void solveInPlace(MatrixBase<OtherDerived>& other) const;
 
-  /* Applies the inverse of \c *this to the sparse vector or matrix \a other,
+  /** Applies the inverse of \c *this to the sparse vector or matrix \a other,
    * "in-place" */
   template <typename OtherDerived>
   void solveInPlace(SparseMatrixBase<OtherDerived>& other) const;

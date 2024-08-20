@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -49,7 +49,7 @@ struct lapacke_llt;
       lapack_int size, lda, info, StorageOrder;                             \
       EIGTYPE* a;                                                           \
       eigen_assert(m.rows() == m.cols());                                   \
-      /* Set up parameters for ?potrf */                                    \
+      /** Set up parameters for ?potrf */                                    \
       size = convert_index<lapack_int>(m.rows());                           \
       StorageOrder = MatrixType::Flags & RowMajorBit ? RowMajor : ColMajor; \
       matrix_order =                                                        \

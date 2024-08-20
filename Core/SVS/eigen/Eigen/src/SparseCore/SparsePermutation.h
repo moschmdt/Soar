@@ -156,7 +156,7 @@ struct product_evaluator<Product<Lhs, Rhs, AliasFreeProduct>, ProductTag,
 
 }  // end namespace internal
 
-/* \returns the matrix with the permutation applied to the columns
+/** \returns the matrix with the permutation applied to the columns
  */
 template <typename SparseDerived, typename PermDerived>
 inline const Product<SparseDerived, PermDerived, AliasFreeProduct> operator*(
@@ -166,7 +166,7 @@ inline const Product<SparseDerived, PermDerived, AliasFreeProduct> operator*(
                                                                perm.derived());
 }
 
-/* \returns the matrix with the permutation applied to the rows
+/** \returns the matrix with the permutation applied to the rows
  */
 template <typename SparseDerived, typename PermDerived>
 inline const Product<PermDerived, SparseDerived, AliasFreeProduct> operator*(
@@ -176,7 +176,7 @@ inline const Product<PermDerived, SparseDerived, AliasFreeProduct> operator*(
       perm.derived(), matrix.derived());
 }
 
-/* \returns the matrix with the inverse permutation applied to the columns.
+/** \returns the matrix with the inverse permutation applied to the columns.
  */
 template <typename SparseDerived, typename PermutationType>
 inline const Product<SparseDerived, Inverse<PermutationType>, AliasFreeProduct>
@@ -186,7 +186,7 @@ operator*(const SparseMatrixBase<SparseDerived>& matrix,
       matrix.derived(), tperm.derived());
 }
 
-/* \returns the matrix with the inverse permutation applied to the rows.
+/** \returns the matrix with the inverse permutation applied to the rows.
  */
 template <typename SparseDerived, typename PermutationType>
 inline const Product<Inverse<PermutationType>, SparseDerived, AliasFreeProduct>

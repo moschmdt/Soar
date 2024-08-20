@@ -34,7 +34,7 @@ class RhsFunction {
 
   virtual ~RhsFunction() {}
 
-  /*
+  /**
    * Returns the name of the RHS function.
    *
    * All Rhs functions must have unique names so that they can be identified in
@@ -42,19 +42,19 @@ class RhsFunction {
    */
   virtual const char* GetName() const = 0;
 
-  /*
+  /**
    * Gets the number of parameters expected for this RHS function
    */
   virtual int GetNumExpectedParameters() const = 0;
 
-  /*
+  /**
    * Returns true if the RHS function returns a value other than 0 from Execute
    */
   virtual bool IsValueReturned() const = 0;
   virtual bool CanBeStandAlone() const = 0;
   virtual bool LiteralizeArguments() const = 0;
 
-  /*
+  /**
    * Executes the RHS function given the set of symbols
    *
    * You should NOT release the symbol values that are passed in.

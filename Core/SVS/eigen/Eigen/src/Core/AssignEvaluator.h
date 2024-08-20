@@ -18,7 +18,7 @@ namespace Eigen {
 
 namespace internal {
 
-/*
+/**
  * Part 1 : the logic deciding a strategy for traversal and unrolling       *
  */
 
@@ -94,14 +94,14 @@ struct copy_using_evaluator_traits {
                          (EIGEN_UNALIGNED_VECTORIZE ||
                           (int(DstAlignment) >= int(LinearRequiredAlignment)) ||
                           MaxSizeAtCompileTime == Dynamic),
-    /* If the destination isn't aligned, we have to do runtime checks and we
+    /** If the destination isn't aligned, we have to do runtime checks and we
        don't unroll, so it's only good for large enough sizes. */
     MaySliceVectorize = bool(MightVectorize) && bool(DstHasDirectAccess) &&
                         (int(InnerMaxSize) == Dynamic ||
                          int(InnerMaxSize) >= (EIGEN_UNALIGNED_VECTORIZE
                                                    ? InnerPacketSize
                                                    : (3 * InnerPacketSize)))
-    /* slice vectorization can be slow, so we only want it if the slices are
+    /** slice vectorization can be slow, so we only want it if the slices are
        big, which is indicated by InnerMaxSize rather than InnerSize, think of
        the case of a dynamic block in a fixed-size matrix However, with
        EIGEN_UNALIGNED_VECTORIZE and unrolling, slice vectorization is still
@@ -219,11 +219,11 @@ struct copy_using_evaluator_traits {
 #endif
 };
 
-/*
+/**
  * Part 2 : meta-unrollers
  */
 
-/*
+/**
 *** Default traversal ***
 */
 
@@ -269,7 +269,7 @@ struct copy_using_evaluator_DefaultTraversal_InnerUnrolling<Kernel, Stop,
   EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void run(Kernel&, Index) {}
 };
 
-/*
+/**
 *** Linear traversal ***
 */
 
@@ -288,7 +288,7 @@ struct copy_using_evaluator_LinearTraversal_CompleteUnrolling<Kernel, Stop,
   EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void run(Kernel&) {}
 };
 
-/*
+/**
 *** Inner vectorization ***
 */
 
@@ -342,7 +342,7 @@ struct copy_using_evaluator_innervec_InnerUnrolling<
   EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void run(Kernel&, Index) {}
 };
 
-/*
+/**
  * Part 3 : implementation of all cases
  */
 
@@ -352,21 +352,21 @@ template <typename Kernel, int Traversal = Kernel::AssignmentTraits::Traversal,
           int Unrolling = Kernel::AssignmentTraits::Unrolling>
 struct dense_assignment_loop;
 
-/*
+/**
 ***** Special Cases *****
 */
 
 // Zero-sized assignment is a no-op.
 template <typename Kernel, int Unrolling>
 struct dense_assignment_loop<Kernel, AllAtOnceTraversal, Unrolling> {
-  EIGEN_DEVICE_FUNC static void EIGEN_STRONG_INLINE run(Kernel& /*kernel*/) {
+  EIGEN_DEVICE_FUNC static void EIGEN_STRONG_INLINE run(Kernel& /**kernel*/) {
     typedef typename Kernel::DstEvaluatorType::XprType DstXprType;
     EIGEN_STATIC_ASSERT(int(DstXprType::SizeAtCompileTime) == 0,
                         EIGEN_INTERNAL_ERROR_PLEASE_FILE_A_BUG_REPORT)
   }
 };
 
-/*
+/**
 *** Default traversal ***
 */
 
@@ -402,7 +402,7 @@ struct dense_assignment_loop<Kernel, DefaultTraversal, InnerUnrolling> {
   }
 };
 
-/*
+/**
 *** Linear vectorization ***
 */
 
@@ -489,7 +489,7 @@ struct dense_assignment_loop<Kernel, LinearVectorizedTraversal,
   }
 };
 
-/*
+/**
 *** Inner vectorization ***
 */
 
@@ -534,7 +534,7 @@ struct dense_assignment_loop<Kernel, InnerVectorizedTraversal, InnerUnrolling> {
   }
 };
 
-/*
+/**
 *** Linear traversal ***
 */
 
@@ -555,7 +555,7 @@ struct dense_assignment_loop<Kernel, LinearTraversal, CompleteUnrolling> {
   }
 };
 
-/*
+/**
 *** Slice vectorization ***
 */
 
@@ -639,7 +639,7 @@ struct dense_assignment_loop<Kernel, SliceVectorizedTraversal, InnerUnrolling> {
 };
 #endif
 
-/*
+/**
  * Part 4 : Generic dense assignment kernel
  */
 
@@ -802,13 +802,13 @@ class restricted_packet_dense_assignment_kernel
       : Base(dst, src, func, dstExpr) {}
 };
 
-/*
+/**
  * Part 5 : Entry point for dense rectangular assignment
  */
 
 template <typename DstXprType, typename SrcXprType, typename Functor>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void resize_if_allowed(
-    DstXprType& dst, const SrcXprType& src, const Functor& /*func*/) {
+    DstXprType& dst, const SrcXprType& src, const Functor& /**func*/) {
   EIGEN_ONLY_USED_FOR_DEBUG(dst);
   EIGEN_ONLY_USED_FOR_DEBUG(src);
   eigen_assert(dst.rows() == src.rows() && dst.cols() == src.cols());
@@ -817,7 +817,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void resize_if_allowed(
 template <typename DstXprType, typename SrcXprType, typename T1, typename T2>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void resize_if_allowed(
     DstXprType& dst, const SrcXprType& src,
-    const internal::assign_op<T1, T2>& /*func*/) {
+    const internal::assign_op<T1, T2>& /**func*/) {
   Index dstRows = src.rows();
   Index dstCols = src.cols();
   if (((dst.rows() != dstRows) || (dst.cols() != dstCols)))
@@ -872,7 +872,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void call_dense_assignment_loop(
                           typename SrcXprType::Scalar>());
 }
 
-/*
+/**
  * Part 6 : Generic assignment
  */
 
@@ -1063,7 +1063,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, EigenBase2EigenBase, Weak> {
   static EIGEN_STRONG_INLINE void run(
       DstXprType& dst, const SrcXprType& src,
       const internal::assign_op<typename DstXprType::Scalar,
-                                typename SrcXprType::Scalar>& /*func*/) {
+                                typename SrcXprType::Scalar>& /**func*/) {
     Index dstRows = src.rows();
     Index dstCols = src.cols();
     if ((dst.rows() != dstRows) || (dst.cols() != dstCols))
@@ -1081,7 +1081,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, EigenBase2EigenBase, Weak> {
   EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void run(
       DstXprType& dst, const SrcXprType& src,
       const internal::add_assign_op<typename DstXprType::Scalar,
-                                    SrcScalarType>& /*func*/) {
+                                    SrcScalarType>& /**func*/) {
     Index dstRows = src.rows();
     Index dstCols = src.cols();
     if ((dst.rows() != dstRows) || (dst.cols() != dstCols))
@@ -1095,7 +1095,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, EigenBase2EigenBase, Weak> {
   EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE void run(
       DstXprType& dst, const SrcXprType& src,
       const internal::sub_assign_op<typename DstXprType::Scalar,
-                                    SrcScalarType>& /*func*/) {
+                                    SrcScalarType>& /**func*/) {
     Index dstRows = src.rows();
     Index dstCols = src.cols();
     if ((dst.rows() != dstRows) || (dst.cols() != dstCols))

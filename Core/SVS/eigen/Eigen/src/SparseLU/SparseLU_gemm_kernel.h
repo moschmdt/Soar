@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * A general matrix-matrix product kernel optimized for the SparseLU
  * factorization.
  *  - A, B, and C must be column major
@@ -196,7 +196,7 @@ EIGEN_DONT_INLINE void sparselu_gemm(Index m, Index n, Index d, const Scalar* A,
         if (RK == 4) b20 = pset1<Packet>(Bc0[2]);
         if (RK == 4) b30 = pset1<Packet>(Bc0[3]);
 
-        Packet a0, a1, a2, a3, c0, t0 /*, t1*/;
+        Packet a0, a1, a2, a3, c0, t0 /**, t1*/;
 
         const Scalar* A0 = A + ib + (k + 0) * lda;
         const Scalar* A1 = A + ib + (k + 1) * lda;

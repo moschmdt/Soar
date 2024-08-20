@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                      Preference Management Routines
 
    Make_preference() creates a new preference structure of the given type
@@ -41,7 +41,7 @@
 #include "kernel.h"
 #include "stl_typedefs.h"
 
-/* ------------------------------------------------------------------------
+/** ------------------------------------------------------------------------
                                Preferences
 
    Fields in a preference:
@@ -108,10 +108,10 @@
 ------------------------------------------------------------------------ */
 
 typedef struct preference_struct {
-  PreferenceType type; /* acceptable, better, etc. */
-  bool o_supported;    /* is the preference o-supported? */
-  bool in_tm;          /* is this currently in TM? */
-  bool on_goal_list;   /* is this pref on the list for its match goal */
+  PreferenceType type; /** acceptable, better, etc. */
+  bool o_supported;    /** is the preference o-supported? */
+  bool in_tm;          /** is this currently in TM? */
+  bool on_goal_list;   /** is this pref on the list for its match goal */
   goal_stack_level level;
   uint64_t reference_count;
   Symbol* id;
@@ -119,32 +119,32 @@ typedef struct preference_struct {
   Symbol* value;
   Symbol* referent;
 
-  identity_set_quadruple identities; /* identity sets for all four elements */
+  identity_set_quadruple identities; /** identity sets for all four elements */
   identity_quadruple
-      inst_identities; /* identities for a preferences in relation to
+      inst_identities; /** identities for a preferences in relation to
                           instantiation that created*/
   identity_quadruple
-      chunk_inst_identities; /* identities for a result preference in relation
+      chunk_inst_identities; /** identities for a result preference in relation
                                 to chunk formed*/
   rhs_quadruple
-      rhs_func_inst_identities; /* identities of syms in rhs functions*/
+      rhs_func_inst_identities; /** identities of syms in rhs functions*/
   rhs_quadruple
-      rhs_func_chunk_inst_identities; /* identities of syms in chunk
+      rhs_func_chunk_inst_identities; /** identities of syms in chunk
                                          instantiation's rhs functions */
 
-  bool_quadruple was_unbound_vars; /* Whether a RHS variable is a newly created
+  bool_quadruple was_unbound_vars; /** Whether a RHS variable is a newly created
                                       unbound RHS var.  Used by re-orderer */
-  action* parent_action; /* Action that created pref.  Used by the explainer */
+  action* parent_action; /** Action that created pref.  Used by the explainer */
 
   struct slot_struct* slot;
   struct preference_struct *next,
-      *prev; /* dll of pref's of same type in same slot */
+      *prev; /** dll of pref's of same type in same slot */
   struct preference_struct *all_of_slot_next,
-      *all_of_slot_prev; /* dll of all pref's in same slot */
+      *all_of_slot_prev; /** dll of all pref's in same slot */
   struct preference_struct *all_of_goal_next,
-      *all_of_goal_prev; /* dll of all pref's from the same match goal */
+      *all_of_goal_prev; /** dll of all pref's from the same match goal */
   struct preference_struct *next_clone,
-      *prev_clone; /* dll (without header) of cloned preferences (created when
+      *prev_clone; /** dll (without header) of cloned preferences (created when
                       chunking) */
 
   struct instantiation_struct* inst;
@@ -155,7 +155,7 @@ typedef struct preference_struct {
   unsigned int total_preferences_for_candidate;
   double numeric_value;
   bool rl_contribution;
-  double rl_rho; /* ratio of target policy to behavior policy */
+  double rl_rho; /** ratio of target policy to behavior policy */
 
   wme_set* wma_o_set;
 } preference;

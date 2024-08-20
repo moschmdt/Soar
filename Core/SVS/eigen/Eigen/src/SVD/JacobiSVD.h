@@ -20,7 +20,7 @@ template <typename MatrixType, int QRPreconditioner,
           bool IsComplex = NumTraits<typename MatrixType::Scalar>::IsComplex>
 struct svd_precondition_2x2_block_to_be_real {};
 
-/* QR preconditioners (R-SVD)
+/** QR preconditioners (R-SVD)
  ***
  *** Their role is to reduce the problem of computing the SVD to the case of a
  *square matrix.
@@ -60,7 +60,7 @@ class qr_preconditioner_impl<MatrixType, QRPreconditioner, Case, false> {
   }
 };
 
-/* preconditioner using FullPivHouseholderQR */
+/** preconditioner using FullPivHouseholderQR */
 
 template <typename MatrixType>
 class qr_preconditioner_impl<MatrixType, FullPivHouseholderQRPreconditioner,
@@ -155,7 +155,7 @@ class qr_preconditioner_impl<MatrixType, FullPivHouseholderQRPreconditioner,
   typename internal::plain_row_type<MatrixType>::type m_workspace;
 };
 
-/* preconditioner using ColPivHouseholderQR */
+/** preconditioner using ColPivHouseholderQR */
 
 template <typename MatrixType>
 class qr_preconditioner_impl<MatrixType, ColPivHouseholderQRPreconditioner,
@@ -258,7 +258,7 @@ class qr_preconditioner_impl<MatrixType, ColPivHouseholderQRPreconditioner,
   typename internal::plain_row_type<MatrixType>::type m_workspace;
 };
 
-/* preconditioner using HouseholderQR */
+/** preconditioner using HouseholderQR */
 
 template <typename MatrixType>
 class qr_preconditioner_impl<MatrixType, HouseholderQRPreconditioner,
@@ -361,7 +361,7 @@ class qr_preconditioner_impl<MatrixType, HouseholderQRPreconditioner,
   typename internal::plain_row_type<MatrixType>::type m_workspace;
 };
 
-/* 2x2 SVD implementation
+/** 2x2 SVD implementation
  ***
  *** JacobiSVD consists in performing a series of 2x2 SVD subproblems
  */
@@ -448,7 +448,7 @@ struct traits<JacobiSVD<_MatrixType, QRPreconditioner> > : traits<_MatrixType> {
 
 }  // end namespace internal
 
-/* \ingroup SVD_Module
+/** \ingroup SVD_Module
  *
  *
  * \class JacobiSVD
@@ -551,14 +551,14 @@ class JacobiSVD : public SVDBase<JacobiSVD<_MatrixType, QRPreconditioner> > {
                  MaxDiagSizeAtCompileTime>
       WorkMatrixType;
 
-  /* \brief Default Constructor.
+  /** \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via JacobiSVD::compute(const MatrixType&).
    */
   JacobiSVD() {}
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem size.
@@ -568,7 +568,7 @@ class JacobiSVD : public SVDBase<JacobiSVD<_MatrixType, QRPreconditioner> > {
     allocate(rows, cols, computationOptions);
   }
 
-  /* \brief Constructor performing the decomposition of given matrix.
+  /** \brief Constructor performing the decomposition of given matrix.
    *
    * \param matrix the matrix to decompose
    * \param computationOptions optional parameter allowing to specify if you
@@ -585,7 +585,7 @@ class JacobiSVD : public SVDBase<JacobiSVD<_MatrixType, QRPreconditioner> > {
     compute(matrix, computationOptions);
   }
 
-  /* \brief Method performing the decomposition of given matrix using custom
+  /** \brief Method performing the decomposition of given matrix using custom
    * options.
    *
    * \param matrix the matrix to decompose
@@ -600,7 +600,7 @@ class JacobiSVD : public SVDBase<JacobiSVD<_MatrixType, QRPreconditioner> > {
    */
   JacobiSVD& compute(const MatrixType& matrix, unsigned int computationOptions);
 
-  /* \brief Method performing the decomposition of given matrix using current
+  /** \brief Method performing the decomposition of given matrix using current
    * options.
    *
    * \param matrix the matrix to decompose
@@ -732,7 +732,7 @@ JacobiSVD<MatrixType, QRPreconditioner>::compute(
   }
   if (scale == RealScalar(0)) scale = RealScalar(1);
 
-  /* step 1. The R-SVD step: we use a QR decomposition to reduce to the case
+  /** step 1. The R-SVD step: we use a QR decomposition to reduce to the case
    * of a square matrix */
 
   if (m_rows != m_cols) {
@@ -747,7 +747,7 @@ JacobiSVD<MatrixType, QRPreconditioner>::compute(
     if (m_computeThinV) m_matrixV.setIdentity(m_cols, m_diagSize);
   }
 
-  /* step 2. The main Jacobi SVD iteration. */
+  /** step 2. The main Jacobi SVD iteration. */
   RealScalar maxDiagEntry = m_workMatrix.cwiseAbs().diagonal().maxCoeff();
 
   bool finished = false;
@@ -796,7 +796,7 @@ JacobiSVD<MatrixType, QRPreconditioner>::compute(
     }
   }
 
-  /* step 3. The work matrix is now diagonal, so ensure it's positive so its
+  /** step 3. The work matrix is now diagonal, so ensure it's positive so its
    * diagonal entries are the singular values */
 
   for (Index i = 0; i < m_diagSize; ++i) {
@@ -819,7 +819,7 @@ JacobiSVD<MatrixType, QRPreconditioner>::compute(
 
   m_singularValues *= scale;
 
-  /* step 4. Sort singular values in descending order and compute the number
+  /** step 4. Sort singular values in descending order and compute the number
    * of nonzero singular values */
 
   m_nonzeroSingularValues = m_diagSize;
@@ -843,7 +843,7 @@ JacobiSVD<MatrixType, QRPreconditioner>::compute(
   return *this;
 }
 
-/* \svd_module
+/** \svd_module
  *
  * \return the singular value decomposition of \c *this computed by two-sided
  * Jacobi transformations.

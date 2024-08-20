@@ -20,7 +20,7 @@ struct decrement_size {
 };
 }  // namespace internal
 
-/* Computes the elementary reflector H such that:
+/** Computes the elementary reflector H such that:
  * \f$ H *this = [ beta 0 ... 0]^T \f$
  * where the transformation H is:
  * \f$ H = I - tau v v^*\f$
@@ -44,7 +44,7 @@ EIGEN_DEVICE_FUNC void MatrixBase<Derived>::makeHouseholderInPlace(
   makeHouseholder(essentialPart, tau, beta);
 }
 
-/* Computes the elementary reflector H such that:
+/** Computes the elementary reflector H such that:
  * \f$ H *this = [ beta 0 ... 0]^T \f$
  * where the transformation H is:
  * \f$ H = I - tau v v^*\f$
@@ -87,7 +87,7 @@ EIGEN_DEVICE_FUNC void MatrixBase<Derived>::makeHouseholder(
   }
 }
 
-/* Apply the elementary reflector H given by
+/** Apply the elementary reflector H given by
  * \f$ H = I - tau v v^*\f$
  * with
  * \f$ v^T = [1 essential^T] \f$
@@ -120,7 +120,7 @@ EIGEN_DEVICE_FUNC void MatrixBase<Derived>::applyHouseholderOnTheLeft(
   }
 }
 
-/* Apply the elementary reflector H given by
+/** Apply the elementary reflector H given by
  * \f$ H = I - tau v v^*\f$
  * with
  * \f$ v^T = [1 essential^T] \f$

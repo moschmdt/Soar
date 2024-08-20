@@ -114,4 +114,4 @@ typedef struct constraint_struct {
       : eq_test(new_eq), constraint_test(new_constraint) {}
 } constraint;
 
-#endif /* CORE_SOARKERNEL_SRC_SHARED_STL_STRUCTS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SHARED_STL_STRUCTS_H_ */

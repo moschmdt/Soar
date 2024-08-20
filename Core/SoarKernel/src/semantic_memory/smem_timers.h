@@ -1,4 +1,4 @@
-/*
+/**
  * smem_timers.h
  *
  *  Created on: Aug 21, 2016
@@ -59,4 +59,4 @@ class smem_timer : public soar_module::timer {
              soar_module::timer::timer_level new_level);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_TIMERS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_TIMERS_H_ */

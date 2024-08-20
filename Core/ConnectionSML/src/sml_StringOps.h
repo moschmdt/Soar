@@ -19,7 +19,7 @@
 
 namespace sml {
 
-/*
+/**
  * @brief Returns true if strings are equal (case sensitive).
  */
 inline bool IsStringEqual(char const* pStr1, char const* pStr2) {
@@ -30,7 +30,7 @@ inline bool IsStringEqual(char const* pStr1, char const* pStr2) {
   return strcmp(pStr1, pStr2) == 0;
 }
 
-/*
+/**
  * @brief Returns true if strings are equal (case insensitive).
  */
 inline bool IsStringEqualIgnoreCase(char const* pStr1, char const* pStr2) {
@@ -41,19 +41,19 @@ inline bool IsStringEqualIgnoreCase(char const* pStr1, char const* pStr2) {
   return strcasecmp(pStr1, pStr2) == 0;
 }
 
-/*
+/**
  * @brief A utility function, splits a command line into argument
  *        tokens and stores them in the argumentVector string.
  */
 extern int Tokenize(std::string cmdline,
                     std::vector<std::string>& argumentVector);
 
-/*
+/**
  * @brief Trim leading whitespace off of a line (for command parsing)
  */
 extern void TrimLeadingWhitespace(std::string& line);
 
-/*
+/**
  * @brief Trim comments off of a line (for command parsing)
  * @return true on success, false if there is a new-line before a pipe quotation
  *ends

@@ -1,4 +1,4 @@
-/*
+/**
  * libccd
  * ---------------------------------
  * Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
@@ -25,32 +25,32 @@
 #define ccd_container_of(ptr, type, member) \
   (type *)((char *)ptr - ccd_offsetof(type, member))
 
-/*
+/**
  * Marks inline function.
  */
 #ifdef __GNUC__
 #define _ccd_inline static inline __attribute__((always_inline))
-#else /* __GNUC__ */
+#else /** __GNUC__ */
 #define _ccd_inline static __inline
-#endif /* __GNUC__ */
+#endif /** __GNUC__ */
 
-/*
+/**
  * __prefetch(x)  - prefetches the cacheline at "x" for read
  * __prefetchw(x) - prefetches the cacheline at "x" for write
  */
 #ifdef __GNUC__
 #define _ccd_prefetch(x) __builtin_prefetch(x)
 #define _ccd_prefetchw(x) __builtin_prefetch(x, 1)
-#else /* __GNUC__ */
+#else /** __GNUC__ */
 #define _ccd_prefetch(x) ((void)0)
 #define _ccd_prefetchw(x) ((void)0)
-#endif /* __GNUC__ */
+#endif /** __GNUC__ */
 
 #ifdef __ICC
 // disable unused parameter warning
 #pragma warning(disable : 869)
 // disable annoying "operands are evaluated in unspecified order" warning
 #pragma warning(disable : 981)
-#endif /* __ICC */
+#endif /** __ICC */
 
-#endif /* __CCD_COMPILER_H__ */
+#endif /** __CCD_COMPILER_H__ */

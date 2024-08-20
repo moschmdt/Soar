@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* instantiations.h */
+/** instantiations.h */
 
 #ifndef INSTANTIATIONS_H
 #define INSTANTIATIONS_H
@@ -18,27 +18,27 @@ typedef struct pi_struct {
 
 typedef struct instantiation_struct {
   struct production_struct*
-      prod;                                 /* used full name of struct because
+      prod;                                 /** used full name of struct because
                                                a forward declaration is needed -ajc (5/1/02) */
-  struct instantiation_struct *next, *prev; /* dll of inst's from same prod */
-  struct token_struct* rete_token;          /* used by Rete for retractions */
-  wme* rete_wme;                            /* ditto */
+  struct instantiation_struct *next, *prev; /** dll of inst's from same prod */
+  struct token_struct* rete_token;          /** used by Rete for retractions */
+  wme* rete_wme;                            /** ditto */
 
   condition* top_of_instantiated_conditions;
   condition* bottom_of_instantiated_conditions;
 
-  preference* preferences_generated; /* prefs created by instantiation that are
+  preference* preferences_generated; /** prefs created by instantiation that are
                                         still in WM*/
   preference*
-      preferences_cached; /* shallow copies of retracted prefs for explainer*/
+      preferences_cached; /** shallow copies of retracted prefs for explainer*/
 
-  uint64_t i_id; /* instantiation id number */
+  uint64_t i_id; /** instantiation id number */
 
-  Symbol* match_goal;                /* symbol, or NIL if none */
-  goal_stack_level match_goal_level; /* level, or ATTRIBUTE_IMPASSE_LEVEL */
+  Symbol* match_goal;                /** symbol, or NIL if none */
+  goal_stack_level match_goal_level; /** level, or ATTRIBUTE_IMPASSE_LEVEL */
 
-  cons* OSK_prefs;          /* list of OSK prefs to backtrace through */
-  cons* OSK_proposal_prefs; /* OSK prefs that temporarily exist for a proposal
+  cons* OSK_prefs;          /** list of OSK prefs to backtrace through */
+  cons* OSK_proposal_prefs; /** OSK prefs that temporarily exist for a proposal
                                while operator is selected */
   slot* OSK_proposal_slot;
 
@@ -47,10 +47,10 @@ typedef struct instantiation_struct {
   bool tested_LTM;
   bool creates_deep_copy;
 
-  bool in_ms;            /* true iff this inst. is still in the match set */
-  bool in_newly_created; /* true iff this inst. is in the
+  bool in_ms;            /** true iff this inst. is still in the match set */
+  bool in_newly_created; /** true iff this inst. is in the
                             newly_created_instantiation list*/
-  bool in_newly_deleted; /* true iff this inst. is in the
+  bool in_newly_deleted; /** true iff this inst. is in the
                             newly_deleted_instantiation list*/
 
   tc_number backtrace_number;
@@ -100,7 +100,7 @@ preference* make_architectural_instantiation_for_impasse_item(agent* thisAgent,
                                                               Symbol* goal,
                                                               preference* cand);
 
-/* -------------------------------------------------------------------
+/** -------------------------------------------------------------------
                               Instantiations
 
    Instantiations record two main things:

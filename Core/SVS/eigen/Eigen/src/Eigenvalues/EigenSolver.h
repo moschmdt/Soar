@@ -15,7 +15,7 @@
 
 namespace Eigen {
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class EigenSolver
@@ -65,7 +65,7 @@ namespace Eigen {
 template <typename _MatrixType>
 class EigenSolver {
  public:
-  /* \brief Synonym for the template parameter \p _MatrixType. */
+  /** \brief Synonym for the template parameter \p _MatrixType. */
   typedef _MatrixType MatrixType;
 
   enum {
@@ -76,12 +76,12 @@ class EigenSolver {
     MaxColsAtCompileTime = MatrixType::MaxColsAtCompileTime
   };
 
-  /* \brief Scalar type for matrices of type #MatrixType. */
+  /** \brief Scalar type for matrices of type #MatrixType. */
   typedef typename MatrixType::Scalar Scalar;
   typedef typename NumTraits<Scalar>::Real RealScalar;
   typedef Eigen::Index Index;  ///< \deprecated since Eigen 3.3
 
-  /* \brief Complex scalar type for #MatrixType.
+  /** \brief Complex scalar type for #MatrixType.
    *
    * This is \c std::complex<Scalar> if #Scalar is real (e.g.,
    * \c float or \c double) and just \c Scalar if #Scalar is
@@ -89,7 +89,7 @@ class EigenSolver {
    */
   typedef std::complex<RealScalar> ComplexScalar;
 
-  /* \brief Type for vector of eigenvalues as returned by eigenvalues().
+  /** \brief Type for vector of eigenvalues as returned by eigenvalues().
    *
    * This is a column vector with entries of type #ComplexScalar.
    * The length of the vector is the size of #MatrixType.
@@ -98,7 +98,7 @@ class EigenSolver {
                  MaxColsAtCompileTime, 1>
       EigenvalueType;
 
-  /* \brief Type for matrix of eigenvectors as returned by eigenvectors().
+  /** \brief Type for matrix of eigenvectors as returned by eigenvectors().
    *
    * This is a square matrix with entries of type #ComplexScalar.
    * The size is the same as the size of #MatrixType.
@@ -107,7 +107,7 @@ class EigenSolver {
                  MaxRowsAtCompileTime, MaxColsAtCompileTime>
       EigenvectorsType;
 
-  /* \brief Default constructor.
+  /** \brief Default constructor.
    *
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via EigenSolver::compute(const MatrixType&, bool).
@@ -123,7 +123,7 @@ class EigenSolver {
         m_matT(),
         m_tmp() {}
 
-  /* \brief Default constructor with memory preallocation
+  /** \brief Default constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -138,7 +138,7 @@ class EigenSolver {
         m_matT(size, size),
         m_tmp(size) {}
 
-  /* \brief Constructor; computes eigendecomposition of given matrix.
+  /** \brief Constructor; computes eigendecomposition of given matrix.
    *
    * \param[in]  matrix  Square matrix whose eigendecomposition is to be
    * computed. \param[in]  computeEigenvectors  If true, both the eigenvectors
@@ -166,7 +166,7 @@ class EigenSolver {
     compute(matrix.derived(), computeEigenvectors);
   }
 
-  /* \brief Returns the eigenvectors of given matrix.
+  /** \brief Returns the eigenvectors of given matrix.
    *
    * \returns  %Matrix whose columns are the (possibly complex) eigenvectors.
    *
@@ -188,7 +188,7 @@ class EigenSolver {
    */
   EigenvectorsType eigenvectors() const;
 
-  /* \brief Returns the pseudo-eigenvectors of given matrix.
+  /** \brief Returns the pseudo-eigenvectors of given matrix.
    *
    * \returns  Const reference to matrix whose columns are the
    * pseudo-eigenvectors.
@@ -215,7 +215,7 @@ class EigenSolver {
     return m_eivec;
   }
 
-  /* \brief Returns the block-diagonal matrix in the pseudo-eigendecomposition.
+  /** \brief Returns the block-diagonal matrix in the pseudo-eigendecomposition.
    *
    * \returns  A block-diagonal matrix.
    *
@@ -235,7 +235,7 @@ class EigenSolver {
    */
   MatrixType pseudoEigenvalueMatrix() const;
 
-  /* \brief Returns the eigenvalues of given matrix.
+  /** \brief Returns the eigenvalues of given matrix.
    *
    * \returns A const reference to the column vector containing the eigenvalues.
    *
@@ -258,7 +258,7 @@ class EigenSolver {
     return m_eivalues;
   }
 
-  /* \brief Computes eigendecomposition of given matrix.
+  /** \brief Computes eigendecomposition of given matrix.
    *
    * \param[in]  matrix  Square matrix whose eigendecomposition is to be
    * computed. \param[in]  computeEigenvectors  If true, both the eigenvectors
@@ -289,20 +289,20 @@ class EigenSolver {
   EigenSolver& compute(const EigenBase<InputType>& matrix,
                        bool computeEigenvectors = true);
 
-  /* \returns NumericalIssue if the input contains INF or NaN values or
+  /** \returns NumericalIssue if the input contains INF or NaN values or
    * overflow occurred. Returns Success otherwise. */
   ComputationInfo info() const {
     eigen_assert(m_isInitialized && "EigenSolver is not initialized.");
     return m_info;
   }
 
-  /* \brief Sets the maximum number of iterations allowed. */
+  /** \brief Sets the maximum number of iterations allowed. */
   EigenSolver& setMaxIterations(Index maxIters) {
     m_realSchur.setMaxIterations(maxIters);
     return *this;
   }
 
-  /* \brief Returns the maximum number of iterations. */
+  /** \brief Returns the maximum number of iterations. */
   Index getMaxIterations() { return m_realSchur.getMaxIterations(); }
 
  private:

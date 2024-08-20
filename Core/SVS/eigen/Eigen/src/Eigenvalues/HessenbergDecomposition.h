@@ -24,7 +24,7 @@ struct traits<HessenbergDecompositionMatrixHReturnType<MatrixType> > {
 
 }  // namespace internal
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class HessenbergDecomposition
@@ -59,7 +59,7 @@ struct traits<HessenbergDecompositionMatrixHReturnType<MatrixType> > {
 template <typename _MatrixType>
 class HessenbergDecomposition {
  public:
-  /* \brief Synonym for the template parameter \p _MatrixType. */
+  /** \brief Synonym for the template parameter \p _MatrixType. */
   typedef _MatrixType MatrixType;
 
   enum {
@@ -70,11 +70,11 @@ class HessenbergDecomposition {
     MaxSizeMinusOne = MaxSize == Dynamic ? Dynamic : MaxSize - 1
   };
 
-  /* \brief Scalar type for matrices of type #MatrixType. */
+  /** \brief Scalar type for matrices of type #MatrixType. */
   typedef typename MatrixType::Scalar Scalar;
   typedef Eigen::Index Index;  ///< \deprecated since Eigen 3.3
 
-  /* \brief Type for vector of Householder coefficients.
+  /** \brief Type for vector of Householder coefficients.
    *
    * This is column vector with entries of type #Scalar. The length of the
    * vector is one less than the size of #MatrixType, if it is a fixed-side
@@ -84,7 +84,7 @@ class HessenbergDecomposition {
                  1>
       CoeffVectorType;
 
-  /* \brief Return type of matrixQ() */
+  /** \brief Return type of matrixQ() */
   typedef HouseholderSequence<
       MatrixType, typename internal::remove_all<
                       typename CoeffVectorType::ConjugateReturnType>::type>
@@ -93,7 +93,7 @@ class HessenbergDecomposition {
   typedef internal::HessenbergDecompositionMatrixHReturnType<MatrixType>
       MatrixHReturnType;
 
-  /* \brief Default constructor; the decomposition will be computed later.
+  /** \brief Default constructor; the decomposition will be computed later.
    *
    * \param [in] size  The size of the matrix whose Hessenberg decomposition
    * will be computed.
@@ -110,7 +110,7 @@ class HessenbergDecomposition {
     if (size > 1) m_hCoeffs.resize(size - 1);
   }
 
-  /* \brief Constructor; computes Hessenberg decomposition of given matrix.
+  /** \brief Constructor; computes Hessenberg decomposition of given matrix.
    *
    * \param[in]  matrix  Square matrix whose Hessenberg decomposition is to be
    * computed.
@@ -134,7 +134,7 @@ class HessenbergDecomposition {
     m_isInitialized = true;
   }
 
-  /* \brief Computes Hessenberg decomposition of given matrix.
+  /** \brief Computes Hessenberg decomposition of given matrix.
    *
    * \param[in]  matrix  Square matrix whose Hessenberg decomposition is to be
    * computed. \returns    Reference to \c *this
@@ -164,7 +164,7 @@ class HessenbergDecomposition {
     return *this;
   }
 
-  /* \brief Returns the Householder coefficients.
+  /** \brief Returns the Householder coefficients.
    *
    * \returns a const reference to the vector of Householder coefficients
    *
@@ -183,7 +183,7 @@ class HessenbergDecomposition {
     return m_hCoeffs;
   }
 
-  /* \brief Returns the internal representation of the decomposition
+  /** \brief Returns the internal representation of the decomposition
    *
    *	\returns a const reference to a matrix with the internal representation
    *	         of the decomposition.
@@ -216,7 +216,7 @@ class HessenbergDecomposition {
     return m_matrix;
   }
 
-  /* \brief Reconstructs the orthogonal matrix Q in the decomposition
+  /** \brief Reconstructs the orthogonal matrix Q in the decomposition
    *
    * \returns object representing the matrix Q
    *
@@ -238,7 +238,7 @@ class HessenbergDecomposition {
         .setShift(1);
   }
 
-  /* \brief Constructs the Hessenberg matrix H in the decomposition
+  /** \brief Constructs the Hessenberg matrix H in the decomposition
    *
    * \returns expression object representing the matrix H
    *
@@ -278,7 +278,7 @@ class HessenbergDecomposition {
   bool m_isInitialized;
 };
 
-/* \internal
+/** \internal
  * Performs a tridiagonal decomposition of \a matA in place.
  *
  * \param matA the input selfadjoint matrix
@@ -323,7 +323,7 @@ void HessenbergDecomposition<MatrixType>::_compute(MatrixType& matA,
 
 namespace internal {
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \brief Expression type for return value of HessenbergDecomposition::matrixH()
@@ -343,7 +343,7 @@ struct HessenbergDecompositionMatrixHReturnType
     : public ReturnByValue<
           HessenbergDecompositionMatrixHReturnType<MatrixType> > {
  public:
-  /* \brief Constructor.
+  /** \brief Constructor.
    *
    * \param[in] hess  Hessenberg decomposition
    */
@@ -351,7 +351,7 @@ struct HessenbergDecompositionMatrixHReturnType
       const HessenbergDecomposition<MatrixType>& hess)
       : m_hess(hess) {}
 
-  /* \brief Hessenberg matrix in decomposition.
+  /** \brief Hessenberg matrix in decomposition.
    *
    * \param[out] result  Hessenberg matrix in decomposition \p hess which
    *                     was passed to the constructor

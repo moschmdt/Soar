@@ -6,7 +6,7 @@
 //
 // This class's HandleEvent method is called when
 // specific events occur within the kernel:
-/*
+/**
  *      smlEVENT_RHS_USER_FUNCTION
  */
 /////////////////////////////////////////////////////////////////

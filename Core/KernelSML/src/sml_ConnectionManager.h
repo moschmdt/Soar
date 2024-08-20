@@ -74,7 +74,7 @@ class ConnectionManager {
   // Set the agent status value for all existing connections
   void SetAgentStatus(char const* pStatus);
 
-  /*
+  /**
    * @brief Turning this on means we'll start dumping output about messages
    *        being sent and received.  Currently this only applies to remote
    *connections.

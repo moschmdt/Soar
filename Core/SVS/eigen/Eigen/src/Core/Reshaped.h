@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \class Reshaped
+/** \class Reshaped
  * \ingroup Core_Module
  *
  * \brief Expression of a fixed-size or dynamic-size reshape
@@ -125,7 +125,7 @@ class Reshaped
   EIGEN_GENERIC_PUBLIC_INTERFACE(Reshaped)
   EIGEN_INHERIT_ASSIGNMENT_OPERATORS(Reshaped)
 
-  /* Fixed-size constructor
+  /** Fixed-size constructor
    */
   EIGEN_DEVICE_FUNC
   inline Reshaped(XprType& xpr) : Impl(xpr) {
@@ -135,7 +135,7 @@ class Reshaped
     eigen_assert(Rows * Cols == xpr.rows() * xpr.cols());
   }
 
-  /* Dynamic-size constructor
+  /** Dynamic-size constructor
    */
   EIGEN_DEVICE_FUNC
   inline Reshaped(XprType& xpr, Index reshapeRows, Index reshapeCols)
@@ -172,7 +172,7 @@ class ReshapedImpl<XprType, Rows, Cols, Order, Dense>
 
 namespace internal {
 
-/* \internal Internal implementation of dense Reshaped in the general case. */
+/** \internal Internal implementation of dense Reshaped in the general case. */
 template <typename XprType, int Rows, int Cols, int Order>
 class ReshapedImpl_dense<XprType, Rows, Cols, Order, false>
     : public internal::dense_xpr_base<
@@ -190,13 +190,13 @@ class ReshapedImpl_dense<XprType, Rows, Cols, Order, false>
 
   class InnerIterator;
 
-  /* Fixed-size constructor
+  /** Fixed-size constructor
    */
   EIGEN_DEVICE_FUNC
   inline ReshapedImpl_dense(XprType& xpr)
       : m_xpr(xpr), m_rows(Rows), m_cols(Cols) {}
 
-  /* Dynamic-size constructor
+  /** Dynamic-size constructor
    */
   EIGEN_DEVICE_FUNC
   inline ReshapedImpl_dense(XprType& xpr, Index nRows, Index nCols)
@@ -206,19 +206,19 @@ class ReshapedImpl_dense<XprType, Rows, Cols, Order, false>
   EIGEN_DEVICE_FUNC Index cols() const { return m_cols; }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* \sa MapBase::data() */
+  /** \sa MapBase::data() */
   EIGEN_DEVICE_FUNC inline const Scalar* data() const;
   EIGEN_DEVICE_FUNC inline Index innerStride() const;
   EIGEN_DEVICE_FUNC inline Index outerStride() const;
 #endif
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   EIGEN_DEVICE_FUNC
   const typename internal::remove_all<XprType>::type& nestedExpression() const {
     return m_xpr;
   }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   EIGEN_DEVICE_FUNC
   typename internal::remove_reference<XprType>::type& nestedExpression() {
     return m_xpr;
@@ -230,7 +230,7 @@ class ReshapedImpl_dense<XprType, Rows, Cols, Order, false>
   const internal::variable_if_dynamic<Index, Cols> m_cols;
 };
 
-/* \internal Internal implementation of dense Reshaped in the direct access
+/** \internal Internal implementation of dense Reshaped in the direct access
  * case. */
 template <typename XprType, int Rows, int Cols, int Order>
 class ReshapedImpl_dense<XprType, Rows, Cols, Order, true>
@@ -244,12 +244,12 @@ class ReshapedImpl_dense<XprType, Rows, Cols, Order, true>
   EIGEN_DENSE_PUBLIC_INTERFACE(ReshapedType)
   EIGEN_INHERIT_ASSIGNMENT_OPERATORS(ReshapedImpl_dense)
 
-  /* Fixed-size constructor
+  /** Fixed-size constructor
    */
   EIGEN_DEVICE_FUNC
   inline ReshapedImpl_dense(XprType& xpr) : Base(xpr.data()), m_xpr(xpr) {}
 
-  /* Dynamic-size constructor
+  /** Dynamic-size constructor
    */
   EIGEN_DEVICE_FUNC
   inline ReshapedImpl_dense(XprType& xpr, Index nRows, Index nCols)
@@ -264,12 +264,12 @@ class ReshapedImpl_dense<XprType, Rows, Cols, Order, true>
   EIGEN_DEVICE_FUNC
   XprType& nestedExpression() { return m_xpr; }
 
-  /* \sa MapBase::innerStride() */
+  /** \sa MapBase::innerStride() */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index innerStride() const {
     return m_xpr.innerStride();
   }
 
-  /* \sa MapBase::outerStride() */
+  /** \sa MapBase::outerStride() */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index outerStride() const {
     return ((Flags & RowMajorBit) == RowMajorBit) ? this->cols() : this->rows();
   }
@@ -334,16 +334,16 @@ struct evaluator<Reshaped<ArgType, Rows, Cols, Order> >
 
 template <typename ArgType, int Rows, int Cols, int Order>
 struct reshaped_evaluator<ArgType, Rows, Cols, Order,
-                          /* HasDirectAccess */ false>
+                          /** HasDirectAccess */ false>
     : evaluator_base<Reshaped<ArgType, Rows, Cols, Order> > {
   typedef Reshaped<ArgType, Rows, Cols, Order> XprType;
 
   enum {
     CoeffReadCost = evaluator<
-        ArgType>::CoeffReadCost /* TODO + cost of index computations */,
+        ArgType>::CoeffReadCost /** TODO + cost of index computations */,
 
     Flags = (evaluator<ArgType>::Flags &
-             (HereditaryBits /*| LinearAccessBit | DirectAccessBit*/)),
+             (HereditaryBits /**| LinearAccessBit | DirectAccessBit*/)),
 
     Alignment = 0
   };
@@ -455,7 +455,7 @@ struct reshaped_evaluator<ArgType, Rows, Cols, Order,
 
 template <typename ArgType, int Rows, int Cols, int Order>
 struct reshaped_evaluator<ArgType, Rows, Cols, Order,
-                          /* HasDirectAccess */ true>
+                          /** HasDirectAccess */ true>
     : mapbase_evaluator<
           Reshaped<ArgType, Rows, Cols, Order>,
           typename Reshaped<ArgType, Rows, Cols, Order>::PlainObject> {

@@ -70,7 +70,7 @@ class CommandLineInterface : public sml::KernelCallback {
   EXPORT CommandLineInterface();
   EXPORT virtual ~CommandLineInterface();
 
-  /*
+  /**
    * @brief Set the kernel this command line module is interfacing with.
    *         Also has the side effect of setting the home directory to
    *         the location of SoarKernelSML, because the kernel is required
@@ -80,7 +80,7 @@ class CommandLineInterface : public sml::KernelCallback {
    */
   EXPORT void SetKernel(sml::KernelSML* pKernelSML = 0);
 
-  /*
+  /**
    * @brief Process a command.  Give it a command line and it will parse
    *         and execute the command using system calls.
    * @param pConnection The connection, for communication to the client
@@ -144,7 +144,7 @@ class CommandLineInterface : public sml::KernelCallback {
 
   EXPORT std::string ExpandCommand(const char* pCommand);
 
-  /*
+  /**
    * @brief Returns true if the given command should always be echoed (to any
    *listeners) The current implementation doesn't support aliases or short forms
    *of the commands.
@@ -152,7 +152,7 @@ class CommandLineInterface : public sml::KernelCallback {
    */
   EXPORT bool ShouldEchoCommand(char const* pCommandLine);
 
-  /*
+  /**
    * @brief Methods to create an XML element by starting a tag, adding
    *attributes and closing the tag. These tags are automatically collected into
    *the result of the current command.
@@ -184,7 +184,7 @@ class CommandLineInterface : public sml::KernelCallback {
   bool SetError(const std::string& error);
   bool AppendError(const std::string& error);
 
-  /*
+  /**
    * @brief Prints message via either m_RawOutput or AppendArgTagFast
    */
   void PrintCLIMessage(std::ostringstream* printString, bool add_raw_lf = true);
@@ -208,7 +208,7 @@ class CommandLineInterface : public sml::KernelCallback {
   bool GetCurrentWorkingDirectory(std::string& directory);
 
  private:
-  /* Previous top-level commands that are now sub-commands */
+  /** Previous top-level commands that are now sub-commands */
   bool AddSaveSetting(bool pShouldAdd, const char* pAddString);
   bool AddSaveSettingOnOff(bool pIsOn, const char* pAddString);
   bool AddSaveSettingInt(const char* pAddString, const uint64_t pInt);
@@ -294,24 +294,24 @@ class CommandLineInterface : public sml::KernelCallback {
   virtual void OnKernelEvent(int eventID, sml::AgentSML* pAgentSML,
                              void* pCallData);
 
-  /*
+  /**
    * @brief Standard parsing of -h and --help flags.  Returns
    *         true if the flag is present.
    */
   bool CheckForHelp(std::vector<std::string>& argv);
 
-  /*
+  /**
    * @brief Add the contents of the helpFile file to m_Result.
    *        Return true if successful, set error and return false if not.
    */
   bool GetHelpString(const std::string& helpFile);
 
-  /*
+  /**
    * @brief This is a utility function used by DoLS
    */
   void PrintFilename(const std::string& name, bool isDirectory);
 
-  /*
+  /**
    * @brief clears m_XMLResult
    */
   void XMLResultToResponse(char const* pCommandName);
@@ -375,7 +375,7 @@ class CommandLineInterface : public sml::KernelCallback {
 };
 }  // namespace cli
 
-/*
+/**
 * This procedure parses a string to determine if it is a
 *      lexeme for an identifier or context variable.
 *

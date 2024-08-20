@@ -34,20 +34,20 @@ class EXPORT EmbeddedConnectionAsynch : public EmbeddedConnection {
   // this.
   EmbeddedConnectionAsynch() {}
 
-  /* A list of messages we've received that have "ack" fields but have yet to
+  /** A list of messages we've received that have "ack" fields but have yet to
    * match up to the commands which triggered them */
   MessageList m_ReceivedMessageList;
 
   enum { kMaxListSize = 10 };
 
-  /* Ensures only one thread accesses the response list at a time */
+  /** Ensures only one thread accesses the response list at a time */
   soar_thread::Mutex m_ListMutex;
 
-  /* An event object which we use to have one thread sleep while waiting for
+  /** An event object which we use to have one thread sleep while waiting for
    * another thread to drop off a response to a message */
   soar_thread::Event m_WaitEvent;
 
-  /* Adds the message to the queue, taking ownership of it at the same time */
+  /** Adds the message to the queue, taking ownership of it at the same time */
   void AddResponseToList(soarxml::ElementXML* pResponse);
   soarxml::ElementXML* IsResponseInList(char const* pID);
 

@@ -21,7 +21,7 @@ struct traits<VectorBlock<VectorType, Size> >
                 traits<VectorType>::Flags & RowMajorBit ? Size : 1> > {};
 }  // namespace internal
 
-/* \class VectorBlock
+/** \class VectorBlock
  * \ingroup Core_Module
  *
  * \brief Expression of a fixed-size or dynamic-size sub-vector
@@ -70,7 +70,7 @@ class VectorBlock
 
   using Base::operator=;
 
-  /* Dynamic-size constructor
+  /** Dynamic-size constructor
    */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE VectorBlock(VectorType& vector,
                                                     Index start, Index size)
@@ -79,7 +79,7 @@ class VectorBlock
     EIGEN_STATIC_ASSERT_VECTOR_ONLY(VectorBlock);
   }
 
-  /* Fixed-size constructor
+  /** Fixed-size constructor
    */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE VectorBlock(VectorType& vector,
                                                     Index start)

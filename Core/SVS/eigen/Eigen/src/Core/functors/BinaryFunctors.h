@@ -22,7 +22,7 @@ struct binary_op_base {
   typedef Arg2 second_argument_type;
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the sum of two scalars
  *
  * \sa class CwiseBinaryOp, MatrixBase::operator+, class VectorwiseOp,
@@ -71,7 +71,7 @@ scalar_sum_op<bool, bool>::operator()(const bool& a, const bool& b) const {
   return a || b;
 }
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the product of two scalars
  *
  * \sa class CwiseBinaryOp, Cwise::operator*(), class VectorwiseOp,
@@ -121,7 +121,7 @@ scalar_product_op<bool, bool>::operator()(const bool& a, const bool& b) const {
   return a && b;
 }
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the conjugate product of two scalars
  *
  * This is a short cut for conj(x) * y which is needed for optimization purpose;
@@ -155,7 +155,7 @@ struct functor_traits<scalar_conj_product_op<LhsScalar, RhsScalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the min of two scalars
  *
  * \sa class CwiseBinaryOp, MatrixBase::cwiseMin, class VectorwiseOp,
@@ -191,7 +191,7 @@ struct functor_traits<scalar_min_op<LhsScalar, RhsScalar, NaNPropagation> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the max of two scalars
  *
  * \sa class CwiseBinaryOp, MatrixBase::cwiseMax, class VectorwiseOp,
@@ -227,7 +227,7 @@ struct functor_traits<scalar_max_op<LhsScalar, RhsScalar, NaNPropagation> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functors for comparison of two scalars
  * \todo Implement packet-comparisons
  */
@@ -319,7 +319,7 @@ struct scalar_cmp_op<LhsScalar, RhsScalar, cmp_NEQ>
   }
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the hypot of two \b positive \b and \b
  * real scalars
  *
@@ -348,7 +348,7 @@ struct functor_traits<scalar_hypot_op<Scalar, Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the pow of two scalars
  * See the specification of pow in
  * https://en.cppreference.com/w/cpp/numeric/math/pow
@@ -396,7 +396,7 @@ struct functor_traits<scalar_pow_op<Scalar, Exponent> > {
 
 //---------- non associative binary functors ----------
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the difference of two scalars
  *
  * \sa class CwiseBinaryOp, MatrixBase::operator-
@@ -432,7 +432,7 @@ struct functor_traits<scalar_difference_op<LhsScalar, RhsScalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the quotient of two scalars
  *
  * \sa class CwiseBinaryOp, Cwise::operator/()
@@ -469,7 +469,7 @@ struct functor_traits<scalar_quotient_op<LhsScalar, RhsScalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the and of two booleans
  *
  * \sa class CwiseBinaryOp, ArrayBase::operator&&
@@ -491,7 +491,7 @@ struct functor_traits<scalar_boolean_and_op> {
   enum { Cost = NumTraits<bool>::AddCost, PacketAccess = true };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the or of two booleans
  *
  * \sa class CwiseBinaryOp, ArrayBase::operator||
@@ -513,7 +513,7 @@ struct functor_traits<scalar_boolean_or_op> {
   enum { Cost = NumTraits<bool>::AddCost, PacketAccess = true };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the xor of two booleans
  *
  * \sa class CwiseBinaryOp, ArrayBase::operator^
@@ -535,7 +535,7 @@ struct functor_traits<scalar_boolean_xor_op> {
   enum { Cost = NumTraits<bool>::AddCost, PacketAccess = true };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the absolute difference of two scalars
  *
  * \sa class CwiseBinaryOp, MatrixBase::absolute_difference

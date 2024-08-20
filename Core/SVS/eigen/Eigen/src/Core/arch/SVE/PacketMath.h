@@ -27,7 +27,7 @@ struct sve_packet_size_selector {
   enum { size = SVEVectorLength / (sizeof(Scalar) * CHAR_BIT) };
 };
 
-/* int32 */
+/** int32 */
 typedef svint32_t PacketXi
     __attribute__((arm_sve_vector_bits(EIGEN_ARM64_SVE_VL)));
 
@@ -161,12 +161,12 @@ EIGEN_STRONG_INLINE PacketXi pcmp_eq<PacketXi>(const PacketXi& a,
 }
 
 template <>
-EIGEN_STRONG_INLINE PacketXi ptrue<PacketXi>(const PacketXi& /*a*/) {
+EIGEN_STRONG_INLINE PacketXi ptrue<PacketXi>(const PacketXi& /**a*/) {
   return svdup_n_s32_z(svptrue_b32(), 0xffffffffu);
 }
 
 template <>
-EIGEN_STRONG_INLINE PacketXi pzero<PacketXi>(const PacketXi& /*a*/) {
+EIGEN_STRONG_INLINE PacketXi pzero<PacketXi>(const PacketXi& /**a*/) {
   return svdup_n_s32_z(svptrue_b32(), 0);
 }
 
@@ -353,7 +353,7 @@ EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<PacketXi, N>& kernel) {
   }
 }
 
-/* float32 */
+/** float32 */
 
 typedef svfloat32_t PacketXf
     __attribute__((arm_sve_vector_bits(EIGEN_ARM64_SVE_VL)));
@@ -545,7 +545,7 @@ EIGEN_STRONG_INLINE PacketXf pfloor<PacketXf>(const PacketXf& a) {
 }
 
 template <>
-EIGEN_STRONG_INLINE PacketXf ptrue<PacketXf>(const PacketXf& /*a*/) {
+EIGEN_STRONG_INLINE PacketXf ptrue<PacketXf>(const PacketXf& /**a*/) {
   return svreinterpret_f32_u32(svdup_n_u32_z(svptrue_b32(), 0xffffffffu));
 }
 

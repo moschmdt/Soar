@@ -15,7 +15,7 @@ namespace Eigen {
 template <typename Decomposition, typename RhsType, typename GuessType>
 class SolveWithGuess;
 
-/* \class SolveWithGuess
+/** \class SolveWithGuess
  * \ingroup IterativeLinearSolvers_Module
  *
  * \brief Pseudo expression representing a solving operation
@@ -110,7 +110,7 @@ struct Assignment<DstXprType, SolveWithGuess<DecType, RhsType, GuessType>,
       dst.resize(dstRows, dstCols);
 
     dst = src.guess();
-    src.dec()._solve_with_guess_impl(src.rhs(), dst /*, src.guess()*/);
+    src.dec()._solve_with_guess_impl(src.rhs(), dst /**, src.guess()*/);
   }
 };
 

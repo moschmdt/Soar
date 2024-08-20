@@ -22,7 +22,7 @@ struct traits<SparseCompressedBase<Derived> > : traits<Derived> {};
 
 }  // end namespace internal
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  * \class SparseCompressedBase
  * \brief Common base class for sparse [compressed]-{row|column}-storage format.
  *
@@ -56,7 +56,7 @@ class SparseCompressedBase : public SparseMatrixBase<Derived> {
   }
 
  public:
-  /* \returns the number of non zero coefficients */
+  /** \returns the number of non zero coefficients */
   inline Index nonZeros() const {
     if (Derived::IsVectorAtCompileTime && outerIndexPtr() == 0)
       return derived().nonZeros();
@@ -68,54 +68,54 @@ class SparseCompressedBase : public SparseMatrixBase<Derived> {
       return innerNonZeros().sum();
   }
 
-  /* \returns a const pointer to the array of values.
+  /** \returns a const pointer to the array of values.
    * This function is aimed at interoperability with other libraries.
    * \sa innerIndexPtr(), outerIndexPtr() */
   inline const Scalar* valuePtr() const { return derived().valuePtr(); }
-  /* \returns a non-const pointer to the array of values.
+  /** \returns a non-const pointer to the array of values.
    * This function is aimed at interoperability with other libraries.
    * \sa innerIndexPtr(), outerIndexPtr() */
   inline Scalar* valuePtr() { return derived().valuePtr(); }
 
-  /* \returns a const pointer to the array of inner indices.
+  /** \returns a const pointer to the array of inner indices.
    * This function is aimed at interoperability with other libraries.
    * \sa valuePtr(), outerIndexPtr() */
   inline const StorageIndex* innerIndexPtr() const {
     return derived().innerIndexPtr();
   }
-  /* \returns a non-const pointer to the array of inner indices.
+  /** \returns a non-const pointer to the array of inner indices.
    * This function is aimed at interoperability with other libraries.
    * \sa valuePtr(), outerIndexPtr() */
   inline StorageIndex* innerIndexPtr() { return derived().innerIndexPtr(); }
 
-  /* \returns a const pointer to the array of the starting positions of the
+  /** \returns a const pointer to the array of the starting positions of the
    * inner vectors. This function is aimed at interoperability with other
    * libraries. \warning it returns the null pointer 0 for SparseVector \sa
    * valuePtr(), innerIndexPtr() */
   inline const StorageIndex* outerIndexPtr() const {
     return derived().outerIndexPtr();
   }
-  /* \returns a non-const pointer to the array of the starting positions of the
+  /** \returns a non-const pointer to the array of the starting positions of the
    * inner vectors. This function is aimed at interoperability with other
    * libraries. \warning it returns the null pointer 0 for SparseVector \sa
    * valuePtr(), innerIndexPtr() */
   inline StorageIndex* outerIndexPtr() { return derived().outerIndexPtr(); }
 
-  /* \returns a const pointer to the array of the number of non zeros of the
+  /** \returns a const pointer to the array of the number of non zeros of the
    * inner vectors. This function is aimed at interoperability with other
    * libraries. \warning it returns the null pointer 0 in compressed mode */
   inline const StorageIndex* innerNonZeroPtr() const {
     return derived().innerNonZeroPtr();
   }
-  /* \returns a non-const pointer to the array of the number of non zeros of
+  /** \returns a non-const pointer to the array of the number of non zeros of
    * the inner vectors. This function is aimed at interoperability with other
    * libraries. \warning it returns the null pointer 0 in compressed mode */
   inline StorageIndex* innerNonZeroPtr() { return derived().innerNonZeroPtr(); }
 
-  /* \returns whether \c *this is in compressed form. */
+  /** \returns whether \c *this is in compressed form. */
   inline bool isCompressed() const { return innerNonZeroPtr() == 0; }
 
-  /* \returns a read-only view of the stored coefficients as a 1D array
+  /** \returns a read-only view of the stored coefficients as a 1D array
    * expression.
    *
    * \warning this method is for \b compressed \b storage \b only, and it will
@@ -127,7 +127,7 @@ class SparseCompressedBase : public SparseMatrixBase<Derived> {
     return Array<Scalar, Dynamic, 1>::Map(valuePtr(), nonZeros());
   }
 
-  /* \returns a read-write view of the stored coefficients as a 1D array
+  /** \returns a read-write view of the stored coefficients as a 1D array
    * expression
    *
    * \warning this method is for \b compressed \b storage \b only, and it will
@@ -145,10 +145,10 @@ class SparseCompressedBase : public SparseMatrixBase<Derived> {
   }
 
  protected:
-  /* Default constructor. Do nothing. */
+  /** Default constructor. Do nothing. */
   SparseCompressedBase() {}
 
-  /* \internal return the index of the coeff at (row,col) or just before if it
+  /** \internal return the index of the coeff at (row,col) or just before if it
    * does not exist. This is an analogue of std::lower_bound.
    */
   internal::LowerBoundIndex lower_bound(Index row, Index col) const {

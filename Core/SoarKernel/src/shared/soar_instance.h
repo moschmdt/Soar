@@ -1,4 +1,4 @@
-/*
+/**
  * soarinstance.h
  *
  *  Created on: Nov 19, 2013
@@ -71,7 +71,7 @@ class EXPORT Soar_Instance {
   std::unordered_map<std::string, Soar_Loaded_Library*>* m_loadedLibraries;
 };
 
-/* -- getSoarInstance is used by libraries to retrieve the
+/** -- getSoarInstance is used by libraries to retrieve the
  *    SoarInstance via a SWIG proxy function.  It is a bit of a hack
  *    currently used CLI libraries like the SoarTcl library module. -- */
 
@@ -80,4 +80,4 @@ EXPORT Output_Manager* getOM();
 EXPORT void configure_for_unit_tests();
 EXPORT void configure_agent_for_unit_tests(agent* testAgent);
 
-#endif /* SOARINSTANCE_H_ */
+#endif /** SOARINSTANCE_H_ */

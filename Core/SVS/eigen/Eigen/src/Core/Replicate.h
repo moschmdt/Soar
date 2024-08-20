@@ -44,7 +44,7 @@ struct traits<Replicate<MatrixType, RowFactor, ColFactor> >
 };
 }  // namespace internal
 
-/*
+/**
  * \class Replicate
  * \ingroup Core_Module
  *
@@ -111,7 +111,7 @@ class Replicate : public internal::dense_xpr_base<
   const internal::variable_if_dynamic<Index, ColFactor> m_colFactor;
 };
 
-/*
+/**
  * \return an expression of the replication of \c *this
  *
  * Example: \include MatrixBase_replicate.cpp
@@ -127,7 +127,7 @@ DenseBase<Derived>::replicate() const {
   return Replicate<Derived, RowFactor, ColFactor>(derived());
 }
 
-/*
+/**
  * \return an expression of the replication of each column (or row) of \c *this
  *
  * Example: \include DirectionWise_replicate_int.cpp

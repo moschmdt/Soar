@@ -76,7 +76,7 @@ class Connection;
 }
 
 namespace soarxml {
-/*
+/**
  * @brief The ElementXML class represents an element in an XML stream.
  *        Through its children, it can represent an entire XML document.
  */
@@ -91,7 +91,7 @@ class EXPORT ElementXML {
                              // created from the ElementXML DLL.
 
  public:
-  /*
+  /**
    * @brief XML ids can only contain letters, numbers, �.� �-� and �_�.
    */
   static bool IsValidID(char const* str) {
@@ -112,12 +112,12 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Default constructor.
    */
   ElementXML() { m_hXML = ::soarxml_NewElementXML(); }
 
-  /*
+  /**
    * @brief Construct an object to manage an existing handle.
    *        Takes ownership of this handle.
    *        This does not affect the referencing counting of the
@@ -127,7 +127,7 @@ class EXPORT ElementXML {
    */
   ElementXML(ElementXML_Handle hXML) { m_hXML = hXML; }
 
-  /*
+  /**
    * @brief Destructor.
    *
    *        If this object is managing a handle when it is deleted,
@@ -146,7 +146,7 @@ class EXPORT ElementXML {
     }
   }
 
-  /*
+  /**
    * @brief Release our reference to this object, possibly
    *        causing it to be deleted.
    *
@@ -168,7 +168,7 @@ class EXPORT ElementXML {
     return refCount;
   }
 
-  /*
+  /**
    * @brief Add a new reference to this object.
    *        The object will only be deleted after calling
    *        releaseRef() one more time than addRef() has been
@@ -183,7 +183,7 @@ class EXPORT ElementXML {
    */
   int AddRefOnHandle() { return ::soarxml_AddRef(m_hXML); }
 
-  /*
+  /**
    * @returns Reports the current reference count (must be > 0)
    */
   int GetRefCount() { return ::soarxml_GetRefCount(m_hXML); }
@@ -194,7 +194,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Takes ownership of an existing handle.
    *
    *        This does not affect the referencing counting of the
@@ -211,7 +211,7 @@ class EXPORT ElementXML {
     m_hXML = hXML;
   }
 
-  /*
+  /**
    * @brief Releases ownership of the handle.
    *
    *        The caller must call releaseRef() on this handle
@@ -225,7 +225,7 @@ class EXPORT ElementXML {
     return hXML;
   }
 
-  /*
+  /**
    * @brief Provides access to the handle this object is managing.
    *
    *        This object retains ownership of the handle and the
@@ -241,7 +241,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Set the tag name for this element.
    *
    * @param  tagName   Tag name can only contain letters, numbers, �.� �-� and
@@ -260,21 +260,21 @@ class EXPORT ElementXML {
     return ::soarxml_SetTagName(m_hXML, tagName, copyName);
   }
 
-  /*
+  /**
    * @brief Helper overload -- if we're passed a const, must copy it.
    */
   bool SetTagName(char const* tagName) {
     return SetTagName(CopyString(tagName), false);
   }
 
-  /*
+  /**
    * @brief Gets the tag name for this element.
    *
    * @returns The tag name.
    */
   char const* GetTagName() const { return ::soarxml_GetTagName(m_hXML); }
 
-  /*
+  /**
    * @brief Returns true if the tag name matches.
    *
    * @param pTagName   The tag to test against.
@@ -307,7 +307,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Associate a comment with this XML element.
    *        The comment is written in front of the element when stored/parsed.
    *
@@ -323,7 +323,7 @@ class EXPORT ElementXML {
     return ::soarxml_SetComment(m_hXML, pComment);
   }
 
-  /*
+  /**
    * @brief Returns the comment for this element.
    *
    * @returns The comment string for this element (or zero-length string if
@@ -340,7 +340,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Adds a child to the list of children of this element.
    *
    * NOTE: The child object is deleted immediately in this version
@@ -358,12 +358,12 @@ class EXPORT ElementXML {
     return hChild;
   }
 
-  /*
+  /**
    * @brief Returns the number of children of this element.
    */
   int GetNumberChildren() const { return ::soarxml_GetNumberChildren(m_hXML); }
 
-  /*
+  /**
    * @brief Returns the n-th child of this element by placing it in pChild.
    *
    * Children are guaranteed to be returned in the order they were added.
@@ -388,7 +388,7 @@ class EXPORT ElementXML {
     return true;
   }
 
-  /*
+  /**
    * @brief Returns the parent of this element by placing it in pParent.
    *
    * The caller must delete the parent when it is finished with it.
@@ -408,7 +408,7 @@ class EXPORT ElementXML {
     return true;
   }
 
-  /*
+  /**
    * @brief Returns a copy of this object.
    *        Generally, this shouldn't be necessary as ref counting
    *        allows multiple clients to point to the same object.
@@ -428,7 +428,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Adds an attribute name-value pair.
    *
    * @param attributeName  Attribute name can only contain letters, numbers, �.�
@@ -446,7 +446,7 @@ class EXPORT ElementXML {
                                   copyName, copyValue);
   }
 
-  /*
+  /**
    * @brief Helper overloads -- if we're passed a const, must copy it.
    */
   bool AddAttribute(char const* attributeName, char* attributeValue) {
@@ -457,14 +457,14 @@ class EXPORT ElementXML {
                         false, false);
   }
 
-  /*
+  /**
    * @brief Get the number of attributes attached to this element.
    */
   int GetNumberAttributes() const {
     return ::soarxml_GetNumberAttributes(m_hXML);
   }
 
-  /*
+  /**
    * @brief Get the name of the n-th attribute of this element.
    *        Attributes may not be returned in the order they were added.
    *
@@ -474,7 +474,7 @@ class EXPORT ElementXML {
     return ::soarxml_GetAttributeName(m_hXML, index);
   }
 
-  /*
+  /**
    * @brief Get the value of the n-th attribute of this element.
    *
    * @param index  The 0-based index of the attribute to return.
@@ -483,7 +483,7 @@ class EXPORT ElementXML {
     return ::soarxml_GetAttributeValue(m_hXML, index);
   }
 
-  /*
+  /**
    * @brief Get the value of the named attribute of this element.
    *
    * @param attName    The name of the attribute to look up.
@@ -501,7 +501,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Set the character data for this element.
    *
    * @param characterData  The character data passed in should *not* replace
@@ -517,7 +517,7 @@ class EXPORT ElementXML {
     SetCharacterData(CopyString(characterData), false);
   }
 
-  /*
+  /**
    * @brief Setting the chracter data in this way indicates that this element�s
    *character data should be treated as a binary buffer (so it may contain chars
    *from 0-255, not just ASCII characters).
@@ -536,7 +536,7 @@ class EXPORT ElementXML {
     SetBinaryCharacterData(CopyBuffer(characterData, length), length, false);
   }
 
-  /*
+  /**
    * @brief Get the character data for this element.
    *
    * @returns  Returns the character data for this element.  If the element has
@@ -548,7 +548,7 @@ class EXPORT ElementXML {
     return ::soarxml_GetCharacterData(m_hXML);
   }
 
-  /*
+  /**
    * @brief Returns true if the character data should be treated as a binary
    *buffer rather than a null-terminated character string.
    */
@@ -556,7 +556,7 @@ class EXPORT ElementXML {
     return ::soarxml_IsCharacterDataBinary(m_hXML);
   }
 
-  /*
+  /**
    * @brief Converts a character data buffer into binary data.
    *
    * If binary data is stored in an XML file it will encoded in
@@ -580,7 +580,7 @@ class EXPORT ElementXML {
     return ::soarxml_ConvertCharacterDataToBinary(m_hXML);
   }
 
-  /*
+  /**
    * @brief Returns the length of the character data.
    *
    * If the data is a binary buffer this is the size of that buffer.
@@ -591,7 +591,7 @@ class EXPORT ElementXML {
     return ::soarxml_GetCharacterDataLength(m_hXML);
   }
 
-  /*
+  /**
    * @brief Setting this value to true indicates that this element�s character
    *data should be stored in a CDATA section. By default this value will be
    *false.
@@ -604,7 +604,7 @@ class EXPORT ElementXML {
    */
   void SetUseCData(bool useCData) { ::soarxml_SetUseCData(m_hXML, useCData); }
 
-  /*
+  /**
    * @brief Returns true if this element's character data should be stored in a
    *CDATA section when streamed to XML.
    */
@@ -616,7 +616,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Converts the XML object to a string.
    *
    * @param includeChildren    Includes all children in the XML output.
@@ -631,7 +631,7 @@ class EXPORT ElementXML {
     return ::soarxml_GenerateXMLString(m_hXML, includeChildren, insertNewLines);
   }
 
-  /*
+  /**
    * @brief Returns the length of string needed to represent this object (does
    *not include the trailing null, so add one for that)
    *
@@ -658,7 +658,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Utility function to allocate memory that the client will pass to the
    *other ElementXML functions.
    *
@@ -670,7 +670,7 @@ class EXPORT ElementXML {
     return ::soarxml_AllocateString(length);
   }
 
-  /*
+  /**
    * @brief Utility function to release memory allocated by this element and
    *returned to the caller.
    *
@@ -679,7 +679,7 @@ class EXPORT ElementXML {
    */
   static void DeleteString(char* pString) { ::soarxml_DeleteString(pString); }
 
-  /*
+  /**
    * @brief    Performs an allocation and then copies the contents of the passed
    *in string to the newly allocated string.
    *
@@ -690,7 +690,7 @@ class EXPORT ElementXML {
     return ::soarxml_CopyString(original);
   }
 
-  /*
+  /**
    * @brief    Performs an allocation and then copies the contents of the passed
    *in buffer to the newly allocated buffer. You need to use this rather than
    *copyString if copying binary data (because it can contained embedded nulls).
@@ -710,7 +710,7 @@ class EXPORT ElementXML {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Parse an XML document from a (long) string and return an ElementXML
    *object for the document.
    *
@@ -728,7 +728,7 @@ class EXPORT ElementXML {
     return new ElementXML(hXML);
   }
 
-  /*
+  /**
    * @brief Parse an XML document from a (long) string and return an ElementXML
    *object for the document.  This version supports a sequence of XML strings
    *which need to be parsed in order (rather than all being part of one
@@ -755,7 +755,7 @@ class EXPORT ElementXML {
     return new ElementXML(hXML);
   }
 
-  /*
+  /**
    * @brief Parse an XML document from a file and return an ElementXML object
    *        for the document.
    *
@@ -773,7 +773,7 @@ class EXPORT ElementXML {
     return new ElementXML(hXML);
   }
 
-  /*
+  /**
    * @brief Returns an error message describing reason for error in last parse.
    *
    * Call here if the parsing functions return NULL to find out what went wrong.
@@ -783,7 +783,7 @@ class EXPORT ElementXML {
   }
 
  protected:
-  /*
+  /**
    * @brief Adds an attribute name-value pair.
    *
    * NOTE: The attribute name must remain in scope for the life of this object.
@@ -806,7 +806,7 @@ class EXPORT ElementXML {
     return AddAttributeFast(attributeName, CopyString(attributeValue), false);
   }
 
-  /*
+  /**
    * @brief Adds an attribute name-value pair.
    *
    * NOTE: The attribute name and value must remain in scope for the life of
@@ -823,7 +823,7 @@ class EXPORT ElementXML {
                                           attributeValue);
   }
 
-  /*
+  /**
    * @brief Set the tag name for this element.
    *
    * NOTE: The caller must ensure that the tag name does not go out of scope

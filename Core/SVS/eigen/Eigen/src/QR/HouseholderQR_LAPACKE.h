@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal Specialization for the data types supported by LAPACKe */
+/** \internal Specialization for the data types supported by LAPACKe */
 
 #define EIGEN_LAPACKE_QR_NOPIV(EIGTYPE, LAPACKE_TYPE, LAPACKE_PREFIX)       \
   template <typename MatrixQR, typename HCoeffs>                            \

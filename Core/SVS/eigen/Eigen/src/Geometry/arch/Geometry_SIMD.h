@@ -114,7 +114,7 @@ struct quat_product<Architecture::Target, Derived, OtherDerived, double> {
     // two temporaries:
     Packet2d t1, t2;
 
-    /*
+    /**
      * t1 = ww*xy + yy*zw
      * t2 = zz*xy - xx*zw
      * res.xy = t1 +/- swap(t2)
@@ -124,7 +124,7 @@ struct quat_product<Architecture::Target, Derived, OtherDerived, double> {
     pstoret<double, Packet2d, ResAlignment>(&res.x(),
                                             paddsub(t1, preverse(t2)));
 
-    /*
+    /**
      * t1 = ww*zw - yy*xy
      * t2 = zz*zw + xx*xy
      * res.zw = t1 -/+ swap(t2) = swap( swap(t1) +/- t2)

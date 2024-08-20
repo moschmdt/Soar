@@ -161,7 +161,7 @@ class EXPORT Identifier : public WMElement {
 
   virtual Identifier *ConvertToIdentifier() { return this; }
 
-  /*
+  /**
    * @brief Searches for a child of this identifier that has the given
    *        time tag.
    *        (The search is recursive over all children).
@@ -171,7 +171,7 @@ class EXPORT Identifier : public WMElement {
    */
   WMElement *FindFromTimeTag(long long timeTag) const;
 
-  /*
+  /**
    * @brief Returns the n-th WME that has the given attribute
    *        and this identifier as its parent (or NULL).
    *        (<ID> ^attribute <WME>) - returns "WME"
@@ -182,7 +182,7 @@ class EXPORT Identifier : public WMElement {
    */
   WMElement *FindByAttribute(char const *pAttribute, int index) const;
 
-  /*
+  /**
    * @brief Returns the value (as a string) of the first WME with this
    *attribute.
    *       (<ID> ^attribute value) - returns "value"
@@ -194,7 +194,7 @@ class EXPORT Identifier : public WMElement {
     return pWME->GetValueAsString();
   }
 
-  /*
+  /**
    * @brief Get the Child Identifier object
    *
    * @param pAttribute
@@ -233,33 +233,33 @@ class EXPORT Identifier : public WMElement {
   //     pWMe->GetValueType()
   // }
 
-  /*
+  /**
    * @brief Returns the "command name" for a top-level identifier on the
    *output-link. That is for output-link O1 (O1 ^move M3) returns "move".
    */
   char const *GetCommandName() const { return this->GetAttribute(); }
 
-  /*
+  /**
    * @brief Adds "^status complete" as a child of this identifier.
    */
   void AddStatusComplete();
 
-  /*
+  /**
    * @brief Adds "^status error" as a child of this identifier.
    */
   void AddStatusError();
 
-  /*
+  /**
    * @brief Adds "^error-code <code>" as a child of this identifier.
    */
   void AddErrorCode(int errorCode);
 
-  /*
+  /**
    * @brief Returns the number of children
    */
   int GetNumberChildren() { return (int)m_pSymbol->m_Children.size(); }
 
-  /*
+  /**
    * @brief Gets the n-th child.
    *        Ownership of this WME is retained by the agent.
    *
@@ -269,7 +269,7 @@ class EXPORT Identifier : public WMElement {
    */
   WMElement *GetChild(int index);
 
-  /*
+  /**
    * @brief This is true if the list of children of this identifier has changed.
    *        The client chooses when to clear these flags.
    */

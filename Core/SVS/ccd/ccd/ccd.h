@@ -1,4 +1,4 @@
-/*
+/**
  * libccd
  * ---------------------------------
  * Copyright (c)2010,2011 Daniel Fiser <danfis@danfis.cz>
@@ -22,9 +22,9 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /** __cplusplus */
 
-/*
+/**
  * Type of *support* function that takes pointer to 3D object and direction
  * and returns (via vec argument) furthest point from object in specified
  * direction.
@@ -32,20 +32,20 @@ extern "C" {
 typedef void (*ccd_support_fn)(const void *obj, const ccd_vec3_t *dir,
                                ccd_vec3_t *vec);
 
-/*
+/**
  * Returns (via dir argument) first direction vector that will be used in
  * initialization of algorithm.
  */
 typedef void (*ccd_first_dir_fn)(const void *obj1, const void *obj2,
                                  ccd_vec3_t *dir);
 
-/*
+/**
  * Returns (via center argument) geometric center (some point near center)
  * of given object.
  */
 typedef void (*ccd_center_fn)(const void *obj1, ccd_vec3_t *center);
 
-/*
+/**
  * Main structure of CCD algorithm.
  */
 struct _ccd_t {
@@ -68,7 +68,7 @@ struct _ccd_t {
 };
 typedef struct _ccd_t ccd_t;
 
-/*
+/**
  * Default first direction.
  */
 void ccdFirstDirDefault(const void *o1, const void *o2, ccd_vec3_t *dir);
@@ -87,12 +87,12 @@ void ccdFirstDirDefault(const void *o1, const void *o2, ccd_vec3_t *dir);
     (ccd)->dist_tolerance = CCD_REAL(1E-6);    \
   } while (0)
 
-/*
+/**
  * Returns true if two given objects interest.
  */
 int ccdGJKIntersect(const void *obj1, const void *obj2, const ccd_t *ccd);
 
-/*
+/**
  * This function computes separation vector of two objects. Separation
  * vector is minimal translation of obj2 to get obj1 and obj2 speparated
  * (without intersection).
@@ -103,7 +103,7 @@ int ccdGJKIntersect(const void *obj1, const void *obj2, const ccd_t *ccd);
 int ccdGJKSeparate(const void *obj1, const void *obj2, const ccd_t *ccd,
                    ccd_vec3_t *sep);
 
-/*
+/**
  * Computes penetration of obj2 into obj1.
  * Depth of penetration, direction and position is returned. It means that
  * if obj2 is translated by distance depth in direction dir objects will
@@ -120,7 +120,7 @@ int ccdGJKSeparate(const void *obj1, const void *obj2, const ccd_t *ccd,
 int ccdGJKPenetration(const void *obj1, const void *obj2, const ccd_t *ccd,
                       ccd_real_t *depth, ccd_vec3_t *dir, ccd_vec3_t *pos);
 
-/*
+/**
  * Computes a distance between given objects.
  * The function uses .dist_tolerance parameter for convergence checking (the
  * improvement in one step must be at least .dist_tolerance).
@@ -130,12 +130,12 @@ int ccdGJKPenetration(const void *obj1, const void *obj2, const ccd_t *ccd,
  */
 ccd_real_t ccdGJKDist(const void *obj1, const void *obj2, const ccd_t *ccd);
 
-/*
+/**
  * Returns true if two given objects intersect - MPR algorithm is used.
  */
 int ccdMPRIntersect(const void *obj1, const void *obj2, const ccd_t *ccd);
 
-/*
+/**
  * Computes penetration of obj2 into obj1.
  * Depth of penetration, direction and position is returned, i.e. if obj2
  * is translated by computed depth in resulting direction obj1 and obj2
@@ -151,7 +151,7 @@ int ccdMPRPenetration(const void *obj1, const void *obj2, const ccd_t *ccd,
                       ccd_real_t *depth, ccd_vec3_t *dir, ccd_vec3_t *pos);
 
 #ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
+} /** extern "C" */
+#endif /** __cplusplus */
 
-#endif /* __CCD_H__ */
+#endif /** __CCD_H__ */

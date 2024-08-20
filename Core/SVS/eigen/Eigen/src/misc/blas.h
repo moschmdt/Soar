@@ -166,7 +166,7 @@ int BLASFUNC(srotm)(int *, float *, int *, float *, int *, float *);
 int BLASFUNC(drotm)(int *, double *, int *, double *, int *, double *);
 int BLASFUNC(qrotm)(int *, double *, int *, double *, int *, double *);
 
-/* Level 2 routines */
+/** Level 2 routines */
 
 int BLASFUNC(sger)(int *, int *, float *, float *, int *, float *, int *,
                    float *, int *);
@@ -409,7 +409,7 @@ int BLASFUNC(zhbmv)(char *, int *, int *, double *, double *, int *, double *,
 int BLASFUNC(xhbmv)(char *, int *, int *, double *, double *, int *, double *,
                     int *, double *, double *, int *);
 
-/* Level 3 routines */
+/** Level 3 routines */
 
 int BLASFUNC(sgemm)(const char *, const char *, const int *, const int *,
                     const int *, const float *, const float *, const int *,

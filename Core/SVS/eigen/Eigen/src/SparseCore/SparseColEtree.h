@@ -7,7 +7,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
 
  * NOTE: This file is the modified version of sp_coletree.c file in SuperLU
 
@@ -34,7 +34,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* Find the root of the tree/set containing the vertex i : Use Path halving */
+/** Find the root of the tree/set containing the vertex i : Use Path halving */
 template <typename Index, typename IndexVector>
 Index etree_find(Index i, IndexVector& pp) {
   Index p = pp(i);   // Parent
@@ -49,7 +49,7 @@ Index etree_find(Index i, IndexVector& pp) {
   return p;
 }
 
-/* Compute the column elimination tree of a sparse matrix
+/** Compute the column elimination tree of a sparse matrix
  * \param mat The matrix in column-major format.
  * \param parent The elimination tree
  * \param firstRowElt The column index of the first element in each row
@@ -82,7 +82,7 @@ int coletree(const MatrixType& mat, IndexVector& parent,
       firstRowElt(row) = (std::min)(firstRowElt(row), col);
     }
   }
-  /* Compute etree by Liu's algorithm for symmetric matrices,
+  /** Compute etree by Liu's algorithm for symmetric matrices,
           except use (firstRowElt[r],c) in place of an edge (r,c) of A.
     Thus each row clique in A'*A is replaced by a star
     centered at its first vertex, which has the same fill. */
@@ -93,7 +93,7 @@ int coletree(const MatrixType& mat, IndexVector& parent,
     cset = col;
     root(cset) = col;
     parent(col) = nc;
-    /* The diagonal element is treated here even if it does not exist in the
+    /** The diagonal element is treated here even if it does not exist in the
      * matrix hence the loop is executed once more */
     StorageIndex pcol = col;
     if (perm) pcol = perm[col];
@@ -119,7 +119,7 @@ int coletree(const MatrixType& mat, IndexVector& parent,
   return 0;
 }
 
-/*
+/**
  * Depth-first search from vertex n.  No recursion.
  * This routine was contributed by Cédric Doucet, CEDRAT Group, Meylan, France.
  */
@@ -160,7 +160,7 @@ void nr_etdfs(typename IndexVector::Scalar n, IndexVector& parent,
   }
 }
 
-/*
+/**
  * \brief Post order a tree
  * \param n the number of nodes
  * \param parent Input tree

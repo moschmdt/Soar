@@ -6,7 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
-/*
+/**
 
  * NOTE: This file is the modified version of [s,d,c,z]copy_to_ucol.c file in
  SuperLU
@@ -33,7 +33,7 @@
 namespace Eigen {
 namespace internal {
 
-/*
+/**
  * \brief Performs numeric block updates (sup-col) in topological order
  *
  * \param jcol current column to update

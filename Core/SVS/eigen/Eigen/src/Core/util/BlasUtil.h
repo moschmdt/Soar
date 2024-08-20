@@ -448,7 +448,7 @@ class const_blas_data_mapper
   }
 };
 
-/* Helper class to analyze the factors of a Product expression.
+/** Helper class to analyze the factors of a Product expression.
  * In particular it allows to pop out operator-, scalar multiples,
  * and conjugate */
 template <typename XprType>
@@ -607,7 +607,7 @@ EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE const typename T::Scalar* extract_data(
   return extract_data_selector<T>::run(m);
 }
 
-/*
+/**
  * \c combine_scalar_factors extracts and multiplies factors from GEMM and GEMV
  * products. There is a specialization for booleans
  */

@@ -22,7 +22,7 @@
 
 namespace Eigen {
 
-/* TODO extract L, extract U, compute det, etc... */
+/** TODO extract L, extract U, compute det, etc... */
 
 // generic double/complex<double> wrapper functions:
 
@@ -361,7 +361,7 @@ inline SuiteSparse_long umfpack_get_determinant(std::complex<double> *Mx,
   return umfpack_zl_get_determinant(&mx_real, 0, Ex, NumericHandle, User_Info);
 }
 
-/* \ingroup UmfPackSupport_Module
+/** \ingroup UmfPackSupport_Module
  * \brief A sparse LU factorization and solver based on UmfPack
  *
  * This class allows to solve for A.X = B sparse linear problems via a LU
@@ -422,7 +422,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
   inline Index rows() const { return mp_matrix.rows(); }
   inline Index cols() const { return mp_matrix.cols(); }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the matrix.appears to be negative.
@@ -452,7 +452,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
     return m_q;
   }
 
-  /* Computes the sparse Cholesky decomposition of \a matrix
+  /** Computes the sparse Cholesky decomposition of \a matrix
    *  Note that the matrix should be column-major, and in compressed format for
    * best performance. \sa SparseMatrix::makeCompressed().
    */
@@ -466,7 +466,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
     factorize_impl();
   }
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -484,7 +484,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
     analyzePattern_impl();
   }
 
-  /* Provides the return status code returned by UmfPack during the numeric
+  /** Provides the return status code returned by UmfPack during the numeric
    * factorization.
    *
    * \sa factorize(), compute()
@@ -494,7 +494,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
     return m_fact_errorCode;
   }
 
-  /* Provides access to the control settings array used by UmfPack.
+  /** Provides access to the control settings array used by UmfPack.
    *
    * If this array contains NaN's, the default values are used.
    *
@@ -502,7 +502,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
    */
   inline const UmfpackControl &umfpackControl() const { return m_control; }
 
-  /* Provides access to the control settings array used by UmfPack.
+  /** Provides access to the control settings array used by UmfPack.
    *
    * If this array contains NaN's, the default values are used.
    *
@@ -510,7 +510,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
    */
   inline UmfpackControl &umfpackControl() { return m_control; }
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must has the same sparcity than the matrix on which the
    * pattern anylysis has been performed.
@@ -528,7 +528,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
     factorize_impl();
   }
 
-  /* Prints the current UmfPack control settings.
+  /** Prints the current UmfPack control settings.
    *
    * \sa umfpackControl()
    */
@@ -536,7 +536,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
     umfpack_report_control(m_control.data(), Scalar(), StorageIndex());
   }
 
-  /* Prints statistics collected by UmfPack.
+  /** Prints statistics collected by UmfPack.
    *
    * \sa analyzePattern(), compute()
    */
@@ -547,7 +547,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
                         StorageIndex());
   }
 
-  /* Prints the status of the previous factorization operation performed by
+  /** Prints the status of the previous factorization operation performed by
    * UmfPack (symbolic or numerical factorization).
    *
    * \sa analyzePattern(), compute()
@@ -559,7 +559,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<_MatrixType> > {
                           StorageIndex());
   }
 
-  /* \internal */
+  /** \internal */
   template <typename BDerived, typename XDerived>
   bool _solve_impl(const MatrixBase<BDerived> &b,
                    MatrixBase<XDerived> &x) const;

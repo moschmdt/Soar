@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal Low-level conjugate gradient algorithm for least-square problems
+/** \internal Low-level conjugate gradient algorithm for least-square problems
  * \param mat The matrix A
  * \param rhs The right hand side vector b
  * \param x On input and initial solution, on output the computed solution.
@@ -110,7 +110,7 @@ struct traits<LeastSquaresConjugateGradient<_MatrixType, _Preconditioner> > {
 
 }  // namespace internal
 
-/* \ingroup IterativeLinearSolvers_Module
+/** \ingroup IterativeLinearSolvers_Module
   * \brief A conjugate gradient solver for sparse (or dense) least-square
   problems
   *
@@ -171,10 +171,10 @@ class LeastSquaresConjugateGradient
   typedef _Preconditioner Preconditioner;
 
  public:
-  /* Default constructor. */
+  /** Default constructor. */
   LeastSquaresConjugateGradient() : Base() {}
 
-  /* Initialize the solver with matrix \a A for further \c Ax=b solving.
+  /** Initialize the solver with matrix \a A for further \c Ax=b solving.
    *
    * This constructor is a shortcut for the default constructor followed
    * by a call to compute().
@@ -190,7 +190,7 @@ class LeastSquaresConjugateGradient
 
   ~LeastSquaresConjugateGradient() {}
 
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_vector_with_guess_impl(const Rhs& b, Dest& x) const {
     m_iterations = Base::maxIterations();

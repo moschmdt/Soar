@@ -14,7 +14,7 @@
 namespace Eigen {
 namespace internal {
 
-/* \ingroup SparseLU_Module
+/** \ingroup SparseLU_Module
  * \brief a class to manipulate the L supernodal factor from the SparseLU
  * factorization
  *
@@ -25,7 +25,7 @@ namespace internal {
  * NOTE : This class corresponds to the SCformat structure in SuperLU
  *
  */
-/* TODO
+/** TODO
  * InnerIterator as for sparsematrix
  * SuperInnerIterator to iterate through all supernodes
  * Function for triangular solve
@@ -49,7 +49,7 @@ class MappedSuperNodalMatrix {
   }
 
   ~MappedSuperNodalMatrix() {}
-  /*
+  /**
    * Set appropriate pointers for the lower triangular supernodal matrix
    * These infos are available at the end of the numerical factorization
    * FIXME This class will be modified such that it can be use in the course
@@ -70,17 +70,17 @@ class MappedSuperNodalMatrix {
     m_sup_to_col = sup_to_col.data();
   }
 
-  /*
+  /**
    * Number of rows
    */
   Index rows() const { return m_row; }
 
-  /*
+  /**
    * Number of columns
    */
   Index cols() const { return m_col; }
 
-  /*
+  /**
    * Return the array of nonzero values packed by column
    *
    * The size is nnz
@@ -88,41 +88,41 @@ class MappedSuperNodalMatrix {
   Scalar* valuePtr() { return m_nzval; }
 
   const Scalar* valuePtr() const { return m_nzval; }
-  /*
+  /**
    * Return the pointers to the beginning of each column in \ref valuePtr()
    */
   StorageIndex* colIndexPtr() { return m_nzval_colptr; }
 
   const StorageIndex* colIndexPtr() const { return m_nzval_colptr; }
 
-  /*
+  /**
    * Return the array of compressed row indices of all supernodes
    */
   StorageIndex* rowIndex() { return m_rowind; }
 
   const StorageIndex* rowIndex() const { return m_rowind; }
 
-  /*
+  /**
    * Return the location in \em rowvaluePtr() which starts each column
    */
   StorageIndex* rowIndexPtr() { return m_rowind_colptr; }
 
   const StorageIndex* rowIndexPtr() const { return m_rowind_colptr; }
 
-  /*
+  /**
    * Return the array of column-to-supernode mapping
    */
   StorageIndex* colToSup() { return m_col_to_sup; }
 
   const StorageIndex* colToSup() const { return m_col_to_sup; }
-  /*
+  /**
    * Return the array of supernode-to-column mapping
    */
   StorageIndex* supToCol() { return m_sup_to_col; }
 
   const StorageIndex* supToCol() const { return m_sup_to_col; }
 
-  /*
+  /**
    * Return the number of supernodes
    */
   Index nsuper() const { return m_nsuper; }
@@ -152,7 +152,7 @@ class MappedSuperNodalMatrix {
  private:
 };
 
-/*
+/**
  * \brief InnerIterator class to iterate over nonzero values of the current
  * column in the supernodal matrix L
  *
@@ -203,7 +203,7 @@ class MappedSuperNodalMatrix<Scalar, StorageIndex>::InnerIterator {
   Index m_endidrow;          // End index of row indices of the current column
 };
 
-/*
+/**
  * \brief Solve with the supernode triangular matrix
  *
  */
@@ -211,7 +211,7 @@ template <typename Scalar, typename Index_>
 template <typename Dest>
 void MappedSuperNodalMatrix<Scalar, Index_>::solveInPlace(
     MatrixBase<Dest>& X) const {
-  /* Explicit type conversion as the Index type of MatrixBase<Dest> may be wider
+  /** Explicit type conversion as the Index type of MatrixBase<Dest> may be wider
    * than Index */
   //    eigen_assert(X.rows() <= NumTraits<Index>::highest());
   //    eigen_assert(X.cols() <= NumTraits<Index>::highest());

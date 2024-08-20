@@ -11,7 +11,7 @@
 // This file is a base class plugin containing common coefficient wise
 // functions.
 
-/* \returns an expression of the difference of \c *this and \a other
+/** \returns an expression of the difference of \c *this and \a other
  *
  * \note If you want to substract a given scalar from all coefficients, see
  * Cwise::operator-().
@@ -20,7 +20,7 @@
  */
 EIGEN_MAKE_CWISE_BINARY_OP(operator-, difference)
 
-/* \returns an expression of the sum of \c *this and \a other
+/** \returns an expression of the sum of \c *this and \a other
  *
  * \note If you want to add a given scalar to all coefficients, see
  * Cwise::operator+().
@@ -29,7 +29,7 @@ EIGEN_MAKE_CWISE_BINARY_OP(operator-, difference)
  */
 EIGEN_MAKE_CWISE_BINARY_OP(operator+, sum)
 
-/* \returns an expression of a custom coefficient-wise operator \a func of
+/** \returns an expression of a custom coefficient-wise operator \a func of
  * *this and \a other
  *
  * The template parameter \a CustomBinaryOp is the type of the functor
@@ -53,7 +53,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const
 #ifndef EIGEN_PARSED_BY_DOXYGEN
 EIGEN_MAKE_SCALAR_BINARY_OP(operator*, product)
 #else
-/* \returns an expression of \c *this scaled by the scalar factor \a scalar
+/** \returns an expression of \c *this scaled by the scalar factor \a scalar
  *
  * \tparam T is the scalar type of \a scalar. It must be compatible with the
  * scalar type of the given expression.
@@ -62,7 +62,7 @@ template <typename T>
 const CwiseBinaryOp<internal::scalar_product_op<Scalar, T>, Derived,
                     Constant<T> >
 operator*(const T &scalar) const;
-/* \returns an expression of \a expr scaled by the scalar factor \a scalar
+/** \returns an expression of \a expr scaled by the scalar factor \a scalar
  *
  * \tparam T is the scalar type of \a scalar. It must be compatible with the
  * scalar type of the given expression.
@@ -76,7 +76,7 @@ operator*(const T &scalar, const StorageBaseType &expr);
 #ifndef EIGEN_PARSED_BY_DOXYGEN
 EIGEN_MAKE_SCALAR_BINARY_OP_ONTHERIGHT(operator/, quotient)
 #else
-/* \returns an expression of \c *this divided by the scalar value \a scalar
+/** \returns an expression of \c *this divided by the scalar value \a scalar
  *
  * \tparam T is the scalar type of \a scalar. It must be compatible with the
  * scalar type of the given expression.
@@ -87,7 +87,7 @@ const CwiseBinaryOp<internal::scalar_quotient_op<Scalar, T>, Derived,
 operator/(const T &scalar) const;
 #endif
 
-/* \returns an expression of the coefficient-wise boolean \b and operator of \c
+/** \returns an expression of the coefficient-wise boolean \b and operator of \c
  * *this and \a other
  *
  * \warning this operator is for expression of bool only.
@@ -109,7 +109,7 @@ operator&&(const EIGEN_CURRENT_STORAGE_BASE_CLASS<OtherDerived> &other) const {
                        const OtherDerived>(derived(), other.derived());
 }
 
-/* \returns an expression of the coefficient-wise boolean \b or operator of \c
+/** \returns an expression of the coefficient-wise boolean \b or operator of \c
  * *this and \a other
  *
  * \warning this operator is for expression of bool only.

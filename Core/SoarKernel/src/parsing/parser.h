@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* ======================================================================
+/** ======================================================================
                               parser.h
 
                      The Production (SP) Parser

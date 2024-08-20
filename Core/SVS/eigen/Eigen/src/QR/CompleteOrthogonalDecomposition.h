@@ -24,7 +24,7 @@ struct traits<CompleteOrthogonalDecomposition<_MatrixType> >
 
 }  // end namespace internal
 
-/* \ingroup QR_Module
+/** \ingroup QR_Module
  *
  * \class CompleteOrthogonalDecomposition
  *
@@ -80,7 +80,7 @@ class CompleteOrthogonalDecomposition
   typedef typename PermutationType::Index PermIndexType;
 
  public:
-  /*
+  /**
    * \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
@@ -89,7 +89,7 @@ class CompleteOrthogonalDecomposition
    */
   CompleteOrthogonalDecomposition() : m_cpqr(), m_zCoeffs(), m_temp() {}
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -98,7 +98,7 @@ class CompleteOrthogonalDecomposition
   CompleteOrthogonalDecomposition(Index rows, Index cols)
       : m_cpqr(rows, cols), m_zCoeffs((std::min)(rows, cols)), m_temp(cols) {}
 
-  /* \brief Constructs a complete orthogonal decomposition from a given
+  /** \brief Constructs a complete orthogonal decomposition from a given
    * matrix.
    *
    * This constructor computes the complete orthogonal decomposition of the
@@ -122,7 +122,7 @@ class CompleteOrthogonalDecomposition
     compute(matrix.derived());
   }
 
-  /* \brief Constructs a complete orthogonal decomposition from a given matrix
+  /** \brief Constructs a complete orthogonal decomposition from a given matrix
    *
    * This overloaded constructor is provided for \link InplaceDecomposition
    * inplace decomposition \endlink when \c MatrixType is a Eigen::Ref.
@@ -138,7 +138,7 @@ class CompleteOrthogonalDecomposition
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* This method computes the minimum-norm solution X to a least squares
+  /** This method computes the minimum-norm solution X to a least squares
    * problem \f[\mathrm{minimize} \|A X - B\|, \f] where \b A is the matrix of
    * which \c *this is the complete orthogonal decomposition.
    *
@@ -155,7 +155,7 @@ class CompleteOrthogonalDecomposition
   HouseholderSequenceType householderQ(void) const;
   HouseholderSequenceType matrixQ(void) const { return m_cpqr.householderQ(); }
 
-  /* \returns the matrix \b Z.
+  /** \returns the matrix \b Z.
    */
   MatrixType matrixZ() const {
     MatrixType Z = MatrixType::Identity(m_cpqr.cols(), m_cpqr.cols());
@@ -163,12 +163,12 @@ class CompleteOrthogonalDecomposition
     return Z;
   }
 
-  /* \returns a reference to the matrix where the complete orthogonal
+  /** \returns a reference to the matrix where the complete orthogonal
    * decomposition is stored
    */
   const MatrixType& matrixQTZ() const { return m_cpqr.matrixQR(); }
 
-  /* \returns a reference to the matrix where the complete orthogonal
+  /** \returns a reference to the matrix where the complete orthogonal
    * decomposition is stored.
    * \warning The strict lower part and \code cols() - rank() \endcode right
    * columns of this matrix contains internal values.
@@ -189,12 +189,12 @@ class CompleteOrthogonalDecomposition
     return *this;
   }
 
-  /* \returns a const reference to the column permutation matrix */
+  /** \returns a const reference to the column permutation matrix */
   const PermutationType& colsPermutation() const {
     return m_cpqr.colsPermutation();
   }
 
-  /* \returns the absolute value of the determinant of the matrix of which
+  /** \returns the absolute value of the determinant of the matrix of which
    * *this is the complete orthogonal decomposition. It has only linear
    * complexity (that is, O(n) where n is the dimension of the square matrix)
    * as the complete orthogonal decomposition has already been computed.
@@ -209,7 +209,7 @@ class CompleteOrthogonalDecomposition
    */
   typename MatrixType::RealScalar absDeterminant() const;
 
-  /* \returns the natural log of the absolute value of the determinant of the
+  /** \returns the natural log of the absolute value of the determinant of the
    * matrix of which *this is the complete orthogonal decomposition. It has
    * only linear complexity (that is, O(n) where n is the dimension of the
    * square matrix) as the complete orthogonal decomposition has already been
@@ -224,7 +224,7 @@ class CompleteOrthogonalDecomposition
    */
   typename MatrixType::RealScalar logAbsDeterminant() const;
 
-  /* \returns the rank of the matrix of which *this is the complete orthogonal
+  /** \returns the rank of the matrix of which *this is the complete orthogonal
    * decomposition.
    *
    * \note This method has to determine which pivots should be considered
@@ -233,7 +233,7 @@ class CompleteOrthogonalDecomposition
    */
   inline Index rank() const { return m_cpqr.rank(); }
 
-  /* \returns the dimension of the kernel of the matrix of which *this is the
+  /** \returns the dimension of the kernel of the matrix of which *this is the
    * complete orthogonal decomposition.
    *
    * \note This method has to determine which pivots should be considered
@@ -242,7 +242,7 @@ class CompleteOrthogonalDecomposition
    */
   inline Index dimensionOfKernel() const { return m_cpqr.dimensionOfKernel(); }
 
-  /* \returns true if the matrix of which *this is the decomposition represents
+  /** \returns true if the matrix of which *this is the decomposition represents
    * an injective linear map, i.e. has trivial kernel; false otherwise.
    *
    * \note This method has to determine which pivots should be considered
@@ -251,7 +251,7 @@ class CompleteOrthogonalDecomposition
    */
   inline bool isInjective() const { return m_cpqr.isInjective(); }
 
-  /* \returns true if the matrix of which *this is the decomposition represents
+  /** \returns true if the matrix of which *this is the decomposition represents
    * a surjective linear map; false otherwise.
    *
    * \note This method has to determine which pivots should be considered
@@ -260,7 +260,7 @@ class CompleteOrthogonalDecomposition
    */
   inline bool isSurjective() const { return m_cpqr.isSurjective(); }
 
-  /* \returns true if the matrix of which *this is the complete orthogonal
+  /** \returns true if the matrix of which *this is the complete orthogonal
    * decomposition is invertible.
    *
    * \note This method has to determine which pivots should be considered
@@ -269,7 +269,7 @@ class CompleteOrthogonalDecomposition
    */
   inline bool isInvertible() const { return m_cpqr.isInvertible(); }
 
-  /* \returns the pseudo-inverse of the matrix of which *this is the complete
+  /** \returns the pseudo-inverse of the matrix of which *this is the complete
    * orthogonal decomposition.
    * \warning: Do not compute \c this->pseudoInverse()*rhs to solve a linear
    * systems. It is more efficient and numerically stable to call \c
@@ -284,21 +284,21 @@ class CompleteOrthogonalDecomposition
   inline Index rows() const { return m_cpqr.rows(); }
   inline Index cols() const { return m_cpqr.cols(); }
 
-  /* \returns a const reference to the vector of Householder coefficients used
+  /** \returns a const reference to the vector of Householder coefficients used
    * to represent the factor \c Q.
    *
    * For advanced uses only.
    */
   inline const HCoeffsType& hCoeffs() const { return m_cpqr.hCoeffs(); }
 
-  /* \returns a const reference to the vector of Householder coefficients
+  /** \returns a const reference to the vector of Householder coefficients
    * used to represent the factor \c Z.
    *
    * For advanced uses only.
    */
   const HCoeffsType& zCoeffs() const { return m_zCoeffs; }
 
-  /* Allows to prescribe a threshold to be used by certain methods, such as
+  /** Allows to prescribe a threshold to be used by certain methods, such as
    * rank(), who need to determine when pivots are to be considered nonzero.
    * Most be called before calling compute().
    *
@@ -322,7 +322,7 @@ class CompleteOrthogonalDecomposition
     return *this;
   }
 
-  /* Allows to come back to the default behavior, letting Eigen use its default
+  /** Allows to come back to the default behavior, letting Eigen use its default
    * formula for determining the threshold.
    *
    * You should pass the special object Eigen::Default as parameter here.
@@ -335,13 +335,13 @@ class CompleteOrthogonalDecomposition
     return *this;
   }
 
-  /* Returns the threshold that will be used by certain methods such as rank().
+  /** Returns the threshold that will be used by certain methods such as rank().
    *
    * See the documentation of setThreshold(const RealScalar&).
    */
   RealScalar threshold() const { return m_cpqr.threshold(); }
 
-  /* \returns the number of nonzero pivots in the complete orthogonal
+  /** \returns the number of nonzero pivots in the complete orthogonal
    * decomposition. Here nonzero is meant in the exact sense, not in a
    * fuzzy sense. So that notion isn't really intrinsically interesting,
    * but it is still useful when implementing algorithms.
@@ -350,12 +350,12 @@ class CompleteOrthogonalDecomposition
    */
   inline Index nonzeroPivots() const { return m_cpqr.nonzeroPivots(); }
 
-  /* \returns the absolute value of the biggest pivot, i.e. the biggest
+  /** \returns the absolute value of the biggest pivot, i.e. the biggest
    *          diagonal coefficient of R.
    */
   inline RealScalar maxPivot() const { return m_cpqr.maxPivot(); }
 
-  /* \brief Reports whether the complete orthogonal decomposition was
+  /** \brief Reports whether the complete orthogonal decomposition was
    * successful.
    *
    * \note This function always returns \c Success. It is provided for
@@ -394,14 +394,14 @@ class CompleteOrthogonalDecomposition
 
   void computeInPlace();
 
-  /* Overwrites \b rhs with \f$ \mathbf{Z} * \mathbf{rhs} \f$ or
+  /** Overwrites \b rhs with \f$ \mathbf{Z} * \mathbf{rhs} \f$ or
    *  \f$ \mathbf{\overline Z} * \mathbf{rhs} \f$ if \c Conjugate
    *  is set to \c true.
    */
   template <bool Conjugate, typename Rhs>
   void applyZOnTheLeftInPlace(Rhs& rhs) const;
 
-  /* Overwrites \b rhs with \f$ \mathbf{Z}^* * \mathbf{rhs} \f$.
+  /** Overwrites \b rhs with \f$ \mathbf{Z}^* * \mathbf{rhs} \f$.
    */
   template <typename Rhs>
   void applyZAdjointOnTheLeftInPlace(Rhs& rhs) const;
@@ -423,7 +423,7 @@ CompleteOrthogonalDecomposition<MatrixType>::logAbsDeterminant() const {
   return m_cpqr.logAbsDeterminant();
 }
 
-/* Performs the complete orthogonal decomposition of the given matrix \a
+/** Performs the complete orthogonal decomposition of the given matrix \a
  * matrix. The result of the factorization is stored into \c *this, and a
  * reference to \c *this is returned.
  *
@@ -632,14 +632,14 @@ struct Assignment<
 
 }  // end namespace internal
 
-/* \returns the matrix Q as a sequence of householder transformations */
+/** \returns the matrix Q as a sequence of householder transformations */
 template <typename MatrixType>
 typename CompleteOrthogonalDecomposition<MatrixType>::HouseholderSequenceType
 CompleteOrthogonalDecomposition<MatrixType>::householderQ() const {
   return m_cpqr.householderQ();
 }
 
-/* \return the complete orthogonal decomposition of \c *this.
+/** \return the complete orthogonal decomposition of \c *this.
  *
  * \sa class CompleteOrthogonalDecomposition
  */

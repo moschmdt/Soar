@@ -13,7 +13,7 @@
 
 #include "details.h"
 
-/*
+/**
  * This section contains a convenience MACRO which allows an easy specialization
  * of std::deque such that for data types with alignment issues the correct
  * allocator is used automatically.
@@ -52,7 +52,7 @@
 #if !EIGEN_HAS_CXX11_CONTAINERS &&                                            \
     !(defined(_GLIBCXX_DEQUE) &&                                              \
       (!EIGEN_GNUC_AT_LEAST(4,                                                \
-                            1))) /* Note that before gcc-4.1 we already have: \
+                            1))) /** Note that before gcc-4.1 we already have: \
                                     std::deque::resize(size_type,const T&). */
 
 namespace std {

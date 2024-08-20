@@ -1,4 +1,4 @@
-/*
+/**
  * explanation_settings.h
  *
  *  Created on: Sep 26, 2016
@@ -38,4 +38,4 @@ class Explainer_Parameters : public soar_module::param_container {
   void print_explanation_settings(agent* thisAgent);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_EXPLANATION_SETTINGS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_EXPLANATION_SETTINGS_H_ */

@@ -37,7 +37,7 @@ struct traits<Transpose<MatrixType> > : public traits<MatrixType> {
 template <typename MatrixType, typename StorageKind>
 class TransposeImpl;
 
-/* \class Transpose
+/** \class Transpose
  * \ingroup Core_Module
  *
  * \brief Expression of the transpose of a matrix
@@ -80,21 +80,21 @@ class Transpose
     return m_matrix.rows();
   }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename internal::remove_all<
       MatrixTypeNested>::type&
   nestedExpression() const {
     return m_matrix;
   }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
       typename internal::remove_reference<MatrixTypeNested>::type&
       nestedExpression() {
     return m_matrix;
   }
 
-  /* \internal */
+  /** \internal */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void resize(Index nrows, Index ncols) {
     m_matrix.resize(ncols, nrows);
   }
@@ -168,7 +168,7 @@ class TransposeImpl<MatrixType, Dense>
   EIGEN_DEFAULT_EMPTY_CONSTRUCTOR_AND_DESTRUCTOR(TransposeImpl)
 };
 
-/* \returns an expression of the transpose of *this.
+/** \returns an expression of the transpose of *this.
  *
  * Example: \include MatrixBase_transpose.cpp
  * Output: \verbinclude MatrixBase_transpose.out
@@ -189,7 +189,7 @@ DenseBase<Derived>::transpose() {
   return TransposeReturnType(derived());
 }
 
-/* This is the const version of transpose().
+/** This is the const version of transpose().
  *
  * Make sure you read the warning for transpose() !
  *
@@ -201,7 +201,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   return ConstTransposeReturnType(derived());
 }
 
-/* \returns an expression of the adjoint (i.e. conjugate transpose) of *this.
+/** \returns an expression of the adjoint (i.e. conjugate transpose) of *this.
  *
  * Example: \include MatrixBase_adjoint.cpp
  * Output: \verbinclude MatrixBase_adjoint.out
@@ -223,7 +223,7 @@ MatrixBase<Derived>::adjoint() const {
   return AdjointReturnType(this->transpose());
 }
 
-/*
+/**
  * "in place" transpose implementation
  */
 
@@ -342,7 +342,7 @@ struct inplace_transpose_selector<
 
 }  // end namespace internal
 
-/* This is the "in place" version of transpose(): it replaces \c *this by its
+/** This is the "in place" version of transpose(): it replaces \c *this by its
  * own transpose. Thus, doing \code m.transposeInPlace(); \endcode has the same
  * effect on m as doing \code m = m.transpose().eval(); \endcode and is faster
  * and also safer because in the latter line of code, forgetting the eval()
@@ -365,11 +365,11 @@ EIGEN_DEVICE_FUNC inline void DenseBase<Derived>::transposeInPlace() {
   internal::inplace_transpose_selector<Derived>::run(derived());
 }
 
-/*
+/**
  * "in place" adjoint implementation
  */
 
-/* This is the "in place" version of adjoint(): it replaces \c *this by its own
+/** This is the "in place" version of adjoint(): it replaces \c *this by its own
  * transpose. Thus, doing \code m.adjointInPlace(); \endcode has the same effect
  * on m as doing \code m = m.adjoint().eval(); \endcode and is faster and also
  * safer because in the latter line of code, forgetting the eval() results in a

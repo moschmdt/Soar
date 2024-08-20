@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \returns the cross product of \c *this and \a other
  *
@@ -69,7 +69,7 @@ struct cross3_impl {
 
 }  // namespace internal
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \returns the cross product of \c *this and \a other using only the x, y, and
  * z coefficients
@@ -98,7 +98,7 @@ MatrixBase<Derived>::cross3(const MatrixBase<OtherDerived>& other) const {
       typename internal::remove_all<OtherDerivedNested>::type>::run(lhs, rhs);
 }
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \returns a matrix expression of the cross product of each column or row
  * of the referenced expression with the \a other vector.
@@ -177,11 +177,11 @@ struct unitOrthogonal_selector<Derived, 3> {
   EIGEN_DEVICE_FUNC
   static inline VectorType run(const Derived& src) {
     VectorType perp;
-    /* Let us compute the crossed product of *this with a vector
+    /** Let us compute the crossed product of *this with a vector
      * that is not too close to being colinear to *this.
      */
 
-    /* unless the x and y coords are both close to zero, we can
+    /** unless the x and y coords are both close to zero, we can
      * simply take ( -y, x, 0 ) and normalize it.
      */
     if ((!isMuchSmallerThan(src.x(), src.z())) ||
@@ -191,7 +191,7 @@ struct unitOrthogonal_selector<Derived, 3> {
       perp.coeffRef(1) = numext::conj(src.x()) * invnm;
       perp.coeffRef(2) = 0;
     }
-    /* if both x and y are close to zero, then the vector is close
+    /** if both x and y are close to zero, then the vector is close
      * to the z-axis, so it's far from colinear to the x-axis for instance.
      * So we take the crossed product with (1,0,0) and normalize it.
      */
@@ -218,7 +218,7 @@ struct unitOrthogonal_selector<Derived, 2> {
 
 }  // end namespace internal
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \returns a unit vector which is orthogonal to \c *this
  *

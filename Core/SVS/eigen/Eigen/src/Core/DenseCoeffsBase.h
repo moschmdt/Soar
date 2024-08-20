@@ -21,7 +21,7 @@ struct add_const_on_value_type_if_arithmetic {
 };
 }  // namespace internal
 
-/* \brief Base class providing read-only coefficient access to matrices and
+/** \brief Base class providing read-only coefficient access to matrices and
  * arrays. \ingroup Core_Module \tparam Derived Type of the derived class
  *
  * \note #ReadOnlyAccessors Constant indicating read-only access
@@ -83,7 +83,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
                                                   : outer;
   }
 
-  /* Short version: don't use this function, use
+  /** Short version: don't use this function, use
    * \link operator()(Index,Index) const \endlink instead.
    *
    * Long version: this function is similar to
@@ -111,7 +111,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
                  colIndexByOuterInner(outer, inner));
   }
 
-  /* \returns the coefficient at given the given row and column.
+  /** \returns the coefficient at given the given row and column.
    *
    * \sa operator()(Index,Index), operator[](Index)
    */
@@ -121,7 +121,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
     return coeff(row, col);
   }
 
-  /* Short version: don't use this function, use
+  /** Short version: don't use this function, use
    * \link operator[](Index) const \endlink instead.
    *
    * Long version: this function is similar to
@@ -145,7 +145,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
     return internal::evaluator<Derived>(derived()).coeff(index);
   }
 
-  /* \returns the coefficient at given index.
+  /** \returns the coefficient at given index.
    *
    * This method is allowed only for vector expressions, and for matrix
    * expressions having the LinearAccessBit.
@@ -163,7 +163,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
     return coeff(index);
   }
 
-  /* \returns the coefficient at given index.
+  /** \returns the coefficient at given index.
    *
    * This is synonymous to operator[](Index) const.
    *
@@ -180,12 +180,12 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
     return coeff(index);
   }
 
-  /* equivalent to operator[](0).  */
+  /** equivalent to operator[](0).  */
 
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE CoeffReturnType x() const { return (*this)[0]; }
 
-  /* equivalent to operator[](1).  */
+  /** equivalent to operator[](1).  */
 
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE CoeffReturnType y() const {
@@ -195,7 +195,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
     return (*this)[1];
   }
 
-  /* equivalent to operator[](2).  */
+  /** equivalent to operator[](2).  */
 
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE CoeffReturnType z() const {
@@ -205,7 +205,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
     return (*this)[2];
   }
 
-  /* equivalent to operator[](3).  */
+  /** equivalent to operator[](3).  */
 
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE CoeffReturnType w() const {
@@ -215,7 +215,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
     return (*this)[3];
   }
 
-  /* \internal
+  /** \internal
    * \returns the packet of coefficients starting at the given row and column.
    * It is your responsibility to ensure that a packet really starts there. This
    * method is only available on expressions having the PacketAccessBit.
@@ -234,7 +234,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
         .template packet<LoadMode, DefaultPacketType>(row, col);
   }
 
-  /* \internal */
+  /** \internal */
   template <int LoadMode>
   EIGEN_STRONG_INLINE PacketReturnType packetByOuterInner(Index outer,
                                                           Index inner) const {
@@ -242,7 +242,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
                             colIndexByOuterInner(outer, inner));
   }
 
-  /* \internal
+  /** \internal
    * \returns the packet of coefficients starting at the given index. It is your
    * responsibility to ensure that a packet really starts there. This method is
    * only available on expressions having the PacketAccessBit and the
@@ -287,7 +287,7 @@ class DenseCoeffsBase<Derived, ReadOnlyAccessors> : public EigenBase<Derived> {
   void colStride();
 };
 
-/* \brief Base class providing read/write coefficient access to matrices and
+/** \brief Base class providing read/write coefficient access to matrices and
  * arrays. \ingroup Core_Module \tparam Derived Type of the derived class
  *
  * \note #WriteAccessors Constant indicating read/write access
@@ -324,7 +324,7 @@ class DenseCoeffsBase<Derived, WriteAccessors>
   using Base::y;
   using Base::z;
 
-  /* Short version: don't use this function, use
+  /** Short version: don't use this function, use
    * \link operator()(Index,Index) \endlink instead.
    *
    * Long version: this function is similar to
@@ -350,7 +350,7 @@ class DenseCoeffsBase<Derived, WriteAccessors>
                     colIndexByOuterInner(outer, inner));
   }
 
-  /* \returns a reference to the coefficient at given the given row and column.
+  /** \returns a reference to the coefficient at given the given row and column.
    *
    * \sa operator[](Index)
    */
@@ -361,7 +361,7 @@ class DenseCoeffsBase<Derived, WriteAccessors>
     return coeffRef(row, col);
   }
 
-  /* Short version: don't use this function, use
+  /** Short version: don't use this function, use
    * \link operator[](Index) \endlink instead.
    *
    * Long version: this function is similar to
@@ -385,7 +385,7 @@ class DenseCoeffsBase<Derived, WriteAccessors>
     return internal::evaluator<Derived>(derived()).coeffRef(index);
   }
 
-  /* \returns a reference to the coefficient at given index.
+  /** \returns a reference to the coefficient at given index.
    *
    * This method is allowed only for vector expressions, and for matrix
    * expressions having the LinearAccessBit.
@@ -402,7 +402,7 @@ class DenseCoeffsBase<Derived, WriteAccessors>
     return coeffRef(index);
   }
 
-  /* \returns a reference to the coefficient at given index.
+  /** \returns a reference to the coefficient at given index.
    *
    * This is synonymous to operator[](Index).
    *
@@ -418,12 +418,12 @@ class DenseCoeffsBase<Derived, WriteAccessors>
     return coeffRef(index);
   }
 
-  /* equivalent to operator[](0).  */
+  /** equivalent to operator[](0).  */
 
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE Scalar& x() { return (*this)[0]; }
 
-  /* equivalent to operator[](1).  */
+  /** equivalent to operator[](1).  */
 
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE Scalar& y() {
@@ -433,7 +433,7 @@ class DenseCoeffsBase<Derived, WriteAccessors>
     return (*this)[1];
   }
 
-  /* equivalent to operator[](2).  */
+  /** equivalent to operator[](2).  */
 
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE Scalar& z() {
@@ -443,7 +443,7 @@ class DenseCoeffsBase<Derived, WriteAccessors>
     return (*this)[2];
   }
 
-  /* equivalent to operator[](3).  */
+  /** equivalent to operator[](3).  */
 
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE Scalar& w() {
@@ -454,7 +454,7 @@ class DenseCoeffsBase<Derived, WriteAccessors>
   }
 };
 
-/* \brief Base class providing direct read-only coefficient access to matrices
+/** \brief Base class providing direct read-only coefficient access to matrices
  * and arrays. \ingroup Core_Module \tparam Derived Type of the derived class
  *
  * \note #DirectAccessors Constant indicating direct access
@@ -479,7 +479,7 @@ class DenseCoeffsBase<Derived, DirectAccessors>
   using Base::rows;
   using Base::size;
 
-  /* \returns the pointer increment between two consecutive elements within a
+  /** \returns the pointer increment between two consecutive elements within a
    * slice in the inner direction.
    *
    * \sa outerStride(), rowStride(), colStride()
@@ -488,7 +488,7 @@ class DenseCoeffsBase<Derived, DirectAccessors>
     return derived().innerStride();
   }
 
-  /* \returns the pointer increment between two consecutive inner slices (for
+  /** \returns the pointer increment between two consecutive inner slices (for
    * example, between two consecutive columns in a column-major matrix).
    *
    * \sa innerStride(), rowStride(), colStride()
@@ -502,7 +502,7 @@ class DenseCoeffsBase<Derived, DirectAccessors>
     return Derived::IsVectorAtCompileTime ? innerStride() : outerStride();
   }
 
-  /* \returns the pointer increment between two consecutive rows.
+  /** \returns the pointer increment between two consecutive rows.
    *
    * \sa innerStride(), outerStride(), colStride()
    */
@@ -510,7 +510,7 @@ class DenseCoeffsBase<Derived, DirectAccessors>
     return Derived::IsRowMajor ? outerStride() : innerStride();
   }
 
-  /* \returns the pointer increment between two consecutive columns.
+  /** \returns the pointer increment between two consecutive columns.
    *
    * \sa innerStride(), outerStride(), rowStride()
    */
@@ -519,7 +519,7 @@ class DenseCoeffsBase<Derived, DirectAccessors>
   }
 };
 
-/* \brief Base class providing direct read/write coefficient access to matrices
+/** \brief Base class providing direct read/write coefficient access to matrices
  * and arrays. \ingroup Core_Module \tparam Derived Type of the derived class
  *
  * \note #DirectWriteAccessors Constant indicating direct access
@@ -544,7 +544,7 @@ class DenseCoeffsBase<Derived, DirectWriteAccessors>
   using Base::rows;
   using Base::size;
 
-  /* \returns the pointer increment between two consecutive elements within a
+  /** \returns the pointer increment between two consecutive elements within a
    * slice in the inner direction.
    *
    * \sa outerStride(), rowStride(), colStride()
@@ -554,7 +554,7 @@ class DenseCoeffsBase<Derived, DirectWriteAccessors>
     return derived().innerStride();
   }
 
-  /* \returns the pointer increment between two consecutive inner slices (for
+  /** \returns the pointer increment between two consecutive inner slices (for
    * example, between two consecutive columns in a column-major matrix).
    *
    * \sa innerStride(), rowStride(), colStride()
@@ -569,7 +569,7 @@ class DenseCoeffsBase<Derived, DirectWriteAccessors>
     return Derived::IsVectorAtCompileTime ? innerStride() : outerStride();
   }
 
-  /* \returns the pointer increment between two consecutive rows.
+  /** \returns the pointer increment between two consecutive rows.
    *
    * \sa innerStride(), outerStride(), colStride()
    */
@@ -578,7 +578,7 @@ class DenseCoeffsBase<Derived, DirectWriteAccessors>
     return Derived::IsRowMajor ? outerStride() : innerStride();
   }
 
-  /* \returns the pointer increment between two consecutive columns.
+  /** \returns the pointer increment between two consecutive columns.
    *
    * \sa innerStride(), outerStride(), rowStride()
    */
@@ -604,7 +604,7 @@ struct first_aligned_impl<Alignment, Derived, false> {
   }
 };
 
-/* \internal \returns the index of the first element of the array stored by \a
+/** \internal \returns the index of the first element of the array stored by \a
  * m that is properly aligned with respect to \a Alignment for vectorization.
  *
  * \tparam Alignment requested alignment in Bytes.

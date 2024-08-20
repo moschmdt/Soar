@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* ======================================================================
+/** ======================================================================
                                 trace.h
 
    Object and stack trace formats are managed by this module.
@@ -41,10 +41,10 @@
 
 #include "kernel.h"
 
-/* trace format type restrictions */
-#define FOR_ANYTHING_TF 0  /* format applies to any object */
-#define FOR_STATES_TF 1    /* format applies only to states */
-#define FOR_OPERATORS_TF 2 /* format applies only to operators */
+/** trace format type restrictions */
+#define FOR_ANYTHING_TF 0  /** format applies to any object */
+#define FOR_STATES_TF 1    /** format applies only to states */
+#define FOR_OPERATORS_TF 2 /** format applies only to operators */
 
 extern void init_tracing(agent* thisAgent);
 extern bool add_trace_format(agent* thisAgent, bool stack_trace,

@@ -55,7 +55,7 @@ class ParseXMLFile : public ParseXML {
   virtual void GetNextChar();
   virtual void ReadLine();
 
-  /*
+  /**
    *
    * Returns the current character from the input stream.
    *

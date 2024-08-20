@@ -10,7 +10,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
  * PacketMath.h
  *
  * \brief:
@@ -90,7 +90,7 @@ SYCL_PLOAD(Aligned, )
 #undef SYCL_PLOAD
 
 #ifdef SYCL_DEVICE_ONLY
-/* \internal \returns a packet version of \a *from.
+/** \internal \returns a packet version of \a *from.
  * The pointer \a from must be aligned on a \a Alignment bytes boundary. */
 #define SYCL_PLOADT(address_space_target)                                   \
   template <typename packet_type, int Alignment>                            \

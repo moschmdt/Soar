@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \class ForceAlignedAccess
+/** \class ForceAlignedAccess
  * \ingroup Core_Module
  *
  * \brief Enforce aligned packet loads and stores regardless of what is
@@ -108,7 +108,7 @@ class ForceAlignedAccess : public internal::dense_xpr_base<
   ForceAlignedAccess& operator=(const ForceAlignedAccess&);
 };
 
-/* \returns an expression of *this with forced aligned access
+/** \returns an expression of *this with forced aligned access
  * \sa forceAlignedAccessIf(),class ForceAlignedAccess
  */
 template <typename Derived>
@@ -117,7 +117,7 @@ MatrixBase<Derived>::forceAlignedAccess() const {
   return ForceAlignedAccess<Derived>(derived());
 }
 
-/* \returns an expression of *this with forced aligned access
+/** \returns an expression of *this with forced aligned access
  * \sa forceAlignedAccessIf(), class ForceAlignedAccess
  */
 template <typename Derived>
@@ -125,7 +125,7 @@ inline ForceAlignedAccess<Derived> MatrixBase<Derived>::forceAlignedAccess() {
   return ForceAlignedAccess<Derived>(derived());
 }
 
-/* \returns an expression of *this with forced aligned access if \a Enable is
+/** \returns an expression of *this with forced aligned access if \a Enable is
  * true. \sa forceAlignedAccess(), class ForceAlignedAccess
  */
 template <typename Derived>
@@ -137,7 +137,7 @@ inline
   return derived();  // FIXME This should not work but apparently is never used
 }
 
-/* \returns an expression of *this with forced aligned access if \a Enable is
+/** \returns an expression of *this with forced aligned access if \a Enable is
  * true. \sa forceAlignedAccess(), class ForceAlignedAccess
  */
 template <typename Derived>

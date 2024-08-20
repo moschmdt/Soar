@@ -15,7 +15,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal \returns the hyperbolic tan of \a a (coeff-wise)
+/** \internal \returns the hyperbolic tan of \a a (coeff-wise)
     Doesn't do anything fancy, just a 13/6-degree rational interpolant which
     is accurate up to a couple of ulps in the (approximate) range [-8, 8],
     outside of which tanh(x) = +/-1 in single precision. The input is clamped

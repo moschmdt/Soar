@@ -15,7 +15,7 @@ namespace Eigen {
 
 namespace internal {
 
-/*
+/**
 *** General case implementation ***
 */
 
@@ -30,11 +30,11 @@ struct compute_inverse {
 
 template <typename MatrixType, typename ResultType,
           int Size = MatrixType::RowsAtCompileTime>
-struct compute_inverse_and_det_with_check { /* nothing! general case not
+struct compute_inverse_and_det_with_check { /** nothing! general case not
                                                supported. */
 };
 
-/*
+/**
 *** Size 1 implementation ***
 */
 
@@ -64,7 +64,7 @@ struct compute_inverse_and_det_with_check<MatrixType, ResultType, 1> {
   }
 };
 
-/*
+/**
 *** Size 2 implementation ***
 */
 
@@ -107,7 +107,7 @@ struct compute_inverse_and_det_with_check<MatrixType, ResultType, 2> {
   }
 };
 
-/*
+/**
 *** Size 3 implementation ***
 */
 
@@ -178,7 +178,7 @@ struct compute_inverse_and_det_with_check<MatrixType, ResultType, 3> {
   }
 };
 
-/*
+/**
 *** Size 4 implementation ***
 */
 
@@ -255,7 +255,7 @@ struct compute_inverse_and_det_with_check<MatrixType, ResultType, 4> {
   }
 };
 
-/*
+/**
 *** MatrixBase methods ***
 */
 
@@ -301,7 +301,7 @@ struct Assignment<
 
 }  // end namespace internal
 
-/* \lu_module
+/** \lu_module
  *
  * \returns the matrix inverse of this matrix.
  *
@@ -327,7 +327,7 @@ EIGEN_DEVICE_FUNC inline const Inverse<Derived> MatrixBase<Derived>::inverse()
   return Inverse<Derived>(derived());
 }
 
-/* \lu_module
+/** \lu_module
  *
  * Computation of matrix inverse and determinant, with invertibility check.
  *
@@ -368,7 +368,7 @@ inline void MatrixBase<Derived>::computeInverseAndDetWithCheck(
       derived(), absDeterminantThreshold, inverse, determinant, invertible);
 }
 
-/* \lu_module
+/** \lu_module
  *
  * Computation of matrix inverse, with invertibility check.
  *

@@ -174,7 +174,7 @@ typedef std::unordered_map<uint64_t, instantiation_record*>
 typedef std::unordered_map<uint64_t, condition_record*> condition_record_map;
 typedef std::unordered_map<uint64_t, action_record*> action_record_map;
 typedef std::unordered_map<uint64_t, production*> production_map;
-/*------ SMem stl typedefs ------*/
+/**------ SMem stl typedefs ------*/
 // - Could create allocator versions of a lot of these
 // - Many of these could be replaced by more general versions above.  Same with
 // epmem
@@ -188,7 +188,7 @@ typedef std::unordered_map<std::string, ltm_object*> str_to_ltm_map;
 typedef std::unordered_map<Symbol*, ltm_object*> sym_to_ltm_map;
 
 #else
-/* The following were unordered STL containers, but in certain cases it seems
+/** The following were unordered STL containers, but in certain cases it seems
  * allocation costs more than we gain.  Still not sure whether to switch or
  * whether we should just switch some.  Might try new allocator that can be used
  * with STL containers that request variable memory allocations like
@@ -306,4 +306,4 @@ typedef std::map<uint64_t, production*, std::less<uint64_t>,
 typedef std::pair<double, uint64_t> smem_activated_lti;
 typedef std::unordered_multimap<uint64_t, wma_decay_element*> smem_wma_map;
 
-#endif /* STL_TYPEDEFS_H_ */
+#endif /** STL_TYPEDEFS_H_ */

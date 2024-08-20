@@ -82,27 +82,27 @@ class EXPORT ClientAnalyzedXML {
 
   static void DeleteString(char* pString);
 
-  /*
+  /**
    * @brief Look up an argument by name.  Returns NULL if not found.
    */
   char const* GetArgString(char const* pArgName) const;
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as a boolean.
    */
   bool GetArgBool(char const* pArgName, bool defaultValue) const;
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as an int.
    */
   int GetArgInt(char const* pArgName, int defaultValue) const;
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as an long long.
    */
   long long GetArgInt(char const* pArgName, long long defaultValue) const;
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as an float (double).
    */
   double GetArgFloat(char const* pArgName, double defaultValue) const;

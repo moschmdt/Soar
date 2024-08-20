@@ -1,4 +1,4 @@
-/*
+/**
  * File: SVS/src/change_tracking_list.h
  *
  * Contains:
@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 
-/*
+/**
  * class ctlist_listener<T>
  *
  * Purpose: an interface for an object which listens to changes
@@ -42,7 +42,7 @@ class ctlist_listener {
   virtual void handle_ctlist_change(const T* e) {}
 };
 
-/*
+/**
  * class change_tracking_list<T>
  *
  * Purpose:

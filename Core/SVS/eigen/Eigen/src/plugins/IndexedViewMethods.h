@@ -259,7 +259,7 @@ operator()(const IndicesT (&indices)[IndicesN])
 
 #else  // EIGEN_PARSED_BY_DOXYGEN
 
-/*
+/**
  * \returns a generic submatrix view defined by the rows and columns indexed \a
  * rowIndices and \a colIndices respectively.
  *
@@ -309,7 +309,7 @@ template <typename RowIndices, typename ColIndices>
 IndexedView_or_Block operator()(const RowIndices& rowIndices,
                                 const ColIndices& colIndices);
 
-/* This is an overload of operator()(const RowIndices&, const ColIndices&) for
+/** This is an overload of operator()(const RowIndices&, const ColIndices&) for
  * 1D vectors or arrays
  *
  * \only_for_vectors

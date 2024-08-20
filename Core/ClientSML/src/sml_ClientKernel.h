@@ -128,17 +128,17 @@ class ConnectionInfo {
     m_AgentStatus = (pAgentStatus ? pAgentStatus : "unknown-status");
   }
 
-  /* The ID is a unique identifier for this connection (machine created) */
+  /** The ID is a unique identifier for this connection (machine created) */
   char const* GetID() const { return m_ID.c_str(); }
 
-  /* The name may be set by the owner of the connection (or not) */
+  /** The name may be set by the owner of the connection (or not) */
   char const* GetName() const { return m_Name.c_str(); }
 
-  /* The connection status is a string from a known set of values, again set by
+  /** The connection status is a string from a known set of values, again set by
    * the owner of the connection */
   char const* GetConnectionStatus() const { return m_Status.c_str(); }
 
-  /* The agent status is a string from a known set of values, again set by the
+  /** The agent status is a string from a known set of values, again set by the
    * owner of the connection and refers to the most recently created agent */
   char const* GetAgentStatus() const { return m_AgentStatus.c_str(); }
 };
@@ -235,21 +235,21 @@ class EXPORT Kernel : public ClientErrors {
 
   void InitEvents();
 
-  /*
+  /**
    * @brief Register for a particular event with the kernel.
    *        (This is a primitive function, should call one of the
    *         higher level methods which will call here if needed)
    */
   void RegisterForEventWithKernel(int id, char const* pAgentName);
 
-  /*
+  /**
    * @brief Unregister for a particular event with the kernel.
    *        (This is a primitive function, should call one of the
    *         higher level methods which will call here if needed)
    */
   void UnregisterForEventWithKernel(int id, char const* pAgentName);
 
-  /*
+  /**
    * @brief Creates a new Agent* object (not to be confused
    *        with actually creating a Soar agent -- see CreateAgent for that)
    */
@@ -262,7 +262,7 @@ class EXPORT Kernel : public ClientErrors {
     return --m_TimeTagCounter;  // Count down so different from Soar kernel
   }
 
-  /*
+  /**
   ***   RHS functions and message event handlers use the same internal logic,
   *although they look rather different to the user
   */
@@ -270,7 +270,7 @@ class EXPORT Kernel : public ClientErrors {
                              RhsEventHandlerCpp handler, bool addToBack);
   bool InternalRemoveRhsFunction(smlRhsEventId id, int callbackID);
 
-  /*
+  /**
    * @brief This function is called when an event is received
    *        from the Soar kernel.
    *
@@ -290,7 +290,7 @@ class EXPORT Kernel : public ClientErrors {
   void ReceivedStringEvent(smlStringEventId id, AnalyzeXML* pIncoming,
                            soarxml::ElementXML* pResponse);
 
-  /*
+  /**
    * @brief If this message is an XML trace message returns
    *        the agent pointer this message is for.
    *        Otherwise returns NULL.
@@ -302,7 +302,7 @@ class EXPORT Kernel : public ClientErrors {
   void InitializeTimeTagCounter();
 
  public:
-  /*
+  /**
    * @brief Creates a connection to the Soar kernel that is embedded
    *        within the same process as the caller.
    *
@@ -347,7 +347,7 @@ class EXPORT Kernel : public ClientErrors {
 
   int GetListenerPort();
 
-  /*
+  /**
    * @brief Creates a connection to a receiver that is in a different
    *        process.  The process can be on the same machine or a different
    *machine.
@@ -377,12 +377,12 @@ class EXPORT Kernel : public ClientErrors {
                                         int port = kDefaultSMLPort,
                                         bool ignoreOutput = false);
 
-  /*
+  /**
    * @brief Returns the default port we use for remote connections.
    */
   static int GetDefaultPort() { return kDefaultSMLPort; }
 
-  /*
+  /**
    * @brief If auto commit is set to false then after making any changes
    *        to working memory elements (adds, updates, deletes) the client
    *        must call "commit" to send those changes over to Soar.
@@ -398,13 +398,13 @@ class EXPORT Kernel : public ClientErrors {
   void SetAutoCommit(bool state) { m_bAutoCommit = state; }
   bool IsAutoCommitEnabled() { return m_bAutoCommit; }
 
-  /*
+  /**
    * @brief True if our connection to the kernel has been closed.
    *        (Generally used for remote connections)
    */
   bool IsConnectionClosed();
 
-  /*
+  /**
    * @brief True if this is a remote connection to the kernel
    *        (i.e. connected over a socket rather than by loading a library)
    */
@@ -412,7 +412,7 @@ class EXPORT Kernel : public ClientErrors {
 
   bool IsDirectConnection();
 
-  /*
+  /**
    * @brief Preparation for deleting the kernel.
    *        Agents are destroyed at this point (if we own the kernel)
    *        After calling shutdown the kernel cannot be restarted
@@ -423,7 +423,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   void Shutdown();
 
-  /*
+  /**
    * @brief Delete the kernel (or our connection to the kernel)
    *        releasing all memory owned by the kernel.
    *        Users should call "Shutdown" prior to calling delete
@@ -431,14 +431,14 @@ class EXPORT Kernel : public ClientErrors {
    */
   virtual ~Kernel();
 
-  /*
+  /**
    * @brief Turning this on means we'll start dumping output about messages
    *        being sent and received.
    */
   void SetTraceCommunications(bool state);
   bool IsTracingCommunications();
 
-  /*
+  /**
    * @brief Creates a new Soar agent with the given name.
    *
    * @returns A pointer to the agent (or NULL if not found).  This object
@@ -447,19 +447,19 @@ class EXPORT Kernel : public ClientErrors {
    */
   Agent* CreateAgent(char const* pAgentName);
 
-  /*
+  /**
    * @brief Get the list of agents currently active in the kernel
    *        and create local Agent objects for each one (if we
    *        don't already have that agent registered).
    */
   void UpdateAgentList();
 
-  /*
+  /**
    * @brief Returns the number of agents (from our list of known agents).
    */
   int GetNumberAgents();
 
-  /*
+  /**
    * @brief Destroys an agent in the kernel (and locally).
    *
    *        This call is not guaranteed to delete the agent immediately.
@@ -472,7 +472,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool DestroyAgent(Agent* pAgent);
 
-  /*
+  /**
    * @brief Looks up an agent by name (from our list of known agents).
    *
    * @returns A pointer to the new agent structure.  This object
@@ -481,19 +481,19 @@ class EXPORT Kernel : public ClientErrors {
    */
   Agent* GetAgent(char const* pAgentName);
 
-  /*
+  /**
    * @brief Returns the n-th agent from our list of known agents.
    *        This is slower than GetAgent(pAgentName).
    */
   Agent* GetAgentByIndex(int index);
 
-  /*
+  /**
    * @brief Returns true if this agent pointer is still valid and
    *        can be used.
    */
   bool IsAgentValid(Agent* pAgent);
 
-  /*
+  /**
    * @brief If filtering is disabled, that means all commands
    *        sent from this client will not be filtered (sent to
    *        external processes that have registered a filter).
@@ -504,7 +504,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   void EnableFiltering(bool state);
 
-  /*
+  /**
    * @brief Process a command line command
    *
    * @param pCommandLine Command line string to process.
@@ -521,7 +521,7 @@ class EXPORT Kernel : public ClientErrors {
                                  bool echoResults = false,
                                  bool noFilter = false);
 
-  /*
+  /**
    * @brief Execute a command line command and return the result
    *        as an XML object.
    *
@@ -534,7 +534,7 @@ class EXPORT Kernel : public ClientErrors {
   bool ExecuteCommandLineXML(char const* pCommandLine, char const* pAgentName,
                              ClientAnalyzedXML* pResponse);
 
-  /*
+  /**
    * @brief   Run Soar for the specified number of decisions
    *
    * @param numberSteps    The number of decisions (or steps) to run the agent
@@ -554,7 +554,7 @@ class EXPORT Kernel : public ClientErrors {
   char const* RunAllAgentsForever(
       smlRunStepSize interleaveStepSize = sml_PHASE);
 
-  /*
+  /**
    * @brief   Run Soar until either output is generated or
    *          the maximum number of decisions is reached.  This is done
    *          on an agent by agent basis, so the entire system stops only
@@ -570,7 +570,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   char const* RunAllTilOutput(smlRunStepSize interleaveStepSize = sml_PHASE);
 
-  /*
+  /**
    * @brief Interrupt the currently running Soar agent.
    *
    * Call this after calling "Run" in order to stop all Soar agents.
@@ -583,7 +583,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   char const* StopAllAgents();
 
-  /*
+  /**
    * @brief Returns true if one or more agents are currently running.
    *
    * Can be used in conjunction with StopAllAgents() to make sure
@@ -591,7 +591,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool IsSoarRunning();
 
-  /*
+  /**
    * @brief Ask the kernel for the current list of connections
    *        and their status information.
    *        This is a snapshot which can then be interrogated through
@@ -601,7 +601,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool GetAllConnectionInfo();
 
-  /*
+  /**
    * @brief Report number of connections and info about those connections.
    *        These methods report information cached in the last
    *        "GetAllConnectionInfo" call.
@@ -614,7 +614,7 @@ class EXPORT Kernel : public ClientErrors {
   char const* GetConnectionStatus(char const* pConnectionName);
   char const* GetAgentStatus(char const* pConnectionName);
 
-  /*
+  /**
    * @brief Sets the name and current status of this connection.
    *        This information is sent to the kernel and can be requested
    *        by other clients.
@@ -636,7 +636,7 @@ class EXPORT Kernel : public ClientErrors {
   bool SetConnectionInfo(char const* pName, char const* pConnectionStatus,
                          char const* pAgentStatus);
 
-  /*
+  /**
    * @brief   Causes the kernel to issue a SYSTEM_START event.
    *
    *          The expectation is that a simulation will be listening
@@ -648,7 +648,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool FireStartSystemEvent();
 
-  /*
+  /**
    * @brief   Causes the kernel to issue a SYSTEM_STOP event.
    *
    *          A running simulation should listen for this event
@@ -662,7 +662,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool FireStopSystemEvent();
 
-  /*
+  /**
    * @brief   Prevents the kernel from sending an smlEVENT_SYSTEM_STOP
    *          event at the of a run.
    *
@@ -677,14 +677,14 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool SuppressSystemStop(bool state);
 
-  /*
+  /**
    * @brief Get last command line result
    *
    * @returns True if the last command line call succeeded.
    */
   bool GetLastCommandLineResult();
 
-  /*
+  /**
    * @brief If this is an embedded connection using "synchronous execution"
    *        then we need to call this periodically to look for commands
    *        coming in from remote sockets.
@@ -696,7 +696,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool CheckForIncomingCommands();
 
-  /*
+  /**
    * @brief See if there are any incoming messages waiting to
    *        be dispatched to event handlers and if so process them.
    *
@@ -712,7 +712,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool CheckForIncomingEvents();
 
-  /*
+  /**
    * @brief Start/stop the event thread.
    *
    * This thread can be used to make sure the client remains responsive
@@ -729,7 +729,7 @@ class EXPORT Kernel : public ClientErrors {
   bool StartEventThread();
   bool StopEventThread();
 
-  /*
+  /**
    * @brief Register for a "SystemEvent".
    *        Multiple handlers can be registered for the same event.
    * @param smlEventId     The event we're interested in (see the list below for
@@ -758,13 +758,13 @@ class EXPORT Kernel : public ClientErrors {
   int RegisterForSystemEvent(smlSystemEventId id, SystemEventHandler handler,
                              void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular event
    * @returns True if succeeds
    */
   bool UnregisterForSystemEvent(int callbackID);
 
-  /*
+  /**
    * @brief The smlEVENT_INTERRUPT_CHECK event fires every n-th
    *        step (phase) during a run.  The n is controlled by
    *        this rate.  By setting a larger value there is less
@@ -781,7 +781,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   bool SetInterruptCheckRate(int newRate);
 
-  /*
+  /**
    * @brief Register a handler for a RHS (right hand side) function.
    *        This function can be called in the RHS of a production firing
    *        allowing a user to quickly extend Soar with custom methods added to
@@ -818,7 +818,7 @@ class EXPORT Kernel : public ClientErrors {
   int AddRhsFunction(char const* pRhsFunctionName, RhsEventHandler handler,
                      void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Register a handler for an RHS (right hand side) function. This is
    * functionally the same as the method with the same name that takes a
    * function pointer, but it uses std::function instead, which is more
@@ -830,14 +830,14 @@ class EXPORT Kernel : public ClientErrors {
   int AddRhsFunction(char const* pRhsFunctionName, RhsEventHandlerCpp handler,
                      bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular rhs function callback
    *        using the ID passed back from AddRhsFunction().
    * @returns True if succeeds
    */
   bool RemoveRhsFunction(int callbackID);
 
-  /*
+  /**
    * @brief Register a handler for receiving generic messages sent from another
    *client. The content of the messages are up to the client and really aren't
    *related to Soar, but providing the ability to send a message from any client
@@ -877,7 +877,7 @@ class EXPORT Kernel : public ClientErrors {
   int RegisterForClientMessageEvent(char const* pClientName,
                                     ClientMessageHandler handler,
                                     void* pUserData, bool addToBack = true);
-  /*
+  /**
    * @brief Register a handler for receiving generic messages sent from another
    * client. This is functionally the same as the method with the same name that
    * takes a function pointer, but it uses std::function instead, which is more
@@ -890,14 +890,14 @@ class EXPORT Kernel : public ClientErrors {
                                     ClientMessageHandlerCpp handler,
                                     bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular client message
    *        using the ID passed back from RegisterForClientMessageEvent().
    * @returns True if succeeds
    */
   bool UnregisterForClientMessageEvent(int callbackID);
 
-  /*
+  /**
    * @brief Send a message to another client (not the Soar kernel).
    *        The other client must have registered for this message to receive
    *it.
@@ -926,7 +926,7 @@ class EXPORT Kernel : public ClientErrors {
   std::string SendClientMessage(Agent* pAgent, char const* pClientName,
                                 char const* pMessage);
 
-  /*
+  /**
    * @brief Register for an "AgentEvent".
    *        Multiple handlers can be registered for the same event.
    * @param smlEventId     The event we're interested in (see the list below for
@@ -954,13 +954,13 @@ class EXPORT Kernel : public ClientErrors {
   int RegisterForAgentEvent(smlAgentEventId id, AgentEventHandler handler,
                             void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular event
    * @returns True if succeeds
    */
   bool UnregisterForAgentEvent(int callbackID);
 
-  /*
+  /**
    * @brief Register for an "UpdateEvent".
    *        Multiple handlers can be registered for the same event.
    * @param smlEventId     The event we're interested in (see the list below for
@@ -980,13 +980,13 @@ class EXPORT Kernel : public ClientErrors {
   int RegisterForUpdateEvent(smlUpdateEventId id, UpdateEventHandler handler,
                              void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular event
    * @returns True if succeeds
    */
   bool UnregisterForUpdateEvent(int callbackID);
 
-  /*
+  /**
    * @brief Register for a string event.
    *        Multiple handlers can be registered for the same event.
    * @param smlEventId     The event we're interested in (see the list below for
@@ -1006,13 +1006,13 @@ class EXPORT Kernel : public ClientErrors {
   int RegisterForStringEvent(smlStringEventId id, StringEventHandler handler,
                              void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular event
    * @returns True if succeeds
    */
   bool UnregisterForStringEvent(int callbackID);
 
-  /*
+  /**
    * @brief The Soar kernel version is based on sending a request
    *        to the kernel asking for its version and returning the
    *        result.
@@ -1030,18 +1030,18 @@ class EXPORT Kernel : public ClientErrors {
    */
   std::string GetSoarKernelVersion();
 
-  /*
+  /**
    * @brief Calls Commit() for all agents -- sending any queued I/O operations
    *        over to the kernel for processing.
    */
   void CommitAll();
 
-  /*
+  /**
    * @brief Returns true if at least one agent has uncommitted changes.
    */
   bool IsCommitRequired();
 
-  /*
+  /**
    * @brief Loads an external library (dll/so/dylib) in the local client for the
    * purpose of event or RHS function registration. This can boost performance
    *over using a remote client for purposes such as logging.
@@ -1051,7 +1051,7 @@ class EXPORT Kernel : public ClientErrors {
    */
   std::string LoadExternalLibrary(char const* pLibraryCommand);
 
-  /*
+  /**
    * @brief Returns the connection information for this kernel
    *        which is how we communicate with the kernel (e.g. embedded,
    *        remotely over a socket etc.)
@@ -1063,7 +1063,7 @@ class EXPORT Kernel : public ClientErrors {
   Connection* GetConnection() const { return m_Connection; }
 
  protected:
-  /*
+  /**
    * @brief This function is called when we receive a "call" SML
    *        message from the kernel.
    */
@@ -1071,14 +1071,14 @@ class EXPORT Kernel : public ClientErrors {
                                            soarxml::ElementXML* pIncoming,
                                            void* pUserData);
 
-  /*
+  /**
    * @brief This function is called (indirectly) when we receive a "call" SML
    *        message from the kernel.
    */
   soarxml::ElementXML* ProcessIncomingSML(Connection* pConnection,
                                           soarxml::ElementXML* pIncoming);
 
-  /*
+  /**
    * @brief The workhorse function to create an embedded connection.
    *        The public methods hide a few of these parameters.
    */

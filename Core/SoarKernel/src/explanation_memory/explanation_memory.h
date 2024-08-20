@@ -1,4 +1,4 @@
-/*
+/**
  * ebc.h
  *
  *  Created on: Dec 15, 2015
@@ -21,7 +21,7 @@
 #include "stl_typedefs.h"
 
 typedef struct chunking_stats_struct {
-  /* Core */
+  /** Core */
   uint64_t chunks_attempted;
   uint64_t chunks_succeeded;
   uint64_t justifications_succeeded;
@@ -191,7 +191,7 @@ class Explanation_Memory {
       current_recording_chunk->stats.identities_participated += pCount;
   };
 
-  /* Only occur with the explainer on */
+  /** Only occur with the explainer on */
   void increment_stat_identities_literalized() {
     stats.identities_literalized++;
     if (current_recording_chunk)
@@ -303,15 +303,15 @@ class Explanation_Memory {
   void delete_action(uint64_t pActionID);
   void delete_instantiation(uint64_t pInstID);
 
-  /* ID Counters */
+  /** ID Counters */
   uint64_t condition_id_count;
   uint64_t chunk_id_count;
   uint64_t action_id_count;
 
-  /* Statistics on learning performed so far */
+  /** Statistics on learning performed so far */
   chunking_stats stats;
 
-  /* These maps store all of the records the logger keeps */
+  /** These maps store all of the records the logger keeps */
   chunk_record_symbol_map* chunks;
   chunk_record_id_map* chunks_by_ID;
   instantiation_record_map* instantiations;
@@ -323,4 +323,4 @@ class Explanation_Memory {
   production_map* production_id_map;
 };
 
-#endif /* EBC_EXPLAIN_H_ */
+#endif /** EBC_EXPLAIN_H_ */

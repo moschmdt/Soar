@@ -1,4 +1,4 @@
-/*
+/**
  * libccd
  * ---------------------------------
  * Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
@@ -24,7 +24,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /** __cplusplus */
 
 struct _ccd_support_t {
   ccd_vec3_t v;   //!< Support point in minkowski sum
@@ -35,20 +35,20 @@ typedef struct _ccd_support_t ccd_support_t;
 
 _ccd_inline void ccdSupportCopy(ccd_support_t *, const ccd_support_t *s);
 
-/*
+/**
  * Computes support point of obj1 and obj2 in direction dir.
  * Support point is returned via supp.
  */
 void __ccdSupport(const void *obj1, const void *obj2, const ccd_vec3_t *dir,
                   const ccd_t *ccd, ccd_support_t *supp);
 
-/* INLINES */
+/** INLINES */
 _ccd_inline void ccdSupportCopy(ccd_support_t *d, const ccd_support_t *s) {
   *d = *s;
 }
 
 #ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
+} /** extern "C" */
+#endif /** __cplusplus */
 
-#endif /* __CCD_SUPPORT_H__ */
+#endif /** __CCD_SUPPORT_H__ */

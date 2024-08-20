@@ -1,4 +1,4 @@
-/*
+/**
  * constants.h
  *
  *  Created on: Sep 2, 2016
@@ -8,7 +8,7 @@
 #ifndef CORE_SOARKERNEL_SRC_SHARED_CONSTANTS_H_
 #define CORE_SOARKERNEL_SRC_SHARED_CONSTANTS_H_
 
-/* ------------------------------------------------------------------------
+/** ------------------------------------------------------------------------
                       Explanation-Based Chunking
 ------------------------------------------------------------------------ */
 #define LITERAL_VALUE 0
@@ -19,11 +19,11 @@
 #define IE_PRODS 1
 #define NO_SAVED_PRODS -1
 
-/* ------------------------------------------------------------------------
+/** ------------------------------------------------------------------------
                              Impasse Types
 ------------------------------------------------------------------------ */
 
-#define NONE_IMPASSE_TYPE 0 /* no impasse */
+#define NONE_IMPASSE_TYPE 0 /** no impasse */
 #define CONSTRAINT_FAILURE_IMPASSE_TYPE 1
 #define CONFLICT_IMPASSE_TYPE 2
 #define TIE_IMPASSE_TYPE 3
@@ -31,41 +31,41 @@
 #define ONC_IMPASSE_TYPE 5
 #define SNC_IMPASSE_TYPE 6
 
-/* ---------------------------------------
+/** ---------------------------------------
     Match Set print parameters
 --------------------------------------- */
 
-#define MS_ASSERT_RETRACT 0 /* print both retractions and assertions */
-#define MS_ASSERT 1         /* print just assertions */
-#define MS_RETRACT 2        /* print just retractions */
+#define MS_ASSERT_RETRACT 0 /** print both retractions and assertions */
+#define MS_ASSERT 1         /** print just assertions */
+#define MS_RETRACT 2        /** print just retractions */
 
-/* ---------------------------------------
+/** ---------------------------------------
     How much information to print about
     the wmes matching an instantiation
 --------------------------------------- */
 
-#define NONE_WME_TRACE 1    /* don't print anything */
-#define TIMETAG_WME_TRACE 2 /* print just timetag */
-#define FULL_WME_TRACE 3    /* print whole wme */
+#define NONE_WME_TRACE 1    /** don't print anything */
+#define TIMETAG_WME_TRACE 2 /** print just timetag */
+#define FULL_WME_TRACE 3    /** print whole wme */
 #define NO_WME_TRACE_SET 4
 
-/* -------------------------------
+/** -------------------------------
       Ways to Do User-Select
 ------------------------------- */
 
 #define USER_SELECT_BOLTZMANN \
-  1 /* boltzmann algorithm, with respect to temperature */
+  1 /** boltzmann algorithm, with respect to temperature */
 #define USER_SELECT_E_GREEDY \
-  2 /* with probability epsilon choose random, otherwise greedy */
-#define USER_SELECT_FIRST 3  /* just choose the first candidate item */
-#define USER_SELECT_LAST 4   /* choose the last item   AGR 615 */
-#define USER_SELECT_RANDOM 5 /* pick one at random */
+  2 /** with probability epsilon choose random, otherwise greedy */
+#define USER_SELECT_FIRST 3  /** just choose the first candidate item */
+#define USER_SELECT_LAST 4   /** choose the last item   AGR 615 */
+#define USER_SELECT_RANDOM 5 /** pick one at random */
 #define USER_SELECT_SOFTMAX \
-  6 /* pick one at random, probabalistically biased by numeric preferences */
+  6 /** pick one at random, probabalistically biased by numeric preferences */
 #define USER_SELECT_INVALID \
-  7 /* should be 1+ last item, used for validity checking */
+  7 /** should be 1+ last item, used for validity checking */
 
-/* -------------------------------
+/** -------------------------------
       Exploration constants
 ------------------------------- */
 #define EXPLORATION_REDUCTION_EXPONENTIAL 0
@@ -76,9 +76,9 @@
 #define EXPLORATION_PARAM_TEMPERATURE 1
 #define EXPLORATION_PARAMS 2  // set as greatest param + 1
 
-/* -------------------------------------------------- */
-/*     EpMem Constants  */
-/* -------------------------------------------------- */
+/** -------------------------------------------------- */
+/**     EpMem Constants  */
+/** -------------------------------------------------- */
 
 // algorithm constants
 #define EPMEM_MEMID_NONE 0
@@ -105,9 +105,9 @@
 
 #define EPMEM_SCHEMA_VERSION "2.0"
 
-/* -------------------------------------------------- */
-/*     Smem Constants  */
-/* -------------------------------------------------- */
+/** -------------------------------------------------- */
+/**     Smem Constants  */
+/** -------------------------------------------------- */
 
 #define SMEM_ACT_MAX \
   static_cast<uint64_t>(static_cast<uint64_t>(0 - 1) / static_cast<uint64_t>(2))
@@ -118,9 +118,9 @@
 #define SMEM_ACT_LOW -1000000000
 #define SMEM_SCHEMA_VERSION "3.0"
 
-/* -------------------------------------------------- */
-/*     Global constants, type declarations, etc.      */
-/* -------------------------------------------------- */
+/** -------------------------------------------------- */
+/**     Global constants, type declarations, etc.      */
+/** -------------------------------------------------- */
 
 #define BUFFER_MSG_SIZE 128
 #define COLUMNS_PER_LINE 80
@@ -129,11 +129,11 @@
 #define LOWEST_POSSIBLE_GOAL_LEVEL 32767
 #define NIL (0)
 
-/* ====================================================================
+/** ====================================================================
              Global System Parameters and Related Definitions
    ==================================================================== */
 
-/* ====== Sysparams for what to trace === */
+/** ====== Sysparams for what to trace === */
 #define INVALID_SYSPARAM 0
 #define TRACE_CONTEXT_DECISIONS_SYSPARAM 1
 #define TRACE_PHASES_SYSPARAM 2
@@ -164,7 +164,7 @@
 #define TRACE_GDS_WMES_SYSPARAM 24
 #define TRACE_GDS_STATE_REMOVAL_SYSPARAM 25
 #define TRACE_ASSERTIONS_SYSPARAM 26
-/* --- Warning: if you add sysparams, be sure to update the next line! --- */
+/** --- Warning: if you add sysparams, be sure to update the next line! --- */
 #define HIGHEST_SYSPARAM_NUMBER 27
 
-#endif /* CORE_SOARKERNEL_SRC_SHARED_CONSTANTS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SHARED_CONSTANTS_H_ */

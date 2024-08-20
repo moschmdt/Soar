@@ -239,7 +239,7 @@ class RefBase : public MapBase<Derived> {
   StrideBase m_stride;
 };
 
-/* \class Ref
+/** \class Ref
  * \ingroup Core_Module
  *
  * \brief A matrix or vector expression mapping an existing expression
@@ -354,7 +354,7 @@ class Ref : public RefBase<Ref<PlainObjectType, Options, StrideType> > {
           bool(Traits::template match<Derived>::MatchAtCompileTime),
           Derived>::type* = 0)
 #else
-  /* Implicit constructor from any dense expression */
+  /** Implicit constructor from any dense expression */
   template <typename Derived>
   inline Ref(DenseBase<Derived>& expr)
 #endif

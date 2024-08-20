@@ -1118,7 +1118,7 @@ struct evaluator<Block<ArgType, BlockRows, BlockCols, InnerPanel> >
 // no direct-access => dispatch to a unary evaluator
 template <typename ArgType, int BlockRows, int BlockCols, bool InnerPanel>
 struct block_evaluator<ArgType, BlockRows, BlockCols, InnerPanel,
-                       /*HasDirectAccess*/ false>
+                       /**HasDirectAccess*/ false>
     : unary_evaluator<Block<ArgType, BlockRows, BlockCols, InnerPanel> > {
   typedef Block<ArgType, BlockRows, BlockCols, InnerPanel> XprType;
 
@@ -1212,21 +1212,21 @@ struct unary_evaluator<Block<ArgType, BlockRows, BlockCols, InnerPanel>,
 
  protected:
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE CoeffReturnType linear_coeff_impl(
-      Index index, internal::true_type /* ForwardLinearAccess */) const {
+      Index index, internal::true_type /** ForwardLinearAccess */) const {
     return m_argImpl.coeff(m_linear_offset.value() + index);
   }
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE CoeffReturnType linear_coeff_impl(
-      Index index, internal::false_type /* not ForwardLinearAccess */) const {
+      Index index, internal::false_type /** not ForwardLinearAccess */) const {
     return coeff(RowsAtCompileTime == 1 ? 0 : index,
                  RowsAtCompileTime == 1 ? index : 0);
   }
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar& linear_coeffRef_impl(
-      Index index, internal::true_type /* ForwardLinearAccess */) {
+      Index index, internal::true_type /** ForwardLinearAccess */) {
     return m_argImpl.coeffRef(m_linear_offset.value() + index);
   }
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar& linear_coeffRef_impl(
-      Index index, internal::false_type /* not ForwardLinearAccess */) {
+      Index index, internal::false_type /** not ForwardLinearAccess */) {
     return coeffRef(RowsAtCompileTime == 1 ? 0 : index,
                     RowsAtCompileTime == 1 ? index : 0);
   }
@@ -1247,7 +1247,7 @@ struct unary_evaluator<Block<ArgType, BlockRows, BlockCols, InnerPanel>,
 
 template <typename ArgType, int BlockRows, int BlockCols, bool InnerPanel>
 struct block_evaluator<ArgType, BlockRows, BlockCols, InnerPanel,
-                       /* HasDirectAccess */ true>
+                       /** HasDirectAccess */ true>
     : mapbase_evaluator<Block<ArgType, BlockRows, BlockCols, InnerPanel>,
                         typename Block<ArgType, BlockRows, BlockCols,
                                        InnerPanel>::PlainObject> {

@@ -17,7 +17,7 @@ namespace internal {
 template <typename _LhsScalar, typename _RhsScalar>
 class level3_blocking;
 
-/* Specialization for a row-major destination matrix => simple transposition of
+/** Specialization for a row-major destination matrix => simple transposition of
  * the product */
 template <typename Index, typename LhsScalar, int LhsStorageOrder,
           bool ConjugateLhs, typename RhsScalar, int RhsStorageOrder,
@@ -46,7 +46,7 @@ struct general_matrix_matrix_product<Index, LhsScalar, LhsStorageOrder,
   }
 };
 
-/*  Specialization for a col-major destination matrix
+/**  Specialization for a col-major destination matrix
  *    => Blocking algorithm following Goto's paper */
 template <typename Index, typename LhsScalar, int LhsStorageOrder,
           bool ConjugateLhs, typename RhsScalar, int RhsStorageOrder,
@@ -221,7 +221,7 @@ struct general_matrix_matrix_product<Index, LhsScalar, LhsStorageOrder,
   }
 };
 
-/*
+/**
  *  Specialization of generic_product_impl for "large" GEMM, i.e.,
  *  implementation of the high level wrapper to general_matrix_matrix_product
  */
@@ -297,7 +297,7 @@ template <int StorageOrder, typename _LhsScalar, typename _RhsScalar,
           int MaxRows, int MaxCols, int MaxDepth, int KcFactor>
 class gemm_blocking_space<StorageOrder, _LhsScalar, _RhsScalar, MaxRows,
                           MaxCols, MaxDepth, KcFactor,
-                          true /* == FiniteAtCompileTime */>
+                          true /** == FiniteAtCompileTime */>
     : public level3_blocking<
           typename conditional<StorageOrder == RowMajor, _RhsScalar,
                                _LhsScalar>::type,
@@ -326,8 +326,8 @@ class gemm_blocking_space<StorageOrder, _LhsScalar, _RhsScalar, MaxRows,
 #endif
 
  public:
-  gemm_blocking_space(Index /*rows*/, Index /*cols*/, Index /*depth*/,
-                      Index /*num_threads*/, bool /*full_rows = false*/) {
+  gemm_blocking_space(Index /**rows*/, Index /**cols*/, Index /**depth*/,
+                      Index /**num_threads*/, bool /**full_rows = false*/) {
     this->m_mc = ActualRows;
     this->m_nc = ActualCols;
     this->m_kc = MaxDepth;

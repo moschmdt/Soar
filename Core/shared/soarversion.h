@@ -4,7 +4,7 @@
 #define _soar_xstr(s) _soar_str(s)
 #define _soar_str(s) #s
 
-/*
+/**
 Many places to change the version number (this list is shorter than it used to
 be):
 

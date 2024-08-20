@@ -1,4 +1,4 @@
-/*
+/**
  * identity_record.h
  *
  *  Created on: Apr 22, 2016
@@ -51,4 +51,4 @@ class identity_record {
                           std::string* pInstString = NULL);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_IDENTITY_RECORD_H_ */
+#endif /** CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_IDENTITY_RECORD_H_ */

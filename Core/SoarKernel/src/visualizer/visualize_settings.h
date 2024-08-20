@@ -1,4 +1,4 @@
-/*
+/**
  * visualize_settings.h
  *
  *  Created on: Sep 25, 2016
@@ -45,4 +45,4 @@ class Viz_Parameters : public soar_module::param_container {
   void print_visualization_settings(agent* thisAgent);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_VISUALIZER_VISUALIZE_SETTINGS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_VISUALIZER_VISUALIZE_SETTINGS_H_ */

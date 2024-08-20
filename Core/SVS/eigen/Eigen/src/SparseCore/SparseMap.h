@@ -42,7 +42,7 @@ template <typename Derived,
                           : ReadOnlyAccessors>
 class SparseMapBase;
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  * class SparseMapBase
  * \brief Common base class for Map and Ref instance of sparse matrix and
  * vector.
@@ -76,33 +76,33 @@ class SparseMapBase<Derived, ReadOnlyAccessors>
   IndexPointer m_innerNonZeros;
 
  public:
-  /* \copydoc SparseMatrixBase::rows() */
+  /** \copydoc SparseMatrixBase::rows() */
   inline Index rows() const { return IsRowMajor ? m_outerSize : m_innerSize; }
-  /* \copydoc SparseMatrixBase::cols() */
+  /** \copydoc SparseMatrixBase::cols() */
   inline Index cols() const { return IsRowMajor ? m_innerSize : m_outerSize; }
-  /* \copydoc SparseMatrixBase::innerSize() */
+  /** \copydoc SparseMatrixBase::innerSize() */
   inline Index innerSize() const { return m_innerSize; }
-  /* \copydoc SparseMatrixBase::outerSize() */
+  /** \copydoc SparseMatrixBase::outerSize() */
   inline Index outerSize() const { return m_outerSize; }
-  /* \copydoc SparseCompressedBase::nonZeros */
+  /** \copydoc SparseCompressedBase::nonZeros */
   inline Index nonZeros() const { return m_zero_nnz[1]; }
 
-  /* \copydoc SparseCompressedBase::isCompressed */
+  /** \copydoc SparseCompressedBase::isCompressed */
   bool isCompressed() const { return m_innerNonZeros == 0; }
 
   //----------------------------------------
   // direct access interface
-  /* \copydoc SparseMatrix::valuePtr */
+  /** \copydoc SparseMatrix::valuePtr */
   inline const Scalar* valuePtr() const { return m_values; }
-  /* \copydoc SparseMatrix::innerIndexPtr */
+  /** \copydoc SparseMatrix::innerIndexPtr */
   inline const StorageIndex* innerIndexPtr() const { return m_innerIndices; }
-  /* \copydoc SparseMatrix::outerIndexPtr */
+  /** \copydoc SparseMatrix::outerIndexPtr */
   inline const StorageIndex* outerIndexPtr() const { return m_outerIndex; }
-  /* \copydoc SparseMatrix::innerNonZeroPtr */
+  /** \copydoc SparseMatrix::innerNonZeroPtr */
   inline const StorageIndex* innerNonZeroPtr() const { return m_innerNonZeros; }
   //----------------------------------------
 
-  /* \copydoc SparseMatrix::coeff */
+  /** \copydoc SparseMatrix::coeff */
   inline Scalar coeff(Index row, Index col) const {
     const Index outer = IsRowMajor ? row : col;
     const Index inner = IsRowMajor ? col : row;
@@ -146,14 +146,14 @@ class SparseMapBase<Derived, ReadOnlyAccessors>
         m_values(valuePtr),
         m_innerNonZeros(0) {}
 
-  /* Empty destructor */
+  /** Empty destructor */
   inline ~SparseMapBase() {}
 
  protected:
   inline SparseMapBase() {}
 };
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  * class SparseMapBase
  * \brief Common base class for writable Map and Ref instance of sparse matrix
  * and vector.
@@ -178,17 +178,17 @@ class SparseMapBase<Derived, WriteAccessors>
   using Base::innerNonZeroPtr;
   using Base::outerIndexPtr;
   using Base::valuePtr;
-  /* \copydoc SparseMatrix::valuePtr */
+  /** \copydoc SparseMatrix::valuePtr */
   inline Scalar* valuePtr() { return Base::m_values; }
-  /* \copydoc SparseMatrix::innerIndexPtr */
+  /** \copydoc SparseMatrix::innerIndexPtr */
   inline StorageIndex* innerIndexPtr() { return Base::m_innerIndices; }
-  /* \copydoc SparseMatrix::outerIndexPtr */
+  /** \copydoc SparseMatrix::outerIndexPtr */
   inline StorageIndex* outerIndexPtr() { return Base::m_outerIndex; }
-  /* \copydoc SparseMatrix::innerNonZeroPtr */
+  /** \copydoc SparseMatrix::innerNonZeroPtr */
   inline StorageIndex* innerNonZeroPtr() { return Base::m_innerNonZeros; }
   //----------------------------------------
 
-  /* \copydoc SparseMatrix::coeffRef */
+  /** \copydoc SparseMatrix::coeffRef */
   inline Scalar& coeffRef(Index row, Index col) {
     const Index outer = IsRowMajor ? row : col;
     const Index inner = IsRowMajor ? col : row;
@@ -219,14 +219,14 @@ class SparseMapBase<Derived, WriteAccessors>
                        Scalar* valuePtr)
       : Base(size, nnz, innerIndexPtr, valuePtr) {}
 
-  /* Empty destructor */
+  /** Empty destructor */
   inline ~SparseMapBase() {}
 
  protected:
   inline SparseMapBase() {}
 };
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  *
  * \brief Specialization of class Map for SparseMatrix-like storage.
  *
@@ -252,7 +252,7 @@ class Map<SparseMatrixType> : public SparseMapBase<Derived, WriteAccessors>
   enum { IsRowMajor = Base::IsRowMajor };
 
  public:
-  /* Constructs a read-write Map to a sparse matrix of size \a rows x \a cols,
+  /** Constructs a read-write Map to a sparse matrix of size \a rows x \a cols,
    * containing \a nnz non-zero coefficients, stored as a sparse format as
    * defined by the pointers \a outerIndexPtr, \a innerIndexPtr, and \a
    * valuePtr. If the optional parameter \a innerNonZerosPtr is the null
@@ -269,7 +269,7 @@ class Map<SparseMatrixType> : public SparseMapBase<Derived, WriteAccessors>
       : Base(rows, cols, nnz, outerIndexPtr, innerIndexPtr, valuePtr,
              innerNonZerosPtr) {}
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* Empty destructor */
+  /** Empty destructor */
   inline ~Map() {}
 };
 
@@ -287,7 +287,7 @@ class Map<const SparseMatrix<MatScalar, MatOptions, MatIndex>, Options,
 
  public:
 #endif
-  /* This is the const version of the above constructor.
+  /** This is the const version of the above constructor.
    *
    * This constructor is available only if \c SparseMatrixType is const, e.g.:
    * \code Map<const SparseMatrix<double> >  \endcode
@@ -299,7 +299,7 @@ class Map<const SparseMatrix<MatScalar, MatOptions, MatIndex>, Options,
       : Base(rows, cols, nnz, outerIndexPtr, innerIndexPtr, valuePtr,
              innerNonZerosPtr) {}
 
-  /* Empty destructor */
+  /** Empty destructor */
   inline ~Map() {}
 };
 

@@ -48,7 +48,7 @@ class filter_table : public cliproxy {
   std::map<std::string, filter_table_entry*> t;
 };
 
-/* Get the singleton instance */
+/** Get the singleton instance */
 filter_table& get_filter_table();
 
 filter* parse_filter_spec(soar_interface* si, Symbol* root, scene* scn);

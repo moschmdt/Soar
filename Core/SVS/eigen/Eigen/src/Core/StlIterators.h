@@ -679,7 +679,7 @@ class subvector_stl_reverse_iterator
 
 }  // namespace internal
 
-/* returns an iterator to the first element of the 1D vector or array
+/** returns an iterator to the first element of the 1D vector or array
  * \only_for_vectors
  * \sa end(), cbegin()
  */
@@ -689,14 +689,14 @@ inline typename DenseBase<Derived>::iterator DenseBase<Derived>::begin() {
   return iterator(derived(), 0);
 }
 
-/* const version of begin() */
+/** const version of begin() */
 template <typename Derived>
 inline typename DenseBase<Derived>::const_iterator DenseBase<Derived>::begin()
     const {
   return cbegin();
 }
 
-/* returns a read-only const_iterator to the first element of the 1D vector or
+/** returns a read-only const_iterator to the first element of the 1D vector or
  * array \only_for_vectors \sa cend(), begin()
  */
 template <typename Derived>
@@ -706,7 +706,7 @@ inline typename DenseBase<Derived>::const_iterator DenseBase<Derived>::cbegin()
   return const_iterator(derived(), 0);
 }
 
-/* returns an iterator to the element following the last element of the 1D
+/** returns an iterator to the element following the last element of the 1D
  * vector or array \only_for_vectors \sa begin(), cend()
  */
 template <typename Derived>
@@ -715,14 +715,14 @@ inline typename DenseBase<Derived>::iterator DenseBase<Derived>::end() {
   return iterator(derived(), size());
 }
 
-/* const version of end() */
+/** const version of end() */
 template <typename Derived>
 inline typename DenseBase<Derived>::const_iterator DenseBase<Derived>::end()
     const {
   return cend();
 }
 
-/* returns a read-only const_iterator to the element following the last element
+/** returns a read-only const_iterator to the element following the last element
  * of the 1D vector or array \only_for_vectors \sa begin(), cend()
  */
 template <typename Derived>

@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \ingroup Householder_Module
+/** \ingroup Householder_Module
  * \householder_module
  * \class HouseholderSequence
  * \brief Sequence of Householder reflections acting on subspaces with
@@ -185,7 +185,7 @@ class HouseholderSequence
                               Side>
       ConstHouseholderSequence;
 
-  /* \brief Constructor.
+  /** \brief Constructor.
    * \param[in]  v      %Matrix containing the essential parts of the
    * Householder vectors \param[in]  h      Vector containing the Householder
    * coefficients
@@ -212,7 +212,7 @@ class HouseholderSequence
         m_length(v.diagonalSize()),
         m_shift(0) {}
 
-  /* \brief Copy constructor. */
+  /** \brief Copy constructor. */
   EIGEN_DEVICE_FUNC
   HouseholderSequence(const HouseholderSequence& other)
       : m_vectors(other.m_vectors),
@@ -221,7 +221,7 @@ class HouseholderSequence
         m_length(other.m_length),
         m_shift(other.m_shift) {}
 
-  /* \brief Number of rows of transformation viewed as a matrix.
+  /** \brief Number of rows of transformation viewed as a matrix.
    * \returns Number of rows
    * \details This equals the dimension of the space that the transformation
    * acts on.
@@ -230,7 +230,7 @@ class HouseholderSequence
     return Side == OnTheLeft ? m_vectors.rows() : m_vectors.cols();
   }
 
-  /* \brief Number of columns of transformation viewed as a matrix.
+  /** \brief Number of columns of transformation viewed as a matrix.
    * \returns Number of columns
    * \details This equals the dimension of the space that the transformation
    * acts on.
@@ -239,7 +239,7 @@ class HouseholderSequence
     return rows();
   }
 
-  /* \brief Essential part of a Householder vector.
+  /** \brief Essential part of a Householder vector.
    * \param[in]  k  Index of Householder reflection
    * \returns    Vector containing non-trivial entries of k-th Householder
    * vector
@@ -260,7 +260,7 @@ class HouseholderSequence
                                               Side>::essentialVector(*this, k);
   }
 
-  /* \brief %Transpose of the Householder sequence. */
+  /** \brief %Transpose of the Householder sequence. */
   TransposeReturnType transpose() const {
     return TransposeReturnType(m_vectors.conjugate(), m_coeffs)
         .setReverseFlag(!m_reverse)
@@ -268,7 +268,7 @@ class HouseholderSequence
         .setShift(m_shift);
   }
 
-  /* \brief Complex conjugate of the Householder sequence. */
+  /** \brief Complex conjugate of the Householder sequence. */
   ConjugateReturnType conjugate() const {
     return ConjugateReturnType(m_vectors.conjugate(), m_coeffs.conjugate())
         .setReverseFlag(m_reverse)
@@ -276,7 +276,7 @@ class HouseholderSequence
         .setShift(m_shift);
   }
 
-  /* \returns an expression of the complex conjugate of \c *this if Cond==true,
+  /** \returns an expression of the complex conjugate of \c *this if Cond==true,
    *           returns \c *this otherwise.
    */
   template <bool Cond>
@@ -290,7 +290,7 @@ class HouseholderSequence
                       m_coeffs.template conjugateIf<Cond>());
   }
 
-  /* \brief Adjoint (conjugate transpose) of the Householder sequence. */
+  /** \brief Adjoint (conjugate transpose) of the Householder sequence. */
   AdjointReturnType adjoint() const {
     return AdjointReturnType(m_vectors, m_coeffs.conjugate())
         .setReverseFlag(!m_reverse)
@@ -298,10 +298,10 @@ class HouseholderSequence
         .setShift(m_shift);
   }
 
-  /* \brief Inverse of the Householder sequence (equals the adjoint). */
+  /** \brief Inverse of the Householder sequence (equals the adjoint). */
   AdjointReturnType inverse() const { return adjoint(); }
 
-  /* \internal */
+  /** \internal */
   template <typename DestType>
   inline EIGEN_DEVICE_FUNC void evalTo(DestType& dst) const {
     Matrix<Scalar, DestType::RowsAtCompileTime, 1, AutoAlign | ColMajor,
@@ -310,7 +310,7 @@ class HouseholderSequence
     evalTo(dst, workspace);
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Dest, typename Workspace>
   EIGEN_DEVICE_FUNC void evalTo(Dest& dst, Workspace& workspace) const {
     workspace.resize(rows());
@@ -358,7 +358,7 @@ class HouseholderSequence
     }
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Dest>
   inline void applyThisOnTheRight(Dest& dst) const {
     Matrix<Scalar, 1, Dest::RowsAtCompileTime, RowMajor, 1,
@@ -367,7 +367,7 @@ class HouseholderSequence
     applyThisOnTheRight(dst, workspace);
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Dest, typename Workspace>
   inline void applyThisOnTheRight(Dest& dst, Workspace& workspace) const {
     workspace.resize(dst.rows());
@@ -380,7 +380,7 @@ class HouseholderSequence
     }
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Dest>
   inline void applyThisOnTheLeft(Dest& dst,
                                  bool inputIsIdentity = false) const {
@@ -390,7 +390,7 @@ class HouseholderSequence
     applyThisOnTheLeft(dst, workspace, inputIsIdentity);
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Dest, typename Workspace>
   inline void applyThisOnTheLeft(Dest& dst, Workspace& workspace,
                                  bool inputIsIdentity = false) const {
@@ -440,7 +440,7 @@ class HouseholderSequence
     }
   }
 
-  /* \brief Computes the product of a Householder sequence with a matrix.
+  /** \brief Computes the product of a Householder sequence with a matrix.
    * \param[in]  other  %Matrix being multiplied.
    * \returns    Expression object representing the product.
    *
@@ -462,7 +462,7 @@ class HouseholderSequence
   template <typename _VectorsType, typename _CoeffsType, int _Side>
   friend struct internal::hseq_side_dependent_impl;
 
-  /* \brief Sets the length of the Householder sequence.
+  /** \brief Sets the length of the Householder sequence.
    * \param [in]  length  New value for the length.
    *
    * By default, the length \f$ n \f$ of the Householder sequence \f$ H = H_0
@@ -478,7 +478,7 @@ class HouseholderSequence
     return *this;
   }
 
-  /* \brief Sets the shift of the Householder sequence.
+  /** \brief Sets the shift of the Householder sequence.
    * \param [in]  shift  New value for the shift.
    *
    * By default, a %HouseholderSequence object represents \f$ H = H_0 H_1 \ldots
@@ -499,19 +499,19 @@ class HouseholderSequence
   EIGEN_DEVICE_FUNC
   Index length() const {
     return m_length;
-  } /*< \brief Returns the length of the Householder sequence. */
+  } /**< \brief Returns the length of the Householder sequence. */
 
   EIGEN_DEVICE_FUNC
   Index shift() const {
     return m_shift;
-  } /*< \brief Returns the shift of the Householder sequence. */
+  } /**< \brief Returns the shift of the Householder sequence. */
 
-  /* Necessary for .adjoint() and .conjugate() */
+  /** Necessary for .adjoint() and .conjugate() */
   template <typename VectorsType2, typename CoeffsType2, int Side2>
   friend class HouseholderSequence;
 
  protected:
-  /* \internal
+  /** \internal
    * \brief Sets the reverse flag.
    * \param [in]  reverse  New value of the reverse flag.
    *
@@ -529,7 +529,7 @@ class HouseholderSequence
 
   bool reverseFlag() const {
     return m_reverse;
-  } /*< \internal \brief Returns the reverse flag. */
+  } /**< \internal \brief Returns the reverse flag. */
 
   typename VectorsType::Nested m_vectors;
   typename CoeffsType::Nested m_coeffs;
@@ -539,7 +539,7 @@ class HouseholderSequence
   enum { BlockSize = 48 };
 };
 
-/* \brief Computes the product of a matrix with a Householder sequence.
+/** \brief Computes the product of a matrix with a Householder sequence.
  * \param[in]  other  %Matrix being multiplied.
  * \param[in]  h      %HouseholderSequence being multiplied.
  * \returns    Expression object representing the product.
@@ -561,7 +561,7 @@ operator*(const MatrixBase<OtherDerived>& other,
   return res;
 }
 
-/* \ingroup Householder_Module \householder_module
+/** \ingroup Householder_Module \householder_module
  * \brief Convenience function for constructing a Householder sequence.
  * \returns A HouseholderSequence constructed from the specified arguments.
  */
@@ -571,7 +571,7 @@ HouseholderSequence<VectorsType, CoeffsType> householderSequence(
   return HouseholderSequence<VectorsType, CoeffsType, OnTheLeft>(v, h);
 }
 
-/* \ingroup Householder_Module \householder_module
+/** \ingroup Householder_Module \householder_module
  * \brief Convenience function for constructing a Householder sequence.
  * \returns A HouseholderSequence constructed from the specified arguments.
  * \details This function differs from householderSequence() in that the

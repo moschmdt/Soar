@@ -1,4 +1,4 @@
-/*
+/**
  * libccd
  * ---------------------------------
  * Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
@@ -18,7 +18,7 @@
 #ifndef __CCD_DBG_H__
 #define __CCD_DBG_H__
 
-/*
+/**
  * Some macros which can be used for printing debug info to stderr if macro
  * NDEBUG not defined.
  *
@@ -52,7 +52,7 @@
             ccdVec3X(vec), ccdVec3Y(vec), ccdVec3Z(vec));                     \
     fflush(stderr);                                                           \
   } while (0)
-/*
+/**
 # define DBG_VEC3(vec, prefix) do {\
     fprintf(stderr, DBG_PROLOGUE "%s :: %s[%.20lf %.20lf %.20lf]\n", \
             __func__, prefix, ccdVec3X(vec), ccdVec3Y(vec), ccdVec3Z(vec)); \
@@ -66,4 +66,4 @@
 #define DBG_VEC3(v, prefix)
 #endif
 
-#endif /* __CCD_DBG_H__ */
+#endif /** __CCD_DBG_H__ */

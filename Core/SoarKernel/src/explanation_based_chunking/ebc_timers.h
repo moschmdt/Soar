@@ -1,4 +1,4 @@
-/*
+/**
  * ebc_timers.h
  *
  *  Created on: Feb 14, 2017
@@ -41,4 +41,4 @@ class ebc_timer : public soar_module::timer {
  public:
   ebc_timer(const char* new_name, agent* new_agent, timer_level new_level);
 };
-#endif /* CORE_SOARKERNEL_SRC_EXPLANATION_BASED_CHUNKING_EBC_TIMERS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_EXPLANATION_BASED_CHUNKING_EBC_TIMERS_H_ */

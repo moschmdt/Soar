@@ -20,7 +20,7 @@ namespace Eigen {
 #define PASTIX_DCOMPLEX std::complex<double>
 #endif
 
-/* \ingroup PaStiXSupport_Module
+/** \ingroup PaStiXSupport_Module
  * \brief Interface to the PaStix solver
  *
  * This class is used to solve the linear systems A.X = B via the PaStix
@@ -193,26 +193,26 @@ class PastixBase : public SparseSolverBase<Derived> {
   template <typename Rhs, typename Dest>
   bool _solve_impl(const MatrixBase<Rhs> &b, MatrixBase<Dest> &x) const;
 
-  /* Returns a reference to the integer vector IPARM of PaStiX parameters
+  /** Returns a reference to the integer vector IPARM of PaStiX parameters
    * to modify the default parameters.
    * The statistics related to the different phases of factorization and solve
    * are saved here as well \sa analyzePattern() factorize()
    */
   Array<StorageIndex, IPARM_SIZE, 1> &iparm() { return m_iparm; }
 
-  /* Return a reference to a particular index parameter of the IPARM vector
+  /** Return a reference to a particular index parameter of the IPARM vector
    * \sa iparm()
    */
 
   int &iparm(int idxparam) { return m_iparm(idxparam); }
 
-  /* Returns a reference to the double vector DPARM of PaStiX parameters
+  /** Returns a reference to the double vector DPARM of PaStiX parameters
    * The statistics related to the different phases of factorization and solve
    * are saved here as well \sa analyzePattern() factorize()
    */
   Array<double, DPARM_SIZE, 1> &dparm() { return m_dparm; }
 
-  /* Return a reference to a particular index parameter of the DPARM vector
+  /** Return a reference to a particular index parameter of the DPARM vector
    * \sa dparm()
    */
   double &dparm(int idxparam) { return m_dparm(idxparam); }
@@ -220,7 +220,7 @@ class PastixBase : public SparseSolverBase<Derived> {
   inline Index cols() const { return m_size; }
   inline Index rows() const { return m_size; }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the PaStiX reports a problem
@@ -272,7 +272,7 @@ class PastixBase : public SparseSolverBase<Derived> {
   mutable int m_size;  // Size of the matrix
 };
 
-/* Initialize the PaStiX data structure.
+/** Initialize the PaStiX data structure.
  *A first call to this function fills iparm and dparm with the default PaStiX
  *parameters \sa iparm() dparm()
  */
@@ -375,7 +375,7 @@ void PastixBase<Derived>::factorize(ColSpMatrix &mat) {
   }
 }
 
-/* Solve the system */
+/** Solve the system */
 template <typename Base>
 template <typename Rhs, typename Dest>
 bool PastixBase<Base>::_solve_impl(const MatrixBase<Rhs> &b,
@@ -385,7 +385,7 @@ bool PastixBase<Base>::_solve_impl(const MatrixBase<Rhs> &b,
                       THIS_METHOD_IS_ONLY_FOR_COLUMN_MAJOR_MATRICES);
   int rhs = 1;
 
-  x = b; /* on return, x is overwritten by the computed solution */
+  x = b; /** on return, x is overwritten by the computed solution */
 
   for (int i = 0; i < b.cols(); i++) {
     m_iparm[IPARM_START_TASK] = API_TASK_SOLVE;
@@ -403,7 +403,7 @@ bool PastixBase<Base>::_solve_impl(const MatrixBase<Rhs> &b,
   return m_iparm(IPARM_ERROR_NUMBER) == 0;
 }
 
-/* \ingroup PaStiXSupport_Module
+/** \ingroup PaStiXSupport_Module
  * \class PastixLU
  * \brief Sparse direct LU solver based on PaStiX library
  *
@@ -440,7 +440,7 @@ class PastixLU : public PastixBase<PastixLU<_MatrixType> > {
     init();
     compute(matrix);
   }
-  /* Compute the LU supernodal factorization of \p matrix.
+  /** Compute the LU supernodal factorization of \p matrix.
    * iparm and dparm can be used to tune the PaStiX parameters.
    * see the PaStiX user's manual
    * \sa analyzePattern() factorize()
@@ -451,7 +451,7 @@ class PastixLU : public PastixBase<PastixLU<_MatrixType> > {
     grabMatrix(matrix, temp);
     Base::compute(temp);
   }
-  /* Compute the LU symbolic factorization of \p matrix using its sparsity
+  /** Compute the LU symbolic factorization of \p matrix using its sparsity
    * pattern. Several ordering methods can be used at this step. See the PaStiX
    * user's manual. The result of this operation can be used with successive
    * matrices having the same pattern as \p matrix \sa factorize()
@@ -463,7 +463,7 @@ class PastixLU : public PastixBase<PastixLU<_MatrixType> > {
     Base::analyzePattern(temp);
   }
 
-  /* Compute the LU supernodal factorization of \p matrix
+  /** Compute the LU supernodal factorization of \p matrix
    * WARNING The matrix \p matrix should have the same structural pattern
    * as the same used in the analysis phase.
    * \sa analyzePattern()
@@ -510,7 +510,7 @@ class PastixLU : public PastixBase<PastixLU<_MatrixType> > {
   bool m_structureIsUptodate;
 };
 
-/* \ingroup PaStiXSupport_Module
+/** \ingroup PaStiXSupport_Module
  * \class PastixLLT
  * \brief A sparse direct supernodal Cholesky (LLT) factorization and solver
  * based on the PaStiX library
@@ -545,7 +545,7 @@ class PastixLLT : public PastixBase<PastixLLT<_MatrixType, _UpLo> > {
     compute(matrix);
   }
 
-  /* Compute the L factor of the LL^T supernodal factorization of \p matrix
+  /** Compute the L factor of the LL^T supernodal factorization of \p matrix
    * \sa analyzePattern() factorize()
    */
   void compute(const MatrixType &matrix) {
@@ -554,7 +554,7 @@ class PastixLLT : public PastixBase<PastixLLT<_MatrixType, _UpLo> > {
     Base::compute(temp);
   }
 
-  /* Compute the LL^T symbolic factorization of \p matrix using its sparsity
+  /** Compute the LL^T symbolic factorization of \p matrix using its sparsity
    * pattern The result of this operation can be used with successive matrices
    * having the same pattern as \p matrix \sa factorize()
    */
@@ -563,7 +563,7 @@ class PastixLLT : public PastixBase<PastixLLT<_MatrixType, _UpLo> > {
     grabMatrix(matrix, temp);
     Base::analyzePattern(temp);
   }
-  /* Compute the LL^T supernodal numerical factorization of \p matrix
+  /** Compute the LL^T supernodal numerical factorization of \p matrix
    * \sa analyzePattern()
    */
   void factorize(const MatrixType &matrix) {
@@ -589,7 +589,7 @@ class PastixLLT : public PastixBase<PastixLLT<_MatrixType, _UpLo> > {
   }
 };
 
-/* \ingroup PaStiXSupport_Module
+/** \ingroup PaStiXSupport_Module
  * \class PastixLDLT
  * \brief A sparse direct supernodal Cholesky (LLT) factorization and solver
  * based on the PaStiX library
@@ -624,7 +624,7 @@ class PastixLDLT : public PastixBase<PastixLDLT<_MatrixType, _UpLo> > {
     compute(matrix);
   }
 
-  /* Compute the L and D factors of the LDL^T factorization of \p matrix
+  /** Compute the L and D factors of the LDL^T factorization of \p matrix
    * \sa analyzePattern() factorize()
    */
   void compute(const MatrixType &matrix) {
@@ -633,7 +633,7 @@ class PastixLDLT : public PastixBase<PastixLDLT<_MatrixType, _UpLo> > {
     Base::compute(temp);
   }
 
-  /* Compute the LDL^T symbolic factorization of \p matrix using its sparsity
+  /** Compute the LDL^T symbolic factorization of \p matrix using its sparsity
    * pattern The result of this operation can be used with successive matrices
    * having the same pattern as \p matrix \sa factorize()
    */
@@ -642,7 +642,7 @@ class PastixLDLT : public PastixBase<PastixLDLT<_MatrixType, _UpLo> > {
     grabMatrix(matrix, temp);
     Base::analyzePattern(temp);
   }
-  /* Compute the LDL^T supernodal numerical factorization of \p matrix
+  /** Compute the LDL^T supernodal numerical factorization of \p matrix
    *
    */
   void factorize(const MatrixType &matrix) {

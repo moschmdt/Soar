@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  * \class SparseSelfAdjointView
  *
  * \brief Pseudo expression to manipulate a triangular sparse matrix as a
@@ -79,13 +79,13 @@ class SparseSelfAdjointView
   inline Index rows() const { return m_matrix.rows(); }
   inline Index cols() const { return m_matrix.cols(); }
 
-  /* \internal \returns a reference to the nested matrix */
+  /** \internal \returns a reference to the nested matrix */
   const _MatrixTypeNested& matrix() const { return m_matrix; }
   typename internal::remove_reference<MatrixTypeNested>::type& matrix() {
     return m_matrix;
   }
 
-  /* \returns an expression of the matrix product between a sparse self-adjoint
+  /** \returns an expression of the matrix product between a sparse self-adjoint
    * matrix \c *this and a sparse matrix \a rhs.
    *
    * Note that there is no algorithmic advantage of performing such a product
@@ -99,7 +99,7 @@ class SparseSelfAdjointView
     return Product<SparseSelfAdjointView, OtherDerived>(*this, rhs.derived());
   }
 
-  /* \returns an expression of the matrix product between a sparse matrix \a
+  /** \returns an expression of the matrix product between a sparse matrix \a
    * lhs and a sparse self-adjoint matrix \a rhs.
    *
    * Note that there is no algorithmic advantage of performing such a product
@@ -114,21 +114,21 @@ class SparseSelfAdjointView
     return Product<OtherDerived, SparseSelfAdjointView>(lhs.derived(), rhs);
   }
 
-  /* Efficient sparse self-adjoint matrix times dense vector/matrix product */
+  /** Efficient sparse self-adjoint matrix times dense vector/matrix product */
   template <typename OtherDerived>
   Product<SparseSelfAdjointView, OtherDerived> operator*(
       const MatrixBase<OtherDerived>& rhs) const {
     return Product<SparseSelfAdjointView, OtherDerived>(*this, rhs.derived());
   }
 
-  /* Efficient dense vector/matrix times sparse self-adjoint matrix product */
+  /** Efficient dense vector/matrix times sparse self-adjoint matrix product */
   template <typename OtherDerived>
   friend Product<OtherDerived, SparseSelfAdjointView> operator*(
       const MatrixBase<OtherDerived>& lhs, const SparseSelfAdjointView& rhs) {
     return Product<OtherDerived, SparseSelfAdjointView>(lhs.derived(), rhs);
   }
 
-  /* Perform a symmetric rank K update of the selfadjoint matrix \c *this:
+  /** Perform a symmetric rank K update of the selfadjoint matrix \c *this:
    * \f$ this = this + \alpha ( u u^* ) \f$ where \a u is a vector or matrix.
    *
    * \returns a reference to \c *this
@@ -140,7 +140,7 @@ class SparseSelfAdjointView
   SparseSelfAdjointView& rankUpdate(const SparseMatrixBase<DerivedU>& u,
                                     const Scalar& alpha = Scalar(1));
 
-  /* \returns an expression of P H P^-1 */
+  /** \returns an expression of P H P^-1 */
   // TODO implement twists in a more evaluator friendly fashion
   SparseSymmetricPermutationProduct<_MatrixTypeNested, Mode> twistedBy(
       const PermutationMatrix<Dynamic, Dynamic, StorageIndex>& perm) const {
@@ -189,7 +189,7 @@ class SparseSelfAdjointView
   void evalTo(Dest&) const;
 };
 
-/*
+/**
  * Implementation of SparseMatrixBase methods
  */
 
@@ -209,7 +209,7 @@ SparseMatrixBase<Derived>::selfadjointView() {
   return SparseSelfAdjointView<Derived, UpLo>(derived());
 }
 
-/*
+/**
  * Implementation of SparseSelfAdjointView methods
  */
 
@@ -261,7 +261,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, SparseSelfAdjoint2Sparse> {
 
   template <typename DestScalar, int StorageOrder>
   static void run(SparseMatrix<DestScalar, StorageOrder, StorageIndex>& dst,
-                  const SrcXprType& src, const AssignOpType& /*func*/) {
+                  const SrcXprType& src, const AssignOpType& /**func*/) {
     internal::permute_symm_to_fullsymm<SrcXprType::Mode>(src.matrix(), dst);
   }
 
@@ -281,7 +281,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, SparseSelfAdjoint2Sparse> {
       SparseMatrix<DestScalar, StorageOrder, StorageIndex>& dst,
       const SrcXprType& src,
       const internal::add_assign_op<typename DstXprType::Scalar,
-                                    typename SrcXprType::Scalar>& /* func */) {
+                                    typename SrcXprType::Scalar>& /** func */) {
     SparseMatrix<DestScalar, StorageOrder, StorageIndex> tmp(src.rows(),
                                                              src.cols());
     run(tmp, src, AssignOpType());
@@ -293,7 +293,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, SparseSelfAdjoint2Sparse> {
       SparseMatrix<DestScalar, StorageOrder, StorageIndex>& dst,
       const SrcXprType& src,
       const internal::sub_assign_op<typename DstXprType::Scalar,
-                                    typename SrcXprType::Scalar>& /* func */) {
+                                    typename SrcXprType::Scalar>& /** func */) {
     SparseMatrix<DestScalar, StorageOrder, StorageIndex> tmp(src.rows(),
                                                              src.cols());
     run(tmp, src, AssignOpType());
@@ -302,7 +302,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, SparseSelfAdjoint2Sparse> {
 
   template <typename DestScalar>
   static void run(DynamicSparseMatrix<DestScalar, ColMajor, StorageIndex>& dst,
-                  const SrcXprType& src, const AssignOpType& /*func*/) {
+                  const SrcXprType& src, const AssignOpType& /**func*/) {
     // TODO directly evaluate into dst;
     SparseMatrix<DestScalar, ColMajor, StorageIndex> tmp(dst.rows(),
                                                          dst.cols());
@@ -313,7 +313,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, SparseSelfAdjoint2Sparse> {
 
 }  // end namespace internal
 
-/*
+/**
  * Implementation of sparse self-adjoint time dense matrix
  */
 
@@ -477,7 +477,7 @@ struct product_evaluator<Product<Lhs, RhsView, DefaultProduct>, ProductTag,
 
 }  // namespace internal
 
-/*
+/**
  * Implementation of symmetric copies and permutations
  */
 namespace internal {

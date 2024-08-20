@@ -1,4 +1,4 @@
-/*
+/**
   Copyright (c) 2010, Intel Corp.
   All rights reserved.
 
@@ -36,7 +36,7 @@
 #ifndef _LAPACKE_H_
 #define _LAPACKE_H_
 
-/*
+/**
  *  Turn on HAVE_LAPACK_CONFIG_H to redefine C-LAPACK datatypes
  */
 #ifdef HAVE_LAPACK_CONFIG_H
@@ -53,7 +53,7 @@
 #define lapack_logical lapack_int
 #endif
 
-/* Complex types are structures equivalent to the
+/** Complex types are structures equivalent to the
  * Fortran complex types COMPLEX(4) and COMPLEX(8).
  *
  * One can also redefine the types with his own types
@@ -70,7 +70,7 @@
 
 #ifndef LAPACK_COMPLEX_CUSTOM
 
-/* Complex type (single precision) */
+/** Complex type (single precision) */
 #ifndef lapack_complex_float
 #include <complex.h>
 #define lapack_complex_float float _Complex
@@ -86,7 +86,7 @@
 
 lapack_complex_float lapack_make_complex_float(float re, float im);
 
-/* Complex type (double precision) */
+/** Complex type (double precision) */
 #ifndef lapack_complex_double
 #include <complex.h>
 #define lapack_complex_double double _Complex
@@ -106,7 +106,7 @@ lapack_complex_double lapack_make_complex_double(double re, double im);
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /** __cplusplus */
 
 #ifndef LAPACKE_malloc
 #define LAPACKE_malloc(size) malloc(size)
@@ -124,7 +124,7 @@ extern "C" {
 #define LAPACK_WORK_MEMORY_ERROR -1010
 #define LAPACK_TRANSPOSE_MEMORY_ERROR -1011
 
-/* Callback logical functions of one, two, or three arguments are used
+/** Callback logical functions of one, two, or three arguments are used
  *  to select eigenvalues to sort to the top left of the Schur form.
  *  The value is selected if function returns TRUE (non-zero). */
 
@@ -147,7 +147,7 @@ typedef lapack_logical (*LAPACK_Z_SELECT2)(const lapack_complex_double*,
 #define LAPACK_lsame LAPACK_GLOBAL(lsame, LSAME)
 lapack_logical LAPACK_lsame(char* ca, char* cb, lapack_int lca, lapack_int lcb);
 
-/* C-LAPACK function prototypes */
+/** C-LAPACK function prototypes */
 
 lapack_int LAPACKE_sbdsdc(int matrix_order, char uplo, char compq, lapack_int n,
                           float* d, float* e, float* u, lapack_int ldu,
@@ -15571,8 +15571,8 @@ void LAPACK_zsyr(char* uplo, lapack_int* n, lapack_complex_double* alpha,
 
 #ifdef __cplusplus
 }
-#endif /* __cplusplus */
+#endif /** __cplusplus */
 
-#endif /* _LAPACKE_H_ */
+#endif /** _LAPACKE_H_ */
 
-#endif /* _MKL_LAPACKE_H_ */
+#endif /** _MKL_LAPACKE_H_ */

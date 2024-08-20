@@ -24,7 +24,7 @@ static inline void check_DenseIndex_is_signed() {
 
 }  // end namespace internal
 
-/* \class DenseBase
+/** \class DenseBase
  * \ingroup Core_Module
  *
  * \brief Base class for all dense matrices, vectors, and arrays
@@ -50,14 +50,14 @@ class DenseBase
 #endif  // not EIGEN_PARSED_BY_DOXYGEN
 {
  public:
-  /* Inner iterator type to iterate over the coefficients of a row or column.
+  /** Inner iterator type to iterate over the coefficients of a row or column.
    * \sa class InnerIterator
    */
   typedef Eigen::InnerIterator<Derived> InnerIterator;
 
   typedef typename internal::traits<Derived>::StorageKind StorageKind;
 
-  /*
+  /**
    * \brief The type used to store indices
    * \details This typedef is relevant for types that store multiple indices
    * such as PermutationMatrix or Transpositions, otherwise it defaults to
@@ -66,11 +66,11 @@ class DenseBase
    */
   typedef typename internal::traits<Derived>::StorageIndex StorageIndex;
 
-  /* The numeric type of the expression' coefficients, e.g. float, double, int
+  /** The numeric type of the expression' coefficients, e.g. float, double, int
    * or std::complex<float>, etc. */
   typedef typename internal::traits<Derived>::Scalar Scalar;
 
-  /* The numeric type of the expression' coefficients, e.g. float, double, int
+  /** The numeric type of the expression' coefficients, e.g. float, double, int
    * or std::complex<float>, etc.
    *
    * It is an alias for the Scalar type */
@@ -105,14 +105,14 @@ class DenseBase
   enum {
 
     RowsAtCompileTime = internal::traits<Derived>::RowsAtCompileTime,
-    /*< The number of rows at compile-time. This is just a copy of the value
+    /**< The number of rows at compile-time. This is just a copy of the value
      * provided by the \a Derived type. If a value is not known at compile-time,
      * it is set to the \a Dynamic constant.
      * \sa MatrixBase::rows(), MatrixBase::cols(), ColsAtCompileTime,
      * SizeAtCompileTime */
 
     ColsAtCompileTime = internal::traits<Derived>::ColsAtCompileTime,
-    /*< The number of columns at compile-time. This is just a copy of the value
+    /**< The number of columns at compile-time. This is just a copy of the value
      * provided by the \a Derived type. If a value is not known at compile-time,
      * it is set to the \a Dynamic constant.
      * \sa MatrixBase::rows(), MatrixBase::cols(), RowsAtCompileTime,
@@ -121,12 +121,12 @@ class DenseBase
     SizeAtCompileTime = (internal::size_at_compile_time<
                          internal::traits<Derived>::RowsAtCompileTime,
                          internal::traits<Derived>::ColsAtCompileTime>::ret),
-    /*< This is equal to the number of coefficients, i.e. the number of
+    /**< This is equal to the number of coefficients, i.e. the number of
      * rows times the number of columns, or to \a Dynamic if this is not
      * known at compile-time. \sa RowsAtCompileTime, ColsAtCompileTime */
 
     MaxRowsAtCompileTime = internal::traits<Derived>::MaxRowsAtCompileTime,
-    /*< This value is equal to the maximum possible number of rows that this
+    /**< This value is equal to the maximum possible number of rows that this
      * expression might have. If this expression might have an arbitrarily high
      * number of rows, this value is set to \a Dynamic.
      *
@@ -138,7 +138,7 @@ class DenseBase
      */
 
     MaxColsAtCompileTime = internal::traits<Derived>::MaxColsAtCompileTime,
-    /*< This value is equal to the maximum possible number of columns that this
+    /**< This value is equal to the maximum possible number of columns that this
      * expression might have. If this expression might have an arbitrarily high
      * number of columns, this value is set to \a Dynamic.
      *
@@ -153,7 +153,7 @@ class DenseBase
         (internal::size_at_compile_time<
             internal::traits<Derived>::MaxRowsAtCompileTime,
             internal::traits<Derived>::MaxColsAtCompileTime>::ret),
-    /*< This value is equal to the maximum possible number of coefficients that
+    /**< This value is equal to the maximum possible number of coefficients that
      * this expression might have. If this expression might have an arbitrarily
      * high number of coefficients, this value is set to \a Dynamic.
      *
@@ -166,7 +166,7 @@ class DenseBase
 
     IsVectorAtCompileTime = internal::traits<Derived>::RowsAtCompileTime == 1 ||
                             internal::traits<Derived>::ColsAtCompileTime == 1,
-    /*< This is set to true if either the number of rows or the number of
+    /**< This is set to true if either the number of rows or the number of
      * columns is known at compile-time to be equal to 1. Indeed, in that case,
      * we are dealing with a column-vector (if there is only one column) or with
      * a row-vector (if there is only one row). */
@@ -174,17 +174,17 @@ class DenseBase
     NumDimensions = int(MaxSizeAtCompileTime) == 1 ? 0
                     : bool(IsVectorAtCompileTime)  ? 1
                                                    : 2,
-    /*< This value is equal to Tensor::NumDimensions, i.e. 0 for scalars, 1 for
+    /**< This value is equal to Tensor::NumDimensions, i.e. 0 for scalars, 1 for
      * vectors, and 2 for matrices.
      */
 
     Flags = internal::traits<Derived>::Flags,
-    /*< This stores expression \ref flags flags which may or may not be
+    /**< This stores expression \ref flags flags which may or may not be
      * inherited by new expressions constructed from this one. See the \ref
      * flags "list of flags".
      */
 
-    IsRowMajor = int(Flags) & RowMajorBit, /*< True if this expression has
+    IsRowMajor = int(Flags) & RowMajorBit, /**< True if this expression has
                                               row-major storage order. */
 
     InnerSizeAtCompileTime = int(IsVectorAtCompileTime) ? int(SizeAtCompileTime)
@@ -202,7 +202,7 @@ class DenseBase
 
   enum { IsPlainObjectBase = 0 };
 
-  /* The plain matrix type corresponding to this expression.
+  /** The plain matrix type corresponding to this expression.
    * \sa PlainObject */
   typedef Matrix<typename internal::traits<Derived>::Scalar,
                  internal::traits<Derived>::RowsAtCompileTime,
@@ -214,7 +214,7 @@ class DenseBase
                  internal::traits<Derived>::MaxColsAtCompileTime>
       PlainMatrix;
 
-  /* The plain array type corresponding to this expression.
+  /** The plain array type corresponding to this expression.
    * \sa PlainObject */
   typedef Array<typename internal::traits<Derived>::Scalar,
                 internal::traits<Derived>::RowsAtCompileTime,
@@ -226,7 +226,7 @@ class DenseBase
                 internal::traits<Derived>::MaxColsAtCompileTime>
       PlainArray;
 
-  /* \brief The plain matrix or array type corresponding to this expression.
+  /** \brief The plain matrix or array type corresponding to this expression.
    *
    * This is not necessarily exactly the return type of eval(). In the case of
    * plain matrices, the return type of eval() is a const reference to a matrix,
@@ -238,13 +238,13 @@ class DenseBase
                         MatrixXpr>::value,
       PlainMatrix, PlainArray>::type PlainObject;
 
-  /* \returns the number of nonzero coefficients which is in practice the
+  /** \returns the number of nonzero coefficients which is in practice the
    * number of stored coefficients. */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index nonZeros() const {
     return size();
   }
 
-  /* \returns the outer size.
+  /** \returns the outer size.
    *
    * \note For a vector, this returns just 1. For a matrix (non-vector), this is
    * the major dimension with respect to the \ref TopicStorageOrders "storage
@@ -256,7 +256,7 @@ class DenseBase
                                  : this->cols();
   }
 
-  /* \returns the inner size.
+  /** \returns the inner size.
    *
    * \note For a vector, this is just the size. For a matrix (non-vector), this
    * is the minor dimension with respect to the \ref TopicStorageOrders "storage
@@ -268,7 +268,7 @@ class DenseBase
                                  : this->rows();
   }
 
-  /* Only plain matrices/arrays, not expressions, may be resized; therefore the
+  /** Only plain matrices/arrays, not expressions, may be resized; therefore the
    * only useful resize methods are Matrix::resize() and Array::resize(). The
    * present method only asserts that the new size equals the old size, and does
    * nothing else.
@@ -279,7 +279,7 @@ class DenseBase
     eigen_assert(newSize == this->size() &&
                  "DenseBase::resize() does not actually allow to resize.");
   }
-  /* Only plain matrices/arrays, not expressions, may be resized; therefore the
+  /** Only plain matrices/arrays, not expressions, may be resized; therefore the
    * only useful resize methods are Matrix::resize() and Array::resize(). The
    * present method only asserts that the new size equals the old size, and does
    * nothing else.
@@ -293,19 +293,19 @@ class DenseBase
   }
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* \internal Represents a matrix with all coefficients equal to one another*/
+  /** \internal Represents a matrix with all coefficients equal to one another*/
   typedef CwiseNullaryOp<internal::scalar_constant_op<Scalar>, PlainObject>
       ConstantReturnType;
-  /* \internal \deprecated Represents a vector with linearly spaced
+  /** \internal \deprecated Represents a vector with linearly spaced
    * coefficients that allows sequential access only. */
   EIGEN_DEPRECATED typedef CwiseNullaryOp<internal::linspaced_op<Scalar>,
                                           PlainObject>
       SequentialLinSpacedReturnType;
-  /* \internal Represents a vector with linearly spaced coefficients that
+  /** \internal Represents a vector with linearly spaced coefficients that
    * allows random access. */
   typedef CwiseNullaryOp<internal::linspaced_op<Scalar>, PlainObject>
       RandomAccessLinSpacedReturnType;
-  /* \internal the return type of MatrixBase::eigenvalues() */
+  /** \internal the return type of MatrixBase::eigenvalues() */
   typedef Matrix<
       typename NumTraits<typename internal::traits<Derived>::Scalar>::Real,
       internal::traits<Derived>::ColsAtCompileTime, 1>
@@ -313,12 +313,12 @@ class DenseBase
 
 #endif  // not EIGEN_PARSED_BY_DOXYGEN
 
-  /* Copies \a other into *this. \returns a reference to *this. */
+  /** Copies \a other into *this. \returns a reference to *this. */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& operator=(
       const DenseBase<OtherDerived>& other);
 
-  /* Special case of the template operator=, in order to prevent the compiler
+  /** Special case of the template operator=, in order to prevent the compiler
    * from generating a default operator= (issue hit with g++ 4.1)
    */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& operator=(
@@ -336,11 +336,11 @@ class DenseBase
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC Derived& operator=(const ReturnByValue<OtherDerived>& func);
 
-  /* \internal
+  /** \internal
    * Copies \a other into *this without evaluating other. \returns a reference
    * to *this. */
   template <typename OtherDerived>
-  /* \deprecated */
+  /** \deprecated */
   EIGEN_DEPRECATED EIGEN_DEVICE_FUNC Derived& lazyAssign(
       const DenseBase<OtherDerived>& other);
 
@@ -348,7 +348,7 @@ class DenseBase
   CommaInitializer<Derived> operator<<(const Scalar& s);
 
   template <unsigned int Added, unsigned int Removed>
-  /* \deprecated it now returns \c *this */
+  /** \deprecated it now returns \c *this */
   EIGEN_DEPRECATED const Derived& flagged() const {
     return derived();
   }
@@ -449,7 +449,7 @@ class DenseBase
 
   typedef typename internal::add_const_on_value_type<
       typename internal::eval<Derived>::type>::type EvalReturnType;
-  /* \returns the matrix or vector obtained by evaluating this expression.
+  /** \returns the matrix or vector obtained by evaluating this expression.
    *
    * Notice that in the case of a plain matrix or vector (not an expression)
    * this function just returns a const reference, in order to avoid a useless
@@ -466,7 +466,7 @@ class DenseBase
     return typename internal::eval<Derived>::type(derived());
   }
 
-  /* swaps *this with the expression \a other.
+  /** swaps *this with the expression \a other.
    *
    */
   template <typename OtherDerived>
@@ -479,7 +479,7 @@ class DenseBase
                     internal::swap_assign_op<Scalar>());
   }
 
-  /* swaps *this with the matrix or array \a other.
+  /** swaps *this with the matrix or array \a other.
    *
    */
   template <typename OtherDerived>
@@ -569,7 +569,7 @@ class DenseBase
   template <typename Visitor>
   EIGEN_DEVICE_FUNC void visit(Visitor& func) const;
 
-  /* \returns a WithFormat proxy object allowing to print a matrix the with
+  /** \returns a WithFormat proxy object allowing to print a matrix the with
    * given format \a fmt.
    *
    * See class IOFormat for some examples.
@@ -580,7 +580,7 @@ class DenseBase
     return WithFormat<Derived>(derived(), fmt);
   }
 
-  /* \returns the unique coefficient of a 1x1 expression */
+  /** \returns the unique coefficient of a 1x1 expression */
   EIGEN_DEVICE_FUNC
   CoeffReturnType value() const {
     EIGEN_STATIC_ASSERT_SIZE_1x1(Derived)
@@ -597,7 +597,7 @@ class DenseBase
   typedef VectorwiseOp<Derived, Vertical> ColwiseReturnType;
   typedef const VectorwiseOp<const Derived, Vertical> ConstColwiseReturnType;
 
-  /* \returns a VectorwiseOp wrapper of *this for broadcasting and partial
+  /** \returns a VectorwiseOp wrapper of *this for broadcasting and partial
    * reductions
    *
    * Example: \include MatrixBase_rowwise.cpp
@@ -612,7 +612,7 @@ class DenseBase
   }
   EIGEN_DEVICE_FUNC RowwiseReturnType rowwise();
 
-  /* \returns a VectorwiseOp wrapper of *this broadcasting and partial
+  /** \returns a VectorwiseOp wrapper of *this broadcasting and partial
    * reductions
    *
    * Example: \include MatrixBase_colwise.cpp
@@ -655,7 +655,7 @@ class DenseBase
   template <int RowFactor, int ColFactor>
   EIGEN_DEVICE_FUNC const Replicate<Derived, RowFactor, ColFactor> replicate()
       const;
-  /*
+  /**
    * \return an expression of the replication of \c *this
    *
    * Example: \include MatrixBase_replicate_int_int.cpp
@@ -675,7 +675,7 @@ class DenseBase
   typedef Reverse<Derived, BothDirections> ReverseReturnType;
   typedef const Reverse<const Derived, BothDirections> ConstReverseReturnType;
   EIGEN_DEVICE_FUNC ReverseReturnType reverse();
-  /* This is the const version of reverse(). */
+  /** This is the const version of reverse(). */
   // Code moved here due to a CUDA compiler bug
   EIGEN_DEVICE_FUNC ConstReverseReturnType reverse() const {
     return ConstReverseReturnType(derived());
@@ -683,12 +683,12 @@ class DenseBase
   EIGEN_DEVICE_FUNC void reverseInPlace();
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* STL-like <a
+  /** STL-like <a
    * href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">RandomAccessIterator</a>
    * iterator type as returned by the begin() and end() methods.
    */
   typedef random_access_iterator_type iterator;
-  /* This is the const version of iterator (aka read-only) */
+  /** This is the const version of iterator (aka read-only) */
   typedef random_access_iterator_type const_iterator;
 #else
   typedef typename internal::conditional<
@@ -745,9 +745,9 @@ class DenseBase
 
  protected:
   EIGEN_DEFAULT_COPY_CONSTRUCTOR(DenseBase)
-  /* Default constructor. Do nothing. */
+  /** Default constructor. Do nothing. */
   EIGEN_DEVICE_FUNC DenseBase() {
-    /* Just checks for self-consistency of the flags.
+    /** Just checks for self-consistency of the flags.
      * Only do it when debugging Eigen, as this borders on paranoia and could
      * slow compilation down
      */

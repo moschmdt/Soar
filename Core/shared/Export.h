@@ -11,7 +11,7 @@
 #ifndef EXPORT_H
 #define EXPORT_H
 
-/* Adapted from SWIG output code, because they know what they are doing */
+/** Adapted from SWIG output code, because they know what they are doing */
 #if (__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
 #ifndef GCC_HASCLASSVISIBILITY
 #define GCC_HASCLASSVISIBILITY
@@ -38,7 +38,7 @@
 #endif
 #endif
 
-/*
+/**
  This macro should be used with the definition of sml_InitLibrary in libraries
  to be loaded with sml::Kernel::LoadExternalLibrary. It always expands to
  __declspec(dllexport)

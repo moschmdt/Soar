@@ -7,7 +7,7 @@
 // This class's HandleEvent method is called when
 // specific events occur within the agent:
 //
-/*
+/**
  *     smlEVENT_AFTER_AGENT_CREATED,
  *     smlEVENT_BEFORE_AGENT_DESTROYED,
  *     smlEVENT_BEFORE_AGENTS_RUN_STEP,

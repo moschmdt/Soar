@@ -114,7 +114,7 @@ class ParseXML {
   inline bool IsError() { return m_Error; }
   char GetEscapeChar();
 
-  /*
+  /**
    *
    * Returns the current character from the input stream.
    *
@@ -124,14 +124,14 @@ class ParseXML {
   virtual void GetNextChar() = 0;
   virtual void ReadLine() = 0;
 
-  /*
+  /**
    *
    * Returns true if we're at the end of the file.
    *
    */
   inline bool IsEOF() { return m_IsEOF; }
 
-  /*
+  /**
    *
    * Returns true if the character is white space.
    *
@@ -140,7 +140,7 @@ class ParseXML {
     return (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n');
   }
 
-  /*
+  /**
    *
    * Returns true if this is a symbol (i.e. a special char in XML, like "<")
    *
@@ -153,28 +153,28 @@ class ParseXML {
     return (ch == kOpenTagChar || ch == kCloseTagChar);
   }
 
-  /*
+  /**
    *
    * Returns true if this is the start of a comment block <!
    *
    */
   bool IsCommentStart(char ch) { return (ch == kCommentStartChar); }
 
-  /*
+  /**
    *
    * Returns true if this character ends a block of character data.
    *
    */
   bool IsEndOfCharData(char ch) { return (ch == kOpenTagChar); }
 
-  /*
+  /**
    *
    * Returns true if this is the quote character (")
    *
    */
   bool IsQuote(char ch) { return (ch == '\"'); }
 
-  /*
+  /**
    *
    * Returns true if the current token matches the given type.
    * E.g. if (Have(kSymbol)) { // Process symbol }
@@ -184,7 +184,7 @@ class ParseXML {
    */
   bool Have(TokenType type) { return (GetTokenType() == type); }
 
-  /*
+  /**
    *
    * Returns true AND consumes the current token, if the values match.
    * We can consume the token, because the parser already knows its value.
@@ -218,7 +218,7 @@ class ParseXML {
     return false;
   }
 
-  /*
+  /**
    *
    * Returns true AND consumes the current token if the value and type match.
    *
@@ -233,7 +233,7 @@ class ParseXML {
     return false;
   }
 
-  /*
+  /**
    *
    * Checks that the current token matches the given value.
    * If not, throws an exception.
@@ -263,7 +263,7 @@ class ParseXML {
     GetNextToken();
   }
 
-  /*
+  /**
    *
    * Checks that the current token matches the given type.
    * If it does, returns the value (this is often useful when testing
@@ -286,7 +286,7 @@ class ParseXML {
     GetNextToken();
   }
 
-  /*
+  /**
    *
    * Checks that both the type and value match.
    * If not, throws an exception.

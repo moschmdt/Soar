@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *
  *  file:  soar_module.h
  *
@@ -49,14 +49,14 @@ template <typename T>
 class predicate {
  public:
   virtual ~predicate() {}
-  virtual bool operator()(T /*val*/) { return true; }
+  virtual bool operator()(T /**val*/) { return true; }
 };
 
 // a false predicate
 template <typename T>
 class f_predicate : public predicate<T> {
  public:
-  virtual bool operator()(T /*val*/) { return false; }
+  virtual bool operator()(T /**val*/) { return false; }
 };
 
 // predefined predicate for validating
@@ -153,7 +153,7 @@ class accumulator {
  public:
   virtual ~accumulator() {}
 
-  virtual void operator()(T /*val*/) {}
+  virtual void operator()(T /**val*/) {}
 };
 
 // this class provides for efficient
@@ -515,7 +515,7 @@ class sym_set_param : public param {
     }
   }
 
-  virtual bool validate_string(const char* /*new_value*/) { return true; }
+  virtual bool validate_string(const char* /**new_value*/) { return true; }
 
   //
 

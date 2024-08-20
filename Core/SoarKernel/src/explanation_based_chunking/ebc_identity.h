@@ -1,4 +1,4 @@
-/*
+/**
  * ebc_identity_set.h
  *
  *  Created on: Mar 4, 2017
@@ -67,29 +67,29 @@ class Identity {
   void touch();
   void clean_up_transient();
 
-  /* An ID used for printing and to make debugging easier. Not used by identity
+  /** An ID used for printing and to make debugging easier. Not used by identity
    * analysis logic. */
   uint64_t idset_id;
   uint64_t chunk_inst_identity;
 
-  /* A pointer to the join super identity.  Used to point back to itself but
+  /** A pointer to the join super identity.  Used to point back to itself but
    * that's bad with shared pointers */
   Identity* joined_identity;
 
-  /* Pointers to other identity_set nodes that map to this one */
+  /** Pointers to other identity_set nodes that map to this one */
   identity_list* merged_identities;
 
-  /* Flag indicating whether any transient data has been changed */
+  /** Flag indicating whether any transient data has been changed */
   bool dirty;
 
  private:
   agent* thisAgent;
 
-  /* Fields for variablization and chunk instantiation identity creation */
+  /** Fields for variablization and chunk instantiation identity creation */
   Symbol* new_var;
   bool m_literalized;
 
-  /* Fields for transitive constraint attachment  */
+  /** Fields for transitive constraint attachment  */
   condition* operational_cond;
   WME_Field operational_field;
 
@@ -102,4 +102,4 @@ struct IDSetLessThan {
   }
 };
 
-#endif /* CORE_SOARKERNEL_SRC_EXPLANATION_BASED_CHUNKING_EBC_IDENTITY_H_ */
+#endif /** CORE_SOARKERNEL_SRC_EXPLANATION_BASED_CHUNKING_EBC_IDENTITY_H_ */

@@ -1,7 +1,7 @@
 #ifndef SGNODE_H
 #define SGNODE_H
 
-/* native scene graph implementation */
+/** native scene graph implementation */
 
 #include <list>
 #include <string>
@@ -33,7 +33,7 @@ class sgnode : public cliproxy {
   sgnode(const std::string& id, bool group);
   virtual ~sgnode();
 
-  /* copied node doesn't inherit listeners */
+  /** copied node doesn't inherit listeners */
   virtual sgnode* clone() const;
 
   const std::string& get_id() const { return id; }

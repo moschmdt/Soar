@@ -1,4 +1,4 @@
-/*
+/**
  * visualize.h
  *
  *  Created on: Apr 23, 2016
@@ -18,7 +18,7 @@ class GraphViz_Visualizer {
   GraphViz_Visualizer(agent* myAgent);
   ~GraphViz_Visualizer();
 
-  /* A string buffer for the visualization command */
+  /** A string buffer for the visualization command */
   std::string graphviz_output;
   Viz_Parameters* settings;
 
@@ -27,7 +27,7 @@ class GraphViz_Visualizer {
 
   const std::string get_next_filename();
 
-  /* Utility graphviz printing functions */
+  /** Utility graphviz printing functions */
   void viz_graph_start(bool pLeftRight = true);
   void viz_graph_end();
   void viz_object_start(Symbol* pName, uint64_t node_id,
@@ -79,4 +79,4 @@ class GraphViz_Visualizer {
   id_to_id_map m_identity_colors;
 };
 
-#endif /* CORE_SOARKERNEL_SRC_VISUALIZER_VISUALIZE_H_ */
+#endif /** CORE_SOARKERNEL_SRC_VISUALIZER_VISUALIZE_H_ */

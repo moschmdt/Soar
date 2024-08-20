@@ -7,7 +7,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
 
  * NOTE: This file is the modified version of [s,d,c,z]memory.c files in SuperLU
 
@@ -46,7 +46,7 @@ inline Index LUTempSpace(Index& m, Index& w) {
          (w + 1) * m * sizeof(Scalar);
 }
 
-/*
+/**
  * Expand the existing storage to accommodate more fill-ins
  * \param vec Valid pointer to the vector to allocate or expand
  * \param[in,out] length  At input, contain the current length of the vector
@@ -125,7 +125,7 @@ Index SparseLUImpl<Scalar, StorageIndex>::expand(VectorType& vec, Index& length,
   return 0;
 }
 
-/*
+/**
  * \brief  Allocate various working space for the numerical factorization phase.
  * \param m number of rows of the input matrix
  * \param n number of columns
@@ -193,7 +193,7 @@ Index SparseLUImpl<Scalar, StorageIndex>::memInit(Index m, Index n, Index annz,
 
 }  // end LuMemInit
 
-/*
+/**
  * \brief Expand the existing storage
  * \param vec vector to expand
  * \param[in,out] maxlen On input, previous size of vec (Number of elements to

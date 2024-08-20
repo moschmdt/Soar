@@ -447,7 +447,7 @@ EIGEN_STRONG_INLINE void pstoreu<std::complex<double> >(
 template <>
 EIGEN_STRONG_INLINE Packet1cd
 pset1<Packet1cd>(const std::complex<double>&
-                     from) { /* here we really have to use unaligned loads :( */
+                     from) { /** here we really have to use unaligned loads :( */
   return ploadu<Packet1cd>(&from);
 }
 
@@ -550,7 +550,7 @@ EIGEN_STRONG_INLINE Packet1cd pdiv<Packet1cd>(const Packet1cd& a,
       pdiv(res.v, padd<Packet2d>(s, vec_perm(s, s, p16uc_REVERSE64))));
 }
 
-EIGEN_STRONG_INLINE Packet1cd pcplxflip /*<Packet1cd>*/ (const Packet1cd& x) {
+EIGEN_STRONG_INLINE Packet1cd pcplxflip /**<Packet1cd>*/ (const Packet1cd& x) {
   return Packet1cd(preverse(Packet2d(x.v)));
 }
 

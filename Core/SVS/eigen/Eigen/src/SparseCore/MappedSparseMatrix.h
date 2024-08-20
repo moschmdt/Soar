@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \deprecated Use Map<SparseMatrix<> >
+/** \deprecated Use Map<SparseMatrix<> >
  * \class MappedSparseMatrix
  *
  * \brief Sparse matrix
@@ -45,7 +45,7 @@ class MappedSparseMatrix
       : Base(rows, cols, nnz, outerIndexPtr, innerIndexPtr, valuePtr,
              innerNonZeroPtr) {}
 
-  /* Empty destructor */
+  /** Empty destructor */
   inline ~MappedSparseMatrix() {}
 };
 

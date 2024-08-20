@@ -31,7 +31,7 @@ typedef Eigen::VectorXd cvec;
 typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
     mat;
 
-/*
+/**
  Don't try to understand what these mean, just know that you
  can treat them like regular matrices.
 */
@@ -62,7 +62,7 @@ typedef Eigen::Block<const_mat_map, Eigen::Dynamic, 1, false>
 typedef Eigen::Block<const_mat_map, 1, Eigen::Dynamic, false>
     const_map_row_block;
 
-/*
+/**
  If you define a function argument as "const mat &" and a block or a
  map is passed into it, the compiler will implicitly create a copy of
  the matrix underlying the block or map. Using mat_views avoids this
@@ -133,7 +133,7 @@ class const_mat_view : public const_mat_map {
       : const_mat_map(b.data(), 1, b.cols(), mat_stride(b.rowStride(), 1)) {}
 };
 
-/*
+/**
  A matrix that can be efficiently dynamically resized. Uses a doubling
  memory allocation policy.
 */
@@ -211,7 +211,7 @@ class dyn_mat : public serializable {
     return c;
   }
 
-  /*
+  /**
    The dyn_mat should no longer be used after the internal matrix is
    released. This function is useful for avoiding redundant copying.
   */
@@ -239,14 +239,14 @@ bool uniform(const_mat_view X);
 void randomize_vec(rvec& v, const rvec& min, const rvec& max);
 void randomize_vec(vec3& v, const vec3& min, const vec3& max);
 
-/*
+/**
  Return indices of columns that have significantly different values,
  meaning the maximum absolute value of the column is greater than
  SAME_THRESH times the minimum absolute value.
 */
 void get_nonuniform_cols(const_mat_view X, int ncols, std::vector<int>& cols);
 
-/*
+/**
  Remove the static columns from the first 'ncols' columns of X. This
  will not resize the matrix. Upon completion, the cols vector will
  contain the original column indexes that were not removed.
@@ -258,7 +258,7 @@ void pick_rows(const_mat_view X, const std::vector<int>& rows, mat& result);
 void pick_cols(mat_view X, const std::vector<int>& cols);
 void pick_rows(mat_view X, const std::vector<int>& rows);
 
-/*
+/**
  Calculate the maximum difference between points in two point clouds in
  the direction of u.
 
@@ -284,7 +284,7 @@ class bbox {
     max_pt.setZero();
   }
 
-  /* bounding box around single point */
+  /** bounding box around single point */
   bbox(const vec3& v) {
     min_pt = v;
     max_pt = v;

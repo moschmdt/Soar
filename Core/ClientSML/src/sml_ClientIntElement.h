@@ -53,7 +53,7 @@ class EXPORT IntElement : public WMElement {
 
   virtual IntElement* ConvertToIntElement() { return this; }
 
-  /*
+  /**
    * @brief Update the value of an existing WME.
    *        If "auto commit" is turned off in ClientKernel,
    *        the value is not actually sent to the kernel

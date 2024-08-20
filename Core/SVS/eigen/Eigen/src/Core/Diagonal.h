@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \class Diagonal
+/** \class Diagonal
  * \ingroup Core_Module
  *
  * \brief Expression of a diagonal/subdiagonal/superdiagonal in a matrix
@@ -192,7 +192,7 @@ class Diagonal
   typename MatrixType::PacketReturnType packet(Index, Index) const;
 };
 
-/* \returns an expression of the main diagonal of the matrix \c *this
+/** \returns an expression of the main diagonal of the matrix \c *this
  *
  * \c *this is not required to be square.
  *
@@ -206,14 +206,14 @@ MatrixBase<Derived>::diagonal() {
   return DiagonalReturnType(derived());
 }
 
-/* This is the const version of diagonal(). */
+/** This is the const version of diagonal(). */
 template <typename Derived>
 EIGEN_DEVICE_FUNC inline typename MatrixBase<Derived>::ConstDiagonalReturnType
 MatrixBase<Derived>::diagonal() const {
   return ConstDiagonalReturnType(derived());
 }
 
-/* \returns an expression of the \a DiagIndex-th sub or super diagonal of the
+/** \returns an expression of the \a DiagIndex-th sub or super diagonal of the
  * matrix \c *this
  *
  * \c *this is not required to be square.
@@ -233,7 +233,7 @@ EIGEN_DEVICE_FUNC inline
   return DiagonalDynamicIndexReturnType(derived(), index);
 }
 
-/* This is the const version of diagonal(Index). */
+/** This is the const version of diagonal(Index). */
 template <typename Derived>
 EIGEN_DEVICE_FUNC inline
     typename MatrixBase<Derived>::ConstDiagonalDynamicIndexReturnType
@@ -241,7 +241,7 @@ EIGEN_DEVICE_FUNC inline
   return ConstDiagonalDynamicIndexReturnType(derived(), index);
 }
 
-/* \returns an expression of the \a DiagIndex-th sub or super diagonal of the
+/** \returns an expression of the \a DiagIndex-th sub or super diagonal of the
  * matrix \c *this
  *
  * \c *this is not required to be square.
@@ -262,7 +262,7 @@ EIGEN_DEVICE_FUNC inline
   return typename DiagonalIndexReturnType<Index_>::Type(derived());
 }
 
-/* This is the const version of diagonal<int>(). */
+/** This is the const version of diagonal<int>(). */
 template <typename Derived>
 template <int Index_>
 EIGEN_DEVICE_FUNC inline typename MatrixBase<

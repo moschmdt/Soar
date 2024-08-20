@@ -14,7 +14,7 @@ namespace Eigen {
 
 enum {
   StandardCompressedFormat =
-      2 /*< used by Ref<SparseMatrix> to specify whether the input storage must
+      2 /**< used by Ref<SparseMatrix> to specify whether the input storage must
            be in standard compressed form */
 };
 
@@ -128,7 +128,7 @@ class SparseRefBase : public SparseMapBase<Derived> {
 
 }  // namespace internal
 
-/*
+/**
  * \ingroup SparseCore_Module
  *
  * \brief A sparse matrix expression referencing an existing sparse expression
@@ -191,7 +191,7 @@ class Ref<SparseMatrixType, Options>
   template <typename Derived>
   inline Ref(const SparseCompressedBase<Derived>& expr)
 #else
-  /* Implicit constructor from any sparse expression (2D matrix or 1D vector)
+  /** Implicit constructor from any sparse expression (2D matrix or 1D vector)
    */
   template <typename Derived>
   inline Ref(SparseCompressedBase<Derived>& expr)
@@ -274,7 +274,7 @@ class Ref<const SparseMatrix<MatScalar, MatOptions, MatIndex>, Options,
   bool m_hasCopy;
 };
 
-/*
+/**
  * \ingroup SparseCore_Module
  *
  * \brief A sparse vector expression referencing an existing sparse vector
@@ -318,7 +318,7 @@ class Ref<SparseVectorType> : public SparseMapBase<Derived, WriteAccessors>
   template <typename Derived>
   inline Ref(const SparseCompressedBase<Derived>& expr)
 #else
-  /* Implicit constructor from any 1D sparse vector expression */
+  /** Implicit constructor from any 1D sparse vector expression */
   template <typename Derived>
   inline Ref(SparseCompressedBase<Derived>& expr)
 #endif

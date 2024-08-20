@@ -10,18 +10,18 @@
 typedef struct production_struct {
   ProductionType type;
   Symbol* name;
-  struct rete_node_struct* p_node; /* NIL if it's not in the rete */
+  struct rete_node_struct* p_node; /** NIL if it's not in the rete */
   char* original_rule_name;
-  char* documentation; /* pointer to memory block, or NIL */
-  char* filename;      /* name of source file, or NIL. */
+  char* documentation; /** pointer to memory block, or NIL */
+  char* filename;      /** name of source file, or NIL. */
   SupportType declared_support;
-  action* action_list;         /* RHS actions */
-  cons* rhs_unbound_variables; /* RHS vars not bound on LHS */
+  action* action_list;         /** RHS actions */
+  cons* rhs_unbound_variables; /** RHS vars not bound on LHS */
   int OPERAND_which_assert_list;
-  bool trace_firings; /* used by pwatch */
+  bool trace_firings; /** used by pwatch */
   uint64_t reference_count;
   uint64_t firing_count;
-  struct instantiation_struct* instantiations; /* dll of inst's in MS */
+  struct instantiation_struct* instantiations; /** dll of inst's in MS */
   struct production_struct *next, *prev;
 
   uint64_t naming_depth;
@@ -32,13 +32,13 @@ typedef struct production_struct {
 
   struct {
     bool interrupt_break : 1;
-    bool already_fired : 1; /* RPM test workaround for bug #139 */
-    bool rl_rule : 1;       /* if true, is a Soar-RL rule */
+    bool already_fired : 1; /** RPM test workaround for bug #139 */
+    bool rl_rule : 1;       /** if true, is a Soar-RL rule */
   };
 
-  double rl_update_count; /* number of (potentially fractional) updates to this
+  double rl_update_count; /** number of (potentially fractional) updates to this
                              rule */
-  unsigned int rl_ref_count; /* number of states referencing this rule in
+  unsigned int rl_ref_count; /** number of states referencing this rule in
                                 prev_op_rl_rules list */
 
   // Per-input memory parameters for delta bar delta algorithm
@@ -56,7 +56,7 @@ typedef struct production_struct {
 
 } production;
 
-/* ========================================================================
+/** ========================================================================
 
    Various utility routines for manipulating productions and parts thereof.
    Also includes the reorderer and compile-time o-support calculations.
@@ -64,7 +64,7 @@ typedef struct production_struct {
    Init_production_utilities() should be called before anything else here.
 ======================================================================== */
 
-/* This structure is used to break ties in favor of non-multi-attributes */
+/** This structure is used to break ties in favor of non-multi-attributes */
 typedef struct multi_attributes_struct {
   Symbol* symbol;
   int64_t value;
@@ -73,7 +73,7 @@ typedef struct multi_attributes_struct {
 
 void init_production_utilities(agent* thisAgent);
 
-/* --------------------------------------------------------------------
+/** --------------------------------------------------------------------
                       Transitive Closure Utilities
                Marking, Unmarking, and Collecting Symbols
 
@@ -126,7 +126,7 @@ bool action_is_in_tc(action* a, tc_number tc);
 void add_all_variables_in_condition_list(agent* thisAgent, condition* cond_list,
                                          tc_number tc, cons** var_list);
 
-/* -------------------------------------------------------------------
+/** -------------------------------------------------------------------
                          Production Management
 
     For each type of production, we maintain a doubly-linked list of
@@ -181,7 +181,7 @@ inline void production_remove_ref(agent* thisAgent, production* p) {
 }
 
 #endif
-/* -------------------------------------------------------------------
+/** -------------------------------------------------------------------
                             production.h
 
    Fields in a production:

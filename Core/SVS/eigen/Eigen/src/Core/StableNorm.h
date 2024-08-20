@@ -207,7 +207,7 @@ inline typename NumTraits<typename traits<Derived>::Scalar>::Real blueNorm_impl(
 
 }  // end namespace internal
 
-/* \returns the \em l2 norm of \c *this avoiding underflow and overflow.
+/** \returns the \em l2 norm of \c *this avoiding underflow and overflow.
  * This version use a blockwise two passes algorithm:
  *  1 - find the absolute largest coefficient \c s
  *  2 - compute \f$ s \Vert \frac{*this}{s} \Vert \f$ in a standard way
@@ -223,7 +223,7 @@ MatrixBase<Derived>::stableNorm() const {
   return internal::stable_norm_impl(derived());
 }
 
-/* \returns the \em l2 norm of \c *this using the Blue's algorithm.
+/** \returns the \em l2 norm of \c *this using the Blue's algorithm.
  * A Portable Fortran Program to Find the Euclidean Norm of a Vector,
  * ACM TOMS, Vol 4, Issue 1, 1978.
  *
@@ -238,7 +238,7 @@ MatrixBase<Derived>::blueNorm() const {
   return internal::blueNorm_impl(*this);
 }
 
-/* \returns the \em l2 norm of \c *this avoiding undeflow and overflow.
+/** \returns the \em l2 norm of \c *this avoiding undeflow and overflow.
  * This version use a concatenation of hypot() calls, and it is very slow.
  *
  * \sa norm(), stableNorm()

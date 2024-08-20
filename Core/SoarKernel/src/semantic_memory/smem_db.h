@@ -1,4 +1,4 @@
-/*
+/**
  * smem_db.h
  *
  *  Created on: Aug 21, 2016
@@ -174,4 +174,4 @@ class smem_statement_container
   void drop_tables(agent* new_agent);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_DB_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_DB_H_ */

@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* Optimized selfadjoint matrix * matrix (?SYMM/?HEMM) product */
+/** Optimized selfadjoint matrix * matrix (?SYMM/?HEMM) product */
 
 #define EIGEN_BLAS_SYMM_L(EIGTYPE, BLASTYPE, EIGPREFIX, BLASFUNC)          \
   template <typename Index, int LhsStorageOrder, bool ConjugateLhs,        \
@@ -49,7 +49,7 @@ namespace internal {
                     Index lhsStride, const EIGTYPE* _rhs, Index rhsStride, \
                     EIGTYPE* res, Index resIncr, Index resStride,          \
                     EIGTYPE alpha,                                         \
-                    level3_blocking<EIGTYPE, EIGTYPE>& /*blocking*/) {     \
+                    level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {     \
       EIGEN_ONLY_USED_FOR_DEBUG(resIncr);                                  \
       eigen_assert(resIncr == 1);                                          \
       char side = 'L', uplo = 'L';                                         \
@@ -58,17 +58,17 @@ namespace internal {
       EIGTYPE beta(1);                                                     \
       MatrixX##EIGPREFIX b_tmp;                                            \
                                                                            \
-      /* Set transpose options */                                          \
-      /* Set m, n, k */                                                    \
+      /** Set transpose options */                                          \
+      /** Set m, n, k */                                                    \
       m = convert_index<BlasIndex>(rows);                                  \
       n = convert_index<BlasIndex>(cols);                                  \
                                                                            \
-      /* Set lda, ldb, ldc */                                              \
+      /** Set lda, ldb, ldc */                                              \
       lda = convert_index<BlasIndex>(lhsStride);                           \
       ldb = convert_index<BlasIndex>(rhsStride);                           \
       ldc = convert_index<BlasIndex>(resStride);                           \
                                                                            \
-      /* Set a, b, c */                                                    \
+      /** Set a, b, c */                                                    \
       if (LhsStorageOrder == RowMajor) uplo = 'U';                         \
       a = _lhs;                                                            \
                                                                            \
@@ -98,7 +98,7 @@ namespace internal {
                     Index lhsStride, const EIGTYPE* _rhs, Index rhsStride, \
                     EIGTYPE* res, Index resIncr, Index resStride,          \
                     EIGTYPE alpha,                                         \
-                    level3_blocking<EIGTYPE, EIGTYPE>& /*blocking*/) {     \
+                    level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {     \
       EIGEN_ONLY_USED_FOR_DEBUG(resIncr);                                  \
       eigen_assert(resIncr == 1);                                          \
       char side = 'L', uplo = 'L';                                         \
@@ -108,17 +108,17 @@ namespace internal {
       MatrixX##EIGPREFIX b_tmp;                                            \
       Matrix<EIGTYPE, Dynamic, Dynamic, LhsStorageOrder> a_tmp;            \
                                                                            \
-      /* Set transpose options */                                          \
-      /* Set m, n, k */                                                    \
+      /** Set transpose options */                                          \
+      /** Set m, n, k */                                                    \
       m = convert_index<BlasIndex>(rows);                                  \
       n = convert_index<BlasIndex>(cols);                                  \
                                                                            \
-      /* Set lda, ldb, ldc */                                              \
+      /** Set lda, ldb, ldc */                                              \
       lda = convert_index<BlasIndex>(lhsStride);                           \
       ldb = convert_index<BlasIndex>(rhsStride);                           \
       ldc = convert_index<BlasIndex>(resStride);                           \
                                                                            \
-      /* Set a, b, c */                                                    \
+      /** Set a, b, c */                                                    \
       if (((LhsStorageOrder == ColMajor) && ConjugateLhs) ||               \
           ((LhsStorageOrder == RowMajor) && (!ConjugateLhs))) {            \
         Map<const Matrix<EIGTYPE, Dynamic, Dynamic, LhsStorageOrder>, 0,   \
@@ -170,7 +170,7 @@ EIGEN_BLAS_HEMM_L(dcomplex, double, cd, zhemm_)
 EIGEN_BLAS_HEMM_L(scomplex, float, cf, chemm_)
 #endif
 
-/* Optimized matrix * selfadjoint matrix (?SYMM/?HEMM) product */
+/** Optimized matrix * selfadjoint matrix (?SYMM/?HEMM) product */
 
 #define EIGEN_BLAS_SYMM_R(EIGTYPE, BLASTYPE, EIGPREFIX, BLASFUNC)           \
   template <typename Index, int LhsStorageOrder, bool ConjugateLhs,         \
@@ -182,7 +182,7 @@ EIGEN_BLAS_HEMM_L(scomplex, float, cf, chemm_)
                     Index lhsStride, const EIGTYPE* _rhs, Index rhsStride,  \
                     EIGTYPE* res, Index resIncr, Index resStride,           \
                     EIGTYPE alpha,                                          \
-                    level3_blocking<EIGTYPE, EIGTYPE>& /*blocking*/) {      \
+                    level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {      \
       EIGEN_ONLY_USED_FOR_DEBUG(resIncr);                                   \
       eigen_assert(resIncr == 1);                                           \
       char side = 'R', uplo = 'L';                                          \
@@ -191,16 +191,16 @@ EIGEN_BLAS_HEMM_L(scomplex, float, cf, chemm_)
       EIGTYPE beta(1);                                                      \
       MatrixX##EIGPREFIX b_tmp;                                             \
                                                                             \
-      /* Set m, n, k */                                                     \
+      /** Set m, n, k */                                                     \
       m = convert_index<BlasIndex>(rows);                                   \
       n = convert_index<BlasIndex>(cols);                                   \
                                                                             \
-      /* Set lda, ldb, ldc */                                               \
+      /** Set lda, ldb, ldc */                                               \
       lda = convert_index<BlasIndex>(rhsStride);                            \
       ldb = convert_index<BlasIndex>(lhsStride);                            \
       ldc = convert_index<BlasIndex>(resStride);                            \
                                                                             \
-      /* Set a, b, c */                                                     \
+      /** Set a, b, c */                                                     \
       if (RhsStorageOrder == RowMajor) uplo = 'U';                          \
       a = _rhs;                                                             \
                                                                             \
@@ -230,7 +230,7 @@ EIGEN_BLAS_HEMM_L(scomplex, float, cf, chemm_)
                     Index lhsStride, const EIGTYPE* _rhs, Index rhsStride,  \
                     EIGTYPE* res, Index resIncr, Index resStride,           \
                     EIGTYPE alpha,                                          \
-                    level3_blocking<EIGTYPE, EIGTYPE>& /*blocking*/) {      \
+                    level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {      \
       EIGEN_ONLY_USED_FOR_DEBUG(resIncr);                                   \
       eigen_assert(resIncr == 1);                                           \
       char side = 'R', uplo = 'L';                                          \
@@ -240,16 +240,16 @@ EIGEN_BLAS_HEMM_L(scomplex, float, cf, chemm_)
       MatrixX##EIGPREFIX b_tmp;                                             \
       Matrix<EIGTYPE, Dynamic, Dynamic, RhsStorageOrder> a_tmp;             \
                                                                             \
-      /* Set m, n, k */                                                     \
+      /** Set m, n, k */                                                     \
       m = convert_index<BlasIndex>(rows);                                   \
       n = convert_index<BlasIndex>(cols);                                   \
                                                                             \
-      /* Set lda, ldb, ldc */                                               \
+      /** Set lda, ldb, ldc */                                               \
       lda = convert_index<BlasIndex>(rhsStride);                            \
       ldb = convert_index<BlasIndex>(lhsStride);                            \
       ldc = convert_index<BlasIndex>(resStride);                            \
                                                                             \
-      /* Set a, b, c */                                                     \
+      /** Set a, b, c */                                                     \
       if (((RhsStorageOrder == ColMajor) && ConjugateRhs) ||                \
           ((RhsStorageOrder == RowMajor) && (!ConjugateRhs))) {             \
         Map<const Matrix<EIGTYPE, Dynamic, Dynamic, RhsStorageOrder>, 0,    \

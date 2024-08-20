@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *
  *  file:  reinforcement_learning.h
  *
@@ -326,7 +326,7 @@ class RL_Manager {
 
   void clean_up_for_agent_deletion();
 
-  uint64_t rl_init_count; /* # of inits done so far */
+  uint64_t rl_init_count; /** # of inits done so far */
   exploration_parameter* exploration_params[EXPLORATION_PARAMS];
   rl_param_container* rl_params;
   rl_stat_container* rl_stats;

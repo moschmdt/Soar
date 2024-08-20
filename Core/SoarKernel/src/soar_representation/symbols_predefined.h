@@ -1,4 +1,4 @@
-/*
+/**
  * symbols_predefined.h
  *
  *  Created on: Sep 27, 2016
@@ -9,7 +9,7 @@
 #define CORE_SOARKERNEL_SRC_SOAR_REPRESENTATION_SYMBOLS_PREDEFINED_H_
 
 typedef struct predefined_sym_struct {
-  /* ---------------- Predefined Symbols -------------------------
+  /** ---------------- Predefined Symbols -------------------------
      Certain symbols are used so frequently that we create them at
      system startup time and never deallocate them.
      ------------------------------------------------------------- */
@@ -56,10 +56,10 @@ typedef struct predefined_sym_struct {
   Symbol* architecture_inst_symbol;
   Symbol* sti_symbol;
 
-  /* RPM 9/06 begin */
+  /** RPM 9/06 begin */
   Symbol* input_link_symbol;
   Symbol* output_link_symbol;
-  /* RPM 9/06 end */
+  /** RPM 9/06 end */
 
   Symbol* rl_sym_reward_link;
   Symbol* rl_sym_reward;
@@ -129,4 +129,4 @@ typedef struct predefined_sym_struct {
 
 } predefined_symbols;
 
-#endif /* CORE_SOARKERNEL_SRC_SOAR_REPRESENTATION_SYMBOLS_PREDEFINED_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SOAR_REPRESENTATION_SYMBOLS_PREDEFINED_H_ */

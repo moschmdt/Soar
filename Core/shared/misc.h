@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *
  *  file:  misc.h
  *
@@ -37,7 +37,7 @@ inline void normalize_separators(std::string& path) {
   }
 }
 
-/* Should probably rename to avoid conflicts */
+/** Should probably rename to avoid conflicts */
 // Conversion of value to string
 template <class T>
 std::string& to_string(const T& x, std::string& dest, int precision = 16,
@@ -168,7 +168,7 @@ inline bool from_c_string(long double& v, const char* const str) {
   return sscanf(str, "%Lf", &v) == 1;
 }
 
-/* Casting between pointer-to-function and pointer-to-object is hard to do...
+/** Casting between pointer-to-function and pointer-to-object is hard to do...
  * legally
  *
  *  reinterpret_cast<...>(...) isn't actually capable of performing such casts
@@ -262,4 +262,4 @@ class soar_timer_accumulator {
   uint64_t get_msec() { return total / 1000; }
 };
 
-#endif /*MISC_H_*/
+#endif /**MISC_H_*/

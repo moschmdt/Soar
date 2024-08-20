@@ -45,7 +45,7 @@ class EXPORT ClientXML {
   ClientXML();
   virtual ~ClientXML();
 
-  /*
+  /**
    * @brief Creates a new reference to the underlying XML object.
    *
    * This allows a caller to "keep a copy" of an object they are
@@ -53,7 +53,7 @@ class EXPORT ClientXML {
    */
   ClientXML(ClientXML* pXML);
 
-  /*
+  /**
    * @brief Cast this object to a subclass.
    *
    * These methods are helpful when we're working in other
@@ -72,14 +72,14 @@ class EXPORT ClientXML {
    */
   virtual ClientTraceXML* ConvertToTraceXML() { return (ClientTraceXML*)this; }
 
-  /*
+  /**
    * @brief Gets the tag name for this element.
    *
    * @returns The tag name.
    */
   char const* GetTagName() const;
 
-  /*
+  /**
    * @brief Returns true if the tag name matches.
    *
    * @param pTagName   The tag to test against.
@@ -88,12 +88,12 @@ class EXPORT ClientXML {
    */
   bool IsTag(char const* pTagName) const;
 
-  /*
+  /**
    * @brief Returns the number of children of this element.
    */
   int GetNumberChildren() const;
 
-  /*
+  /**
    * @brief Returns the n-th child of this element by placing it in pChild.
    *
    * Children are guaranteed to be returned in the order they were added.
@@ -107,12 +107,12 @@ class EXPORT ClientXML {
    */
   bool GetChild(ClientXML* pChild, int index) const;
 
-  /*
+  /**
    * @brief Get the number of attributes attached to this element.
    */
   int GetNumberAttributes() const;
 
-  /*
+  /**
    * @brief Get the name of the n-th attribute of this element.
    *        Attributes may not be returned in the order they were added.
    *
@@ -120,14 +120,14 @@ class EXPORT ClientXML {
    */
   const char* GetAttributeName(int index) const;
 
-  /*
+  /**
    * @brief Get the value of the n-th attribute of this element.
    *
    * @param index  The 0-based index of the attribute to return.
    */
   const char* GetAttributeValue(int index) const;
 
-  /*
+  /**
    * @brief Get the value of the named attribute of this element.
    *
    * @param attName    The name of the attribute to look up.
@@ -136,7 +136,7 @@ class EXPORT ClientXML {
    */
   const char* GetAttribute(const char* attName) const;
 
-  /*
+  /**
    * @brief Get the character data for this element.
    *
    * @returns  Returns the character data for this element.  If the element has
@@ -146,13 +146,13 @@ class EXPORT ClientXML {
    */
   char const* GetCharacterData() const;
 
-  /*
+  /**
    * @brief Returns true if the character data should be treated as a binary
    *buffer rather than a null-terminated character string.
    */
   bool IsCharacterDataBinary() const;
 
-  /*
+  /**
    * @brief Converts a character data buffer into binary data.
    *
    * If binary data is stored in an XML file it will encoded in
@@ -174,7 +174,7 @@ class EXPORT ClientXML {
    */
   bool ConvertCharacterDataToBinary();
 
-  /*
+  /**
    * @brief Returns the length of the character data.
    *
    * If the data is a binary buffer this is the size of that buffer.
@@ -183,7 +183,7 @@ class EXPORT ClientXML {
    */
   int GetCharacterDataLength() const;
 
-  /*
+  /**
    * @brief Converts the XML object to a string.
    *
    * @param includeChildren    Includes all children in the XML output.
@@ -195,7 +195,7 @@ class EXPORT ClientXML {
   char* GenerateXMLString(bool includeChildren,
                           bool insertNewLines = false) const;
 
-  /*
+  /**
    * @brief Returns the length of string needed to represent this object (does
    *not include the trailing null, so add one for that)
    *
@@ -206,7 +206,7 @@ class EXPORT ClientXML {
   int DetermineXMLStringLength(bool includeChildren,
                                bool insertNewLines = false) const;
 
-  /*
+  /**
    * @brief Utility function to allocate memory that the client will pass to the
    *other ElementXML functions.
    *
@@ -216,7 +216,7 @@ class EXPORT ClientXML {
    */
   static char* AllocateString(int length);
 
-  /*
+  /**
    * @brief Utility function to release memory allocated by this element and
    *returned to the caller.
    *
@@ -225,7 +225,7 @@ class EXPORT ClientXML {
    */
   static void DeleteString(char* pString);
 
-  /*
+  /**
    * @brief    Performs an allocation and then copies the contents of the passed
    *in string to the newly allocated string.
    *
@@ -234,7 +234,7 @@ class EXPORT ClientXML {
    */
   static char* CopyString(char const* original);
 
-  /*
+  /**
    * @brief    Performs an allocation and then copies the contents of the passed
    *in buffer to the newly allocated buffer. You need to use this rather than
    *copyString if copying binary data (because it can contained embedded nulls).

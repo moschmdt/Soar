@@ -1,4 +1,4 @@
-/*
+/**
  * cli_Cli_enums.h
  *
  *  Created on: Oct 3, 2016
@@ -213,4 +213,4 @@ enum eWatchWMEsOptions {
 };
 typedef std::bitset<WATCH_WMES_TYPE_NUM_OPTIONS> WatchWMEsTypeBitset;
 }  // namespace cli
-#endif /* CORE_CLI_SRC_CLI_ENUMS_H_ */
+#endif /** CORE_CLI_SRC_CLI_ENUMS_H_ */

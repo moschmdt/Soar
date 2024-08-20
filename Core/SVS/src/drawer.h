@@ -1,7 +1,7 @@
 #ifndef DRAWER_H
 #define DRAWER_H
 
-/*
+/**
  A class that interfaces with the viewer through TCP sockets.
 */
 

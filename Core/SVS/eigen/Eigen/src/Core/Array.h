@@ -23,7 +23,7 @@ struct traits<Array<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>>
 };
 }  // namespace internal
 
-/* \class Array
+/** \class Array
  * \ingroup Core_Module
  *
  * \brief General-purpose arrays with easy API for coefficient-wise operations
@@ -66,7 +66,7 @@ class Array : public PlainObjectBase<
   using Base::coeff;
   using Base::coeffRef;
 
-  /*
+  /**
    * The usage of
    *   using Base::operator=;
    * fails on MSVC. Since the code below is working with GCC and MSVC, we
@@ -78,10 +78,10 @@ class Array : public PlainObjectBase<
     return Base::operator=(other);
   }
 
-  /* Set all the entries to \a value.
+  /** Set all the entries to \a value.
    * \sa DenseBase::setConstant(), DenseBase::fill()
    */
-  /* This overload is needed because the usage of
+  /** This overload is needed because the usage of
    *   using Base::operator=;
    * fails on MSVC. Since the code below is working with GCC and MSVC, we
    * skipped the usage of 'using'. This should be done only for operator=.
@@ -92,7 +92,7 @@ class Array : public PlainObjectBase<
     return *this;
   }
 
-  /* Copies the value of the expression \a other into \c *this with automatic
+  /** Copies the value of the expression \a other into \c *this with automatic
    * resizing.
    *
    * *this might be resized to match the dimensions of \a other. If *this was a
@@ -108,7 +108,7 @@ class Array : public PlainObjectBase<
     return Base::_set(other);
   }
 
-  /* This is a special case of the templated operator=. Its purpose is to
+  /** This is a special case of the templated operator=. Its purpose is to
    * prevent a default operator= from hiding the templated operator=.
    */
   EIGEN_DEVICE_FUNC
@@ -116,7 +116,7 @@ class Array : public PlainObjectBase<
     return Base::_set(other);
   }
 
-  /* Default constructor.
+  /** Default constructor.
    *
    * For fixed-size matrices, does nothing.
    *
@@ -135,7 +135,7 @@ class Array : public PlainObjectBase<
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
   // FIXME is it still needed ??
-  /* \internal */
+  /** \internal */
   EIGEN_DEVICE_FUNC
   Array(internal::constructor_without_unaligned_array_assert)
       : Base(internal::constructor_without_unaligned_array_assert()) {
@@ -160,7 +160,7 @@ class Array : public PlainObjectBase<
 #endif
 
 #if EIGEN_HAS_CXX11
-  /* \copydoc PlainObjectBase(const Scalar& a0, const Scalar& a1, const Scalar&
+  /** \copydoc PlainObjectBase(const Scalar& a0, const Scalar& a1, const Scalar&
    * a2, const Scalar& a3, const ArgTypes&... args)
    *
    * Example: \include Array_variadic_ctor_cxx11.cpp
@@ -177,7 +177,7 @@ class Array : public PlainObjectBase<
                                               const ArgTypes&... args)
       : Base(a0, a1, a2, a3, args...) {}
 
-  /* \brief Constructs an array and initializes it from the coefficients given
+  /** \brief Constructs an array and initializes it from the coefficients given
    * as initializer-lists grouped by row. \cpp11
    *
    * In the general case, the constructor takes a list of rows, each row being
@@ -225,10 +225,10 @@ class Array : public PlainObjectBase<
   }
 
 #else
-  /* \brief Constructs a fixed-sized array initialized with coefficients
+  /** \brief Constructs a fixed-sized array initialized with coefficients
    * starting at \a data */
   EIGEN_DEVICE_FUNC explicit Array(const Scalar* data);
-  /* Constructs a vector or row-vector with given dimension. \only_for_vectors
+  /** Constructs a vector or row-vector with given dimension. \only_for_vectors
    *
    * Note that this is only useful for dynamic-size vectors. For fixed-size
    * vectors, it is redundant to pass the dimension here, so it makes more sense
@@ -236,23 +236,23 @@ class Array : public PlainObjectBase<
    */
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE explicit Array(Index dim);
-  /* constructs an initialized 1x1 Array with the given coefficient
+  /** constructs an initialized 1x1 Array with the given coefficient
    * \sa const Scalar& a0, const Scalar& a1, const Scalar& a2, const Scalar& a3,
    * const ArgTypes&... args */
   Array(const Scalar& value);
-  /* constructs an uninitialized array with \a rows rows and \a cols columns.
+  /** constructs an uninitialized array with \a rows rows and \a cols columns.
    *
    * This is useful for dynamic-size arrays. For fixed-size arrays,
    * it is redundant to pass these parameters, so one should use the default
    * constructor Array() instead. */
   Array(Index rows, Index cols);
-  /* constructs an initialized 2D vector with given coefficients
+  /** constructs an initialized 2D vector with given coefficients
    * \sa Array(const Scalar& a0, const Scalar& a1, const Scalar& a2, const
    * Scalar& a3, const ArgTypes&... args) */
   Array(const Scalar& val0, const Scalar& val1);
 #endif  // end EIGEN_PARSED_BY_DOXYGEN
 
-  /* constructs an initialized 3D vector with given coefficients
+  /** constructs an initialized 3D vector with given coefficients
    * \sa Array(const Scalar& a0, const Scalar& a1, const Scalar& a2, const
    * Scalar& a3, const ArgTypes&... args)
    */
@@ -265,7 +265,7 @@ class Array : public PlainObjectBase<
     m_storage.data()[1] = val1;
     m_storage.data()[2] = val2;
   }
-  /* constructs an initialized 4D vector with given coefficients
+  /** constructs an initialized 4D vector with given coefficients
    * \sa Array(const Scalar& a0, const Scalar& a1, const Scalar& a2, const
    * Scalar& a3, const ArgTypes&... args)
    */
@@ -280,7 +280,7 @@ class Array : public PlainObjectBase<
     m_storage.data()[3] = val3;
   }
 
-  /* Copy constructor */
+  /** Copy constructor */
   EIGEN_DEVICE_FUNC
   EIGEN_STRONG_INLINE Array(const Array& other) : Base(other) {}
 
@@ -288,7 +288,7 @@ class Array : public PlainObjectBase<
   struct PrivateType {};
 
  public:
-  /* \sa MatrixBase::operator=(const EigenBase<OtherDerived>&) */
+  /** \sa MatrixBase::operator=(const EigenBase<OtherDerived>&) */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   Array(const EigenBase<OtherDerived>& other,
@@ -316,7 +316,7 @@ class Array : public PlainObjectBase<
   friend struct internal::matrix_swap_impl;
 };
 
-/* \defgroup arraytypedefs Global array typedefs
+/** \defgroup arraytypedefs Global array typedefs
  * \ingroup Core_Module
  *
  * %Eigen defines several typedef shortcuts for most common 1D and 2D array
@@ -347,15 +347,15 @@ class Array : public PlainObjectBase<
  */
 
 #define EIGEN_MAKE_ARRAY_TYPEDEFS(Type, TypeSuffix, Size, SizeSuffix)        \
-  /* \ingroup arraytypedefs */                                              \
+  /** \ingroup arraytypedefs */                                              \
   typedef Array<Type, Size, Size> Array##SizeSuffix##SizeSuffix##TypeSuffix; \
-  /* \ingroup arraytypedefs */                                              \
+  /** \ingroup arraytypedefs */                                              \
   typedef Array<Type, Size, 1> Array##SizeSuffix##TypeSuffix;
 
 #define EIGEN_MAKE_ARRAY_FIXED_TYPEDEFS(Type, TypeSuffix, Size)  \
-  /* \ingroup arraytypedefs */                                  \
+  /** \ingroup arraytypedefs */                                  \
   typedef Array<Type, Size, Dynamic> Array##Size##X##TypeSuffix; \
-  /* \ingroup arraytypedefs */                                  \
+  /** \ingroup arraytypedefs */                                  \
   typedef Array<Type, Dynamic, Size> Array##X##Size##TypeSuffix;
 
 #define EIGEN_MAKE_ARRAY_TYPEDEFS_ALL_SIZES(Type, TypeSuffix) \
@@ -380,22 +380,22 @@ EIGEN_MAKE_ARRAY_TYPEDEFS_ALL_SIZES(std::complex<double>, cd)
 #if EIGEN_HAS_CXX11
 
 #define EIGEN_MAKE_ARRAY_TYPEDEFS(Size, SizeSuffix)              \
-  /* \ingroup arraytypedefs */                                  \
-  /* \brief \cpp11 */                                           \
+  /** \ingroup arraytypedefs */                                  \
+  /** \brief \cpp11 */                                           \
   template <typename Type>                                       \
   using Array##SizeSuffix##SizeSuffix = Array<Type, Size, Size>; \
-  /* \ingroup arraytypedefs */                                  \
-  /* \brief \cpp11 */                                           \
+  /** \ingroup arraytypedefs */                                  \
+  /** \brief \cpp11 */                                           \
   template <typename Type>                                       \
   using Array##SizeSuffix = Array<Type, Size, 1>;
 
 #define EIGEN_MAKE_ARRAY_FIXED_TYPEDEFS(Size)        \
-  /* \ingroup arraytypedefs */                      \
-  /* \brief \cpp11 */                               \
+  /** \ingroup arraytypedefs */                      \
+  /** \brief \cpp11 */                               \
   template <typename Type>                           \
   using Array##Size##X = Array<Type, Size, Dynamic>; \
-  /* \ingroup arraytypedefs */                      \
-  /* \brief \cpp11 */                               \
+  /** \ingroup arraytypedefs */                      \
+  /** \brief \cpp11 */                               \
   template <typename Type>                           \
   using Array##X##Size = Array<Type, Dynamic, Size>;
 

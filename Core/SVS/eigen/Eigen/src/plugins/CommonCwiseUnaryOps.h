@@ -13,25 +13,25 @@
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
 
-/* \internal the return type of conjugate() */
+/** \internal the return type of conjugate() */
 typedef typename internal::conditional<
     NumTraits<Scalar>::IsComplex,
     const CwiseUnaryOp<internal::scalar_conjugate_op<Scalar>, const Derived>,
     const Derived&>::type ConjugateReturnType;
-/* \internal the return type of real() const */
+/** \internal the return type of real() const */
 typedef typename internal::conditional<
     NumTraits<Scalar>::IsComplex,
     const CwiseUnaryOp<internal::scalar_real_op<Scalar>, const Derived>,
     const Derived&>::type RealReturnType;
-/* \internal the return type of real() */
+/** \internal the return type of real() */
 typedef typename internal::conditional<
     NumTraits<Scalar>::IsComplex,
     CwiseUnaryView<internal::scalar_real_ref_op<Scalar>, Derived>,
     Derived&>::type NonConstRealReturnType;
-/* \internal the return type of imag() const */
+/** \internal the return type of imag() const */
 typedef CwiseUnaryOp<internal::scalar_imag_op<Scalar>, const Derived>
     ImagReturnType;
-/* \internal the return type of imag() */
+/** \internal the return type of imag() */
 typedef CwiseUnaryView<internal::scalar_imag_ref_op<Scalar>, Derived>
     NonConstImagReturnType;
 

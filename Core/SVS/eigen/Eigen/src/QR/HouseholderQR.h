@@ -25,7 +25,7 @@ struct traits<HouseholderQR<_MatrixType> > : traits<_MatrixType> {
 
 }  // end namespace internal
 
-/* \ingroup QR_Module
+/** \ingroup QR_Module
  *
  *
  * \class HouseholderQR
@@ -76,7 +76,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
                       typename HCoeffsType::ConjugateReturnType>::type>
       HouseholderSequenceType;
 
-  /*
+  /**
    * \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
@@ -84,7 +84,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
    */
   HouseholderQR() : m_qr(), m_hCoeffs(), m_temp(), m_isInitialized(false) {}
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -96,7 +96,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
         m_temp(cols),
         m_isInitialized(false) {}
 
-  /* \brief Constructs a QR factorization from a given matrix
+  /** \brief Constructs a QR factorization from a given matrix
    *
    * This constructor computes the QR factorization of the matrix \a matrix by
    * calling the method compute(). It is a short cut for:
@@ -117,7 +117,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
     compute(matrix.derived());
   }
 
-  /* \brief Constructs a QR factorization from a given matrix
+  /** \brief Constructs a QR factorization from a given matrix
    *
    * This overloaded constructor is provided for \link InplaceDecomposition
    * inplace decomposition \endlink when \c MatrixType is a Eigen::Ref.
@@ -134,7 +134,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* This method finds a solution x to the equation Ax=b, where A is the matrix
+  /** This method finds a solution x to the equation Ax=b, where A is the matrix
    * of which *this is the QR decomposition, if any exists.
    *
    * \param b the right-hand-side of the equation to solve.
@@ -152,7 +152,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
   inline const Solve<HouseholderQR, Rhs> solve(const MatrixBase<Rhs>& b) const;
 #endif
 
-  /* This method returns an expression of the unitary matrix Q as a sequence of
+  /** This method returns an expression of the unitary matrix Q as a sequence of
    * Householder transformations.
    *
    * The returned expression can directly be used to perform matrix products. It
@@ -168,7 +168,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
     return HouseholderSequenceType(m_qr, m_hCoeffs.conjugate());
   }
 
-  /* \returns a reference to the matrix where the Householder QR decomposition
+  /** \returns a reference to the matrix where the Householder QR decomposition
    * is stored in a LAPACK-compatible way.
    */
   const MatrixType& matrixQR() const {
@@ -183,7 +183,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
     return *this;
   }
 
-  /* \returns the absolute value of the determinant of the matrix of which
+  /** \returns the absolute value of the determinant of the matrix of which
    * *this is the QR decomposition. It has only linear complexity
    * (that is, O(n) where n is the dimension of the square matrix)
    * as the QR decomposition has already been computed.
@@ -198,7 +198,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
    */
   typename MatrixType::RealScalar absDeterminant() const;
 
-  /* \returns the natural log of the absolute value of the determinant of the
+  /** \returns the natural log of the absolute value of the determinant of the
    * matrix of which *this is the QR decomposition. It has only linear
    * complexity (that is, O(n) where n is the dimension of the square matrix) as
    * the QR decomposition has already been computed.
@@ -215,7 +215,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<_MatrixType> > {
   inline Index rows() const { return m_qr.rows(); }
   inline Index cols() const { return m_qr.cols(); }
 
-  /* \returns a const reference to the vector of Householder coefficients used
+  /** \returns a const reference to the vector of Householder coefficients used
    * to represent the factor \c Q.
    *
    * For advanced uses only.
@@ -264,7 +264,7 @@ typename MatrixType::RealScalar HouseholderQR<MatrixType>::logAbsDeterminant()
 
 namespace internal {
 
-/* \internal */
+/** \internal */
 template <typename MatrixQR, typename HCoeffs>
 void householder_qr_inplace_unblocked(MatrixQR& mat, HCoeffs& hCoeffs,
                                       typename MatrixQR::Scalar* tempData = 0) {
@@ -300,7 +300,7 @@ void householder_qr_inplace_unblocked(MatrixQR& mat, HCoeffs& hCoeffs,
   }
 }
 
-/* \internal */
+/** \internal */
 template <typename MatrixQR, typename HCoeffs,
           typename MatrixQRScalar = typename MatrixQR::Scalar,
           bool InnerStrideIsOne = (MatrixQR::InnerStrideAtCompileTime == 1 &&
@@ -399,7 +399,7 @@ void HouseholderQR<_MatrixType>::_solve_impl_transposed(const RhsType& rhs,
 }
 #endif
 
-/* Performs the QR factorization of the given matrix \a matrix. The result of
+/** Performs the QR factorization of the given matrix \a matrix. The result of
  * the factorization is stored into \c *this, and a reference to \c *this
  * is returned.
  *
@@ -423,7 +423,7 @@ void HouseholderQR<MatrixType>::computeInPlace() {
   m_isInitialized = true;
 }
 
-/* \return the Householder QR decomposition of \c *this.
+/** \return the Householder QR decomposition of \c *this.
  *
  * \sa class HouseholderQR
  */

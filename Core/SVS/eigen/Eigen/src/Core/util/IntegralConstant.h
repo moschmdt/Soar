@@ -19,7 +19,7 @@ class FixedInt;
 template <int N>
 class VariableAndFixedInt;
 
-/* \internal
+/** \internal
  * \class FixedInt
  *
  * This class embeds a compile-time integer \c N.
@@ -110,7 +110,7 @@ class FixedInt {
 #endif
 };
 
-/* \internal
+/** \internal
  * \class VariableAndFixedInt
  *
  * This class embeds both a compile-time integer \c N and a runtime integer.
@@ -259,7 +259,7 @@ inline internal::VariableAndFixedInt<N> fix(T val) {
 
 #else  // EIGEN_PARSED_BY_DOXYGEN
 
-/* \var fix<N>()
+/** \var fix<N>()
  * \ingroup Core_Module
  *
  * This \em identifier permits to construct an object embedding a compile-time
@@ -296,7 +296,7 @@ inline internal::VariableAndFixedInt<N> fix(T val) {
 template <int N>
 static const auto fix();
 
-/* \fn fix<N>(int)
+/** \fn fix<N>(int)
  * \ingroup Core_Module
  *
  * This function returns an object embedding both a compile-time integer \c N,

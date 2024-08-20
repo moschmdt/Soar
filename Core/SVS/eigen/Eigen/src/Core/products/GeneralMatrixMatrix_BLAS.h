@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@ namespace Eigen {
 
 namespace internal {
 
-/*
+/**
  * This file implements general matrix-matrix multiplication using BLAS
  * gemm function via partial specialization of
  * general_matrix_matrix_product::run(..) method for float, double,
@@ -58,8 +58,8 @@ namespace internal {
                     Index lhsStride, const EIGTYPE* _rhs, Index rhsStride,     \
                     EIGTYPE* res, Index resIncr, Index resStride,              \
                     EIGTYPE alpha,                                             \
-                    level3_blocking<EIGTYPE, EIGTYPE>& /*blocking*/,           \
-                    GemmParallelInfo<Index>* /*info = 0*/) {                   \
+                    level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/,           \
+                    GemmParallelInfo<Index>* /**info = 0*/) {                   \
       using std::conj;                                                         \
                                                                                \
       EIGEN_ONLY_USED_FOR_DEBUG(resIncr);                                      \
@@ -70,23 +70,23 @@ namespace internal {
       EIGTYPE beta(1);                                                         \
       MatrixX##EIGPREFIX a_tmp, b_tmp;                                         \
                                                                                \
-      /* Set transpose options */                                              \
+      /** Set transpose options */                                              \
       transa =                                                                 \
           (LhsStorageOrder == RowMajor) ? ((ConjugateLhs) ? 'C' : 'T') : 'N';  \
       transb =                                                                 \
           (RhsStorageOrder == RowMajor) ? ((ConjugateRhs) ? 'C' : 'T') : 'N';  \
                                                                                \
-      /* Set m, n, k */                                                        \
+      /** Set m, n, k */                                                        \
       m = convert_index<BlasIndex>(rows);                                      \
       n = convert_index<BlasIndex>(cols);                                      \
       k = convert_index<BlasIndex>(depth);                                     \
                                                                                \
-      /* Set lda, ldb, ldc */                                                  \
+      /** Set lda, ldb, ldc */                                                  \
       lda = convert_index<BlasIndex>(lhsStride);                               \
       ldb = convert_index<BlasIndex>(rhsStride);                               \
       ldc = convert_index<BlasIndex>(resStride);                               \
                                                                                \
-      /* Set a, b, c */                                                        \
+      /** Set a, b, c */                                                        \
       if ((LhsStorageOrder == ColMajor) && (ConjugateLhs)) {                   \
         Map<const MatrixX##EIGPREFIX, 0, OuterStride<> > lhs(                  \
             _lhs, m, k, OuterStride<>(lhsStride));                             \

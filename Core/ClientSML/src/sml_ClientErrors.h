@@ -27,34 +27,34 @@ class EXPORT ClientErrors {
   // message based on just the error code.
   std::string m_LastErrorDetail;
 
-  /*
+  /**
    * @brief Resets our "last error" to no error.
    */
   virtual void ClearError();
 
-  /*
+  /**
    * @brief Records that an error has occurred
    */
   virtual void SetError(ErrorCode error);
 
-  /*
+  /**
    * @brief Records that an error has occurred and we are overriding
    *        the default message to go with it.
    */
   virtual void SetDetailedError(ErrorCode error, char const* pDetailedError);
 
  public:
-  /*
+  /**
    * @brief Returns true if an error occurred in the last call.
    */
   virtual bool HadError();
 
-  /*
+  /**
    * @brief Returns a description of the error that occurred in the last call.
    */
   virtual char const* GetLastErrorDescription();
 
-  /*
+  /**
    * @brief Classes with virtual functions need a virtual destructor (gcc
    *warning).
    */

@@ -1,4 +1,4 @@
-/*
+/**
  * forward.h
  *
  *  Created on: Dec 29, 2015
@@ -154,7 +154,7 @@ class CommandLineInterface;
 
 }
 
-/* Three utility functions to help break when a soar symbol or wme is
+/** Three utility functions to help break when a soar symbol or wme is
  * encountered.  If you set your debugger to always break on these, you can just
  * add them to stop Soar at the point where problem structures are being
  * processed.  Since we can throw these in anywhere, we're forward declaring
@@ -169,4 +169,4 @@ extern bool break_if_wme_matches_string(wme* w, const char* match_id,
                                         const char* match_attr,
                                         const char* match_value);
 
-#endif /* CORE_SOARKERNEL_SRC_SHARED_FORWARD_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SHARED_FORWARD_H_ */

@@ -32,7 +32,7 @@ struct LDLT_Traits;
 enum SignMatrix { PositiveSemiDef, NegativeSemiDef, ZeroSign, Indefinite };
 }  // namespace internal
 
-/* \ingroup Cholesky_Module
+/** \ingroup Cholesky_Module
  *
  * \class LDLT
  *
@@ -84,7 +84,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
 
   typedef internal::LDLT_Traits<MatrixType, UpLo> Traits;
 
-  /* \brief Default Constructor.
+  /** \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via LDLT::compute(const MatrixType&).
@@ -95,7 +95,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
         m_sign(internal::ZeroSign),
         m_isInitialized(false) {}
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -108,7 +108,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
         m_sign(internal::ZeroSign),
         m_isInitialized(false) {}
 
-  /* \brief Constructor with decomposition
+  /** \brief Constructor with decomposition
    *
    * This calculates the decomposition for the input \a matrix.
    *
@@ -124,7 +124,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
     compute(matrix.derived());
   }
 
-  /* \brief Constructs a LDLT factorization from a given matrix
+  /** \brief Constructs a LDLT factorization from a given matrix
    *
    * This overloaded constructor is provided for \link InplaceDecomposition
    * inplace decomposition \endlink when \c MatrixType is a Eigen::Ref.
@@ -141,50 +141,50 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
     compute(matrix.derived());
   }
 
-  /* Clear any existing decomposition
+  /** Clear any existing decomposition
    * \sa rankUpdate(w,sigma)
    */
   void setZero() { m_isInitialized = false; }
 
-  /* \returns a view of the upper triangular matrix U */
+  /** \returns a view of the upper triangular matrix U */
   inline typename Traits::MatrixU matrixU() const {
     eigen_assert(m_isInitialized && "LDLT is not initialized.");
     return Traits::getU(m_matrix);
   }
 
-  /* \returns a view of the lower triangular matrix L */
+  /** \returns a view of the lower triangular matrix L */
   inline typename Traits::MatrixL matrixL() const {
     eigen_assert(m_isInitialized && "LDLT is not initialized.");
     return Traits::getL(m_matrix);
   }
 
-  /* \returns the permutation matrix P as a transposition sequence.
+  /** \returns the permutation matrix P as a transposition sequence.
    */
   inline const TranspositionType& transpositionsP() const {
     eigen_assert(m_isInitialized && "LDLT is not initialized.");
     return m_transpositions;
   }
 
-  /* \returns the coefficients of the diagonal matrix D */
+  /** \returns the coefficients of the diagonal matrix D */
   inline Diagonal<const MatrixType> vectorD() const {
     eigen_assert(m_isInitialized && "LDLT is not initialized.");
     return m_matrix.diagonal();
   }
 
-  /* \returns true if the matrix is positive (semidefinite) */
+  /** \returns true if the matrix is positive (semidefinite) */
   inline bool isPositive() const {
     eigen_assert(m_isInitialized && "LDLT is not initialized.");
     return m_sign == internal::PositiveSemiDef || m_sign == internal::ZeroSign;
   }
 
-  /* \returns true if the matrix is negative (semidefinite) */
+  /** \returns true if the matrix is negative (semidefinite) */
   inline bool isNegative(void) const {
     eigen_assert(m_isInitialized && "LDLT is not initialized.");
     return m_sign == internal::NegativeSemiDef || m_sign == internal::ZeroSign;
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* \returns a solution x of \f$ A x = b \f$ using the current decomposition
+  /** \returns a solution x of \f$ A x = b \f$ using the current decomposition
    * of A.
    *
    * This function also supports in-place solves using the syntax <tt>x =
@@ -213,7 +213,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
   template <typename InputType>
   LDLT& compute(const EigenBase<InputType>& matrix);
 
-  /* \returns an estimate of the reciprocal condition number of the matrix of
+  /** \returns an estimate of the reciprocal condition number of the matrix of
    *  which \c *this is the LDLT decomposition.
    */
   RealScalar rcond() const {
@@ -224,7 +224,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
   template <typename Derived>
   LDLT& rankUpdate(const MatrixBase<Derived>& w, const RealScalar& alpha = 1);
 
-  /* \returns the internal LDLT decomposition matrix
+  /** \returns the internal LDLT decomposition matrix
    *
    * TODO: document the storage layout
    */
@@ -235,7 +235,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
 
   MatrixType reconstructedMatrix() const;
 
-  /* \returns the adjoint of \c *this, that is, a const reference to the
+  /** \returns the adjoint of \c *this, that is, a const reference to the
    * decomposition itself as the underlying matrix is self-adjoint.
    *
    * This method is provided for compatibility with other matrix decompositions,
@@ -251,7 +251,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
     return m_matrix.cols();
   }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the factorization failed because of a zero
@@ -275,7 +275,7 @@ class LDLT : public SolverBase<LDLT<_MatrixType, _UpLo> > {
     EIGEN_STATIC_ASSERT_NON_INTEGER(Scalar);
   }
 
-  /* \internal
+  /** \internal
    * Used to compute and store the Cholesky decomposition A = L D L^* = U^* D U.
    * The strict upper part is used during the decomposition, the strict lower
    * part correspond to the coefficients of L (its diagonal is equal to 1 and
@@ -513,7 +513,7 @@ struct LDLT_Traits<MatrixType, Upper> {
 
 }  // end namespace internal
 
-/* Compute / recompute the LDLT decomposition A = L D L^* = U^* D U of \a
+/** Compute / recompute the LDLT decomposition A = L D L^* = U^* D U of \a
  * matrix
  */
 template <typename MatrixType, int _UpLo>
@@ -555,7 +555,7 @@ LDLT<MatrixType, _UpLo>& LDLT<MatrixType, _UpLo>::compute(
   return *this;
 }
 
-/* Update the LDLT decomposition:  given A = L D L^T, efficiently compute the
+/** Update the LDLT decomposition:  given A = L D L^T, efficiently compute the
  * decomposition of A + sigma w w^T. \param w a vector to be incorporated into
  * the decomposition. \param sigma a scalar, +1 for updates and -1 for
  * "downdates," which correspond to removing previously-added column vectors.
@@ -639,7 +639,7 @@ void LDLT<_MatrixType, _UpLo>::_solve_impl_transposed(const RhsType& rhs,
 }
 #endif
 
-/* \internal use x = ldlt_object.solve(x);
+/** \internal use x = ldlt_object.solve(x);
  *
  * This is the \em in-place version of solve().
  *
@@ -664,7 +664,7 @@ bool LDLT<MatrixType, _UpLo>::solveInPlace(MatrixBase<Derived>& bAndX) const {
   return true;
 }
 
-/* \returns the matrix represented by the decomposition,
+/** \returns the matrix represented by the decomposition,
  * i.e., it returns the product: P^T L D L^* P.
  * This function is provided for debug purpose. */
 template <typename MatrixType, int _UpLo>
@@ -688,7 +688,7 @@ MatrixType LDLT<MatrixType, _UpLo>::reconstructedMatrix() const {
   return res;
 }
 
-/* \cholesky_module
+/** \cholesky_module
  * \returns the Cholesky decomposition with full pivoting without square root of
  * \c *this \sa MatrixBase::ldlt()
  */
@@ -698,7 +698,7 @@ SelfAdjointView<MatrixType, UpLo>::ldlt() const {
   return LDLT<PlainObject, UpLo>(m_matrix);
 }
 
-/* \cholesky_module
+/** \cholesky_module
  * \returns the Cholesky decomposition with full pivoting without square root of
  * \c *this \sa SelfAdjointView::ldlt()
  */

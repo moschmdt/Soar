@@ -74,7 +74,7 @@ struct default_digits_impl<T, false, true>  // Integer
 }  // end namespace internal
 
 namespace numext {
-/* \internal bit-wise cast without changing the underlying bit representation.
+/** \internal bit-wise cast without changing the underlying bit representation.
  */
 
 // TODO: Replace by std::bit_cast (available in C++20)
@@ -97,7 +97,7 @@ EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC Tgt bit_cast(const Src& src) {
 }
 }  // namespace numext
 
-/* \class NumTraits
+/** \class NumTraits
  * \ingroup Core_Module
  *
  * \brief Holds information about the various numeric (i.e. scalar) types

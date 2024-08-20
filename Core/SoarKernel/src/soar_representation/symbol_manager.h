@@ -1,4 +1,4 @@
-/*
+/**
  * symbol_factory.h
  *
  *  Created on: Aug 19, 2016
@@ -64,7 +64,7 @@ class EXPORT Symbol_Manager {
     return &id_counter[name_letter];
   }
 
-  /* --------------------------------------------------------------------
+  /** --------------------------------------------------------------------
                            Variable Generator
 
      These routines are used for generating new variables.  The variables
@@ -121,4 +121,4 @@ class EXPORT Symbol_Manager {
   }
 };
 
-#endif /* CORE_SOARKERNEL_SRC_SOAR_REPRESENTATION_SYMBOL_MANAGER_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SOAR_REPRESENTATION_SYMBOL_MANAGER_H_ */

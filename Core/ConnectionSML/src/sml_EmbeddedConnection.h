@@ -38,13 +38,13 @@ class EXPORT EmbeddedConnection : public Connection {
   EmbeddedConnection();
 
  protected:
-  /* To "send" a message we call to the process message function for this
+  /** To "send" a message we call to the process message function for this
    * receiver. */
   Connection_Receiver_Handle m_hConnection;
 
   ProcessMessageFunction m_pProcessMessageFunction;
 
-  /* We need to cache the responses to calls */
+  /** We need to cache the responses to calls */
   soarxml::ElementXML* m_pLastResponse;
 
   KernelSML* m_pKernelSML;

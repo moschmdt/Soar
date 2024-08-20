@@ -17,7 +17,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * \ingroup OrderingMethods_Module
  * \param[in] A the input non-symmetric matrix
  * \param[out] symmat the symmetric pattern A^T+A from the input matrix \a A.
@@ -36,7 +36,7 @@ void ordering_helper_at_plus_a(const MatrixType& A, MatrixType& symmat) {
 
 }  // namespace internal
 
-/* \ingroup OrderingMethods_Module
+/** \ingroup OrderingMethods_Module
  * \class AMDOrdering
  *
  * Functor computing the \em approximate \em minimum \em degree ordering
@@ -49,7 +49,7 @@ class AMDOrdering {
  public:
   typedef PermutationMatrix<Dynamic, Dynamic, StorageIndex> PermutationType;
 
-  /* Compute the permutation vector from a sparse matrix
+  /** Compute the permutation vector from a sparse matrix
    * This routine is much faster if the input matrix is column-major
    */
   template <typename MatrixType>
@@ -63,7 +63,7 @@ class AMDOrdering {
     internal::minimum_degree_ordering(symm, perm);
   }
 
-  /* Compute the permutation with a selfadjoint matrix */
+  /** Compute the permutation with a selfadjoint matrix */
   template <typename SrcType, unsigned int SrcUpLo>
   void operator()(const SparseSelfAdjointView<SrcType, SrcUpLo>& mat,
                   PermutationType& perm) {
@@ -76,7 +76,7 @@ class AMDOrdering {
   }
 };
 
-/* \ingroup OrderingMethods_Module
+/** \ingroup OrderingMethods_Module
  * \class NaturalOrdering
  *
  * Functor computing the natural ordering (identity)
@@ -89,14 +89,14 @@ class NaturalOrdering {
  public:
   typedef PermutationMatrix<Dynamic, Dynamic, StorageIndex> PermutationType;
 
-  /* Compute the permutation vector from a column-major sparse matrix */
+  /** Compute the permutation vector from a column-major sparse matrix */
   template <typename MatrixType>
-  void operator()(const MatrixType& /*mat*/, PermutationType& perm) {
+  void operator()(const MatrixType& /**mat*/, PermutationType& perm) {
     perm.resize(0);
   }
 };
 
-/* \ingroup OrderingMethods_Module
+/** \ingroup OrderingMethods_Module
  * \class COLAMDOrdering
  *
  * \tparam  StorageIndex The type of indices of the matrix
@@ -111,7 +111,7 @@ class COLAMDOrdering {
   typedef PermutationMatrix<Dynamic, Dynamic, StorageIndex> PermutationType;
   typedef Matrix<StorageIndex, Dynamic, 1> IndexVector;
 
-  /* Compute the permutation vector \a perm form the sparse matrix \a mat
+  /** Compute the permutation vector \a perm form the sparse matrix \a mat
    * \warning The input sparse matrix \a mat must be in compressed mode (see
    * SparseMatrix::makeCompressed()).
    */

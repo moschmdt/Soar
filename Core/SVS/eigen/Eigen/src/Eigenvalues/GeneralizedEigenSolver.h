@@ -16,7 +16,7 @@
 
 namespace Eigen {
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class GeneralizedEigenSolver
@@ -63,7 +63,7 @@ namespace Eigen {
 template <typename _MatrixType>
 class GeneralizedEigenSolver {
  public:
-  /* \brief Synonym for the template parameter \p _MatrixType. */
+  /** \brief Synonym for the template parameter \p _MatrixType. */
   typedef _MatrixType MatrixType;
 
   enum {
@@ -74,12 +74,12 @@ class GeneralizedEigenSolver {
     MaxColsAtCompileTime = MatrixType::MaxColsAtCompileTime
   };
 
-  /* \brief Scalar type for matrices of type #MatrixType. */
+  /** \brief Scalar type for matrices of type #MatrixType. */
   typedef typename MatrixType::Scalar Scalar;
   typedef typename NumTraits<Scalar>::Real RealScalar;
   typedef Eigen::Index Index;  ///< \deprecated since Eigen 3.3
 
-  /* \brief Complex scalar type for #MatrixType.
+  /** \brief Complex scalar type for #MatrixType.
    *
    * This is \c std::complex<Scalar> if #Scalar is real (e.g.,
    * \c float or \c double) and just \c Scalar if #Scalar is
@@ -87,7 +87,7 @@ class GeneralizedEigenSolver {
    */
   typedef std::complex<RealScalar> ComplexScalar;
 
-  /* \brief Type for vector of real scalar values eigenvalues as returned by
+  /** \brief Type for vector of real scalar values eigenvalues as returned by
    * betas().
    *
    * This is a column vector with entries of type #Scalar.
@@ -97,7 +97,7 @@ class GeneralizedEigenSolver {
                  MaxColsAtCompileTime, 1>
       VectorType;
 
-  /* \brief Type for vector of complex scalar values eigenvalues as returned by
+  /** \brief Type for vector of complex scalar values eigenvalues as returned by
    * alphas().
    *
    * This is a column vector with entries of type #ComplexScalar.
@@ -107,13 +107,13 @@ class GeneralizedEigenSolver {
                  MaxColsAtCompileTime, 1>
       ComplexVectorType;
 
-  /* \brief Expression type for the eigenvalues as returned by eigenvalues().
+  /** \brief Expression type for the eigenvalues as returned by eigenvalues().
    */
   typedef CwiseBinaryOp<internal::scalar_quotient_op<ComplexScalar, Scalar>,
                         ComplexVectorType, VectorType>
       EigenvalueType;
 
-  /* \brief Type for matrix of eigenvectors as returned by eigenvectors().
+  /** \brief Type for matrix of eigenvectors as returned by eigenvectors().
    *
    * This is a square matrix with entries of type #ComplexScalar.
    * The size is the same as the size of #MatrixType.
@@ -122,7 +122,7 @@ class GeneralizedEigenSolver {
                  MaxRowsAtCompileTime, MaxColsAtCompileTime>
       EigenvectorsType;
 
-  /* \brief Default constructor.
+  /** \brief Default constructor.
    *
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via EigenSolver::compute(const MatrixType&, bool).
@@ -137,7 +137,7 @@ class GeneralizedEigenSolver {
         m_vectorsOkay(false),
         m_realQZ() {}
 
-  /* \brief Default constructor with memory preallocation
+  /** \brief Default constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -152,7 +152,7 @@ class GeneralizedEigenSolver {
         m_realQZ(size),
         m_tmp(size) {}
 
-  /* \brief Constructor; computes the generalized eigendecomposition of given
+  /** \brief Constructor; computes the generalized eigendecomposition of given
    * matrix pair.
    *
    * \param[in]  A  Square matrix whose eigendecomposition is to be computed.
@@ -177,7 +177,7 @@ class GeneralizedEigenSolver {
     compute(A, B, computeEigenvectors);
   }
 
-  /* \brief Returns the computed generalized eigenvectors.
+  /** \brief Returns the computed generalized eigenvectors.
    *
    * \returns  %Matrix whose columns are the (possibly complex) right
    * eigenvectors. i.e. the eigenvectors that solve (A - l*B)x = 0. The ordering
@@ -197,7 +197,7 @@ class GeneralizedEigenSolver {
     return m_eivec;
   }
 
-  /* \brief Returns an expression of the computed generalized eigenvalues.
+  /** \brief Returns an expression of the computed generalized eigenvalues.
    *
    * \returns An expression of the column vector containing the eigenvalues.
    *
@@ -222,7 +222,7 @@ class GeneralizedEigenSolver {
     return EigenvalueType(m_alphas, m_betas);
   }
 
-  /* \returns A const reference to the vectors containing the alpha values
+  /** \returns A const reference to the vectors containing the alpha values
    *
    * This vector permits to reconstruct the j-th eigenvalues as
    * alphas(i)/betas(j).
@@ -233,7 +233,7 @@ class GeneralizedEigenSolver {
     return m_alphas;
   }
 
-  /* \returns A const reference to the vectors containing the beta values
+  /** \returns A const reference to the vectors containing the beta values
    *
    * This vector permits to reconstruct the j-th eigenvalues as
    * alphas(i)/betas(j).
@@ -244,7 +244,7 @@ class GeneralizedEigenSolver {
     return m_betas;
   }
 
-  /* \brief Computes generalized eigendecomposition of given matrix.
+  /** \brief Computes generalized eigendecomposition of given matrix.
    *
    * \param[in]  A  Square matrix whose eigendecomposition is to be computed.
    * \param[in]  B  Square matrix whose eigendecomposition is to be computed.
@@ -276,7 +276,7 @@ class GeneralizedEigenSolver {
     return m_realQZ.info();
   }
 
-  /* Sets the maximal number of iterations allowed.
+  /** Sets the maximal number of iterations allowed.
    */
   GeneralizedEigenSolver& setMaxIterations(Index maxIters) {
     m_realQZ.setMaxIterations(maxIters);

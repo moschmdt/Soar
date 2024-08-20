@@ -1,4 +1,4 @@
-/*
+/**
  *  Copyright (C) 2017 Codeplay Software Limited
  *  This Source Code Form is subject to the terms of the Mozilla
  *  Public License v. 2.0. If a copy of the MPL was not distributed
@@ -40,14 +40,14 @@ namespace internal {
 using sycl_acc_target = cl::sycl::access::target;
 using sycl_acc_mode = cl::sycl::access::mode;
 
-/*
+/**
  * Default values for template arguments
  */
 using buffer_data_type_t = uint8_t;
 const sycl_acc_target default_acc_target = sycl_acc_target::global_buffer;
 const sycl_acc_mode default_acc_mode = sycl_acc_mode::read_write;
 
-/*
+/**
  * PointerMapper
  *  Associates fake pointers with buffers.
  *
@@ -56,34 +56,34 @@ class PointerMapper {
  public:
   using base_ptr_t = std::intptr_t;
 
-  /* Structure of a virtual pointer
+  /** Structure of a virtual pointer
    *
    * |================================================|
    * |               POINTER ADDRESS                  |
    * |================================================|
    */
   struct virtual_pointer_t {
-    /* Type for the pointers
+    /** Type for the pointers
      */
     base_ptr_t m_contents;
 
-    /* Conversions from virtual_pointer_t to
+    /** Conversions from virtual_pointer_t to
      * void * should just reinterpret_cast the integer number
      */
     operator void *() const { return reinterpret_cast<void *>(m_contents); }
 
-    /*
+    /**
      * Convert back to the integer number.
      */
     operator base_ptr_t() const { return m_contents; }
 
-    /*
+    /**
      * Add a certain value to the pointer to create a
      * new pointer to that offset
      */
     virtual_pointer_t operator+(size_t off) { return m_contents + off; }
 
-    /* Numerical order for sorting pointers in containers. */
+    /** Numerical order for sorting pointers in containers. */
     bool operator<(virtual_pointer_t rhs) const {
       return (static_cast<base_ptr_t>(m_contents) <
               static_cast<base_ptr_t>(rhs.m_contents));
@@ -94,7 +94,7 @@ class PointerMapper {
               static_cast<base_ptr_t>(rhs.m_contents));
     }
 
-    /*
+    /**
      * Numerical order for sorting pointers in containers
      */
     bool operator==(virtual_pointer_t rhs) const {
@@ -102,14 +102,14 @@ class PointerMapper {
               static_cast<base_ptr_t>(rhs.m_contents));
     }
 
-    /*
+    /**
      * Simple forward to the equality overload.
      */
     bool operator!=(virtual_pointer_t rhs) const {
       return !(this->operator==(rhs));
     }
 
-    /*
+    /**
      * Converts a void * into a virtual pointer structure.
      * Note that this will only work if the void * was
      * already a virtual_pointer_t, but we have no way of
@@ -118,18 +118,18 @@ class PointerMapper {
     virtual_pointer_t(const void *ptr)
         : m_contents(reinterpret_cast<base_ptr_t>(ptr)){};
 
-    /*
+    /**
      * Creates a virtual_pointer_t from the given integer
      * number
      */
     virtual_pointer_t(base_ptr_t u) : m_contents(u){};
   };
 
-  /* Definition of a null pointer
+  /** Definition of a null pointer
    */
   const virtual_pointer_t null_virtual_ptr = nullptr;
 
-  /*
+  /**
    * Whether if a pointer is null or not.
    * A pointer is nullptr if the value is of null_virtual_ptr
    */
@@ -137,11 +137,11 @@ class PointerMapper {
     return (static_cast<void *>(ptr) == nullptr);
   }
 
-  /* basic type for all buffers
+  /** basic type for all buffers
    */
   using buffer_t = cl::sycl::buffer_mem;
 
-  /*
+  /**
    * Node that stores information about a device allocation.
    * Nodes are sorted by size to organise a free list of nodes
    * that can be recovered.
@@ -159,11 +159,11 @@ class PointerMapper {
     bool operator<=(const pMapNode_t &rhs) { return (m_size <= rhs.m_size); }
   };
 
-  /* Storage of the pointer / buffer tree
+  /** Storage of the pointer / buffer tree
    */
   using pointerMap_t = std::map<virtual_pointer_t, pMapNode_t>;
 
-  /*
+  /**
    * Obtain the insertion point in the pointer map for
    * a pointer of the given size.
    * \param requiredSize Size attemted to reclaim
@@ -189,7 +189,7 @@ class PointerMapper {
     return retVal;
   }
 
-  /*
+  /**
    * Returns an iterator to the node that stores the information
    * of the given virtual pointer from the given pointer map structure.
    * If pointer is not found, throws std::out_of_range.
@@ -227,7 +227,7 @@ class PointerMapper {
     return node;
   }
 
-  /* get_buffer.
+  /** get_buffer.
    * Returns a buffer from the map using the pointer address
    */
   template <typename buffer_data_type = buffer_data_type_t>
@@ -246,7 +246,7 @@ class PointerMapper {
     return *(static_cast<sycl_buffer_t *>(&node->second.m_buffer));
   }
 
-  /*
+  /**
    * @brief Returns an accessor to the buffer of the given virtual pointer
    * @param accessMode
    * @param accessTarget
@@ -261,7 +261,7 @@ class PointerMapper {
     return buf.template get_access<access_mode, access_target>();
   }
 
-  /*
+  /**
    * @brief Returns an accessor to the buffer of the given virtual pointer
    *        in the given command group scope
    * @param accessMode
@@ -278,7 +278,7 @@ class PointerMapper {
     return buf.template get_access<access_mode, access_target>(cgh);
   }
 
-  /*
+  /**
    * Returns the offset from the base address of this pointer.
    */
   inline std::ptrdiff_t get_offset(const virtual_pointer_t ptr) {
@@ -291,7 +291,7 @@ class PointerMapper {
     return (ptr - start);
   }
 
-  /*
+  /**
    * Returns the number of elements by which the given pointer is offset from
    * the base address.
    */
@@ -300,7 +300,7 @@ class PointerMapper {
     return get_offset(ptr) / sizeof(buffer_data_type);
   }
 
-  /*
+  /**
    * Constructs the PointerMapper structure.
    */
   PointerMapper(base_ptr_t baseAddress = 4096)
@@ -310,12 +310,12 @@ class PointerMapper {
     }
   };
 
-  /*
+  /**
    * PointerMapper cannot be copied or moved
    */
   PointerMapper(const PointerMapper &) = delete;
 
-  /*
+  /**
    * Empty the pointer list
    */
   inline void clear() {
@@ -323,21 +323,21 @@ class PointerMapper {
     m_pointerMap.clear();
   }
 
-  /* add_pointer.
+  /** add_pointer.
    * Adds an existing pointer to the map and returns the virtual pointer id.
    */
   inline virtual_pointer_t add_pointer(const buffer_t &b) {
     return add_pointer_impl(b);
   }
 
-  /* add_pointer.
+  /** add_pointer.
    * Adds a pointer to the map and returns the virtual pointer id.
    */
   inline virtual_pointer_t add_pointer(buffer_t &&b) {
     return add_pointer_impl(b);
   }
 
-  /*
+  /**
    * @brief Fuses the given node with the previous nodes in the
    *        pointer map if they are free
    *
@@ -359,7 +359,7 @@ class PointerMapper {
     }
   }
 
-  /*
+  /**
    * @brief Fuses the given node with the following nodes in the
    *        pointer map if they are free
    *
@@ -384,7 +384,7 @@ class PointerMapper {
     }
   }
 
-  /* remove_pointer.
+  /** remove_pointer.
    * Removes the given pointer from the map.
    * The pointer is allowed to be reused only if ReUse if true.
    */
@@ -411,14 +411,14 @@ class PointerMapper {
     }
   }
 
-  /* count.
+  /** count.
    * Return the number of active pointers (i.e, pointers that
    * have been malloc but not freed).
    */
   size_t count() const { return (m_pointerMap.size() - m_freeList.size()); }
 
  private:
-  /* add_pointer_impl.
+  /** add_pointer_impl.
    * Adds a pointer to the map and returns the virtual pointer id.
    * BufferT is either a const buffer_t& or a buffer_t&&.
    */
@@ -465,7 +465,7 @@ class PointerMapper {
     return retVal;
   }
 
-  /*
+  /**
    * Compare two iterators to pointer map entries according to
    * the size of the allocation on the device.
    */
@@ -477,20 +477,20 @@ class PointerMapper {
     }
   };
 
-  /* Maps the pointer addresses to buffer and size pairs.
+  /** Maps the pointer addresses to buffer and size pairs.
    */
   pointerMap_t m_pointerMap;
 
-  /* List of free nodes available for re-using
+  /** List of free nodes available for re-using
    */
   std::set<typename pointerMap_t::iterator, SortBySize> m_freeList;
 
-  /* Base address used when issuing the first virtual pointer, allows users
+  /** Base address used when issuing the first virtual pointer, allows users
    * to specify alignment. Cannot be zero. */
   std::intptr_t m_baseAddress;
 };
 
-/* remove_pointer.
+/** remove_pointer.
  * Removes the given pointer from the map.
  * The pointer is allowed to be reused only if ReUse if true.
  */
@@ -502,7 +502,7 @@ inline void PointerMapper::remove_pointer<false>(const virtual_pointer_t ptr) {
   m_pointerMap.erase(this->get_node(ptr));
 }
 
-/*
+/**
  * Malloc-like interface to the pointer-mapper.
  * Given a size, creates a byte-typed buffer and returns a
  * fake pointer to keep track of it.
@@ -520,7 +520,7 @@ inline void *SYCLmalloc(size_t size, PointerMapper &pMap) {
   return static_cast<void *>(thePointer);
 }
 
-/*
+/**
  * Free-like interface to the pointer mapper.
  * Given a fake-pointer created with the virtual-pointer malloc,
  * destroys the buffer and remove it from the list.
@@ -532,7 +532,7 @@ inline void SYCLfree(void *ptr, PointerMapper &pMap) {
   pMap.template remove_pointer<ReUse>(ptr);
 }
 
-/*
+/**
  * Clear all the memory allocated by SYCL.
  */
 template <typename PointerMapper>

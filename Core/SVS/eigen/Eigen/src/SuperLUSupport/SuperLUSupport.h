@@ -34,7 +34,7 @@ namespace Eigen {
     PREFIX##gssvx(options, A, perm_c, perm_r, etree, equed, R, C, L, U, work, \
                   lwork, B, X, recip_pivot_growth, rcond, ferr, berr, &gLU,   \
                   &mem_usage, stats, info);                                   \
-    return mem_usage.for_lu; /* bytes used by the factor storage */           \
+    return mem_usage.for_lu; /** bytes used by the factor storage */           \
   }
 #else  // version < 5.0
 #define DECL_GSSVX(PREFIX, FLOATTYPE, KEYTYPE)                                \
@@ -56,7 +56,7 @@ namespace Eigen {
     PREFIX##gssvx(options, A, perm_c, perm_r, etree, equed, R, C, L, U, work, \
                   lwork, B, X, recip_pivot_growth, rcond, ferr, berr,         \
                   &mem_usage, stats, info);                                   \
-    return mem_usage.for_lu; /* bytes used by the factor storage */           \
+    return mem_usage.for_lu; /** bytes used by the factor storage */           \
   }
 #endif
 
@@ -91,7 +91,7 @@ DECL_GSSVX(z, double, std::complex<double>)
     PREFIX##gsisx(options, A, perm_c, perm_r, etree, equed, R, C, L, U, work, \
                   lwork, B, X, recip_pivot_growth, rcond, &mem_usage, stats,  \
                   info);                                                      \
-    return mem_usage.for_lu; /* bytes used by the factor storage */           \
+    return mem_usage.for_lu; /** bytes used by the factor storage */           \
   }
 
 DECL_GSISX(s, float, float)
@@ -104,7 +104,7 @@ DECL_GSISX(z, double, std::complex<double>)
 template <typename MatrixType>
 struct SluMatrixMapHelper;
 
-/* \internal
+/** \internal
  *
  * A wrapper class for SuperLU matrices. It supports only compressed sparse
  * matrices and dense matrices. Supernodal and other fancy format are not
@@ -274,7 +274,7 @@ SluMatrix asSluMatrix(MatrixType &mat) {
   return SluMatrix::Map(mat);
 }
 
-/* View a Super LU matrix as an Eigen expression */
+/** View a Super LU matrix as an Eigen expression */
 template <typename Scalar, int Flags, typename Index>
 MappedSparseMatrix<Scalar, Flags, Index> map_superlu(SluMatrix &sluMat) {
   eigen_assert(((Flags & RowMajor) == RowMajor && sluMat.Stype == SLU_NR) ||
@@ -290,7 +290,7 @@ MappedSparseMatrix<Scalar, Flags, Index> map_superlu(SluMatrix &sluMat) {
 
 }  // end namespace internal
 
-/* \ingroup SuperLUSupport_Module
+/** \ingroup SuperLUSupport_Module
  * \class SuperLUBase
  * \brief The base class for the direct and incomplete LU factorization of
  * SuperLU
@@ -325,11 +325,11 @@ class SuperLUBase : public SparseSolverBase<Derived> {
   inline Index rows() const { return m_matrix.rows(); }
   inline Index cols() const { return m_matrix.cols(); }
 
-  /* \returns a reference to the Super LU option object to configure the  Super
+  /** \returns a reference to the Super LU option object to configure the  Super
    * LU algorithms. */
   inline superlu_options_t &options() { return m_sluOptions; }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the matrix.appears to be negative.
@@ -339,20 +339,20 @@ class SuperLUBase : public SparseSolverBase<Derived> {
     return m_info;
   }
 
-  /* Computes the sparse Cholesky decomposition of \a matrix */
+  /** Computes the sparse Cholesky decomposition of \a matrix */
   void compute(const MatrixType &matrix) {
     derived().analyzePattern(matrix);
     derived().factorize(matrix);
   }
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
    *
    * \sa factorize()
    */
-  void analyzePattern(const MatrixType & /*matrix*/) {
+  void analyzePattern(const MatrixType & /**matrix*/) {
     m_isInitialized = true;
     m_info = Success;
     m_analysisIsOk = true;
@@ -360,7 +360,7 @@ class SuperLUBase : public SparseSolverBase<Derived> {
   }
 
   template <typename Stream>
-  void dumpMemory(Stream & /*s*/) {}
+  void dumpMemory(Stream & /**s*/) {}
 
  protected:
   void initFactorization(const MatrixType &a) {
@@ -437,7 +437,7 @@ class SuperLUBase : public SparseSolverBase<Derived> {
   SuperLUBase(SuperLUBase &) {}
 };
 
-/* \ingroup SuperLUSupport_Module
+/** \ingroup SuperLUSupport_Module
  * \class SuperLU
  * \brief A sparse direct LU factorization and solver based on the SuperLU
  * library
@@ -484,7 +484,7 @@ class SuperLU : public SuperLUBase<_MatrixType, SuperLU<_MatrixType> > {
 
   ~SuperLU() {}
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -497,7 +497,7 @@ class SuperLU : public SuperLUBase<_MatrixType, SuperLU<_MatrixType> > {
     Base::analyzePattern(matrix);
   }
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must has the same sparcity than the matrix on which the
    * symbolic decomposition has been performed.
@@ -506,7 +506,7 @@ class SuperLU : public SuperLUBase<_MatrixType, SuperLU<_MatrixType> > {
    */
   void factorize(const MatrixType &matrix);
 
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_impl(const MatrixBase<Rhs> &b, MatrixBase<Dest> &dest) const;
 
@@ -686,45 +686,45 @@ void SuperLUBase<MatrixType, Derived>::extractData() const {
     Ucol[0] = 0;
     Ucol[0] = 0;
 
-    /* for each supernode */
+    /** for each supernode */
     for (int k = 0; k <= Lstore->nsuper; ++k) {
       fsupc = L_FST_SUPC(k);
       istart = L_SUB_START(fsupc);
       nsupr = L_SUB_START(fsupc + 1) - istart;
       upper = 1;
 
-      /* for each column in the supernode */
+      /** for each column in the supernode */
       for (int j = fsupc; j < L_FST_SUPC(k + 1); ++j) {
         SNptr = &((Scalar *)Lstore->nzval)[L_NZ_START(j)];
 
-        /* Extract U */
+        /** Extract U */
         for (int i = U_NZ_START(j); i < U_NZ_START(j + 1); ++i) {
           Uval[lastu] = ((Scalar *)Ustore->nzval)[i];
-          /* Matlab doesn't like explicit zero. */
+          /** Matlab doesn't like explicit zero. */
           if (Uval[lastu] != 0.0) Urow[lastu++] = U_SUB(i);
         }
         for (int i = 0; i < upper; ++i) {
-          /* upper triangle in the supernode */
+          /** upper triangle in the supernode */
           Uval[lastu] = SNptr[i];
-          /* Matlab doesn't like explicit zero. */
+          /** Matlab doesn't like explicit zero. */
           if (Uval[lastu] != 0.0) Urow[lastu++] = L_SUB(istart + i);
         }
         Ucol[j + 1] = lastu;
 
-        /* Extract L */
-        Lval[lastl] = 1.0; /* unit diagonal */
+        /** Extract L */
+        Lval[lastl] = 1.0; /** unit diagonal */
         Lrow[lastl++] = L_SUB(istart + upper - 1);
         for (int i = upper; i < nsupr; ++i) {
           Lval[lastl] = SNptr[i];
-          /* Matlab doesn't like explicit zero. */
+          /** Matlab doesn't like explicit zero. */
           if (Lval[lastl] != 0.0) Lrow[lastl++] = L_SUB(istart + i);
         }
         Lcol[j + 1] = lastl;
 
         ++upper;
-      } /* for j ... */
+      } /** for j ... */
 
-    } /* for k ... */
+    } /** for k ... */
 
     // squeeze the matrices :
     m_l.resizeNonZeros(lastl);
@@ -767,7 +767,7 @@ typename SuperLU<MatrixType>::Scalar SuperLU<MatrixType>::determinant() const {
 
 #ifdef EIGEN_SUPERLU_HAS_ILU
 
-/* \ingroup SuperLUSupport_Module
+/** \ingroup SuperLUSupport_Module
  * \class SuperILU
  * \brief A sparse direct \b incomplete LU factorization and solver based on the
  * SuperLU library
@@ -809,7 +809,7 @@ class SuperILU : public SuperLUBase<_MatrixType, SuperILU<_MatrixType> > {
 
   ~SuperILU() {}
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -820,7 +820,7 @@ class SuperILU : public SuperLUBase<_MatrixType, SuperILU<_MatrixType> > {
     Base::analyzePattern(matrix);
   }
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must has the same sparcity than the matrix on which the
    * symbolic decomposition has been performed.
@@ -830,7 +830,7 @@ class SuperILU : public SuperLUBase<_MatrixType, SuperILU<_MatrixType> > {
   void factorize(const MatrixType &matrix);
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_impl(const MatrixBase<Rhs> &b, MatrixBase<Dest> &dest) const;
 #endif  // EIGEN_PARSED_BY_DOXYGEN

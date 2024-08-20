@@ -47,7 +47,7 @@ struct traits<CwiseUnaryView<ViewOp, MatrixType> > : traits<MatrixType> {
 template <typename ViewOp, typename MatrixType, typename StorageKind>
 class CwiseUnaryViewImpl;
 
-/* \class CwiseUnaryView
+/** \class CwiseUnaryView
  * \ingroup Core_Module
  *
  * \brief Generic lvalue expression of a coefficient-wise unary operator of a
@@ -91,16 +91,16 @@ class CwiseUnaryView : public CwiseUnaryViewImpl<
     return m_matrix.cols();
   }
 
-  /* \returns the functor representing unary operation */
+  /** \returns the functor representing unary operation */
   EIGEN_DEVICE_FUNC const ViewOp& functor() const { return m_functor; }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   EIGEN_DEVICE_FUNC const typename internal::remove_all<MatrixTypeNested>::type&
   nestedExpression() const {
     return m_matrix;
   }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   EIGEN_DEVICE_FUNC typename internal::remove_reference<MatrixTypeNested>::type&
   nestedExpression() {
     return m_matrix;

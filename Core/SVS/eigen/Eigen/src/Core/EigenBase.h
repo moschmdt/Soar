@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \class EigenBase
+/** \class EigenBase
  * \ingroup Core_Module
  *
  * Common base class for all classes T such that MatrixBase has an operator=(T)
@@ -34,7 +34,7 @@ template <typename Derived>
 struct EigenBase {
   //   typedef typename internal::plain_matrix_type<Derived>::type PlainObject;
 
-  /* \brief The interface type of indices
+  /** \brief The interface type of indices
    * \details To change this, \c \#define the preprocessor symbol \c
    * EIGEN_DEFAULT_DENSE_INDEX_TYPE. \sa StorageIndex, \ref
    * TopicPreprocessorDirectives. DEPRECATED: Since Eigen 3.3, its usage is
@@ -47,10 +47,10 @@ struct EigenBase {
   // FIXME is it needed?
   typedef typename internal::traits<Derived>::StorageKind StorageKind;
 
-  /* \returns a reference to the derived object */
+  /** \returns a reference to the derived object */
   EIGEN_DEVICE_FUNC
   Derived& derived() { return *static_cast<Derived*>(this); }
-  /* \returns a const reference to the derived object */
+  /** \returns a const reference to the derived object */
   EIGEN_DEVICE_FUNC
   const Derived& derived() const { return *static_cast<const Derived*>(this); }
 
@@ -63,28 +63,28 @@ struct EigenBase {
     return *static_cast<const Derived*>(this);
   }
 
-  /* \returns the number of rows. \sa cols(), RowsAtCompileTime */
+  /** \returns the number of rows. \sa cols(), RowsAtCompileTime */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index rows() const EIGEN_NOEXCEPT {
     return derived().rows();
   }
-  /* \returns the number of columns. \sa rows(), ColsAtCompileTime*/
+  /** \returns the number of columns. \sa rows(), ColsAtCompileTime*/
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index cols() const EIGEN_NOEXCEPT {
     return derived().cols();
   }
-  /* \returns the number of coefficients, which is rows()*cols().
+  /** \returns the number of coefficients, which is rows()*cols().
    * \sa rows(), cols(), SizeAtCompileTime. */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index size() const EIGEN_NOEXCEPT {
     return rows() * cols();
   }
 
-  /* \internal Don't use it, but do the equivalent: \code dst = *this; \endcode
+  /** \internal Don't use it, but do the equivalent: \code dst = *this; \endcode
    */
   template <typename Dest>
   EIGEN_DEVICE_FUNC inline void evalTo(Dest& dst) const {
     derived().evalTo(dst);
   }
 
-  /* \internal Don't use it, but do the equivalent: \code dst += *this;
+  /** \internal Don't use it, but do the equivalent: \code dst += *this;
    * \endcode */
   template <typename Dest>
   EIGEN_DEVICE_FUNC inline void addTo(Dest& dst) const {
@@ -95,7 +95,7 @@ struct EigenBase {
     dst += res;
   }
 
-  /* \internal Don't use it, but do the equivalent: \code dst -= *this;
+  /** \internal Don't use it, but do the equivalent: \code dst -= *this;
    * \endcode */
   template <typename Dest>
   EIGEN_DEVICE_FUNC inline void subTo(Dest& dst) const {
@@ -106,7 +106,7 @@ struct EigenBase {
     dst -= res;
   }
 
-  /* \internal Don't use it, but do the equivalent: \code
+  /** \internal Don't use it, but do the equivalent: \code
    * dst.applyOnTheRight(*this); \endcode */
   template <typename Dest>
   EIGEN_DEVICE_FUNC inline void applyThisOnTheRight(Dest& dst) const {
@@ -115,7 +115,7 @@ struct EigenBase {
     dst = dst * this->derived();
   }
 
-  /* \internal Don't use it, but do the equivalent: \code
+  /** \internal Don't use it, but do the equivalent: \code
    * dst.applyOnTheLeft(*this); \endcode */
   template <typename Dest>
   EIGEN_DEVICE_FUNC inline void applyThisOnTheLeft(Dest& dst) const {
@@ -125,11 +125,11 @@ struct EigenBase {
   }
 };
 
-/*
+/**
  * Implementation of matrix base methods
  */
 
-/* \brief Copies the generic expression \a other into *this.
+/** \brief Copies the generic expression \a other into *this.
  *
  * \details The expression must provide a (templated) evalTo(Derived& dst) const
  * function which does the actual job. In practice, this allows any user to

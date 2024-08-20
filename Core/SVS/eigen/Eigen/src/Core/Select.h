@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \class Select
+/** \class Select
  * \ingroup Core_Module
  *
  * \brief Expression of a coefficient wise version of the C++ ternary operator
@@ -113,7 +113,7 @@ class Select
   typename ElseMatrixType::Nested m_else;
 };
 
-/* \returns a matrix where each coefficient (i,j) is equal to \a
+/** \returns a matrix where each coefficient (i,j) is equal to \a
  * thenMatrix(i,j) if \c *this(i,j), and \a elseMatrix(i,j) otherwise.
  *
  * Example: \include MatrixBase_select.cpp
@@ -130,7 +130,7 @@ DenseBase<Derived>::select(const DenseBase<ThenDerived>& thenMatrix,
       derived(), thenMatrix.derived(), elseMatrix.derived());
 }
 
-/* Version of DenseBase::select(const DenseBase&, const DenseBase&) with
+/** Version of DenseBase::select(const DenseBase&, const DenseBase&) with
  * the \em else expression being a scalar value.
  *
  * \sa DenseBase::select(const DenseBase<ThenDerived>&, const
@@ -148,7 +148,7 @@ inline EIGEN_DEVICE_FUNC const
       ThenDerived::Constant(rows(), cols(), elseScalar));
 }
 
-/* Version of DenseBase::select(const DenseBase&, const DenseBase&) with
+/** Version of DenseBase::select(const DenseBase&, const DenseBase&) with
  * the \em then expression being a scalar value.
  *
  * \sa DenseBase::select(const DenseBase<ThenDerived>&, const

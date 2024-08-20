@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \ingroup Jacobi_Module
+/** \ingroup Jacobi_Module
  * \jacobi_module
  * \class JacobiRotation
  * \brief Rotation given by a cosine-sine pair.
@@ -35,11 +35,11 @@ class JacobiRotation {
  public:
   typedef typename NumTraits<Scalar>::Real RealScalar;
 
-  /* Default constructor without any initialization. */
+  /** Default constructor without any initialization. */
   EIGEN_DEVICE_FUNC
   JacobiRotation() {}
 
-  /* Construct a planar rotation from a cosine-sine pair (\a c, \c s). */
+  /** Construct a planar rotation from a cosine-sine pair (\a c, \c s). */
   EIGEN_DEVICE_FUNC
   JacobiRotation(const Scalar& c, const Scalar& s) : m_c(c), m_s(s) {}
 
@@ -48,7 +48,7 @@ class JacobiRotation {
   EIGEN_DEVICE_FUNC Scalar& s() { return m_s; }
   EIGEN_DEVICE_FUNC Scalar s() const { return m_s; }
 
-  /* Concatenates two planar rotation */
+  /** Concatenates two planar rotation */
   EIGEN_DEVICE_FUNC
   JacobiRotation operator*(const JacobiRotation& other) {
     using numext::conj;
@@ -57,14 +57,14 @@ class JacobiRotation {
         conj(m_c * conj(other.m_s) + conj(m_s) * conj(other.m_c)));
   }
 
-  /* Returns the transposed transformation */
+  /** Returns the transposed transformation */
   EIGEN_DEVICE_FUNC
   JacobiRotation transpose() const {
     using numext::conj;
     return JacobiRotation(m_c, -conj(m_s));
   }
 
-  /* Returns the adjoint transformation */
+  /** Returns the adjoint transformation */
   EIGEN_DEVICE_FUNC
   JacobiRotation adjoint() const {
     using numext::conj;
@@ -91,7 +91,7 @@ class JacobiRotation {
   Scalar m_c, m_s;
 };
 
-/* Makes \c *this as a Jacobi rotation \a J such that applying \a J on both the
+/** Makes \c *this as a Jacobi rotation \a J such that applying \a J on both the
  * right and left sides of the selfadjoint 2x2 matrix \f$ B = \left (
  * \begin{array}{cc} x & y \\ \overline y & z \end{array} \right )\f$ yields a
  * diagonal matrix \f$ A = J^* B J \f$
@@ -128,7 +128,7 @@ EIGEN_DEVICE_FUNC bool JacobiRotation<Scalar>::makeJacobi(const RealScalar& x,
   }
 }
 
-/* Makes \c *this as a Jacobi rotation \c J such that applying \a J on both the
+/** Makes \c *this as a Jacobi rotation \c J such that applying \a J on both the
  * right and left sides of the 2x2 selfadjoint matrix \f$ B = \left (
  * \begin{array}{cc} \text{this}_{pp} & \text{this}_{pq} \\ (\text{this}_{pq})^*
  * & \text{this}_{qq} \end{array} \right )\f$ yields a diagonal matrix \f$ A =
@@ -148,7 +148,7 @@ EIGEN_DEVICE_FUNC inline bool JacobiRotation<Scalar>::makeJacobi(
                     numext::real(m.coeff(q, q)));
 }
 
-/* Makes \c *this as a Givens rotation \c G such that applying \f$ G^* \f$ to
+/** Makes \c *this as a Givens rotation \c G such that applying \f$ G^* \f$ to
  * the left of the vector \f$ V = \left ( \begin{array}{c} p \\ q \end{array}
  * \right )\f$ yields: \f$ G^* V = \left ( \begin{array}{c} r \\ 0 \end{array}
  * \right )\f$.
@@ -258,12 +258,12 @@ EIGEN_DEVICE_FUNC void JacobiRotation<Scalar>::makeGivens(
   }
 }
 
-/*
+/**
  *   Implementation of MatrixBase methods
  */
 
 namespace internal {
-/* \jacobi_module
+/** \jacobi_module
  * Applies the clock wise 2D rotation \a j to the set of 2D vectors of
  * coordinates \a x and \a y: \f$ \left ( \begin{array}{cc} x \\ y \end{array}
  * \right )  =  J \left ( \begin{array}{cc} x \\ y \end{array} \right ) \f$
@@ -276,7 +276,7 @@ EIGEN_DEVICE_FUNC void apply_rotation_in_the_plane(
     const JacobiRotation<OtherScalar>& j);
 }  // namespace internal
 
-/* \jacobi_module
+/** \jacobi_module
  * Applies the rotation in the plane \a j to the rows \a p and \a q of \c *this,
  * i.e., it computes B = J * B, with \f$ B = \left ( \begin{array}{cc}
  * \text{*this.row}(p) \\ \text{*this.row}(q) \end{array} \right ) \f$.
@@ -293,7 +293,7 @@ EIGEN_DEVICE_FUNC inline void MatrixBase<Derived>::applyOnTheLeft(
   internal::apply_rotation_in_the_plane(x, y, j);
 }
 
-/* \ingroup Jacobi_Module
+/** \ingroup Jacobi_Module
  * Applies the rotation in the plane \a j to the columns \a p and \a q of \c
  * *this, i.e., it computes B = B * J with \f$ B = \left ( \begin{array}{cc}
  * \text{*this.col}(p) & \text{*this.col}(q) \end{array} \right ) \f$.
@@ -333,7 +333,7 @@ template <typename Scalar, typename OtherScalar, int SizeAtCompileTime,
           int MinAlignment>
 struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar,
                                             SizeAtCompileTime, MinAlignment,
-                                            true /* vectorizable */> {
+                                            true /** vectorizable */> {
   static inline void run(Scalar* x, Index incrx, Scalar* y, Index incry,
                          Index size, OtherScalar c, OtherScalar s) {
     enum {
@@ -343,7 +343,7 @@ struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar,
     typedef typename packet_traits<Scalar>::type Packet;
     typedef typename packet_traits<OtherScalar>::type OtherPacket;
 
-    /* dynamic-size vectorized paths */
+    /** dynamic-size vectorized paths */
     if (SizeAtCompileTime == Dynamic &&
         ((incrx == 1 && incry == 1) || PacketSize == 1)) {
       // both vectors are sequentially stored in memory => vectorization
@@ -411,7 +411,7 @@ struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar,
       }
     }
 
-    /* fixed-size vectorized path */
+    /** fixed-size vectorized path */
     else if (SizeAtCompileTime != Dynamic &&
              MinAlignment >
                  0)  // FIXME should be compared to the required alignment
@@ -433,7 +433,7 @@ struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar,
       }
     }
 
-    /* non-vectorized path */
+    /** non-vectorized path */
     else {
       apply_rotation_in_the_plane_selector<Scalar, OtherScalar,
                                            SizeAtCompileTime, MinAlignment,
@@ -444,7 +444,7 @@ struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar,
 };
 
 template <typename VectorX, typename VectorY, typename OtherScalar>
-EIGEN_DEVICE_FUNC void /*EIGEN_DONT_INLINE*/ apply_rotation_in_the_plane(
+EIGEN_DEVICE_FUNC void /**EIGEN_DONT_INLINE*/ apply_rotation_in_the_plane(
     DenseBase<VectorX>& xpr_x, DenseBase<VectorY>& xpr_y,
     const JacobiRotation<OtherScalar>& j) {
   typedef typename VectorX::Scalar Scalar;

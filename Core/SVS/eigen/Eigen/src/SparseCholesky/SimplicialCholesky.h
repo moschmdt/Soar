@@ -29,13 +29,13 @@ template <typename MatrixType>
 struct simplicial_cholesky_grab_input<MatrixType, MatrixType> {
   typedef MatrixType const* ConstMatrixPtr;
   static void run(const MatrixType& input, ConstMatrixPtr& pmat,
-                  MatrixType& /*tmp*/) {
+                  MatrixType& /**tmp*/) {
     pmat = &input;
   }
 };
 }  // end namespace internal
 
-/* \ingroup SparseCholesky_Module
+/** \ingroup SparseCholesky_Module
  * \brief A base class for direct sparse Cholesky factorizations
  *
  * This is a base class for LL^T and LDL^T Cholesky factorizations of sparse
@@ -74,7 +74,7 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
  public:
   using Base::derived;
 
-  /* Default constructor */
+  /** Default constructor */
   SimplicialCholeskyBase()
       : m_info(Success),
         m_factorizationIsOk(false),
@@ -99,7 +99,7 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
   inline Index cols() const { return m_matrix.cols(); }
   inline Index rows() const { return m_matrix.rows(); }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the matrix.appears to be negative.
@@ -109,21 +109,21 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
     return m_info;
   }
 
-  /* \returns the permutation P
+  /** \returns the permutation P
    * \sa permutationPinv() */
   const PermutationMatrix<Dynamic, Dynamic, StorageIndex>& permutationP()
       const {
     return m_P;
   }
 
-  /* \returns the inverse P^-1 of the permutation P
+  /** \returns the inverse P^-1 of the permutation P
    * \sa permutationP() */
   const PermutationMatrix<Dynamic, Dynamic, StorageIndex>& permutationPinv()
       const {
     return m_Pinv;
   }
 
-  /* Sets the shift parameters that will be used to adjust the diagonal
+  /** Sets the shift parameters that will be used to adjust the diagonal
    * coefficients during the numerical factorization.
    *
    * During the numerical factorization, the diagonal coefficients are
@@ -142,7 +142,7 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
   }
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* \internal */
+  /** \internal */
   template <typename Stream>
   void dumpMemory(Stream& s) {
     int total = 0;
@@ -170,7 +170,7 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
       << "\n";
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_impl(const MatrixBase<Rhs>& b, MatrixBase<Dest>& dest) const {
     eigen_assert(m_factorizationIsOk &&
@@ -205,7 +205,7 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
 #endif  // EIGEN_PARSED_BY_DOXYGEN
 
  protected:
-  /* Computes the sparse Cholesky decomposition of \a matrix */
+  /** Computes the sparse Cholesky decomposition of \a matrix */
   template <bool DoLDLT>
   void compute(const MatrixType& matrix) {
     eigen_assert(matrix.rows() == matrix.cols());
@@ -254,7 +254,7 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
   void ordering(const MatrixType& a, ConstCholMatrixPtr& pmat,
                 CholMatrixType& ap);
 
-  /* keeps off-diagonal entries; drops diagonal entries */
+  /** keeps off-diagonal entries; drops diagonal entries */
   struct keep_diag {
     inline bool operator()(const Index& row, const Index& col,
                            const Scalar&) const {
@@ -335,7 +335,7 @@ struct traits<SimplicialCholesky<_MatrixType, _UpLo, _Ordering> > {
 
 }  // namespace internal
 
-/* \ingroup SparseCholesky_Module
+/** \ingroup SparseCholesky_Module
  * \class SimplicialLLT
  * \brief A direct sparse LLT Cholesky factorizations
  *
@@ -373,30 +373,30 @@ class SimplicialLLT : public SimplicialCholeskyBase<
   typedef typename Traits::MatrixU MatrixU;
 
  public:
-  /* Default constructor */
+  /** Default constructor */
   SimplicialLLT() : Base() {}
-  /* Constructs and performs the LLT factorization of \a matrix */
+  /** Constructs and performs the LLT factorization of \a matrix */
   explicit SimplicialLLT(const MatrixType& matrix) : Base(matrix) {}
 
-  /* \returns an expression of the factor L */
+  /** \returns an expression of the factor L */
   inline const MatrixL matrixL() const {
     eigen_assert(Base::m_factorizationIsOk && "Simplicial LLT not factorized");
     return Traits::getL(Base::m_matrix);
   }
 
-  /* \returns an expression of the factor U (= L^*) */
+  /** \returns an expression of the factor U (= L^*) */
   inline const MatrixU matrixU() const {
     eigen_assert(Base::m_factorizationIsOk && "Simplicial LLT not factorized");
     return Traits::getU(Base::m_matrix);
   }
 
-  /* Computes the sparse Cholesky decomposition of \a matrix */
+  /** Computes the sparse Cholesky decomposition of \a matrix */
   SimplicialLLT& compute(const MatrixType& matrix) {
     Base::template compute<false>(matrix);
     return *this;
   }
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -405,7 +405,7 @@ class SimplicialLLT : public SimplicialCholeskyBase<
    */
   void analyzePattern(const MatrixType& a) { Base::analyzePattern(a, false); }
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must has the same sparcity than the matrix on which the
    * symbolic decomposition has been performed.
@@ -414,7 +414,7 @@ class SimplicialLLT : public SimplicialCholeskyBase<
    */
   void factorize(const MatrixType& a) { Base::template factorize<false>(a); }
 
-  /* \returns the determinant of the underlying matrix from the current
+  /** \returns the determinant of the underlying matrix from the current
    * factorization */
   Scalar determinant() const {
     Scalar detL = Base::m_matrix.diagonal().prod();
@@ -422,7 +422,7 @@ class SimplicialLLT : public SimplicialCholeskyBase<
   }
 };
 
-/* \ingroup SparseCholesky_Module
+/** \ingroup SparseCholesky_Module
  * \class SimplicialLDLT
  * \brief A direct sparse LDLT Cholesky factorizations without square root.
  *
@@ -460,36 +460,36 @@ class SimplicialLDLT : public SimplicialCholeskyBase<
   typedef typename Traits::MatrixU MatrixU;
 
  public:
-  /* Default constructor */
+  /** Default constructor */
   SimplicialLDLT() : Base() {}
 
-  /* Constructs and performs the LLT factorization of \a matrix */
+  /** Constructs and performs the LLT factorization of \a matrix */
   explicit SimplicialLDLT(const MatrixType& matrix) : Base(matrix) {}
 
-  /* \returns a vector expression of the diagonal D */
+  /** \returns a vector expression of the diagonal D */
   inline const VectorType vectorD() const {
     eigen_assert(Base::m_factorizationIsOk && "Simplicial LDLT not factorized");
     return Base::m_diag;
   }
-  /* \returns an expression of the factor L */
+  /** \returns an expression of the factor L */
   inline const MatrixL matrixL() const {
     eigen_assert(Base::m_factorizationIsOk && "Simplicial LDLT not factorized");
     return Traits::getL(Base::m_matrix);
   }
 
-  /* \returns an expression of the factor U (= L^*) */
+  /** \returns an expression of the factor U (= L^*) */
   inline const MatrixU matrixU() const {
     eigen_assert(Base::m_factorizationIsOk && "Simplicial LDLT not factorized");
     return Traits::getU(Base::m_matrix);
   }
 
-  /* Computes the sparse Cholesky decomposition of \a matrix */
+  /** Computes the sparse Cholesky decomposition of \a matrix */
   SimplicialLDLT& compute(const MatrixType& matrix) {
     Base::template compute<true>(matrix);
     return *this;
   }
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -498,7 +498,7 @@ class SimplicialLDLT : public SimplicialCholeskyBase<
    */
   void analyzePattern(const MatrixType& a) { Base::analyzePattern(a, true); }
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must has the same sparcity than the matrix on which the
    * symbolic decomposition has been performed.
@@ -507,12 +507,12 @@ class SimplicialLDLT : public SimplicialCholeskyBase<
    */
   void factorize(const MatrixType& a) { Base::template factorize<true>(a); }
 
-  /* \returns the determinant of the underlying matrix from the current
+  /** \returns the determinant of the underlying matrix from the current
    * factorization */
   Scalar determinant() const { return Base::m_diag.prod(); }
 };
 
-/* \deprecated use SimplicialLDLT or class SimplicialLLT
+/** \deprecated use SimplicialLDLT or class SimplicialLLT
  * \ingroup SparseCholesky_Module
  * \class SimplicialCholesky
  *
@@ -568,7 +568,7 @@ class SimplicialCholesky
     return Base::m_matrix;
   }
 
-  /* Computes the sparse Cholesky decomposition of \a matrix */
+  /** Computes the sparse Cholesky decomposition of \a matrix */
   SimplicialCholesky& compute(const MatrixType& matrix) {
     if (m_LDLT)
       Base::template compute<true>(matrix);
@@ -577,7 +577,7 @@ class SimplicialCholesky
     return *this;
   }
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -586,7 +586,7 @@ class SimplicialCholesky
    */
   void analyzePattern(const MatrixType& a) { Base::analyzePattern(a, m_LDLT); }
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must has the same sparcity than the matrix on which the
    * symbolic decomposition has been performed.
@@ -600,7 +600,7 @@ class SimplicialCholesky
       Base::template factorize<false>(a);
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_impl(const MatrixBase<Rhs>& b, MatrixBase<Dest>& dest) const {
     eigen_assert(Base::m_factorizationIsOk &&
@@ -637,7 +637,7 @@ class SimplicialCholesky
     if (Base::m_P.size() > 0) dest = Base::m_Pinv * dest;
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_impl(const SparseMatrixBase<Rhs>& b,
                    SparseMatrixBase<Dest>& dest) const {

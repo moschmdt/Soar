@@ -88,7 +88,7 @@ struct product_type {
 #endif
 };
 
-/* The following allows to select the kind of product at compile time
+/** The following allows to select the kind of product at compile time
  * based on the three dimensions of the product.
  * This is a compile time mapping from {1,Small,Large}^3 -> {product types} */
 // FIXME I'm not sure the current mapping is the ideal one.
@@ -191,7 +191,7 @@ struct product_type_selector<Large, Large, Small> {
 
 }  // end namespace internal
 
-/*
+/**
  *  Implementation of Inner Vector Vector Product
  */
 
@@ -203,15 +203,15 @@ struct product_type_selector<Large, Large, Small> {
 // use case, we could have a specialization for Block<MatrixType,1,1> with:
 // operator=(Scalar x);
 
-/*
+/**
  *  Implementation of Outer Vector Vector Product
  */
 
-/*
+/**
  *  Implementation of General Matrix Vector Product
  */
 
-/*  According to the shape/flags of the matrix we have to distinghish 3
+/**  According to the shape/flags of the matrix we have to distinghish 3
  * different cases: 1 - the matrix is col-major, BLAS compatible and M is large
  * => call fast BLAS-like colmajor routine 2 - the matrix is row-major, BLAS
  * compatible and N is large => call fast BLAS-like rowmajor routine 3 - all
@@ -489,11 +489,11 @@ struct gemv_dense_selector<OnTheRight, RowMajor, false> {
 
 }  // end namespace internal
 
-/*
+/**
  * Implementation of matrix base methods
  */
 
-/* \returns the matrix product of \c *this and \a other.
+/** \returns the matrix product of \c *this and \a other.
  *
  * \note If instead of the matrix product you want the coefficient-wise product,
  * see Cwise::operator*().
@@ -535,7 +535,7 @@ MatrixBase<Derived>::operator*(const MatrixBase<OtherDerived>& other) const {
   return Product<Derived, OtherDerived>(derived(), other.derived());
 }
 
-/* \returns an expression of the matrix product of \c *this and \a other
+/** \returns an expression of the matrix product of \c *this and \a other
  * without implicit evaluation.
  *
  * The returned product will behave like any other expressions: the coefficients

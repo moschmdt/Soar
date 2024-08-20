@@ -38,7 +38,7 @@ struct eigenvalues_selector<Derived, false> {
 
 }  // end namespace internal
 
-/* \brief Computes the eigenvalues of a matrix
+/** \brief Computes the eigenvalues of a matrix
  * \returns Column vector containing the eigenvalues.
  *
  * \eigenvalues_module
@@ -65,7 +65,7 @@ MatrixBase<Derived>::eigenvalues() const {
       Derived, NumTraits<Scalar>::IsComplex>::run(derived());
 }
 
-/* \brief Computes the eigenvalues of a matrix
+/** \brief Computes the eigenvalues of a matrix
  * \returns Column vector containing the eigenvalues.
  *
  * \eigenvalues_module
@@ -87,7 +87,7 @@ EIGEN_DEVICE_FUNC inline
   return SelfAdjointEigenSolver<PlainObject>(thisAsMatrix, false).eigenvalues();
 }
 
-/* \brief Computes the L2 operator norm
+/** \brief Computes the L2 operator norm
  * \returns Operator norm of the matrix.
  *
  * \eigenvalues_module
@@ -124,7 +124,7 @@ MatrixBase<Derived>::operatorNorm() const {
                   .maxCoeff());
 }
 
-/* \brief Computes the L2 operator norm
+/** \brief Computes the L2 operator norm
  * \returns Operator norm of the matrix.
  *
  * \eigenvalues_module

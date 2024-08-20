@@ -101,7 +101,7 @@ ArithmeticSequence<typename internal::cleanup_index_type<FirstType>::type,
                    typename internal::cleanup_seq_incr<IncrType>::type>
 seqN(FirstType first, SizeType size, IncrType incr);
 
-/* \class ArithmeticSequence
+/** \class ArithmeticSequence
  * \ingroup Core_Module
  *
  * This class represents an arithmetic progression \f$ a_0, a_1, a_2, ...,
@@ -138,13 +138,13 @@ class ArithmeticSequence {
     IncrAtCompileTime = internal::get_fixed_value<IncrType, DynamicIndex>::value
   };
 
-  /* \returns the size, i.e., number of elements, of the sequence */
+  /** \returns the size, i.e., number of elements, of the sequence */
   Index size() const { return m_size; }
 
-  /* \returns the first element \f$ a_0 \f$ in the sequence */
+  /** \returns the first element \f$ a_0 \f$ in the sequence */
   Index first() const { return m_first; }
 
-  /* \returns the value \f$ a_i \f$ at index \a i in the sequence. */
+  /** \returns the value \f$ a_i \f$ at index \a i in the sequence. */
   Index operator[](Index i) const { return m_first + i * m_incr; }
 
   const FirstType& firstObject() const { return m_first; }
@@ -177,7 +177,7 @@ class ArithmeticSequence {
 #endif
 };
 
-/* \returns an ArithmeticSequence starting at \a first, of length \a size, and
+/** \returns an ArithmeticSequence starting at \a first, of length \a size, and
  * increment \a incr
  *
  * \sa seqN(FirstType,SizeType), seq(FirstType,LastType,IncrType) */
@@ -192,7 +192,7 @@ seqN(FirstType first, SizeType size, IncrType incr) {
       typename internal::cleanup_seq_incr<IncrType>::type>(first, size, incr);
 }
 
-/* \returns an ArithmeticSequence starting at \a first, of length \a size, and
+/** \returns an ArithmeticSequence starting at \a first, of length \a size, and
  * unit increment
  *
  * \sa seqN(FirstType,SizeType,IncrType), seq(FirstType,LastType) */
@@ -207,7 +207,7 @@ seqN(FirstType first, SizeType size) {
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
 
-/* \returns an ArithmeticSequence starting at \a f, up (or down) to \a l, and
+/** \returns an ArithmeticSequence starting at \a f, up (or down) to \a l, and
  * with positive (or negative) increment \a incr
  *
  * It is essentially an alias to:
@@ -220,7 +220,7 @@ seqN(FirstType first, SizeType size) {
 template <typename FirstType, typename LastType, typename IncrType>
 auto seq(FirstType f, LastType l, IncrType incr);
 
-/* \returns an ArithmeticSequence starting at \a f, up (or down) to \a l, and
+/** \returns an ArithmeticSequence starting at \a f, up (or down) to \a l, and
  * unit increment
  *
  * It is essentially an alias to:
@@ -410,7 +410,7 @@ seq(const symbolic::BaseExpr<FirstTypeDerived> &f,
 #endif  // EIGEN_PARSED_BY_DOXYGEN
 
 #if EIGEN_HAS_CXX11 || defined(EIGEN_PARSED_BY_DOXYGEN)
-/* \cpp11
+/** \cpp11
  * \returns a symbolic ArithmeticSequence representing the last \a size elements
  * with increment \a incr.
  *
@@ -425,7 +425,7 @@ auto lastN(SizeType size, IncrType incr)
   return seqN(Eigen::last - (size - fix<1>()) * incr, size, incr);
 }
 
-/* \cpp11
+/** \cpp11
  * \returns a symbolic ArithmeticSequence representing the last \a size elements
  * with a unit increment.
  *
@@ -476,7 +476,7 @@ struct get_compile_time_incr<
 
 }  // end namespace internal
 
-/* \namespace Eigen::indexing
+/** \namespace Eigen::indexing
   * \ingroup Core_Module
   *
   * The sole purpose of this namespace is to be able to import all functions

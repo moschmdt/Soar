@@ -1,4 +1,4 @@
-/*
+/**
  * libccd
  * ---------------------------------
  * Copyright (c)2010-2013 Daniel Fiser <danfis@danfis.cz>
@@ -26,22 +26,22 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /** __cplusplus */
 
 #ifndef CCD_SINGLE
 #ifndef CCD_DOUBLE
 #error You must define CCD_SINGLE or CCD_DOUBLE
-#endif /* CCD_DOUBLE */
-#endif /* CCD_SINGLE */
+#endif /** CCD_DOUBLE */
+#endif /** CCD_SINGLE */
 
 #ifdef WIN32
 #define CCD_FMIN(x, y) ((x) < (y) ? (x) : (y))
-#endif /* WIN32 */
+#endif /** WIN32 */
 
 #ifdef CCD_SINGLE
 #ifdef CCD_DOUBLE
 #error You can define either CCD_SINGLE or CCD_DOUBLE, not both!
-#endif /* CCD_DOUBLE */
+#endif /** CCD_DOUBLE */
 
 typedef float ccd_real_t;
 
@@ -50,16 +50,16 @@ typedef float ccd_real_t;
 
 #define CCD_REAL_MAX FLT_MAX
 
-#define CCD_REAL(x) (x##f)               /*!< form a constant */
-#define CCD_SQRT(x) (sqrtf(x))           /*!< square root */
-#define CCD_FABS(x) (fabsf(x))           /*!< absolute value */
-#define CCD_FMAX(x, y) (fmaxf((x), (y))) /*!< maximum of two floats */
+#define CCD_REAL(x) (x##f)               /**!< form a constant */
+#define CCD_SQRT(x) (sqrtf(x))           /**!< square root */
+#define CCD_FABS(x) (fabsf(x))           /**!< absolute value */
+#define CCD_FMAX(x, y) (fmaxf((x), (y))) /**!< maximum of two floats */
 
 #ifndef CCD_FMIN
-#define CCD_FMIN(x, y) (fminf((x), (y))) /*!< minimum of two floats */
-#endif                                   /* CCD_FMIN */
+#define CCD_FMIN(x, y) (fminf((x), (y))) /**!< minimum of two floats */
+#endif                                   /** CCD_FMIN */
 
-#endif /* CCD_SINGLE */
+#endif /** CCD_SINGLE */
 
 #ifdef CCD_DOUBLE
 typedef double ccd_real_t;
@@ -69,16 +69,16 @@ typedef double ccd_real_t;
 
 #define CCD_REAL_MAX DBL_MAX
 
-#define CCD_REAL(x) (x)                 /*!< form a constant */
-#define CCD_SQRT(x) (sqrt(x))           /*!< square root */
-#define CCD_FABS(x) (fabs(x))           /*!< absolute value */
-#define CCD_FMAX(x, y) (fmax((x), (y))) /*!< maximum of two floats */
+#define CCD_REAL(x) (x)                 /**!< form a constant */
+#define CCD_SQRT(x) (sqrt(x))           /**!< square root */
+#define CCD_FABS(x) (fabs(x))           /**!< absolute value */
+#define CCD_FMAX(x, y) (fmax((x), (y))) /**!< maximum of two floats */
 
 #ifndef CCD_FMIN
-#define CCD_FMIN(x, y) (fmin((x), (y))) /*!< minimum of two floats */
-#endif                                  /* CCD_FMIN */
+#define CCD_FMIN(x, y) (fmin((x), (y))) /**!< minimum of two floats */
+#endif                                  /** CCD_FMIN */
 
-#endif /* CCD_DOUBLE */
+#endif /** CCD_DOUBLE */
 
 #define CCD_ONE CCD_REAL(1.)
 #define CCD_ZERO CCD_REAL(0.)
@@ -88,22 +88,22 @@ struct _ccd_vec3_t {
 };
 typedef struct _ccd_vec3_t ccd_vec3_t;
 
-/*
+/**
  * Holds origin (0,0,0) - this variable is meant to be read-only!
  */
 extern ccd_vec3_t *ccd_vec3_origin;
 
-/*
+/**
  * Array of points uniformly distributed on unit sphere.
  */
 extern ccd_vec3_t *ccd_points_on_sphere;
 extern size_t ccd_points_on_sphere_len;
 
-/* Returns sign of value. */
+/** Returns sign of value. */
 _ccd_inline int ccdSign(ccd_real_t val);
-/* Returns true if val is zero. */
+/** Returns true if val is zero. */
 _ccd_inline int ccdIsZero(ccd_real_t val);
-/* Returns true if a and b equal. */
+/** Returns true if a and b equal. */
 _ccd_inline int ccdEq(ccd_real_t a, ccd_real_t b);
 
 #define CCD_VEC3_STATIC(x, y, z) \
@@ -117,17 +117,17 @@ _ccd_inline ccd_real_t ccdVec3X(const ccd_vec3_t *v);
 _ccd_inline ccd_real_t ccdVec3Y(const ccd_vec3_t *v);
 _ccd_inline ccd_real_t ccdVec3Z(const ccd_vec3_t *v);
 
-/*
+/**
  * Returns true if a and b equal.
  */
 _ccd_inline int ccdVec3Eq(const ccd_vec3_t *a, const ccd_vec3_t *b);
 
-/*
+/**
  * Returns squared length of vector.
  */
 _ccd_inline ccd_real_t ccdVec3Len2(const ccd_vec3_t *v);
 
-/*
+/**
  * Returns distance between a and b.
  */
 _ccd_inline ccd_real_t ccdVec3Dist2(const ccd_vec3_t *a, const ccd_vec3_t *b);
@@ -135,49 +135,49 @@ _ccd_inline ccd_real_t ccdVec3Dist2(const ccd_vec3_t *a, const ccd_vec3_t *b);
 _ccd_inline void ccdVec3Set(ccd_vec3_t *v, ccd_real_t x, ccd_real_t y,
                             ccd_real_t z);
 
-/*
+/**
  * v = w
  */
 _ccd_inline void ccdVec3Copy(ccd_vec3_t *v, const ccd_vec3_t *w);
 
-/*
+/**
  * Substracts coordinates of vector w from vector v. v = v - w
  */
 _ccd_inline void ccdVec3Sub(ccd_vec3_t *v, const ccd_vec3_t *w);
 
-/*
+/**
  * Adds coordinates of vector w to vector v. v = v + w
  */
 _ccd_inline void ccdVec3Add(ccd_vec3_t *v, const ccd_vec3_t *w);
 
-/*
+/**
  * d = v - w
  */
 _ccd_inline void ccdVec3Sub2(ccd_vec3_t *d, const ccd_vec3_t *v,
                              const ccd_vec3_t *w);
 
-/*
+/**
  * d = d * k;
  */
 _ccd_inline void ccdVec3Scale(ccd_vec3_t *d, ccd_real_t k);
 
-/*
+/**
  * Normalizes given vector to unit length.
  */
 _ccd_inline void ccdVec3Normalize(ccd_vec3_t *d);
 
-/*
+/**
  * Dot product of two vectors.
  */
 _ccd_inline ccd_real_t ccdVec3Dot(const ccd_vec3_t *a, const ccd_vec3_t *b);
 
-/*
+/**
  * Cross product: d = a x b.
  */
 _ccd_inline void ccdVec3Cross(ccd_vec3_t *d, const ccd_vec3_t *a,
                               const ccd_vec3_t *b);
 
-/*
+/**
  * Returns distance^2 of point P to segment ab.
  * If witness is non-NULL it is filled with coordinates of point from which
  * was computaed distance to point P.
@@ -185,7 +185,7 @@ _ccd_inline void ccdVec3Cross(ccd_vec3_t *d, const ccd_vec3_t *a,
 ccd_real_t ccdVec3PointSegmentDist2(const ccd_vec3_t *P, const ccd_vec3_t *a,
                                     const ccd_vec3_t *b, ccd_vec3_t *witness);
 
-/*
+/**
  * Returns distance^2 of point P from triangle formed by triplet a, b, c.
  * If witness vector is provided it is filled with coordinates of point
  * from which was computed distance to point P.
@@ -194,7 +194,7 @@ ccd_real_t ccdVec3PointTriDist2(const ccd_vec3_t *P, const ccd_vec3_t *a,
                                 const ccd_vec3_t *b, const ccd_vec3_t *c,
                                 ccd_vec3_t *witness);
 
-/* INLINES */
+/** INLINES */
 _ccd_inline int ccdSign(ccd_real_t val) {
   if (ccdIsZero(val)) {
     return 0;
@@ -298,7 +298,7 @@ _ccd_inline void ccdVec3Cross(ccd_vec3_t *d, const ccd_vec3_t *a,
 }
 
 #ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
+} /** extern "C" */
+#endif /** __cplusplus */
 
-#endif /* __CCD_VEC3_H__ */
+#endif /** __CCD_VEC3_H__ */

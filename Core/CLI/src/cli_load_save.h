@@ -1,4 +1,4 @@
-/*
+/**
  * cli_load_save.h
  *
  *  Created on: Oct 1, 2016
@@ -111,4 +111,4 @@ class SaveCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CORE_CLI_SRC_CLI_LOAD_SAVE_H_ */
+#endif /** CORE_CLI_SRC_CLI_LOAD_SAVE_H_ */

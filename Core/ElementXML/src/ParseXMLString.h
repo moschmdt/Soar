@@ -45,7 +45,7 @@ class ParseXMLString : public ParseXML {
   // Location when we start the current token
   size_t m_StartTokenPos;
 
-  /*
+  /**
    *
    * Read the next character from the input string.
    *
@@ -67,7 +67,7 @@ class ParseXMLString : public ParseXML {
 
   virtual void ReadLine();
 
-  /*
+  /**
    *
    * Returns the current character from the input stream.
    *

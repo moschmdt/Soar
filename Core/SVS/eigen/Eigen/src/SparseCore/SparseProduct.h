@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \returns an expression of the product of two sparse matrices.
+/** \returns an expression of the product of two sparse matrices.
  * By default a conservative product preserving the symbolic non zeros is
  * performed. The automatic pruning of the small values can be achieved by
  * calling the pruned() function in which case a totally different product

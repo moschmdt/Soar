@@ -25,7 +25,7 @@
 // EIGEN_ALIGN{8,16,32,_MAX} to be used to declare statically aligned buffers.
 //------------------------------------------------------------------------------------------
 
-/* EIGEN_ALIGN_TO_BOUNDARY(n) forces data to be n-byte aligned. This is used to
+/** EIGEN_ALIGN_TO_BOUNDARY(n) forces data to be n-byte aligned. This is used to
  * satisfy SIMD requirements. However, we do that EVEN if vectorization
  * (EIGEN_VECTORIZE) is disabled, so that vectorization doesn't affect binary
  * compatibility.
@@ -504,7 +504,7 @@ extern "C" {
 #include <hip/hip_fp16.h>
 #endif
 
-/* \brief Namespace containing all symbols from the %Eigen library. */
+/** \brief Namespace containing all symbols from the %Eigen library. */
 namespace Eigen {
 
 inline static const char *SimdInstructionSetsInUse(void) {

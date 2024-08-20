@@ -11,7 +11,7 @@
 #ifndef EIGEN_STATIC_ASSERT_H
 #define EIGEN_STATIC_ASSERT_H
 
-/* Some notes on Eigen's static assertion mechanism:
+/** Some notes on Eigen's static assertion mechanism:
  *
  *  - in EIGEN_STATIC_ASSERT(CONDITION,MSG) the parameter CONDITION must be a
  * compile time boolean expression, and MSG an enum listed in struct

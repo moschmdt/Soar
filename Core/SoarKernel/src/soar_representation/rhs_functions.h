@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* ====================================================================
+/** ====================================================================
                             rhs_functions.h
 
    The system maintains a list of available RHS functions.  Functions
@@ -53,11 +53,11 @@ typedef struct rhs_function_struct {
   struct rhs_function_struct* next;
   Symbol* name;
   rhs_function_routine f;
-  int num_args_expected; /* -1 means it can take any number of args */
+  int num_args_expected; /** -1 means it can take any number of args */
   bool can_be_rhs_value;
   bool can_be_stand_alone_action;
   bool literalize_arguments;
-  void* user_data; /* Pointer to anything the user may want to pass into the
+  void* user_data; /** Pointer to anything the user may want to pass into the
                       function */
 } rhs_function;
 

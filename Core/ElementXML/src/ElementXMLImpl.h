@@ -85,7 +85,7 @@ typedef std::map<xmlStringConst, xmlStringConst, strCompareElementXMLImpl>
 typedef xmlAttributeMap::iterator xmlAttributeMapIter;
 typedef xmlAttributeMap::const_iterator xmlAttributeMapConstIter;
 
-/*
+/**
  * @brief The ElementXMLImpl class represents an element in an XML stream.
  *        Through its children, it can represent an entire XML document.
  */
@@ -123,7 +123,7 @@ class EXPORT ElementXMLImpl {
   xmlStringList m_StringsToDelete;  // List of strings we now own and should
                                     // delete when we are destroyed.
 
-  /*
+  /**
    * @brief Destructor.  This is private so we are forced to
    *        use the release method, which supports ref-counting.
    */
@@ -131,7 +131,7 @@ class EXPORT ElementXMLImpl {
   virtual ~ElementXMLImpl(void);
 
  public:
-  /*
+  /**
    * @brief XML ids can only contain letters, numbers, �.� �-� and �_�.
    */
   static bool IsValidID(xmlStringConst str);
@@ -143,12 +143,12 @@ class EXPORT ElementXMLImpl {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Default constructor.
    */
   ElementXMLImpl(void);
 
-  /*
+  /**
    * @brief Release our reference to this object, possibly
    *        causing it to be deleted.
    *
@@ -156,7 +156,7 @@ class EXPORT ElementXMLImpl {
    */
   int ReleaseRef();
 
-  /*
+  /**
    * @brief Add a new reference to this object.
    *        The object will only be deleted after calling
    *        releaseRef() one more time than addRef() has been
@@ -167,18 +167,18 @@ class EXPORT ElementXMLImpl {
    */
   int AddRef();
 
-  /*
+  /**
    * @returns Reports the current reference count (must be > 0)
    */
   int GetRefCount();
 
-  /*
+  /**
    * @returns If an error occurs, this code can provide further details.
    *          (Not currently used -- but provided for later expansion)
    */
   int GetLastError() { return m_ErrorCode; }
 
-  /*
+  /**
    * @returns If an error occurs, this provides a text description of
    *          the error.
    *          (Not currently used -- but provided for later expansion)
@@ -191,7 +191,7 @@ class EXPORT ElementXMLImpl {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Set the tag name for this element.
    *
    * @param  tagName   Tag name can only contain letters, numbers, �.� �-� and
@@ -202,14 +202,14 @@ class EXPORT ElementXMLImpl {
    */
   bool SetTagName(char* tagName, bool copyName = true);
 
-  /*
+  /**
    * @brief Helper overload -- if we're passed a const, must copy it.
    */
   bool SetTagName(char const* tagName) {
     return SetTagName(CopyString(tagName), false);
   }
 
-  /*
+  /**
    * @brief Gets the tag name for this element.
    *
    * @returns The tag name.
@@ -225,7 +225,7 @@ class EXPORT ElementXMLImpl {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Adds a child to the list of children of this element.
    *
    * @param  pChild    The child to add.  Will be released when the parent is
@@ -233,12 +233,12 @@ class EXPORT ElementXMLImpl {
    */
   void AddChild(ElementXMLImpl* pChild);
 
-  /*
+  /**
    * @brief Returns the number of children of this element.
    */
   int GetNumberChildren() const;
 
-  /*
+  /**
    * @brief Returns the n-th child of this element.
    *
    * Children are guaranteed to be returned in the order they were added.
@@ -251,7 +251,7 @@ class EXPORT ElementXMLImpl {
    */
   ElementXMLImpl const* GetChild(int index) const;
 
-  /*
+  /**
    * @brief Returns the parent of this element.
    *
    * The caller should *not* call releaseRef() on this parent.
@@ -262,7 +262,7 @@ class EXPORT ElementXMLImpl {
    */
   ElementXMLImpl const* GetParent() const;
 
-  /*
+  /**
    * @brief Returns a copy of this object.
    *        Generally, this shouldn't be necessary as ref counting
    *        allows multiple clients to point to the same object.
@@ -278,7 +278,7 @@ class EXPORT ElementXMLImpl {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Adds an attribute name-value pair.
    *
    * @param attributeName  Attribute name can only contain letters, numbers, �.�
@@ -293,7 +293,7 @@ class EXPORT ElementXMLImpl {
   bool AddAttribute(char* attributeName, char* attributeValue,
                     bool copyName = true, bool copyValue = true);
 
-  /*
+  /**
    * @brief Helper overloads -- if we're passed a const, must copy it.
    */
   bool AddAttribute(char const* attributeName, char* attributeValue) {
@@ -304,12 +304,12 @@ class EXPORT ElementXMLImpl {
                         false, false);
   }
 
-  /*
+  /**
    * @brief Get the number of attributes attached to this element.
    */
   int GetNumberAttributes() const;
 
-  /*
+  /**
    * @brief Get the name of the n-th attribute of this element.
    *        Attributes may not be returned in the order they were added.
    *
@@ -317,14 +317,14 @@ class EXPORT ElementXMLImpl {
    */
   const char* GetAttributeName(int index) const;
 
-  /*
+  /**
    * @brief Get the value of the n-th attribute of this element.
    *
    * @param index  The 0-based index of the attribute to return.
    */
   const char* GetAttributeValue(int index) const;
 
-  /*
+  /**
    * @brief Get the value of the named attribute of this element.
    *
    * @param attName    The name of the attribute to look up.
@@ -333,7 +333,7 @@ class EXPORT ElementXMLImpl {
    */
   const char* GetAttribute(const char* attName) const;
 
-  /*
+  /**
    * @brief Associate a comment with this XML element.
    *        The comment is written in front of the element when stored/parsed.
    *
@@ -347,7 +347,7 @@ class EXPORT ElementXMLImpl {
    */
   bool SetComment(const char* comment);
 
-  /*
+  /**
    * @brief Returns the comment for this element.
    *
    * @returns The comment string for this element (or zero-length string if
@@ -362,7 +362,7 @@ class EXPORT ElementXMLImpl {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Set the character data for this element.
    *
    * NOTE: The characterData will be deleted by this object when it is deleted.
@@ -376,7 +376,7 @@ class EXPORT ElementXMLImpl {
    */
   void SetCharacterData(char* characterData, bool copyData = true);
 
-  /*
+  /**
    * @brief Setting the chracter data in this way indicates that this element�s
    *character data should be treated as a binary buffer (so it may contain chars
    *from 0-255, not just ASCII characters).
@@ -395,7 +395,7 @@ class EXPORT ElementXMLImpl {
   void SetBinaryCharacterData(char* characterData, int length,
                               bool copyData = true);
 
-  /*
+  /**
    * @brief Get the character data for this element.
    *
    * @returns   Returns the character data for this element.  If the element has
@@ -405,13 +405,13 @@ class EXPORT ElementXMLImpl {
    */
   char const* GetCharacterData() const;
 
-  /*
+  /**
    * @brief Returns true if the character data should be treated as a binary
    *buffer rather than a null-terminated character string.
    */
   bool IsCharacterDataBinary() const;
 
-  /*
+  /**
    * @brief Converts a character data buffer into binary data.
    *
    * If binary data is stored in an XML file it will encoded in
@@ -433,7 +433,7 @@ class EXPORT ElementXMLImpl {
    */
   bool ConvertCharacterDataToBinary();
 
-  /*
+  /**
    * @brief Converts the stored binary data into a string of
    *        characters (hex for now, or base64 later)
    *        which can be safely stored in XML text.
@@ -442,7 +442,7 @@ class EXPORT ElementXMLImpl {
    */
   bool ConvertBinaryDataToCharacters();
 
-  /*
+  /**
    * @brief Returns the length of the character data.
    *
    * If the data is a binary buffer this is the size of that buffer.
@@ -451,7 +451,7 @@ class EXPORT ElementXMLImpl {
    */
   int GetCharacterDataLength() const;
 
-  /*
+  /**
    * @brief Setting this value to true indicates that this element�s character
    *data should be stored in a CDATA section. By default this value will be
    *false.
@@ -464,7 +464,7 @@ class EXPORT ElementXMLImpl {
    */
   void SetUseCData(bool useCData);
 
-  /*
+  /**
    * @brief Returns true if this element's character data should be stored in a
    *CDATA section when streamed to XML.
    */
@@ -476,7 +476,7 @@ class EXPORT ElementXMLImpl {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Converts the XML object to a string.
    *
    * @param includeChildren    Includes all children in the XML output.
@@ -488,7 +488,7 @@ class EXPORT ElementXMLImpl {
    */
   char* GenerateXMLString(bool includeChildren, bool insertNewLines) const;
 
-  /*
+  /**
    * @brief Returns the length of string needed to represent this object (does
    *not include the trailing null, so add one for that)
    *
@@ -514,7 +514,7 @@ class EXPORT ElementXMLImpl {
   //
   ////////////////////////////////////////////////////////////////
 
-  /*
+  /**
    * @brief Utility function to allocate memory that the client will pass to the
    *other ElementXMLImpl functions.
    *
@@ -533,7 +533,7 @@ class EXPORT ElementXMLImpl {
     return str;
   }
 
-  /*
+  /**
    * @brief Utility function to release memory allocated by this element and
    *returned to the caller.
    *
@@ -548,7 +548,7 @@ class EXPORT ElementXMLImpl {
     free(string);
   }
 
-  /*
+  /**
    * @brief    Performs an allocation and then copies the contents of the passed
    *in string to the newly allocated string.
    *
@@ -563,7 +563,7 @@ class EXPORT ElementXMLImpl {
     return strdup(original);
   }
 
-  /*
+  /**
    * @brief    Performs an allocation and then copies the contents of the passed
    *in buffer to the newly allocated buffer. You need to use this rather than
    *copyString if copying binary data (because it can contained embedded nulls).
@@ -576,7 +576,7 @@ class EXPORT ElementXMLImpl {
   static char* CopyBuffer(char const* original, int length);
 
   // protected:
-  /*
+  /**
    * @brief Adds an attribute name-value pair.
    *
    * NOTE: The attribute name must remain in scope for the life of this object.
@@ -592,7 +592,7 @@ class EXPORT ElementXMLImpl {
   bool AddAttributeFast(char const* attributeName, char* attributeValue,
                         bool copyValue = true);
 
-  /*
+  /**
    * @brief Adds an attribute name-value pair.
    *
    * NOTE: The attribute name and value must remain in scope for the life of
@@ -606,7 +606,7 @@ class EXPORT ElementXMLImpl {
   bool AddAttributeFastFast(char const* attributeName,
                             char const* attributeValue);
 
-  /*
+  /**
    * @brief Set the tag name for this element.
    *
    * NOTE: The caller must ensure that the tag name does not go out of scope
@@ -620,7 +620,7 @@ class EXPORT ElementXMLImpl {
   bool SetTagNameFast(char const* tagName);
 
  protected:
-  /*
+  /**
    * @brief Converts the XML object to a string.
    *
    * Note: maxLength is currently ignored for speed, but I'm leaving

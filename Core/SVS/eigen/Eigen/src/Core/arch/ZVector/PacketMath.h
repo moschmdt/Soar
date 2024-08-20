@@ -143,7 +143,7 @@ static Packet16uc p16uc_PSET32_WODD =
 static Packet16uc p16uc_PSET32_WEVEN = vec_sld(
     p16uc_DUPLICATE32_HI, (Packet16uc)vec_splat((Packet4ui)p16uc_FORWARD, 3),
     8);  //{ 4,5,6,7, 4,5,6,7, 12,13,14,15, 12,13,14,15 };
-/*static Packet16uc p16uc_HALF64_0_16 = vec_sld((Packet16uc)p4i_ZERO,
+/**static Packet16uc p16uc_HALF64_0_16 = vec_sld((Packet16uc)p4i_ZERO,
 vec_splat((Packet16uc) vec_abs(p4i_MINUS16), 3), 8);      //{ 0,0,0,0, 0,0,0,0,
 16,16,16,16, 16,16,16,16};
 
@@ -154,7 +154,7 @@ static Packet16uc p16uc_PSET64_LO = (Packet16uc)vec_mergel(
     (Packet4ui)p16uc_PSET32_WODD,
     (Packet4ui)p16uc_PSET32_WEVEN);  //{ 8,9,10,11, 12,13,14,15, 8,9,10,11,
                                      // 12,13,14,15 };
-/*static Packet16uc p16uc_TRANSPOSE64_HI = vec_add(p16uc_PSET64_HI,
+/**static Packet16uc p16uc_TRANSPOSE64_HI = vec_add(p16uc_PSET64_HI,
 p16uc_HALF64_0_16);                                         //{ 0,1,2,3,
 4,5,6,7, 16,17,18,19, 20,21,22,23}; static Packet16uc p16uc_TRANSPOSE64_LO =
 vec_add(p16uc_PSET64_LO, p16uc_HALF64_0_16); //{ 8,9,10,11, 12,13,14,15,
@@ -298,7 +298,7 @@ struct unpacket_traits<Packet2d> {
   typedef Packet2d half;
 };
 
-/* Forward declaration */
+/** Forward declaration */
 EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<Packet4f, 4>& kernel);
 
 inline std::ostream& operator<<(std::ostream& s, const Packet4i& v) {
@@ -798,11 +798,11 @@ EIGEN_STRONG_INLINE Packet2d pblend(const Selector<2>& ifPacket,
   return vec_sel(elsePacket, thenPacket, mask);
 }
 
-/* z13 has no vector float support so we emulate that with double
+/** z13 has no vector float support so we emulate that with double
    z14 has proper vector float support.
 */
 #if !defined(__ARCH__) || (defined(__ARCH__) && __ARCH__ < 12)
-/* Helper function to simulate a vec_splat_packet4f
+/** Helper function to simulate a vec_splat_packet4f
  */
 template <int element>
 EIGEN_STRONG_INLINE Packet4f vec_splat_packet4f(const Packet4f& from) {
@@ -1084,7 +1084,7 @@ EIGEN_STRONG_INLINE float predux_max<Packet4f>(const Packet4f& a) {
   return static_cast<float>(pfirst(res));
 }
 
-/* Split the Packet4f PacketBlock into 4 Packet2d PacketBlocks and transpose
+/** Split the Packet4f PacketBlock into 4 Packet2d PacketBlocks and transpose
  * each one
  */
 EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<Packet4f, 4>& kernel) {

@@ -1,4 +1,4 @@
-/* -------------------------------------------------------------------
+/** -------------------------------------------------------------------
                               rhs.h
                       Right-Hand-Side Values
 
@@ -32,15 +32,15 @@
 typedef char* rhs_value;
 typedef struct rhs_struct {
   Symbol* referent;
-  uint64_t inst_identity; /* instantiation identity ID */
+  uint64_t inst_identity; /** instantiation identity ID */
   uint64_t cv_id;
   Identity* identity;
-  uint64_t identity_id_unjoined; /* cached value only used for the explainer */
-  bool was_unbound_var;          /* used by re-orderer */
+  uint64_t identity_id_unjoined; /** cached value only used for the explainer */
+  bool was_unbound_var;          /** used by re-orderer */
 } rhs_info;
 typedef rhs_info* rhs_symbol;
 
-/* -------------------------------------------------------------------
+/** -------------------------------------------------------------------
                              RHS Actions
 
    Fields in an action:
@@ -75,19 +75,19 @@ typedef struct action_struct {
   PreferenceType preference_type;
   rhs_value id;
   rhs_value attr;
-  rhs_value value; /* for FUNCALL_ACTION's, this holds the funcall */
+  rhs_value value; /** for FUNCALL_ACTION's, this holds the funcall */
   rhs_value referent;
   SupportType support;
   struct action_struct* next;
 } action;
 
-/* -- Used by cli_productionfind.cpp and related functions -- */
+/** -- Used by cli_productionfind.cpp and related functions -- */
 typedef struct binding_structure {
   Symbol* from;
   Symbol* to;
 } Binding;
 
-/* -- RHS Methods-- */
+/** -- RHS Methods-- */
 action* make_action(agent* thisAgent);
 action* copy_action(agent* thisAgent, action* pAction);
 rhs_value allocate_rhs_value_for_symbol_no_refcount(
@@ -117,7 +117,7 @@ void add_all_variables_in_action_list(agent* thisAgent, action* actions,
 char first_letter_from_rhs_value(rhs_value rv);
 bool rhs_value_is_literalizing_function(rhs_value rv);
 
-/* -- Functions to check the 4 types that a rhs value can take -- */
+/** -- Functions to check the 4 types that a rhs value can take -- */
 inline bool rhs_value_is_symbol(rhs_value rv) {
   return (reinterpret_cast<uintptr_t>(rv) & 3) == 0;
 }
@@ -131,7 +131,7 @@ inline bool rhs_value_is_unboundvar(rhs_value rv) {
   return (reinterpret_cast<uintptr_t>(rv) & 3) == 3;
 }
 
-/* -- Conversion functions -- */
+/** -- Conversion functions -- */
 inline rhs_symbol rhs_value_to_rhs_symbol(rhs_value rv) {
   return reinterpret_cast<rhs_symbol>(rv);
 }
@@ -170,7 +170,7 @@ inline rhs_value reteloc_to_rhs_value(byte field_num,
   return reinterpret_cast<rhs_value>(levels_up << 4) + (field_num << 2) + 2;
 }
 
-/* -- Comparison functions -- */
+/** -- Comparison functions -- */
 inline bool rhs_values_symbols_equal(rhs_value rv1, rhs_value rv2) {
   return (reinterpret_cast<rhs_symbol>(rv1)->referent ==
           reinterpret_cast<rhs_symbol>(rv2)->referent);
@@ -207,4 +207,4 @@ inline bool rhs_value_is_null(rhs_value rv) {
   return false;
 }
 
-#endif /* RHS_H_ */
+#endif /** RHS_H_ */

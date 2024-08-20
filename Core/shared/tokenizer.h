@@ -1,4 +1,4 @@
-/*
+/**
  * @file tokenizer.h
  * @author Jonathan Voigt <voigtjr@gmail.com>
  * @date 2010
@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-/*
+/**
  * Define PRINT_CALLBACKS to enable dumping of callback argvs to stdout before
  * the callback is called.
  */
@@ -24,12 +24,12 @@
 #include <iostream>
 #endif
 
-/*
+/**
  * The soar namespace is not well defined yet, it would be nice if the Soar
  * kernel and surrounding utilities were all defined inside this namespace.
  */
 namespace soar {
-/*
+/**
  * Interface called by the tokenizer to be implemented by tokenizer users.
  * When a command is parsed, the command and its arguments (words) are
  * passed to this interface's handle_command function.
@@ -38,7 +38,7 @@ class tokenizer_callback {
  public:
   virtual ~tokenizer_callback() {}
 
-  /*
+  /**
    * Implement to handle commands. The words of the command are in the
    * passed argv vector. The first entry in the vector is the command.
    * The vector is guaranteed to never be empty, though the first command
@@ -50,7 +50,7 @@ class tokenizer_callback {
   virtual bool handle_command(std::vector<std::string>& argv) = 0;
 };
 
-/*
+/**
  * A smart index in to the tokenizer input buffer. Encapsulates a lot of
  * code necessary for figuring out where errors happen.
  */
@@ -61,12 +61,12 @@ class tokenizer_current {
   const char* current;
 
  public:
-  /*
+  /**
    * Create with null input buffer, call set_current before using.
    */
   tokenizer_current() { set_current(0); }
 
-  /*
+  /**
    * Create with input buffer, equivalient to using default constructor
    * and calling set_current.
    * @param[in] initial Initial buffer to pass to set_current.
@@ -75,7 +75,7 @@ class tokenizer_current {
 
   virtual ~tokenizer_current() {}
 
-  /*
+  /**
    * Set the input buffer, point to the first character in the buffer.
    * Resets line and offset counters.
    * @param initial
@@ -91,12 +91,12 @@ class tokenizer_current {
     }
   }
 
-  /*
+  /**
    * Invalidate the current pointer. Used to indicate error state.
    */
   void invalidate() { current = 0; }
 
-  /*
+  /**
    * Increment the current pointer to the next char in the buffer.  Keeps
    * track of offset in to buffer and newline count as they occur.
    */
@@ -109,45 +109,45 @@ class tokenizer_current {
     offset += 1;
   }
 
-  /*
+  /**
    * Returns the current line number.
    * @return The current line number.
    */
   int get_line() const { return line; }
 
-  /*
+  /**
    * Returns how many characters of the current line have been read.
    * @return The current offset.
    */
   int get_offset() const { return offset; }
 
-  /*
+  /**
    * Returns true if not in an error state.
    * @return true if not in an error state.
    */
   bool good() const { return current != 0; }
 
-  /*
+  /**
    * Returns true if in an error state.
    * @return true if in an error state.
    */
   bool bad() const { return !current; }
 
-  /*
+  /**
    * Dereference the pointer and retrieve the current character.
    * This will segfault if this->bad() is true.
    * @return The current character in the stream.
    */
   char get() { return *current; }
 
-  /*
+  /**
    * Check to see if the current character is the end of input.
    * @return true if at end of input.
    */
   bool eof() const { return !*current; }
 };
 
-/*
+/**
  * Essentially implements a simple Tcl parser, with some exceptions.
  *
  * Takes a string and farily efficiently converts it in to a series of
@@ -276,14 +276,14 @@ class tokenizer {
   tokenizer() : callback(0), error(0) {}
   virtual ~tokenizer() {}
 
-  /*
+  /**
    * Set the current callback handler. There can only be one at a time.
    * To unset, call this with null.
    * @param callback An object to receive the argv callbacks.
    */
   void set_handler(tokenizer_callback* callback) { this->callback = callback; }
 
-  /*
+  /**
    * Evaluate some input, return true if there were no errors, and issue
    * callbacks at command separators (if a callback is registered).
    * @return true if no errors, parse or errors returned by commands.
@@ -302,27 +302,27 @@ class tokenizer {
     return current.good();
   }
 
-  /*
+  /**
    * Returns the line number that the command started on.
    * @return The line number that the command started on.
    */
   int get_command_line_number() const { return command_start_line; }
 
-  /*
+  /**
    * Returns the current line number, useful when there was a parse
    * error.
    * @return The current line number.
    */
   int get_current_line_number() const { return current.get_line(); }
 
-  /*
+  /**
    * Returns an error string if there was a parse error, or null if the
    * error came from a callback.
    * @return Error message or null if no parse error.
    */
   const char* get_error_string() { return error; }
 
-  /*
+  /**
    * Returns how many characters of the current line have been read.
    * @return The current offset.
    */
@@ -334,7 +334,7 @@ class tokenizer {
     current.invalidate();
   }
 
-  /*
+  /**
    * Parses a command, at least one word. Calls the callback handler.
    */
   void parse_command() {
@@ -375,7 +375,7 @@ class tokenizer {
     }
   }
 
-  /*
+  /**
    * Parse the next word, return false when a command separator is
    * encountered.
    * @return false if a command separator is encountered.
@@ -425,7 +425,7 @@ class tokenizer {
     return !at_end_of_command();
   }
 
-  /*
+  /**
    * Store a word that doesn't start with { or " in to argv.back().
    */
   void read_normal_word(std::vector<std::string>& argv) {
@@ -455,7 +455,7 @@ class tokenizer {
     } while (!current.eof() && !isspace(current.get()));
   }
 
-  /*
+  /**
    * @return true if at command separator.
    */
   bool at_end_of_command() {
@@ -480,7 +480,7 @@ class tokenizer {
     return true;
   }
 
-  /*
+  /**
    * Read a word which is quoted via the given quote character.
    */
   void read_quoted_string(std::vector<std::string>& argv, char quote_char) {
@@ -510,7 +510,7 @@ class tokenizer {
     current.increment();  // consume quote_char
   }
 
-  /*
+  /**
    * The current character is a backslash, return the next character
    * converting it if necessary.  Special codes become new characters
    * here and are returned as them. Braces and quotes lose special
@@ -564,7 +564,7 @@ class tokenizer {
     return ret;
   }
 
-  /*
+  /**
    * Read a word enclosed in braces. Brace levels must match unless
    * braces are escaped.
    */
@@ -611,7 +611,7 @@ class tokenizer {
     }
   }
 
-  /*
+  /**
    * Skip whitespace and a comment (to the end of the line) if a pound
    * sign is encountered.
    */
@@ -629,7 +629,7 @@ class tokenizer {
     }
   }
 
-  /*
+  /**
    * Read until first non-whitespace character.
    */
   void skip_whitespace() {
@@ -638,7 +638,7 @@ class tokenizer {
     }
   }
 
-  /*
+  /**
    * Read until newline and consume the newline.
    */
   void skip_to_end_of_line() {

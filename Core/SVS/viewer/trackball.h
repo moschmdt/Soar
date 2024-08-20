@@ -1,4 +1,4 @@
-/*
+/**
  * (c) Copyright 1993, 1994, Silicon Graphics, Inc.
  * ALL RIGHTS RESERVED
  * Permission to use, copy, modify, and distribute this software for
@@ -34,7 +34,7 @@
  *
  * OpenGL(TM) is a trademark of Silicon Graphics, Inc.
  */
-/*
+/**
  * trackball.h
  * A virtual trackball implementation
  * Written by Gavin Bell for Silicon Graphics, November 1988.
@@ -43,7 +43,7 @@
 #ifndef TRACKBALL_H
 #define TRACKBALL_H
 
-/*
+/**
  * Pass the x and y coordinates of the last and current positions of
  * the mouse, scaled so they are from (-1.0 ... 1.0).
  *
@@ -53,7 +53,7 @@
 void trackball(double q[4], double sz, double p1x, double p1y, double p2x,
                double p2y);
 
-/*
+/**
  * Given two quaternions, add them together to get a third quaternion.
  * Adding quaternions to get a compound rotation is analagous to adding
  * translations to get a compound translation.  When incrementally
@@ -63,17 +63,17 @@ void trackball(double q[4], double sz, double p1x, double p1y, double p2x,
  */
 void add_quats(const double q1[4], const double q2[4], double dest[4]);
 
-/*
+/**
  * A useful function, builds a rotation matrix in Matrix based on
  * given quaternion.
  */
 void build_rotmatrix(double m[4][4], const double q[4]);
 
-/*
+/**
  * This function computes a quaternion based on an axis (defined by
  * the given vector) and an angle about which to rotate.  The angle is
  * expressed in radians.  The result is put into the third argument.
  */
 void axis_to_quat(const double a[3], double phi, double q[4]);
 
-#endif /* TRACKBALL_H */
+#endif /** TRACKBALL_H */

@@ -23,7 +23,7 @@ struct traits<FullPivLU<_MatrixType> > : traits<_MatrixType> {
 
 }  // end namespace internal
 
-/* \ingroup LU_Module
+/** \ingroup LU_Module
  *
  * \class FullPivLU
  *
@@ -84,7 +84,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
       PermutationPType;
   typedef typename MatrixType::PlainObject PlainObject;
 
-  /*
+  /**
    * \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
@@ -92,7 +92,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
    */
   FullPivLU();
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -100,7 +100,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
    */
   FullPivLU(Index rows, Index cols);
 
-  /* Constructor.
+  /** Constructor.
    *
    * \param matrix the matrix of which to compute the LU decomposition.
    *               It is required to be nonzero.
@@ -108,7 +108,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
   template <typename InputType>
   explicit FullPivLU(const EigenBase<InputType>& matrix);
 
-  /* \brief Constructs a LU factorization from a given matrix
+  /** \brief Constructs a LU factorization from a given matrix
    *
    * This overloaded constructor is provided for \link InplaceDecomposition
    * inplace decomposition \endlink when \c MatrixType is a Eigen::Ref.
@@ -118,7 +118,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
   template <typename InputType>
   explicit FullPivLU(EigenBase<InputType>& matrix);
 
-  /* Computes the LU decomposition of the given matrix.
+  /** Computes the LU decomposition of the given matrix.
    *
    * \param matrix the matrix of which to compute the LU decomposition.
    *               It is required to be nonzero.
@@ -132,7 +132,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return *this;
   }
 
-  /* \returns the LU decomposition matrix: the upper-triangular part is U, the
+  /** \returns the LU decomposition matrix: the upper-triangular part is U, the
    * unit-lower-triangular part is L (at least for square matrices; in the
    * non-square case, special care is needed, see the documentation of class
    * FullPivLU).
@@ -144,7 +144,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return m_lu;
   }
 
-  /* \returns the number of nonzero pivots in the LU decomposition.
+  /** \returns the number of nonzero pivots in the LU decomposition.
    * Here nonzero is meant in the exact sense, not in a fuzzy sense.
    * So that notion isn't really intrinsically interesting, but it is
    * still useful when implementing algorithms.
@@ -156,12 +156,12 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return m_nonzero_pivots;
   }
 
-  /* \returns the absolute value of the biggest pivot, i.e. the biggest
+  /** \returns the absolute value of the biggest pivot, i.e. the biggest
    *          diagonal coefficient of U.
    */
   RealScalar maxPivot() const { return m_maxpivot; }
 
-  /* \returns the permutation matrix P
+  /** \returns the permutation matrix P
    *
    * \sa permutationQ()
    */
@@ -170,7 +170,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return m_p;
   }
 
-  /* \returns the permutation matrix Q
+  /** \returns the permutation matrix Q
    *
    * \sa permutationP()
    */
@@ -179,7 +179,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return m_q;
   }
 
-  /* \returns the kernel of the matrix, also called its null-space. The columns
+  /** \returns the kernel of the matrix, also called its null-space. The columns
    * of the returned matrix will form a basis of the kernel.
    *
    * \note If the kernel has dimension zero, then the returned matrix is a
@@ -199,7 +199,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return internal::kernel_retval<FullPivLU>(*this);
   }
 
-  /* \returns the image of the matrix, also called its column-space. The
+  /** \returns the image of the matrix, also called its column-space. The
    * columns of the returned matrix will form a basis of the image
    * (column-space).
    *
@@ -227,7 +227,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* \return a solution x to the equation Ax=b, where A is the matrix of which
+  /** \return a solution x to the equation Ax=b, where A is the matrix of which
    * *this is the LU decomposition.
    *
    * \param b the right-hand-side of the equation to solve. Can be a vector or a
@@ -251,7 +251,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
   inline const Solve<FullPivLU, Rhs> solve(const MatrixBase<Rhs>& b) const;
 #endif
 
-  /* \returns an estimate of the reciprocal condition number of the matrix of
+  /** \returns an estimate of the reciprocal condition number of the matrix of
      which \c *this is the LU decomposition.
     */
   inline RealScalar rcond() const {
@@ -259,7 +259,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return internal::rcond_estimate_helper(m_l1_norm, *this);
   }
 
-  /* \returns the determinant of the matrix of which
+  /** \returns the determinant of the matrix of which
    * *this is the LU decomposition. It has only linear complexity
    * (that is, O(n) where n is the dimension of the square matrix)
    * as the LU decomposition has already been computed.
@@ -276,7 +276,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
    */
   typename internal::traits<MatrixType>::Scalar determinant() const;
 
-  /* Allows to prescribe a threshold to be used by certain methods, such as
+  /** Allows to prescribe a threshold to be used by certain methods, such as
    * rank(), who need to determine when pivots are to be considered nonzero.
    * This is not used for the LU decomposition itself.
    *
@@ -300,7 +300,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return *this;
   }
 
-  /* Allows to come back to the default behavior, letting Eigen use its default
+  /** Allows to come back to the default behavior, letting Eigen use its default
    * formula for determining the threshold.
    *
    * You should pass the special object Eigen::Default as parameter here.
@@ -313,7 +313,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return *this;
   }
 
-  /* Returns the threshold that will be used by certain methods such as rank().
+  /** Returns the threshold that will be used by certain methods such as rank().
    *
    * See the documentation of setThreshold(const RealScalar&).
    */
@@ -327,7 +327,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
                : NumTraits<Scalar>::epsilon() * RealScalar(m_lu.diagonalSize());
   }
 
-  /* \returns the rank of the matrix of which *this is the LU decomposition.
+  /** \returns the rank of the matrix of which *this is the LU decomposition.
    *
    * \note This method has to determine which pivots should be considered
    * nonzero. For that, it uses the threshold value that you can control by
@@ -343,7 +343,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return result;
   }
 
-  /* \returns the dimension of the kernel of the matrix of which *this is the
+  /** \returns the dimension of the kernel of the matrix of which *this is the
    * LU decomposition.
    *
    * \note This method has to determine which pivots should be considered
@@ -355,7 +355,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return cols() - rank();
   }
 
-  /* \returns true if the matrix of which *this is the LU decomposition
+  /** \returns true if the matrix of which *this is the LU decomposition
    * represents an injective linear map, i.e. has trivial kernel; false
    * otherwise.
    *
@@ -368,7 +368,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return rank() == cols();
   }
 
-  /* \returns true if the matrix of which *this is the LU decomposition
+  /** \returns true if the matrix of which *this is the LU decomposition
    * represents a surjective linear map; false otherwise.
    *
    * \note This method has to determine which pivots should be considered
@@ -380,7 +380,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return rank() == rows();
   }
 
-  /* \returns true if the matrix of which *this is the LU decomposition is
+  /** \returns true if the matrix of which *this is the LU decomposition is
    * invertible.
    *
    * \note This method has to determine which pivots should be considered
@@ -392,7 +392,7 @@ class FullPivLU : public SolverBase<FullPivLU<_MatrixType> > {
     return isInjective() && (m_lu.rows() == m_lu.cols());
   }
 
-  /* \returns the inverse of the matrix of which *this is the LU decomposition.
+  /** \returns the inverse of the matrix of which *this is the LU decomposition.
    *
    * \note If this matrix is not invertible, the returned matrix has undefined
    * coefficients. Use isInvertible() to first determine whether this matrix is
@@ -594,7 +594,7 @@ FullPivLU<MatrixType>::determinant() const {
   return Scalar(m_det_pq) * Scalar(m_lu.diagonal().prod());
 }
 
-/* \returns the matrix represented by the decomposition,
+/** \returns the matrix represented by the decomposition,
  * i.e., it returns the product: \f$ P^{-1} L U Q^{-1} \f$.
  * This function is provided for debug purposes. */
 template <typename MatrixType>
@@ -618,7 +618,7 @@ MatrixType FullPivLU<MatrixType>::reconstructedMatrix() const {
   return res;
 }
 
-/* Implementation of kernel()
+/** Implementation of kernel()
  * */
 
 namespace internal {
@@ -645,7 +645,7 @@ struct kernel_retval<FullPivLU<_MatrixType> >
       return;
     }
 
-    /* Let us use the following lemma:
+    /** Let us use the following lemma:
      *
      * Lemma: If the matrix A has the LU decomposition PAQ = LU,
      * then Ker A = Q(Ker U).
@@ -653,7 +653,7 @@ struct kernel_retval<FullPivLU<_MatrixType> >
      * Proof: trivial: just keep in mind that P, Q, L are invertible.
      */
 
-    /* Thus, all we need to do is to compute Ker U, and then apply Q.
+    /** Thus, all we need to do is to compute Ker U, and then apply Q.
      *
      * U is upper triangular, with eigenvalues sorted so that any zeros appear
      * at the end. Thus, the diagonal of U ends with exactly dimKer zero's. Let
@@ -712,7 +712,7 @@ struct kernel_retval<FullPivLU<_MatrixType> >
   }
 };
 
-/* Implementation of image()
+/** Implementation of image()
  * */
 
 template <typename _MatrixType>
@@ -751,7 +751,7 @@ struct image_retval<FullPivLU<_MatrixType> >
   }
 };
 
-/* Implementation of solve()
+/** Implementation of solve()
  * */
 
 }  // end namespace internal
@@ -761,7 +761,7 @@ template <typename _MatrixType>
 template <typename RhsType, typename DstType>
 void FullPivLU<_MatrixType>::_solve_impl(const RhsType& rhs,
                                          DstType& dst) const {
-  /* The decomposition PAQ = LU can be rewritten as A = P^{-1} L U Q^{-1}.
+  /** The decomposition PAQ = LU can be rewritten as A = P^{-1} L U Q^{-1}.
    * So we proceed as follows:
    * Step 1: compute c = P * rhs.
    * Step 2: replace c by the solution x to Lx = c. Exists because L is
@@ -806,7 +806,7 @@ template <typename _MatrixType>
 template <bool Conjugate, typename RhsType, typename DstType>
 void FullPivLU<_MatrixType>::_solve_impl_transposed(const RhsType& rhs,
                                                     DstType& dst) const {
-  /* The decomposition PAQ = LU can be rewritten as A = P^{-1} L U Q^{-1},
+  /** The decomposition PAQ = LU can be rewritten as A = P^{-1} L U Q^{-1},
    * and since permutations are real and unitary, we can write this
    * as   A^T = Q U^T L^T P,
    * So we proceed as follows:
@@ -857,7 +857,7 @@ void FullPivLU<_MatrixType>::_solve_impl_transposed(const RhsType& rhs,
 
 namespace internal {
 
-/* Implementation of inverse()
+/** Implementation of inverse()
  * */
 template <typename DstXprType, typename MatrixType>
 struct Assignment<DstXprType, Inverse<FullPivLU<MatrixType> >,
@@ -875,10 +875,10 @@ struct Assignment<DstXprType, Inverse<FullPivLU<MatrixType> >,
 };
 }  // end namespace internal
 
-/* MatrixBase methods
+/** MatrixBase methods
  * */
 
-/* \lu_module
+/** \lu_module
  *
  * \return the full-pivoting LU decomposition of \c *this.
  *

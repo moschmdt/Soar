@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \class CommaInitializer
+/** \class CommaInitializer
  * \ingroup Core_Module
  *
  * \brief Helper class used by the comma initializer operator
@@ -49,7 +49,7 @@ struct CommaInitializer {
     m_xpr.block(0, 0, other.rows(), other.cols()) = other;
   }
 
-  /* Copy/Move constructor which transfers ownership. This is crucial in
+  /** Copy/Move constructor which transfers ownership. This is crucial in
    * absence of return value optimization to avoid assertions during
    * destruction. */
   // FIXME in C++11 mode this could be replaced by a proper RValue constructor
@@ -66,7 +66,7 @@ struct CommaInitializer {
     const_cast<CommaInitializer&>(o).m_currentBlockRows = 0;
   }
 
-  /* inserts a scalar value in the target matrix */
+  /** inserts a scalar value in the target matrix */
   EIGEN_DEVICE_FUNC
   CommaInitializer& operator,(const Scalar& s) {
     if (m_col == m_xpr.cols()) {
@@ -84,7 +84,7 @@ struct CommaInitializer {
     return *this;
   }
 
-  /* inserts a matrix expression in the target matrix */
+  /** inserts a matrix expression in the target matrix */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC CommaInitializer &operator,(
       const DenseBase<OtherDerived>& other) {
@@ -117,7 +117,7 @@ struct CommaInitializer {
     finished();
   }
 
-  /* \returns the built matrix once all its coefficients have been set.
+  /** \returns the built matrix once all its coefficients have been set.
    * Calling finished is 100% optional. Its purpose is to write expressions
    * like this:
    * \code
@@ -139,7 +139,7 @@ struct CommaInitializer {
   Index m_currentBlockRows;  // current block height
 };
 
-/* \anchor MatrixBaseCommaInitRef
+/** \anchor MatrixBaseCommaInitRef
  * Convenient operator to set the coefficients of a matrix.
  *
  * The coefficients must be provided in a row major order and exactly match
@@ -159,7 +159,7 @@ DenseBase<Derived>::operator<<(const Scalar& s) {
   return CommaInitializer<Derived>(*static_cast<Derived*>(this), s);
 }
 
-/* \sa operator<<(const Scalar&) */
+/** \sa operator<<(const Scalar&) */
 template <typename Derived>
 template <typename OtherDerived>
 EIGEN_DEVICE_FUNC inline CommaInitializer<Derived>

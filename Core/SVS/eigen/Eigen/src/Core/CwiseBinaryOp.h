@@ -53,7 +53,7 @@ struct traits<CwiseBinaryOp<BinaryOp, Lhs, Rhs> > {
 template <typename BinaryOp, typename Lhs, typename Rhs, typename StorageKind>
 class CwiseBinaryOpImpl;
 
-/* \class CwiseBinaryOp
+/** \class CwiseBinaryOp
  * \ingroup Core_Module
  *
  * \brief Generic expression where a coefficient-wise binary operator is applied
@@ -137,15 +137,15 @@ class CwiseBinaryOp
                : m_lhs.cols();
   }
 
-  /* \returns the left hand side nested expression */
+  /** \returns the left hand side nested expression */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const _LhsNested& lhs() const {
     return m_lhs;
   }
-  /* \returns the right hand side nested expression */
+  /** \returns the right hand side nested expression */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const _RhsNested& rhs() const {
     return m_rhs;
   }
-  /* \returns the functor representing the binary operation */
+  /** \returns the functor representing the binary operation */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const BinaryOp& functor() const {
     return m_functor;
   }
@@ -165,7 +165,7 @@ class CwiseBinaryOpImpl : public internal::generic_xpr_base<
       CwiseBinaryOp<BinaryOp, Lhs, Rhs> >::type Base;
 };
 
-/* replaces \c *this by \c *this - \a other.
+/** replaces \c *this by \c *this - \a other.
  *
  * \returns a reference to \c *this
  */
@@ -179,7 +179,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& MatrixBase<Derived>::operator-=(
   return derived();
 }
 
-/* replaces \c *this by \c *this + \a other.
+/** replaces \c *this by \c *this + \a other.
  *
  * \returns a reference to \c *this
  */

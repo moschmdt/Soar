@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
 
 namespace Eigen {
 
-/* \internal Specialization for the data types supported by LAPACKe */
+/** \internal Specialization for the data types supported by LAPACKe */
 
 #define EIGEN_LAPACKE_EIG_SELFADJ_2(EIGTYPE, LAPACKE_TYPE, LAPACKE_RTYPE,   \
                                     LAPACKE_NAME, EIGCOLROW)                \
@@ -67,7 +67,7 @@ namespace Eigen {
     }                                                                       \
                                                                             \
     lda = internal::convert_index<lapack_int>(m_eivec.outerStride());       \
-    char jobz, uplo = 'L' /*, range='A'*/;                                  \
+    char jobz, uplo = 'L' /**, range='A'*/;                                  \
     jobz = computeEigenvectors ? 'V' : 'N';                                 \
                                                                             \
     info = LAPACKE_##LAPACKE_NAME(LAPACK_COL_MAJOR, jobz, uplo, n,          \

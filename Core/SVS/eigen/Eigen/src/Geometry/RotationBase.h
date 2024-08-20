@@ -19,7 +19,7 @@ template <typename RotationDerived, typename MatrixType,
 struct rotation_base_generic_product_selector;
 }
 
-/* \class RotationBase
+/** \class RotationBase
  *
  * \brief Common base class for compact rotation representations
  *
@@ -30,10 +30,10 @@ template <typename Derived, int _Dim>
 class RotationBase {
  public:
   enum { Dim = _Dim };
-  /* the scalar type of the coefficients */
+  /** the scalar type of the coefficients */
   typedef typename internal::traits<Derived>::Scalar Scalar;
 
-  /* corresponding linear transformation matrix type */
+  /** corresponding linear transformation matrix type */
   typedef Matrix<Scalar, Dim, Dim> RotationMatrixType;
   typedef Matrix<Scalar, Dim, 1> VectorType;
 
@@ -45,12 +45,12 @@ class RotationBase {
     return *static_cast<Derived*>(this);
   }
 
-  /* \returns an equivalent rotation matrix */
+  /** \returns an equivalent rotation matrix */
   EIGEN_DEVICE_FUNC inline RotationMatrixType toRotationMatrix() const {
     return derived().toRotationMatrix();
   }
 
-  /* \returns an equivalent rotation matrix
+  /** \returns an equivalent rotation matrix
    * This function is added to be conform with the Transform class' naming
    * scheme.
    */
@@ -58,26 +58,26 @@ class RotationBase {
     return derived().toRotationMatrix();
   }
 
-  /* \returns the inverse rotation */
+  /** \returns the inverse rotation */
   EIGEN_DEVICE_FUNC inline Derived inverse() const {
     return derived().inverse();
   }
 
-  /* \returns the concatenation of the rotation \c *this with a translation \a
+  /** \returns the concatenation of the rotation \c *this with a translation \a
    * t */
   EIGEN_DEVICE_FUNC inline Transform<Scalar, Dim, Isometry> operator*(
       const Translation<Scalar, Dim>& t) const {
     return Transform<Scalar, Dim, Isometry>(*this) * t;
   }
 
-  /* \returns the concatenation of the rotation \c *this with a uniform scaling
+  /** \returns the concatenation of the rotation \c *this with a uniform scaling
    * \a s */
   EIGEN_DEVICE_FUNC inline RotationMatrixType operator*(
       const UniformScaling<Scalar>& s) const {
     return toRotationMatrix() * s.factor();
   }
 
-  /* \returns the concatenation of the rotation \c *this with a generic
+  /** \returns the concatenation of the rotation \c *this with a generic
    * expression \a e \a e can be:
    *  - a DimxDim linear transformation matrix
    *  - a DimxDim diagonal matrix (axis aligned scaling)
@@ -93,7 +93,7 @@ class RotationBase {
         Derived, OtherDerived>::run(derived(), e.derived());
   }
 
-  /* \returns the concatenation of a linear transformation \a l with the
+  /** \returns the concatenation of a linear transformation \a l with the
    * rotation \a r */
   template <typename OtherDerived>
   friend EIGEN_DEVICE_FUNC inline RotationMatrixType operator*(
@@ -101,7 +101,7 @@ class RotationBase {
     return l.derived() * r.toRotationMatrix();
   }
 
-  /* \returns the concatenation of a scaling \a l with the rotation \a r */
+  /** \returns the concatenation of a scaling \a l with the rotation \a r */
   EIGEN_DEVICE_FUNC friend inline Transform<Scalar, Dim, Affine> operator*(
       const DiagonalMatrix<Scalar, Dim>& l, const Derived& r) {
     Transform<Scalar, Dim, Affine> res(r);
@@ -109,7 +109,7 @@ class RotationBase {
     return res;
   }
 
-  /* \returns the concatenation of the rotation \c *this with a transformation
+  /** \returns the concatenation of the rotation \c *this with a transformation
    * \a t */
   template <int Mode, int Options>
   EIGEN_DEVICE_FUNC inline Transform<Scalar, Dim, Mode> operator*(
@@ -163,7 +163,7 @@ struct rotation_base_generic_product_selector<RotationDerived, OtherVectorType,
 
 }  // end namespace internal
 
-/* \geometry_module
+/** \geometry_module
  *
  * \brief Constructs a Dim x Dim rotation matrix from the rotation \a r
  */
@@ -178,7 +178,7 @@ Matrix<_Scalar, _Rows, _Cols, _Storage, _MaxRows, _MaxCols>::Matrix(
   *this = r.toRotationMatrix();
 }
 
-/* \geometry_module
+/** \geometry_module
  *
  * \brief Set a Dim x Dim rotation matrix from the rotation \a r
  */
@@ -195,7 +195,7 @@ Matrix<_Scalar, _Rows, _Cols, _Storage, _MaxRows, _MaxCols>::operator=(
 
 namespace internal {
 
-/* \internal
+/** \internal
  *
  * Helper function to return an arbitrary rotation object to a rotation matrix.
  *

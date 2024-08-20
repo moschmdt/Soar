@@ -1,4 +1,4 @@
-/*
+/**
  * instantiation_record.h
  *
  *  Created on: Apr 22, 2016
@@ -67,4 +67,4 @@ class instantiation_record {
   void viz_connect_conditions(bool isChunkInstantiation = false);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_INSTANTIATION_RECORD_H_ */
+#endif /** CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_INSTANTIATION_RECORD_H_ */

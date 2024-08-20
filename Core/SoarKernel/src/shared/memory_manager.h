@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *
  *  file:  memory_manager.h
  *
@@ -49,25 +49,25 @@
 #define NUM_MEM_USAGE_CODES 5
 
 typedef struct memory_pool_struct {
-  void* free_list; /* header of chain of free items */
+  void* free_list; /** header of chain of free items */
   MemoryPoolType index;
   size_t
-      used_count;   /* used for statistics only when #def'd MEMORY_POOL_STATS */
-  size_t item_size; /* bytes per item */
-  size_t items_per_block; /* number of items in each big block */
-  size_t num_blocks;      /* number of big blocks in use by this pool */
-  void* first_block;      /* header of chain of blocks */
-  char name[MAX_POOL_NAME_LENGTH]; /* name of the pool (for memory-stats) */
+      used_count;   /** used for statistics only when #def'd MEMORY_POOL_STATS */
+  size_t item_size; /** bytes per item */
+  size_t items_per_block; /** number of items in each big block */
+  size_t num_blocks;      /** number of big blocks in use by this pool */
+  void* first_block;      /** header of chain of blocks */
+  char name[MAX_POOL_NAME_LENGTH]; /** name of the pool (for memory-stats) */
   bool initialized;
-  struct memory_pool_struct* next; /* next in list of all memory pools */
+  struct memory_pool_struct* next; /** next in list of all memory pools */
   memory_pool_struct() : initialized(false) {}
 } memory_pool;
 
-/* ----------------------- */
-/* basic memory allocation */
-/* ----------------------- */
+/** ----------------------- */
+/** basic memory allocation */
+/** ----------------------- */
 
-/* Note:  DEBUG_MEMORY currently does nothing on allocation. It previously
+/** Note:  DEBUG_MEMORY currently does nothing on allocation. It previously
  * filled with zero's on allocation and 0xbbb on deallocation.  The reasoning is
  * that filling with zeroes on allocation seems to hide uninitialization
  * variable bugs, though I suppose if you suspect that an uninitialized variable
@@ -80,7 +80,7 @@ inline void fill_with_garbage(T* block, size_t size) {
   memset(static_cast<void*>(block), 0xBB, (size));
   //        memset(static_cast<void*>(block), 0, (size));
 }
-/* Disabling the fill with zeros part since that may actually hide bugs */
+/** Disabling the fill with zeros part since that may actually hide bugs */
 #define fill_with_zeroes(block, size) \
   {}
 
@@ -115,10 +115,10 @@ inline void decrement_used_count(P p) {
 #define decrement_used_count(p) \
   {}
 
-#endif /* MEMORY_POOL_STATS */
+#endif /** MEMORY_POOL_STATS */
 
 class Memory_Manager {
-  /* CLI is a friend because it prints out mempool stats */
+  /** CLI is a friend because it prints out mempool stats */
   friend class cli::CommandLineInterface;
 
  public:
@@ -151,7 +151,7 @@ class Memory_Manager {
  private:
   Memory_Manager();
 
-  /* The following two functions are declared but not implemented to avoid
+  /** The following two functions are declared but not implemented to avoid
    * copies of singletons */
   Memory_Manager(Memory_Manager const&){};
   void operator=(Memory_Manager const&){};
@@ -283,7 +283,7 @@ class Memory_Manager {
 #endif  // !MEM_POOLS_ENABLED
   }
   //
-  //        /* Memory pools */
+  //        /** Memory pools */
   //        memory_pool         float_constant_pool;
   //        memory_pool         identifier_pool;
   //        memory_pool         int_constant_pool;
@@ -300,7 +300,7 @@ class Memory_Manager {
   //        memory_pool         slot_pool;
   //        memory_pool         gds_pool;
   //
-  //        /* ----------------------- Misc. top-level stuff
+  //        /** ----------------------- Misc. top-level stuff
   //        -------------------------- */
   //
   //        memory_pool         action_pool;
@@ -310,13 +310,13 @@ class Memory_Manager {
   //        memory_pool         production_pool;
   //        memory_pool         rhs_symbol_pool;
   //
-  //        /* ----------------------- Reorderer stuff
+  //        /** ----------------------- Reorderer stuff
   //        -------------------------- */
   //
   //        memory_pool         saved_test_pool;
   //
-  //        memory_pool         cons_cell_pool; /* pool for cons cells */
-  //        memory_pool         dl_cons_pool;   /* doubly-linked list cells */
+  //        memory_pool         cons_cell_pool; /** pool for cons cells */
+  //        memory_pool         dl_cons_pool;   /** doubly-linked list cells */
   //
   //        memory_pool         rete_node_pool;
   //        memory_pool         rete_test_pool;

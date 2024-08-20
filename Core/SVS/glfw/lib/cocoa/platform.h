@@ -48,7 +48,7 @@ typedef void *id;
 
 typedef const GLubyte *(APIENTRY *PFNGLGETSTRINGIPROC)(GLenum, GLuint);
 
-#endif /*GL_VERSION_3_0*/
+#endif /**GL_VERSION_3_0*/
 
 //========================================================================
 // GLFW platform specific types

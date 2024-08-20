@@ -1,4 +1,4 @@
-/*
+/**
  * semantic_memory_math_queries.h
  *
  *  Created on: Feb 12, 2014
@@ -279,4 +279,4 @@ class MathQueryMin : public MathQuery {
   }
 };
 
-#endif /* SEMANTIC_MEMORY_MATH_QUERIES_H_ */
+#endif /** SEMANTIC_MEMORY_MATH_QUERIES_H_ */

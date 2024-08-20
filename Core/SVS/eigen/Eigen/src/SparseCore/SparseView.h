@@ -24,7 +24,7 @@ struct traits<SparseView<MatrixType> > : traits<MatrixType> {
 
 }  // end namespace internal
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  * \class SparseView
  *
  * \brief Expression of a dense or sparse matrix with zero or too small values
@@ -63,7 +63,7 @@ class SparseView : public SparseMatrixBase<SparseView<MatrixType> > {
   inline Index innerSize() const { return m_matrix.innerSize(); }
   inline Index outerSize() const { return m_matrix.outerSize(); }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   const typename internal::remove_all<MatrixTypeNested>::type&
   nestedExpression() const {
     return m_matrix;
@@ -209,7 +209,7 @@ struct unary_evaluator<SparseView<ArgType>, IndexBased>
 
 }  // end namespace internal
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  *
  * \returns a sparse expression of the dense expression \c *this with values
  * smaller than \a reference * \a epsilon removed.
@@ -233,7 +233,7 @@ const SparseView<Derived> MatrixBase<Derived>::sparseView(
   return SparseView<Derived>(derived(), reference, epsilon);
 }
 
-/* \returns an expression of \c *this with values smaller than
+/** \returns an expression of \c *this with values smaller than
  * \a reference * \a epsilon removed.
  *
  * This method is typically used in conjunction with the product of two sparse

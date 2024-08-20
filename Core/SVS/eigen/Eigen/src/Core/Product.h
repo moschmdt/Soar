@@ -62,7 +62,7 @@ struct traits<Product<Lhs, Rhs, Option> > {
 
 }  // end namespace internal
 
-/* \class Product
+/** \class Product
  * \ingroup Core_Module
  *
  * \brief Expression of the product of two arbitrary matrices or vectors
@@ -135,7 +135,7 @@ template <typename Lhs, typename Rhs, int Option,
 class dense_product_base
     : public internal::dense_xpr_base<Product<Lhs, Rhs, Option> >::type {};
 
-/* Conversion to scalar for inner-products */
+/** Conversion to scalar for inner-products */
 template <typename Lhs, typename Rhs, int Option>
 class dense_product_base<Lhs, Rhs, Option, InnerProduct>
     : public internal::dense_xpr_base<Product<Lhs, Rhs, Option> >::type {

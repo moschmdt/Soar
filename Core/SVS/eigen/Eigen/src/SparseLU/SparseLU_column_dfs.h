@@ -7,7 +7,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
 
  * NOTE: This file is the modified version of [s,d,c,z]column_dfs.c file in
  SuperLU
@@ -46,7 +46,7 @@ struct column_dfs_traits : no_assignment_operator {
       typename SparseLUImpl<Scalar, StorageIndex>::GlobalLU_t& glu,
       SparseLUImpl<Scalar, StorageIndex>& luImpl)
       : m_jcol(jcol), m_jsuper_ref(jsuper), m_glu(glu), m_luImpl(luImpl) {}
-  bool update_segrep(Index /*krep*/, Index /*jj*/) { return true; }
+  bool update_segrep(Index /**krep*/, Index /**jj*/) { return true; }
   void mem_expand(IndexVector& lsub, Index& nextl, Index chmark) {
     if (nextl >= m_glu.nzlmax)
       m_luImpl.memXpand(lsub, m_glu.nzlmax, nextl, LSUB, m_glu.num_expansions);
@@ -60,7 +60,7 @@ struct column_dfs_traits : no_assignment_operator {
   SparseLUImpl<Scalar, StorageIndex>& m_luImpl;
 };
 
-/*
+/**
  * \brief Performs a symbolic factorization on column jcol and decide the
  * supernode boundary
  *
@@ -129,7 +129,7 @@ Index SparseLUImpl<Scalar, StorageIndex>::column_dfs(
     // exceed threshold
     if ((jcol - fsupc) >= maxsuper) jsuper = emptyIdxLU;
 
-    /* If jcol starts a new supernode, reclaim storage space in
+    /** If jcol starts a new supernode, reclaim storage space in
      * glu.lsub from previous supernode. Note we only store
      * the subscript set of the first and last columns of
      * a supernode. (first for num values, last for pruning)

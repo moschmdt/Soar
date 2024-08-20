@@ -105,7 +105,7 @@ class EXPORT WMElement {
 
   Agent* GetAgent() { return m_Agent; }
 
-  /*
+  /**
    * @brief Schedules a WME from deletion from the input link and removes
    *        it from the client's model of working memory.
    *

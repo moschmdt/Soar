@@ -6,7 +6,7 @@
 //
 // This class's HandleEvent method is called when
 // specific events occur within the kernel:
-/*
+/**
  *      // System events
  *      smlEVENT_BEFORE_SHUTDOWN            = 1,
  *      smlEVENT_AFTER_CONNECTION_LOST,

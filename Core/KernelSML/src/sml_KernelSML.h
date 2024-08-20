@@ -144,7 +144,7 @@ class EXPORT KernelSML {
 
   int GetInterruptCheckRate() { return m_InterruptCheckRate; }
 
-  /*
+  /**
    * @brief    Creates the singleton kernel object
    *           and starts listening for incoming commands on the
    *           given port.
@@ -153,7 +153,7 @@ class EXPORT KernelSML {
 
   int GetListenerPort();
 
-  /*
+  /**
    * @brief    Handy utility function for dumping output to the
    *           debugger.
    */
@@ -173,19 +173,19 @@ class EXPORT KernelSML {
  public:
   ~KernelSML(void);
 
-  /*
+  /**
    * @brief    Shutdown any connections and sockets in preparation
    *           for the kernel process exiting.
    */
   void Shutdown();
 
-  /*
+  /**
    * @brief    Add a new connection to the list of connections
    *           we're aware of to this soar kernel.
    */
   void AddConnection(Connection* pConnection);
 
-  /*
+  /**
    * @brief    Add or remove a connection from the list listening
    *           for a particular event in the kernel.
    */
@@ -214,38 +214,38 @@ class EXPORT KernelSML {
     m_StringListener.RemoveListener(eventID, pConnection);
   }
 
-  /*
+  /**
    * @brief    Notify listeners that this event has occured.
    */
   void FireUpdateListenerEvent(smlUpdateEventId eventID, int runFlags) {
     m_UpdateListener.OnKernelEvent(eventID, 0, &runFlags);
   }
 
-  /*
+  /**
    * @brief    Notify listeners that this event has occured.
    */
   void FireSystemEvent(smlSystemEventId eventID) {
     m_SystemListener.OnKernelEvent(eventID, 0, 0);
   }
 
-  /*
+  /**
    * @brief    Notify listeners that this event has occured.
    */
   void FireAgentEvent(AgentSML* pAgentSML, smlAgentEventId eventID) {
     m_AgentListener.OnEvent(eventID, pAgentSML);
   }
 
-  /*
+  /**
    * @brief    Notify listeners that this event has occured.
    */
   std::string FireLoadLibraryEvent(char const* pLibraryCommand);
 
-  /*
+  /**
    * @brief  Notify listeners that this event has occured.
    */
   std::string FireCliExtensionMessageEvent(char const* pCliExtCommand);
 
-  /*
+  /**
    * @brief    Add or remove a connection from the list implementing
    *           a particular rhs function in the kernel.
    */
@@ -262,7 +262,7 @@ class EXPORT KernelSML {
                                            arguments, pResult);
   }
 
-  /*
+  /**
    * @brief    Send this message out to any clients that are listening.
    *           These messages are from one client to another--kernelSML is just
    *           facilitating the message passing process without knowing/caring
@@ -271,7 +271,7 @@ class EXPORT KernelSML {
   std::string SendClientMessage(AgentSML* pAgentSML, char const* pMessageType,
                                 char const* pMessage);
 
-  /*
+  /**
    * @brief    Send this command line out to all clients that have
    *           registered a filter.  The result is the processed
    *           version of the command line.
@@ -279,25 +279,25 @@ class EXPORT KernelSML {
   bool SendFilterMessage(AgentSML* pAgent, char const* pCommandLine,
                          std::string* pResult);
 
-  /*
+  /**
    * @brief    Returns true if at least one filter is registered.
    */
   bool HasFilterRegistered();
 
-  /*
+  /**
    * @brief Convert from a string version of an event to the int (enum) version.
    *        Returns smlEVENT_INVALID_EVENT (== 0) if the string is not
    *recognized.
    */
   int ConvertStringToEvent(char const* pStr);
 
-  /*
+  /**
    * @brief Convert from int version of an event to the string form.
    *        Returns NULL if the id is not recognized.
    */
   char const* ConvertEventToString(int id);
 
-  /*
+  /**
    * @brief Flags used to suppress the firing of system start and
    *        system stop events.
    */
@@ -311,13 +311,13 @@ class EXPORT KernelSML {
     return m_SuppressSystemStop && !m_RequireSystemStop;
   }
 
-  /*
+  /**
    * @brief    Remove any events that this connection was listening to.
    *           Generally do this just prior to deleting the connection.
    */
   void RemoveAllListeners(Connection* pConnection);
 
-  /*
+  /**
    * @brief    Receive and process any messages from remote connections
    *           that are waiting on a socket.
    *           Returning false indicates we should stop checking
@@ -325,7 +325,7 @@ class EXPORT KernelSML {
    */
   bool ReceiveAllMessages();
 
-  /*
+  /**
    * @brief    Stop the thread that is used to receive messages
    *           from remote connections.  We do this when we're
    *           using a "synchronized" embedded connection, which
@@ -334,7 +334,7 @@ class EXPORT KernelSML {
    */
   void StopReceiverThread();
 
-  /*
+  /**
    * @brief Turning this on means we'll start dumping output about messages
    *        being sent and received.  Currently this only applies to remote
    *connections.
@@ -342,7 +342,7 @@ class EXPORT KernelSML {
   void SetTraceCommunications(bool state);
   bool IsTracingCommunications();
 
-  /*
+  /**
    * @brief    Takes an incoming SML message and responds with
    *           an appropriate response message.
    *
@@ -352,17 +352,17 @@ class EXPORT KernelSML {
   soarxml::ElementXML* ProcessIncomingSML(Connection* pConnection,
                                           soarxml::ElementXML* pIncoming);
 
-  /*
+  /**
    * @brief    Look up an agent from its name.
    */
   AgentSML* GetAgentSML(char const* pAgentName);
 
-  /*
+  /**
    * @brief    Returns the number of agents.
    */
   int GetNumberAgents();
 
-  /*
+  /**
    * @brief    Delete the agent sml object for this agent.
    *           This object stores the data SML uses when working
    *           with the underlying gSKI agent.
@@ -370,20 +370,20 @@ class EXPORT KernelSML {
   bool DeleteAgentSML(const char* agentName);
   // bool DeleteAgentSML(agent* pAgent) ;
 
-  /*
+  /**
    * @brief    Stops and deletes all agents.  Generally called
    *           just prior to shutdown.
    */
   void DeleteAllAgents(bool waitTillDeleted);
 
-  /*
+  /**
    * @brief    The run scheduler is responsible for deciding which
    *           agents to include in a run and actually performing
    *           that run.
    */
   RunScheduler* GetRunScheduler() { return m_pRunScheduler; }
 
-  /*
+  /**
    * @brief    Defines which phase we stop before when running by decision.
    *           E.g. Pass input phase to stop just after generating output and
    *before receiving input. This is a setting which modifies the future behavior
@@ -393,7 +393,7 @@ class EXPORT KernelSML {
   smlPhase GetStopBefore();
   top_level_phase ConvertSMLToSoarPhase(smlPhase phase);
 
-  /*
+  /**
    * @brief    If true, whenever a user issues a command that changes the state
    *of the kernel in some manner the command and its results are echoed to
    *anyone listening.  This is useful when two users are debugging the same
@@ -402,7 +402,7 @@ class EXPORT KernelSML {
   void SetEchoCommands(bool state) { m_EchoCommands = state; }
   bool GetEchoCommands() { return m_EchoCommands; }
 
-  /*
+  /**
    * @brief    Request that all agents stop soon
    */
   void InterruptAllAgents(smlStopLocationFlags stopLoc);
@@ -422,25 +422,25 @@ class EXPORT KernelSML {
   KernelSML(int portToListenOn);
 
  protected:
-  /*
+  /**
    * @brief    Return an object* to the caller.
    */
   bool ReturnResult(Connection* pConnection, soarxml::ElementXML* pResponse,
                     char const* pResult);
 
-  /*
+  /**
    * @brief    Return an integer result to the caller.
    */
   bool ReturnIntResult(Connection* pConnection, soarxml::ElementXML* pResponse,
                        int64_t result);
 
-  /*
+  /**
    * @brief    Return a boolean result to the caller.
    */
   bool ReturnBoolResult(Connection* pConnection, soarxml::ElementXML* pResponse,
                         bool result);
 
-  /*
+  /**
    * @brief    Return an invalid argument error to the caller.
    */
   bool InvalidArg(Connection* pConnection, soarxml::ElementXML* pResponse,
@@ -457,7 +457,7 @@ class EXPORT KernelSML {
 
   // Our command handlers
 
-  /*
+  /**
    * @brief    A command handler (SML message->appropriate gSKI handling).
    *
    * @param pAgent         The agent this command is for (can be NULL if the

@@ -1,4 +1,4 @@
-/*
+/**
  * smem_stats.h
  *
  *  Created on: Aug 21, 2016
@@ -60,4 +60,4 @@ class smem_mem_high_stat : public soar_module::integer_stat {
   int64_t get_value();
 };
 
-#endif /* CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_STATS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_STATS_H_ */

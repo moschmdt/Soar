@@ -22,7 +22,7 @@ std::ostream& print_matrix(std::ostream& s, const Derived& _m,
                            const IOFormat& fmt);
 }
 
-/* \class IOFormat
+/** \class IOFormat
  * \ingroup Core_Module
  *
  * \brief Stores a set of parameters controlling the way matrices are printed
@@ -51,7 +51,7 @@ std::ostream& print_matrix(std::ostream& s, const Derived& _m,
  * \sa DenseBase::format(), class WithFormat
  */
 struct IOFormat {
-  /* Default constructor, see class IOFormat for the meaning of the parameters
+  /** Default constructor, see class IOFormat for the meaning of the parameters
    */
   IOFormat(int _precision = StreamPrecision, int _flags = 0,
            const std::string& _coeffSeparator = " ",
@@ -87,7 +87,7 @@ struct IOFormat {
   int flags;
 };
 
-/* \class WithFormat
+/** \class WithFormat
  * \ingroup Core_Module
  *
  * \brief Pseudo expression providing matrix output with given format
@@ -130,7 +130,7 @@ struct significant_decimals_impl {
   static inline int run() { return NumTraits<Scalar>::digits10(); }
 };
 
-/* \internal
+/** \internal
  * print the matrix \a _m to the output stream \a s using the output format \a
  * fmt */
 template <typename Derived>
@@ -220,7 +220,7 @@ std::ostream& print_matrix(std::ostream& s, const Derived& _m,
 
 }  // end namespace internal
 
-/* \relates DenseBase
+/** \relates DenseBase
  *
  * Outputs the matrix, to the given stream.
  *

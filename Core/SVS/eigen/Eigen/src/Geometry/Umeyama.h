@@ -55,7 +55,7 @@ struct umeyama_transform_matrix_type {
 
 #endif
 
-/*
+/**
  * \geometry_module \ingroup Geometry_Module
  *
  * \brief Returns the transformation between two point sets.

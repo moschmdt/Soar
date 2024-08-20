@@ -7,7 +7,7 @@
 // This class's HandleEvent method is called when
 // specific events occur within the agent:
 //
-/*
+/**
  *       smlEVENT_XML_TRACE_OUTPUT
  */
 /////////////////////////////////////////////////////////////////

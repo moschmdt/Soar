@@ -1,4 +1,4 @@
-/* -------------------------------------------------------------------
+/** -------------------------------------------------------------------
                               test.h
 
    Tests in conditions can be blank tests (null), tests for equality
@@ -22,7 +22,7 @@
 template <typename T>
 inline void allocate_cons(agent* thisAgent, T* dest_cons_pointer);
 
-/* -- test_info stores information about a test.  If nil, the test is
+/** -- test_info stores information about a test.  If nil, the test is
  *    considered blank.
  *
  *    The original_test pointer stores the test that was defined when the
@@ -37,11 +37,11 @@ inline void allocate_cons(agent* thisAgent, T* dest_cons_pointer);
  *    constituent test of the conjunctive test has its own identity */
 
 typedef struct test_struct {
-  TestType type; /* see definitions in enums.h */
+  TestType type; /** see definitions in enums.h */
   union test_info_union {
-    Symbol* referent;       /* for relational tests */
-    cons* disjunction_list; /* for disjunction tests */
-    cons* conjunct_list;    /* for conjunctive tests */
+    Symbol* referent;       /** for relational tests */
+    cons* disjunction_list; /** for disjunction tests */
+    cons* conjunct_list;    /** for conjunctive tests */
   } data;
 
   test_struct* eq_test;
@@ -51,11 +51,11 @@ typedef struct test_struct {
   Identity* identity;
 } test_info;
 
-/* --- Note that the test typedef is a *pointer* to a test struct. A test is
+/** --- Note that the test typedef is a *pointer* to a test struct. A test is
  *     considered blank when that pointer is nil. --- */
 typedef test_info* test;
 
-/* --- Descriptions of these functions can be found in the test.cpp --- */
+/** --- Descriptions of these functions can be found in the test.cpp --- */
 char first_letter_from_test(test t);
 bool tests_are_equal(test t1, test t2, bool neg);
 bool tests_identical(test t1, test t2, bool considerIdentity = false);
@@ -80,7 +80,7 @@ void add_test_if_not_already_there(agent* thisAgent, test* t, test new_test,
 
 cons* delete_test_from_conjunct(agent* thisAgent, test* t, cons* pDeleteItem);
 
-/* --- Some functions related to tests that used to be in rete.cpp */
+/** --- Some functions related to tests that used to be in rete.cpp */
 
 void add_hash_info_to_id_test(agent* thisAgent, condition* cond, byte field_num,
                               rete_node_level levels_up);
@@ -113,4 +113,4 @@ inline bool test_can_be_transitive_constraint(test t) {
           (t->type != GOAL_ID_TEST) && (t->type != IMPASSE_ID_TEST));
 };
 
-#endif /* TEST_H_ */
+#endif /** TEST_H_ */

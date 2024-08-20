@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* Optimized selfadjoint matrix += alpha * uv' + conj(alpha)*vu'
+/** Optimized selfadjoint matrix += alpha * uv' + conj(alpha)*vu'
  * It corresponds to the Level2 syr2 BLAS routine
  */
 

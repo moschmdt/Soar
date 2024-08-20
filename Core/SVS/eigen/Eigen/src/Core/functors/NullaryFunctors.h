@@ -33,7 +33,7 @@ struct scalar_constant_op {
 template <typename Scalar>
 struct functor_traits<scalar_constant_op<Scalar> > {
   enum {
-    Cost = 0 /* as the constant value should be loaded in register only once for
+    Cost = 0 /** as the constant value should be loaded in register only once for
                 the whole expression */
     ,
     PacketAccess = packet_traits<Scalar>::Vectorizable,
@@ -63,7 +63,7 @@ template <typename Scalar, bool IsInteger>
 struct linspaced_op_impl;
 
 template <typename Scalar>
-struct linspaced_op_impl<Scalar, /*IsInteger*/ false> {
+struct linspaced_op_impl<Scalar, /**IsInteger*/ false> {
   typedef typename NumTraits<Scalar>::Real RealScalar;
 
   EIGEN_DEVICE_FUNC linspaced_op_impl(const Scalar& low, const Scalar& high,
@@ -117,7 +117,7 @@ struct linspaced_op_impl<Scalar, /*IsInteger*/ false> {
 };
 
 template <typename Scalar>
-struct linspaced_op_impl<Scalar, /*IsInteger*/ true> {
+struct linspaced_op_impl<Scalar, /**IsInteger*/ true> {
   EIGEN_DEVICE_FUNC linspaced_op_impl(const Scalar& low, const Scalar& high,
                                       Index num_steps)
       : m_low(low),
@@ -161,7 +161,7 @@ struct functor_traits<linspaced_op<Scalar> > {
     PacketAccess = (!NumTraits<Scalar>::IsInteger) &&
                    packet_traits<Scalar>::HasSetLinear &&
                    packet_traits<Scalar>::HasBlend,
-    /*&& ((!NumTraits<Scalar>::IsInteger) || packet_traits<Scalar>::HasDiv),*/  // <- vectorization for integer is currently disabled
+    /**&& ((!NumTraits<Scalar>::IsInteger) || packet_traits<Scalar>::HasDiv),*/  // <- vectorization for integer is currently disabled
     IsRepeatable = true
   };
 };

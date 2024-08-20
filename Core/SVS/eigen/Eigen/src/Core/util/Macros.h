@@ -42,7 +42,7 @@
 #define EIGEN_MAX_CPP_VER 99
 #endif
 
-/* Allows to disable some optimizations which might affect the accuracy of the
+/** Allows to disable some optimizations which might affect the accuracy of the
  * result. Such optimization are enabled by default, and set EIGEN_FAST_MATH to
  * 0 to disable them. They currently include:
  *   - single precision ArrayBase::sin() and ArrayBase::cos() for SSE and AVX
@@ -1274,7 +1274,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void ignore_unused_variable(const T&) {}
   }
 #endif
 
-/*
+/**
  * \internal
  * \brief Macro to explicitly define the default copy constructor.
  * This is necessary, because the implicit definition is deprecated if the
@@ -1286,7 +1286,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void ignore_unused_variable(const T&) {}
 #define EIGEN_DEFAULT_COPY_CONSTRUCTOR(CLASS)
 #endif
 
-/* \internal
+/** \internal
  * \brief Macro to manually inherit assignment operators.
  * This is necessary, because the implicitly defined assignment operator gets
  * deleted when a custom operator= is defined. With C++11 or later this also
@@ -1296,7 +1296,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void ignore_unused_variable(const T&) {}
   EIGEN_INHERIT_ASSIGNMENT_EQUAL_OPERATOR(Derived)  \
   EIGEN_DEFAULT_COPY_CONSTRUCTOR(Derived)
 
-/* \internal
+/** \internal
  * \brief Macro to manually define default constructors and destructors.
  * This is necessary when the copy constructor is re-defined.
  * For empty helper classes this should usually be protected, to avoid
@@ -1312,10 +1312,10 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void ignore_unused_variable(const T&) {}
 #else
 #define EIGEN_DEFAULT_EMPTY_CONSTRUCTOR_AND_DESTRUCTOR(Derived) \
   Derived(){};                                                  \
-  /* ~Derived() {}; */
+  /** ~Derived() {}; */
 #endif
 
-/*
+/**
  * Just a side note. Commenting within defines works only by documenting
  * behind the object (via '!<'). Comments cannot be multi-line and thus
  * we have these extra long lines. What is confusing doxygen over here is
@@ -1325,14 +1325,14 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void ignore_unused_variable(const T&) {}
 
 #define EIGEN_GENERIC_PUBLIC_INTERFACE(Derived)                               \
   typedef typename Eigen::internal::traits<Derived>::Scalar                   \
-      Scalar; /*!< \brief Numeric type, e.g. float, double, int or            \
+      Scalar; /**!< \brief Numeric type, e.g. float, double, int or            \
                  std::complex<float>. */                                      \
   typedef typename Eigen::NumTraits<Scalar>::Real                             \
-      RealScalar; /*!< \brief The underlying numeric type for composed scalar \
+      RealScalar; /**!< \brief The underlying numeric type for composed scalar \
                      types. \details In cases where Scalar is e.g.            \
                      std::complex<T>, T were corresponding to RealScalar. */  \
   typedef typename Base::CoeffReturnType                                      \
-      CoeffReturnType; /*!< \brief The return type for coefficient access.    \
+      CoeffReturnType; /**!< \brief The return type for coefficient access.    \
                           \details Depending on whether the object allows     \
                           direct coefficient access (e.g. for a MatrixXd),    \
                           this type is either 'const Scalar&' or simply       \

@@ -116,7 +116,7 @@ class generic_matrix_wrapper<MatrixType, true> {
 
 }  // namespace internal
 
-/* \ingroup IterativeLinearSolvers_Module
+/** \ingroup IterativeLinearSolvers_Module
  * \brief Base class for linear iterative solvers
  *
  * \sa class SimplicialCholesky, DiagonalPreconditioner, IdentityPreconditioner
@@ -142,10 +142,10 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
  public:
   using Base::derived;
 
-  /* Default constructor. */
+  /** Default constructor. */
   IterativeSolverBase() { init(); }
 
-  /* Initialize the solver with matrix \a A for further \c Ax=b solving.
+  /** Initialize the solver with matrix \a A for further \c Ax=b solving.
    *
    * This constructor is a shortcut for the default constructor followed
    * by a call to compute().
@@ -164,7 +164,7 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
 
   ~IterativeSolverBase() {}
 
-  /* Initializes the iterative solver for the sparsity pattern of the matrix \a
+  /** Initializes the iterative solver for the sparsity pattern of the matrix \a
    * A for further solving \c Ax=b problems.
    *
    * Currently, this function mostly calls analyzePattern on the preconditioner.
@@ -181,7 +181,7 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     return derived();
   }
 
-  /* Initializes the iterative solver with the numerical values of the matrix
+  /** Initializes the iterative solver with the numerical values of the matrix
    * \a A for further solving \c Ax=b problems.
    *
    * Currently, this function mostly calls factorize on the preconditioner.
@@ -201,7 +201,7 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     return derived();
   }
 
-  /* Initializes the iterative solver with the matrix \a A for further solving
+  /** Initializes the iterative solver with the matrix \a A for further solving
    * \c Ax=b problems.
    *
    * Currently, this function mostly initializes/computes the preconditioner. In
@@ -224,18 +224,18 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     return derived();
   }
 
-  /* \internal */
+  /** \internal */
   EIGEN_CONSTEXPR Index rows() const EIGEN_NOEXCEPT { return matrix().rows(); }
 
-  /* \internal */
+  /** \internal */
   EIGEN_CONSTEXPR Index cols() const EIGEN_NOEXCEPT { return matrix().cols(); }
 
-  /* \returns the tolerance threshold used by the stopping criteria.
+  /** \returns the tolerance threshold used by the stopping criteria.
    * \sa setTolerance()
    */
   RealScalar tolerance() const { return m_tolerance; }
 
-  /* Sets the tolerance threshold used by the stopping criteria.
+  /** Sets the tolerance threshold used by the stopping criteria.
    *
    * This value is used as an upper bound to the relative residual error:
    * |Ax-b|/|b|. The default value is the machine precision given by
@@ -246,14 +246,14 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     return derived();
   }
 
-  /* \returns a read-write reference to the preconditioner for custom
+  /** \returns a read-write reference to the preconditioner for custom
    * configuration. */
   Preconditioner& preconditioner() { return m_preconditioner; }
 
-  /* \returns a read-only reference to the preconditioner. */
+  /** \returns a read-only reference to the preconditioner. */
   const Preconditioner& preconditioner() const { return m_preconditioner; }
 
-  /* \returns the max number of iterations.
+  /** \returns the max number of iterations.
    * It is either the value set by setMaxIterations or, by default,
    * twice the number of columns of the matrix.
    */
@@ -261,7 +261,7 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     return (m_maxIterations < 0) ? 2 * matrix().cols() : m_maxIterations;
   }
 
-  /* Sets the max number of iterations.
+  /** Sets the max number of iterations.
    * Default is twice the number of columns of the matrix.
    */
   Derived& setMaxIterations(Index maxIters) {
@@ -269,13 +269,13 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     return derived();
   }
 
-  /* \returns the number of iterations performed during the last solve */
+  /** \returns the number of iterations performed during the last solve */
   Index iterations() const {
     eigen_assert(m_isInitialized && "ConjugateGradient is not initialized.");
     return m_iterations;
   }
 
-  /* \returns the tolerance error reached during the last solve.
+  /** \returns the tolerance error reached during the last solve.
    * It is a close approximation of the true relative residual error |Ax-b|/|b|.
    */
   RealScalar error() const {
@@ -283,7 +283,7 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     return m_error;
   }
 
-  /* \returns the solution x of \f$ A x = b \f$ using the current decomposition
+  /** \returns the solution x of \f$ A x = b \f$ using the current decomposition
    * of A and \a x0 as an initial solution.
    *
    * \sa solve(), compute()
@@ -298,14 +298,14 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     return SolveWithGuess<Derived, Rhs, Guess>(derived(), b.derived(), x0);
   }
 
-  /* \returns Success if the iterations converged, and NoConvergence otherwise.
+  /** \returns Success if the iterations converged, and NoConvergence otherwise.
    */
   ComputationInfo info() const {
     eigen_assert(m_isInitialized && "IterativeSolverBase is not initialized.");
     return m_info;
   }
 
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename DestDerived>
   void _solve_with_guess_impl(const Rhs& b,
                               SparseMatrixBase<DestDerived>& aDest) const {
@@ -370,7 +370,7 @@ class IterativeSolverBase : public SparseSolverBase<Derived> {
     derived()._solve_vector_with_guess_impl(b, dest.derived());
   }
 
-  /* \internal default initial guess = 0 */
+  /** \internal default initial guess = 0 */
   template <typename Rhs, typename Dest>
   void _solve_impl(const Rhs& b, Dest& x) const {
     x.setZero();

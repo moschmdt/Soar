@@ -27,7 +27,7 @@ struct traits<CwiseUnaryOp<UnaryOp, XprType> > : traits<XprType> {
 template <typename UnaryOp, typename XprType, typename StorageKind>
 class CwiseUnaryOpImpl;
 
-/* \class CwiseUnaryOp
+/** \class CwiseUnaryOp
  * \ingroup Core_Module
  *
  * \brief Generic expression where a coefficient-wise unary operator is applied
@@ -76,19 +76,19 @@ class CwiseUnaryOp
     return m_xpr.cols();
   }
 
-  /* \returns the functor representing the unary operation */
+  /** \returns the functor representing the unary operation */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const UnaryOp& functor() const {
     return m_functor;
   }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const typename internal::remove_all<
       XprTypeNested>::type&
   nestedExpression() const {
     return m_xpr;
   }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
       typename internal::remove_all<XprTypeNested>::type&
       nestedExpression() {

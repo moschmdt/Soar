@@ -7,7 +7,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
 
  * NOTE: This file is the modified version of [s,d,c,z]panel_dfs.c file in
  SuperLU
@@ -47,8 +47,8 @@ struct panel_dfs_traits {
     }
     return false;
   }
-  void mem_expand(IndexVector& /*glu.lsub*/, Index /*nextl*/,
-                  Index /*chmark*/) {}
+  void mem_expand(IndexVector& /**glu.lsub*/, Index /**nextl*/,
+                  Index /**chmark*/) {}
   enum { ExpandMem = false };
   Index m_jcol;
   StorageIndex* m_marker;
@@ -158,7 +158,7 @@ void SparseLUImpl<Scalar, StorageIndex>::dfs_kernel(
   }  // end if (kperm == -1)
 }
 
-/*
+/**
  * \brief Performs a symbolic factorization on a panel of columns [jcol, jcol+w)
  *
  * A supernode representative is the last column of a supernode.

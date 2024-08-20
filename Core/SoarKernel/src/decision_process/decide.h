@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* =======================================================================
+/** =======================================================================
                                 decide.h
 
    Decide.cpp contains the decider as well as routine for managing working
@@ -32,7 +32,7 @@
 
 #include "kernel.h"
 
-/* ------------------------------------------------------------------------
+/** ------------------------------------------------------------------------
            Goal Dependency Set
 
    The Goal Dependency Set is a data structure used in Operand2 to maintain
@@ -66,11 +66,11 @@
    */
 
 typedef struct gds_struct {
-  Symbol* goal;     /* pointer to the goal for the dependency set */
-  wme* wmes_in_gds; /* pointer to the dll of WMEs in GDS of goal */
+  Symbol* goal;     /** pointer to the goal for the dependency set */
+  wme* wmes_in_gds; /** pointer to the dll of WMEs in GDS of goal */
 } goal_dependency_set;
 
-/* ------------------------------------------------------------------------
+/** ------------------------------------------------------------------------
                                 Slots
 
    Fields in a slot:
@@ -139,8 +139,8 @@ extern void uniquely_add_to_head_of_dll(agent* thisAgent, instantiation* inst);
 extern void create_gds_for_goal(agent* thisAgent, Symbol* goal);
 extern void remove_operator_if_necessary(agent* thisAgent, slot* s, wme* w);
 
-extern int GDS_PrintCmd(/*ClientData*/ int clientData,
-                        /*Tcl_Interp*/ void* interp, int argc, char* argv[]);
+extern int GDS_PrintCmd(/**ClientData*/ int clientData,
+                        /**Tcl_Interp*/ void* interp, int argc, char* argv[]);
 
 void rl_update_for_one_candidate(agent* thisAgent, slot* s, bool consistency,
                                  preference* candidates);
@@ -151,7 +151,7 @@ extern byte run_preference_semantics(agent* thisAgent, slot* s,
 extern preference* run_non_context_preference_semantics(agent* thisAgent,
                                                         slot* s);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                       Top-Level Decider Routines
 
    Init_decider() should be called at startup time to initialize this
@@ -172,7 +172,7 @@ extern preference* run_non_context_preference_semantics(agent* thisAgent,
 --------------------------------------------------------------------- */
 
 extern void remove_wmes_for_context_slot(
-    agent* thisAgent, slot* s); /* added this prototype -ajc (5/1/02) */
+    agent* thisAgent, slot* s); /** added this prototype -ajc (5/1/02) */
 extern void init_decider(agent* thisAgent);
 extern void do_buffered_wm_and_ownership_changes(agent* thisAgent);
 extern void do_working_memory_phase(agent* thisAgent);

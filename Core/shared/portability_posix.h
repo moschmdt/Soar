@@ -1,7 +1,7 @@
 #ifndef PORTABILITY_POSIX_H
 #define PORTABILITY_POSIX_H
 
-/* This file contains code specific to the posix platforms */
+/** This file contains code specific to the posix platforms */
 
 #include <arpa/inet.h>
 #include <dirent.h>
@@ -32,9 +32,9 @@
 #include <mach-o/dyld.h>
 #endif
 
-/* this needs to be defined */
+/** this needs to be defined */
 #ifndef MAXPATHLEN
-#define MAXPATHLEN 1024 /* AGR 536  - from sys/param.h */
+#define MAXPATHLEN 1024 /** AGR 536  - from sys/param.h */
 #endif                  // MAXPATHLEN
 
 // Use local sockets instead of internet sockets for same-machine interprocess
@@ -47,12 +47,12 @@
 #define SNPRINTF snprintf
 #define VSNPRINTF vsnprintf
 
-/* socket support stuff */
+/** socket support stuff */
 
 ///////
 // This maps some constants to values that can be used on any platform
 #ifndef SUN_LEN
-/* This system is not POSIX.1g.         */
+/** This system is not POSIX.1g.         */
 #define SUN_LEN(ptr) \
   ((size_t)(((struct sockaddr_un*)0)->sun_path) + strlen((ptr)->sun_path))
 #endif

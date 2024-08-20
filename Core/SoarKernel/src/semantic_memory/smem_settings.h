@@ -1,4 +1,4 @@
-/*
+/**
  * smem_settings.h
  *
  *  Created on: Aug 21, 2016
@@ -91,4 +91,4 @@ class smem_db_predicate : public soar_module::agent_predicate<T> {
   bool operator()(T val);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_SETTINGS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_SETTINGS_H_ */

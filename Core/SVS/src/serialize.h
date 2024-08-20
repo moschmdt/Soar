@@ -1,4 +1,4 @@
-/*
+/**
  This file declares all non-member ::serialize and ::unserialize
  functions for classes from external libraries, such as STL containers
  and Eigen matrices. The template functions defined here allow the
@@ -159,7 +159,7 @@ void unserialize(std::set<T>& s, std::istream& is) {
   if (!(is >> delim) || delim != ']') {
     assert(false);
   }
-  /*
+  /**
    If elem contains a pointer and doesn't have a custom assignment operator,
    then at this point elem may be holding the same pointer as the last element
    inserted into the set. That pointer may be deallocated by the destructor when
@@ -194,7 +194,7 @@ void unserialize(std::list<T>& l, std::istream& is) {
   if (!(is >> delim) || delim != ']') {
     assert(false);
   }
-  /*
+  /**
    Reset key for the same reason as in the set unserializer.
   */
   elem = T();
@@ -224,7 +224,7 @@ void unserialize(std::map<K, V>& m, std::istream& is) {
   if (!(is >> delim) || delim != ']') {
     assert(false);
   }
-  /*
+  /**
    Reset key for the same reason as in the set unserializer.
   */
   entry = std::pair<K, V>();

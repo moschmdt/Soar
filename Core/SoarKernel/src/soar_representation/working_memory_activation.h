@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "COPYING" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *
  *  file:  wma.h
  *
@@ -23,18 +23,18 @@
 // WMA Constants
 //////////////////////////////////////////////////////////
 
-/*
+/**
  * This is the size of the reference history.
  */
 #define WMA_DECAY_HISTORY 10
 
-/*
+/**
  * How many references are expected per decision
  * (this affects creation of the power/approx cache)
  */
 #define WMA_REFERENCES_PER_DECISION 50
 
-/*
+/**
  * If an external caller asks for the activation level/value
  * of a WME that is not activated, then this is the value that
  * is returned.
@@ -42,12 +42,12 @@
 #define WMA_ACTIVATION_NONE 1.0
 #define WMA_TIME_SUM_NONE 2.71828182845905
 
-/*
+/**
  * If no history, this is a low number to report as activation
  */
 #define WMA_ACTIVATION_LOW -1000000000
 
-/*
+/**
  * If below decay thresh, but not forgotten, forget_cycle =
  */
 #define WMA_FORGOTTEN_CYCLE 0
@@ -222,20 +222,20 @@ extern void wma_remove_pref_o_set(agent* thisAgent, preference* pref);
 // Updating Activation
 //////////////////////////////////////////////////////////
 
-/*
+/**
  * Given a preference, this routine increments the
  * reference count of all its WMEs (as necessary).
  */
 extern void wma_activate_wmes_in_pref(agent* thisAgent, preference* pref);
 
-/*
+/**
  * Increments the reference count of all
  * WMEs that have been referenced this
  * cycle.
  */
 extern void wma_activate_wmes_tested_in_prods(agent* thisAgent);
 
-/*
+/**
  * This routine performs WME activation
  * and forgetting at the end of each cycle.
  */
@@ -245,12 +245,12 @@ extern void wma_go(agent* thisAgent, wma_go_action go_action);
 // Retrieving Activation
 //////////////////////////////////////////////////////////
 
-/*
+/**
  * Retrieve wme activation exact/approximate
  */
 extern double wma_get_wme_activation(agent* thisAgent, wme* w, bool log_result);
 
-/*
+/**
  * Debugging: get list of wme references
  */
 extern void wma_get_wme_history(agent* thisAgent, wme* w, std::string& buffer);

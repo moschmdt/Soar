@@ -490,7 +490,7 @@ EIGEN_STRONG_INLINE Packet2cf pdiv<Packet2cf>(const Packet2cf& a,
 }
 
 EIGEN_DEVICE_FUNC inline void ptranspose(
-    PacketBlock<Packet1cf, 1>& /*kernel*/) {}
+    PacketBlock<Packet1cf, 1>& /**kernel*/) {}
 EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<Packet2cf, 2>& kernel) {
   Packet4f tmp = vcombine_f32(vget_high_f32(kernel.packet[0].v),
                               vget_high_f32(kernel.packet[1].v));
@@ -580,7 +580,7 @@ ploadu<Packet1cd>(const std::complex<double>* from) {
 template <>
 EIGEN_STRONG_INLINE Packet1cd
 pset1<Packet1cd>(const std::complex<double>& from) {
-  /* here we really have to use unaligned loads :( */
+  /** here we really have to use unaligned loads :( */
   return ploadu<Packet1cd>(&from);
 }
 
@@ -747,7 +747,7 @@ EIGEN_STRONG_INLINE Packet1cd pdiv<Packet1cd>(const Packet1cd& a,
   return Packet1cd(pdiv(res.v, padd<Packet2d>(s, rev_s)));
 }
 
-EIGEN_STRONG_INLINE Packet1cd pcplxflip /*<Packet1cd>*/ (const Packet1cd& x) {
+EIGEN_STRONG_INLINE Packet1cd pcplxflip /**<Packet1cd>*/ (const Packet1cd& x) {
   return Packet1cd(preverse(Packet2d(x.v)));
 }
 

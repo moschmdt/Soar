@@ -1,4 +1,4 @@
-/* -------------- Macros for safe counters ------------*/
+/** -------------- Macros for safe counters ------------*/
 
 #define increment_counter(counter) \
   counter++;                       \
@@ -8,7 +8,7 @@
   counter += amt;                    \
   if (counter < lastcnt) counter = amt;
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
      Macros for Inserting and Removing Stuff from Doubly-Linked Lists
 
    Note: fast_remove_from_dll() is the same as remove_from_dll() except
@@ -20,7 +20,7 @@
    the effort right now.
 -------------------------------------------------------------------- */
 
-/* This macro cannot be easily converted to an inline function.
+/** This macro cannot be easily converted to an inline function.
    Some additional changes are required.
 */
 #define insert_at_head_of_dll(header, item, next_field_name, prev_field_name) \
@@ -30,7 +30,7 @@
     if (header) ((header)->prev_field_name) = (item);                         \
     (header) = (item);                                                        \
   }
-/*template <typename T>
+/**template <typename T>
 inline void insert_at_head_of_dll(T header, T item, T next_field_name,
                                   T prev_field_name)
 {
@@ -40,7 +40,7 @@ inline void insert_at_head_of_dll(T header, T item, T next_field_name,
   (header) = (item);
 }*/
 
-/* This macro cannot be easily converted to an inline function.
+/** This macro cannot be easily converted to an inline function.
    Some additional changes are required.
 */
 #define remove_from_dll(header, item, next_field_name, prev_field_name)       \
@@ -53,7 +53,7 @@ inline void insert_at_head_of_dll(T header, T item, T next_field_name,
       (header) = ((item)->next_field_name);                                   \
     }                                                                         \
   }
-/*template <typename T>
+/**template <typename T>
 inline void remove_from_dll(T header, T item, T next_field_name,
                             T prev_field_name)
 {
@@ -66,7 +66,7 @@ inline void remove_from_dll(T header, T item, T next_field_name,
   }
 }*/
 
-/* This macro cannot be easily converted to an inline function.
+/** This macro cannot be easily converted to an inline function.
    Some additional changes are required.
 */
 #define fast_remove_from_dll(header, item, typename, next_field_name, \

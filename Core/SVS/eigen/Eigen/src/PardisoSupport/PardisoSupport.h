@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -142,7 +142,7 @@ class PardisoImpl : public SparseSolverBase<Derived> {
   inline Index cols() const { return m_size; }
   inline Index rows() const { return m_size; }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the matrix appears to be negative.
@@ -152,12 +152,12 @@ class PardisoImpl : public SparseSolverBase<Derived> {
     return m_info;
   }
 
-  /* \warning for advanced usage only.
+  /** \warning for advanced usage only.
    * \returns a reference to the parameter array controlling PARDISO.
    * See the PARDISO manual to know how to use it. */
   ParameterType& pardisoParameterArray() { return m_iparm; }
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -166,7 +166,7 @@ class PardisoImpl : public SparseSolverBase<Derived> {
    */
   Derived& analyzePattern(const MatrixType& matrix);
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must has the same sparcity than the matrix on which the
    * symbolic decomposition has been performed.
@@ -368,7 +368,7 @@ void PardisoImpl<Derived>::_solve_impl(const MatrixBase<BDerived>& b,
   manageErrorCode(error);
 }
 
-/* \ingroup PardisoSupport_Module
+/** \ingroup PardisoSupport_Module
  * \class PardisoLU
  * \brief A sparse direct LU factorization and solver based on the PARDISO
  * library
@@ -417,7 +417,7 @@ class PardisoLU : public PardisoImpl<PardisoLU<MatrixType> > {
   }
 };
 
-/* \ingroup PardisoSupport_Module
+/** \ingroup PardisoSupport_Module
  * \class PardisoLLT
  * \brief A sparse direct Cholesky (LLT) factorization and solver based on the
  * PARDISO library
@@ -473,7 +473,7 @@ class PardisoLLT : public PardisoImpl<PardisoLLT<MatrixType, _UpLo> > {
   }
 };
 
-/* \ingroup PardisoSupport_Module
+/** \ingroup PardisoSupport_Module
  * \class PardisoLDLT
  * \brief A sparse direct Cholesky (LDLT) factorization and solver based on the
  * PARDISO library

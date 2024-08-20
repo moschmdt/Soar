@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  *
  * \class SparseMatrix
  *
@@ -139,60 +139,60 @@ class SparseMatrix : public SparseCompressedBase<
   Storage m_data;
 
  public:
-  /* \returns the number of rows of the matrix */
+  /** \returns the number of rows of the matrix */
   inline Index rows() const { return IsRowMajor ? m_outerSize : m_innerSize; }
-  /* \returns the number of columns of the matrix */
+  /** \returns the number of columns of the matrix */
   inline Index cols() const { return IsRowMajor ? m_innerSize : m_outerSize; }
 
-  /* \returns the number of rows (resp. columns) of the matrix if the storage
+  /** \returns the number of rows (resp. columns) of the matrix if the storage
    * order column major (resp. row major) */
   inline Index innerSize() const { return m_innerSize; }
-  /* \returns the number of columns (resp. rows) of the matrix if the storage
+  /** \returns the number of columns (resp. rows) of the matrix if the storage
    * order column major (resp. row major) */
   inline Index outerSize() const { return m_outerSize; }
 
-  /* \returns a const pointer to the array of values.
+  /** \returns a const pointer to the array of values.
    * This function is aimed at interoperability with other libraries.
    * \sa innerIndexPtr(), outerIndexPtr() */
   inline const Scalar* valuePtr() const { return m_data.valuePtr(); }
-  /* \returns a non-const pointer to the array of values.
+  /** \returns a non-const pointer to the array of values.
    * This function is aimed at interoperability with other libraries.
    * \sa innerIndexPtr(), outerIndexPtr() */
   inline Scalar* valuePtr() { return m_data.valuePtr(); }
 
-  /* \returns a const pointer to the array of inner indices.
+  /** \returns a const pointer to the array of inner indices.
    * This function is aimed at interoperability with other libraries.
    * \sa valuePtr(), outerIndexPtr() */
   inline const StorageIndex* innerIndexPtr() const { return m_data.indexPtr(); }
-  /* \returns a non-const pointer to the array of inner indices.
+  /** \returns a non-const pointer to the array of inner indices.
    * This function is aimed at interoperability with other libraries.
    * \sa valuePtr(), outerIndexPtr() */
   inline StorageIndex* innerIndexPtr() { return m_data.indexPtr(); }
 
-  /* \returns a const pointer to the array of the starting positions of the
+  /** \returns a const pointer to the array of the starting positions of the
    * inner vectors. This function is aimed at interoperability with other
    * libraries. \sa valuePtr(), innerIndexPtr() */
   inline const StorageIndex* outerIndexPtr() const { return m_outerIndex; }
-  /* \returns a non-const pointer to the array of the starting positions of the
+  /** \returns a non-const pointer to the array of the starting positions of the
    * inner vectors. This function is aimed at interoperability with other
    * libraries. \sa valuePtr(), innerIndexPtr() */
   inline StorageIndex* outerIndexPtr() { return m_outerIndex; }
 
-  /* \returns a const pointer to the array of the number of non zeros of the
+  /** \returns a const pointer to the array of the number of non zeros of the
    * inner vectors. This function is aimed at interoperability with other
    * libraries. \warning it returns the null pointer 0 in compressed mode */
   inline const StorageIndex* innerNonZeroPtr() const { return m_innerNonZeros; }
-  /* \returns a non-const pointer to the array of the number of non zeros of
+  /** \returns a non-const pointer to the array of the number of non zeros of
    * the inner vectors. This function is aimed at interoperability with other
    * libraries. \warning it returns the null pointer 0 in compressed mode */
   inline StorageIndex* innerNonZeroPtr() { return m_innerNonZeros; }
 
-  /* \internal */
+  /** \internal */
   inline Storage& data() { return m_data; }
-  /* \internal */
+  /** \internal */
   inline const Storage& data() const { return m_data; }
 
-  /* \returns the value of the matrix at position \a i, \a j
+  /** \returns the value of the matrix at position \a i, \a j
    * This function returns Scalar(0) if the element is an explicit \em zero */
   inline Scalar coeff(Index row, Index col) const {
     eigen_assert(row >= 0 && row < rows() && col >= 0 && col < cols());
@@ -204,7 +204,7 @@ class SparseMatrix : public SparseCompressedBase<
     return m_data.atInRange(m_outerIndex[outer], end, StorageIndex(inner));
   }
 
-  /* \returns a non-const reference to the value of the matrix at position \a
+  /** \returns a non-const reference to the value of the matrix at position \a
    * i, \a j
    *
    * If the element does not exist then it is inserted via the
@@ -234,7 +234,7 @@ class SparseMatrix : public SparseCompressedBase<
       return insert(row, col);
   }
 
-  /* \returns a reference to a novel non zero coefficient with coordinates \a
+  /** \returns a reference to a novel non zero coefficient with coordinates \a
    * row x \a col. The non zero coefficient must \b not already exist.
    *
    * If the matrix \c *this is in compressed mode, then \c *this is turned into
@@ -256,7 +256,7 @@ class SparseMatrix : public SparseCompressedBase<
   Scalar& insert(Index row, Index col);
 
  public:
-  /* Removes all non zeros but keep allocated memory
+  /** Removes all non zeros but keep allocated memory
    *
    * This function does not free the currently allocated memory. To release as
    * much as memory as possible, call \code mat.data().squeeze(); \endcode after
@@ -271,7 +271,7 @@ class SparseMatrix : public SparseCompressedBase<
       memset(m_innerNonZeros, 0, (m_outerSize) * sizeof(StorageIndex));
   }
 
-  /* Preallocates \a reserveSize non zeros.
+  /** Preallocates \a reserveSize non zeros.
    *
    * Precondition: the matrix must be in compressed mode. */
   inline void reserve(Index reserveSize) {
@@ -281,7 +281,7 @@ class SparseMatrix : public SparseCompressedBase<
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* Preallocates \a reserveSize[\c j] non zeros for each column (resp. row) \c
+  /** Preallocates \a reserveSize[\c j] non zeros for each column (resp. row) \c
     j.
     *
     * This function turns the matrix in non-compressed mode.
@@ -388,7 +388,7 @@ class SparseMatrix : public SparseCompressedBase<
  public:
   //--- low level purely coherent filling ---
 
-  /* \internal
+  /** \internal
    * \returns a reference to the non zero coefficient at position \a row, \a col
    * assuming that:
    * - the nonzero does not already exist
@@ -405,7 +405,7 @@ class SparseMatrix : public SparseCompressedBase<
                                   IsRowMajor ? col : row);
   }
 
-  /* \internal
+  /** \internal
    * \sa insertBack, startVec */
   inline Scalar& insertBackByOuterInner(Index outer, Index inner) {
     eigen_assert(Index(m_outerIndex[outer + 1]) == m_data.size() &&
@@ -419,7 +419,7 @@ class SparseMatrix : public SparseCompressedBase<
     return m_data.value(p);
   }
 
-  /* \internal
+  /** \internal
    * \warning use it only if you know what you are doing */
   inline Scalar& insertBackByOuterInnerUnordered(Index outer, Index inner) {
     Index p = m_outerIndex[outer + 1];
@@ -428,7 +428,7 @@ class SparseMatrix : public SparseCompressedBase<
     return m_data.value(p);
   }
 
-  /* \internal
+  /** \internal
    * \sa insertBack, insertBackByOuterInner */
   inline void startVec(Index outer) {
     eigen_assert(m_outerIndex[outer] == Index(m_data.size()) &&
@@ -438,7 +438,7 @@ class SparseMatrix : public SparseCompressedBase<
     m_outerIndex[outer + 1] = m_outerIndex[outer];
   }
 
-  /* \internal
+  /** \internal
    * Must be called after inserting a set of non zero entries using the low
    * level compressed API.
    */
@@ -474,14 +474,14 @@ class SparseMatrix : public SparseCompressedBase<
 
   //---
 
-  /* \internal
+  /** \internal
    * same as insert(Index,Index) except that the indices are given relative to
    * the storage order */
   Scalar& insertByOuterInner(Index j, Index i) {
     return insert(IsRowMajor ? j : i, IsRowMajor ? i : j);
   }
 
-  /* Turns the matrix into the \em compressed format.
+  /** Turns the matrix into the \em compressed format.
    */
   void makeCompressed() {
     if (isCompressed()) return;
@@ -508,7 +508,7 @@ class SparseMatrix : public SparseCompressedBase<
     m_data.squeeze();
   }
 
-  /* Turns the matrix into the uncompressed mode */
+  /** Turns the matrix into the uncompressed mode */
   void uncompress() {
     if (m_innerNonZeros != 0) return;
     m_innerNonZeros = static_cast<StorageIndex*>(
@@ -518,7 +518,7 @@ class SparseMatrix : public SparseCompressedBase<
     }
   }
 
-  /* Suppresses all nonzeros which are \b much \b smaller \b than \a reference
+  /** Suppresses all nonzeros which are \b much \b smaller \b than \a reference
    * under the tolerance \a epsilon */
   void prune(
       const Scalar& reference,
@@ -526,7 +526,7 @@ class SparseMatrix : public SparseCompressedBase<
     prune(default_prunning_func(reference, epsilon));
   }
 
-  /* Turns the matrix into compressed format, and suppresses all nonzeros which
+  /** Turns the matrix into compressed format, and suppresses all nonzeros which
    * do not satisfy the predicate \a keep. The functor type \a KeepFunc must
    * implement the following function: \code bool operator() (const Index& row,
    * const Index& col, const Scalar& value) const; \endcode \sa
@@ -556,7 +556,7 @@ class SparseMatrix : public SparseCompressedBase<
     m_data.resize(k, 0);
   }
 
-  /* Resizes the matrix to a \a rows x \a cols matrix leaving old values
+  /** Resizes the matrix to a \a rows x \a cols matrix leaving old values
    * untouched.
    *
    * If the sizes of the matrix are decreased, then the matrix is turned to \b
@@ -626,7 +626,7 @@ class SparseMatrix : public SparseCompressedBase<
     m_outerSize += outerChange;
   }
 
-  /* Resizes the matrix to a \a rows x \a cols matrix and initializes it to
+  /** Resizes the matrix to a \a rows x \a cols matrix and initializes it to
    * zero.
    *
    * This function does not free the currently allocated memory. To release as
@@ -654,36 +654,36 @@ class SparseMatrix : public SparseCompressedBase<
     memset(m_outerIndex, 0, (m_outerSize + 1) * sizeof(StorageIndex));
   }
 
-  /* \internal
+  /** \internal
    * Resize the nonzero vector to \a size */
   void resizeNonZeros(Index size) { m_data.resize(size); }
 
-  /* \returns a const expression of the diagonal coefficients. */
+  /** \returns a const expression of the diagonal coefficients. */
   const ConstDiagonalReturnType diagonal() const {
     return ConstDiagonalReturnType(*this);
   }
 
-  /* \returns a read-write expression of the diagonal coefficients.
+  /** \returns a read-write expression of the diagonal coefficients.
    * \warning If the diagonal entries are written, then all diagonal
    * entries \b must already exist, otherwise an assertion will be raised.
    */
   DiagonalReturnType diagonal() { return DiagonalReturnType(*this); }
 
-  /* Default constructor yielding an empty \c 0 \c x \c 0 matrix */
+  /** Default constructor yielding an empty \c 0 \c x \c 0 matrix */
   inline SparseMatrix()
       : m_outerSize(-1), m_innerSize(0), m_outerIndex(0), m_innerNonZeros(0) {
     check_template_parameters();
     resize(0, 0);
   }
 
-  /* Constructs a \a rows \c x \a cols empty matrix */
+  /** Constructs a \a rows \c x \a cols empty matrix */
   inline SparseMatrix(Index rows, Index cols)
       : m_outerSize(0), m_innerSize(0), m_outerIndex(0), m_innerNonZeros(0) {
     check_template_parameters();
     resize(rows, cols);
   }
 
-  /* Constructs a sparse matrix from the sparse expression \a other */
+  /** Constructs a sparse matrix from the sparse expression \a other */
   template <typename OtherDerived>
   inline SparseMatrix(const SparseMatrixBase<OtherDerived>& other)
       : m_outerSize(0), m_innerSize(0), m_outerIndex(0), m_innerNonZeros(0) {
@@ -704,7 +704,7 @@ class SparseMatrix : public SparseCompressedBase<
     }
   }
 
-  /* Constructs a sparse matrix from the sparse selfadjoint view \a other */
+  /** Constructs a sparse matrix from the sparse selfadjoint view \a other */
   template <typename OtherDerived, unsigned int UpLo>
   inline SparseMatrix(const SparseSelfAdjointView<OtherDerived, UpLo>& other)
       : m_outerSize(0), m_innerSize(0), m_outerIndex(0), m_innerNonZeros(0) {
@@ -712,7 +712,7 @@ class SparseMatrix : public SparseCompressedBase<
     Base::operator=(other);
   }
 
-  /* Copy constructor (it performs a deep copy) */
+  /** Copy constructor (it performs a deep copy) */
   inline SparseMatrix(const SparseMatrix& other)
       : Base(),
         m_outerSize(0),
@@ -723,7 +723,7 @@ class SparseMatrix : public SparseCompressedBase<
     *this = other.derived();
   }
 
-  /* \brief Copy constructor with in-place evaluation */
+  /** \brief Copy constructor with in-place evaluation */
   template <typename OtherDerived>
   SparseMatrix(const ReturnByValue<OtherDerived>& other)
       : Base(),
@@ -736,7 +736,7 @@ class SparseMatrix : public SparseCompressedBase<
     other.evalTo(*this);
   }
 
-  /* \brief Copy constructor with in-place evaluation */
+  /** \brief Copy constructor with in-place evaluation */
   template <typename OtherDerived>
   explicit SparseMatrix(const DiagonalBase<OtherDerived>& other)
       : Base(),
@@ -748,7 +748,7 @@ class SparseMatrix : public SparseCompressedBase<
     *this = other.derived();
   }
 
-  /* Swaps the content of two sparse matrices of the same type.
+  /** Swaps the content of two sparse matrices of the same type.
    * This is a fast operation that simply swaps the underlying pointers and
    * parameters. */
   inline void swap(SparseMatrix& other) {
@@ -760,7 +760,7 @@ class SparseMatrix : public SparseCompressedBase<
     m_data.swap(other.m_data);
   }
 
-  /* Sets *this to the identity matrix.
+  /** Sets *this to the identity matrix.
    * This function also turns the matrix into compressed mode, and drop any
    * reserved memory. */
   inline void setIdentity() {
@@ -844,13 +844,13 @@ class SparseMatrix : public SparseCompressedBase<
     return s;
   }
 
-  /* Destructor */
+  /** Destructor */
   inline ~SparseMatrix() {
     std::free(m_outerIndex);
     std::free(m_innerNonZeros);
   }
 
-  /* Overloaded for performance */
+  /** Overloaded for performance */
   Scalar sum() const;
 
 #ifdef EIGEN_SPARSEMATRIX_PLUGIN
@@ -867,11 +867,11 @@ class SparseMatrix : public SparseCompressedBase<
     }
   }
 
-  /* \internal
+  /** \internal
    * \sa insert(Index,Index) */
   EIGEN_DONT_INLINE Scalar& insertCompressed(Index row, Index col);
 
-  /* \internal
+  /** \internal
    * A vector object that is equal to 0 everywhere but v at the position i */
   class SingletonVector {
     StorageIndex m_index;
@@ -887,12 +887,12 @@ class SparseMatrix : public SparseCompressedBase<
     }
   };
 
-  /* \internal
+  /** \internal
    * \sa insert(Index,Index) */
   EIGEN_DONT_INLINE Scalar& insertUncompressed(Index row, Index col);
 
  public:
-  /* \internal
+  /** \internal
    * \sa insert(Index,Index) */
   EIGEN_STRONG_INLINE Scalar& insertBackUncompressed(Index row, Index col) {
     const Index outer = IsRowMajor ? row : col;
@@ -914,7 +914,7 @@ class SparseMatrix : public SparseCompressedBase<
     Index p;
   };
 
-  /* \internal assign \a diagXpr to the diagonal of \c *this
+  /** \internal assign \a diagXpr to the diagonal of \c *this
    * There are different strategies:
    *   1 - if *this is overwritten (Func==assign_op) or *this is empty, then we
    * can work treat *this as a dense vector expression. 2 - otherwise, for each
@@ -1074,7 +1074,7 @@ void set_from_triplets(const InputIterator& begin, const InputIterator& end,
 
 }  // namespace internal
 
-/* Fill the matrix \c *this with the list of \em triplets defined by the
+/** Fill the matrix \c *this with the list of \em triplets defined by the
   iterator range \a begin - \a end.
   *
   * A \em triplet is a tuple (i,j,value) defining a non-zero element.
@@ -1127,7 +1127,7 @@ void SparseMatrix<Scalar, _Options, _StorageIndex>::setFromTriplets(
       begin, end, *this, internal::scalar_sum_op<Scalar, Scalar>());
 }
 
-/* The same as setFromTriplets but when duplicates are met the functor \a
+/** The same as setFromTriplets but when duplicates are met the functor \a
  * dup_func is applied: \code value = dup_func(OldValue, NewValue) \endcode Here
  * is a C++11 example keeping the latest entry only: \code
  * mat.setFromTriplets(triplets.begin(), triplets.end(), [] (const Scalar&,const
@@ -1143,7 +1143,7 @@ void SparseMatrix<Scalar, _Options, _StorageIndex>::setFromTriplets(
                               DupFunctor>(begin, end, *this, dup_func);
 }
 
-/* \internal */
+/** \internal */
 template <typename Scalar, int _Options, typename _StorageIndex>
 template <typename DupFunctor>
 void SparseMatrix<Scalar, _Options, _StorageIndex>::collapseDuplicates(

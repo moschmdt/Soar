@@ -9,7 +9,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/* The sin, cos, exp, and log functions of this file come from
+/** The sin, cos, exp, and log functions of this file come from
  * Julien Pommier's sse math library: http://gruntthepeon.free.fr/ssemath/
  */
 
@@ -28,13 +28,13 @@ static _EIGEN_DECLARE_CONST_Packet4i(23, 23);
 
 static _EIGEN_DECLARE_CONST_Packet4f_FROM_INT(inv_mant_mask, ~0x7f800000);
 
-/* the smallest non denormalized float number */
+/** the smallest non denormalized float number */
 static _EIGEN_DECLARE_CONST_Packet4f_FROM_INT(min_norm_pos, 0x00800000);
 static _EIGEN_DECLARE_CONST_Packet4f_FROM_INT(minus_inf,
                                               0xff800000);  // -1.f/0.f
 static _EIGEN_DECLARE_CONST_Packet4f_FROM_INT(minus_nan, 0xffffffff);
 
-/* natural logarithm computed for 4 simultaneous float
+/** natural logarithm computed for 4 simultaneous float
   return NaN for x <= 0
 */
 static _EIGEN_DECLARE_CONST_Packet4f(cephes_SQRTHF, 0.707106781186547524f);
@@ -96,7 +96,7 @@ pexp<Packet2d>(const Packet2d& _x) {
 
   // clamp x
   x = pmax(pmin(x, p2d_exp_hi), p2d_exp_lo);
-  /* express exp(x) as exp(g + n*log(2)) */
+  /** express exp(x) as exp(g + n*log(2)) */
   fx = pmadd(p2d_cephes_LOG2EF, x, p2d_half);
 
   fx = vec_floor(fx);

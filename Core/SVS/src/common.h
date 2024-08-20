@@ -230,7 +230,7 @@ class table_printer {
     return *this;
   }
 
-  /*
+  /**
    To save space, print integers when possible
   */
   table_printer& operator<<(double x) {

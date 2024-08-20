@@ -659,7 +659,7 @@ EIGEN_STRONG_INLINE Packet1cd pdiv<Packet1cd>(const Packet1cd& a,
   return a / b;
 }
 
-EIGEN_STRONG_INLINE Packet1cd pcplxflip /*<Packet1cd>*/ (const Packet1cd& x) {
+EIGEN_STRONG_INLINE Packet1cd pcplxflip /**<Packet1cd>*/ (const Packet1cd& x) {
   EIGEN_MSA_DEBUG;
 
   return Packet1cd(preverse(Packet2d(x.v)));

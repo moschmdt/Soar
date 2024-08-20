@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * Stores a sparse set of values as a list of values and a list of indices.
  *
  */
@@ -117,13 +117,13 @@ class CompressedStorage {
     return m_indices[i];
   }
 
-  /* \returns the largest \c k such that for all \c j in [0,k) index[\c j]\<\a
+  /** \returns the largest \c k such that for all \c j in [0,k) index[\c j]\<\a
    * key */
   inline Index searchLowerIndex(Index key) const {
     return searchLowerIndex(0, m_size, key);
   }
 
-  /* \returns the largest \c k in [start,end) such that for all \c j in
+  /** \returns the largest \c k in [start,end) such that for all \c j in
    * [start,k) index[\c j]\<\a key */
   inline Index searchLowerIndex(Index start, Index end, Index key) const {
     while (end > start) {
@@ -136,7 +136,7 @@ class CompressedStorage {
     return start;
   }
 
-  /* \returns the stored value at index \a key
+  /** \returns the stored value at index \a key
    * If the value does not exist, then the value \a defaultValue is returned
    * without any insertion. */
   inline Scalar at(Index key, const Scalar& defaultValue = Scalar(0)) const {
@@ -151,7 +151,7 @@ class CompressedStorage {
                                                      : defaultValue;
   }
 
-  /* Like at(), but the search is performed in the range [start,end) */
+  /** Like at(), but the search is performed in the range [start,end) */
   inline Scalar atInRange(Index start, Index end, Index key,
                           const Scalar& defaultValue = Scalar(0)) const {
     if (start >= end)
@@ -164,7 +164,7 @@ class CompressedStorage {
     return ((id < end) && (m_indices[id] == key)) ? m_values[id] : defaultValue;
   }
 
-  /* \returns a reference to the value at index \a key
+  /** \returns a reference to the value at index \a key
    * If the value does not exist, then the value \a defaultValue is inserted
    * such that the keys are sorted. */
   inline Scalar& atWithInsertion(Index key,

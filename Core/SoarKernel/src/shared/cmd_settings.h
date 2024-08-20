@@ -1,4 +1,4 @@
-/*
+/**
  * cli_command_parameters.h
  *
  *  Created on: Oct 1, 2016
@@ -98,4 +98,4 @@ class wm_param_container : public soar_module::param_container {
   void print_summary(agent* thisAgent);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_INTERFACE_CLI_COMMAND_PARAMETERS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_INTERFACE_CLI_COMMAND_PARAMETERS_H_ */

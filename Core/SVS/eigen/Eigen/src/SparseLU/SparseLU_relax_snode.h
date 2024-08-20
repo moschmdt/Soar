@@ -7,7 +7,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/* This file is a modified version of heap_relax_snode.c file in SuperLU
+/** This file is a modified version of heap_relax_snode.c file in SuperLU
  * -- SuperLU routine (version 3.0) --
  * Univ. of California Berkeley, Xerox Palo Alto Research Center,
  * and Lawrence Berkeley National Lab.
@@ -32,7 +32,7 @@ namespace Eigen {
 
 namespace internal {
 
-/*
+/**
  * \brief Identify the initial relaxed supernodes
  *
  * This routine is applied to a column elimination tree.

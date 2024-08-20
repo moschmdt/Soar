@@ -39,7 +39,7 @@ namespace internal {
 //   }
 // };
 
-/* Optimized triangular matrix * matrix (_TRMM++) product built on top of
+/** Optimized triangular matrix * matrix (_TRMM++) product built on top of
  * the general matrix matrix product.
  */
 template <typename Scalar, typename Index, int Mode, bool LhsIsTriangular,
@@ -396,7 +396,7 @@ EIGEN_DONT_INLINE void product_triangular_matrix_matrix<
   }
 }
 
-/*
+/**
  * Wrapper to product_triangular_matrix_matrix
  */
 

@@ -1,4 +1,4 @@
-/*
+/**
  * ansi_colors.h
  *
  *  Created on: May 21, 2014
@@ -155,4 +155,4 @@ static const char* On_IWhite = "\033[0;107m";   // White
 //    static const char* On_ICyan = "";
 //    static const char* On_IWhite = "";
 }  // namespace ANSI_Color_Constants
-#endif /* ANSI_COLORS_H_ */
+#endif /** ANSI_COLORS_H_ */

@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* =======================================================================
+/** =======================================================================
                                  rete.h
 
    All_wmes_in_rete is the header for a dll of all the wmes currently
@@ -79,7 +79,7 @@ inline cons* varnames_to_var_list(varnames* x) {
   return reinterpret_cast<cons*>(static_cast<char*>(x) - 1);
 }
 
-/* --- tells where to find a variable --- */
+/** --- tells where to find a variable --- */
 typedef unsigned short rete_node_level;
 Symbol* var_bound_in_reconstructed_conds(agent* thisAgent, condition* cond,
                                          byte where_field_num,
@@ -88,21 +88,21 @@ test var_test_bound_in_reconstructed_conds(agent* thisAgent, condition* cond,
                                            byte where_field_num,
                                            rete_node_level where_levels_up);
 
-/* ----------------------------------------------------------------------
+/** ----------------------------------------------------------------------
 
        Structures and Declarations:  Alpha Portion of the Rete Net
 
 ---------------------------------------------------------------------- */
 
-/* --- types and structure of beta nodes --- */
-/*   key:  bit 0 --> hashed                  */
-/*         bit 1 --> memory                  */
-/*         bit 2 --> positive join           */
-/*         bit 3 --> negative join           */
-/*         bit 4 --> split from beta memory  */
-/*         bit 6 --> various special types   */
+/** --- types and structure of beta nodes --- */
+/**   key:  bit 0 --> hashed                  */
+/**         bit 1 --> memory                  */
+/**         bit 2 --> positive join           */
+/**         bit 3 --> negative join           */
+/**         bit 4 --> split from beta memory  */
+/**         bit 6 --> various special types   */
 
-/* Warning: If you change any of these or add ones, be sure to update the
+/** Warning: If you change any of these or add ones, be sure to update the
    bit-twiddling macros just below */
 #define UNHASHED_MEMORY_BNODE 0x02
 #define MEMORY_BNODE 0x03
@@ -118,124 +118,124 @@ test var_test_bound_in_reconstructed_conds(agent* thisAgent, condition* cond,
 #define CN_PARTNER_BNODE 0x43
 #define P_BNODE 0x44
 
-/* --- structure of each alpha memory --- */
+/** --- structure of each alpha memory --- */
 typedef struct alpha_mem_struct {
-  struct alpha_mem_struct* next_in_hash_table; /* next mem in hash bucket */
-  struct right_mem_struct* right_mems;         /* dll of right_mem structures */
-  struct rete_node_struct* beta_nodes;         /* list of attached beta nodes */
-  struct rete_node_struct* last_beta_node;     /* tail of above dll */
-  Symbol* id;   /* constants tested by this alpha mem */
-  Symbol* attr; /* (NIL if this alpha mem ignores that field) */
+  struct alpha_mem_struct* next_in_hash_table; /** next mem in hash bucket */
+  struct right_mem_struct* right_mems;         /** dll of right_mem structures */
+  struct rete_node_struct* beta_nodes;         /** list of attached beta nodes */
+  struct rete_node_struct* last_beta_node;     /** tail of above dll */
+  Symbol* id;   /** constants tested by this alpha mem */
+  Symbol* attr; /** (NIL if this alpha mem ignores that field) */
   Symbol* value;
-  bool acceptable;          /* does it test for acceptable pref? */
-  uint32_t am_id;           /* id for hashing */
-  uint64_t reference_count; /* number of beta nodes using this mem */
+  bool acceptable;          /** does it test for acceptable pref? */
+  uint32_t am_id;           /** id for hashing */
+  uint64_t reference_count; /** number of beta nodes using this mem */
   uint64_t retesave_amindex;
 } alpha_mem;
 
-/* --- the entry for one WME in one alpha memory --- */
+/** --- the entry for one WME in one alpha memory --- */
 typedef struct right_mem_struct {
-  wme* w;        /* the wme */
-  alpha_mem* am; /* the alpha memory */
-  struct right_mem_struct *next_in_bucket, *prev_in_bucket; /*hash bucket dll*/
-  struct right_mem_struct *next_in_am, *prev_in_am;       /*rm's in this amem*/
-  struct right_mem_struct *next_from_wme, *prev_from_wme; /*tree-based remove*/
+  wme* w;        /** the wme */
+  alpha_mem* am; /** the alpha memory */
+  struct right_mem_struct *next_in_bucket, *prev_in_bucket; /**hash bucket dll*/
+  struct right_mem_struct *next_in_am, *prev_in_am;       /**rm's in this amem*/
+  struct right_mem_struct *next_from_wme, *prev_from_wme; /**tree-based remove*/
 } right_mem;
 
-/* Note: right_mem's are stored in hash table thisAgent->right_ht */
+/** Note: right_mem's are stored in hash table thisAgent->right_ht */
 
 typedef struct var_location_struct {
-  rete_node_level levels_up; /* 0=current node's alphamem, 1=parent's, etc. */
-  byte field_num;            /* 0=id, 1=attr, 2=value */
+  rete_node_level levels_up; /** 0=current node's alphamem, 1=parent's, etc. */
+  byte field_num;            /** 0=id, 1=attr, 2=value */
 } var_location;
 
-/* --- gives data for a test that must be applied at a node --- */
+/** --- gives data for a test that must be applied at a node --- */
 typedef struct rete_test_struct {
-  byte right_field_num; /* field (0, 1, or 2) from wme */
-  byte type;            /* test type (ID_IS_GOAL_RETE_TEST, etc.) */
+  byte right_field_num; /** field (0, 1, or 2) from wme */
+  byte type;            /** test type (ID_IS_GOAL_RETE_TEST, etc.) */
   union rete_test_data_union {
-    var_location variable_referent; /* for relational tests to a variable */
-    Symbol* constant_referent;      /* for relational tests to a constant */
-    cons* disjunction_list;         /* list of symbols in disjunction test */
+    var_location variable_referent; /** for relational tests to a variable */
+    Symbol* constant_referent;      /** for relational tests to a constant */
+    cons* disjunction_list;         /** list of symbols in disjunction test */
   } data;
-  struct rete_test_struct* next; /* next in list of tests at the node */
+  struct rete_test_struct* next; /** next in list of tests at the node */
 } rete_test;
 
-/* --- data for positive nodes only --- */
+/** --- data for positive nodes only --- */
 typedef struct pos_node_data_struct {
-  /* --- dll of left-linked pos nodes from the parent beta memory --- */
+  /** --- dll of left-linked pos nodes from the parent beta memory --- */
   struct rete_node_struct *next_from_beta_mem, *prev_from_beta_mem;
 } pos_node_data;
 
-/* --- data for both positive and negative nodes --- */
+/** --- data for both positive and negative nodes --- */
 typedef struct posneg_node_data_struct {
-  rete_test* other_tests; /* tests other than the hashed test */
-  alpha_mem* alpha_mem_;  /* the alpha memory this node uses */
-  struct rete_node_struct* next_from_alpha_mem; /* dll of nodes using that */
-  struct rete_node_struct* prev_from_alpha_mem; /*   ... alpha memory */
+  rete_test* other_tests; /** tests other than the hashed test */
+  alpha_mem* alpha_mem_;  /** the alpha memory this node uses */
+  struct rete_node_struct* next_from_alpha_mem; /** dll of nodes using that */
+  struct rete_node_struct* prev_from_alpha_mem; /**   ... alpha memory */
   struct rete_node_struct* nearest_ancestor_with_same_am;
 } posneg_node_data;
 
-/* --- data for beta memory nodes only --- */
+/** --- data for beta memory nodes only --- */
 typedef struct beta_memory_node_data_struct {
-  /* --- first pos node child that is left-linked --- */
+  /** --- first pos node child that is left-linked --- */
   struct rete_node_struct* first_linked_child;
 } beta_memory_node_data;
 
-/* --- data for cn and cn_partner nodes only --- */
+/** --- data for cn and cn_partner nodes only --- */
 typedef struct cn_node_data_struct {
-  struct rete_node_struct* partner; /* cn, cn_partner point to each other */
+  struct rete_node_struct* partner; /** cn, cn_partner point to each other */
 } cn_node_data;
 
-/* --- data for production nodes only --- */
+/** --- data for production nodes only --- */
 typedef struct p_node_data_struct {
-  struct production_struct* prod;                /* the production */
-  struct node_varnames_struct* parents_nvn;      /* records variable names */
-  struct ms_change_struct* tentative_assertions; /* pending MS changes */
+  struct production_struct* prod;                /** the production */
+  struct node_varnames_struct* parents_nvn;      /** records variable names */
+  struct ms_change_struct* tentative_assertions; /** pending MS changes */
   struct ms_change_struct* tentative_retractions;
 } p_node_data;
 
 #define O_LIST 0
-#define I_LIST 1 /*   values for prod->OPERAND_which_assert_list */
+#define I_LIST 1 /**   values for prod->OPERAND_which_assert_list */
 
-/* --- data for all except positive nodes --- */
+/** --- data for all except positive nodes --- */
 typedef struct non_pos_node_data_struct {
-  struct token_struct* tokens;   /* dll of tokens at this node */
-  unsigned is_left_unlinked : 1; /* used on mp nodes only */
+  struct token_struct* tokens;   /** dll of tokens at this node */
+  unsigned is_left_unlinked : 1; /** used on mp nodes only */
 } non_pos_node_data;
 
-/* --- structure of a rete beta node --- */
+/** --- structure of a rete beta node --- */
 typedef struct rete_node_struct {
-  byte node_type; /* tells what kind of node this is */
+  byte node_type; /** tells what kind of node this is */
 
-  /* -- used only on hashed nodes -- */
-  /* field_num: 0=id, 1=attr, 2=value */
+  /** -- used only on hashed nodes -- */
+  /** field_num: 0=id, 1=attr, 2=value */
   byte left_hash_loc_field_num;
-  /* left_hash_loc_levels_up: 0=current node's alphamem, 1=parent's, etc. */
+  /** left_hash_loc_levels_up: 0=current node's alphamem, 1=parent's, etc. */
   rete_node_level left_hash_loc_levels_up;
-  /* node_id: used for hash function */
+  /** node_id: used for hash function */
   uint32_t node_id;
 
 #ifdef SHARING_FACTORS
   uint64_t sharing_factor;
 #endif
 
-  struct rete_node_struct* parent;       /* points to parent node */
-  struct rete_node_struct* first_child;  /* used for dll of all children, */
-  struct rete_node_struct* next_sibling; /*   regardless of unlinking status */
+  struct rete_node_struct* parent;       /** points to parent node */
+  struct rete_node_struct* first_child;  /** used for dll of all children, */
+  struct rete_node_struct* next_sibling; /**   regardless of unlinking status */
   union rete_node_a_union {
-    pos_node_data pos;    /* for pos. nodes */
-    non_pos_node_data np; /* for all other nodes */
+    pos_node_data pos;    /** for pos. nodes */
+    non_pos_node_data np; /** for all other nodes */
   } a;
   union rete_node_b_union {
-    posneg_node_data posneg;   /* for pos, neg, mp nodes */
-    beta_memory_node_data mem; /* for beta memory nodes */
-    cn_node_data cn;           /* for cn, cn_partner nodes */
-    p_node_data p;             /* for p nodes */
+    posneg_node_data posneg;   /** for pos, neg, mp nodes */
+    beta_memory_node_data mem; /** for beta memory nodes */
+    cn_node_data cn;           /** for cn, cn_partner nodes */
+    p_node_data p;             /** for p nodes */
   } b;
 } rete_node;
 
-/* --- for the last two (i.e., the relational tests), we add in one of
+/** --- for the last two (i.e., the relational tests), we add in one of
        the following, to specifiy the kind of relation --- */
 #define RELATIONAL_EQUAL_RETE_TEST 0x00
 #define RELATIONAL_NOT_EQUAL_RETE_TEST 0x01
@@ -247,7 +247,7 @@ typedef struct rete_node_struct {
 #define RELATIONAL_SMEM_LINK_TEST 0x07
 #define RELATIONAL_SMEM_LINK_NOT_TEST 0x08
 
-/* --- types of tests found at beta nodes --- */
+/** --- types of tests found at beta nodes --- */
 #define CONSTANT_RELATIONAL_RETE_TEST 0x00
 #define VARIABLE_RELATIONAL_RETE_TEST 0x10
 #define DISJUNCTION_RETE_TEST 0x20
@@ -285,47 +285,47 @@ typedef struct node_varnames_struct {
 } node_varnames;
 
 typedef struct token_struct {
-  /* --- Note: "parent" is NIL on negative node negrm (local join result)
+  /** --- Note: "parent" is NIL on negative node negrm (local join result)
      tokens, non-NIL on all other tokens including CN and CN_P stuff.
      I put "parent" at offset 0 in the structure, so that upward scans
      are fast (saves doing an extra integer addition in the inner loop) --- */
   struct token_struct* parent;
   union token_a_union {
     struct token_in_hash_table_data_struct {
-      struct token_struct *next_in_bucket, *prev_in_bucket; /*hash bucket dll*/
-      Symbol* referent; /* referent of the hash test (thing we hashed on) */
+      struct token_struct *next_in_bucket, *prev_in_bucket; /**hash bucket dll*/
+      Symbol* referent; /** referent of the hash test (thing we hashed on) */
     } ht;
     struct token_from_right_memory_of_negative_or_cn_node_struct {
-      struct token_struct *next_negrm, *prev_negrm; /*other local join results*/
-      struct token_struct* left_token; /* token this is local join result for*/
+      struct token_struct *next_negrm, *prev_negrm; /**other local join results*/
+      struct token_struct* left_token; /** token this is local join result for*/
     } neg;
   } a;
   rete_node* node;
   wme* w;
-  struct token_struct* first_child; /* first of dll of children */
-  struct token_struct *next_sibling, *prev_sibling; /* for dll of children */
-  struct token_struct *next_of_node, *prev_of_node; /* dll of tokens at node */
-  struct token_struct *next_from_wme, *prev_from_wme; /* tree-based remove */
-  struct token_struct* negrm_tokens; /* join results: for Neg, CN nodes only */
+  struct token_struct* first_child; /** first of dll of children */
+  struct token_struct *next_sibling, *prev_sibling; /** for dll of children */
+  struct token_struct *next_of_node, *prev_of_node; /** dll of tokens at node */
+  struct token_struct *next_from_wme, *prev_from_wme; /** tree-based remove */
+  struct token_struct* negrm_tokens; /** join results: for Neg, CN nodes only */
 } token;
 
-/* --- info about a change to the match set --- */
+/** --- info about a change to the match set --- */
 typedef struct ms_change_struct {
-  struct ms_change_struct* next; /* dll for all p nodes */
+  struct ms_change_struct* next; /** dll for all p nodes */
   struct ms_change_struct* prev;
-  struct ms_change_struct* next_of_node; /* dll for just this p node */
+  struct ms_change_struct* next_of_node; /** dll for just this p node */
   struct ms_change_struct* prev_of_node;
-  struct rete_node_struct* p_node; /* for retractions, this can be NIL
+  struct rete_node_struct* p_node; /** for retractions, this can be NIL
                                     if the p_node has been excised */
-  struct token_struct* tok;        /* for assertions only */
+  struct token_struct* tok;        /** for assertions only */
 
-  wme* w;                            /* for assertions only */
-  struct instantiation_struct* inst; /* for retractions only */
+  wme* w;                            /** for assertions only */
+  struct instantiation_struct* inst; /** for retractions only */
 
   Symbol* goal;
   goal_stack_level
-      level; /* Level of the match of the assertion or retraction */
-  struct ms_change_struct* next_in_level; /* dll for goal level */
+      level; /** Level of the match of the assertion or retraction */
+  struct ms_change_struct* next_in_level; /** dll for goal level */
   struct ms_change_struct* prev_in_level;
 } ms_change;
 extern void init_rete(agent* thisAgent);
@@ -337,16 +337,16 @@ extern void consume_last_postponed_assertion(agent* thisAgent);
 extern void restore_postponed_assertions(agent* thisAgent);
 extern bool get_next_retraction(agent* thisAgent,
                                 struct instantiation_struct** inst);
-/* REW: begin 08.20.97 */
-/* Special routine for retractions in removed goals.  See note in rete.cpp */
+/** REW: begin 08.20.97 */
+/** Special routine for retractions in removed goals.  See note in rete.cpp */
 extern bool get_next_nil_goal_retraction(agent* thisAgent,
                                          struct instantiation_struct** inst);
-/* REW: end   08.20.97 */
+/** REW: end   08.20.97 */
 
-#define NO_REFRACTED_INST 0            /* no refracted inst. was given */
-#define REFRACTED_INST_MATCHED 1       /* there was a match for the inst. */
-#define REFRACTED_INST_DID_NOT_MATCH 2 /* there was no match for it */
-#define DUPLICATE_PRODUCTION 3         /* the prod. was a duplicate */
+#define NO_REFRACTED_INST 0            /** no refracted inst. was given */
+#define REFRACTED_INST_MATCHED 1       /** there was a match for the inst. */
+#define REFRACTED_INST_DID_NOT_MATCH 2 /** there was no match for it */
+#define DUPLICATE_PRODUCTION 3         /** the prod. was a duplicate */
 extern byte add_production_to_rete(agent* thisAgent, production* p,
                                    condition* lhs_top,
                                    instantiation* refracted_inst,
@@ -391,7 +391,7 @@ extern bool load_rete_net(agent* thisAgent, FILE* source_file);
 
 extern void add_varnames_to_test(agent* thisAgent, varnames* vn, test* t);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
 
        Test Type <---> Relational (Rete) Test Type Conversion
 
@@ -404,7 +404,7 @@ extern void add_varnames_to_test(agent* thisAgent, varnames* vn, test* t);
 --------------------------------------------------------------------- */
 
 inline TestType relational_test_type_to_test_type(byte test_type) {
-  /* we don't need ...[equal test] */
+  /** we don't need ...[equal test] */
   switch (test_type) {
     case RELATIONAL_EQUAL_RETE_TEST:
       return EQUALITY_TEST;
@@ -440,7 +440,7 @@ inline TestType relational_test_type_to_test_type(byte test_type) {
   return EQUALITY_TEST;
 }
 inline byte test_type_to_relational_test_type(byte test_type) {
-  /* we don't need ...[equal test] */
+  /** we don't need ...[equal test] */
   switch (test_type) {
     case NOT_EQUAL_TEST:
       return RELATIONAL_NOT_EQUAL_RETE_TEST;

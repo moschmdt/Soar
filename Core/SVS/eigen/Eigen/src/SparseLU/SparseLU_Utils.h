@@ -13,7 +13,7 @@
 namespace Eigen {
 namespace internal {
 
-/*
+/**
  * \brief Count Nonzero elements in the factors
  */
 template <typename Scalar, typename StorageIndex>
@@ -38,7 +38,7 @@ void SparseLUImpl<Scalar, StorageIndex>::countnz(const Index n, Index& nnzL,
   }
 }
 
-/*
+/**
  * \brief Fix up the data storage lsub for L-subscripts.
  *
  * It removes the subscripts sets for structural pruning,

@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \class Stride
+/** \class Stride
  * \ingroup Core_Module
  *
  * \brief Holds strides information for Map
@@ -56,7 +56,7 @@ class Stride {
     OuterStrideAtCompileTime = _OuterStrideAtCompileTime
   };
 
-  /* Default constructor, for use when strides are fixed at compile time */
+  /** Default constructor, for use when strides are fixed at compile time */
   EIGEN_DEVICE_FUNC
   Stride()
       : m_outer(OuterStrideAtCompileTime), m_inner(InnerStrideAtCompileTime) {
@@ -66,21 +66,21 @@ class Stride {
                  OuterStrideAtCompileTime != Dynamic);
   }
 
-  /* Constructor allowing to pass the strides at runtime */
+  /** Constructor allowing to pass the strides at runtime */
   EIGEN_DEVICE_FUNC
   Stride(Index outerStride, Index innerStride)
       : m_outer(outerStride), m_inner(innerStride) {}
 
-  /* Copy constructor */
+  /** Copy constructor */
   EIGEN_DEVICE_FUNC
   Stride(const Stride& other)
       : m_outer(other.outer()), m_inner(other.inner()) {}
 
-  /* \returns the outer stride */
+  /** \returns the outer stride */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index outer() const {
     return m_outer.value();
   }
-  /* \returns the inner stride */
+  /** \returns the inner stride */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index inner() const {
     return m_inner.value();
   }
@@ -90,7 +90,7 @@ class Stride {
   internal::variable_if_dynamic<Index, InnerStrideAtCompileTime> m_inner;
 };
 
-/* \brief Convenience specialization of Stride to specify only an inner stride
+/** \brief Convenience specialization of Stride to specify only an inner stride
  * See class Map for some examples */
 template <int Value>
 class InnerStride : public Stride<0, Value> {
@@ -102,7 +102,7 @@ class InnerStride : public Stride<0, Value> {
       : Base(0, v) {}  // FIXME making this explicit could break valid code
 };
 
-/* \brief Convenience specialization of Stride to specify only an outer stride
+/** \brief Convenience specialization of Stride to specify only an outer stride
  * See class Map for some examples */
 template <int Value>
 class OuterStride : public Stride<Value, 0> {

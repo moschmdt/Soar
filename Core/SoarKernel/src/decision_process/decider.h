@@ -1,4 +1,4 @@
-/*
+/**
  * decider.h
  *
  *  Created on: Sep 11, 2016
@@ -18,7 +18,7 @@ class SoarDecider {
   friend decider_param_container;
 
  public:
-  /* General methods */
+  /** General methods */
 
   SoarDecider(agent* myAgent);
   ~SoarDecider(){};
@@ -27,7 +27,7 @@ class SoarDecider {
   void get_run_result_string(std::string& runResultStr);
   void clean_up_for_agent_deletion();
 
-  /* Settings and cli command related functions */
+  /** Settings and cli command related functions */
   decider_param_container* params;
   uint64_t settings[num_decider_settings];
 
@@ -43,4 +43,4 @@ class SoarDecider {
   int get_state_stack_string(std::string& stateStackStr);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_DECISION_PROCESS_DECIDER_H_ */
+#endif /** CORE_SOARKERNEL_SRC_DECISION_PROCESS_DECIDER_H_ */

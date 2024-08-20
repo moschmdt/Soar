@@ -52,7 +52,7 @@ template <typename TernaryOp, typename Arg1, typename Arg2, typename Arg3,
           typename StorageKind>
 class CwiseTernaryOpImpl;
 
-/* \class CwiseTernaryOp
+/** \class CwiseTernaryOp
  * \ingroup Core_Module
  *
  * \brief Generic expression where a coefficient-wise ternary operator is
@@ -162,16 +162,16 @@ class CwiseTernaryOp : public CwiseTernaryOpImpl<
       return m_arg1.cols();
   }
 
-  /* \returns the first argument nested expression */
+  /** \returns the first argument nested expression */
   EIGEN_DEVICE_FUNC
   const _Arg1Nested& arg1() const { return m_arg1; }
-  /* \returns the first argument nested expression */
+  /** \returns the first argument nested expression */
   EIGEN_DEVICE_FUNC
   const _Arg2Nested& arg2() const { return m_arg2; }
-  /* \returns the third argument nested expression */
+  /** \returns the third argument nested expression */
   EIGEN_DEVICE_FUNC
   const _Arg3Nested& arg3() const { return m_arg3; }
-  /* \returns the functor representing the ternary operation */
+  /** \returns the functor representing the ternary operation */
   EIGEN_DEVICE_FUNC
   const TernaryOp& functor() const { return m_functor; }
 

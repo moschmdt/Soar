@@ -1,4 +1,4 @@
-/*
+/**
  * libccd
  * ---------------------------------
  * Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
@@ -23,7 +23,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /** __cplusplus */
 
 struct _ccd_quat_t {
   ccd_real_t q[4];  //!< x, y, z, w
@@ -46,30 +46,30 @@ _ccd_inline void ccdQuatSetAngleAxis(ccd_quat_t *q, ccd_real_t angle,
 
 _ccd_inline void ccdQuatScale(ccd_quat_t *q, ccd_real_t k);
 
-/*
+/**
  * q = q * q2
  */
 _ccd_inline void ccdQuatMul(ccd_quat_t *q, const ccd_quat_t *q2);
 
-/*
+/**
  * q = a * b
  */
 _ccd_inline void ccdQuatMul2(ccd_quat_t *q, const ccd_quat_t *a,
                              const ccd_quat_t *b);
 
-/*
+/**
  * Inverts quaternion.
  * Returns 0 on success.
  */
 _ccd_inline int ccdQuatInvert(ccd_quat_t *q);
 _ccd_inline int ccdQuatInvert2(ccd_quat_t *dest, const ccd_quat_t *src);
 
-/*
+/**
  * Rotate vector v by quaternion q.
  */
 _ccd_inline void ccdQuatRotVec(ccd_vec3_t *v, const ccd_quat_t *q);
 
-/* INLINES */
+/** INLINES */
 _ccd_inline ccd_real_t ccdQuatLen2(const ccd_quat_t *q) {
   ccd_real_t len;
 
@@ -204,7 +204,7 @@ _ccd_inline void ccdQuatRotVec(ccd_vec3_t *v, const ccd_quat_t *q) {
 }
 
 #ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
+} /** extern "C" */
+#endif /** __cplusplus */
 
-#endif /* __CCD_QUAT_H__ */
+#endif /** __CCD_QUAT_H__ */

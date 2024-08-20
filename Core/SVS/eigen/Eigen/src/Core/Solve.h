@@ -15,7 +15,7 @@ namespace Eigen {
 template <typename Decomposition, typename RhsType, typename StorageKind>
 class SolveImpl;
 
-/* \class Solve
+/** \class Solve
  * \ingroup Core_Module
  *
  * \brief Pseudo expression representing a solving operation

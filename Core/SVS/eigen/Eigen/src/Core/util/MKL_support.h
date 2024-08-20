@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -59,17 +59,17 @@
 #define MKL_DIRECT_CALL_JUST_SET
 #endif
 #include <mkl.h>
-/*Check IMKL version for compatibility: < 10.3 is not usable with Eigen*/
+/**Check IMKL version for compatibility: < 10.3 is not usable with Eigen*/
 #ifndef INTEL_MKL_VERSION
-#undef EIGEN_USE_MKL /* INTEL_MKL_VERSION is not even defined on older \
+#undef EIGEN_USE_MKL /** INTEL_MKL_VERSION is not even defined on older \
                         versions */
 #elif INTEL_MKL_VERSION <                                                     \
-    100305 /* the intel-mkl-103-release-notes say this was when the lapacke.h \
+    100305 /** the intel-mkl-103-release-notes say this was when the lapacke.h \
               interface was added*/
 #undef EIGEN_USE_MKL
 #endif
 #ifndef EIGEN_USE_MKL
-/*If the MKL version is too old, undef everything*/
+/**If the MKL version is too old, undef everything*/
 #undef EIGEN_USE_MKL_ALL
 #undef EIGEN_USE_LAPACKE
 #undef EIGEN_USE_MKL_VML
@@ -85,8 +85,8 @@
 
 #define EIGEN_MKL_VML_THRESHOLD 128
 
-/* MKL_DOMAIN_BLAS, etc are defined only in 10.3 update 7 */
-/* MKL_BLAS, etc are not defined in 11.2 */
+/** MKL_DOMAIN_BLAS, etc are defined only in 10.3 update 7 */
+/** MKL_BLAS, etc are not defined in 11.2 */
 #ifdef MKL_DOMAIN_ALL
 #define EIGEN_MKL_DOMAIN_ALL MKL_DOMAIN_ALL
 #else

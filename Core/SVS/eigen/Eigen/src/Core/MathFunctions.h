@@ -34,7 +34,7 @@ long double abs(long double x) { return (fabsl(x)); }
 
 namespace internal {
 
-/* \internal \class global_math_functions_filtering_base
+/** \internal \class global_math_functions_filtering_base
  *
  * What it does:
  * Defines a typedef 'type' as follows:
@@ -87,7 +87,7 @@ struct global_math_functions_filtering_base<
       typename Eigen::internal::global_math_functions_filtering_base< \
           scalar>::type>::type
 
-/*
+/**
  * Implementation of real                                                 *
  */
 
@@ -125,7 +125,7 @@ struct real_retval {
   typedef typename NumTraits<Scalar>::Real type;
 };
 
-/*
+/**
  * Implementation of imag                                                 *
  */
 
@@ -163,7 +163,7 @@ struct imag_retval {
   typedef typename NumTraits<Scalar>::Real type;
 };
 
-/*
+/**
  * Implementation of real_ref                                             *
  */
 
@@ -185,7 +185,7 @@ struct real_ref_retval {
   typedef typename NumTraits<Scalar>::Real& type;
 };
 
-/*
+/**
  * Implementation of imag_ref                                             *
  */
 
@@ -222,7 +222,7 @@ struct imag_ref_retval {
   typedef typename NumTraits<Scalar>::Real& type;
 };
 
-/*
+/**
  * Implementation of conj                                                 *
  */
 
@@ -249,7 +249,7 @@ struct conj_retval {
   typedef Scalar type;
 };
 
-/*
+/**
  * Implementation of abs2                                                 *
  */
 
@@ -284,7 +284,7 @@ struct abs2_retval {
   typedef typename NumTraits<Scalar>::Real type;
 };
 
-/*
+/**
  * Implementation of sqrt/rsqrt                                             *
  */
 
@@ -337,7 +337,7 @@ struct rsqrt_retval {
   typedef Scalar type;
 };
 
-/*
+/**
  * Implementation of norm1                                                *
  */
 
@@ -371,7 +371,7 @@ struct norm1_retval {
   typedef typename NumTraits<Scalar>::Real type;
 };
 
-/*
+/**
  * Implementation of hypot                                                *
  */
 
@@ -383,7 +383,7 @@ struct hypot_retval {
   typedef typename NumTraits<Scalar>::Real type;
 };
 
-/*
+/**
  * Implementation of cast                                                 *
  */
 
@@ -417,7 +417,7 @@ EIGEN_DEVICE_FUNC inline NewType cast(const OldType& x) {
   return cast_impl<OldType, NewType>::run(x);
 }
 
-/*
+/**
  * Implementation of round                                                   *
  */
 
@@ -476,7 +476,7 @@ struct round_retval {
   typedef Scalar type;
 };
 
-/*
+/**
  * Implementation of rint                                                    *
  */
 
@@ -511,7 +511,7 @@ struct rint_retval {
   typedef Scalar type;
 };
 
-/*
+/**
  * Implementation of arg                                                     *
  */
 
@@ -580,7 +580,7 @@ struct arg_retval {
   typedef typename NumTraits<Scalar>::Real type;
 };
 
-/*
+/**
  * Implementation of expm1                                                   *
  */
 
@@ -629,7 +629,7 @@ struct expm1_retval {
   typedef Scalar type;
 };
 
-/*
+/**
  * Implementation of log                                                     *
  */
 
@@ -653,7 +653,7 @@ struct log_impl<std::complex<Scalar> > {
   }
 };
 
-/*
+/**
  * Implementation of log1p                                                   *
  */
 
@@ -702,7 +702,7 @@ struct log1p_retval {
   typedef Scalar type;
 };
 
-/*
+/**
  * Implementation of pow                                                  *
  */
 
@@ -738,7 +738,7 @@ struct pow_impl<ScalarX, ScalarY, true> {
   }
 };
 
-/*
+/**
  * Implementation of random                                               *
  */
 
@@ -1059,7 +1059,7 @@ template <typename T>
 T generic_fast_tanh_float(const T& a_x);
 }  // end namespace internal
 
-/*
+/**
  * Generic math functions                                                    *
  */
 
@@ -1409,7 +1409,7 @@ EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE double ceil(const double& x) {
 }
 #endif
 
-/* Log base 2 for 32 bits positive integers.
+/** Log base 2 for 32 bits positive integers.
  * Conveniently returns 0 for x==0. */
 inline int log2(int x) {
   eigen_assert(x >= 0);
@@ -1425,7 +1425,7 @@ inline int log2(int x) {
   return table[(v * 0x07C4ACDDU) >> 27];
 }
 
-/* \returns the square root of \a x.
+/** \returns the square root of \a x.
  *
  * It is essentially equivalent to
  * \code using std::sqrt; return sqrt(x); \endcode
@@ -1453,7 +1453,7 @@ sqrt<bool>(const bool& x) {
 SYCL_SPECIALIZE_FLOATING_TYPES_UNARY(sqrt, sqrt)
 #endif
 
-/* \returns the reciprocal square root of \a x. */
+/** \returns the reciprocal square root of \a x. */
 template <typename T>
 EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE T rsqrt(const T& x) {
   return internal::rsqrt_impl<T>::run(x);
@@ -1883,7 +1883,7 @@ EIGEN_DEVICE_FUNC bool isinf_impl(const std::complex<T>& x) {
          (!(numext::isnan)(x));
 }
 
-/*
+/**
  * Implementation of fuzzy comparisons                                       *
  */
 
@@ -1978,7 +1978,7 @@ EIGEN_DEVICE_FUNC inline bool isApproxOrLessThan(
   return scalar_fuzzy_impl<Scalar>::isApproxOrLessThan(x, y, precision);
 }
 
-/*
+/**
 ***  The special case of the  bool type ***
 */
 

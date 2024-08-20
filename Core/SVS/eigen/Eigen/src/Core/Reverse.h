@@ -44,7 +44,7 @@ struct reverse_packet_cond<PacketType, false> {
 
 }  // end namespace internal
 
-/* \class Reverse
+/** \class Reverse
  * \ingroup Core_Module
  *
  * \brief Expression of the reverse of a vector or matrix
@@ -110,7 +110,7 @@ class Reverse
   typename MatrixType::Nested m_matrix;
 };
 
-/* \returns an expression of the reverse of *this.
+/** \returns an expression of the reverse of *this.
  *
  * Example: \include MatrixBase_reverse.cpp
  * Output: \verbinclude MatrixBase_reverse.out
@@ -124,7 +124,7 @@ DenseBase<Derived>::reverse() {
 
 // reverse const overload moved DenseBase.h due to a CUDA compiler bug
 
-/* This is the "in place" version of reverse: it reverses \c *this.
+/** This is the "in place" version of reverse: it reverses \c *this.
  *
  * In most cases it is probably better to simply use the reversed expression
  * of a matrix. However, when reversing the matrix data itself is really needed,
@@ -188,7 +188,7 @@ struct vectorwise_reverse_inplace_impl<Horizontal> {
 
 }  // end namespace internal
 
-/* This is the "in place" version of VectorwiseOp::reverse: it reverses each
+/** This is the "in place" version of VectorwiseOp::reverse: it reverses each
  * column or row of \c *this.
  *
  * In most cases it is probably better to simply use the reversed expression

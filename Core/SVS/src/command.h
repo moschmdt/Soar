@@ -26,10 +26,10 @@ class command {
   command(svs_state* state, Symbol* root);
   virtual ~command();
 
-  /* check if any substructure in the command changed */
+  /** check if any substructure in the command changed */
   bool changed();
 
-  /* get the value of a string wme */
+  /** get the value of a string wme */
   bool get_str_param(const std::string& name, std::string& val);
 
   void set_status(const std::string& s);

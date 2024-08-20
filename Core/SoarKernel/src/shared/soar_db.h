@@ -1,4 +1,4 @@
-/*
+/**
  *
  *  file:  soar_db.h
  *
@@ -15,7 +15,7 @@
 #include "soar_module.h"
 #include "sqlite3.h"
 
-/* -- Tracing functions that print SQL processing and errors -- */
+/** -- Tracing functions that print SQL processing and errors -- */
 //    #define DEBUG_SQL_ERRORS
 //    #define DEBUG_SQL_QUERIES
 //    #define DEBUG_SQL_PROFILE

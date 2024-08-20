@@ -48,19 +48,19 @@ class BandMatrixBase : public EigenBase<Derived> {
   using Base::derived;
   using Base::rows;
 
-  /* \returns the number of super diagonals */
+  /** \returns the number of super diagonals */
   inline Index supers() const { return derived().supers(); }
 
-  /* \returns the number of sub diagonals */
+  /** \returns the number of sub diagonals */
   inline Index subs() const { return derived().subs(); }
 
-  /* \returns an expression of the underlying coefficient matrix */
+  /** \returns an expression of the underlying coefficient matrix */
   inline const CoefficientsType& coeffs() const { return derived().coeffs(); }
 
-  /* \returns an expression of the underlying coefficient matrix */
+  /** \returns an expression of the underlying coefficient matrix */
   inline CoefficientsType& coeffs() { return derived().coeffs(); }
 
-  /* \returns a vector expression of the \a i -th column,
+  /** \returns a vector expression of the \a i -th column,
    * only the meaningful part is returned.
    * \warning the internal storage must be column major. */
   inline Block<CoefficientsType, Dynamic, 1> col(Index i) {
@@ -77,13 +77,13 @@ class BandMatrixBase : public EigenBase<Derived> {
     return Block<CoefficientsType, Dynamic, 1>(coeffs(), start, i, len, 1);
   }
 
-  /* \returns a vector expression of the main diagonal */
+  /** \returns a vector expression of the main diagonal */
   inline Block<CoefficientsType, 1, SizeAtCompileTime> diagonal() {
     return Block<CoefficientsType, 1, SizeAtCompileTime>(
         coeffs(), supers(), 0, 1, (std::min)(rows(), cols()));
   }
 
-  /* \returns a vector expression of the main diagonal (const version) */
+  /** \returns a vector expression of the main diagonal (const version) */
   inline const Block<const CoefficientsType, 1, SizeAtCompileTime> diagonal()
       const {
     return Block<const CoefficientsType, 1, SizeAtCompileTime>(
@@ -114,28 +114,28 @@ class BandMatrixBase : public EigenBase<Derived> {
         BuildType>::type Type;
   };
 
-  /* \returns a vector expression of the \a N -th sub or super diagonal */
+  /** \returns a vector expression of the \a N -th sub or super diagonal */
   template <int N>
   inline typename DiagonalIntReturnType<N>::Type diagonal() {
     return typename DiagonalIntReturnType<N>::BuildType(
         coeffs(), supers() - N, (std::max)(0, N), 1, diagonalLength(N));
   }
 
-  /* \returns a vector expression of the \a N -th sub or super diagonal */
+  /** \returns a vector expression of the \a N -th sub or super diagonal */
   template <int N>
   inline const typename DiagonalIntReturnType<N>::Type diagonal() const {
     return typename DiagonalIntReturnType<N>::BuildType(
         coeffs(), supers() - N, (std::max)(0, N), 1, diagonalLength(N));
   }
 
-  /* \returns a vector expression of the \a i -th sub or super diagonal */
+  /** \returns a vector expression of the \a i -th sub or super diagonal */
   inline Block<CoefficientsType, 1, Dynamic> diagonal(Index i) {
     eigen_assert((i < 0 && -i <= subs()) || (i >= 0 && i <= supers()));
     return Block<CoefficientsType, 1, Dynamic>(
         coeffs(), supers() - i, std::max<Index>(0, i), 1, diagonalLength(i));
   }
 
-  /* \returns a vector expression of the \a i -th sub or super diagonal */
+  /** \returns a vector expression of the \a i -th sub or super diagonal */
   inline const Block<const CoefficientsType, 1, Dynamic> diagonal(
       Index i) const {
     eigen_assert((i < 0 && -i <= subs()) || (i >= 0 && i <= supers()));
@@ -165,7 +165,7 @@ class BandMatrixBase : public EigenBase<Derived> {
   }
 };
 
-/*
+/**
  * \class BandMatrix
  * \ingroup Core_Module
  *
@@ -227,16 +227,16 @@ class BandMatrix
         m_supers(supers),
         m_subs(subs) {}
 
-  /* \returns the number of columns */
+  /** \returns the number of columns */
   inline EIGEN_CONSTEXPR Index rows() const { return m_rows.value(); }
 
-  /* \returns the number of rows */
+  /** \returns the number of rows */
   inline EIGEN_CONSTEXPR Index cols() const { return m_coeffs.cols(); }
 
-  /* \returns the number of super diagonals */
+  /** \returns the number of super diagonals */
   inline EIGEN_CONSTEXPR Index supers() const { return m_supers.value(); }
 
-  /* \returns the number of sub diagonals */
+  /** \returns the number of sub diagonals */
   inline EIGEN_CONSTEXPR Index subs() const { return m_subs.value(); }
 
   inline const CoefficientsType& coeffs() const { return m_coeffs; }
@@ -297,16 +297,16 @@ class BandMatrixWrapper
     // (supers()+subs()+1)==coeffs.rows());
   }
 
-  /* \returns the number of columns */
+  /** \returns the number of columns */
   inline EIGEN_CONSTEXPR Index rows() const { return m_rows.value(); }
 
-  /* \returns the number of rows */
+  /** \returns the number of rows */
   inline EIGEN_CONSTEXPR Index cols() const { return m_coeffs.cols(); }
 
-  /* \returns the number of super diagonals */
+  /** \returns the number of super diagonals */
   inline EIGEN_CONSTEXPR Index supers() const { return m_supers.value(); }
 
-  /* \returns the number of sub diagonals */
+  /** \returns the number of sub diagonals */
   inline EIGEN_CONSTEXPR Index subs() const { return m_subs.value(); }
 
   inline const CoefficientsType& coeffs() const { return m_coeffs; }
@@ -318,7 +318,7 @@ class BandMatrixWrapper
   internal::variable_if_dynamic<Index, _Subs> m_subs;
 };
 
-/*
+/**
  * \class TridiagonalMatrix
  * \ingroup Core_Module
  *

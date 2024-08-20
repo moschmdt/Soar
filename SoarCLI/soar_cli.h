@@ -1,7 +1,7 @@
 #ifndef SOAR_CLI_H
 #define SOAR_CLI_H
 
-/* This is a new command line interface for soar that combines the the cleaner,
+/** This is a new command line interface for soar that combines the the cleaner,
  * object-oriented implementation of test cli with the additional features of
  * multicli (which was based on mincli) */
 
@@ -24,7 +24,7 @@ void XMLCallbackHandler(sml::smlXMLEventId, void*, sml::Agent*,
                         sml::ClientXML*);
 void InterruptCallbackHandler(sml::smlSystemEventId, void*, sml::Kernel*);
 
-/*
+/**
  * Reads lines from input and stores them in a queue for processing.
  *
  * InputThread blocks on stdin using std::getline reading strings delimited by
@@ -35,7 +35,7 @@ class InputThread : public soar_thread::Thread {
  public:
   virtual ~InputThread() {}
 
-  /*
+  /**
    * Thread entry point.
    *
    * This thread spends most of its time blocking on getline. It loops until
@@ -120,7 +120,7 @@ class InputThread : public soar_thread::Thread {
     }
     return true;
   }
-  /*
+  /**
    * Get a line of input, block until it is received.
    * @param[out] Buffer to copy the line of input to.
    */
@@ -136,7 +136,7 @@ class InputThread : public soar_thread::Thread {
     delete lock;
   }
 
-  /*
+  /**
    * Try to get a line of input, do not block if one is not available.
    * @param[out] Buffer to copy the line of input to, only valid if function
    * returns true.

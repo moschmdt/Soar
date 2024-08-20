@@ -40,7 +40,7 @@ struct visitor_impl<Visitor, Derived, 1> {
 template <typename Visitor, typename Derived>
 struct visitor_impl<Visitor, Derived, 0> {
   EIGEN_DEVICE_FUNC
-  static inline void run(const Derived& /*mat*/, Visitor& /*visitor*/) {}
+  static inline void run(const Derived& /**mat*/, Visitor& /**visitor*/) {}
 };
 
 template <typename Visitor, typename Derived>
@@ -90,7 +90,7 @@ class visitor_evaluator {
 };
 }  // end namespace internal
 
-/* Applies the visitor \a visitor to the whole coefficients of the matrix or
+/** Applies the visitor \a visitor to the whole coefficients of the matrix or
  * vector.
  *
  * The template parameter \a Visitor is the type of the visitor and provides the
@@ -130,7 +130,7 @@ EIGEN_DEVICE_FUNC void DenseBase<Derived>::visit(Visitor& visitor) const {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * \brief Base class to implement min and max visitors
  */
 template <typename Derived>
@@ -150,7 +150,7 @@ struct coeff_visitor {
   }
 };
 
-/* \internal
+/** \internal
  * \brief Visitor computing the min coefficient with its value and coordinates
  *
  * \sa DenseBase::minCoeff(Index*, Index*)
@@ -200,7 +200,7 @@ struct functor_traits<min_coeff_visitor<Scalar, NaNPropagation> > {
   enum { Cost = NumTraits<Scalar>::AddCost };
 };
 
-/* \internal
+/** \internal
  * \brief Visitor computing the max coefficient with its value and coordinates
  *
  * \sa DenseBase::maxCoeff(Index*, Index*)
@@ -252,7 +252,7 @@ struct functor_traits<max_coeff_visitor<Scalar, NaNPropagation> > {
 
 }  // end namespace internal
 
-/* \fn DenseBase<Derived>::minCoeff(IndexType* rowId, IndexType* colId) const
+/** \fn DenseBase<Derived>::minCoeff(IndexType* rowId, IndexType* colId) const
  * \returns the minimum of all coefficients of *this and puts in *row and *col
  * its location.
  *
@@ -280,7 +280,7 @@ DenseBase<Derived>::minCoeff(IndexType* rowId, IndexType* colId) const {
   return minVisitor.res;
 }
 
-/* \returns the minimum of all coefficients of *this and puts in *index its
+/** \returns the minimum of all coefficients of *this and puts in *index its
  * location.
  *
  * In case \c *this contains NaN, NaNPropagation determines the behavior:
@@ -309,7 +309,7 @@ DenseBase<Derived>::minCoeff(IndexType* index) const {
   return minVisitor.res;
 }
 
-/* \fn DenseBase<Derived>::maxCoeff(IndexType* rowId, IndexType* colId) const
+/** \fn DenseBase<Derived>::maxCoeff(IndexType* rowId, IndexType* colId) const
  * \returns the maximum of all coefficients of *this and puts in *row and *col
  * its location.
  *
@@ -337,7 +337,7 @@ DenseBase<Derived>::maxCoeff(IndexType* rowPtr, IndexType* colPtr) const {
   return maxVisitor.res;
 }
 
-/* \returns the maximum of all coefficients of *this and puts in *index its
+/** \returns the maximum of all coefficients of *this and puts in *index its
  * location.
  *
  * In case \c *this contains NaN, NaNPropagation determines the behavior:

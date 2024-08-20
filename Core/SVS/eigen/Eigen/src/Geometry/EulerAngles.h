@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  *
  * \returns the Euler-angles of the rotation matrix \c *this using the
@@ -39,7 +39,7 @@ MatrixBase<Derived>::eulerAngles(Index a0, Index a1, Index a2) const {
   EIGEN_USING_STD(atan2)
   EIGEN_USING_STD(sin)
   EIGEN_USING_STD(cos)
-  /* Implemented from Graphics Gems IV */
+  /** Implemented from Graphics Gems IV */
   EIGEN_STATIC_ASSERT_MATRIX_SPECIFIC_SIZE(Derived, 3, 3)
 
   Matrix<Scalar, 3, 1> res;

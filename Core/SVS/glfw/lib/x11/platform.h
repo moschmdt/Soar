@@ -130,28 +130,28 @@ typedef intptr_t GLFWintptr;
 
 typedef void (*PFNGLXSWAPINTERVALEXTPROC)(Display *, GLXDrawable, int);
 
-#endif /*GLX_MESA_swap_control*/
+#endif /**GLX_MESA_swap_control*/
 
 #ifndef GLX_MESA_swap_control
 
 typedef int (*PFNGLXSWAPINTERVALMESAPROC)(int);
 
-#endif /*GLX_MESA_swap_control*/
+#endif /**GLX_MESA_swap_control*/
 
 #ifndef GLX_SGI_swap_control
 
 // Function signature for GLX_SGI_swap_control
 typedef int (*PFNGLXSWAPINTERVALSGIPROC)(int interval);
 
-#endif /*GLX_SGI_swap_control*/
+#endif /**GLX_SGI_swap_control*/
 
 #ifndef GLX_SGIX_fbconfig
 
-/* Type definitions for GLX_SGIX_fbconfig */
+/** Type definitions for GLX_SGIX_fbconfig */
 typedef XID GLXFBConfigIDSGIX;
 typedef struct __GLXFBConfigRec *GLXFBConfigSGIX;
 
-/* Function signatures for GLX_SGIX_fbconfig */
+/** Function signatures for GLX_SGIX_fbconfig */
 typedef int (*PFNGLXGETFBCONFIGATTRIBSGIXPROC)(Display *dpy,
                                                GLXFBConfigSGIX config,
                                                int attribute, int *value);
@@ -165,7 +165,7 @@ typedef GLXContext (*PFNGLXCREATECONTEXTWITHCONFIGSGIXPROC)(
 typedef XVisualInfo *(*PFNGLXGETVISUALFROMFBCONFIGSGIXPROC)(
     Display *dpy, GLXFBConfigSGIX config);
 
-/* Tokens for GLX_SGIX_fbconfig */
+/** Tokens for GLX_SGIX_fbconfig */
 #define GLX_WINDOW_BIT_SGIX 0x00000001
 #define GLX_PIXMAP_BIT_SGIX 0x00000002
 #define GLX_RGBA_BIT_SGIX 0x00000001
@@ -178,42 +178,42 @@ typedef XVisualInfo *(*PFNGLXGETVISUALFROMFBCONFIGSGIXPROC)(
 #define GLX_COLOR_INDEX_TYPE_SGIX 0x8015
 #define GLX_SCREEN_EXT 0x800C
 
-#endif /*GLX_SGIX_fbconfig*/
+#endif /**GLX_SGIX_fbconfig*/
 
 #ifndef GLX_ARB_create_context
 
-/* Tokens for glXCreateContextAttribsARB attributes */
+/** Tokens for glXCreateContextAttribsARB attributes */
 #define GLX_CONTEXT_MAJOR_VERSION_ARB 0x2091
 #define GLX_CONTEXT_MINOR_VERSION_ARB 0x2092
 #define GLX_CONTEXT_FLAGS_ARB 0x2094
 
-/* Bits for WGL_CONTEXT_FLAGS_ARB */
+/** Bits for WGL_CONTEXT_FLAGS_ARB */
 #define GLX_CONTEXT_DEBUG_BIT_ARB 0x0001
 #define GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x0002
 
-/* Prototype for glXCreateContextAttribs */
+/** Prototype for glXCreateContextAttribs */
 typedef GLXContext (*PFNGLXCREATECONTEXTATTRIBSARBPROC)(
     Display *display, GLXFBConfig config, GLXContext share_context, Bool direct,
     const int *attrib_list);
 
-#endif /*GLX_ARB_create_context*/
+#endif /**GLX_ARB_create_context*/
 
 #ifndef GLX_ARB_create_context_profile
 
-/* Tokens for glXCreateContextAttribsARB attributes */
+/** Tokens for glXCreateContextAttribsARB attributes */
 #define GLX_CONTEXT_PROFILE_MASK_ARB 0x9126
 
-/* BIts for GLX_CONTEXT_PROFILE_MASK_ARB */
+/** BIts for GLX_CONTEXT_PROFILE_MASK_ARB */
 #define GLX_CONTEXT_CORE_PROFILE_BIT_ARB 0x00000001
 #define GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB 0x00000002
 
-#endif /*GLX_ARB_create_context_profile*/
+#endif /**GLX_ARB_create_context_profile*/
 
 #ifndef GL_VERSION_3_0
 
 typedef const GLubyte *(APIENTRY *PFNGLGETSTRINGIPROC)(GLenum, GLuint);
 
-#endif /*GL_VERSION_3_0*/
+#endif /**GL_VERSION_3_0*/
 
 //========================================================================
 // Global variables (GLFW internals)

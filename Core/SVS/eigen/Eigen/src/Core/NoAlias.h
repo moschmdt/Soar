@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \class NoAlias
+/** \class NoAlias
  * \ingroup Core_Module
  *
  * \brief Pseudo expression providing an operator = assuming no aliasing
@@ -70,7 +70,7 @@ class NoAlias {
   ExpressionType& m_expression;
 };
 
-/* \returns a pseudo expression of \c *this with an operator= assuming
+/** \returns a pseudo expression of \c *this with an operator= assuming
  * no aliasing between \c *this and the source expression.
  *
  * More precisely, noalias() allows to bypass the EvalBeforeAssignBit flag.

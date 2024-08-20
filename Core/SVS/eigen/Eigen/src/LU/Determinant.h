@@ -90,7 +90,7 @@ struct determinant_impl<Derived, 4> {
 
 }  // end namespace internal
 
-/* \lu_module
+/** \lu_module
  *
  * \returns the determinant of this matrix
  */

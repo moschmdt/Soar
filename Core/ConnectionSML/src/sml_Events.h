@@ -69,7 +69,7 @@ enum smlRunEventId {
   smlEVENT_AFTER_SMALLEST_STEP,
   smlEVENT_BEFORE_ELABORATION_CYCLE,
   smlEVENT_AFTER_ELABORATION_CYCLE,
-  /*  inline tests depend on this ordering... */
+  /**  inline tests depend on this ordering... */
   smlEVENT_BEFORE_PHASE_EXECUTED,
   smlEVENT_BEFORE_INPUT_PHASE,
   smlEVENT_BEFORE_PROPOSE_PHASE,
@@ -86,7 +86,7 @@ enum smlRunEventId {
   smlEVENT_AFTER_PREFERENCE_PHASE,  // Soar-7 mode only
   smlEVENT_AFTER_WM_PHASE,          // Soar-7 mode only
   smlEVENT_AFTER_PHASE_EXECUTED,
-  /* */
+  /** */
   smlEVENT_BEFORE_DECISION_CYCLE,
   smlEVENT_AFTER_DECISION_CYCLE,
   smlEVENT_MAX_MEMORY_USAGE_EXCEEDED,
@@ -332,7 +332,7 @@ class EXPORT Events {
 
   void RegisterEvent(int id, char const* pStr);
 
-  /*
+  /**
    * @brief Convert from a string version of an event to the int (enum) version.
    *        Returns smlEVENT_INVALID_EVENT (== 0) if the string is not
    *recognized.
@@ -347,7 +347,7 @@ class EXPORT Events {
     return mapIter->second;
   }
 
-  /*
+  /**
    * @brief Convert from int version of an event to the string form.
    *        Returns NULL if the id is not recognized.
    */
@@ -373,7 +373,7 @@ class EXPORT Events {
   // version to work with later Soar kernels. As a side effect it makes the XML
   // much more human readable as you get event "init-soar" not event 23.
 
-  /*
+  /**
    * @brief Convert from a string version of an event to the int (enum) version.
    *        Returns smlEVENT_INVALID_EVENT (== 0) if the string is not
    *recognized.
@@ -382,7 +382,7 @@ class EXPORT Events {
     return InternalConvertToEvent(pStr);
   }
 
-  /*
+  /**
    * @brief Convert from int version of an event to the string form.
    *        Returns NULL if the id is not recognized.
    */

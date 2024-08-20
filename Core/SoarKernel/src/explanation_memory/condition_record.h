@@ -1,4 +1,4 @@
-/*
+/**
  * ebc.h
  *
  *  Created on: Dec 15, 2015
@@ -84,4 +84,4 @@ class condition_record {
   bool test_for_acceptable_preference;
 };
 
-#endif /* EBC_EXPLAIN_CONDITION_RECORD_H_ */
+#endif /** EBC_EXPLAIN_CONDITION_RECORD_H_ */

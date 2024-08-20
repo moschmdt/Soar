@@ -1,4 +1,4 @@
-/* =======================================================================
+/** =======================================================================
                                 wmem.h
 
                 Working Memory Management and Utility Routines
@@ -78,7 +78,7 @@ class WM_Manager {
 };
 
 typedef struct wme_struct {
-  /* WARNING:  The next three fields (id,attr,value) MUST be consecutive.  The
+  /** WARNING:  The next three fields (id,attr,value) MUST be consecutive.  The
    * rete code relies on this! */
   Symbol* id;
   Symbol* attr;
@@ -92,8 +92,8 @@ typedef struct wme_struct {
   struct token_struct* tokens;
   struct wme_struct *next, *prev;
 
-  struct preference_struct* preference;   /* pref. supporting it, or NIL */
-  struct output_link_struct* output_link; /* for top-state output commands */
+  struct preference_struct* preference;   /** pref. supporting it, or NIL */
+  struct output_link_struct* output_link; /** for top-state output commands */
 
   tc_number tc;
   struct condition_struct* chunker_bt_last_ground_cond;
@@ -103,7 +103,7 @@ typedef struct wme_struct {
   Identity* local_singleton_value_identity_set;
 
   struct gds_struct* gds;
-  struct wme_struct *gds_next, *gds_prev; /* wmes in gds */
+  struct wme_struct *gds_next, *gds_prev; /** wmes in gds */
 
   epmem_node_id epmem_id;
   uint64_t epmem_valid;
@@ -129,7 +129,7 @@ inline Symbol* get_wme_element(wme* w, WME_Field f) {
   return NULL;
 }
 
-/* ------------------------------------------------------------------------
+/** ------------------------------------------------------------------------
                       Working Memory Elements (WMEs)
 
    Fields in a WME:

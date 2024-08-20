@@ -76,7 +76,7 @@ typedef CwiseUnaryOp<internal::scalar_isinf_op<Scalar>, const Derived>
 typedef CwiseUnaryOp<internal::scalar_isfinite_op<Scalar>, const Derived>
     IsFiniteReturnType;
 
-/* \returns an expression of the coefficient-wise absolute value of \c *this
+/** \returns an expression of the coefficient-wise absolute value of \c *this
  *
  * Example: \include Cwise_abs.cpp
  * Output: \verbinclude Cwise_abs.out
@@ -89,7 +89,7 @@ EIGEN_STRONG_INLINE const AbsReturnType abs() const {
   return AbsReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise phase angle of \c *this
+/** \returns an expression of the coefficient-wise phase angle of \c *this
  *
  * Example: \include Cwise_arg.cpp
  * Output: \verbinclude Cwise_arg.out
@@ -101,7 +101,7 @@ EIGEN_STRONG_INLINE const ArgReturnType arg() const {
   return ArgReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise squared absolute value of \c
+/** \returns an expression of the coefficient-wise squared absolute value of \c
  * *this
  *
  * Example: \include Cwise_abs2.cpp
@@ -115,7 +115,7 @@ EIGEN_STRONG_INLINE const Abs2ReturnType abs2() const {
   return Abs2ReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise exponential of *this.
+/** \returns an expression of the coefficient-wise exponential of *this.
  *
  * This function computes the coefficient-wise exponential. The function
  * MatrixBase::exp() in the unsupported module MatrixFunctions computes the
@@ -130,7 +130,7 @@ EIGEN_STRONG_INLINE const Abs2ReturnType abs2() const {
 EIGEN_DEVICE_FUNC
 inline const ExpReturnType exp() const { return ExpReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise exponential of *this minus 1.
+/** \returns an expression of the coefficient-wise exponential of *this minus 1.
  *
  * In exact arithmetic, \c x.expm1() is equivalent to \c x.exp() - 1,
  * however, with finite precision, this function is much more accurate when \c x
@@ -144,7 +144,7 @@ inline const Expm1ReturnType expm1() const {
   return Expm1ReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise logarithm of *this.
+/** \returns an expression of the coefficient-wise logarithm of *this.
  *
  * This function computes the coefficient-wise logarithm. The function
  * MatrixBase::log() in the unsupported module MatrixFunctions computes the
@@ -159,7 +159,7 @@ inline const Expm1ReturnType expm1() const {
 EIGEN_DEVICE_FUNC
 inline const LogReturnType log() const { return LogReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise logarithm of 1 plus \c *this.
+/** \returns an expression of the coefficient-wise logarithm of 1 plus \c *this.
  *
  * In exact arithmetic, \c x.log() is equivalent to \c (x+1).log(),
  * however, with finite precision, this function is much more accurate when \c x
@@ -173,7 +173,7 @@ inline const Log1pReturnType log1p() const {
   return Log1pReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise base-10 logarithm of *this.
+/** \returns an expression of the coefficient-wise base-10 logarithm of *this.
  *
  * This function computes the coefficient-wise base-10 logarithm.
  *
@@ -188,7 +188,7 @@ inline const Log10ReturnType log10() const {
   return Log10ReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise base-2 logarithm of *this.
+/** \returns an expression of the coefficient-wise base-2 logarithm of *this.
  *
  * This function computes the coefficient-wise base-2 logarithm.
  *
@@ -196,7 +196,7 @@ inline const Log10ReturnType log10() const {
 EIGEN_DEVICE_FUNC
 inline const Log2ReturnType log2() const { return Log2ReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise square root of *this.
+/** \returns an expression of the coefficient-wise square root of *this.
  *
  * This function computes the coefficient-wise square root. The function
  * MatrixBase::sqrt() in the unsupported module MatrixFunctions computes the
@@ -211,7 +211,7 @@ inline const Log2ReturnType log2() const { return Log2ReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const SqrtReturnType sqrt() const { return SqrtReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise inverse square root of *this.
+/** \returns an expression of the coefficient-wise inverse square root of *this.
  *
  * This function computes the coefficient-wise inverse square root.
  *
@@ -225,7 +225,7 @@ inline const RsqrtReturnType rsqrt() const {
   return RsqrtReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise signum of *this.
+/** \returns an expression of the coefficient-wise signum of *this.
  *
  * This function computes the coefficient-wise signum.
  *
@@ -237,7 +237,7 @@ inline const RsqrtReturnType rsqrt() const {
 EIGEN_DEVICE_FUNC
 inline const SignReturnType sign() const { return SignReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise cosine of *this.
+/** \returns an expression of the coefficient-wise cosine of *this.
  *
  * This function computes the coefficient-wise cosine. The function
  * MatrixBase::cos() in the unsupported module MatrixFunctions computes the
@@ -252,7 +252,7 @@ inline const SignReturnType sign() const { return SignReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const CosReturnType cos() const { return CosReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise sine of *this.
+/** \returns an expression of the coefficient-wise sine of *this.
  *
  * This function computes the coefficient-wise sine. The function
  * MatrixBase::sin() in the unsupported module MatrixFunctions computes the
@@ -267,7 +267,7 @@ inline const CosReturnType cos() const { return CosReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const SinReturnType sin() const { return SinReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise tan of *this.
+/** \returns an expression of the coefficient-wise tan of *this.
  *
  * Example: \include Cwise_tan.cpp
  * Output: \verbinclude Cwise_tan.out
@@ -278,7 +278,7 @@ inline const SinReturnType sin() const { return SinReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const TanReturnType tan() const { return TanReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise arc tan of *this.
+/** \returns an expression of the coefficient-wise arc tan of *this.
  *
  * Example: \include Cwise_atan.cpp
  * Output: \verbinclude Cwise_atan.out
@@ -289,7 +289,7 @@ inline const TanReturnType tan() const { return TanReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const AtanReturnType atan() const { return AtanReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise arc cosine of *this.
+/** \returns an expression of the coefficient-wise arc cosine of *this.
  *
  * Example: \include Cwise_acos.cpp
  * Output: \verbinclude Cwise_acos.out
@@ -300,7 +300,7 @@ inline const AtanReturnType atan() const { return AtanReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const AcosReturnType acos() const { return AcosReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise arc sine of *this.
+/** \returns an expression of the coefficient-wise arc sine of *this.
  *
  * Example: \include Cwise_asin.cpp
  * Output: \verbinclude Cwise_asin.out
@@ -311,7 +311,7 @@ inline const AcosReturnType acos() const { return AcosReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const AsinReturnType asin() const { return AsinReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise hyperbolic tan of *this.
+/** \returns an expression of the coefficient-wise hyperbolic tan of *this.
  *
  * Example: \include Cwise_tanh.cpp
  * Output: \verbinclude Cwise_tanh.out
@@ -322,7 +322,7 @@ inline const AsinReturnType asin() const { return AsinReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const TanhReturnType tanh() const { return TanhReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise hyperbolic sin of *this.
+/** \returns an expression of the coefficient-wise hyperbolic sin of *this.
  *
  * Example: \include Cwise_sinh.cpp
  * Output: \verbinclude Cwise_sinh.out
@@ -333,7 +333,7 @@ inline const TanhReturnType tanh() const { return TanhReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const SinhReturnType sinh() const { return SinhReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise hyperbolic cos of *this.
+/** \returns an expression of the coefficient-wise hyperbolic cos of *this.
  *
  * Example: \include Cwise_cosh.cpp
  * Output: \verbinclude Cwise_cosh.out
@@ -345,7 +345,7 @@ EIGEN_DEVICE_FUNC
 inline const CoshReturnType cosh() const { return CoshReturnType(derived()); }
 
 #if EIGEN_HAS_CXX11_MATH
-/* \returns an expression of the coefficient-wise inverse hyperbolic tan of
+/** \returns an expression of the coefficient-wise inverse hyperbolic tan of
  * *this.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_atanh">Math
@@ -356,7 +356,7 @@ inline const AtanhReturnType atanh() const {
   return AtanhReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise inverse hyperbolic sin of
+/** \returns an expression of the coefficient-wise inverse hyperbolic sin of
  * *this.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_asinh">Math
@@ -367,7 +367,7 @@ inline const AsinhReturnType asinh() const {
   return AsinhReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise inverse hyperbolic cos of
+/** \returns an expression of the coefficient-wise inverse hyperbolic cos of
  * *this.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_acosh">Math
@@ -379,14 +379,14 @@ inline const AcoshReturnType acosh() const {
 }
 #endif
 
-/* \returns an expression of the coefficient-wise logistic of *this.
+/** \returns an expression of the coefficient-wise logistic of *this.
  */
 EIGEN_DEVICE_FUNC
 inline const LogisticReturnType logistic() const {
   return LogisticReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise inverse of *this.
+/** \returns an expression of the coefficient-wise inverse of *this.
  *
  * Example: \include Cwise_inverse.cpp
  * Output: \verbinclude Cwise_inverse.out
@@ -398,7 +398,7 @@ inline const InverseReturnType inverse() const {
   return InverseReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise square of *this.
+/** \returns an expression of the coefficient-wise square of *this.
  *
  * Example: \include Cwise_square.cpp
  * Output: \verbinclude Cwise_square.out
@@ -411,7 +411,7 @@ inline const SquareReturnType square() const {
   return SquareReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise cube of *this.
+/** \returns an expression of the coefficient-wise cube of *this.
  *
  * Example: \include Cwise_cube.cpp
  * Output: \verbinclude Cwise_cube.out
@@ -422,7 +422,7 @@ inline const SquareReturnType square() const {
 EIGEN_DEVICE_FUNC
 inline const CubeReturnType cube() const { return CubeReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise rint of *this.
+/** \returns an expression of the coefficient-wise rint of *this.
  *
  * Example: \include Cwise_rint.cpp
  * Output: \verbinclude Cwise_rint.out
@@ -433,7 +433,7 @@ inline const CubeReturnType cube() const { return CubeReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const RintReturnType rint() const { return RintReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise round of *this.
+/** \returns an expression of the coefficient-wise round of *this.
  *
  * Example: \include Cwise_round.cpp
  * Output: \verbinclude Cwise_round.out
@@ -446,7 +446,7 @@ inline const RoundReturnType round() const {
   return RoundReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise floor of *this.
+/** \returns an expression of the coefficient-wise floor of *this.
  *
  * Example: \include Cwise_floor.cpp
  * Output: \verbinclude Cwise_floor.out
@@ -459,7 +459,7 @@ inline const FloorReturnType floor() const {
   return FloorReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise ceil of *this.
+/** \returns an expression of the coefficient-wise ceil of *this.
  *
  * Example: \include Cwise_ceil.cpp
  * Output: \verbinclude Cwise_ceil.out
@@ -477,7 +477,7 @@ struct ShiftRightXpr {
       Type;
 };
 
-/* \returns an expression of \c *this with the \a Scalar type arithmetically
+/** \returns an expression of \c *this with the \a Scalar type arithmetically
  * shifted right by \a N bit positions.
  *
  * The template parameter \a N specifies the number of bit positions to shift.
@@ -495,7 +495,7 @@ struct ShiftLeftXpr {
       Type;
 };
 
-/* \returns an expression of \c *this with the \a Scalar type logically
+/** \returns an expression of \c *this with the \a Scalar type logically
  * shifted left by \a N bit positions.
  *
  * The template parameter \a N specifies the number of bit positions to shift.
@@ -507,7 +507,7 @@ EIGEN_DEVICE_FUNC typename ShiftLeftXpr<N>::Type shiftLeft() const {
   return typename ShiftLeftXpr<N>::Type(derived());
 }
 
-/* \returns an expression of the coefficient-wise isnan of *this.
+/** \returns an expression of the coefficient-wise isnan of *this.
  *
  * Example: \include Cwise_isNaN.cpp
  * Output: \verbinclude Cwise_isNaN.out
@@ -519,7 +519,7 @@ inline const IsNaNReturnType isNaN() const {
   return IsNaNReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise isinf of *this.
+/** \returns an expression of the coefficient-wise isinf of *this.
  *
  * Example: \include Cwise_isInf.cpp
  * Output: \verbinclude Cwise_isInf.out
@@ -531,7 +531,7 @@ inline const IsInfReturnType isInf() const {
   return IsInfReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise isfinite of *this.
+/** \returns an expression of the coefficient-wise isfinite of *this.
  *
  * Example: \include Cwise_isFinite.cpp
  * Output: \verbinclude Cwise_isFinite.out
@@ -543,7 +543,7 @@ inline const IsFiniteReturnType isFinite() const {
   return IsFiniteReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise ! operator of *this
+/** \returns an expression of the coefficient-wise ! operator of *this
  *
  * \warning this operator is for expression of bool only.
  *
@@ -572,7 +572,7 @@ typedef CwiseUnaryOp<internal::scalar_erfc_op<Scalar>, const Derived>
 typedef CwiseUnaryOp<internal::scalar_ndtri_op<Scalar>, const Derived>
     NdtriReturnType;
 
-/* \cpp11 \returns an expression of the coefficient-wise ln(|gamma(*this)|).
+/** \cpp11 \returns an expression of the coefficient-wise ln(|gamma(*this)|).
  *
  * \specialfunctions_module
  *
@@ -589,7 +589,7 @@ inline const LgammaReturnType lgamma() const {
   return LgammaReturnType(derived());
 }
 
-/* \returns an expression of the coefficient-wise digamma (psi, derivative of
+/** \returns an expression of the coefficient-wise digamma (psi, derivative of
  * lgamma).
  *
  * \specialfunctions_module
@@ -606,7 +606,7 @@ inline const DigammaReturnType digamma() const {
   return DigammaReturnType(derived());
 }
 
-/* \cpp11 \returns an expression of the coefficient-wise Gauss error
+/** \cpp11 \returns an expression of the coefficient-wise Gauss error
  * function of *this.
  *
  * \specialfunctions_module
@@ -622,7 +622,7 @@ inline const DigammaReturnType digamma() const {
 EIGEN_DEVICE_FUNC
 inline const ErfReturnType erf() const { return ErfReturnType(derived()); }
 
-/* \cpp11 \returns an expression of the coefficient-wise Complementary error
+/** \cpp11 \returns an expression of the coefficient-wise Complementary error
  * function of *this.
  *
  * \specialfunctions_module
@@ -638,7 +638,7 @@ inline const ErfReturnType erf() const { return ErfReturnType(derived()); }
 EIGEN_DEVICE_FUNC
 inline const ErfcReturnType erfc() const { return ErfcReturnType(derived()); }
 
-/* \returns an expression of the coefficient-wise inverse of the CDF of the
+/** \returns an expression of the coefficient-wise inverse of the CDF of the
  * Normal distribution function function of *this.
  *
  * \specialfunctions_module

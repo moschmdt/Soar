@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* ======================================================================
+/** ======================================================================
                              lexer.h
 
   The lexer reads strings and returns a stream of lexemes.  Get_lexeme() is
@@ -21,49 +21,49 @@
 
 #include "kernel.h"
 
-/*
+/**
  * Types of tokens read by the lexer
  */
 enum lexer_token_type {
-  EOF_LEXEME,                /*< end-of-file */
-  IDENTIFIER_LEXEME,         /*< identifier */
-  VARIABLE_LEXEME,           /*< variable */
-  STR_CONSTANT_LEXEME,       /*< string constant */
-  INT_CONSTANT_LEXEME,       /*< integer constant */
-  FLOAT_CONSTANT_LEXEME,     /*< floating point constant */
-  L_PAREN_LEXEME,            /*< "(" */
-  R_PAREN_LEXEME,            /*< ")" */
-  L_BRACE_LEXEME,            /*< "{" */
-  R_BRACE_LEXEME,            /*< "}" */
-  PLUS_LEXEME,               /*< "+" */
-  MINUS_LEXEME,              /*< "-" */
-  RIGHT_ARROW_LEXEME,        /*< "-->" */
-  GREATER_LEXEME,            /*< ">" */
-  LESS_LEXEME,               /*< "<" */
-  EQUAL_LEXEME,              /*< "=" */
-  LESS_EQUAL_LEXEME,         /*< "<=" */
-  GREATER_EQUAL_LEXEME,      /*< ">=" */
-  NOT_EQUAL_LEXEME,          /*< "<>" */
-  LESS_EQUAL_GREATER_LEXEME, /*< "<=>" */
-  NOT_AT_LEXEME,             /*< "!@" */
-  UNARY_AT_LEXEME,           /*< "@+" */
-  UNARY_NOT_AT_LEXEME,       /*< "@-" */
-  LESS_LESS_LEXEME,          /*< "<<" */
-  GREATER_GREATER_LEXEME,    /*< ">>" */
-  AMPERSAND_LEXEME,          /*< "&" */
-  AT_LEXEME,                 /*< "@" */
-  TILDE_LEXEME,              /*< "~" */
-  UP_ARROW_LEXEME,           /*< "^" */
-  EXCLAMATION_POINT_LEXEME,  /*< "!" */
-  COMMA_LEXEME,              /*< "," */
-  PERIOD_LEXEME,             /*< "." */
-  QUOTED_STRING_LEXEME,      /*< string in double quotes */
-  DOLLAR_STRING_LEXEME,      /*< string for shell escape */
-  NULL_LEXEME                /*< Initial value */
+  EOF_LEXEME,                /**< end-of-file */
+  IDENTIFIER_LEXEME,         /**< identifier */
+  VARIABLE_LEXEME,           /**< variable */
+  STR_CONSTANT_LEXEME,       /**< string constant */
+  INT_CONSTANT_LEXEME,       /**< integer constant */
+  FLOAT_CONSTANT_LEXEME,     /**< floating point constant */
+  L_PAREN_LEXEME,            /**< "(" */
+  R_PAREN_LEXEME,            /**< ")" */
+  L_BRACE_LEXEME,            /**< "{" */
+  R_BRACE_LEXEME,            /**< "}" */
+  PLUS_LEXEME,               /**< "+" */
+  MINUS_LEXEME,              /**< "-" */
+  RIGHT_ARROW_LEXEME,        /**< "-->" */
+  GREATER_LEXEME,            /**< ">" */
+  LESS_LEXEME,               /**< "<" */
+  EQUAL_LEXEME,              /**< "=" */
+  LESS_EQUAL_LEXEME,         /**< "<=" */
+  GREATER_EQUAL_LEXEME,      /**< ">=" */
+  NOT_EQUAL_LEXEME,          /**< "<>" */
+  LESS_EQUAL_GREATER_LEXEME, /**< "<=>" */
+  NOT_AT_LEXEME,             /**< "!@" */
+  UNARY_AT_LEXEME,           /**< "@+" */
+  UNARY_NOT_AT_LEXEME,       /**< "@-" */
+  LESS_LESS_LEXEME,          /**< "<<" */
+  GREATER_GREATER_LEXEME,    /**< ">>" */
+  AMPERSAND_LEXEME,          /**< "&" */
+  AT_LEXEME,                 /**< "@" */
+  TILDE_LEXEME,              /**< "~" */
+  UP_ARROW_LEXEME,           /**< "^" */
+  EXCLAMATION_POINT_LEXEME,  /**< "!" */
+  COMMA_LEXEME,              /**< "," */
+  PERIOD_LEXEME,             /**< "." */
+  QUOTED_STRING_LEXEME,      /**< string in double quotes */
+  DOLLAR_STRING_LEXEME,      /**< string for shell escape */
+  NULL_LEXEME                /**< Initial value */
 };
 
 namespace soar {
-/*
+/**
  * A class representing a single lexeme.
  */
 class Lexeme {
@@ -77,28 +77,28 @@ class Lexeme {
         id_letter('A'),
         id_number(0) {}
   ~Lexeme() {}
-  enum lexer_token_type type; /*< what kind of lexeme it is */
-  int64_t int_val;            /*< for INT_CONSTANT_LEXEME's */
-  double float_val;           /*< for FLOAT_CONSTANT_LEXEME's */
-  char id_letter;             /*< for IDENTIFIER_LEXEME's */
-  uint64_t id_number;         /*< for IDENTIFIER_LEXEME's */
-  /*
+  enum lexer_token_type type; /**< what kind of lexeme it is */
+  int64_t int_val;            /**< for INT_CONSTANT_LEXEME's */
+  double float_val;           /**< for FLOAT_CONSTANT_LEXEME's */
+  char id_letter;             /**< for IDENTIFIER_LEXEME's */
+  uint64_t id_number;         /**< for IDENTIFIER_LEXEME's */
+  /**
    * @return the text of the lexeme
    */
   const char *string() { return lex_string.c_str(); }
-  /*
+  /**
    * @return the length of the lexeme string
    */
   size_t length() { return lex_string.length(); }
 
  private:
-  /* text of the lexeme */
+  /** text of the lexeme */
   std::string lex_string;
 };
 
 class Lexer {
  public:
-  /*
+  /**
    *  Create a new lexer that reads and lexes input.
    *  @param agent TODO: Currently required for printing
    *  purposes; should refactor and pass in a printer object
@@ -107,31 +107,31 @@ class Lexer {
    */
   Lexer(agent *thisAgent, const char *input);
   ~Lexer(){};
-  /*
+  /**
    * Read the input and set the current lexeme.
    */
   bool get_lexeme();
 
-  /*
+  /**
    * Return a single lexeme created from the input string;
    *
    * @param input string to analyze for lexeme value/type
    */
   static Lexeme get_lexeme_from_string(agent *thisAgent, const char *input);
 
-  /*
+  /**
    * Return the current level of parentheses nesting (0 means
    * no open paren's have been encountered).
    */
   int current_parentheses_level() const;
 
-  /*
+  /**
    * Return the remaining string in the lex.
    */
   const char *current_orig_string() const;
   const char *current_remaining_string() const;
 
-  /*
+  /**
    * Inserts an exec lexeme in front of the current lexeme, resets the lexer to
    * before the exec lexeme, then reads back up to the exec lexeme. We use this
    * to change undefined RHS function calls into exec calls so that clients can
@@ -140,12 +140,12 @@ class Lexer {
    */
   void addExec();
 
-  /*
+  /**
    * Eat lexemes until current_parentheses_level matches the input
    * integer (0 means eat until back at the top level).
    */
   void skip_ahead_to_balanced_parentheses(int parentheses_level);
-  /*
+  /**
    * Figure out what kind(s) of symbol a given string could represent.
    * The result is stored in the input pointer variables.
    * @param s The string to analyze
@@ -165,21 +165,21 @@ class Lexer {
       bool *possible_sc, bool *possible_ic, bool *possible_fc,
       bool *rereadable);
 
-  /*
+  /**
    * The last character read from the input string.
    */
   int current_char;
-  /*
+  /**
    * The last lexeme read from the input string (set by get_lexeme()).
    */
   Lexeme current_lexeme;
 
  private:
-  /*
+  /**
    * The second-to-last character read from the input string.
    */
   int prev_char;
-  /*
+  /**
    * Saves the original string passed to the lexer, in case
    * it is changed by addExec().
    */
@@ -203,7 +203,7 @@ class Lexer {
   // initializes all lexing structures once at startup
   static bool init();
   bool lex_error;
-  /*
+  /**
    * Get the next character from the current input file
    * and put it into the member variable current_char.
    * Set current_char to EOF if the input string is null
@@ -238,18 +238,18 @@ class Lexer {
 
   bool determine_type_of_constituent_string();
   void record_position_of_start_of_lexeme();
-  /*
+  /**
    * Appends the current character to the current lexeme
    * and then retrieves the next character.
    */
   void store_and_advance();
-  /*
+  /**
    * Calls store_and_advance until a non-constituent character
    * is found (constituent characters are alphanumerics and
    * $%&*+-/:<=>?_@).
    */
   void read_constituent_string();
-  /*
+  /**
    * This is called when the current character is "." and we believe
    * the current lexeme will be a floating point number. Calls
    * store_and_advance for every character left in the number (

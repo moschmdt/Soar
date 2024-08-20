@@ -192,7 +192,7 @@ struct LowerBoundIndex {
 
 }  // end namespace internal
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  *
  * \class Triplet
  *
@@ -210,13 +210,13 @@ class Triplet {
           const Scalar& v = Scalar(0))
       : m_row(i), m_col(j), m_value(v) {}
 
-  /* \returns the row index of the element */
+  /** \returns the row index of the element */
   const StorageIndex& row() const { return m_row; }
 
-  /* \returns the column index of the element */
+  /** \returns the column index of the element */
   const StorageIndex& col() const { return m_col; }
 
-  /* \returns the value of the element */
+  /** \returns the value of the element */
   const Scalar& value() const { return m_value; }
 
  protected:

@@ -19,7 +19,7 @@
 
 namespace Eigen {
 
-/* \ingroup Core_Module
+/** \ingroup Core_Module
  *
  * \brief Base class for dense Map and Block expression with direct access
  *
@@ -87,16 +87,16 @@ class MapBase<Derived, ReadOnlyAccessors>
 
   typedef typename Base::CoeffReturnType CoeffReturnType;
 
-  /* \copydoc DenseBase::rows() */
+  /** \copydoc DenseBase::rows() */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index rows() const EIGEN_NOEXCEPT {
     return m_rows.value();
   }
-  /* \copydoc DenseBase::cols() */
+  /** \copydoc DenseBase::cols() */
   EIGEN_DEVICE_FUNC EIGEN_CONSTEXPR inline Index cols() const EIGEN_NOEXCEPT {
     return m_cols.value();
   }
 
-  /* Returns a pointer to the first coefficient of the matrix or vector.
+  /** Returns a pointer to the first coefficient of the matrix or vector.
    *
    * \note When addressing this data, make sure to honor the strides returned by
    * innerStride() and outerStride().
@@ -105,40 +105,40 @@ class MapBase<Derived, ReadOnlyAccessors>
    */
   EIGEN_DEVICE_FUNC inline const Scalar* data() const { return m_data; }
 
-  /* \copydoc PlainObjectBase::coeff(Index,Index) const */
+  /** \copydoc PlainObjectBase::coeff(Index,Index) const */
   EIGEN_DEVICE_FUNC
   inline const Scalar& coeff(Index rowId, Index colId) const {
     return m_data[colId * colStride() + rowId * rowStride()];
   }
 
-  /* \copydoc PlainObjectBase::coeff(Index) const */
+  /** \copydoc PlainObjectBase::coeff(Index) const */
   EIGEN_DEVICE_FUNC
   inline const Scalar& coeff(Index index) const {
     EIGEN_STATIC_ASSERT_INDEX_BASED_ACCESS(Derived)
     return m_data[index * innerStride()];
   }
 
-  /* \copydoc PlainObjectBase::coeffRef(Index,Index) const */
+  /** \copydoc PlainObjectBase::coeffRef(Index,Index) const */
   EIGEN_DEVICE_FUNC
   inline const Scalar& coeffRef(Index rowId, Index colId) const {
     return this->m_data[colId * colStride() + rowId * rowStride()];
   }
 
-  /* \copydoc PlainObjectBase::coeffRef(Index) const */
+  /** \copydoc PlainObjectBase::coeffRef(Index) const */
   EIGEN_DEVICE_FUNC
   inline const Scalar& coeffRef(Index index) const {
     EIGEN_STATIC_ASSERT_INDEX_BASED_ACCESS(Derived)
     return this->m_data[index * innerStride()];
   }
 
-  /* \internal */
+  /** \internal */
   template <int LoadMode>
   inline PacketScalar packet(Index rowId, Index colId) const {
     return internal::ploadt<PacketScalar, LoadMode>(
         m_data + (colId * colStride() + rowId * rowStride()));
   }
 
-  /* \internal */
+  /** \internal */
   template <int LoadMode>
   inline PacketScalar packet(Index index) const {
     EIGEN_STATIC_ASSERT_INDEX_BASED_ACCESS(Derived)
@@ -146,7 +146,7 @@ class MapBase<Derived, ReadOnlyAccessors>
                                                     index * innerStride());
   }
 
-  /* \internal Constructor for fixed size matrices or vectors */
+  /** \internal Constructor for fixed size matrices or vectors */
   EIGEN_DEVICE_FUNC
   explicit inline MapBase(PointerType dataPtr)
       : m_data(dataPtr), m_rows(RowsAtCompileTime), m_cols(ColsAtCompileTime) {
@@ -154,7 +154,7 @@ class MapBase<Derived, ReadOnlyAccessors>
     checkSanity<Derived>();
   }
 
-  /* \internal Constructor for dynamically sized vectors */
+  /** \internal Constructor for dynamically sized vectors */
   EIGEN_DEVICE_FUNC
   inline MapBase(PointerType dataPtr, Index vecSize)
       : m_data(dataPtr),
@@ -169,7 +169,7 @@ class MapBase<Derived, ReadOnlyAccessors>
     checkSanity<Derived>();
   }
 
-  /* \internal Constructor for dynamically sized matrices */
+  /** \internal Constructor for dynamically sized matrices */
   EIGEN_DEVICE_FUNC
   inline MapBase(PointerType dataPtr, Index rows, Index cols)
       : m_data(dataPtr), m_rows(rows), m_cols(cols) {
@@ -218,7 +218,7 @@ class MapBase<Derived, ReadOnlyAccessors>
   const internal::variable_if_dynamic<Index, ColsAtCompileTime> m_cols;
 };
 
-/* \ingroup Core_Module
+/** \ingroup Core_Module
  *
  * \brief Base class for non-const dense Map and Block expression with direct
  * access

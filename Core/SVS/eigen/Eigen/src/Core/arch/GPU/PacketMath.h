@@ -794,12 +794,12 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE half2 pabs(const half2& a) {
   return combine_half(result1, result2);
 }
 
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE half2 ptrue(const half2& /*a*/) {
+EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE half2 ptrue(const half2& /**a*/) {
   half true_half = half_impl::raw_uint16_to_half(0xffffu);
   return pset1<half2>(true_half);
 }
 
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE half2 pzero(const half2& /*a*/) {
+EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE half2 pzero(const half2& /**a*/) {
   half false_half = half_impl::raw_uint16_to_half(0x0000u);
   return pset1<half2>(false_half);
 }
@@ -1252,14 +1252,14 @@ pabs<Packet4h2>(const Packet4h2& a) {
 
 template <>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Packet4h2
-ptrue<Packet4h2>(const Packet4h2& /*a*/) {
+ptrue<Packet4h2>(const Packet4h2& /**a*/) {
   half true_half = half_impl::raw_uint16_to_half(0xffffu);
   return pset1<Packet4h2>(true_half);
 }
 
 template <>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Packet4h2
-pzero<Packet4h2>(const Packet4h2& /*a*/) {
+pzero<Packet4h2>(const Packet4h2& /**a*/) {
   half false_half = half_impl::raw_uint16_to_half(0x0000u);
   return pset1<Packet4h2>(false_half);
 }

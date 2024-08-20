@@ -56,7 +56,7 @@ struct dot_nocheck<T, U, true> {
 
 }  // end namespace internal
 
-/* \fn MatrixBase::dot
+/** \fn MatrixBase::dot
  * \returns the dot product of *this with other.
  *
  * \only_for_vectors
@@ -90,7 +90,7 @@ MatrixBase<Derived>::dot(const MatrixBase<OtherDerived>& other) const {
 
 //---------- implementation of L2 norm and related functions ----------
 
-/* \returns, for vectors, the squared \em l2 norm of \c *this, and for matrices
+/** \returns, for vectors, the squared \em l2 norm of \c *this, and for matrices
  * the squared Frobenius norm. In both cases, it consists in the sum of the
  * square of all the matrix entries. For vectors, this is also equals to the dot
  * product of \c *this with itself.
@@ -104,7 +104,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   return numext::real((*this).cwiseAbs2().sum());
 }
 
-/* \returns, for vectors, the \em l2 norm of \c *this, and for matrices the
+/** \returns, for vectors, the \em l2 norm of \c *this, and for matrices the
  * Frobenius norm. In both cases, it consists in the square root of the sum of
  * the square of all the matrix entries. For vectors, this is also equals to the
  * square root of the dot product of \c *this with itself.
@@ -118,7 +118,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   return numext::sqrt(squaredNorm());
 }
 
-/* \returns an expression of the quotient of \c *this by its own norm.
+/** \returns an expression of the quotient of \c *this by its own norm.
  *
  * \warning If the input vector is too small (i.e., this->norm()==0),
  *          then this function returns a copy of the input.
@@ -142,7 +142,7 @@ EIGEN_DEVICE_FUNC
     return n;
 }
 
-/* Normalizes the vector, i.e. divides it by its own norm.
+/** Normalizes the vector, i.e. divides it by its own norm.
  *
  * \only_for_vectors
  *
@@ -159,7 +159,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void MatrixBase<Derived>::normalize() {
   if (z > RealScalar(0)) derived() /= numext::sqrt(z);
 }
 
-/* \returns an expression of the quotient of \c *this by its own norm while
+/** \returns an expression of the quotient of \c *this by its own norm while
  * avoiding underflow and overflow.
  *
  * \only_for_vectors
@@ -186,7 +186,7 @@ EIGEN_DEVICE_FUNC
     return n;
 }
 
-/* Normalizes the vector while avoid underflow and overflow
+/** Normalizes the vector while avoid underflow and overflow
  *
  * \only_for_vectors
  *
@@ -252,7 +252,7 @@ struct lpNorm_selector<Derived, Infinity> {
 
 }  // end namespace internal
 
-/* \returns the \b coefficient-wise \f$ \ell^p \f$ norm of \c *this, that is,
+/** \returns the \b coefficient-wise \f$ \ell^p \f$ norm of \c *this, that is,
  * returns the p-th root of the sum of the p-th powers of the absolute values of
  * the coefficients of \c *this. If \a p is the special value \a
  * Eigen::Infinity, this function returns the \f$ \ell^\infty \f$ norm, that is
@@ -284,7 +284,7 @@ EIGEN_DEVICE_FUNC MatrixBase<Derived>::RealScalar
 
 //---------- implementation of isOrthogonal / isUnitary ----------
 
-/* \returns true if *this is approximately orthogonal to \a other,
+/** \returns true if *this is approximately orthogonal to \a other,
  *          within the precision given by \a prec.
  *
  * Example: \include MatrixBase_isOrthogonal.cpp
@@ -301,7 +301,7 @@ bool MatrixBase<Derived>::isOrthogonal(const MatrixBase<OtherDerived>& other,
          prec * prec * nested.squaredNorm() * otherNested.squaredNorm();
 }
 
-/* \returns true if *this is approximately an unitary matrix,
+/** \returns true if *this is approximately an unitary matrix,
  *          within the precision given by \a prec. In the case where the \a
  * Scalar type is real numbers, a unitary matrix is an orthogonal matrix, whence
  * the name.

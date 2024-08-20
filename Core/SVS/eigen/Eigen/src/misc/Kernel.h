@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \class kernel_retval_base
+/** \class kernel_retval_base
  *
  */
 template <typename DecompositionType>

@@ -47,7 +47,7 @@ class RunScheduler : public gSKI::IRunListener {
  public:
   RunScheduler(KernelSML* pKernelSML);
 
-  /*
+  /**
    * @brief    This is a method for getting the default value
    *           for the interleaveStepSize for running agents.
    *
@@ -57,7 +57,7 @@ class RunScheduler : public gSKI::IRunListener {
   egSKIInterleaveType RunScheduler::DefaultInterleaveStepSize(
       egSKIRunType runStepSize);
 
-  /*
+  /**
    * @brief    Don't try to Run with an nonsense interleaveStepSize
    *
    * @param runStepSize -- increment to run an agent, phase, decision etc.
@@ -67,19 +67,19 @@ class RunScheduler : public gSKI::IRunListener {
   bool RunScheduler::VerifyStepSizeForRunType(egSKIRunType runStepSize,
                                               egSKIInterleaveType interleave);
 
-  /*
+  /**
    * @brief    Indicate that the next time RunScheduledAgents() is called
    *           this agent should (or should not) run.
    */
   void ScheduleAgentToRun(AgentSML* pAgentSML, bool state);
 
-  /*
+  /**
    * @brief    Indicate that the next time RunScheduledAgents() is called
    *           all agents should (or should not) run.
    */
   void ScheduleAllAgentsToRun(bool state);
 
-  /*
+  /**
    * @brief    Run all agents previously marked as being scheduled to run.
    *
    * @param runStepSize -- decision/phase etc.
@@ -99,7 +99,7 @@ class RunScheduler : public gSKI::IRunListener {
                                     egSKIRunType interleaveStepSize,
                                     bool synchronize, gSKI::Error* pError);
 
-  /*
+  /**
    * @brief    Run all agents previously marked as being scheduled to run.
    *
    * @param runStepSize -- decision/phase etc.
@@ -119,12 +119,12 @@ class RunScheduler : public gSKI::IRunListener {
                                     egSKIInterleaveType interleaveStepSize,
                                     bool synchronize, gSKI::Error* pError);
 
-  /*
+  /**
    * @brief    Returns true if at least one agent is currently running.
    */
   bool IsRunning();
 
-  /*
+  /**
    * @brief    Defines which phase we stop before when running by decision.
    *           E.g. Pass input phase to stop just after generating output and
    *before receiving input. This is a setting which modifies the future behavior

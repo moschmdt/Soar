@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* ========================================================================
+/** ========================================================================
                               init_soar.h
 ======================================================================== */
 
@@ -17,7 +17,7 @@ void set_trace_setting(agent* thisAgent, int param_number, int64_t new_value);
 void reset_statistics(agent* thisAgent);
 void setup_signal_handling(void);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                             Exiting Soar
 
    Exit_soar() and abort_with_fatal_error() both terminate Soar, closing
@@ -30,7 +30,7 @@ void setup_signal_handling(void);
 void abort_with_fatal_error(agent* thisAgent, const char*);
 void abort_with_fatal_error_noagent(const char* msg);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                      Adding and Removing Pwatchs
 
    Productions_being_traced is a (consed) list of all productions
@@ -41,7 +41,7 @@ void abort_with_fatal_error_noagent(const char* msg);
 void add_pwatch(agent* thisAgent, struct production_struct* prod);
 void remove_pwatch(agent* thisAgent, struct production_struct* prod);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                          Reinitializing Soar
 
    Reinitialize_soar() does all the work for an init-soar.
@@ -49,20 +49,20 @@ void remove_pwatch(agent* thisAgent, struct production_struct* prod);
 
 void reinitialize_soar(agent* thisAgent);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                          Reset Timers
    This code was duplicated in three spots. It is now consolidated.
    This stops and sets all timers to zero.
 --------------------------------------------------------------------- */
 void reset_timers(agent* thisAgent);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                          Reset Timers
    This code used to be in the CLI, it resets the per-cycle max stats.
 --------------------------------------------------------------------- */
 void reset_max_stats(agent* thisAgent);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                          Reinitializing Soar
 
    This adds the top state (S1) and the io header symbols and wme's to the
@@ -71,7 +71,7 @@ void reset_max_stats(agent* thisAgent);
 
 void init_agent_memory(agent* thisAgent);
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                             Running Soar
 
    Each of the following routines runs Soar for a certain duration,

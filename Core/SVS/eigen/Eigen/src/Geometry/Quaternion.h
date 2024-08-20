@@ -12,7 +12,7 @@
 #define EIGEN_QUATERNION_H
 namespace Eigen {
 
-/*
+/**
  * Definition of QuaternionBase<Derived>
  * The implementation is at the end of the file
  */
@@ -23,7 +23,7 @@ template <typename Other, int OtherRows = Other::RowsAtCompileTime,
 struct quaternionbase_assign_impl;
 }
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  * \class QuaternionBase
  * \brief Base class for quaternion expressions
  * \tparam Derived derived type (CRTP)
@@ -48,70 +48,70 @@ class QuaternionBase : public RotationBase<Derived, 3> {
   enum { Flags = Eigen::internal::traits<Derived>::Flags };
 
   // typedef typename Matrix<Scalar,4,1> Coefficients;
-  /* the type of a 3D vector */
+  /** the type of a 3D vector */
   typedef Matrix<Scalar, 3, 1> Vector3;
-  /* the equivalent rotation matrix type */
+  /** the equivalent rotation matrix type */
   typedef Matrix<Scalar, 3, 3> Matrix3;
-  /* the equivalent angle-axis type */
+  /** the equivalent angle-axis type */
   typedef AngleAxis<Scalar> AngleAxisType;
 
-  /* \returns the \c x coefficient */
+  /** \returns the \c x coefficient */
   EIGEN_DEVICE_FUNC inline CoeffReturnType x() const {
     return this->derived().coeffs().coeff(0);
   }
-  /* \returns the \c y coefficient */
+  /** \returns the \c y coefficient */
   EIGEN_DEVICE_FUNC inline CoeffReturnType y() const {
     return this->derived().coeffs().coeff(1);
   }
-  /* \returns the \c z coefficient */
+  /** \returns the \c z coefficient */
   EIGEN_DEVICE_FUNC inline CoeffReturnType z() const {
     return this->derived().coeffs().coeff(2);
   }
-  /* \returns the \c w coefficient */
+  /** \returns the \c w coefficient */
   EIGEN_DEVICE_FUNC inline CoeffReturnType w() const {
     return this->derived().coeffs().coeff(3);
   }
 
-  /* \returns a reference to the \c x coefficient (if Derived is a non-const
+  /** \returns a reference to the \c x coefficient (if Derived is a non-const
    * lvalue) */
   EIGEN_DEVICE_FUNC inline NonConstCoeffReturnType x() {
     return this->derived().coeffs().x();
   }
-  /* \returns a reference to the \c y coefficient (if Derived is a non-const
+  /** \returns a reference to the \c y coefficient (if Derived is a non-const
    * lvalue) */
   EIGEN_DEVICE_FUNC inline NonConstCoeffReturnType y() {
     return this->derived().coeffs().y();
   }
-  /* \returns a reference to the \c z coefficient (if Derived is a non-const
+  /** \returns a reference to the \c z coefficient (if Derived is a non-const
    * lvalue) */
   EIGEN_DEVICE_FUNC inline NonConstCoeffReturnType z() {
     return this->derived().coeffs().z();
   }
-  /* \returns a reference to the \c w coefficient (if Derived is a non-const
+  /** \returns a reference to the \c w coefficient (if Derived is a non-const
    * lvalue) */
   EIGEN_DEVICE_FUNC inline NonConstCoeffReturnType w() {
     return this->derived().coeffs().w();
   }
 
-  /* \returns a read-only vector expression of the imaginary part (x,y,z) */
+  /** \returns a read-only vector expression of the imaginary part (x,y,z) */
   EIGEN_DEVICE_FUNC inline const VectorBlock<const Coefficients, 3> vec()
       const {
     return coeffs().template head<3>();
   }
 
-  /* \returns a vector expression of the imaginary part (x,y,z) */
+  /** \returns a vector expression of the imaginary part (x,y,z) */
   EIGEN_DEVICE_FUNC inline VectorBlock<Coefficients, 3> vec() {
     return coeffs().template head<3>();
   }
 
-  /* \returns a read-only vector expression of the coefficients (x,y,z,w) */
+  /** \returns a read-only vector expression of the coefficients (x,y,z,w) */
   EIGEN_DEVICE_FUNC inline const typename internal::traits<
       Derived>::Coefficients&
   coeffs() const {
     return derived().coeffs();
   }
 
-  /* \returns a vector expression of the coefficients (x,y,z,w) */
+  /** \returns a vector expression of the coefficients (x,y,z,w) */
   EIGEN_DEVICE_FUNC inline typename internal::traits<Derived>::Coefficients&
   coeffs() {
     return derived().coeffs();
@@ -136,42 +136,42 @@ class QuaternionBase : public RotationBase<Derived, 3> {
   template <class OtherDerived>
   EIGEN_DEVICE_FUNC Derived& operator=(const MatrixBase<OtherDerived>& m);
 
-  /* \returns a quaternion representing an identity rotation
+  /** \returns a quaternion representing an identity rotation
    * \sa MatrixBase::Identity()
    */
   EIGEN_DEVICE_FUNC static inline Quaternion<Scalar> Identity() {
     return Quaternion<Scalar>(Scalar(1), Scalar(0), Scalar(0), Scalar(0));
   }
 
-  /* \sa QuaternionBase::Identity(), MatrixBase::setIdentity()
+  /** \sa QuaternionBase::Identity(), MatrixBase::setIdentity()
    */
   EIGEN_DEVICE_FUNC inline QuaternionBase& setIdentity() {
     coeffs() << Scalar(0), Scalar(0), Scalar(0), Scalar(1);
     return *this;
   }
 
-  /* \returns the squared norm of the quaternion's coefficients
+  /** \returns the squared norm of the quaternion's coefficients
    * \sa QuaternionBase::norm(), MatrixBase::squaredNorm()
    */
   EIGEN_DEVICE_FUNC inline Scalar squaredNorm() const {
     return coeffs().squaredNorm();
   }
 
-  /* \returns the norm of the quaternion's coefficients
+  /** \returns the norm of the quaternion's coefficients
    * \sa QuaternionBase::squaredNorm(), MatrixBase::norm()
    */
   EIGEN_DEVICE_FUNC inline Scalar norm() const { return coeffs().norm(); }
 
-  /* Normalizes the quaternion \c *this
+  /** Normalizes the quaternion \c *this
    * \sa normalized(), MatrixBase::normalize() */
   EIGEN_DEVICE_FUNC inline void normalize() { coeffs().normalize(); }
-  /* \returns a normalized copy of \c *this
+  /** \returns a normalized copy of \c *this
    * \sa normalize(), MatrixBase::normalized() */
   EIGEN_DEVICE_FUNC inline Quaternion<Scalar> normalized() const {
     return Quaternion<Scalar>(coeffs().normalized());
   }
 
-  /* \returns the dot product of \c *this and \a other
+  /** \returns the dot product of \c *this and \a other
    * Geometrically speaking, the dot product of two unit quaternions
    * corresponds to the cosine of half the angle between the two rotations.
    * \sa angularDistance()
@@ -186,10 +186,10 @@ class QuaternionBase : public RotationBase<Derived, 3> {
   EIGEN_DEVICE_FUNC Scalar
   angularDistance(const QuaternionBase<OtherDerived>& other) const;
 
-  /* \returns an equivalent 3x3 rotation matrix */
+  /** \returns an equivalent 3x3 rotation matrix */
   EIGEN_DEVICE_FUNC inline Matrix3 toRotationMatrix() const;
 
-  /* \returns the quaternion which transform \a a into \a b through a rotation
+  /** \returns the quaternion which transform \a a into \a b through a rotation
    */
   template <typename Derived1, typename Derived2>
   EIGEN_DEVICE_FUNC Derived& setFromTwoVectors(const MatrixBase<Derived1>& a,
@@ -202,17 +202,17 @@ class QuaternionBase : public RotationBase<Derived, 3> {
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& operator*=(
       const QuaternionBase<OtherDerived>& q);
 
-  /* \returns the quaternion describing the inverse rotation */
+  /** \returns the quaternion describing the inverse rotation */
   EIGEN_DEVICE_FUNC Quaternion<Scalar> inverse() const;
 
-  /* \returns the conjugated quaternion */
+  /** \returns the conjugated quaternion */
   EIGEN_DEVICE_FUNC Quaternion<Scalar> conjugate() const;
 
   template <class OtherDerived>
   EIGEN_DEVICE_FUNC Quaternion<Scalar> slerp(
       const Scalar& t, const QuaternionBase<OtherDerived>& other) const;
 
-  /* \returns true if each coefficients of \c *this and \a other are all
+  /** \returns true if each coefficients of \c *this and \a other are all
    * exactly equal. \warning When using floating point scalar values you
    * probably should rather use a fuzzy comparison such as isApprox() \sa
    * isApprox(), operator!= */
@@ -222,7 +222,7 @@ class QuaternionBase : public RotationBase<Derived, 3> {
     return coeffs() == other.coeffs();
   }
 
-  /* \returns true if at least one pair of coefficients of \c *this and \a
+  /** \returns true if at least one pair of coefficients of \c *this and \a
    * other are not exactly equal to each other. \warning When using floating
    * point scalar values you probably should rather use a fuzzy comparison such
    * as isApprox() \sa isApprox(), operator== */
@@ -232,7 +232,7 @@ class QuaternionBase : public RotationBase<Derived, 3> {
     return coeffs() != other.coeffs();
   }
 
-  /* \returns \c true if \c *this is approximately equal to \a other, within
+  /** \returns \c true if \c *this is approximately equal to \a other, within
    * the precision determined by \a prec.
    *
    * \sa MatrixBase::isApprox() */
@@ -243,12 +243,12 @@ class QuaternionBase : public RotationBase<Derived, 3> {
     return coeffs().isApprox(other.coeffs(), prec);
   }
 
-  /* return the result vector of \a v through the rotation*/
+  /** return the result vector of \a v through the rotation*/
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Vector3
   _transformVector(const Vector3& v) const;
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* \returns \c *this with scalar type casted to \a NewScalarType
+  /** \returns \c *this with scalar type casted to \a NewScalarType
    *
    * Note that if \a NewScalarType is equal to the current scalar type of \c
    * *this then this function smartly returns a const reference to \c *this.
@@ -294,11 +294,11 @@ class QuaternionBase : public RotationBase<Derived, 3> {
   EIGEN_DEFAULT_EMPTY_CONSTRUCTOR_AND_DESTRUCTOR(QuaternionBase)
 };
 
-/*
+/**
  * Definition/implementation of Quaternion<Scalar>
  */
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \class Quaternion
  *
@@ -352,10 +352,10 @@ class Quaternion : public QuaternionBase<Quaternion<_Scalar, _Options> > {
   typedef typename internal::traits<Quaternion>::Coefficients Coefficients;
   typedef typename Base::AngleAxisType AngleAxisType;
 
-  /* Default constructor leaving the quaternion uninitialized. */
+  /** Default constructor leaving the quaternion uninitialized. */
   EIGEN_DEVICE_FUNC inline Quaternion() {}
 
-  /* Constructs and initializes the quaternion \f$ w+xi+yj+zk \f$ from
+  /** Constructs and initializes the quaternion \f$ w+xi+yj+zk \f$ from
    * its four coefficients \a w, \a x, \a y and \a z.
    *
    * \warning Note the order of the arguments: the real \a w coefficient first,
@@ -366,23 +366,23 @@ class Quaternion : public QuaternionBase<Quaternion<_Scalar, _Options> > {
                                       const Scalar& y, const Scalar& z)
       : m_coeffs(x, y, z, w) {}
 
-  /* Constructs and initialize a quaternion from the array data */
+  /** Constructs and initialize a quaternion from the array data */
   EIGEN_DEVICE_FUNC explicit inline Quaternion(const Scalar* data)
       : m_coeffs(data) {}
 
-  /* Copy constructor */
+  /** Copy constructor */
   template <class Derived>
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
   Quaternion(const QuaternionBase<Derived>& other) {
     this->Base::operator=(other);
   }
 
-  /* Constructs and initializes a quaternion from the angle-axis \a aa */
+  /** Constructs and initializes a quaternion from the angle-axis \a aa */
   EIGEN_DEVICE_FUNC explicit inline Quaternion(const AngleAxisType& aa) {
     *this = aa;
   }
 
-  /* Constructs and initializes a quaternion from either:
+  /** Constructs and initializes a quaternion from either:
    *  - a rotation matrix expression,
    *  - a 4D vector expression representing quaternion coefficients.
    */
@@ -392,7 +392,7 @@ class Quaternion : public QuaternionBase<Quaternion<_Scalar, _Options> > {
     *this = other;
   }
 
-  /* Explicit copy constructor with scalar conversion */
+  /** Explicit copy constructor with scalar conversion */
   template <typename OtherScalar, int OtherOptions>
   EIGEN_DEVICE_FUNC explicit inline Quaternion(
       const Quaternion<OtherScalar, OtherOptions>& other) {
@@ -402,12 +402,12 @@ class Quaternion : public QuaternionBase<Quaternion<_Scalar, _Options> > {
 #if EIGEN_HAS_RVALUE_REFERENCES
   // We define a copy constructor, which means we don't get an implicit move
   // constructor or assignment operator.
-  /* Default move constructor */
+  /** Default move constructor */
   EIGEN_DEVICE_FUNC inline Quaternion(Quaternion&& other)
       EIGEN_NOEXCEPT_IF(std::is_nothrow_move_constructible<Scalar>::value)
       : m_coeffs(std::move(other.coeffs())) {}
 
-  /* Default move assignment operator */
+  /** Default move assignment operator */
   EIGEN_DEVICE_FUNC Quaternion& operator=(Quaternion&& other)
       EIGEN_NOEXCEPT_IF(std::is_nothrow_move_assignable<Scalar>::value) {
     m_coeffs = std::move(other.coeffs());
@@ -443,14 +443,14 @@ class Quaternion : public QuaternionBase<Quaternion<_Scalar, _Options> > {
 #endif
 };
 
-/* \ingroup Geometry_Module
+/** \ingroup Geometry_Module
  * single precision quaternion type */
 typedef Quaternion<float> Quaternionf;
-/* \ingroup Geometry_Module
+/** \ingroup Geometry_Module
  * double precision quaternion type */
 typedef Quaternion<double> Quaterniond;
 
-/*
+/**
  * Specialization of Map<Quaternion<Scalar>>
  */
 
@@ -478,7 +478,7 @@ struct traits<Map<const Quaternion<_Scalar>, _Options> >
 };
 }  // namespace internal
 
-/* \ingroup Geometry_Module
+/** \ingroup Geometry_Module
  * \brief Quaternion expression mapping a constant memory buffer
  *
  * \tparam _Scalar the type of the Quaternion coefficients
@@ -500,7 +500,7 @@ class Map<const Quaternion<_Scalar>, _Options>
   EIGEN_INHERIT_ASSIGNMENT_OPERATORS(Map)
   using Base::operator*=;
 
-  /* Constructs a Mapped Quaternion object from the pointer \a coeffs
+  /** Constructs a Mapped Quaternion object from the pointer \a coeffs
    *
    * The pointer \a coeffs must reference the four coefficients of Quaternion in
    * the following order: \code *coeffs == {x, y, z, w} \endcode
@@ -518,7 +518,7 @@ class Map<const Quaternion<_Scalar>, _Options>
   const Coefficients m_coeffs;
 };
 
-/* \ingroup Geometry_Module
+/** \ingroup Geometry_Module
  * \brief Expression of a quaternion from a memory buffer
  *
  * \tparam _Scalar the type of the Quaternion coefficients
@@ -540,7 +540,7 @@ class Map<Quaternion<_Scalar>, _Options>
   EIGEN_INHERIT_ASSIGNMENT_OPERATORS(Map)
   using Base::operator*=;
 
-  /* Constructs a Mapped Quaternion object from the pointer \a coeffs
+  /** Constructs a Mapped Quaternion object from the pointer \a coeffs
    *
    * The pointer \a coeffs must reference the four coefficients of Quaternion in
    * the following order: \code *coeffs == {x, y, z, w} \endcode
@@ -559,20 +559,20 @@ class Map<Quaternion<_Scalar>, _Options>
   Coefficients m_coeffs;
 };
 
-/* \ingroup Geometry_Module
+/** \ingroup Geometry_Module
  * Map an unaligned array of single precision scalars as a quaternion */
 typedef Map<Quaternion<float>, 0> QuaternionMapf;
-/* \ingroup Geometry_Module
+/** \ingroup Geometry_Module
  * Map an unaligned array of double precision scalars as a quaternion */
 typedef Map<Quaternion<double>, 0> QuaternionMapd;
-/* \ingroup Geometry_Module
+/** \ingroup Geometry_Module
  * Map a 16-byte aligned array of single precision scalars as a quaternion */
 typedef Map<Quaternion<float>, Aligned> QuaternionMapAlignedf;
-/* \ingroup Geometry_Module
+/** \ingroup Geometry_Module
  * Map a 16-byte aligned array of double precision scalars as a quaternion */
 typedef Map<Quaternion<double>, Aligned> QuaternionMapAlignedd;
 
-/*
+/**
  * Implementation of QuaternionBase methods
  */
 
@@ -593,7 +593,7 @@ struct quat_product {
 };
 }  // namespace internal
 
-/* \returns the concatenation of two rotations as a quaternion-quaternion
+/** \returns the concatenation of two rotations as a quaternion-quaternion
  * product */
 template <class Derived>
 template <class OtherDerived>
@@ -610,7 +610,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
       typename internal::traits<Derived>::Scalar>::run(*this, other);
 }
 
-/* \sa operator*(Quaternion) */
+/** \sa operator*(Quaternion) */
 template <class Derived>
 template <class OtherDerived>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived&
@@ -619,7 +619,7 @@ QuaternionBase<Derived>::operator*=(const QuaternionBase<OtherDerived>& other) {
   return derived();
 }
 
-/* Rotation of a vector by a quaternion.
+/** Rotation of a vector by a quaternion.
  * \remarks If the quaternion is used to rotate several points (>1)
  * then it is much more efficient to first convert it to a 3x3 Matrix.
  * Comparison of the operation cost for n transformations:
@@ -654,7 +654,7 @@ QuaternionBase<Derived>::operator=(const QuaternionBase<OtherDerived>& other) {
   return derived();
 }
 
-/* Set \c *this from an angle-axis \a aa and returns a reference to \c *this
+/** Set \c *this from an angle-axis \a aa and returns a reference to \c *this
  */
 template <class Derived>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived&
@@ -668,7 +668,7 @@ QuaternionBase<Derived>::operator=(const AngleAxisType& aa) {
   return derived();
 }
 
-/* Set \c *this from the expression \a xpr:
+/** Set \c *this from the expression \a xpr:
  *   - if \a xpr is a 4x1 vector, then \a xpr is assumed to be a quaternion
  *   - if \a xpr is a 3x3 matrix, then \a xpr is assumed to be rotation matrix
  *     and \a xpr is converted to a quaternion
@@ -687,7 +687,7 @@ EIGEN_DEVICE_FUNC inline Derived& QuaternionBase<Derived>::operator=(
   return derived();
 }
 
-/* Convert the quaternion to a 3x3 rotation matrix. The quaternion is required
+/** Convert the quaternion to a 3x3 rotation matrix. The quaternion is required
  * to be normalized, otherwise the result is undefined.
  */
 template <class Derived>
@@ -725,7 +725,7 @@ QuaternionBase<Derived>::toRotationMatrix(void) const {
   return res;
 }
 
-/* Sets \c *this to be a quaternion representing a rotation between
+/** Sets \c *this to be a quaternion representing a rotation between
  * the two arbitrary vectors \a a and \a b. In other words, the built
  * rotation represent a rotation sending the line of direction \a a
  * to the line of direction \a b, both lines passing through the origin.
@@ -773,7 +773,7 @@ EIGEN_DEVICE_FUNC inline Derived& QuaternionBase<Derived>::setFromTwoVectors(
   return derived();
 }
 
-/* \returns a random unit quaternion following a uniform distribution law on
+/** \returns a random unit quaternion following a uniform distribution law on
  * SO(3)
  *
  * \note The implementation is based on http://planning.cs.uiuc.edu/node198.html
@@ -791,7 +791,7 @@ Quaternion<Scalar, Options>::UnitRandom() {
   return Quaternion(a * sin(u2), a * cos(u2), b * sin(u3), b * cos(u3));
 }
 
-/* Returns a quaternion representing a rotation between
+/** Returns a quaternion representing a rotation between
  * the two arbitrary vectors \a a and \a b. In other words, the built
  * rotation represent a rotation sending the line of direction \a a
  * to the line of direction \a b, both lines passing through the origin.
@@ -811,7 +811,7 @@ Quaternion<Scalar, Options>::FromTwoVectors(const MatrixBase<Derived1>& a,
   return quat;
 }
 
-/* \returns the multiplicative inverse of \c *this
+/** \returns the multiplicative inverse of \c *this
  * Note that in most cases, i.e., if you simply want the opposite rotation,
  * and/or the quaternion is normalized, then it is enough to use the conjugate.
  *
@@ -842,7 +842,7 @@ struct quat_conj {
 };
 }  // namespace internal
 
-/* \returns the conjugate of the \c *this which is equal to the multiplicative
+/** \returns the conjugate of the \c *this which is equal to the multiplicative
  * inverse if the quaternion is normalized. The conjugate of a quaternion
  * represents the opposite rotation.
  *
@@ -856,7 +856,7 @@ QuaternionBase<Derived>::conjugate() const {
       typename internal::traits<Derived>::Scalar>::run(*this);
 }
 
-/* \returns the angle (in radian) between two rotations
+/** \returns the angle (in radian) between two rotations
  * \sa dot()
  */
 template <class Derived>
@@ -869,7 +869,7 @@ QuaternionBase<Derived>::angularDistance(
   return Scalar(2) * atan2(d.vec().norm(), numext::abs(d.w()));
 }
 
-/* \returns the spherical linear interpolation between the two quaternions
+/** \returns the spherical linear interpolation between the two quaternions
  * \c *this and \a other at the parameter \a t in [0;1].
  *
  * This represents an interpolation for a constant motion between \c *this and

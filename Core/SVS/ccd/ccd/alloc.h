@@ -1,4 +1,4 @@
-/*
+/**
  * libccd
  * ---------------------------------
  * Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
@@ -22,20 +22,20 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /** __cplusplus */
 
-/*
+/**
  * Functions and macros required for memory allocation.
  */
 
-/* Memory allocation: */
+/** Memory allocation: */
 #define __CCD_ALLOC_MEMORY(type, ptr_old, size) \
   (type *)realloc((void *)ptr_old, (size))
 
-/* Allocate memory for one element of type.  */
+/** Allocate memory for one element of type.  */
 #define CCD_ALLOC(type) __CCD_ALLOC_MEMORY(type, NULL, sizeof(type))
 
-/* Allocate memory for array of elements of type type.  */
+/** Allocate memory for array of elements of type type.  */
 #define CCD_ALLOC_ARR(type, num_elements) \
   __CCD_ALLOC_MEMORY(type, NULL, sizeof(type) * (num_elements))
 
@@ -43,7 +43,7 @@ extern "C" {
   __CCD_ALLOC_MEMORY(type, ptr, sizeof(type) * (num_elements))
 
 #ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
+} /** extern "C" */
+#endif /** __cplusplus */
 
-#endif /* __CCD_ALLOC_H__ */
+#endif /** __CCD_ALLOC_H__ */

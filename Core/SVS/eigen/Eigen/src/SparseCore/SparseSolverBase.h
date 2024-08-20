@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * Helper functions to solve with a sparse right-hand-side and result.
  * The rhs is decomposed into small vertical panels which are solved through
  * dense temporaries.
@@ -60,7 +60,7 @@ solve_sparse_through_dense_panels(const Decomposition& dec, const Rhs& rhs,
 
 }  // end namespace internal
 
-/* \class SparseSolverBase
+/** \class SparseSolverBase
  * \ingroup SparseCore_Module
  * \brief A base class for sparse solvers
  *
@@ -70,7 +70,7 @@ solve_sparse_through_dense_panels(const Decomposition& dec, const Rhs& rhs,
 template <typename Derived>
 class SparseSolverBase : internal::noncopyable {
  public:
-  /* Default constructor */
+  /** Default constructor */
   SparseSolverBase() : m_isInitialized(false) {}
 
   ~SparseSolverBase() {}
@@ -78,7 +78,7 @@ class SparseSolverBase : internal::noncopyable {
   Derived& derived() { return *static_cast<Derived*>(this); }
   const Derived& derived() const { return *static_cast<const Derived*>(this); }
 
-  /* \returns an expression of the solution x of \f$ A x = b \f$ using the
+  /** \returns an expression of the solution x of \f$ A x = b \f$ using the
    * current decomposition of A.
    *
    * \sa compute()
@@ -92,7 +92,7 @@ class SparseSolverBase : internal::noncopyable {
     return Solve<Derived, Rhs>(derived(), b.derived());
   }
 
-  /* \returns an expression of the solution x of \f$ A x = b \f$ using the
+  /** \returns an expression of the solution x of \f$ A x = b \f$ using the
    * current decomposition of A.
    *
    * \sa compute()
@@ -107,7 +107,7 @@ class SparseSolverBase : internal::noncopyable {
   }
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* \internal default implementation of solving with a sparse rhs */
+  /** \internal default implementation of solving with a sparse rhs */
   template <typename Rhs, typename Dest>
   void _solve_impl(const SparseMatrixBase<Rhs>& b,
                    SparseMatrixBase<Dest>& dest) const {

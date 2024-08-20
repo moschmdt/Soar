@@ -1,4 +1,4 @@
-/*
+/**
  * cli_decide.h
  *
  *  Created on: Oct 1, 2016
@@ -80,4 +80,4 @@ class DecideCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CORE_CLI_SRC_CLI_DECIDE_H_ */
+#endif /** CORE_CLI_SRC_CLI_DECIDE_H_ */

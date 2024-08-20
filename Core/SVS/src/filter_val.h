@@ -1,4 +1,4 @@
-/*
+/**
  *
  * File: SVS/src/filter_val.h
  *
@@ -25,7 +25,7 @@
 
 class sgnode;
 
-/*
+/**
  Wrapper for all filter value types so we can cache them uniformly.
 */
 class filter_val {
@@ -182,7 +182,7 @@ class filter_val_c<sgnode*> : public filter_val {
   bool dirty;
 };
 
-/*
+/**
  Convenience functions for getting filter outputs as specific values
  with error checking
  */
@@ -197,7 +197,7 @@ inline bool get_filter_val(const filter_val* fv, T& v) {
   return true;
 }
 
-/*
+/**
  Specialization for floats to allow getting floats, doubles, and ints
 */
 template <>

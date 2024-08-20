@@ -16,7 +16,7 @@ namespace internal {
 struct symbolic_last_tag {};
 }  // namespace internal
 
-/* \var last
+/** \var last
  * \ingroup Core_Module
  *
  * Can be used as a parameter to Eigen::seq and Eigen::seqN functions to
@@ -39,7 +39,7 @@ struct symbolic_last_tag {};
 static const symbolic::SymbolExpr<internal::symbolic_last_tag>
     last;  // PLEASE use Eigen::last   instead of Eigen::placeholders::last
 
-/* \var lastp1
+/** \var lastp1
  * \ingroup Core_Module
  *
  * Can be used as a parameter to Eigen::seq and Eigen::seqN functions to
@@ -66,10 +66,10 @@ static const symbolic::AddExpr<
 namespace internal {
 
 // Replace symbolic last/end "keywords" by their true runtime value
-inline Index eval_expr_given_size(Index x, Index /* size */) { return x; }
+inline Index eval_expr_given_size(Index x, Index /** size */) { return x; }
 
 template <int N>
-FixedInt<N> eval_expr_given_size(FixedInt<N> x, Index /*size*/) {
+FixedInt<N> eval_expr_given_size(FixedInt<N> x, Index /**size*/) {
   return x;
 }
 
@@ -99,7 +99,7 @@ struct IndexedViewCompatibleType {
 };
 
 template <typename T, typename Q>
-const T& makeIndexedViewCompatible(const T& x, Index /*size*/, Q) {
+const T& makeIndexedViewCompatible(const T& x, Index /**size*/, Q) {
   return x;
 }
 
@@ -182,7 +182,7 @@ struct get_compile_time_incr<AllRange<Size> > {
 
 }  // end namespace internal
 
-/* \var all
+/** \var all
  * \ingroup Core_Module
  * Can be used as a parameter to DenseBase::operator()(const RowIndices&, const
  * ColIndices&) to index all rows or columns

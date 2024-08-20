@@ -134,13 +134,13 @@ class no_assignment_operator {
   EIGEN_DEFAULT_EMPTY_CONSTRUCTOR_AND_DESTRUCTOR(no_assignment_operator)
 };
 
-/* \internal return the index type with the largest number of bits */
+/** \internal return the index type with the largest number of bits */
 template <typename I1, typename I2>
 struct promote_index_type {
   typedef typename conditional<(sizeof(I1) < sizeof(I2)), I2, I1>::type type;
 };
 
-/* \internal If the template parameter Value is Dynamic, this class is just a
+/** \internal If the template parameter Value is Dynamic, this class is just a
  * wrapper around a T variable that can be accessed using value() and
  * setValue(). Otherwise, this class is an empty structure and value() just
  * returns the template parameter Value.
@@ -179,7 +179,7 @@ class variable_if_dynamic<T, Dynamic> {
   }
 };
 
-/* \internal like variable_if_dynamic but for DynamicIndex
+/** \internal like variable_if_dynamic but for DynamicIndex
  */
 template <typename T, int Value>
 class variable_if_dynamicindex {
@@ -342,7 +342,7 @@ struct size_of_xpr_at_compile_time {
   };
 };
 
-/* plain_matrix_type : the difference from eval is that plain_matrix_type is
+/** plain_matrix_type : the difference from eval is that plain_matrix_type is
  * always a plain matrix type, whereas eval is a const reference in the case of
  * a matrix
  */
@@ -381,7 +381,7 @@ struct plain_matrix_type_dense<T, ArrayXpr, Flags> {
       type;
 };
 
-/* eval : the return type of eval(). For matrices, this is just a const
+/** eval : the return type of eval(). For matrices, this is just a const
  * reference in order to avoid a useless copy
  */
 
@@ -423,7 +423,7 @@ struct eval<Array<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, Dense> {
       type;
 };
 
-/* similar to plain_matrix_type, but using the evaluator's Flags */
+/** similar to plain_matrix_type, but using the evaluator's Flags */
 template <typename T, typename StorageKind = typename traits<T>::StorageKind>
 struct plain_object_eval;
 
@@ -433,7 +433,7 @@ struct plain_object_eval<T, Dense> {
                                            evaluator<T>::Flags>::type type;
 };
 
-/* plain_matrix_type_column_major : same as plain_matrix_type but guaranteed to
+/** plain_matrix_type_column_major : same as plain_matrix_type but guaranteed to
  * be column-major
  */
 template <typename T>
@@ -450,7 +450,7 @@ struct plain_matrix_type_column_major {
       type;
 };
 
-/* plain_matrix_type_row_major : same as plain_matrix_type but guaranteed to be
+/** plain_matrix_type_row_major : same as plain_matrix_type but guaranteed to be
  * row-major
  */
 template <typename T>
@@ -467,7 +467,7 @@ struct plain_matrix_type_row_major {
       type;
 };
 
-/* \internal The reference selector for template expressions. The idea is that
+/** \internal The reference selector for template expressions. The idea is that
  * we don't need to use references for expressions since they are light weight
  * proxy objects which should generate no copying overhead. */
 template <typename T>
@@ -480,7 +480,7 @@ struct ref_selector {
           non_const_type;
 };
 
-/* \internal Adds the const qualifier on the value-type of T2 if and only if T1
+/** \internal Adds the const qualifier on the value-type of T2 if and only if T1
  * is a const type */
 template <typename T1, typename T2>
 struct transfer_constness {
@@ -493,7 +493,7 @@ struct transfer_constness {
 // However, we still need a mechanism to detect whether an expression which is
 // evaluated multiple time has to be evaluated into a temporary. That's the
 // purpose of this new nested_eval helper:
-/* \internal Determines how a given expression should be nested when evaluated
+/** \internal Determines how a given expression should be nested when evaluated
  * multiple times. For example, when you do a * (b+c), Eigen will determine how
  * the expression b+c should be evaluated into the bigger product expression.
  * The choice is between nesting the expression b+c as-is, or evaluating that
@@ -543,7 +543,7 @@ EIGEN_DEVICE_FUNC inline T* const_cast_ptr(const T* ptr) {
 template <typename Derived,
           typename XprKind = typename traits<Derived>::XprKind>
 struct dense_xpr_base {
-  /* dense_xpr_base should only ever be used on dense expressions, thus falling
+  /** dense_xpr_base should only ever be used on dense expressions, thus falling
    * either into the MatrixXpr or into the ArrayXpr cases */
 };
 
@@ -592,7 +592,7 @@ struct promote_storage_type<const A, A> {
   typedef A ret;
 };
 
-/* \internal Specify the "storage kind" of applying a coefficient-wise
+/** \internal Specify the "storage kind" of applying a coefficient-wise
  * binary operations between two expressions of kinds A and B respectively.
  * The template parameter Functor permits to specialize the resulting storage
  * kind wrt to the functor. The default rules are as follows: \code A      op A
@@ -645,7 +645,7 @@ struct cwise_promote_storage_order<Sparse, Sparse, Order, Order> {
   enum { value = Order };
 };
 
-/* \internal Specify the "storage kind" of multiplying an expression of kind A
+/** \internal Specify the "storage kind" of multiplying an expression of kind A
  * with kind B. The template parameter ProductTag permits to specialize the
  * resulting storage kind wrt to some compile-time properties of the product:
  * GemmProduct, GemvProduct, OuterProduct, InnerProduct. The default rules are
@@ -707,7 +707,7 @@ struct product_promote_storage_type<PermutationStorage, Dense, ProductTag> {
   typedef Dense ret;
 };
 
-/* \internal gives the plain matrix or array type to store a
+/** \internal gives the plain matrix or array type to store a
  * row/column/diagonal of a matrix type. \tparam Scalar optional parameter
  * allowing to pass a different scalar type than the one of the MatrixType.
  */
@@ -923,7 +923,7 @@ std::string demangle_flags(int f) {
 
 }  // end namespace internal
 
-/* \class ScalarBinaryOpTraits
+/** \class ScalarBinaryOpTraits
   * \ingroup Core_Module
   *
   * \brief Determines whether the given binary operation of two numeric types is

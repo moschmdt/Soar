@@ -1,7 +1,7 @@
 #ifndef PORTABILITY_WINDOWS_H
 #define PORTABILITY_WINDOWS_H
 
-/* This file contains code specific to the windows platforms */
+/** This file contains code specific to the windows platforms */
 #define WIN32_LEAN_AND_MEAN  // Exclude rarely-used stuff from Windows headers
 #define _WIN32_WINNT 0x0400  // This is required since our target is NT4+
 
@@ -29,7 +29,7 @@
 #include <stdint.h>  // this is in shared/msvc for older Visual Studios systems
 
 #ifndef MAXPATHLEN
-#define MAXPATHLEN 1024 /* AGR 536  - from sys/param.h */
+#define MAXPATHLEN 1024 /** AGR 536  - from sys/param.h */
 #endif
 
 // Map certain functions depending on the OS

@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
 
 namespace Eigen {
 
-/* \internal Specialization for the data types supported by LAPACKe */
+/** \internal Specialization for the data types supported by LAPACKe */
 
 #define EIGEN_LAPACKE_SCHUR_COMPLEX(EIGTYPE, LAPACKE_TYPE, LAPACKE_PREFIX,     \
                                     LAPACKE_PREFIX_U, EIGCOLROW,               \

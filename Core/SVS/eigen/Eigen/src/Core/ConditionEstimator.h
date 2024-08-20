@@ -32,7 +32,7 @@ struct rcond_compute_sign<Vector, Vector, false> {
   }
 };
 
-/*
+/**
  * \returns an estimate of ||inv(matrix)||_1 given a decomposition of
  * \a matrix that implements .solve() and .adjoint().solve() methods.
  *
@@ -144,7 +144,7 @@ typename Decomposition::RealScalar rcond_invmatrix_L1_norm_estimate(
   return numext::maxi(lower_bound, alternate_lower_bound);
 }
 
-/* \brief Reciprocal condition number estimator.
+/** \brief Reciprocal condition number estimator.
  *
  * Computing a decomposition of a dense matrix takes O(n^3) operations, while
  * this method estimates the condition number quickly and reliably in O(n^2)

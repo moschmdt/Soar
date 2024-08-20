@@ -70,7 +70,7 @@ struct gebp_traits<float, float, false, false, Architecture::NEON,
   }
 
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacket& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<0>&) const {
     c = vfmaq_n_f32(c, a, b);
   }
@@ -80,22 +80,22 @@ struct gebp_traits<float, float, false, false, Architecture::NEON,
   // 'Eigen::internal::FixedInt<0>".
 
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacketx4& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<0>&) const {
     madd_helper<0>(a, b, c);
   }
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacketx4& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<1>&) const {
     madd_helper<1>(a, b, c);
   }
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacketx4& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<2>&) const {
     madd_helper<2>(a, b, c);
   }
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacketx4& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<3>&) const {
     madd_helper<3>(a, b, c);
   }
@@ -153,7 +153,7 @@ struct gebp_traits<double, double, false, false, Architecture::NEON>
   }
 
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacket& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<0>&) const {
     c = vfmaq_n_f64(c, a, b);
   }
@@ -163,22 +163,22 @@ struct gebp_traits<double, double, false, false, Architecture::NEON>
   // 'Eigen::internal::FixedInt<0>".
 
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacketx4& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<0>&) const {
     madd_helper<0>(a, b, c);
   }
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacketx4& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<1>&) const {
     madd_helper<1>(a, b, c);
   }
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacketx4& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<2>&) const {
     madd_helper<2>(a, b, c);
   }
   EIGEN_STRONG_INLINE void madd(const LhsPacket& a, const RhsPacketx4& b,
-                                AccPacket& c, RhsPacket& /*tmp*/,
+                                AccPacket& c, RhsPacket& /**tmp*/,
                                 const FixedInt<3>&) const {
     madd_helper<3>(a, b, c);
   }

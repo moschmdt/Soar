@@ -14,11 +14,11 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/* The sin, cos, exp, and log functions of this file come from
+/** The sin, cos, exp, and log functions of this file come from
  * Julien Pommier's sse math library: http://gruntthepeon.free.fr/ssemath/
  */
 
-/* The tanh function of this file is an adaptation of
+/** The tanh function of this file is an adaptation of
  * template<typename T> T generic_fast_tanh_float(const T&)
  * from MathFunctionsImpl.h.
  */
@@ -61,7 +61,7 @@ plog<Packet4f>(const Packet4f& _x) {
   // Multiply x by 2**(-exponent-1) to get 0.5 <= x < 1.0 as from frexpf().
   x = __builtin_msa_fexp2_w(x, (Packet4i)__builtin_msa_nori_b((v16u8)e_int, 0));
 
-  /*
+  /**
      if (x < SQRTHF) {
        x = x + x - 1.0;
      } else {
@@ -328,13 +328,13 @@ Packet4f psincos_inner_msa_float(const Packet4f& _x) {
 template <>
 EIGEN_DEFINE_FUNCTION_ALLOWING_MULTIPLE_DEFINITIONS EIGEN_UNUSED Packet4f
 psin<Packet4f>(const Packet4f& x) {
-  return psincos_inner_msa_float</* sine */ true>(x);
+  return psincos_inner_msa_float</** sine */ true>(x);
 }
 
 template <>
 EIGEN_DEFINE_FUNCTION_ALLOWING_MULTIPLE_DEFINITIONS EIGEN_UNUSED Packet4f
 pcos<Packet4f>(const Packet4f& x) {
-  return psincos_inner_msa_float</* sine */ false>(x);
+  return psincos_inner_msa_float</** sine */ false>(x);
 }
 
 template <>

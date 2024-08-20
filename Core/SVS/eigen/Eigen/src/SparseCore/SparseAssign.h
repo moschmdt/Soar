@@ -147,7 +147,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, Sparse2Sparse> {
   static void run(
       DstXprType &dst, const SrcXprType &src,
       const internal::assign_op<typename DstXprType::Scalar,
-                                typename SrcXprType::Scalar> & /*func*/) {
+                                typename SrcXprType::Scalar> & /**func*/) {
     assign_sparse_to_sparse(dst.derived(), src.derived());
   }
 };
@@ -182,7 +182,7 @@ template <typename DstXprType, typename Func1, typename Func2>
 struct assignment_from_dense_op_sparse {
   template <typename SrcXprType, typename InitialFunc>
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void run(
-      DstXprType &dst, const SrcXprType &src, const InitialFunc & /*func*/) {
+      DstXprType &dst, const SrcXprType &src, const InitialFunc & /**func*/) {
 #ifdef EIGEN_SPARSE_ASSIGNMENT_FROM_DENSE_OP_SPARSE_PLUGIN
     EIGEN_SPARSE_ASSIGNMENT_FROM_DENSE_OP_SPARSE_PLUGIN
 #endif
@@ -201,7 +201,7 @@ struct assignment_from_dense_op_sparse {
       const CwiseBinaryOp<internal::scalar_sum_op<Scalar, Scalar>, const Lhs,
                           const Rhs> &src,
       const internal::assign_op<typename DstXprType::Scalar, Scalar>
-          & /*func*/) {
+          & /**func*/) {
 #ifdef EIGEN_SPARSE_ASSIGNMENT_FROM_SPARSE_ADD_DENSE_PLUGIN
     EIGEN_SPARSE_ASSIGNMENT_FROM_SPARSE_ADD_DENSE_PLUGIN
 #endif
@@ -221,7 +221,7 @@ struct assignment_from_dense_op_sparse {
       const CwiseBinaryOp<internal::scalar_difference_op<Scalar, Scalar>,
                           const Lhs, const Rhs> &src,
       const internal::assign_op<typename DstXprType::Scalar, Scalar>
-          & /*func*/) {
+          & /**func*/) {
 #ifdef EIGEN_SPARSE_ASSIGNMENT_FROM_SPARSE_SUB_DENSE_PLUGIN
     EIGEN_SPARSE_ASSIGNMENT_FROM_SPARSE_SUB_DENSE_PLUGIN
 #endif
@@ -304,7 +304,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, Diagonal2Sparse> {
   static void run(
       SparseMatrixBase<DstDerived> &dst, const SrcXprType &src,
       const internal::assign_op<typename DstXprType::Scalar,
-                                typename SrcXprType::Scalar> & /*func*/) {
+                                typename SrcXprType::Scalar> & /**func*/) {
     dst.derived().diagonal() = src.diagonal();
   }
 
@@ -312,7 +312,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, Diagonal2Sparse> {
   static void run(
       SparseMatrixBase<DstDerived> &dst, const SrcXprType &src,
       const internal::add_assign_op<typename DstXprType::Scalar,
-                                    typename SrcXprType::Scalar> & /*func*/) {
+                                    typename SrcXprType::Scalar> & /**func*/) {
     dst.derived().diagonal() += src.diagonal();
   }
 
@@ -320,7 +320,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, Diagonal2Sparse> {
   static void run(
       SparseMatrixBase<DstDerived> &dst, const SrcXprType &src,
       const internal::sub_assign_op<typename DstXprType::Scalar,
-                                    typename SrcXprType::Scalar> & /*func*/) {
+                                    typename SrcXprType::Scalar> & /**func*/) {
     dst.derived().diagonal() -= src.diagonal();
   }
 };

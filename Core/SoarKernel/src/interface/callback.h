@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *=======================================================================
  *
  * File: callback.h
@@ -28,18 +28,18 @@
  * =======================================================================
  */
 
-/* Two points about this enumeration: a) The first entry is not */
-/* a valid callback because 0 is used to indicate an invalid or */
-/* missing callback and b) The last entry in the enum list      */
-/* indicates how many enums are defined.                        */
+/** Two points about this enumeration: a) The first entry is not */
+/** a valid callback because 0 is used to indicate an invalid or */
+/** missing callback and b) The last entry in the enum list      */
+/** indicates how many enums are defined.                        */
 
-#ifndef CALLBACK_H_INCLUDED /* Avoid duplicate includes  */
+#ifndef CALLBACK_H_INCLUDED /** Avoid duplicate includes  */
 #define CALLBACK_H_INCLUDED
 
 #include "Export.h"
 #include "kernel.h"
 
-/* --------------------------------------------------------------------
+/** --------------------------------------------------------------------
 
   All callback functions installed by the user must use the function
   soar_add_callback.  The type signature of all callback functions is

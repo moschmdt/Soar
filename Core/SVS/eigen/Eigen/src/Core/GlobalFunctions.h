@@ -14,7 +14,7 @@
 #ifdef EIGEN_PARSED_BY_DOXYGEN
 
 #define EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(NAME, FUNCTOR, DOC_OP, DOC_DETAILS)   \
-  /* \returns an expression of the coefficient-wise DOC_OP of \a x            \
+  /** \returns an expression of the coefficient-wise DOC_OP of \a x            \
                                                                              \ \
     DOC_DETAILS                                                                \
                                                                              \ \
@@ -163,7 +163,7 @@ EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(isfinite, scalar_isfinite_op,
 EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(sign, scalar_sign_op,
                                  sign(or 0),\sa ArrayBase::sign)
 
-/* \returns an expression of the coefficient-wise power of \a x to the given
+/** \returns an expression of the coefficient-wise power of \a x to the given
  * constant \a exponent.
  *
  * \tparam ScalarExponent is the scalar type of \a exponent. It must be
@@ -202,7 +202,7 @@ EIGEN_DEVICE_FUNC inline EIGEN_MSVC10_WORKAROUND_BINARYOP_RETURN_TYPE(
 }
 #endif
 
-/* \returns an expression of the coefficient-wise power of \a x to the given
+/** \returns an expression of the coefficient-wise power of \a x to the given
  * array of \a exponents.
  *
  * This function computes the coefficient-wise power.
@@ -227,7 +227,7 @@ pow(const Eigen::ArrayBase<Derived>& x,
       const Derived, const ExponentDerived>(x.derived(), exponents.derived());
 }
 
-/* \returns an expression of the coefficient-wise power of the scalar \a x to
+/** \returns an expression of the coefficient-wise power of the scalar \a x to
  * the given array of \a exponents.
  *
  * This function computes the coefficient-wise power between a scalar and an

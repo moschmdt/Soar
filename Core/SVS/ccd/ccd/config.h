@@ -3,4 +3,4 @@
 
 #define CCD_DOUBLE
 
-#endif /* __CCD_CONFIG_H__ */
+#endif /** __CCD_CONFIG_H__ */

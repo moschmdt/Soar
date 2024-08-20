@@ -26,7 +26,7 @@ struct all_unroller {
 
 template <typename Derived, int Rows>
 struct all_unroller<Derived, 0, Rows> {
-  EIGEN_DEVICE_FUNC static inline bool run(const Derived & /*mat*/) {
+  EIGEN_DEVICE_FUNC static inline bool run(const Derived & /**mat*/) {
     return true;
   }
 };
@@ -48,7 +48,7 @@ struct any_unroller {
 
 template <typename Derived, int Rows>
 struct any_unroller<Derived, 0, Rows> {
-  EIGEN_DEVICE_FUNC static inline bool run(const Derived & /*mat*/) {
+  EIGEN_DEVICE_FUNC static inline bool run(const Derived & /**mat*/) {
     return false;
   }
 };
@@ -60,7 +60,7 @@ struct any_unroller<Derived, Dynamic, Rows> {
 
 }  // end namespace internal
 
-/* \returns true if all coefficients are true
+/** \returns true if all coefficients are true
  *
  * Example: \include MatrixBase_all.cpp
  * Output: \verbinclude MatrixBase_all.out
@@ -89,7 +89,7 @@ EIGEN_DEVICE_FUNC inline bool DenseBase<Derived>::all() const {
   }
 }
 
-/* \returns true if at least one coefficient is true
+/** \returns true if at least one coefficient is true
  *
  * \sa all()
  */
@@ -115,7 +115,7 @@ EIGEN_DEVICE_FUNC inline bool DenseBase<Derived>::any() const {
   }
 }
 
-/* \returns the number of coefficients which evaluate to true
+/** \returns the number of coefficients which evaluate to true
  *
  * \sa all(), any()
  */
@@ -124,7 +124,7 @@ EIGEN_DEVICE_FUNC inline Eigen::Index DenseBase<Derived>::count() const {
   return derived().template cast<bool>().template cast<Index>().sum();
 }
 
-/* \returns true is \c *this contains at least one Not A Number (NaN).
+/** \returns true is \c *this contains at least one Not A Number (NaN).
  *
  * \sa allFinite()
  */
@@ -137,7 +137,7 @@ inline bool DenseBase<Derived>::hasNaN() const {
 #endif
 }
 
-/* \returns true if \c *this contains only finite numbers, i.e., no NaN and no
+/** \returns true if \c *this contains only finite numbers, i.e., no NaN and no
  * +/-INF values.
  *
  * \sa hasNaN()

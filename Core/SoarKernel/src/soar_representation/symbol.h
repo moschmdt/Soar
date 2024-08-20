@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* =======================================================================
+/** =======================================================================
                              symtab.h
 
    Soar uses five kinds of symbols:  symbolic constants, integer
@@ -31,7 +31,7 @@ struct varSymbol;
 struct intSymbol;
 struct strSymbol;
 
-/*
+/**
  * Symbol base struct
  *
  * This contains the common data found in all five symbol types.
@@ -143,7 +143,7 @@ struct strSymbol : public Symbol {
   char* cached_rereadable_print_str;
 
   struct {
-    bool possible; /* Used by EBC to quickly determine if a WMEs attribute makes
+    bool possible; /** Used by EBC to quickly determine if a WMEs attribute makes
                       it eligible to be a singleton */
     singleton_element_type id_type;
     singleton_element_type value_type;
@@ -155,7 +155,7 @@ struct varSymbol : public Symbol {
   Symbol* current_binding_value;
   uint64_t gensym_number;
   cons* rete_binding_locations;
-  Symbol* instantiated_sym; /* Used by EBC to reinstantiate a condition or rhs
+  Symbol* instantiated_sym; /** Used by EBC to reinstantiate a condition or rhs
                                value */
 };
 
@@ -177,19 +177,19 @@ struct idSymbol : public Symbol {
 
   bool allow_bottom_up_chunks;
 
-  /* --- ownership, promotion, demotion, & garbage collection stuff --- */
+  /** --- ownership, promotion, demotion, & garbage collection stuff --- */
   bool could_be_a_link_from_below;
   goal_stack_level level;
   goal_stack_level promotion_level;
   uint64_t link_count;
   dl_cons* unknown_level;
 
-  struct slot_struct* slots; /* dll of slots for this identifier */
+  struct slot_struct* slots; /** dll of slots for this identifier */
 
-  /* --- fields used only on goals and impasse identifiers --- */
+  /** --- fields used only on goals and impasse identifiers --- */
   struct wme_struct* impasse_wmes;
 
-  /* --- fields used only on goals --- */
+  /** --- fields used only on goals --- */
   Symbol *higher_goal, *lower_goal;
   struct slot_struct* operator_slot;
   struct preference_struct* preferences_from_goal;
@@ -210,7 +210,7 @@ struct idSymbol : public Symbol {
   struct ms_change_struct* ms_i_assertions;
   struct ms_change_struct* ms_retractions;
 
-  /* --- fields used for Soar I/O stuff --- */
+  /** --- fields used for Soar I/O stuff --- */
   cons* associated_output_links;
   struct wme_struct* input_wmes;
 
@@ -269,7 +269,7 @@ inline bool get_symbol_value(Symbol* sym, double& v) {
   return false;
 }
 
-/* -- mark_if_unmarked set the tc number to the new tc and add the symbol to the
+/** -- mark_if_unmarked set the tc number to the new tc and add the symbol to the
  * list passed in -- */
 
 template <typename P, typename T>
@@ -284,15 +284,15 @@ inline void Symbol::mark_if_unmarked(agent* thisAgent, tc_number tc,
   }
 }
 
-/* -- Functions related to symbols.  Descriptions in symtab.cpp -- */
+/** -- Functions related to symbols.  Descriptions in symtab.cpp -- */
 
 char first_letter_from_symbol(Symbol* sym);
 bool make_string_rereadable(std::string& pStr);
 
-/* -- This function returns a numeric value from a symbol -- */
+/** -- This function returns a numeric value from a symbol -- */
 double get_number_from_symbol(Symbol* sym);
 
-/* -----------------------------------------------------------------
+/** -----------------------------------------------------------------
  *
  *                  Symbol Struct Variables
  *

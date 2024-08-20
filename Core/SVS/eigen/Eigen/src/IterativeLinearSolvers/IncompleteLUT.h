@@ -15,7 +15,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * Compute a quick-sort split of a vector
  * On output, the vector row is permuted such that its elements satisfy
  * abs(row(i)) >= abs(row(ncut)) if i<ncut
@@ -30,10 +30,10 @@ Index QuickSplit(VectorV& row, VectorI& ind, Index ncut) {
   using std::abs;
   using std::swap;
   Index mid;
-  Index n = row.size(); /* length of the vector */
+  Index n = row.size(); /** length of the vector */
   Index first, last;
 
-  ncut--; /* to fit the zero-based indices */
+  ncut--; /** to fit the zero-based indices */
   first = 0;
   last = n - 1;
   if (ncut < first || ncut > last) return 0;
@@ -48,7 +48,7 @@ Index QuickSplit(VectorV& row, VectorI& ind, Index ncut) {
         swap(ind(mid), ind(j));
       }
     }
-    /* Interchange for the pivot element */
+    /** Interchange for the pivot element */
     swap(row(mid), row(first));
     swap(ind(mid), ind(first));
 
@@ -58,12 +58,12 @@ Index QuickSplit(VectorV& row, VectorI& ind, Index ncut) {
       first = mid + 1;
   } while (mid != ncut);
 
-  return 0; /* mid is equal to ncut */
+  return 0; /** mid is equal to ncut */
 }
 
 }  // end namespace internal
 
-/* \ingroup IterativeLinearSolvers_Module
+/** \ingroup IterativeLinearSolvers_Module
  * \class IncompleteLUT
  * \brief Incomplete LU factorization with dual-threshold strategy
  *
@@ -138,7 +138,7 @@ class IncompleteLUT
 
   EIGEN_CONSTEXPR Index cols() const EIGEN_NOEXCEPT { return m_lu.cols(); }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the matrix.appears to be negative.
@@ -154,7 +154,7 @@ class IncompleteLUT
   template <typename MatrixType>
   void factorize(const MatrixType& amat);
 
-  /*
+  /**
    * Compute an incomplete LU factorization with dual threshold on the matrix
    *mat No pivoting is done in this version
    *
@@ -178,7 +178,7 @@ class IncompleteLUT
   }
 
  protected:
-  /* keeps off-diagonal entries; drops diagonal entries */
+  /** keeps off-diagonal entries; drops diagonal entries */
   struct keep_diag {
     inline bool operator()(const Index& row, const Index& col,
                            const Scalar&) const {
@@ -199,7 +199,7 @@ class IncompleteLUT
       m_Pinv;  // Inverse permutation
 };
 
-/*
+/**
  * Set control parameter droptol
  *  \param droptol   Drop any element whose magnitude is less than this
  *tolerance
@@ -210,7 +210,7 @@ void IncompleteLUT<Scalar, StorageIndex>::setDroptol(
   this->m_droptol = droptol;
 }
 
-/*
+/**
  * Set control parameter fillfactor
  * \param fillfactor  This is used to compute the  number @p fill_in of largest
  *elements to keep on each row.

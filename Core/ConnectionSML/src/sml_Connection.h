@@ -72,7 +72,7 @@ typedef void (*ListenerCallback)(Connection*, void*);
 typedef soarxml::ElementXML* (*IncomingCallback)(Connection*,
                                                  soarxml::ElementXML*, void*);
 
-/*
+/**
  * @brief The Callback class is a simple wrapper around a callback.
  *        We use it to keep together the callback function pointer and the
  *        user data we'll pass to the function.
@@ -84,12 +84,12 @@ class Callback {
   void* m_pUserData;
 
  public:
-  /*
+  /**
    * @brief Accessors
    */
   IncomingCallback getFunction() { return m_pCallback; }
 
-  /*
+  /**
    * @brief Constructor
    */
   Callback(Connection* pConnection, IncomingCallback pFunc, void* pUserData) {
@@ -98,7 +98,7 @@ class Callback {
     m_pUserData = pUserData;
   }
 
-  /*
+  /**
    * @brief Invoke this callback, passing the message,
    *        the connection and the user's data (which can be anything).
    *
@@ -125,7 +125,7 @@ typedef std::queue<ElementXML_Handle> MessageQueue;
 typedef std::list<soarxml::ElementXML*> MessageList;
 typedef MessageList::iterator MessageListIter;
 
-/*
+/**
  * @brief The Connection class represents a logical link
  *        between two entities that are communicating through
  *        SML messages.
@@ -197,7 +197,7 @@ class EXPORT Connection {
   Connection();
   virtual ~Connection();
 
-  /*
+  /**
    * @brief Creates a connection to a receiver that is embedded
    *        within the same process.
    *
@@ -224,7 +224,7 @@ class EXPORT Connection {
       bool clientThread, bool optimized, int portToListenOn = kDefaultSMLPort,
       ErrorCode* pError = NULL);
 
-  /*
+  /**
    * @brief Creates a connection to a receiver that is in a different
    *        process.  The process can be on the same machine or a different
    *machine.
@@ -249,7 +249,7 @@ class EXPORT Connection {
                                             int port = kDefaultSMLPort,
                                             ErrorCode* pError = NULL);
 
-  /*
+  /**
    * @brief Create a new connection object wrapping a socket.
    *        The socket is generally obtained from a ListenerSocket.
    *        (Clients don't generally use this method--use the one above instead)
@@ -257,31 +257,31 @@ class EXPORT Connection {
   static Connection* CreateRemoteConnection(sock::DataSender* pDataSender);
 
  public:
-  /*
+  /**
    * @brief Shuts down this connection.
    */
   virtual void CloseConnection() = 0;
 
-  /*
+  /**
    * @brief Returns true if this connection has been closed or
    *        is otherwise not usable.
    */
   virtual bool IsClosed() = 0;
 
-  /*
+  /**
    * @brief Returns true if this is a remote connection (i.e. over a socket,
    *        may in fact be on the same machine).
    */
   virtual bool IsRemoteConnection() = 0;
 
-  /*
+  /**
    * @brief Returns true if messages are queued and executed on receiver's
    *thread. (Always true for a remote connection.  May be true or false for an
    *embedded connection, depending on how it was created).
    */
   virtual bool IsAsynchronous() = 0;
 
-  /*
+  /**
    * @brief Returns true if direct access to gSKI is available.
    *        This allows us to optimize I/O calls by calling directly
    *        to gSKI (and hence the kernel) without using the messaging system at
@@ -290,7 +290,7 @@ class EXPORT Connection {
    */
   virtual bool IsDirectConnection() { return m_bIsDirectConnection; }
 
-  /*
+  /**
    * @brief Print out debug information about the messages we are sending and
    *receiving. Currently only affects remote connections, but we may extend
    *things.
@@ -300,7 +300,7 @@ class EXPORT Connection {
   }
   virtual bool IsTracingCommunications() { return m_bTraceCommunications; }
 
-  /*
+  /**
    * @brief True if this connection is from the kernel to the client (false if
    *other way, from client to kernel). This has no impact on the logic but can
    *help with debugging.
@@ -308,7 +308,7 @@ class EXPORT Connection {
   virtual void SetIsKernelSide(bool state) { m_bIsKernelSide = state; }
   virtual bool IsKernelSide() { return m_bIsKernelSide; }
 
-  /*
+  /**
    * @brief Send a message to the SML receiver (e.g. from the environment to the
    *Soar kernel). The error code that is returned indicates whether the command
    *was successfully sent, not whether the command was interpreted successfully
@@ -320,7 +320,7 @@ class EXPORT Connection {
    */
   virtual void SendMsg(soarxml::ElementXML* pMsg) = 0;
 
-  /*
+  /**
    * @brief Retrieve any commands, notifications, responses etc. that are
    *waiting. Messages that are received are routed to callback functions in the
    *client for processing.
@@ -340,7 +340,7 @@ class EXPORT Connection {
    */
   virtual bool ReceiveMessages(bool allMessages) = 0;
 
-  /*
+  /**
    * @brief Retrieve the response to the last call message sent.
    *
    *        In an embedded situation, this result is always immediately
@@ -376,7 +376,7 @@ class EXPORT Connection {
    */
   virtual soarxml::ElementXML* GetResponseForID(char const* pID, bool wait) = 0;
 
-  /*
+  /**
    * @brief Retrieve the response to the last call message sent.
    *
    *        In an embedded situation, this result is always immediately
@@ -412,7 +412,7 @@ class EXPORT Connection {
   virtual soarxml::ElementXML* GetResponse(soarxml::ElementXML const* pMsg,
                                            bool wait = true);
 
-  /*
+  /**
    * @brief Register a callback for a particular type of incoming message.
    *
    *        Messages are currently one of:
@@ -446,7 +446,7 @@ class EXPORT Connection {
   virtual void RegisterCallback(IncomingCallback callback, void* pUserData,
                                 char const* pType, bool addToEnd);
 
-  /*
+  /**
    * @brief Removes a callback from the list of callbacks for a particular type
    *of incoming message.
    *
@@ -457,7 +457,7 @@ class EXPORT Connection {
    */
   virtual void UnregisterCallback(IncomingCallback callback, char const* pType);
 
-  /*
+  /**
    * @brief Invoke the list of callbacks matching the doctype of the incoming
    *message.
    *
@@ -470,7 +470,7 @@ class EXPORT Connection {
   virtual soarxml::ElementXML* InvokeCallbacks(
       soarxml::ElementXML* pIncomingMsg);
 
-  /*
+  /**
    * @brief Get and set the user data.
    *
    * The client or kernel may wish to keep state information (e.g. a pointer
@@ -481,7 +481,7 @@ class EXPORT Connection {
   void SetUserData(void* pUserData) { m_pUserData = pUserData; }
   void* GetUserData() { return m_pUserData; }
 
-  /*
+  /**
    * @brief Get and set id, name and status
    * ID - unique machine generated id (created by kernel)
    * Name   - optional, set by client.  Should always be the same for a given
@@ -498,7 +498,7 @@ class EXPORT Connection {
   char const* GetAgentStatus() { return m_AgentStatus.c_str(); }
   void SetAgentStatus(char const* pStatus) { m_AgentStatus = pStatus; }
 
-  /*
+  /**
    * @brief Send a message and get the response.
    *
    * @param pAnalysis  This will be filled in with the analyzed response
@@ -507,7 +507,7 @@ class EXPORT Connection {
    */
   bool SendMessageGetResponse(AnalyzeXML* pAnalysis, soarxml::ElementXML* pMsg);
 
-  /*
+  /**
    * @brief Build an SML message and send it over the connection
    *        returning the analyzed version of the response.
    *
@@ -555,7 +555,7 @@ class EXPORT Connection {
                         char const* pParamVal2, char const* pParamName3,
                         char const* pParamVal3, bool rawOutput = false);
 
-  /*
+  /**
    * @brief Build an SML message and send it over the connection
    *        returning the analyzed version of the response.
    *
@@ -591,7 +591,7 @@ class EXPORT Connection {
                         char const* pParamVal2, char const* pParamName3,
                         char const* pParamVal3);
 
-  /*
+  /**
    * @brief Returns the error status from the last function called.
    *        0 if successful, otherwise an error code to indicate what went
    *wrong.
@@ -600,14 +600,14 @@ class EXPORT Connection {
 
   bool HadError() { return m_ErrorCode != Error::kNoError; }
 
-  /*
+  /**
    * @brief Creates a new ID that's unique for this generator.
    *
    * @returns The new ID.
    */
   int GenerateID() { return m_MessageID++; }
 
-  /*
+  /**
    * @brief Create a basic SML message, with the top level <sml> tag defined
    *        together with the version, doctype, soarVersion and id filled in.
    *
@@ -623,7 +623,7 @@ class EXPORT Connection {
    */
   virtual soarxml::ElementXML* CreateSMLMessage(char const* pType);
 
-  /*
+  /**
    * @brief Create a basic SML command message.  You should then add parameters
    *to this command. This function calls CreateSMLMessage() and then adds a
    *<command> tag to it. E.g. the command might be "excise -production" so the
@@ -639,7 +639,7 @@ class EXPORT Connection {
   virtual soarxml::ElementXML* CreateSMLCommand(char const* pCommandName,
                                                 bool rawOutput = false);
 
-  /*
+  /**
    * @brief Add a parameter to an SML command message.
    *
    * The type of the value is optional as presumably the recipient knows how to
@@ -660,7 +660,7 @@ class EXPORT Connection {
       soarxml::ElementXML* pCommand, char const* pName, char const* pValue,
       char const* pValueType = NULL);
 
-  /*
+  /**
    * @brief Create a basic SML response message.  You should then add content to
    *this response. This function calls CreateSMLMessage() and fills in the
    *appropriate "ack" attribute to respond to the incoming message.
@@ -672,7 +672,7 @@ class EXPORT Connection {
   virtual soarxml::ElementXML* CreateSMLResponse(
       soarxml::ElementXML const* pIncomingMsg);
 
-  /*
+  /**
    * @brief Adds an <error> tag and an error message to a response message.
    *
    * @param pResponse  The response message we are adding an error to.
@@ -684,7 +684,7 @@ class EXPORT Connection {
   virtual void AddErrorToSMLResponse(soarxml::ElementXML* pResponse,
                                      char const* pErrorMsg, int errorCode = -1);
 
-  /*
+  /**
    * @brief Adds a <result> tag and fills in character data for that result.
    *
    * @param pResponse  The response message we are adding an error to.
@@ -702,23 +702,23 @@ class EXPORT Connection {
   double GetOutgoingTime() { return m_OutgoingTime.get_sec(); }
 
  protected:
-  /*
+  /**
    * @brief Resets the last error value to 0.
    */
   void ClearError() { m_ErrorCode = Error::kNoError; }
 
-  /*
+  /**
    * @brief Set the error code
    */
   void SetError(ErrorCode error) { m_ErrorCode = error; }
 
-  /*
+  /**
    * @brief Gets the list of callbacks associated with a given doctype (e.g.
    *"call")
    */
   virtual CallbackList* GetCallbackList(char const* pType);
 
-  /*
+  /**
    * @brief Removes the top message from the incoming message queue
    *        in a thread safe way.
    *        Returns NULL if there is no waiting message.

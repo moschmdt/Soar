@@ -91,7 +91,7 @@ template <typename XprType, typename RowIndices, typename ColIndices,
           typename StorageKind>
 class IndexedViewImpl;
 
-/* \class IndexedView
+/** \class IndexedView
  * \ingroup Core_Module
  *
  * \brief Expression of a non-sequential sub-matrix defined by arbitrary
@@ -151,27 +151,27 @@ class IndexedView
   IndexedView(XprType& xpr, const T0& rowIndices, const T1& colIndices)
       : m_xpr(xpr), m_rowIndices(rowIndices), m_colIndices(colIndices) {}
 
-  /* \returns number of rows */
+  /** \returns number of rows */
   Index rows() const { return internal::size(m_rowIndices); }
 
-  /* \returns number of columns */
+  /** \returns number of columns */
   Index cols() const { return internal::size(m_colIndices); }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   const typename internal::remove_all<XprType>::type& nestedExpression() const {
     return m_xpr;
   }
 
-  /* \returns the nested expression */
+  /** \returns the nested expression */
   typename internal::remove_reference<XprType>::type& nestedExpression() {
     return m_xpr;
   }
 
-  /* \returns a const reference to the object storing/generating the row
+  /** \returns a const reference to the object storing/generating the row
    * indices */
   const RowIndices& rowIndices() const { return m_rowIndices; }
 
-  /* \returns a const reference to the object storing/generating the column
+  /** \returns a const reference to the object storing/generating the column
    * indices */
   const ColIndices& colIndices() const { return m_colIndices; }
 
@@ -201,7 +201,7 @@ struct unary_evaluator<IndexedView<ArgType, RowIndices, ColIndices>, IndexBased>
 
   enum {
     CoeffReadCost =
-        evaluator<ArgType>::CoeffReadCost /* TODO + cost of row/col index */,
+        evaluator<ArgType>::CoeffReadCost /** TODO + cost of row/col index */,
 
     FlagsLinearAccessBit = (traits<XprType>::RowsAtCompileTime == 1 ||
                             traits<XprType>::ColsAtCompileTime == 1)
@@ -212,7 +212,7 @@ struct unary_evaluator<IndexedView<ArgType, RowIndices, ColIndices>, IndexBased>
 
     Flags = (evaluator<ArgType>::Flags &
              (HereditaryBits &
-              ~RowMajorBit /*| LinearAccessBit | DirectAccessBit*/)) |
+              ~RowMajorBit /**| LinearAccessBit | DirectAccessBit*/)) |
             FlagsLinearAccessBit | FlagsRowMajorBit,
 
     Alignment = 0

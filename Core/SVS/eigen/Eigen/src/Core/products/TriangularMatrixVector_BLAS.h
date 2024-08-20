@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@ namespace Eigen {
 
 namespace internal {
 
-/*
+/**
  * This file implements triangular matrix-vector multiplication using BLAS
  */
 
@@ -117,7 +117,7 @@ EIGEN_BLAS_TRMV_SPECIALIZE(scomplex)
       typedef VectorX##EIGPREFIX VectorRhs;                                    \
       EIGTYPE *x, *y;                                                          \
                                                                                \
-      /* Set x*/                                                               \
+      /** Set x*/                                                               \
       Map<const VectorRhs, 0, InnerStride<> > rhs(_rhs, cols,                  \
                                                   InnerStride<>(rhsIncr));     \
       VectorRhs x_tmp;                                                         \
@@ -127,34 +127,34 @@ EIGEN_BLAS_TRMV_SPECIALIZE(scomplex)
         x_tmp = rhs;                                                           \
       x = x_tmp.data();                                                        \
                                                                                \
-      /* Square part handling */                                               \
+      /** Square part handling */                                               \
                                                                                \
       char trans, uplo, diag;                                                  \
       BlasIndex m, n, lda, incx, incy;                                         \
       EIGTYPE const* a;                                                        \
       EIGTYPE beta(1);                                                         \
                                                                                \
-      /* Set m, n */                                                           \
+      /** Set m, n */                                                           \
       n = convert_index<BlasIndex>(size);                                      \
       lda = convert_index<BlasIndex>(lhsStride);                               \
       incx = 1;                                                                \
       incy = convert_index<BlasIndex>(resIncr);                                \
                                                                                \
-      /* Set uplo, trans and diag*/                                            \
+      /** Set uplo, trans and diag*/                                            \
       trans = 'N';                                                             \
       uplo = IsLower ? 'L' : 'U';                                              \
       diag = IsUnitDiag ? 'U' : 'N';                                           \
                                                                                \
-      /* call ?TRMV*/                                                          \
+      /** call ?TRMV*/                                                          \
       BLASPREFIX##trmv##BLASPOSTFIX(&uplo, &trans, &diag, &n,                  \
                                     (const BLASTYPE*)_lhs, &lda, (BLASTYPE*)x, \
                                     &incx);                                    \
                                                                                \
-      /* Add op(a_tr)rhs into res*/                                            \
+      /** Add op(a_tr)rhs into res*/                                            \
       BLASPREFIX##axpy##BLASPOSTFIX(                                           \
           &n, (const BLASTYPE*)&numext::real_ref(alpha), (const BLASTYPE*)x,   \
           &incx, (BLASTYPE*)_res, &incy);                                      \
-      /* Non-square case - doesn't fit to BLAS ?TRMV. Fall to default          \
+      /** Non-square case - doesn't fit to BLAS ?TRMV. Fall to default          \
        * triangular product*/                                                  \
       if (size < (std::max)(rows, cols)) {                                     \
         if (ConjRhs)                                                           \
@@ -226,7 +226,7 @@ EIGEN_BLAS_TRMV_CM(scomplex, float, cf, c, _)
       typedef VectorX##EIGPREFIX VectorRhs;                                    \
       EIGTYPE *x, *y;                                                          \
                                                                                \
-      /* Set x*/                                                               \
+      /** Set x*/                                                               \
       Map<const VectorRhs, 0, InnerStride<> > rhs(_rhs, cols,                  \
                                                   InnerStride<>(rhsIncr));     \
       VectorRhs x_tmp;                                                         \
@@ -236,34 +236,34 @@ EIGEN_BLAS_TRMV_CM(scomplex, float, cf, c, _)
         x_tmp = rhs;                                                           \
       x = x_tmp.data();                                                        \
                                                                                \
-      /* Square part handling */                                               \
+      /** Square part handling */                                               \
                                                                                \
       char trans, uplo, diag;                                                  \
       BlasIndex m, n, lda, incx, incy;                                         \
       EIGTYPE const* a;                                                        \
       EIGTYPE beta(1);                                                         \
                                                                                \
-      /* Set m, n */                                                           \
+      /** Set m, n */                                                           \
       n = convert_index<BlasIndex>(size);                                      \
       lda = convert_index<BlasIndex>(lhsStride);                               \
       incx = 1;                                                                \
       incy = convert_index<BlasIndex>(resIncr);                                \
                                                                                \
-      /* Set uplo, trans and diag*/                                            \
+      /** Set uplo, trans and diag*/                                            \
       trans = ConjLhs ? 'C' : 'T';                                             \
       uplo = IsLower ? 'U' : 'L';                                              \
       diag = IsUnitDiag ? 'U' : 'N';                                           \
                                                                                \
-      /* call ?TRMV*/                                                          \
+      /** call ?TRMV*/                                                          \
       BLASPREFIX##trmv##BLASPOSTFIX(&uplo, &trans, &diag, &n,                  \
                                     (const BLASTYPE*)_lhs, &lda, (BLASTYPE*)x, \
                                     &incx);                                    \
                                                                                \
-      /* Add op(a_tr)rhs into res*/                                            \
+      /** Add op(a_tr)rhs into res*/                                            \
       BLASPREFIX##axpy##BLASPOSTFIX(                                           \
           &n, (const BLASTYPE*)&numext::real_ref(alpha), (const BLASTYPE*)x,   \
           &incx, (BLASTYPE*)_res, &incy);                                      \
-      /* Non-square case - doesn't fit to BLAS ?TRMV. Fall to default          \
+      /** Non-square case - doesn't fit to BLAS ?TRMV. Fall to default          \
        * triangular product*/                                                  \
       if (size < (std::max)(rows, cols)) {                                     \
         if (ConjRhs)                                                           \

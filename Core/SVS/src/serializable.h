@@ -1,4 +1,4 @@
-/*
+/**
  Due to circular include dependencies, this interface has to be
  defined in a separate file from serialize.h
 */

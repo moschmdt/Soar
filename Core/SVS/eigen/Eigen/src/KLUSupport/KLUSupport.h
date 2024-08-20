@@ -12,9 +12,9 @@
 
 namespace Eigen {
 
-/* TODO extract L, extract U, compute det, etc... */
+/** TODO extract L, extract U, compute det, etc... */
 
-/* \ingroup KLUSupport_Module
+/** \ingroup KLUSupport_Module
  * \brief A sparse LU factorization and solver based on KLU
  *
  * This class allows to solve for A.X = B sparse linear problems via a LU
@@ -115,7 +115,7 @@ class KLU : public SparseSolverBase<KLU<_MatrixType> > {
     return mp_matrix.cols();
   }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the matrix.appears to be negative.
@@ -149,7 +149,7 @@ class KLU : public SparseSolverBase<KLU<_MatrixType> > {
       return m_q;
     }
 #endif
-  /* Computes the sparse Cholesky decomposition of \a matrix
+  /** Computes the sparse Cholesky decomposition of \a matrix
    *  Note that the matrix should be column-major, and in compressed format for
    * best performance. \sa SparseMatrix::makeCompressed().
    */
@@ -162,7 +162,7 @@ class KLU : public SparseSolverBase<KLU<_MatrixType> > {
     factorize_impl();
   }
 
-  /* Performs a symbolic decomposition on the sparcity of \a matrix.
+  /** Performs a symbolic decomposition on the sparcity of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -179,13 +179,13 @@ class KLU : public SparseSolverBase<KLU<_MatrixType> > {
     analyzePattern_impl();
   }
 
-  /* Provides access to the control settings array used by KLU.
+  /** Provides access to the control settings array used by KLU.
    *
    * See KLU documentation for details.
    */
   inline const klu_common &kluCommon() const { return m_common; }
 
-  /* Provides access to the control settings array used by UmfPack.
+  /** Provides access to the control settings array used by UmfPack.
    *
    * If this array contains NaN's, the default values are used.
    *
@@ -193,7 +193,7 @@ class KLU : public SparseSolverBase<KLU<_MatrixType> > {
    */
   inline klu_common &kluCommon() { return m_common; }
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must has the same sparcity than the matrix on which the
    * pattern anylysis has been performed.
@@ -210,7 +210,7 @@ class KLU : public SparseSolverBase<KLU<_MatrixType> > {
     factorize_impl();
   }
 
-  /* \internal */
+  /** \internal */
   template <typename BDerived, typename XDerived>
   bool _solve_impl(const MatrixBase<BDerived> &b,
                    MatrixBase<XDerived> &x) const;

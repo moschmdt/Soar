@@ -15,7 +15,7 @@ class command;
 class scene;
 class drawer;
 
-/* working memory scene graph object - mediates between wmes and scene graph
+/** working memory scene graph object - mediates between wmes and scene graph
  * nodes */
 class sgwme : public sgnode_listener {
  public:
@@ -58,7 +58,7 @@ struct command_entry {
 };
 typedef std::set<command_entry> command_set;
 typedef command_set::iterator command_set_it;
-/*
+/**
  Each state in the state stack has its own SVS link, scene, etc.
 */
 class svs_state : public cliproxy {
@@ -80,7 +80,7 @@ class svs_state : public cliproxy {
   Symbol* get_state() { return state; }
   svs* get_svs() { return svsp; }
 
-  /*
+  /**
    Should only be called by svs::state_deletion_callback to save top-state scene
    during init.
   */
@@ -109,7 +109,7 @@ class svs_state : public cliproxy {
   int scene_num;
   wme* scene_num_wme;
 
-  /* command changes per decision cycle */
+  /** command changes per decision cycle */
   command_set curr_cmds;
 };
 

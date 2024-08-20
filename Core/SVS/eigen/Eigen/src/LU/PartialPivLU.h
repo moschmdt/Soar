@@ -36,7 +36,7 @@ struct enable_if_ref<Ref<T>, Derived> {
 
 }  // end namespace internal
 
-/* \ingroup LU_Module
+/** \ingroup LU_Module
  *
  * \class PartialPivLU
  *
@@ -95,7 +95,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
       TranspositionType;
   typedef typename MatrixType::PlainObject PlainObject;
 
-  /*
+  /**
    * \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
@@ -103,7 +103,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
    */
   PartialPivLU();
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -111,7 +111,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
    */
   explicit PartialPivLU(Index size);
 
-  /* Constructor.
+  /** Constructor.
    *
    * \param matrix the matrix of which to compute the LU decomposition.
    *
@@ -122,7 +122,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
   template <typename InputType>
   explicit PartialPivLU(const EigenBase<InputType>& matrix);
 
-  /* Constructor for \link InplaceDecomposition inplace decomposition \endlink
+  /** Constructor for \link InplaceDecomposition inplace decomposition \endlink
    *
    * \param matrix the matrix of which to compute the LU decomposition.
    *
@@ -140,7 +140,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
     return *this;
   }
 
-  /* \returns the LU decomposition matrix: the upper-triangular part is U, the
+  /** \returns the LU decomposition matrix: the upper-triangular part is U, the
    * unit-lower-triangular part is L (at least for square matrices; in the
    * non-square case, special care is needed, see the documentation of class
    * FullPivLU).
@@ -152,7 +152,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
     return m_lu;
   }
 
-  /* \returns the permutation matrix P.
+  /** \returns the permutation matrix P.
    */
   inline const PermutationType& permutationP() const {
     eigen_assert(m_isInitialized && "PartialPivLU is not initialized.");
@@ -160,7 +160,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* This method returns the solution x to the equation Ax=b, where A is the
+  /** This method returns the solution x to the equation Ax=b, where A is the
    * matrix of which *this is the LU decomposition.
    *
    * \param b the right-hand-side of the equation to solve. Can be a vector or a
@@ -183,7 +183,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
   inline const Solve<PartialPivLU, Rhs> solve(const MatrixBase<Rhs>& b) const;
 #endif
 
-  /* \returns an estimate of the reciprocal condition number of the matrix of
+  /** \returns an estimate of the reciprocal condition number of the matrix of
      which \c *this is the LU decomposition.
     */
   inline RealScalar rcond() const {
@@ -191,7 +191,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
     return internal::rcond_estimate_helper(m_l1_norm, *this);
   }
 
-  /* \returns the inverse of the matrix of which *this is the LU decomposition.
+  /** \returns the inverse of the matrix of which *this is the LU decomposition.
    *
    * \warning The matrix being decomposed here is assumed to be invertible. If
    * you need to check for invertibility, use class FullPivLU instead.
@@ -203,7 +203,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
     return Inverse<PartialPivLU>(*this);
   }
 
-  /* \returns the determinant of the matrix of which
+  /** \returns the determinant of the matrix of which
    * *this is the LU decomposition. It has only linear complexity
    * (that is, O(n) where n is the dimension of the square matrix)
    * as the LU decomposition has already been computed.
@@ -230,7 +230,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
 #ifndef EIGEN_PARSED_BY_DOXYGEN
   template <typename RhsType, typename DstType>
   EIGEN_DEVICE_FUNC void _solve_impl(const RhsType& rhs, DstType& dst) const {
-    /* The decomposition PA = LU can be rewritten as A = P^{-1} L U.
+    /** The decomposition PA = LU can be rewritten as A = P^{-1} L U.
      * So we proceed as follows:
      * Step 1: compute c = Pb.
      * Step 2: replace c by the solution x to Lx = c.
@@ -250,7 +250,7 @@ class PartialPivLU : public SolverBase<PartialPivLU<_MatrixType> > {
   template <bool Conjugate, typename RhsType, typename DstType>
   EIGEN_DEVICE_FUNC void _solve_impl_transposed(const RhsType& rhs,
                                                 DstType& dst) const {
-    /* The decomposition PA = LU can be rewritten as A^T = U^T L^T P.
+    /** The decomposition PA = LU can be rewritten as A^T = U^T L^T P.
      * So we proceed as follows:
      * Step 1: compute c as the solution to L^T c = b
      * Step 2: replace c by the solution x to U^T x = c.
@@ -333,7 +333,7 @@ PartialPivLU<MatrixType>::PartialPivLU(EigenBase<InputType>& matrix)
 
 namespace internal {
 
-/* \internal This is the blocked version of fullpivlu_unblocked() */
+/** \internal This is the blocked version of fullpivlu_unblocked() */
 template <typename Scalar, int StorageOrder, typename PivIndex,
           int SizeAtCompileTime = Dynamic>
 struct partial_lu_impl {
@@ -352,7 +352,7 @@ struct partial_lu_impl {
   typedef Ref<Matrix<Scalar, Dynamic, Dynamic, StorageOrder> > BlockType;
   typedef typename MatrixType::RealScalar RealScalar;
 
-  /* \internal performs the LU decomposition in-place of the matrix \a lu
+  /** \internal performs the LU decomposition in-place of the matrix \a lu
    * using an unblocked algorithm.
    *
    * In addition, this function returns the row transpositions in the
@@ -419,7 +419,7 @@ struct partial_lu_impl {
     return first_zero_pivot;
   }
 
-  /* \internal performs the LU decomposition in-place of the matrix represented
+  /** \internal performs the LU decomposition in-place of the matrix represented
    * by the variables \a rows, \a cols, \a lu_data, and \a lu_stride using a
    * recursive, blocked algorithm.
    *
@@ -508,7 +508,7 @@ struct partial_lu_impl {
   }
 };
 
-/* \internal performs the LU decomposition with partial pivoting in-place.
+/** \internal performs the LU decomposition with partial pivoting in-place.
  */
 template <typename MatrixType, typename TranspositionType>
 void partial_lu_inplace(
@@ -570,7 +570,7 @@ PartialPivLU<MatrixType>::determinant() const {
   return Scalar(m_det_p) * m_lu.diagonal().prod();
 }
 
-/* \returns the matrix represented by the decomposition,
+/** \returns the matrix represented by the decomposition,
  * i.e., it returns the product: P^{-1} L U.
  * This function is provided for debug purpose. */
 template <typename MatrixType>
@@ -586,12 +586,12 @@ MatrixType PartialPivLU<MatrixType>::reconstructedMatrix() const {
   return res;
 }
 
-/* Implementation details
+/** Implementation details
  * */
 
 namespace internal {
 
-/* Implementation of inverse()
+/** Implementation of inverse()
  * */
 template <typename DstXprType, typename MatrixType>
 struct Assignment<
@@ -610,9 +610,9 @@ struct Assignment<
 };
 }  // end namespace internal
 
-/* MatrixBase methods */
+/** MatrixBase methods */
 
-/* \lu_module
+/** \lu_module
  *
  * \return the partial-pivoting LU decomposition of \c *this.
  *
@@ -624,7 +624,7 @@ MatrixBase<Derived>::partialPivLu() const {
   return PartialPivLU<PlainObject>(eval());
 }
 
-/* \lu_module
+/** \lu_module
  *
  * Synonym of partialPivLu().
  *

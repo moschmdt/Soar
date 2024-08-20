@@ -1,4 +1,4 @@
-/*
+/**
  *
  * File SVS/src/filter_input.h
  *
@@ -37,13 +37,13 @@
 #include "filter_val.h"
 class filter;
 
-/*
+/**
  A filter parameter set represents one complete input into a filter. It's
  just a list of pairs <parameter name, value>.
 */
 typedef std::vector<std::pair<std::string, filter_val*> > filter_params;
 
-/*
+/**
  Each filter takes a number of input parameters. Each of those parameters
  is in the form of an output list. The derived classes of this abstract
  base class are responsible for combining those separate output lists into
@@ -80,7 +80,7 @@ class null_filter_input : public filter_input {
   void combine(const input_table& inputs) {}
 };
 
-/*
+/**
  Input class that just concatenates all separate lists into
  a single parameter set list, with each parameter set being a single
  element.
@@ -96,7 +96,7 @@ class concat_filter_input : public filter_input {
   std::map<filter_val*, filter_params*> val2params;
 };
 
-/*
+/**
  Input class that takes the Cartesian product of all input lists.
 */
 class product_filter_input : public filter_input {

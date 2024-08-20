@@ -15,7 +15,7 @@
 
 namespace Eigen {
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class RealSchur
@@ -73,7 +73,7 @@ class RealSchur {
                  MaxColsAtCompileTime, 1>
       ColumnVectorType;
 
-  /* \brief Default constructor.
+  /** \brief Default constructor.
    *
    * \param [in] size  Positive integer, size of the matrix whose Schur
    * decomposition will be computed.
@@ -96,7 +96,7 @@ class RealSchur {
         m_matUisUptodate(false),
         m_maxIters(-1) {}
 
-  /* \brief Constructor; computes real Schur decomposition of given matrix.
+  /** \brief Constructor; computes real Schur decomposition of given matrix.
    *
    * \param[in]  matrix    Square matrix whose Schur decomposition is to be
    * computed. \param[in]  computeU  If true, both T and U are computed; if
@@ -119,7 +119,7 @@ class RealSchur {
     compute(matrix.derived(), computeU);
   }
 
-  /* \brief Returns the orthogonal matrix in the Schur decomposition.
+  /** \brief Returns the orthogonal matrix in the Schur decomposition.
    *
    * \returns A const reference to the matrix U.
    *
@@ -138,7 +138,7 @@ class RealSchur {
     return m_matU;
   }
 
-  /* \brief Returns the quasi-triangular matrix in the Schur decomposition.
+  /** \brief Returns the quasi-triangular matrix in the Schur decomposition.
    *
    * \returns A const reference to the matrix T.
    *
@@ -153,7 +153,7 @@ class RealSchur {
     return m_matT;
   }
 
-  /* \brief Computes Schur decomposition of given matrix.
+  /** \brief Computes Schur decomposition of given matrix.
    *
    * \param[in]  matrix    Square matrix whose Schur decomposition is to be
    * computed. \param[in]  computeU  If true, both T and U are computed; if
@@ -175,7 +175,7 @@ class RealSchur {
   template <typename InputType>
   RealSchur& compute(const EigenBase<InputType>& matrix, bool computeU = true);
 
-  /* \brief Computes Schur decomposition of a Hessenberg matrix H = Z T Z^T
+  /** \brief Computes Schur decomposition of a Hessenberg matrix H = Z T Z^T
    *  \param[in] matrixH Matrix in Hessenberg form H
    *  \param[in] matrixQ orthogonal matrix Q that transform a matrix A to H : A
    * = Q H Q^T \param computeU Computes the matriX U of the Schur vectors
@@ -197,7 +197,7 @@ class RealSchur {
   RealSchur& computeFromHessenberg(const HessMatrixType& matrixH,
                                    const OrthMatrixType& matrixQ,
                                    bool computeU);
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful, \c NoConvergence
    * otherwise.
@@ -207,7 +207,7 @@ class RealSchur {
     return m_info;
   }
 
-  /* \brief Sets the maximum number of iterations allowed.
+  /** \brief Sets the maximum number of iterations allowed.
    *
    * If not specified by the user, the maximum number of iterations is
    * m_maxIterationsPerRow times the size of the matrix.
@@ -217,10 +217,10 @@ class RealSchur {
     return *this;
   }
 
-  /* \brief Returns the maximum number of iterations. */
+  /** \brief Returns the maximum number of iterations. */
   Index getMaxIterations() { return m_maxIters; }
 
-  /* \brief Maximum number of iterations per row.
+  /** \brief Maximum number of iterations per row.
    *
    * If not otherwise specified, the maximum number of iterations is this number
    * times the size of the matrix. It is currently set to 40.
@@ -358,7 +358,7 @@ RealSchur<MatrixType>& RealSchur<MatrixType>::computeFromHessenberg(
   return *this;
 }
 
-/* \internal Computes and returns vector L1 norm of T */
+/** \internal Computes and returns vector L1 norm of T */
 template <typename MatrixType>
 inline typename MatrixType::Scalar RealSchur<MatrixType>::computeNormOfT() {
   const Index size = m_matT.cols();
@@ -372,7 +372,7 @@ inline typename MatrixType::Scalar RealSchur<MatrixType>::computeNormOfT() {
   return norm;
 }
 
-/* \internal Look for single small sub-diagonal element and returns its index
+/** \internal Look for single small sub-diagonal element and returns its index
  */
 template <typename MatrixType>
 inline Index RealSchur<MatrixType>::findSmallSubdiagEntry(
@@ -391,7 +391,7 @@ inline Index RealSchur<MatrixType>::findSmallSubdiagEntry(
   return res;
 }
 
-/* \internal Update T given that rows iu-1 and iu decouple from the rest. */
+/** \internal Update T given that rows iu-1 and iu decouple from the rest. */
 template <typename MatrixType>
 inline void RealSchur<MatrixType>::splitOffTwoRows(Index iu, bool computeU,
                                                    const Scalar& exshift) {
@@ -428,7 +428,7 @@ inline void RealSchur<MatrixType>::splitOffTwoRows(Index iu, bool computeU,
   if (iu > 1) m_matT.coeffRef(iu - 1, iu - 2) = Scalar(0);
 }
 
-/* \internal Form shift in shiftInfo, and update exshift if an exceptional
+/** \internal Form shift in shiftInfo, and update exshift if an exceptional
  * shift is performed. */
 template <typename MatrixType>
 inline void RealSchur<MatrixType>::computeShift(Index iu, Index iter,
@@ -467,7 +467,7 @@ inline void RealSchur<MatrixType>::computeShift(Index iu, Index iter,
   }
 }
 
-/* \internal Compute index im at which Francis QR step starts and the first
+/** \internal Compute index im at which Francis QR step starts and the first
  * Householder vector. */
 template <typename MatrixType>
 inline void RealSchur<MatrixType>::initFrancisQRStep(
@@ -496,7 +496,7 @@ inline void RealSchur<MatrixType>::initFrancisQRStep(
   }
 }
 
-/* \internal Perform a Francis QR step involving rows il:iu and columns im:iu.
+/** \internal Perform a Francis QR step involving rows il:iu and columns im:iu.
  */
 template <typename MatrixType>
 inline void RealSchur<MatrixType>::performFrancisQRStep(

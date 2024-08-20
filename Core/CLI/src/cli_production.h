@@ -1,4 +1,4 @@
-/*
+/**
  * cli_production.h
  *
  *  Created on: Oct 1, 2016
@@ -97,4 +97,4 @@ class ProductionCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CORE_CLI_SRC_CLI_PRODUCTION_H_ */
+#endif /** CORE_CLI_SRC_CLI_PRODUCTION_H_ */

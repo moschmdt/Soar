@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* =======================================================================
+/** =======================================================================
                                 reorder.h
    Need to add comments here
 ======================================================================= */
@@ -30,7 +30,7 @@ extern ProdReorderFailureType reorder_lhs(
     matched_symbol_list* ungrounded_syms = NULL, bool add_ungrounded = false);
 extern void init_reorderer(agent* thisAgent);
 
-/* this prototype moved here from osupport.cpp -ajc (5/3/02) */
+/** this prototype moved here from osupport.cpp -ajc (5/3/02) */
 extern cons* collect_root_variables(agent* thisAgent, condition* cond_list,
                                     tc_number tc,
                                     matched_symbol_list* ungrounded_syms = NULL,

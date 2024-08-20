@@ -43,31 +43,31 @@ typedef struct Geometry {
   vec3 scale;
   vec3 color;
 
-  /* for polyhedrons */
+  /** for polyhedrons */
   real *vertices;
   GLuint *indexes;
   int ninds;
   real *normals;
 
-  /* for spheres */
+  /** for spheres */
   GLUquadricObj *quadric;
   real radius;
 
-  /* for text */
+  /** for text */
   char *text;
 
   struct Geometry *next;
 } geometry;
 
 typedef struct Layer {
-  /* drawing options */
+  /** drawing options */
   int lighting;
   int flat;
   int clear_depth;
   int draw_names;
   int wireframe;
 
-  /*
+  /**
    storage for various matrices between object drawing and label drawing
   */
   GLint last_view[4];
@@ -90,7 +90,7 @@ extern GLFWmutex scene_lock;
 extern semaphore redraw_semaphore;
 extern int debug;
 
-/* viewer.c */
+/** viewer.c */
 void pan_camera(camera *c, real x, real y);
 void rotate_camera(camera *c, int x, int y, int dx, int dy);
 void zoom_camera(camera *c, real f);
@@ -111,7 +111,7 @@ int match_scenes(char *pattern, scene **scns, int n);
 void init_scene(scene *s, char *name);
 void destroy_scene(scene *s);
 void request_screenshot(char *path,
-                        int i); /* 0 = from keyboard, 1 = from input */
+                        int i); /** 0 = from keyboard, 1 = from input */
 
 geometry *find_or_add_geom(scene *s, char *name);
 int delete_geoms(scene *s, char *pattern);
@@ -122,14 +122,14 @@ int set_layer(int layer_num, char option, int value);
 int get_redraw();
 void set_redraw();
 
-/* input.c */
+/** input.c */
 void GLFWCALL proc_input(void *unused);
 
-/* text.c */
+/** text.c */
 void init_font(void);
 void draw_text(char *s, int x, int y);
 
-/* util.c */
+/** util.c */
 void error(const char *msg);
 int match(char *pattern, char *s);
 int split(char *s, char *fields[], int maxfields);
@@ -155,7 +155,7 @@ void semaphore_V(semaphore *s);
 
 int qhull(real verts[], int nverts, int indexes[], int max_indexes);
 
-/* platform specific */
+/** platform specific */
 int init_input(int argc, char *argv[]);
 int get_input(char *buf, int n);
 int run_shell(const char *cmd);

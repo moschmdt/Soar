@@ -1,4 +1,4 @@
-/*
+/**
  * smem_typedefs.h
  *
  *  Created on: Aug 21, 2016
@@ -109,4 +109,4 @@ typedef union ltm_value_union {
   struct ltm_value_lti val_lti;
 } ltm_value;
 
-#endif /* CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_STRUCTS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_SEMANTIC_MEMORY_SMEM_STRUCTS_H_ */

@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  * \class SparseVector
  *
  * \brief a sparse vector class
@@ -97,9 +97,9 @@ class SparseVector : public SparseCompressedBase<
   inline const StorageIndex* innerNonZeroPtr() const { return 0; }
   inline StorageIndex* innerNonZeroPtr() { return 0; }
 
-  /* \internal */
+  /** \internal */
   inline Storage& data() { return m_data; }
-  /* \internal */
+  /** \internal */
   inline const Storage& data() const { return m_data; }
 
   inline Scalar coeff(Index row, Index col) const {
@@ -118,7 +118,7 @@ class SparseVector : public SparseCompressedBase<
     return coeffRef(IsColVector ? row : col);
   }
 
-  /* \returns a reference to the coefficient value at given index \a i
+  /** \returns a reference to the coefficient value at given index \a i
    * This operation involes a log(rho*size) binary search. If the coefficient
    * does not exist yet, then a sorted insertion into a sequential buffer is
    * performed.
@@ -138,7 +138,7 @@ class SparseVector : public SparseCompressedBase<
 
   inline void setZero() { m_data.clear(); }
 
-  /* \returns the number of non zero coefficients */
+  /** \returns the number of non zero coefficients */
   inline Index nonZeros() const { return m_data.size(); }
 
   inline void startVec(Index outer) {
@@ -194,20 +194,20 @@ class SparseVector : public SparseCompressedBase<
     return m_data.value(p + 1);
   }
 
-  /*
+  /**
    */
   inline void reserve(Index reserveSize) { m_data.reserve(reserveSize); }
 
   inline void finalize() {}
 
-  /* \copydoc SparseMatrix::prune(const Scalar&,const RealScalar&) */
+  /** \copydoc SparseMatrix::prune(const Scalar&,const RealScalar&) */
   void prune(
       const Scalar& reference,
       const RealScalar& epsilon = NumTraits<RealScalar>::dummy_precision()) {
     m_data.prune(reference, epsilon);
   }
 
-  /* Resizes the sparse vector to \a rows x \a cols
+  /** Resizes the sparse vector to \a rows x \a cols
    *
    * This method is provided for compatibility with matrices.
    * For a column vector, \a cols must be equal to 1.
@@ -221,7 +221,7 @@ class SparseVector : public SparseCompressedBase<
     resize(IsColVector ? rows : cols);
   }
 
-  /* Resizes the sparse vector to \a newSize
+  /** Resizes the sparse vector to \a newSize
    * This method deletes all entries, thus leaving an empty sparse vector
    *
    * \sa  conservativeResize(), setZero() */
@@ -230,7 +230,7 @@ class SparseVector : public SparseCompressedBase<
     m_data.clear();
   }
 
-  /* Resizes the sparse vector to \a newSize, while leaving old values
+  /** Resizes the sparse vector to \a newSize, while leaving old values
    * untouched.
    *
    * If the size of the vector is decreased, then the storage of the out-of
@@ -279,7 +279,7 @@ class SparseVector : public SparseCompressedBase<
     *this = other.derived();
   }
 
-  /* Swaps the values of \c *this and \a other.
+  /** Swaps the values of \c *this and \a other.
    * Overloaded for performance: this version performs a \em shallow swap by
    * swapping pointers and attributes only. \sa SparseMatrixBase::swap()
    */
@@ -328,48 +328,48 @@ class SparseVector : public SparseCompressedBase<
     return s;
   }
 
-  /* Destructor */
+  /** Destructor */
   inline ~SparseVector() {}
 
-  /* Overloaded for performance */
+  /** Overloaded for performance */
   Scalar sum() const;
 
  public:
-  /* \internal \deprecated use setZero() and reserve() */
+  /** \internal \deprecated use setZero() and reserve() */
   EIGEN_DEPRECATED void startFill(Index reserve) {
     setZero();
     m_data.reserve(reserve);
   }
 
-  /* \internal \deprecated use insertBack(Index,Index) */
+  /** \internal \deprecated use insertBack(Index,Index) */
   EIGEN_DEPRECATED Scalar& fill(Index r, Index c) {
     eigen_assert(r == 0 || c == 0);
     return fill(IsColVector ? r : c);
   }
 
-  /* \internal \deprecated use insertBack(Index) */
+  /** \internal \deprecated use insertBack(Index) */
   EIGEN_DEPRECATED Scalar& fill(Index i) {
     m_data.append(0, i);
     return m_data.value(m_data.size() - 1);
   }
 
-  /* \internal \deprecated use insert(Index,Index) */
+  /** \internal \deprecated use insert(Index,Index) */
   EIGEN_DEPRECATED Scalar& fillrand(Index r, Index c) {
     eigen_assert(r == 0 || c == 0);
     return fillrand(IsColVector ? r : c);
   }
 
-  /* \internal \deprecated use insert(Index) */
+  /** \internal \deprecated use insert(Index) */
   EIGEN_DEPRECATED Scalar& fillrand(Index i) { return insert(i); }
 
-  /* \internal \deprecated use finalize() */
+  /** \internal \deprecated use finalize() */
   EIGEN_DEPRECATED void endFill() {}
 
   // These two functions were here in the 3.1 release, so let's keep them in
   // case some code rely on them.
-  /* \internal \deprecated use data() */
+  /** \internal \deprecated use data() */
   EIGEN_DEPRECATED Storage& _data() { return m_data; }
-  /* \internal \deprecated use data() */
+  /** \internal \deprecated use data() */
   EIGEN_DEPRECATED const Storage& _data() const { return m_data; }
 
 #ifdef EIGEN_SPARSEVECTOR_PLUGIN

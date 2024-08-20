@@ -13,7 +13,7 @@
 
 #include "details.h"
 
-/*
+/**
  * This section contains a convenience MACRO which allows an easy specialization
  * of std::vector such that for data types with alignment issues the correct
  * allocator is used automatically.
@@ -107,7 +107,7 @@ class vector<T, EIGEN_ALIGNED_ALLOCATOR<T> >
     vector_base::insert(position, new_size, x);
   }
 #elif defined(_GLIBCXX_VECTOR) && (!(EIGEN_GNUC_AT_LEAST(4, 1)))
-  /* Note that before gcc-4.1 we already have:
+  /** Note that before gcc-4.1 we already have:
    * std::vector::resize(size_type,const T&). However, this specialization is
    * still needed to make the above EIGEN_DEFINE_STL_VECTOR_SPECIALIZATION trick
    * to work. */

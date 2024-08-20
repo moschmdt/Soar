@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *
  *  file:  agent.h
  *
@@ -47,7 +47,7 @@ class svs_interface;
 #endif
 
 typedef struct EXPORT agent_struct {
-  /* -- Rete stuff: These are used for statistics in rete.cpp -- */
+  /** -- Rete stuff: These are used for statistics in rete.cpp -- */
   uint64_t actual[256], if_no_merging[256], if_no_sharing[256];
 
   uint64_t current_retesave_amindex;
@@ -71,20 +71,20 @@ typedef struct EXPORT agent_struct {
   /////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
 
-  /* Hash tables for alpha memories, and for entries in left & right memories */
+  /** Hash tables for alpha memories, and for entries in left & right memories */
   void* left_ht;
   void* right_ht;
   hash_table*(alpha_hash_tables[16]);
 
-  /* Number of WMEs, and list of WMEs, the Rete has been told about */
+  /** Number of WMEs, and list of WMEs, the Rete has been told about */
   uint64_t num_wmes_in_rete;
   wme* all_wmes_in_rete;
 
-  /* Dummy nodes and tokens */
+  /** Dummy nodes and tokens */
   struct rete_node_struct* dummy_top_node;
   struct token_struct* dummy_top_token;
 
-  /* Various Rete statistics counters */
+  /** Various Rete statistics counters */
   uint64_t rete_node_counts[256];
   uint64_t rete_node_counts_if_no_sharing[256];
   uint64_t token_additions;
@@ -94,13 +94,13 @@ typedef struct EXPORT agent_struct {
   uint64_t num_null_right_activations;
   uint64_t num_null_left_activations;
 
-  /* Miscellaneous other stuff */
-  uint32_t alpha_mem_id_counter; /* node id's for hashing */
+  /** Miscellaneous other stuff */
+  uint32_t alpha_mem_id_counter; /** node id's for hashing */
   uint32_t beta_node_id_counter;
-  struct ms_change_struct* ms_assertions; /* changes to match set */
+  struct ms_change_struct* ms_assertions; /** changes to match set */
   struct ms_change_struct* ms_retractions;
 
-  /* Various classes for this agent that manage different aspects of Soar */
+  /** Various classes for this agent that manage different aspects of Soar */
   Symbol_Manager* symbolManager;
   SoarDecider* Decider;
   WM_Manager* WM;
@@ -113,118 +113,118 @@ typedef struct EXPORT agent_struct {
   Explanation_Memory* explanationMemory;
   GraphViz_Visualizer* visualizationManager;
 
-  /* This contains parameters that are used to interface to certain CLI
+  /** This contains parameters that are used to interface to certain CLI
    * commands that were combined in Soar 9.6.  Should be moved to a
    * manager class */
   cli_command_params* command_params;
 
-  /* Some output manager settings for this agent */
+  /** Some output manager settings for this agent */
   AgentOutput_Info* output_settings;
 
-  /* ----------------------- Top-level stuff -------------------------- */
+  /** ----------------------- Top-level stuff -------------------------- */
 
-  /* --- headers of dll's of all productions of each type --- */
+  /** --- headers of dll's of all productions of each type --- */
   production* all_productions_of_type[NUM_PRODUCTION_TYPES];
   uint64_t num_productions_of_type[NUM_PRODUCTION_TYPES];
 
-  /* --- stuff for "input-period" command --- */
-  /* --- in Soar8, input runs once at beginning of D cycle, no matter what */
-  int input_period;      /* AGR REW1 */
-  bool input_cycle_flag; /* AGR REW1 */
+  /** --- stuff for "input-period" command --- */
+  /** --- in Soar8, input runs once at beginning of D cycle, no matter what */
+  int input_period;      /** AGR REW1 */
+  bool input_cycle_flag; /** AGR REW1 */
 
-  /* --- current top level phase --- */
+  /** --- current top level phase --- */
   enum top_level_phase current_phase;
 
-  /* --- to interrupt at the end of the current phase, set stop_soar to true
+  /** --- to interrupt at the end of the current phase, set stop_soar to true
    and reason_for_stopping to some appropriate string --- */
   bool stop_soar;
   const char* reason_for_stopping;
 
-  /* --- the RHS action (halt) sets this true --- */
+  /** --- the RHS action (halt) sets this true --- */
   bool system_halted;
 
-  /* --- list of productions whose firings are being traced --- */
+  /** --- list of productions whose firings are being traced --- */
   cons* productions_being_traced;
 
-  /* --- various user-settable system parameters --- */
+  /** --- various user-settable system parameters --- */
   int64_t trace_settings[HIGHEST_SYSPARAM_NUMBER + 1];
 
-  /* --- parameters for running Soar --- */
-  /*  --- the code loops go_number times over the go_type phases --- */
-  int64_t go_number;              /* How many times to "go" */
-  Symbol* go_slot_attr;           /* The context slot checked */
-  goal_stack_level go_slot_level; /* The goal stack level checked */
-  enum go_type_enum go_type;      /* The phase type used */
+  /** --- parameters for running Soar --- */
+  /**  --- the code loops go_number times over the go_type phases --- */
+  int64_t go_number;              /** How many times to "go" */
+  Symbol* go_slot_attr;           /** The context slot checked */
+  goal_stack_level go_slot_level; /** The goal stack level checked */
+  enum go_type_enum go_type;      /** The phase type used */
 
-  /* --- Top-level Statistics --- */
+  /** --- Top-level Statistics --- */
 
-  /* running total of WM sizes at end of phases */
+  /** running total of WM sizes at end of phases */
   double cumulative_wm_size;
-  /* number of items included in "cumulative_wm_size" sum */
+  /** number of items included in "cumulative_wm_size" sum */
   uint64_t num_wm_sizes_accumulated;
 
-  uint64_t max_wm_size;        /* maximum size of WM so far */
-  uint64_t wme_addition_count; /* # of wmes added to WM */
-  uint64_t wme_removal_count;  /* # of wmes removed from WM */
+  uint64_t max_wm_size;        /** maximum size of WM so far */
+  uint64_t wme_addition_count; /** # of wmes added to WM */
+  uint64_t wme_removal_count;  /** # of wmes removed from WM */
 
-  uint64_t start_dc_wme_addition_count; /* for calculating max_dc_wm_changes */
-  uint64_t start_dc_wme_removal_count;  /* for calculating max_dc_wm_changes */
+  uint64_t start_dc_wme_addition_count; /** for calculating max_dc_wm_changes */
+  uint64_t start_dc_wme_removal_count;  /** for calculating max_dc_wm_changes */
   uint64_t
-      max_dc_wm_changes_value; /* # of wmes added + removed in a single dc */
-  uint64_t max_dc_wm_changes_cycle; /* # cycle of max_dc_wm_changes */
+      max_dc_wm_changes_value; /** # of wmes added + removed in a single dc */
+  uint64_t max_dc_wm_changes_cycle; /** # cycle of max_dc_wm_changes */
 
-  uint64_t init_count;    /* # of inits done so far */
-  uint64_t d_cycle_count; /* # of DC's run so far */
-  uint64_t e_cycle_count; /* # of EC's run so far */
-  /*  in Soar 8, e_cycles_this_d_cycle is reset to zero for every
+  uint64_t init_count;    /** # of inits done so far */
+  uint64_t d_cycle_count; /** # of DC's run so far */
+  uint64_t e_cycle_count; /** # of EC's run so far */
+  /**  in Soar 8, e_cycles_this_d_cycle is reset to zero for every
       propose and apply phase */
-  uint64_t e_cycles_this_d_cycle;            /* # of EC's run this DC */
-  uint64_t num_existing_wmes;                /* current WM size */
-  uint64_t production_firing_count;          /* # of prod. firings */
-  uint64_t start_dc_production_firing_count; /* # of prod. firings this decision
+  uint64_t e_cycles_this_d_cycle;            /** # of EC's run this DC */
+  uint64_t num_existing_wmes;                /** current WM size */
+  uint64_t production_firing_count;          /** # of prod. firings */
+  uint64_t start_dc_production_firing_count; /** # of prod. firings this decision
                                                 cycle */
   uint64_t
-      max_dc_production_firing_count_value; /* max # of prod. firings per dc */
+      max_dc_production_firing_count_value; /** max # of prod. firings per dc */
   uint64_t
-      max_dc_production_firing_count_cycle; /* cycle of
+      max_dc_production_firing_count_cycle; /** cycle of
                                                max_dc_production_firing_count_value
                                              */
   uint64_t d_cycle_last_output;
-  /* last time agent produced output */  // KJC 11.17.05
+  /** last time agent produced output */  // KJC 11.17.05
   uint64_t
-      decide_phases_count; /* can differ from d_cycle_count.  want for stats */
-  //?? uint64_t            out_cycle_count;       /* # of output phases have
+      decide_phases_count; /** can differ from d_cycle_count.  want for stats */
+  //?? uint64_t            out_cycle_count;       /** # of output phases have
   // gen'd output */
-  //?? uint64_t            phase_count;       /* # of phases run so far */
-  /* DJP 2/22/07: These counts are based around the counts that the run command
+  //?? uint64_t            phase_count;       /** # of phases run so far */
+  /** DJP 2/22/07: These counts are based around the counts that the run command
      understands and are intended to capture the same semantics as run expects.
      That may differ from some of the other counters above which historically
      may track slightly different values */
-  uint64_t run_phase_count;       /* # of phases run since last init-soar */
-  uint64_t run_elaboration_count; /* # of elaboration cycles run since last
+  uint64_t run_phase_count;       /** # of phases run since last init-soar */
+  uint64_t run_elaboration_count; /** # of elaboration cycles run since last
                                      init-soar.  A phase where nothing happens
                                      counts as an elaboration cycle */
-  uint64_t run_last_output_count; /* # of output phases since this agent last
+  uint64_t run_last_output_count; /** # of output phases since this agent last
                                      generated output */
-  uint64_t run_generated_output_count; /* # of output phases when this agent
+  uint64_t run_generated_output_count; /** # of output phases when this agent
                                           either generated output or reached
                                           "max-nil-output" cycles since last
                                           init-soar */
 
-  /* REW: begin 09.15.96 */
-  /* in Soar 8, PE's are done only during the APPLY phase */
-  uint64_t pe_cycle_count;         /* # of PE's run so far */
-  uint64_t pe_cycles_this_d_cycle; /* # of PE's run this DC */
+  /** REW: begin 09.15.96 */
+  /** in Soar 8, PE's are done only during the APPLY phase */
+  uint64_t pe_cycle_count;         /** # of PE's run so far */
+  uint64_t pe_cycles_this_d_cycle; /** # of PE's run this DC */
 
   parent_inst* parent_list_head;
-  /* REW: end   09.15.96 */
+  /** REW: end   09.15.96 */
 
-  /* State for new waterfall model */
-  uint64_t inner_e_cycle_count; /* # of inner elaboration cycles run so far */
+  /** State for new waterfall model */
+  uint64_t inner_e_cycle_count; /** # of inner elaboration cycles run so far */
 
-  /* ----------------------- Timing statistics -------------------------- */
+  /** ----------------------- Timing statistics -------------------------- */
 
-  /*
+  /**
   When the compile flag NO_TIMING_STUFF is off, statistics will be collected on
   total cpu time, total kernel time, time spent in the individual phases of a
   decision cycle, time spent executing the input and output functions, and time
@@ -351,8 +351,8 @@ typedef struct EXPORT agent_struct {
 
   soar_timer_accumulator callback_timers[NUMBER_OF_CALLBACKS];
 
-/* accumulated cpu time spent in various parts of the system */
-/* only used if DETAILED_TIMING_STATS is #def'd in kernel.h */
+/** accumulated cpu time spent in various parts of the system */
+/** only used if DETAILED_TIMING_STATS is #def'd in kernel.h */
 #ifdef DETAILED_TIMING_STATS
   soar_timer timers_gds;  // start_gds_tv
   soar_timer_accumulator
@@ -365,20 +365,20 @@ typedef struct EXPORT agent_struct {
 #endif  // DETAILED_TIMING_STATS
 #endif  // NO_TIMING_STUFF
 
-  /* ----------------------- Firer stuff -------------------------- */
+  /** ----------------------- Firer stuff -------------------------- */
 
   instantiation* newly_created_instantiations;
   inst_list newly_deleted_instantiations;  // instantiations from NCI that are
                                            // flagged for deallocation before
                                            // they are asserted
 
-  /* production_being_fired -- during firing, points to the prod. being fired */
+  /** production_being_fired -- during firing, points to the prod. being fired */
   production* production_being_fired;
 
   uint64_t max_rhs_unbound_variables;
   Symbol** rhs_variable_bindings;
 
-  /* ==================================================================
+  /** ==================================================================
      Decider stuff
      =================================================================== */
 
@@ -386,7 +386,7 @@ typedef struct EXPORT agent_struct {
   cons* wmes_to_add;
   cons* wmes_to_remove;
 
-  /* ---------------------------------------------------------------------
+  /** ---------------------------------------------------------------------
      Top_goal and bottom_goal point to the top and bottom goal identifiers,
      respectively.  (If there is no goal stack at all, they're both NIL.)
      Top_state points to the top state (symbol) if there is a top state, and
@@ -413,7 +413,7 @@ typedef struct EXPORT agent_struct {
   cons* promoted_ids;
   int link_update_mode;
 
-  /* ----------------------- Trace Formats -------------------------- */
+  /** ----------------------- Trace Formats -------------------------- */
 
   struct trace_format_struct*(object_tf_for_anything[3]);
   struct hash_table_struct*(object_tr_ht[3]);
@@ -422,19 +422,19 @@ typedef struct EXPORT agent_struct {
   struct hash_table_struct*(stack_tr_ht[3]);
   tc_number tf_printing_tc;
 
-  cons* wme_filter_list; /* kjh(CUSP-B2) */
+  cons* wme_filter_list; /** kjh(CUSP-B2) */
 
-  /* ----------------------- RHS Function Stuff -------------------------- */
+  /** ----------------------- RHS Function Stuff -------------------------- */
 
-  /* --- "make-constant-symbol" counter --- */
+  /** --- "make-constant-symbol" counter --- */
   uint64_t mcs_counter;
 
-  /* ----------------------- O support stuff -------------------------- */
+  /** ----------------------- O support stuff -------------------------- */
 
   tc_number o_support_tc;
   preference* rhs_prefs_from_instantiation;
 
-  /* ----------------------- I/O stuff -------------------------- */
+  /** ----------------------- I/O stuff -------------------------- */
 
   io_wme* collected_io_wmes;
   struct output_link_struct* existing_output_links;
@@ -452,9 +452,9 @@ typedef struct EXPORT agent_struct {
 
   Symbol* prev_top_state;
 
-  /* ------------------- Info about the agent itself ---------------------- */
+  /** ------------------- Info about the agent itself ---------------------- */
 
-  char* name; /* name of this Soar agent */
+  char* name; /** name of this Soar agent */
 
   multi_attribute* multi_attributes;
 
@@ -464,47 +464,47 @@ typedef struct EXPORT agent_struct {
   int FIRING_TYPE;
   Symbol* PE_level;
 
-  struct ms_change_struct* ms_o_assertions; /* changes to match set */
-  struct ms_change_struct* ms_i_assertions; /* changes to match set */
+  struct ms_change_struct* ms_o_assertions; /** changes to match set */
+  struct ms_change_struct* ms_i_assertions; /** changes to match set */
   struct ms_change_struct*
-      postponed_assertions; /* New waterfall model: postponed assertion list */
+      postponed_assertions; /** New waterfall model: postponed assertion list */
 
   goal_stack_level active_level;
   goal_stack_level previous_active_level;
   Symbol* active_goal;
   Symbol* previous_active_goal;
-  struct ms_change_struct* nil_goal_retractions; /* dll of all retractions for
+  struct ms_change_struct* nil_goal_retractions; /** dll of all retractions for
                                                     removed (ie nil) goals */
 
-  /*
+  /**
    * State for new waterfall model
    * Represents the original active level of the elaboration cycle, saved so
    * that we can modify the active level during the inner preference loop and
    * restore it before working memory changes.
    */
   goal_stack_level highest_active_level;
-  /*
+  /**
    * State for new waterfall model
    * Same as highest_active_level, just the goal that the level represents.
    */
   Symbol* highest_active_goal;
-  /*
+  /**
    * State for new waterfall model
    * Can't fire rules at this level or higher (lower int)
    */
   goal_stack_level change_level;
-  /*
+  /**
    * State for new waterfall model
    * Next change_level, in next iteration of inner preference loop.
    */
   goal_stack_level next_change_level;
 
-  /* delineate btwn Pref/WM(propose) and Pref/WM(apply) KJC 10.05.98 */
+  /** delineate btwn Pref/WM(propose) and Pref/WM(apply) KJC 10.05.98 */
   bool applyPhase;
 
   rhs_function* rhs_functions;
 
-  enum ni_mode numeric_indifferent_mode; /* SW 08.19.2003 */
+  enum ni_mode numeric_indifferent_mode; /** SW 08.19.2003 */
 
   // select
   select_info* select;
@@ -548,7 +548,7 @@ typedef struct EXPORT agent_struct {
   svs_interface* svs;
 #endif
 } agent;
-/* end of agent struct */
+/** end of agent struct */
 
 template <typename T>
 inline void allocate_cons(agent* thisAgent, T* dest_cons_pointer) {

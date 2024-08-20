@@ -1,4 +1,4 @@
-/*
+/**
  * cli_explain.h
  *
  *  Created on: Dec 22, 2015
@@ -71,4 +71,4 @@ class ExplainCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CLI_EXPLAIN_H_ */
+#endif /** CLI_EXPLAIN_H_ */

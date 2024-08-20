@@ -73,7 +73,7 @@ struct transform_make_affine;
 
 }  // end namespace internal
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \class Transform
  *
@@ -206,53 +206,53 @@ class Transform {
     HDim = _Dim + 1,  ///< size of a respective homogeneous vector
     Rows = int(Mode) == (AffineCompact) ? Dim : HDim
   };
-  /* the scalar type of the coefficients */
+  /** the scalar type of the coefficients */
   typedef _Scalar Scalar;
   typedef Eigen::Index StorageIndex;
   typedef Eigen::Index Index;  ///< \deprecated since Eigen 3.3
-  /* type of the matrix used to represent the transformation */
+  /** type of the matrix used to represent the transformation */
   typedef typename internal::make_proper_matrix_type<Scalar, Rows, HDim,
                                                      Options>::type MatrixType;
-  /* constified MatrixType */
+  /** constified MatrixType */
   typedef const MatrixType ConstMatrixType;
-  /* type of the matrix used to represent the linear part of the transformation
+  /** type of the matrix used to represent the linear part of the transformation
    */
   typedef Matrix<Scalar, Dim, Dim, Options> LinearMatrixType;
-  /* type of read/write reference to the linear part of the transformation */
+  /** type of read/write reference to the linear part of the transformation */
   typedef Block<MatrixType, Dim, Dim,
                 int(Mode) == (AffineCompact) && (int(Options) & RowMajor) == 0>
       LinearPart;
-  /* type of read reference to the linear part of the transformation */
+  /** type of read reference to the linear part of the transformation */
   typedef const Block<ConstMatrixType, Dim, Dim,
                       int(Mode) == (AffineCompact) &&
                           (int(Options) & RowMajor) == 0>
       ConstLinearPart;
-  /* type of read/write reference to the affine part of the transformation */
+  /** type of read/write reference to the affine part of the transformation */
   typedef typename internal::conditional<
       int(Mode) == int(AffineCompact), MatrixType&,
       Block<MatrixType, Dim, HDim> >::type AffinePart;
-  /* type of read reference to the affine part of the transformation */
+  /** type of read reference to the affine part of the transformation */
   typedef typename internal::conditional<
       int(Mode) == int(AffineCompact), const MatrixType&,
       const Block<const MatrixType, Dim, HDim> >::type ConstAffinePart;
-  /* type of a vector */
+  /** type of a vector */
   typedef Matrix<Scalar, Dim, 1> VectorType;
-  /* type of a read/write reference to the translation part of the rotation */
+  /** type of a read/write reference to the translation part of the rotation */
   typedef Block<MatrixType, Dim, 1,
                 !(internal::traits<MatrixType>::Flags & RowMajorBit)>
       TranslationPart;
-  /* type of a read reference to the translation part of the rotation */
+  /** type of a read reference to the translation part of the rotation */
   typedef const Block<ConstMatrixType, Dim, 1,
                       !(internal::traits<MatrixType>::Flags & RowMajorBit)>
       ConstTranslationPart;
-  /* corresponding translation type */
+  /** corresponding translation type */
   typedef Translation<Scalar, Dim> TranslationType;
 
   // this intermediate enum is needed to avoid an ICE with gcc 3.4 and 4.0
   enum {
     TransformTimeDiagonalMode = ((Mode == int(Isometry)) ? Affine : int(Mode))
   };
-  /* The return type of the product between a diagonal matrix and a transform
+  /** The return type of the product between a diagonal matrix and a transform
    */
   typedef Transform<Scalar, Dim, TransformTimeDiagonalMode>
       TransformTimeDiagonalReturnType;
@@ -261,7 +261,7 @@ class Transform {
   MatrixType m_matrix;
 
  public:
-  /* Default constructor without initialization of the meaningful coefficients.
+  /** Default constructor without initialization of the meaningful coefficients.
    * If Mode==Affine or Mode==Isometry, then the last row is set to [0 ... 0 1]
    */
   EIGEN_DEVICE_FUNC inline Transform() {
@@ -289,7 +289,7 @@ class Transform {
 
   typedef internal::transform_take_affine_part<Transform> take_affine_part;
 
-  /* Constructs and initializes a transformation from a Dim^2 or a (Dim+1)^2
+  /** Constructs and initializes a transformation from a Dim^2 or a (Dim+1)^2
    * matrix. */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC inline explicit Transform(
@@ -303,7 +303,7 @@ class Transform {
                                               HDim>::run(this, other.derived());
   }
 
-  /* Set \c *this from a Dim^2 or (Dim+1)^2 matrix. */
+  /** Set \c *this from a Dim^2 or (Dim+1)^2 matrix. */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC inline Transform& operator=(
       const EigenBase<OtherDerived>& other) {
@@ -400,55 +400,55 @@ class Transform {
     return m_matrix.cols();
   }
 
-  /* shortcut for m_matrix(row,col);
+  /** shortcut for m_matrix(row,col);
    * \sa MatrixBase::operator(Index,Index) const */
   EIGEN_DEVICE_FUNC inline Scalar operator()(Index row, Index col) const {
     return m_matrix(row, col);
   }
-  /* shortcut for m_matrix(row,col);
+  /** shortcut for m_matrix(row,col);
    * \sa MatrixBase::operator(Index,Index) */
   EIGEN_DEVICE_FUNC inline Scalar& operator()(Index row, Index col) {
     return m_matrix(row, col);
   }
 
-  /* \returns a read-only expression of the transformation matrix */
+  /** \returns a read-only expression of the transformation matrix */
   EIGEN_DEVICE_FUNC inline const MatrixType& matrix() const { return m_matrix; }
-  /* \returns a writable expression of the transformation matrix */
+  /** \returns a writable expression of the transformation matrix */
   EIGEN_DEVICE_FUNC inline MatrixType& matrix() { return m_matrix; }
 
-  /* \returns a read-only expression of the linear part of the transformation
+  /** \returns a read-only expression of the linear part of the transformation
    */
   EIGEN_DEVICE_FUNC inline ConstLinearPart linear() const {
     return ConstLinearPart(m_matrix, 0, 0);
   }
-  /* \returns a writable expression of the linear part of the transformation */
+  /** \returns a writable expression of the linear part of the transformation */
   EIGEN_DEVICE_FUNC inline LinearPart linear() {
     return LinearPart(m_matrix, 0, 0);
   }
 
-  /* \returns a read-only expression of the Dim x HDim affine part of the
+  /** \returns a read-only expression of the Dim x HDim affine part of the
    * transformation */
   EIGEN_DEVICE_FUNC inline ConstAffinePart affine() const {
     return take_affine_part::run(m_matrix);
   }
-  /* \returns a writable expression of the Dim x HDim affine part of the
+  /** \returns a writable expression of the Dim x HDim affine part of the
    * transformation */
   EIGEN_DEVICE_FUNC inline AffinePart affine() {
     return take_affine_part::run(m_matrix);
   }
 
-  /* \returns a read-only expression of the translation vector of the
+  /** \returns a read-only expression of the translation vector of the
    * transformation */
   EIGEN_DEVICE_FUNC inline ConstTranslationPart translation() const {
     return ConstTranslationPart(m_matrix, 0, Dim);
   }
-  /* \returns a writable expression of the translation vector of the
+  /** \returns a writable expression of the translation vector of the
    * transformation */
   EIGEN_DEVICE_FUNC inline TranslationPart translation() {
     return TranslationPart(m_matrix, 0, Dim);
   }
 
-  /* \returns an expression of the product between the transform \c *this and a
+  /** \returns an expression of the product between the transform \c *this and a
    * matrix expression \a other.
    *
    * The right-hand-side \a other can be either:
@@ -484,7 +484,7 @@ class Transform {
         *this, other.derived());
   }
 
-  /* \returns the product expression of a transformation matrix \a a times a
+  /** \returns the product expression of a transformation matrix \a a times a
    * transform \a b
    *
    * The left hand side \a other can be either:
@@ -502,7 +502,7 @@ class Transform {
                                                                  b);
   }
 
-  /* \returns The product expression of a transform \a a times a diagonal
+  /** \returns The product expression of a transform \a a times a diagonal
    * matrix \a b
    *
    * The rhs diagonal matrix is interpreted as an affine scaling transformation.
@@ -518,7 +518,7 @@ class Transform {
     return res;
   }
 
-  /* \returns The product expression of a diagonal matrix \a a times a
+  /** \returns The product expression of a diagonal matrix \a a times a
    * transform \a b
    *
    * The lhs diagonal matrix is interpreted as an affine scaling transformation.
@@ -543,7 +543,7 @@ class Transform {
     return *this = *this * other;
   }
 
-  /* Concatenates two transformations */
+  /** Concatenates two transformations */
   EIGEN_DEVICE_FUNC inline const Transform operator*(
       const Transform& other) const {
     return internal::transform_transform_product_impl<Transform,
@@ -573,7 +573,7 @@ class Transform {
   };
 
  public:
-  /* Concatenates two different transformations */
+  /** Concatenates two different transformations */
   template <int OtherMode, int OtherOptions>
   inline typename icc_11_workaround<OtherMode, OtherOptions>::ResultType
   operator*(
@@ -583,7 +583,7 @@ class Transform {
     return ProductType::run(*this, other);
   }
 #else
-  /* Concatenates two different transformations */
+  /** Concatenates two different transformations */
   template <int OtherMode, int OtherOptions>
   EIGEN_DEVICE_FUNC inline typename internal::transform_transform_product_impl<
       Transform, Transform<Scalar, Dim, OtherMode, OtherOptions> >::ResultType
@@ -595,10 +595,10 @@ class Transform {
   }
 #endif
 
-  /* \sa MatrixBase::setIdentity() */
+  /** \sa MatrixBase::setIdentity() */
   EIGEN_DEVICE_FUNC void setIdentity() { m_matrix.setIdentity(); }
 
-  /*
+  /**
    * \brief Returns an identity transformation.
    * \todo In the future this function should be returning a Transform
    * expression.
@@ -701,12 +701,12 @@ class Transform {
   inline Transform inverse(TransformTraits traits = (TransformTraits)
                                Mode) const;
 
-  /* \returns a const pointer to the column major internal matrix */
+  /** \returns a const pointer to the column major internal matrix */
   EIGEN_DEVICE_FUNC const Scalar* data() const { return m_matrix.data(); }
-  /* \returns a non-const pointer to the column major internal matrix */
+  /** \returns a non-const pointer to the column major internal matrix */
   EIGEN_DEVICE_FUNC Scalar* data() { return m_matrix.data(); }
 
-  /* \returns \c *this with scalar type casted to \a NewScalarType
+  /** \returns \c *this with scalar type casted to \a NewScalarType
    *
    * Note that if \a NewScalarType is equal to the current scalar type of \c
    * *this then this function smartly returns a const reference to \c *this.
@@ -719,7 +719,7 @@ class Transform {
         Transform, Transform<NewScalarType, Dim, Mode, Options> >::type(*this);
   }
 
-  /* Copy constructor with scalar type conversion */
+  /** Copy constructor with scalar type conversion */
   template <typename OtherScalarType>
   EIGEN_DEVICE_FUNC inline explicit Transform(
       const Transform<OtherScalarType, Dim, Mode, Options>& other) {
@@ -727,7 +727,7 @@ class Transform {
     m_matrix = other.matrix().template cast<Scalar>();
   }
 
-  /* \returns \c true if \c *this is approximately equal to \a other, within
+  /** \returns \c true if \c *this is approximately equal to \a other, within
    * the precision determined by \a prec.
    *
    * \sa MatrixBase::isApprox() */
@@ -737,13 +737,13 @@ class Transform {
     return m_matrix.isApprox(other.m_matrix, prec);
   }
 
-  /* Sets the last row to [0 ... 0 1]
+  /** Sets the last row to [0 ... 0 1]
    */
   EIGEN_DEVICE_FUNC void makeAffine() {
     internal::transform_make_affine<int(Mode)>::run(m_matrix);
   }
 
-  /* \internal
+  /** \internal
    * \returns the Dim x Dim linear part if the transformation is affine,
    *          and the HDim x Dim part for projective transformations.
    */
@@ -753,7 +753,7 @@ class Transform {
     return m_matrix.template block < int(Mode) == int(Projective) ? HDim : Dim,
            Dim > (0, 0);
   }
-  /* \internal
+  /** \internal
    * \returns the Dim x Dim linear part if the transformation is affine,
    *          and the HDim x Dim part for projective transformations.
    */
@@ -764,7 +764,7 @@ class Transform {
            Dim > (0, 0);
   }
 
-  /* \internal
+  /** \internal
    * \returns the translation part if the transformation is affine,
    *          and the last column for projective transformations.
    */
@@ -774,7 +774,7 @@ class Transform {
     return m_matrix.template block < int(Mode) == int(Projective) ? HDim : Dim,
            1 > (0, Dim);
   }
-  /* \internal
+  /** \internal
    * \returns the translation part if the transformation is affine,
    *          and the last column for projective transformations.
    */
@@ -798,48 +798,48 @@ class Transform {
 #endif
 };
 
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<float, 2, Isometry> Isometry2f;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<float, 3, Isometry> Isometry3f;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<double, 2, Isometry> Isometry2d;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<double, 3, Isometry> Isometry3d;
 
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<float, 2, Affine> Affine2f;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<float, 3, Affine> Affine3f;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<double, 2, Affine> Affine2d;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<double, 3, Affine> Affine3d;
 
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<float, 2, AffineCompact> AffineCompact2f;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<float, 3, AffineCompact> AffineCompact3f;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<double, 2, AffineCompact> AffineCompact2d;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<double, 3, AffineCompact> AffineCompact3d;
 
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<float, 2, Projective> Projective2f;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<float, 3, Projective> Projective3f;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<double, 2, Projective> Projective2d;
-/* \ingroup Geometry_Module */
+/** \ingroup Geometry_Module */
 typedef Transform<double, 3, Projective> Projective3d;
 
-/*
+/**
 *** Optional QT support ***
 */
 
 #ifdef EIGEN_QT_SUPPORT
-/* Initializes \c *this from a QMatrix assuming the dimension is 2.
+/** Initializes \c *this from a QMatrix assuming the dimension is 2.
  *
  * This function is available only if the token EIGEN_QT_SUPPORT is defined.
  */
@@ -849,7 +849,7 @@ Transform<Scalar, Dim, Mode, Options>::Transform(const QMatrix& other) {
   *this = other;
 }
 
-/* Set \c *this from a QMatrix assuming the dimension is 2.
+/** Set \c *this from a QMatrix assuming the dimension is 2.
  *
  * This function is available only if the token EIGEN_QT_SUPPORT is defined.
  */
@@ -866,7 +866,7 @@ Transform<Scalar, Dim, Mode, Options>::operator=(const QMatrix& other) {
   return *this;
 }
 
-/* \returns a QMatrix from \c *this assuming the dimension is 2.
+/** \returns a QMatrix from \c *this assuming the dimension is 2.
  *
  * \warning this conversion might loss data if \c *this is not affine
  *
@@ -881,7 +881,7 @@ QMatrix Transform<Scalar, Dim, Mode, Options>::toQMatrix(void) const {
                  m_matrix.coeff(0, 2), m_matrix.coeff(1, 2));
 }
 
-/* Initializes \c *this from a QTransform assuming the dimension is 2.
+/** Initializes \c *this from a QTransform assuming the dimension is 2.
  *
  * This function is available only if the token EIGEN_QT_SUPPORT is defined.
  */
@@ -891,7 +891,7 @@ Transform<Scalar, Dim, Mode, Options>::Transform(const QTransform& other) {
   *this = other;
 }
 
-/* Set \c *this from a QTransform assuming the dimension is 2.
+/** Set \c *this from a QTransform assuming the dimension is 2.
  *
  * This function is available only if the token EIGEN_QT_SUPPORT is defined.
  */
@@ -909,7 +909,7 @@ Transform<Scalar, Dim, Mode, Options>::operator=(const QTransform& other) {
   return *this;
 }
 
-/* \returns a QTransform from \c *this assuming the dimension is 2.
+/** \returns a QTransform from \c *this assuming the dimension is 2.
  *
  * This function is available only if the token EIGEN_QT_SUPPORT is defined.
  */
@@ -928,11 +928,11 @@ QTransform Transform<Scalar, Dim, Mode, Options>::toQTransform(void) const {
 }
 #endif
 
-/*
+/**
 *** Procedural API ***
 */
 
-/* Applies on the right the non uniform scale transformation represented
+/** Applies on the right the non uniform scale transformation represented
  * by the vector \a other to \c *this and returns a reference to \c *this.
  * \sa prescale()
  */
@@ -948,7 +948,7 @@ Transform<Scalar, Dim, Mode, Options>::scale(
   return *this;
 }
 
-/* Applies on the right a uniform scale of a factor \a c to \c *this
+/** Applies on the right a uniform scale of a factor \a c to \c *this
  * and returns a reference to \c *this.
  * \sa prescale(Scalar)
  */
@@ -961,7 +961,7 @@ Transform<Scalar, Dim, Mode, Options>::scale(const Scalar& s) {
   return *this;
 }
 
-/* Applies on the left the non uniform scale transformation represented
+/** Applies on the left the non uniform scale transformation represented
  * by the vector \a other to \c *this and returns a reference to \c *this.
  * \sa scale()
  */
@@ -977,7 +977,7 @@ Transform<Scalar, Dim, Mode, Options>::prescale(
   return *this;
 }
 
-/* Applies on the left a uniform scale of a factor \a c to \c *this
+/** Applies on the left a uniform scale of a factor \a c to \c *this
  * and returns a reference to \c *this.
  * \sa scale(Scalar)
  */
@@ -990,7 +990,7 @@ Transform<Scalar, Dim, Mode, Options>::prescale(const Scalar& s) {
   return *this;
 }
 
-/* Applies on the right the translation matrix represented by the vector \a
+/** Applies on the right the translation matrix represented by the vector \a
  * other to \c *this and returns a reference to \c *this. \sa pretranslate()
  */
 template <typename Scalar, int Dim, int Mode, int Options>
@@ -1003,7 +1003,7 @@ Transform<Scalar, Dim, Mode, Options>::translate(
   return *this;
 }
 
-/* Applies on the left the translation matrix represented by the vector \a
+/** Applies on the left the translation matrix represented by the vector \a
  * other to \c *this and returns a reference to \c *this. \sa translate()
  */
 template <typename Scalar, int Dim, int Mode, int Options>
@@ -1019,7 +1019,7 @@ Transform<Scalar, Dim, Mode, Options>::pretranslate(
   return *this;
 }
 
-/* Applies on the right the rotation represented by the rotation \a rotation
+/** Applies on the right the rotation represented by the rotation \a rotation
  * to \c *this and returns a reference to \c *this.
  *
  * The template parameter \a RotationType is the type of the rotation which
@@ -1045,7 +1045,7 @@ Transform<Scalar, Dim, Mode, Options>::rotate(const RotationType& rotation) {
   return *this;
 }
 
-/* Applies on the left the rotation represented by the rotation \a rotation
+/** Applies on the left the rotation represented by the rotation \a rotation
  * to \c *this and returns a reference to \c *this.
  *
  * See rotate() for further details.
@@ -1062,7 +1062,7 @@ Transform<Scalar, Dim, Mode, Options>::prerotate(const RotationType& rotation) {
   return *this;
 }
 
-/* Applies on the right the shear transformation represented
+/** Applies on the right the shear transformation represented
  * by the vector \a other to \c *this and returns a reference to \c *this.
  * \warning 2D only.
  * \sa preshear()
@@ -1079,7 +1079,7 @@ Transform<Scalar, Dim, Mode, Options>::shear(const Scalar& sx,
   return *this;
 }
 
-/* Applies on the left the shear transformation represented
+/** Applies on the left the shear transformation represented
  * by the vector \a other to \c *this and returns a reference to \c *this.
  * \warning 2D only.
  * \sa shear()
@@ -1096,7 +1096,7 @@ Transform<Scalar, Dim, Mode, Options>::preshear(const Scalar& sx,
   return *this;
 }
 
-/*
+/**
 *** Scaling, Translation and Rotation compatibility ***
 */
 
@@ -1149,7 +1149,7 @@ Transform<Scalar, Dim, Mode, Options>::operator*(
   return res;
 }
 
-/*
+/**
 *** Special functions ***
 */
 
@@ -1174,7 +1174,7 @@ struct transform_rotation_impl<Isometry> {
   }
 };
 }  // namespace internal
-/* \returns the rotation part of the transformation
+/** \returns the rotation part of the transformation
  *
  * If Mode==Isometry, then this method is an alias for linear(),
  * otherwise it calls computeRotationScaling() to extract the rotation
@@ -1191,7 +1191,7 @@ EIGEN_DEVICE_FUNC
   return internal::transform_rotation_impl<Mode>::run(*this);
 }
 
-/* decomposes the linear part of the transformation as a product rotation x
+/** decomposes the linear part of the transformation as a product rotation x
  * scaling, the scaling being not necessarily positive.
  *
  * If either pointer is zero, the corresponding computation is skipped.
@@ -1224,7 +1224,7 @@ Transform<Scalar, Dim, Mode, Options>::computeRotationScaling(
   }
 }
 
-/* decomposes the linear part of the transformation as a product scaling x
+/** decomposes the linear part of the transformation as a product scaling x
  * rotation, the scaling being not necessarily positive.
  *
  * If either pointer is zero, the corresponding computation is skipped.
@@ -1257,7 +1257,7 @@ Transform<Scalar, Dim, Mode, Options>::computeScalingRotation(
   }
 }
 
-/* Convenient method to set \c *this from a position, orientation and scale
+/** Convenient method to set \c *this from a position, orientation and scale
  * of a 3D object.
  */
 template <typename Scalar, int Dim, int Mode, int Options>
@@ -1309,7 +1309,7 @@ struct projective_transform_inverse<TransformType, Projective> {
 
 }  // end namespace internal
 
-/*
+/**
  *
  * \returns the inverse transformation according to some given knowledge
  * on \c *this.
@@ -1356,7 +1356,7 @@ Transform<Scalar, Dim, Mode, Options>::inverse(TransformTraits hint) const {
 
 namespace internal {
 
-/*
+/**
 *** Specializations of take affine part            ***
 */
 
@@ -1382,7 +1382,7 @@ struct transform_take_affine_part<
   static inline const MatrixType& run(const MatrixType& m) { return m; }
 };
 
-/*
+/**
 *** Specializations of construct from matrix       ***
 */
 
@@ -1429,7 +1429,7 @@ struct transform_construct_from_matrix<Other, AffineCompact, Options, Dim, HDim,
   }
 };
 
-/*
+/**
 ***   Specializations of operator* with rhs EigenBase   ***
 */
 
@@ -1537,7 +1537,7 @@ struct transform_right_product_impl<TransformType, MatrixType, 2,
   }
 };
 
-/*
+/**
 ***   Specializations of operator* with lhs EigenBase   ***
 */
 
@@ -1618,7 +1618,7 @@ struct transform_left_product_impl<Other, Mode, Options, Dim, HDim, Dim, Dim> {
   }
 };
 
-/*
+/**
 *** Specializations of operator* with another Transform ***
 */
 

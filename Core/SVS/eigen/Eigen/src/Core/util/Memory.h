@@ -12,7 +12,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
 *** Platform checks for aligned malloc functions                           ***
 */
 
@@ -93,13 +93,13 @@ inline void throw_std_bad_alloc() {
 #endif
 }
 
-/*
+/**
 *** Implementation of handmade aligned functions                           ***
 */
 
-/* ----- Hand made implementations of aligned malloc/free and realloc ----- */
+/** ----- Hand made implementations of aligned malloc/free and realloc ----- */
 
-/* \internal Like malloc, but the returned pointer is guaranteed to be 16-byte
+/** \internal Like malloc, but the returned pointer is guaranteed to be 16-byte
  * aligned. Fast, but wastes 16 additional bytes of memory. Does not throw any
  * exception.
  */
@@ -121,7 +121,7 @@ EIGEN_DEVICE_FUNC inline void* handmade_aligned_malloc(
   return aligned;
 }
 
-/* \internal Frees memory allocated with handmade_aligned_malloc */
+/** \internal Frees memory allocated with handmade_aligned_malloc */
 EIGEN_DEVICE_FUNC inline void handmade_aligned_free(void* ptr) {
   if (ptr) {
     EIGEN_USING_STD(free)
@@ -129,7 +129,7 @@ EIGEN_DEVICE_FUNC inline void handmade_aligned_free(void* ptr) {
   }
 }
 
-/* \internal
+/** \internal
  * \brief Reallocates aligned memory.
  * Since we know that our handmade version is based on std::malloc
  * we can use std::realloc to implement efficient reallocation.
@@ -154,7 +154,7 @@ inline void* handmade_aligned_realloc(void* ptr, std::size_t size,
   return aligned;
 }
 
-/*
+/**
 *** Implementation of portable aligned versions of malloc/free/realloc     ***
 */
 
@@ -185,7 +185,7 @@ EIGEN_DEVICE_FUNC inline void check_that_malloc_is_allowed() {
 EIGEN_DEVICE_FUNC inline void check_that_malloc_is_allowed() {}
 #endif
 
-/* \internal Allocates \a size bytes. The returned pointer is guaranteed to
+/** \internal Allocates \a size bytes. The returned pointer is guaranteed to
  * have 16 or 32 bytes alignment depending on the requirements. On allocation
  * error, the returned pointer is null, and std::bad_alloc is thrown.
  */
@@ -213,7 +213,7 @@ EIGEN_DEVICE_FUNC inline void* aligned_malloc(std::size_t size) {
   return result;
 }
 
-/* \internal Frees memory allocated with aligned_malloc. */
+/** \internal Frees memory allocated with aligned_malloc. */
 EIGEN_DEVICE_FUNC inline void aligned_free(void* ptr) {
 #if (EIGEN_DEFAULT_ALIGN_BYTES == 0) || EIGEN_MALLOC_ALREADY_ALIGNED
 
@@ -225,7 +225,7 @@ EIGEN_DEVICE_FUNC inline void aligned_free(void* ptr) {
 #endif
 }
 
-/*
+/**
  * \internal
  * \brief Reallocates an aligned block of memory.
  * \throws std::bad_alloc on allocation failure
@@ -246,11 +246,11 @@ inline void* aligned_realloc(void* ptr, std::size_t new_size,
   return result;
 }
 
-/*
+/**
 *** Implementation of conditionally aligned functions                      ***
 */
 
-/* \internal Allocates \a size bytes. If Align is true, then the returned ptr
+/** \internal Allocates \a size bytes. If Align is true, then the returned ptr
  * is 16-byte-aligned. On allocation error, the returned pointer is null, and a
  * std::bad_alloc is thrown.
  */
@@ -271,7 +271,7 @@ EIGEN_DEVICE_FUNC inline void* conditional_aligned_malloc<false>(
   return result;
 }
 
-/* \internal Frees memory allocated with conditional_aligned_malloc */
+/** \internal Frees memory allocated with conditional_aligned_malloc */
 template <bool Align>
 EIGEN_DEVICE_FUNC inline void conditional_aligned_free(void* ptr) {
   aligned_free(ptr);
@@ -295,11 +295,11 @@ inline void* conditional_aligned_realloc<false>(void* ptr, std::size_t new_size,
   return std::realloc(ptr, new_size);
 }
 
-/*
+/**
 *** Construction/destruction of array elements                             ***
 */
 
-/* \internal Destructs the elements of an array.
+/** \internal Destructs the elements of an array.
  * The \a size parameters tells on how many objects to call the destructor of T.
  */
 template <typename T>
@@ -310,7 +310,7 @@ EIGEN_DEVICE_FUNC inline void destruct_elements_of_array(T* ptr,
     while (size) ptr[--size].~T();
 }
 
-/* \internal Constructs the elements of an array.
+/** \internal Constructs the elements of an array.
  * The \a size parameter tells on how many objects to call the constructor of T.
  */
 template <typename T>
@@ -328,7 +328,7 @@ EIGEN_DEVICE_FUNC inline T* construct_elements_of_array(T* ptr,
   return NULL;
 }
 
-/*
+/**
 *** Implementation of aligned new/delete-like functions                    ***
 */
 
@@ -338,7 +338,7 @@ EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE void check_size_for_overflow(
   if (size > std::size_t(-1) / sizeof(T)) throw_std_bad_alloc();
 }
 
-/* \internal Allocates \a size objects of type T. The returned pointer is
+/** \internal Allocates \a size objects of type T. The returned pointer is
  * guaranteed to have 16 bytes alignment. On allocation error, the returned
  * pointer is undefined, but a std::bad_alloc is thrown. The default constructor
  * of T is called.
@@ -368,7 +368,7 @@ EIGEN_DEVICE_FUNC inline T* conditional_aligned_new(std::size_t size) {
   return result;
 }
 
-/* \internal Deletes objects constructed with aligned_new
+/** \internal Deletes objects constructed with aligned_new
  * The \a size parameters tells on how many objects to call the destructor of T.
  */
 template <typename T>
@@ -377,7 +377,7 @@ EIGEN_DEVICE_FUNC inline void aligned_delete(T* ptr, std::size_t size) {
   Eigen::internal::aligned_free(ptr);
 }
 
-/* \internal Deletes objects constructed with conditional_aligned_new
+/** \internal Deletes objects constructed with conditional_aligned_new
  * The \a size parameters tells on how many objects to call the destructor of T.
  */
 template <typename T, bool Align>
@@ -455,9 +455,9 @@ EIGEN_DEVICE_FUNC inline void conditional_aligned_delete_auto(
   conditional_aligned_free<Align>(ptr);
 }
 
-/*/
+/**/
 
-/* \internal Returns the index of the first element of the array that is well
+/** \internal Returns the index of the first element of the array that is well
  * aligned with respect to the requested \a Alignment.
  *
  * \tparam Alignment requested alignment in Bytes.
@@ -503,7 +503,7 @@ EIGEN_DEVICE_FUNC inline Index first_aligned(const Scalar* array, Index size) {
   }
 }
 
-/* \internal Returns the index of the first element of the array that is well
+/** \internal Returns the index of the first element of the array that is well
  * aligned with respect the largest packet requirement. \sa
  * first_aligned(Scalar*,Index) and first_default_aligned(DenseBase<Derived>) */
 template <typename Scalar, typename Index>
@@ -514,7 +514,7 @@ EIGEN_DEVICE_FUNC inline Index first_default_aligned(const Scalar* array,
                                                                       size);
 }
 
-/* \internal Returns the smallest integer multiple of \a base and greater or
+/** \internal Returns the smallest integer multiple of \a base and greater or
  * equal to \a size
  */
 template <typename Index>
@@ -600,7 +600,7 @@ EIGEN_DEVICE_FUNC T* smart_move(T* start, T* end, T* target) {
 }
 #endif
 
-/*
+/**
 *** Implementation of runtime stack allocation (falling back to malloc)    ***
 */
 
@@ -630,7 +630,7 @@ EIGEN_DEVICE_FUNC T* smart_move(T* start, T* end, T* target) {
 template <typename T>
 class aligned_stack_memory_handler : noncopyable {
  public:
-  /* Creates a stack_memory_handler responsible for the buffer \a ptr of size \a
+  /** Creates a stack_memory_handler responsible for the buffer \a ptr of size \a
    *size. Note that \a ptr can be 0 regardless of the other parameters. This
    *constructor takes care of constructing/initializing the elements of the
    *buffer if required by the scalar type T (see
@@ -731,7 +731,7 @@ void swap(scoped_array<T>& a, scoped_array<T>& b) {
 
 }  // end namespace internal
 
-/* \internal
+/** \internal
  *
  * The macro
  * ei_declare_aligned_stack_constructed_variable(TYPE,NAME,SIZE,BUFFER)
@@ -821,7 +821,7 @@ void swap(scoped_array<T>& a, scoped_array<T>& b) {
 
 #endif
 
-/*
+/**
 *** Implementation of EIGEN_MAKE_ALIGNED_OPERATOR_NEW [_IF]                ***
 */
 
@@ -864,16 +864,16 @@ void swap(scoped_array<T>& a, scoped_array<T>& b) {
     Eigen::internal::conditional_aligned_free<NeedsToAlign>(ptr);            \
   }                                                                          \
   EIGEN_DEVICE_FUNC                                                          \
-  void operator delete(void* ptr, std::size_t /* sz */) EIGEN_NO_THROW {     \
+  void operator delete(void* ptr, std::size_t /** sz */) EIGEN_NO_THROW {     \
     Eigen::internal::conditional_aligned_free<NeedsToAlign>(ptr);            \
   }                                                                          \
   EIGEN_DEVICE_FUNC                                                          \
-  void operator delete[](void* ptr, std::size_t /* sz */) EIGEN_NO_THROW {   \
+  void operator delete[](void* ptr, std::size_t /** sz */) EIGEN_NO_THROW {   \
     Eigen::internal::conditional_aligned_free<NeedsToAlign>(ptr);            \
   }                                                                          \
-  /* in-place new and delete. since (at least afaik) there is no actual   */ \
-  /* memory allocated we can safely let the default implementation handle */ \
-  /* this particular case. */                                                \
+  /** in-place new and delete. since (at least afaik) there is no actual   */ \
+  /** memory allocated we can safely let the default implementation handle */ \
+  /** this particular case. */                                                \
   EIGEN_DEVICE_FUNC                                                          \
   static void* operator new(std::size_t size, void* ptr) {                   \
     return ::operator new(size, ptr);                                        \
@@ -890,7 +890,7 @@ void swap(scoped_array<T>& a, scoped_array<T>& b) {
   void operator delete[](void* memory, void* ptr) EIGEN_NO_THROW {           \
     return ::operator delete[](memory, ptr);                                 \
   }                                                                          \
-  /* nothrow-new (returns zero instead of std::bad_alloc) */                 \
+  /** nothrow-new (returns zero instead of std::bad_alloc) */                 \
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW_NOTHROW(NeedsToAlign)                      \
   EIGEN_DEVICE_FUNC                                                          \
   void operator delete(void* ptr, const std::nothrow_t&) EIGEN_NO_THROW {    \
@@ -915,9 +915,9 @@ void swap(scoped_array<T>& a, scoped_array<T>& b) {
 
 #endif
 
-/*/
+/**/
 
-/* \class aligned_allocator
+/** \class aligned_allocator
  * \ingroup Core_Module
  *
  * \brief STL compatible allocator to use with types requiring a non standrad
@@ -979,12 +979,12 @@ class aligned_allocator : public std::allocator<T> {
   }
 #endif
 
-  pointer allocate(size_type num, const void* /*hint*/ = 0) {
+  pointer allocate(size_type num, const void* /**hint*/ = 0) {
     internal::check_size_for_overflow<T>(num);
     return static_cast<pointer>(internal::aligned_malloc(num * sizeof(T)));
   }
 
-  void deallocate(pointer p, size_type /*num*/) { internal::aligned_free(p); }
+  void deallocate(pointer p, size_type /**num*/) { internal::aligned_free(p); }
 };
 
 //---------- Cache sizes ----------
@@ -1316,7 +1316,7 @@ inline void queryCacheSizes_amd(int& l1, int& l2, int& l3) {
 }
 #endif
 
-/* \internal
+/** \internal
  * Queries and returns the cache sizes in Bytes of the L1, L2, and L3 data
  * caches respectively */
 inline void queryCacheSizes(int& l1, int& l2, int& l3) {
@@ -1355,7 +1355,7 @@ inline void queryCacheSizes(int& l1, int& l2, int& l3) {
 #endif
 }
 
-/* \internal
+/** \internal
  * \returns the size in Bytes of the L1 data cache */
 inline int queryL1CacheSize() {
   int l1(-1), l2, l3;
@@ -1363,7 +1363,7 @@ inline int queryL1CacheSize() {
   return l1;
 }
 
-/* \internal
+/** \internal
  * \returns the size in Bytes of the L2 or L3 cache if this later is present */
 inline int queryTopLevelCacheSize() {
   int l1, l2(-1), l3(-1);

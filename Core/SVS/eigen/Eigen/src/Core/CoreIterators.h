@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* This file contains the respective InnerIterator definition of the expressions
+/** This file contains the respective InnerIterator definition of the expressions
  * defined in Eigen/Core
  */
 
@@ -23,7 +23,7 @@ class inner_iterator_selector;
 
 }
 
-/* \class InnerIterator
+/** \class InnerIterator
  * \brief An InnerIterator allows to loop over the element of any matrix
  * expression.
  *
@@ -42,13 +42,13 @@ class InnerIterator {
   typedef typename internal::traits<XprType>::Scalar Scalar;
 
  public:
-  /* Construct an iterator over the \a outerId -th row or column of \a xpr */
+  /** Construct an iterator over the \a outerId -th row or column of \a xpr */
   InnerIterator(const XprType &xpr, const Index &outerId)
       : m_eval(xpr), m_iter(m_eval, outerId, xpr.innerSize()) {}
 
   /// \returns the value of the current coefficient.
   EIGEN_STRONG_INLINE Scalar value() const { return m_iter.value(); }
-  /* Increment the iterator \c *this to the next non-zero coefficient.
+  /** Increment the iterator \c *this to the next non-zero coefficient.
    * Explicit zeros are not skipped over. To skip explicit zeros, see class
    * SparseView
    */
@@ -141,7 +141,7 @@ class inner_iterator_selector<XprType, IteratorBased>
  public:
   EIGEN_STRONG_INLINE inner_iterator_selector(const EvaluatorType &eval,
                                               const Index &outerId,
-                                              const Index & /*innerSize*/)
+                                              const Index & /**innerSize*/)
       : Base(eval, outerId) {}
 };
 

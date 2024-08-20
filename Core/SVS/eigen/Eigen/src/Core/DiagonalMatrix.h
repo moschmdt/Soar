@@ -122,7 +122,7 @@ class DiagonalBase : public EigenBase<Derived> {
 
 #endif
 
-/* \class DiagonalMatrix
+/** \class DiagonalMatrix
  * \ingroup Core_Module
  *
  * \brief Represents a diagonal matrix with its storage
@@ -165,32 +165,32 @@ class DiagonalMatrix
   DiagonalVectorType m_diagonal;
 
  public:
-  /* const version of diagonal(). */
+  /** const version of diagonal(). */
   EIGEN_DEVICE_FUNC
   inline const DiagonalVectorType& diagonal() const { return m_diagonal; }
-  /* \returns a reference to the stored vector of diagonal coefficients. */
+  /** \returns a reference to the stored vector of diagonal coefficients. */
   EIGEN_DEVICE_FUNC
   inline DiagonalVectorType& diagonal() { return m_diagonal; }
 
-  /* Default constructor without initialization */
+  /** Default constructor without initialization */
   EIGEN_DEVICE_FUNC
   inline DiagonalMatrix() {}
 
-  /* Constructs a diagonal matrix with given dimension  */
+  /** Constructs a diagonal matrix with given dimension  */
   EIGEN_DEVICE_FUNC
   explicit inline DiagonalMatrix(Index dim) : m_diagonal(dim) {}
 
-  /* 2D constructor. */
+  /** 2D constructor. */
   EIGEN_DEVICE_FUNC
   inline DiagonalMatrix(const Scalar& x, const Scalar& y) : m_diagonal(x, y) {}
 
-  /* 3D constructor. */
+  /** 3D constructor. */
   EIGEN_DEVICE_FUNC
   inline DiagonalMatrix(const Scalar& x, const Scalar& y, const Scalar& z)
       : m_diagonal(x, y, z) {}
 
 #if EIGEN_HAS_CXX11
-  /* \brief Construct a diagonal matrix with fixed size from an arbitrary
+  /** \brief Construct a diagonal matrix with fixed size from an arbitrary
    * number of coefficients. \cpp11
    *
    * There exists C++98 anologue constructors for fixed-size diagonal matrices
@@ -209,7 +209,7 @@ class DiagonalMatrix
                                                        const ArgTypes&... args)
       : m_diagonal(a0, a1, a2, args...) {}
 
-  /* \brief Constructs a DiagonalMatrix and initializes it by elements given by
+  /** \brief Constructs a DiagonalMatrix and initializes it by elements given by
    * an initializer list of initializer lists \cpp11
    */
   EIGEN_DEVICE_FUNC
@@ -218,26 +218,26 @@ class DiagonalMatrix
       : m_diagonal(list) {}
 #endif  // EIGEN_HAS_CXX11
 
-  /* Copy constructor. */
+  /** Copy constructor. */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC inline DiagonalMatrix(
       const DiagonalBase<OtherDerived>& other)
       : m_diagonal(other.diagonal()) {}
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* copy constructor. prevent a default copy constructor from hiding the other
+  /** copy constructor. prevent a default copy constructor from hiding the other
    * templated constructor */
   inline DiagonalMatrix(const DiagonalMatrix& other)
       : m_diagonal(other.diagonal()) {}
 #endif
 
-  /* generic constructor from expression of the diagonal coefficients */
+  /** generic constructor from expression of the diagonal coefficients */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC explicit inline DiagonalMatrix(
       const MatrixBase<OtherDerived>& other)
       : m_diagonal(other) {}
 
-  /* Copy operator. */
+  /** Copy operator. */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC DiagonalMatrix& operator=(
       const DiagonalBase<OtherDerived>& other) {
@@ -246,7 +246,7 @@ class DiagonalMatrix
   }
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* This is a special case of the templated operator=. Its purpose is to
+  /** This is a special case of the templated operator=. Its purpose is to
    * prevent a default operator= from hiding the templated operator=.
    */
   EIGEN_DEVICE_FUNC
@@ -256,24 +256,24 @@ class DiagonalMatrix
   }
 #endif
 
-  /* Resizes to given size. */
+  /** Resizes to given size. */
   EIGEN_DEVICE_FUNC
   inline void resize(Index size) { m_diagonal.resize(size); }
-  /* Sets all coefficients to zero. */
+  /** Sets all coefficients to zero. */
   EIGEN_DEVICE_FUNC
   inline void setZero() { m_diagonal.setZero(); }
-  /* Resizes and sets all coefficients to zero. */
+  /** Resizes and sets all coefficients to zero. */
   EIGEN_DEVICE_FUNC
   inline void setZero(Index size) { m_diagonal.setZero(size); }
-  /* Sets this matrix to be the identity matrix of the current size. */
+  /** Sets this matrix to be the identity matrix of the current size. */
   EIGEN_DEVICE_FUNC
   inline void setIdentity() { m_diagonal.setOnes(); }
-  /* Sets this matrix to be the identity matrix of the given size. */
+  /** Sets this matrix to be the identity matrix of the given size. */
   EIGEN_DEVICE_FUNC
   inline void setIdentity(Index size) { m_diagonal.setOnes(size); }
 };
 
-/* \class DiagonalWrapper
+/** \class DiagonalWrapper
  * \ingroup Core_Module
  *
  * \brief Expression of a diagonal matrix
@@ -317,12 +317,12 @@ class DiagonalWrapper
   typedef DiagonalWrapper Nested;
 #endif
 
-  /* Constructor from expression of diagonal coefficients to wrap. */
+  /** Constructor from expression of diagonal coefficients to wrap. */
   EIGEN_DEVICE_FUNC
   explicit inline DiagonalWrapper(DiagonalVectorType& a_diagonal)
       : m_diagonal(a_diagonal) {}
 
-  /* \returns a const reference to the wrapped expression of diagonal
+  /** \returns a const reference to the wrapped expression of diagonal
    * coefficients. */
   EIGEN_DEVICE_FUNC
   const DiagonalVectorType& diagonal() const { return m_diagonal; }
@@ -331,7 +331,7 @@ class DiagonalWrapper
   typename DiagonalVectorType::Nested m_diagonal;
 };
 
-/* \returns a pseudo-expression of a diagonal matrix with *this as vector of
+/** \returns a pseudo-expression of a diagonal matrix with *this as vector of
  *diagonal coefficients
  *
  * \only_for_vectors
@@ -347,7 +347,7 @@ MatrixBase<Derived>::asDiagonal() const {
   return DiagonalWrapper<const Derived>(derived());
 }
 
-/* \returns true if *this is approximately equal to a diagonal matrix,
+/** \returns true if *this is approximately equal to a diagonal matrix,
  *          within the precision given by \a prec.
  *
  * Example: \include MatrixBase_isDiagonal.cpp
@@ -393,7 +393,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, Diagonal2Dense> {
   static void run(
       DstXprType& dst, const SrcXprType& src,
       const internal::assign_op<typename DstXprType::Scalar,
-                                typename SrcXprType::Scalar>& /*func*/) {
+                                typename SrcXprType::Scalar>& /**func*/) {
     Index dstRows = src.rows();
     Index dstCols = src.cols();
     if ((dst.rows() != dstRows) || (dst.cols() != dstCols))
@@ -406,14 +406,14 @@ struct Assignment<DstXprType, SrcXprType, Functor, Diagonal2Dense> {
   static void run(
       DstXprType& dst, const SrcXprType& src,
       const internal::add_assign_op<typename DstXprType::Scalar,
-                                    typename SrcXprType::Scalar>& /*func*/) {
+                                    typename SrcXprType::Scalar>& /**func*/) {
     dst.diagonal() += src.diagonal();
   }
 
   static void run(
       DstXprType& dst, const SrcXprType& src,
       const internal::sub_assign_op<typename DstXprType::Scalar,
-                                    typename SrcXprType::Scalar>& /*func*/) {
+                                    typename SrcXprType::Scalar>& /**func*/) {
     dst.diagonal() -= src.diagonal();
   }
 };

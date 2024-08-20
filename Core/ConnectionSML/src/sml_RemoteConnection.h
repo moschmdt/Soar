@@ -44,25 +44,25 @@ class RemoteConnection : public Connection {
   // the flag means less breaking of existing code.
   bool m_SharedFileSystem;
 
-  /* We need to cache the responses to calls */
+  /** We need to cache the responses to calls */
   soarxml::ElementXML* m_pLastResponse;
 
-  /* A list of messages we've received that have "ack" fields but have yet to
+  /** A list of messages we've received that have "ack" fields but have yet to
    * match up to the commands which triggered them */
   MessageList m_ReceivedMessageList;
 
   enum { kMaxListSize = 10 };
 
-  /* Ensures only one thread accesses the response list at a time */
+  /** Ensures only one thread accesses the response list at a time */
   soar_thread::Mutex m_ListMutex;
 
-  /* Adds the message to the queue, taking ownership of it at the same time */
+  /** Adds the message to the queue, taking ownership of it at the same time */
   void AddResponseToList(soarxml::ElementXML* pResponse);
   soarxml::ElementXML* IsResponseInList(char const* pID);
 
   bool DoesResponseMatch(soarxml::ElementXML* pResponse, char const* pID);
 
-  /* The timeout for receiving messages is secondsWait + millisecondsWait,
+  /** The timeout for receiving messages is secondsWait + millisecondsWait,
    * where millisecondsWait < 1000 */
   bool ReceiveMessages(bool allMessages, int secondsWait, int millisecondsWait);
 

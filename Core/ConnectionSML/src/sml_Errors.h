@@ -43,7 +43,7 @@ class Error {
     kOutputError,
   };
 
-  /* Returns a description of the error which can be shown to a user */
+  /** Returns a description of the error which can be shown to a user */
   static char const* GetErrorDescription(::ErrorCode code) {
     switch (code) {
       case kNoError:

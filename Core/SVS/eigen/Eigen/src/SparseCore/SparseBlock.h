@@ -95,7 +95,7 @@ class BlockImpl<XprType, BlockRows, BlockCols, true, Sparse>
   }
 };
 
-/*
+/**
  * specialization for SparseMatrix
  */
 
@@ -383,7 +383,7 @@ class BlockImpl<const SparseMatrix<_Scalar, _Options, _StorageIndex>, BlockRows,
 
 //----------
 
-/* Generic implementation of sparse Block expression.
+/** Generic implementation of sparse Block expression.
  * Real-only.
  */
 template <typename XprType, int BlockRows, int BlockCols, bool InnerPanel>
@@ -402,7 +402,7 @@ class BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Sparse>
   typedef typename internal::remove_all<typename XprType::Nested>::type
       _MatrixTypeNested;
 
-  /* Column or Row constructor
+  /** Column or Row constructor
    */
   inline BlockImpl(XprType& xpr, Index i)
       : m_matrix(xpr),
@@ -415,7 +415,7 @@ class BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Sparse>
         m_blockRows(BlockRows == 1 ? 1 : xpr.rows()),
         m_blockCols(BlockCols == 1 ? 1 : xpr.cols()) {}
 
-  /* Dynamic-size constructor
+  /** Dynamic-size constructor
    */
   inline BlockImpl(XprType& xpr, Index startRow, Index startCol,
                    Index blockRows, Index blockCols)

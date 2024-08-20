@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \class ArrayWrapper
+/** \class ArrayWrapper
  * \ingroup Core_Module
  *
  * \brief Expression of a mathematical vector or matrix as an array object
@@ -102,11 +102,11 @@ class ArrayWrapper : public ArrayBase<ArrayWrapper<ExpressionType> > {
     return m_expression;
   }
 
-  /* Forwards the resizing request to the nested expression
+  /** Forwards the resizing request to the nested expression
    * \sa DenseBase::resize(Index)  */
   EIGEN_DEVICE_FUNC
   void resize(Index newSize) { m_expression.resize(newSize); }
-  /* Forwards the resizing request to the nested expression
+  /** Forwards the resizing request to the nested expression
    * \sa DenseBase::resize(Index,Index)*/
   EIGEN_DEVICE_FUNC
   void resize(Index rows, Index cols) { m_expression.resize(rows, cols); }
@@ -115,7 +115,7 @@ class ArrayWrapper : public ArrayBase<ArrayWrapper<ExpressionType> > {
   NestedExpressionType m_expression;
 };
 
-/* \class MatrixWrapper
+/** \class MatrixWrapper
  * \ingroup Core_Module
  *
  * \brief Expression of an array as a mathematical vector or matrix
@@ -200,11 +200,11 @@ class MatrixWrapper : public MatrixBase<MatrixWrapper<ExpressionType> > {
     return m_expression;
   }
 
-  /* Forwards the resizing request to the nested expression
+  /** Forwards the resizing request to the nested expression
    * \sa DenseBase::resize(Index)  */
   EIGEN_DEVICE_FUNC
   void resize(Index newSize) { m_expression.resize(newSize); }
-  /* Forwards the resizing request to the nested expression
+  /** Forwards the resizing request to the nested expression
    * \sa DenseBase::resize(Index,Index)*/
   EIGEN_DEVICE_FUNC
   void resize(Index rows, Index cols) { m_expression.resize(rows, cols); }

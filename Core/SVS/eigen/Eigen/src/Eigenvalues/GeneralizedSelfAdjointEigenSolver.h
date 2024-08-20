@@ -15,7 +15,7 @@
 
 namespace Eigen {
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class GeneralizedSelfAdjointEigenSolver
@@ -53,7 +53,7 @@ class GeneralizedSelfAdjointEigenSolver
  public:
   typedef _MatrixType MatrixType;
 
-  /* \brief Default constructor for fixed-size matrices.
+  /** \brief Default constructor for fixed-size matrices.
    *
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via compute(). This constructor
@@ -62,7 +62,7 @@ class GeneralizedSelfAdjointEigenSolver
    */
   GeneralizedSelfAdjointEigenSolver() : Base() {}
 
-  /* \brief Constructor, pre-allocates memory for dynamic-size matrices.
+  /** \brief Constructor, pre-allocates memory for dynamic-size matrices.
    *
    * \param [in]  size  Positive integer, size of the matrix whose
    * eigenvalues and eigenvectors will be computed.
@@ -76,7 +76,7 @@ class GeneralizedSelfAdjointEigenSolver
    */
   explicit GeneralizedSelfAdjointEigenSolver(Index size) : Base(size) {}
 
-  /* \brief Constructor; computes generalized eigendecomposition of given
+  /** \brief Constructor; computes generalized eigendecomposition of given
    * matrix pencil.
    *
    * \param[in]  matA  Selfadjoint matrix in matrix pencil.
@@ -112,7 +112,7 @@ class GeneralizedSelfAdjointEigenSolver
     compute(matA, matB, options);
   }
 
-  /* \brief Computes generalized eigendecomposition of given matrix pencil.
+  /** \brief Computes generalized eigendecomposition of given matrix pencil.
    *
    * \param[in]  matA  Selfadjoint matrix in matrix pencil.
    *                   Only the lower triangular part of the matrix is

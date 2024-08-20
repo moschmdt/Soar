@@ -31,7 +31,7 @@ struct functor_traits<scalar_random_op<Scalar> > {
 
 }  // end namespace internal
 
-/* \returns a random matrix expression
+/** \returns a random matrix expression
  *
  * Numbers are uniformly spread through their whole definition range for integer
  * types, and in the [-1:1] range for floating point scalar types.
@@ -65,7 +65,7 @@ DenseBase<Derived>::Random(Index rows, Index cols) {
   return NullaryExpr(rows, cols, internal::scalar_random_op<Scalar>());
 }
 
-/* \returns a random vector expression
+/** \returns a random vector expression
  *
  * Numbers are uniformly spread through their whole definition range for integer
  * types, and in the [-1:1] range for floating point scalar types.
@@ -97,7 +97,7 @@ DenseBase<Derived>::Random(Index size) {
   return NullaryExpr(size, internal::scalar_random_op<Scalar>());
 }
 
-/* \returns a fixed-size random matrix or vector expression
+/** \returns a fixed-size random matrix or vector expression
  *
  * Numbers are uniformly spread through their whole definition range for integer
  * types, and in the [-1:1] range for floating point scalar types.
@@ -125,7 +125,7 @@ DenseBase<Derived>::Random() {
                      internal::scalar_random_op<Scalar>());
 }
 
-/* Sets all coefficients in this expression to random values.
+/** Sets all coefficients in this expression to random values.
  *
  * Numbers are uniformly spread through their whole definition range for integer
  * types, and in the [-1:1] range for floating point scalar types.
@@ -142,7 +142,7 @@ EIGEN_DEVICE_FUNC inline Derived& DenseBase<Derived>::setRandom() {
   return *this = Random(rows(), cols());
 }
 
-/* Resizes to the given \a newSize, and sets all coefficients in this
+/** Resizes to the given \a newSize, and sets all coefficients in this
  * expression to random values.
  *
  * Numbers are uniformly spread through their whole definition range for integer
@@ -164,7 +164,7 @@ EIGEN_STRONG_INLINE Derived& PlainObjectBase<Derived>::setRandom(
   return setRandom();
 }
 
-/* Resizes to the given size, and sets all coefficients in this expression to
+/** Resizes to the given size, and sets all coefficients in this expression to
  * random values.
  *
  * Numbers are uniformly spread through their whole definition range for integer
@@ -188,7 +188,7 @@ EIGEN_STRONG_INLINE Derived& PlainObjectBase<Derived>::setRandom(Index rows,
   return setRandom();
 }
 
-/* Resizes to the given size, changing only the number of columns, and sets all
+/** Resizes to the given size, changing only the number of columns, and sets all
  * coefficients in this expression to random values. For the parameter of type
  * NoChange_t, just pass the special value \c NoChange.
  *
@@ -206,7 +206,7 @@ EIGEN_STRONG_INLINE Derived& PlainObjectBase<Derived>::setRandom(NoChange_t,
   return setRandom(rows(), cols);
 }
 
-/* Resizes to the given size, changing only the number of rows, and sets all
+/** Resizes to the given size, changing only the number of rows, and sets all
  * coefficients in this expression to random values. For the parameter of type
  * NoChange_t, just pass the special value \c NoChange.
  *

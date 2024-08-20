@@ -44,4 +44,4 @@ class Repair_Manager {
   void add_path_to_goal_WMEs(chunk_element* pTargetSym, tc_number cond_tc);
   void add_state_link_WMEs(goal_stack_level pTargetGoal, tc_number pSeenTC);
 };
-#endif /* CONNECT_CONDITIONS_H_ */
+#endif /** CONNECT_CONDITIONS_H_ */

@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * Hybrid sparse/dense vector class designed for intensive read-write
  * operations.
  *
@@ -43,7 +43,7 @@ class AmbiVector {
 
   Index nonZeros() const;
 
-  /* Specifies a sub-vector to work on */
+  /** Specifies a sub-vector to work on */
   void setBounds(Index start, Index end) {
     m_start = convert_index(start);
     m_end = convert_index(end);
@@ -127,7 +127,7 @@ class AmbiVector {
   StorageIndex m_llSize;
 };
 
-/* \returns the number of non zeros in the current sub vector */
+/** \returns the number of non zeros in the current sub vector */
 template <typename _Scalar, typename _StorageIndex>
 Index AmbiVector<_Scalar, _StorageIndex>::nonZeros() const {
   if (m_mode == IsSparse)
@@ -155,7 +155,7 @@ void AmbiVector<_Scalar, _StorageIndex>::init(int mode) {
   }
 }
 
-/* Must be called whenever we might perform a write access
+/** Must be called whenever we might perform a write access
  * with an index smaller than the previous one.
  *
  * Don't worry, this function is extremely cheap.
@@ -165,7 +165,7 @@ void AmbiVector<_Scalar, _StorageIndex>::restart() {
   m_llCurrent = m_llStart;
 }
 
-/* Set all coefficients of current subvector to zero */
+/** Set all coefficients of current subvector to zero */
 template <typename _Scalar, typename _StorageIndex>
 void AmbiVector<_Scalar, _StorageIndex>::setZero() {
   if (m_mode == IsDense) {
@@ -259,14 +259,14 @@ _Scalar& AmbiVector<_Scalar, _StorageIndex>::coeff(Index i) {
   }
 }
 
-/* Iterator over the nonzero coefficients */
+/** Iterator over the nonzero coefficients */
 template <typename _Scalar, typename _StorageIndex>
 class AmbiVector<_Scalar, _StorageIndex>::Iterator {
  public:
   typedef _Scalar Scalar;
   typedef typename NumTraits<Scalar>::Real RealScalar;
 
-  /* Default constructor
+  /** Default constructor
    * \param vec the vector on which we iterate
    * \param epsilon the minimal value used to prune zero coefficients.
    * In practice, all coefficients having a magnitude smaller than \a epsilon

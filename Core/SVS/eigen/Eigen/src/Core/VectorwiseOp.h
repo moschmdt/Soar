@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \class PartialReduxExpr
+/** \class PartialReduxExpr
  * \ingroup Core_Module
  *
  * \brief Generic expression of a partially reduxed matrix
@@ -181,7 +181,7 @@ struct member_redux {
 };
 }  // namespace internal
 
-/* \class VectorwiseOp
+/** \class VectorwiseOp
  * \ingroup Core_Module
  *
  * \brief Pseudo expression providing broadcasting and partial reduction
@@ -267,7 +267,7 @@ class VectorwiseOp {
         Type;
   };
 
-  /* \internal
+  /** \internal
    * Replicates a vector to match the size of \c *this */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC typename ExtendedType<OtherDerived>::Type extendedTo(
@@ -291,7 +291,7 @@ class VectorwiseOp {
         Type;
   };
 
-  /* \internal
+  /** \internal
    * Replicates a vector in the opposite direction to match the size of \c *this
    */
   template <typename OtherDerived>
@@ -312,18 +312,18 @@ class VectorwiseOp {
   EIGEN_DEVICE_FUNC
   explicit inline VectorwiseOp(ExpressionType& matrix) : m_matrix(matrix) {}
 
-  /* \internal */
+  /** \internal */
   EIGEN_DEVICE_FUNC
   inline const ExpressionType& _expression() const { return m_matrix; }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* STL-like <a
+  /** STL-like <a
    * href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">RandomAccessIterator</a>
    * iterator type over the columns or rows as returned by the begin() and end()
    * methods.
    */
   random_access_iterator_type iterator;
-  /* This is the const version of iterator (aka read-only) */
+  /** This is the const version of iterator (aka read-only) */
   random_access_iterator_type const_iterator;
 #else
   typedef internal::subvector_stl_iterator<ExpressionType,
@@ -340,65 +340,65 @@ class VectorwiseOp {
       const_reverse_iterator;
 #endif
 
-  /* returns an iterator to the first row (rowwise) or column (colwise) of the
+  /** returns an iterator to the first row (rowwise) or column (colwise) of the
    * nested expression. \sa end(), cbegin()
    */
   iterator begin() { return iterator(m_matrix, 0); }
-  /* const version of begin() */
+  /** const version of begin() */
   const_iterator begin() const { return const_iterator(m_matrix, 0); }
-  /* const version of begin() */
+  /** const version of begin() */
   const_iterator cbegin() const { return const_iterator(m_matrix, 0); }
 
-  /* returns a reverse iterator to the last row (rowwise) or column (colwise)
+  /** returns a reverse iterator to the last row (rowwise) or column (colwise)
    * of the nested expression. \sa rend(), crbegin()
    */
   reverse_iterator rbegin() {
     return reverse_iterator(
         m_matrix, m_matrix.template subVectors<DirectionType(Direction)>() - 1);
   }
-  /* const version of rbegin() */
+  /** const version of rbegin() */
   const_reverse_iterator rbegin() const {
     return const_reverse_iterator(
         m_matrix, m_matrix.template subVectors<DirectionType(Direction)>() - 1);
   }
-  /* const version of rbegin() */
+  /** const version of rbegin() */
   const_reverse_iterator crbegin() const {
     return const_reverse_iterator(
         m_matrix, m_matrix.template subVectors<DirectionType(Direction)>() - 1);
   }
 
-  /* returns an iterator to the row (resp. column) following the last row
+  /** returns an iterator to the row (resp. column) following the last row
    * (resp. column) of the nested expression \sa begin(), cend()
    */
   iterator end() {
     return iterator(m_matrix,
                     m_matrix.template subVectors<DirectionType(Direction)>());
   }
-  /* const version of end() */
+  /** const version of end() */
   const_iterator end() const {
     return const_iterator(
         m_matrix, m_matrix.template subVectors<DirectionType(Direction)>());
   }
-  /* const version of end() */
+  /** const version of end() */
   const_iterator cend() const {
     return const_iterator(
         m_matrix, m_matrix.template subVectors<DirectionType(Direction)>());
   }
 
-  /* returns a reverse iterator to the row (resp. column) before the first row
+  /** returns a reverse iterator to the row (resp. column) before the first row
    * (resp. column) of the nested expression \sa begin(), cend()
    */
   reverse_iterator rend() { return reverse_iterator(m_matrix, -1); }
-  /* const version of rend() */
+  /** const version of rend() */
   const_reverse_iterator rend() const {
     return const_reverse_iterator(m_matrix, -1);
   }
-  /* const version of rend() */
+  /** const version of rend() */
   const_reverse_iterator crend() const {
     return const_reverse_iterator(m_matrix, -1);
   }
 
-  /* \returns a row or column vector expression of \c *this reduxed by \a func
+  /** \returns a row or column vector expression of \c *this reduxed by \a func
    *
    * The template parameter \a BinaryOp is the type of the functor
    * of the custom redux operator. Note that func must be an associative
@@ -455,7 +455,7 @@ class VectorwiseOp {
         Type;
   };
 
-  /* \returns a row (or column) vector expression of the smallest coefficient
+  /** \returns a row (or column) vector expression of the smallest coefficient
    * of each column (or row) of the referenced expression.
    *
    * \warning the size along the reduction direction must be strictly positive,
@@ -473,7 +473,7 @@ class VectorwiseOp {
     return MinCoeffReturnType(_expression());
   }
 
-  /* \returns a row (or column) vector expression of the largest coefficient
+  /** \returns a row (or column) vector expression of the largest coefficient
    * of each column (or row) of the referenced expression.
    *
    * \warning the size along the reduction direction must be strictly positive,
@@ -491,7 +491,7 @@ class VectorwiseOp {
     return MaxCoeffReturnType(_expression());
   }
 
-  /* \returns a row (or column) vector expression of the squared norm
+  /** \returns a row (or column) vector expression of the squared norm
    * of each column (or row) of the referenced expression.
    * This is a vector with real entries, even if the original matrix has complex
    * entries.
@@ -505,7 +505,7 @@ class VectorwiseOp {
     return SquaredNormReturnType(m_matrix.cwiseAbs2());
   }
 
-  /* \returns a row (or column) vector expression of the norm
+  /** \returns a row (or column) vector expression of the norm
    * of each column (or row) of the referenced expression.
    * This is a vector with real entries, even if the original matrix has complex
    * entries.
@@ -517,7 +517,7 @@ class VectorwiseOp {
   EIGEN_DEVICE_FUNC
   const NormReturnType norm() const { return NormReturnType(squaredNorm()); }
 
-  /* \returns a row (or column) vector expression of the norm
+  /** \returns a row (or column) vector expression of the norm
    * of each column (or row) of the referenced expression.
    * This is a vector with real entries, even if the original matrix has complex
    * entries.
@@ -531,7 +531,7 @@ class VectorwiseOp {
     return typename LpNormReturnType<p>::Type(_expression());
   }
 
-  /* \returns a row (or column) vector expression of the norm
+  /** \returns a row (or column) vector expression of the norm
    * of each column (or row) of the referenced expression, using
    * Blue's algorithm.
    * This is a vector with real entries, even if the original matrix has complex
@@ -543,7 +543,7 @@ class VectorwiseOp {
     return BlueNormReturnType(_expression());
   }
 
-  /* \returns a row (or column) vector expression of the norm
+  /** \returns a row (or column) vector expression of the norm
    * of each column (or row) of the referenced expression, avoiding
    * underflow and overflow.
    * This is a vector with real entries, even if the original matrix has complex
@@ -555,7 +555,7 @@ class VectorwiseOp {
     return StableNormReturnType(_expression());
   }
 
-  /* \returns a row (or column) vector expression of the norm
+  /** \returns a row (or column) vector expression of the norm
    * of each column (or row) of the referenced expression, avoiding
    * underflow and overflow using a concatenation of hypot() calls.
    * This is a vector with real entries, even if the original matrix has complex
@@ -567,7 +567,7 @@ class VectorwiseOp {
     return HypotNormReturnType(_expression());
   }
 
-  /* \returns a row (or column) vector expression of the sum
+  /** \returns a row (or column) vector expression of the sum
    * of each column (or row) of the referenced expression.
    *
    * Example: \include PartialRedux_sum.cpp
@@ -577,7 +577,7 @@ class VectorwiseOp {
   EIGEN_DEVICE_FUNC
   const SumReturnType sum() const { return SumReturnType(_expression()); }
 
-  /* \returns a row (or column) vector expression of the mean
+  /** \returns a row (or column) vector expression of the mean
    * of each column (or row) of the referenced expression.
    *
    * \sa DenseBase::mean() */
@@ -587,7 +587,7 @@ class VectorwiseOp {
            Scalar(Direction == Vertical ? m_matrix.rows() : m_matrix.cols());
   }
 
-  /* \returns a row (or column) vector expression representing
+  /** \returns a row (or column) vector expression representing
    * whether \b all coefficients of each respective column (or row) are \c true.
    * This expression can be assigned to a vector with entries of type \c bool.
    *
@@ -595,7 +595,7 @@ class VectorwiseOp {
   EIGEN_DEVICE_FUNC
   const AllReturnType all() const { return AllReturnType(_expression()); }
 
-  /* \returns a row (or column) vector expression representing
+  /** \returns a row (or column) vector expression representing
    * whether \b at \b least one coefficient of each respective column (or row)
    * is \c true. This expression can be assigned to a vector with entries of
    * type \c bool.
@@ -604,7 +604,7 @@ class VectorwiseOp {
   EIGEN_DEVICE_FUNC
   const AnyReturnType any() const { return AnyReturnType(_expression()); }
 
-  /* \returns a row (or column) vector expression representing
+  /** \returns a row (or column) vector expression representing
    * the number of \c true coefficients of each respective column (or row).
    * This expression can be assigned to a vector whose entries have the same
    * type as is used to index entries of the original matrix; for dense
@@ -617,7 +617,7 @@ class VectorwiseOp {
   EIGEN_DEVICE_FUNC
   const CountReturnType count() const { return CountReturnType(_expression()); }
 
-  /* \returns a row (or column) vector expression of the product
+  /** \returns a row (or column) vector expression of the product
    * of each column (or row) of the referenced expression.
    *
    * Example: \include PartialRedux_prod.cpp
@@ -627,7 +627,7 @@ class VectorwiseOp {
   EIGEN_DEVICE_FUNC
   const ProdReturnType prod() const { return ProdReturnType(_expression()); }
 
-  /* \returns a matrix expression
+  /** \returns a matrix expression
    * where each column (or row) are reversed.
    *
    * Example: \include Vectorwise_reverse.cpp
@@ -639,7 +639,7 @@ class VectorwiseOp {
     return ConstReverseReturnType(_expression());
   }
 
-  /* \returns a writable matrix expression
+  /** \returns a writable matrix expression
    * where each column (or row) are reversed.
    *
    * \sa reverse() const */
@@ -652,7 +652,7 @@ class VectorwiseOp {
   EIGEN_DEVICE_FUNC
   const ReplicateReturnType replicate(Index factor) const;
 
-  /*
+  /**
    * \return an expression of the replication of each column (or row) of \c
    * *this
    *
@@ -675,7 +675,7 @@ class VectorwiseOp {
 
   /////////// Artithmetic operators ///////////
 
-  /* Copies the vector \a other to each subvector of \c *this */
+  /** Copies the vector \a other to each subvector of \c *this */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC ExpressionType& operator=(
       const DenseBase<OtherDerived>& other) {
@@ -685,7 +685,7 @@ class VectorwiseOp {
     return m_matrix = extendedTo(other.derived());
   }
 
-  /* Adds the vector \a other to each subvector of \c *this */
+  /** Adds the vector \a other to each subvector of \c *this */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC ExpressionType& operator+=(
       const DenseBase<OtherDerived>& other) {
@@ -694,7 +694,7 @@ class VectorwiseOp {
     return m_matrix += extendedTo(other.derived());
   }
 
-  /* Substracts the vector \a other to each subvector of \c *this */
+  /** Substracts the vector \a other to each subvector of \c *this */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC ExpressionType& operator-=(
       const DenseBase<OtherDerived>& other) {
@@ -703,7 +703,7 @@ class VectorwiseOp {
     return m_matrix -= extendedTo(other.derived());
   }
 
-  /* Multiples each subvector of \c *this by the vector \a other */
+  /** Multiples each subvector of \c *this by the vector \a other */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC ExpressionType& operator*=(
       const DenseBase<OtherDerived>& other) {
@@ -714,7 +714,7 @@ class VectorwiseOp {
     return m_matrix;
   }
 
-  /* Divides each subvector of \c *this by the vector \a other */
+  /** Divides each subvector of \c *this by the vector \a other */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC ExpressionType& operator/=(
       const DenseBase<OtherDerived>& other) {
@@ -725,7 +725,7 @@ class VectorwiseOp {
     return m_matrix;
   }
 
-  /* Returns the expression of the sum of the vector \a other to each subvector
+  /** Returns the expression of the sum of the vector \a other to each subvector
    * of \c *this */
   template <typename OtherDerived>
   EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC CwiseBinaryOp<
@@ -738,7 +738,7 @@ class VectorwiseOp {
     return m_matrix + extendedTo(other.derived());
   }
 
-  /* Returns the expression of the difference between each subvector of \c
+  /** Returns the expression of the difference between each subvector of \c
    * *this and the vector \a other */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC CwiseBinaryOp<
@@ -751,7 +751,7 @@ class VectorwiseOp {
     return m_matrix - extendedTo(other.derived());
   }
 
-  /* Returns the expression where each subvector is the product of the vector
+  /** Returns the expression where each subvector is the product of the vector
    * \a other by the corresponding subvector of \c *this */
   template <typename OtherDerived>
   EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC CwiseBinaryOp<
@@ -764,7 +764,7 @@ class VectorwiseOp {
     return m_matrix * extendedTo(other.derived());
   }
 
-  /* Returns the expression where each subvector is the quotient of the
+  /** Returns the expression where each subvector is the quotient of the
    * corresponding subvector of \c *this by the vector \a other */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC CwiseBinaryOp<
@@ -777,7 +777,7 @@ class VectorwiseOp {
     return m_matrix / extendedTo(other.derived());
   }
 
-  /* \returns an expression where each column (or row) of the referenced matrix
+  /** \returns an expression where each column (or row) of the referenced matrix
    * are normalized. The referenced matrix is \b not modified. \sa
    * MatrixBase::normalized(), normalize()
    */
@@ -789,7 +789,7 @@ class VectorwiseOp {
     return m_matrix.cwiseQuotient(extendedToOpposite(this->norm()));
   }
 
-  /* Normalize in-place each row or columns of the referenced matrix.
+  /** Normalize in-place each row or columns of the referenced matrix.
    * \sa MatrixBase::normalize(), normalized()
    */
   EIGEN_DEVICE_FUNC void normalize() { m_matrix = this->normalized(); }
@@ -856,7 +856,7 @@ class VectorwiseOp {
 
 // const colwise moved to DenseBase.h due to CUDA compiler bug
 
-/* \returns a writable VectorwiseOp wrapper of *this providing additional
+/** \returns a writable VectorwiseOp wrapper of *this providing additional
  * partial reduction operations
  *
  * \sa rowwise(), class VectorwiseOp, \ref
@@ -870,7 +870,7 @@ DenseBase<Derived>::colwise() {
 
 // const rowwise moved to DenseBase.h due to CUDA compiler bug
 
-/* \returns a writable VectorwiseOp wrapper of *this providing additional
+/** \returns a writable VectorwiseOp wrapper of *this providing additional
  * partial reduction operations
  *
  * \sa colwise(), class VectorwiseOp, \ref

@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/* ---------------------------------------------------------------------
+/** ---------------------------------------------------------------------
                                slot.h
 
    Find_slot() looks for an existing slot for a given id/attr pair, and
@@ -33,25 +33,25 @@
 #include "stl_typedefs.h"
 
 typedef struct slot_struct {
-  struct slot_struct *next, *prev; /* dll of slots for this id */
-  Symbol* id;                      /* id, attr of the slot */
+  struct slot_struct *next, *prev; /** dll of slots for this id */
+  Symbol* id;                      /** id, attr of the slot */
   Symbol* attr;
-  wme* wmes;                       /* dll of wmes in the slot */
-  wme* acceptable_preference_wmes; /* dll of acceptable pref. wmes */
-  preference* all_preferences;     /* dll of all pref's in the slot */
-  preference* preferences[NUM_PREFERENCE_TYPES]; /* dlls for each type */
-  cons* OSK_prefs; /* list of OSK prefs to backtrace through */
+  wme* wmes;                       /** dll of wmes in the slot */
+  wme* acceptable_preference_wmes; /** dll of acceptable pref. wmes */
+  preference* all_preferences;     /** dll of all pref's in the slot */
+  preference* preferences[NUM_PREFERENCE_TYPES]; /** dlls for each type */
+  cons* OSK_prefs; /** list of OSK prefs to backtrace through */
   instantiation*
-      instantiation_with_temp_OSK; /* last operator proposal instantiation that
+      instantiation_with_temp_OSK; /** last operator proposal instantiation that
                                       had an OSK */
-  Symbol* impasse_id;              /* NIL if slot is not impassed */
+  Symbol* impasse_id;              /** NIL if slot is not impassed */
   bool isa_context_slot;
   byte impasse_type;
   bool marked_for_possible_removal;
-  dl_cons* changed; /* for non-context slots: points to the corresponding
+  dl_cons* changed; /** for non-context slots: points to the corresponding
                      dl_cons in changed_slots;  for context slots: just
                      zero/nonzero flag indicating slot changed */
-  dl_cons* acceptable_preference_changed; /* for context slots: either zero,
+  dl_cons* acceptable_preference_changed; /** for context slots: either zero,
                                            or points to dl_cons if the slot
                                            has changed + or ! pref's */
 

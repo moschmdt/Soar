@@ -66,7 +66,7 @@ namespace Eigen {
 
 typedef EIGEN_DEFAULT_DENSE_INDEX_TYPE DenseIndex;
 
-/*
+/**
  * \brief The Index type as used for the API.
  * \details To change this, \c \#define the preprocessor symbol \c
  * EIGEN_DEFAULT_DENSE_INDEX_TYPE. \sa \blank \ref TopicPreprocessorDirectives,
@@ -77,7 +77,7 @@ typedef EIGEN_DEFAULT_DENSE_INDEX_TYPE Index;
 
 namespace internal {
 
-/* \internal
+/** \internal
  * \file Meta.h
  * This file contains generic metaprogramming classes which are not specifically
  * related to Eigen. \note In case you wonder, yes we're aware that Boost
@@ -490,7 +490,7 @@ struct is_convertible<const T, const T&> {
 
 #endif
 
-/* \internal Allows to enable/disable an overload
+/** \internal Allows to enable/disable an overload
  * according to a compile time condition.
  */
 template <bool Condition, typename T = void>
@@ -638,7 +638,7 @@ struct numeric_limits<bool> {
 
 #endif  // defined(EIGEN_GPU_COMPILE_PHASE) && !EIGEN_HAS_CXX11
 
-/* \internal
+/** \internal
  * A base class do disable default copy ctor and copy assignment operator.
  */
 class noncopyable {
@@ -650,7 +650,7 @@ class noncopyable {
   EIGEN_DEVICE_FUNC ~noncopyable() {}
 };
 
-/* \internal
+/** \internal
  * Provides access to the number of elements in the object of as a compile-time
  * constant expression. It "returns" Eigen::Dynamic if the size cannot be
  * resolved at compile-time (default).
@@ -696,7 +696,7 @@ struct array_size<std::array<T, N> > {
 };
 #endif
 
-/* \internal
+/** \internal
  * Analogue of the std::size free function.
  * It returns the size of the container or view \a x of type \c T
  *
@@ -715,7 +715,7 @@ EIGEN_CONSTEXPR Index size(const T (&)[N]) {
   return N;
 }
 
-/* \internal
+/** \internal
  * Convenient struct to get the result type of a nullary, unary, binary, or
  * ternary functor.
  *
@@ -993,7 +993,7 @@ struct has_binary_operator {
   enum { value = sizeof(testFunctor(static_cast<T*>(0))) == sizeof(meta_yes) };
 };
 
-/* \internal In short, it computes int(sqrt(\a Y)) with \a Y an integer.
+/** \internal In short, it computes int(sqrt(\a Y)) with \a Y an integer.
  * Usage example: \code meta_sqrt<1023>::ret \endcode
  */
 template <int Y, int InfX = 0, int SupX = ((Y == 1) ? 1 : Y / 2),
@@ -1019,7 +1019,7 @@ class meta_sqrt<Y, InfX, SupX, true> {
   enum { ret = (SupX * SupX <= Y) ? SupX : InfX };
 };
 
-/* \internal Computes the least common multiple of two positive integer A and B
+/** \internal Computes the least common multiple of two positive integer A and B
  * at compile-time.
  */
 template <int A, int B, int K = 1, bool Done = ((A * K) % B) == 0,
@@ -1036,7 +1036,7 @@ struct meta_least_common_multiple<A, B, K, true, true> {
   enum { ret = A * K };
 };
 
-/* \internal determines whether the product of two numeric types is allowed and
+/** \internal determines whether the product of two numeric types is allowed and
  * what the return type is */
 template <typename T, typename U>
 struct scalar_product_traits {
@@ -1050,7 +1050,7 @@ struct scalar_product_traits {
 // typename remove_all<ArgType1>::type>::ReturnType type;
 // };
 
-/* \internal Obtains a POD type suitable to use as storage for an object of a
+/** \internal Obtains a POD type suitable to use as storage for an object of a
  * size of at most Len bytes, aligned as specified by \c Align.
  */
 template <unsigned Len, unsigned Align>

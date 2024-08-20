@@ -16,7 +16,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * Evaluator of a product expression.
  * Since products require special treatments to handle all possible cases,
  * we simply defer the evaluation logic to a product_evaluator class
@@ -253,7 +253,7 @@ template <typename DstXprType, typename OtherXpr, typename ProductType,
 struct assignment_from_xpr_op_product {
   template <typename SrcXprType, typename InitialFunc>
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void run(
-      DstXprType& dst, const SrcXprType& src, const InitialFunc& /*func*/) {
+      DstXprType& dst, const SrcXprType& src, const InitialFunc& /**func*/) {
     call_assignment_no_alias(dst, src.lhs(), Func1());
     call_assignment_no_alias(dst, src.rhs(), Func2());
   }
@@ -310,7 +310,7 @@ struct generic_product_impl<Lhs, Rhs, DenseShape, DenseShape, InnerProduct> {
   }
 };
 
-/*
+/**
  *  Implementation of outer dense * dense vector product
  */
 
@@ -561,7 +561,7 @@ struct generic_product_impl<Lhs, Rhs, DenseShape, DenseShape,
             typename Scalar>
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void eval_dynamic_impl(
       Dst& dst, const LhsT& lhs, const RhsT& rhs, const Func& func,
-      const Scalar& s /* == 1 */, false_type) {
+      const Scalar& s /** == 1 */, false_type) {
     EIGEN_UNUSED_VARIABLE(s);
     eigen_internal_assert(s == Scalar(1));
     call_restricted_packet_assignment_no_alias(dst, lhs.lazyProduct(rhs), func);
@@ -737,7 +737,7 @@ struct product_evaluator<Product<Lhs, Rhs, LazyProduct>, ProductTag, DenseShape,
                            : RhsAlignment)
                     : 0,
 
-    /* CanVectorizeInner deserves special explanation. It does not affect the
+    /** CanVectorizeInner deserves special explanation. It does not affect the
      * product flags. It is not used outside of Product. If the Product itself
      * is not a packet-access expression, there is still a chance that the inner
      * loop of the product might be vectorized. This is the meaning of
@@ -755,7 +755,7 @@ struct product_evaluator<Product<Lhs, Rhs, LazyProduct>, ProductTag, DenseShape,
     return (m_lhs.row(row).transpose().cwiseProduct(m_rhs.col(col))).sum();
   }
 
-  /* Allow index-based non-packet access. It is impossible though to allow
+  /** Allow index-based non-packet access. It is impossible though to allow
    * index-based packed access, which is why we don't set the LinearAccessBit.
    * TODO: this seems possible when the result is a vector
    */
@@ -818,7 +818,7 @@ struct product_evaluator<Product<Lhs, Rhs, DefaultProduct>,
       : Base(BaseProduct(xpr.lhs(), xpr.rhs())) {}
 };
 
-/*
+/**
 *** Coeff based product, Packet path  ***
 */
 
@@ -862,7 +862,7 @@ struct etor_product_packet_impl<RowMajor, 1, Lhs, Rhs, Packet, LoadMode> {
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void run(Index row, Index col,
                                                         const Lhs& lhs,
                                                         const Rhs& rhs,
-                                                        Index /*innerDim*/,
+                                                        Index /**innerDim*/,
                                                         Packet& res) {
     res = pmul(pset1<Packet>(lhs.coeff(row, Index(0))),
                rhs.template packet<LoadMode, Packet>(Index(0), col));
@@ -874,7 +874,7 @@ struct etor_product_packet_impl<ColMajor, 1, Lhs, Rhs, Packet, LoadMode> {
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void run(Index row, Index col,
                                                         const Lhs& lhs,
                                                         const Rhs& rhs,
-                                                        Index /*innerDim*/,
+                                                        Index /**innerDim*/,
                                                         Packet& res) {
     res = pmul(lhs.template packet<LoadMode, Packet>(row, Index(0)),
                pset1<Packet>(rhs.coeff(Index(0), col)));
@@ -884,8 +884,8 @@ struct etor_product_packet_impl<ColMajor, 1, Lhs, Rhs, Packet, LoadMode> {
 template <typename Lhs, typename Rhs, typename Packet, int LoadMode>
 struct etor_product_packet_impl<RowMajor, 0, Lhs, Rhs, Packet, LoadMode> {
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void run(
-      Index /*row*/, Index /*col*/, const Lhs& /*lhs*/, const Rhs& /*rhs*/,
-      Index /*innerDim*/, Packet& res) {
+      Index /**row*/, Index /**col*/, const Lhs& /**lhs*/, const Rhs& /**rhs*/,
+      Index /**innerDim*/, Packet& res) {
     res = pset1<Packet>(typename unpacket_traits<Packet>::type(0));
   }
 };
@@ -893,8 +893,8 @@ struct etor_product_packet_impl<RowMajor, 0, Lhs, Rhs, Packet, LoadMode> {
 template <typename Lhs, typename Rhs, typename Packet, int LoadMode>
 struct etor_product_packet_impl<ColMajor, 0, Lhs, Rhs, Packet, LoadMode> {
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void run(
-      Index /*row*/, Index /*col*/, const Lhs& /*lhs*/, const Rhs& /*rhs*/,
-      Index /*innerDim*/, Packet& res) {
+      Index /**row*/, Index /**col*/, const Lhs& /**lhs*/, const Rhs& /**rhs*/,
+      Index /**innerDim*/, Packet& res) {
     res = pset1<Packet>(typename unpacket_traits<Packet>::type(0));
   }
 };
@@ -927,7 +927,7 @@ struct etor_product_packet_impl<ColMajor, Dynamic, Lhs, Rhs, Packet, LoadMode> {
   }
 };
 
-/*
+/**
  * Triangular products
  */
 template <int Mode, bool LhsIsTriangular, typename Lhs, bool LhsIsVector,
@@ -969,7 +969,7 @@ struct generic_product_impl<Lhs, Rhs, DenseShape, TriangularShape, ProductTag>
   }
 };
 
-/*
+/**
  * SelfAdjoint products
  */
 template <typename Lhs, int LhsMode, bool LhsIsVector, typename Rhs,
@@ -1012,7 +1012,7 @@ struct generic_product_impl<Lhs, Rhs, DenseShape, SelfAdjointShape, ProductTag>
   }
 };
 
-/*
+/**
  * Diagonal products
  */
 
@@ -1221,11 +1221,11 @@ struct product_evaluator<Product<Lhs, Rhs, ProductKind>, ProductTag, DenseShape,
 #endif
 };
 
-/*
+/**
  * Products with permutation matrices
  */
 
-/* \internal
+/** \internal
  * \class permutation_matrix_product
  * Internal helper class implementing the product between a permutation matrix
  * and a matrix. This class is specialized for DenseShape below and for
@@ -1349,13 +1349,13 @@ struct generic_product_impl<Lhs, Inverse<Rhs>, MatrixShape, PermutationShape,
   }
 };
 
-/*
+/**
  * Products with transpositions matrices
  */
 
 // FIXME could we unify Transpositions and Permutation into a single "shape"??
 
-/* \internal
+/** \internal
  * \class transposition_matrix_product
  * Internal helper class implementing the product between a permutation matrix
  * and a matrix.

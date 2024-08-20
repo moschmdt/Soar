@@ -8,7 +8,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
 
  * NOTE: This file is the modified version of [s,d,c,z]panel_bmod.c file in
  SuperLU
@@ -35,7 +35,7 @@
 namespace Eigen {
 namespace internal {
 
-/*
+/**
  * \brief Performs numeric block updates (sup-panel) in topological order.
  *
  * Before entering this routine, the original nonzeros in the panel
@@ -69,7 +69,7 @@ void SparseLUImpl<Scalar, StorageIndex>::panel_bmod(
   const Index PacketSize = internal::packet_traits<Scalar>::size;
 
   for (ksub = 0; ksub < nseg; ksub++) {  // For each updating supernode
-    /* krep = representative of current k-th supernode
+    /** krep = representative of current k-th supernode
      * fsupc =  first supernodal column
      * nsupc = number of columns in a supernode
      * nsupr = number of rows in a supernode

@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \class MatrixBase
+/** \class MatrixBase
   * \ingroup Core_Module
   *
   * \brief Base class for all dense matrices, vectors, and expressions
@@ -96,13 +96,13 @@ class MatrixBase : public DenseBase<Derived> {
 #endif  // not EIGEN_PARSED_BY_DOXYGEN
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* type of the equivalent square matrix */
+  /** type of the equivalent square matrix */
   typedef Matrix<Scalar, EIGEN_SIZE_MAX(RowsAtCompileTime, ColsAtCompileTime),
                  EIGEN_SIZE_MAX(RowsAtCompileTime, ColsAtCompileTime)>
       SquareMatrixType;
 #endif  // not EIGEN_PARSED_BY_DOXYGEN
 
-  /* \returns the size of the main diagonal, which is min(rows(),cols()).
+  /** \returns the size of the main diagonal, which is min(rows(),cols()).
    * \sa rows(), cols(), SizeAtCompileTime. */
   EIGEN_DEVICE_FUNC
   inline Index diagonalSize() const { return (numext::mini)(rows(), cols()); }
@@ -110,23 +110,23 @@ class MatrixBase : public DenseBase<Derived> {
   typedef typename Base::PlainObject PlainObject;
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* \internal Represents a matrix with all coefficients equal to one another*/
+  /** \internal Represents a matrix with all coefficients equal to one another*/
   typedef CwiseNullaryOp<internal::scalar_constant_op<Scalar>, PlainObject>
       ConstantReturnType;
-  /* \internal the return type of MatrixBase::adjoint() */
+  /** \internal the return type of MatrixBase::adjoint() */
   typedef typename internal::conditional<
       NumTraits<Scalar>::IsComplex,
       CwiseUnaryOp<internal::scalar_conjugate_op<Scalar>,
                    ConstTransposeReturnType>,
       ConstTransposeReturnType>::type AdjointReturnType;
-  /* \internal Return type of eigenvalues() */
+  /** \internal Return type of eigenvalues() */
   typedef Matrix<std::complex<RealScalar>,
                  internal::traits<Derived>::ColsAtCompileTime, 1, ColMajor>
       EigenvaluesReturnType;
-  /* \internal the return type of identity */
+  /** \internal the return type of identity */
   typedef CwiseNullaryOp<internal::scalar_identity_op<Scalar>, PlainObject>
       IdentityReturnType;
-  /* \internal the return type of unit vectors */
+  /** \internal the return type of unit vectors */
   typedef Block<const CwiseNullaryOp<internal::scalar_identity_op<Scalar>,
                                      SquareMatrixType>,
                 internal::traits<Derived>::RowsAtCompileTime,
@@ -145,7 +145,7 @@ class MatrixBase : public DenseBase<Derived> {
 #undef EIGEN_CURRENT_STORAGE_BASE_CLASS
 #undef EIGEN_DOC_UNARY_ADDONS
 
-  /* Special case of the template operator=, in order to prevent the compiler
+  /** Special case of the template operator=, in order to prevent the compiler
    * from generating a default operator= (issue hit with g++ 4.1)
    */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& operator=(
@@ -321,7 +321,7 @@ class MatrixBase : public DenseBase<Derived> {
   bool isUnitary(
       const RealScalar& prec = NumTraits<Scalar>::dummy_precision()) const;
 
-  /* \returns true if each coefficients of \c *this and \a other are all
+  /** \returns true if each coefficients of \c *this and \a other are all
    * exactly equal. \warning When using floating point scalar values you
    * probably should rather use a fuzzy comparison such as isApprox() \sa
    * isApprox(), operator!= */
@@ -331,7 +331,7 @@ class MatrixBase : public DenseBase<Derived> {
     return cwiseEqual(other).all();
   }
 
-  /* \returns true if at least one pair of coefficients of \c *this and \a
+  /** \returns true if at least one pair of coefficients of \c *this and \a
    * other are not exactly equal to each other. \warning When using floating
    * point scalar values you probably should rather use a fuzzy comparison such
    * as isApprox() \sa isApprox(), operator== */
@@ -364,12 +364,12 @@ class MatrixBase : public DenseBase<Derived> {
   EIGEN_DEVICE_FUNC MatrixBase<Derived>& matrix() { return *this; }
   EIGEN_DEVICE_FUNC const MatrixBase<Derived>& matrix() const { return *this; }
 
-  /* \returns an \link Eigen::ArrayBase Array \endlink expression of this
+  /** \returns an \link Eigen::ArrayBase Array \endlink expression of this
    * matrix \sa ArrayBase::matrix() */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE ArrayWrapper<Derived> array() {
     return ArrayWrapper<Derived>(derived());
   }
-  /* \returns a const \link Eigen::ArrayBase Array \endlink expression of this
+  /** \returns a const \link Eigen::ArrayBase Array \endlink expression of this
    * matrix \sa ArrayBase::matrix() */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const ArrayWrapper<const Derived>
   array() const {
@@ -524,14 +524,14 @@ class MatrixBase : public DenseBase<Derived> {
 
   typedef typename internal::stem_function<Scalar>::type StemFunction;
 #define EIGEN_MATRIX_FUNCTION(ReturnType, Name, Description)                 \
-  /* \returns an expression of the matrix Description of \c *this. \brief   \
+  /** \returns an expression of the matrix Description of \c *this. \brief   \
    * This function requires the <a                                           \
    * href="unsupported/group__MatrixFunctions__Module.html"> unsupported     \
    * MatrixFunctions module</a>. To compute the coefficient-wise Description \
    * use ArrayBase::##Name . */                                              \
   const ReturnType<Derived> Name() const;
 #define EIGEN_MATRIX_FUNCTION_1(ReturnType, Name, Description, Argument)     \
-  /* \returns an expression of the matrix Description of \c *this. \brief   \
+  /** \returns an expression of the matrix Description of \c *this. \brief   \
    * This function requires the <a                                           \
    * href="unsupported/group__MatrixFunctions__Module.html"> unsupported     \
    * MatrixFunctions module</a>. To compute the coefficient-wise Description \
@@ -539,7 +539,7 @@ class MatrixBase : public DenseBase<Derived> {
   const ReturnType<Derived> Name(Argument) const;
 
   EIGEN_MATRIX_FUNCTION(MatrixExponentialReturnValue, exp, exponential)
-  /* \brief Helper function for the <a
+  /** \brief Helper function for the <a
    * href="unsupported/group__MatrixFunctions__Module.html"> unsupported
    * MatrixFunctions module</a>.*/
   const MatrixFunctionReturnValue<Derived> matrixFunction(StemFunction f) const;
@@ -591,11 +591,11 @@ class MatrixBase : public DenseBase<Derived> {
   }
 };
 
-/*
+/**
  * Implementation of matrix base methods
  */
 
-/* replaces \c *this by \c *this * \a other.
+/** replaces \c *this by \c *this * \a other.
  *
  * \returns a reference to \c *this
  *
@@ -610,7 +610,7 @@ inline Derived& MatrixBase<Derived>::operator*=(
   return derived();
 }
 
-/* replaces \c *this by \c *this * \a other. It is equivalent to
+/** replaces \c *this by \c *this * \a other. It is equivalent to
  * MatrixBase::operator*=().
  *
  * Example: \include MatrixBase_applyOnTheRight.cpp
@@ -623,7 +623,7 @@ inline void MatrixBase<Derived>::applyOnTheRight(
   other.derived().applyThisOnTheRight(derived());
 }
 
-/* replaces \c *this by \a other * \c *this.
+/** replaces \c *this by \a other * \c *this.
  *
  * Example: \include MatrixBase_applyOnTheLeft.cpp
  * Output: \verbinclude MatrixBase_applyOnTheLeft.out

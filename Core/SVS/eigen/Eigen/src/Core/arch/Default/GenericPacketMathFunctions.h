@@ -9,7 +9,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/* The exp and log functions of this file initially come from
+/** The exp and log functions of this file initially come from
  * Julien Pommier's sse math library: http://gruntthepeon.free.fr/ssemath/
  */
 
@@ -294,16 +294,16 @@ plog_impl_float(const Packet _x) {
 template <typename Packet>
 EIGEN_DEFINE_FUNCTION_ALLOWING_MULTIPLE_DEFINITIONS EIGEN_UNUSED Packet
 plog_float(const Packet _x) {
-  return plog_impl_float<Packet, /* base2 */ false>(_x);
+  return plog_impl_float<Packet, /** base2 */ false>(_x);
 }
 
 template <typename Packet>
 EIGEN_DEFINE_FUNCTION_ALLOWING_MULTIPLE_DEFINITIONS EIGEN_UNUSED Packet
 plog2_float(const Packet _x) {
-  return plog_impl_float<Packet, /* base2 */ true>(_x);
+  return plog_impl_float<Packet, /** base2 */ true>(_x);
 }
 
-/* Returns the base e (2.718...) or base 2 logarithm of x.
+/** Returns the base e (2.718...) or base 2 logarithm of x.
  * The argument is separated into its exponent and fractional parts.
  * The logarithm of the fraction in the interval [sqrt(1/2), sqrt(2)],
  * is approximated by
@@ -412,16 +412,16 @@ plog_impl_double(const Packet _x) {
 template <typename Packet>
 EIGEN_DEFINE_FUNCTION_ALLOWING_MULTIPLE_DEFINITIONS EIGEN_UNUSED Packet
 plog_double(const Packet _x) {
-  return plog_impl_double<Packet, /* base2 */ false>(_x);
+  return plog_impl_double<Packet, /** base2 */ false>(_x);
 }
 
 template <typename Packet>
 EIGEN_DEFINE_FUNCTION_ALLOWING_MULTIPLE_DEFINITIONS EIGEN_UNUSED Packet
 plog2_double(const Packet _x) {
-  return plog_impl_double<Packet, /* base2 */ true>(_x);
+  return plog_impl_double<Packet, /** base2 */ true>(_x);
 }
 
-/* \internal \returns log(1 + x) computed using W. Kahan's formula.
+/** \internal \returns log(1 + x) computed using W. Kahan's formula.
     See: http://www.plunk.org/~hatch/rightway.php
  */
 template <typename Packet>
@@ -436,7 +436,7 @@ Packet generic_plog1p(const Packet& x) {
   return pselect(por(small_mask, inf_mask), x, log_large);
 }
 
-/* \internal \returns exp(x)-1 computed using W. Kahan's formula.
+/** \internal \returns exp(x)-1 computed using W. Kahan's formula.
     See: http://www.plunk.org/~hatch/rightway.php
  */
 template <typename Packet>
@@ -1558,7 +1558,7 @@ generic_pow(const Packet& x, const Packet& y) {
                                               pow_abs))))));
 }
 
-/* polevl (modified for Eigen)
+/** polevl (modified for Eigen)
  *
  *      Evaluate polynomial
  *
@@ -1616,7 +1616,7 @@ struct ppolevl<Packet, 0> {
   }
 };
 
-/* chbevl (modified for Eigen)
+/** chbevl (modified for Eigen)
  *
  *     Evaluate Chebyshev series
  *

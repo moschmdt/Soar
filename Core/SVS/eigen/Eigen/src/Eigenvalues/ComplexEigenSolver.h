@@ -16,7 +16,7 @@
 
 namespace Eigen {
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class ComplexEigenSolver
@@ -45,7 +45,7 @@ namespace Eigen {
 template <typename _MatrixType>
 class ComplexEigenSolver {
  public:
-  /* \brief Synonym for the template parameter \p _MatrixType. */
+  /** \brief Synonym for the template parameter \p _MatrixType. */
   typedef _MatrixType MatrixType;
 
   enum {
@@ -56,12 +56,12 @@ class ComplexEigenSolver {
     MaxColsAtCompileTime = MatrixType::MaxColsAtCompileTime
   };
 
-  /* \brief Scalar type for matrices of type #MatrixType. */
+  /** \brief Scalar type for matrices of type #MatrixType. */
   typedef typename MatrixType::Scalar Scalar;
   typedef typename NumTraits<Scalar>::Real RealScalar;
   typedef Eigen::Index Index;  ///< \deprecated since Eigen 3.3
 
-  /* \brief Complex scalar type for #MatrixType.
+  /** \brief Complex scalar type for #MatrixType.
    *
    * This is \c std::complex<Scalar> if #Scalar is real (e.g.,
    * \c float or \c double) and just \c Scalar if #Scalar is
@@ -69,7 +69,7 @@ class ComplexEigenSolver {
    */
   typedef std::complex<RealScalar> ComplexScalar;
 
-  /* \brief Type for vector of eigenvalues as returned by eigenvalues().
+  /** \brief Type for vector of eigenvalues as returned by eigenvalues().
    *
    * This is a column vector with entries of type #ComplexScalar.
    * The length of the vector is the size of #MatrixType.
@@ -78,7 +78,7 @@ class ComplexEigenSolver {
                  MaxColsAtCompileTime, 1>
       EigenvalueType;
 
-  /* \brief Type for matrix of eigenvectors as returned by eigenvectors().
+  /** \brief Type for matrix of eigenvectors as returned by eigenvectors().
    *
    * This is a square matrix with entries of type #ComplexScalar.
    * The size is the same as the size of #MatrixType.
@@ -87,7 +87,7 @@ class ComplexEigenSolver {
                  MaxRowsAtCompileTime, MaxColsAtCompileTime>
       EigenvectorType;
 
-  /* \brief Default constructor.
+  /** \brief Default constructor.
    *
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via compute().
@@ -100,7 +100,7 @@ class ComplexEigenSolver {
         m_eigenvectorsOk(false),
         m_matX() {}
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -114,7 +114,7 @@ class ComplexEigenSolver {
         m_eigenvectorsOk(false),
         m_matX(size, size) {}
 
-  /* \brief Constructor; computes eigendecomposition of given matrix.
+  /** \brief Constructor; computes eigendecomposition of given matrix.
    *
    * \param[in]  matrix  Square matrix whose eigendecomposition is to be
    * computed. \param[in]  computeEigenvectors  If true, both the eigenvectors
@@ -135,7 +135,7 @@ class ComplexEigenSolver {
     compute(matrix.derived(), computeEigenvectors);
   }
 
-  /* \brief Returns the eigenvectors of given matrix.
+  /** \brief Returns the eigenvectors of given matrix.
    *
    * \returns  A const reference to the matrix whose columns are the
    * eigenvectors.
@@ -164,7 +164,7 @@ class ComplexEigenSolver {
     return m_eivec;
   }
 
-  /* \brief Returns the eigenvalues of given matrix.
+  /** \brief Returns the eigenvalues of given matrix.
    *
    * \returns A const reference to the column vector containing the eigenvalues.
    *
@@ -187,7 +187,7 @@ class ComplexEigenSolver {
     return m_eivalues;
   }
 
-  /* \brief Computes eigendecomposition of given matrix.
+  /** \brief Computes eigendecomposition of given matrix.
    *
    * \param[in]  matrix  Square matrix whose eigendecomposition is to be
    * computed. \param[in]  computeEigenvectors  If true, both the eigenvectors
@@ -215,7 +215,7 @@ class ComplexEigenSolver {
   ComplexEigenSolver& compute(const EigenBase<InputType>& matrix,
                               bool computeEigenvectors = true);
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful, \c NoConvergence
    * otherwise.
@@ -225,13 +225,13 @@ class ComplexEigenSolver {
     return m_schur.info();
   }
 
-  /* \brief Sets the maximum number of iterations allowed. */
+  /** \brief Sets the maximum number of iterations allowed. */
   ComplexEigenSolver& setMaxIterations(Index maxIters) {
     m_schur.setMaxIterations(maxIters);
     return *this;
   }
 
-  /* \brief Returns the maximum number of iterations. */
+  /** \brief Returns the maximum number of iterations. */
   Index getMaxIterations() { return m_schur.getMaxIterations(); }
 
  protected:

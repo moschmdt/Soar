@@ -45,7 +45,7 @@ struct traits<BDCSVD<_MatrixType> > : traits<_MatrixType> {
 
 }  // end namespace internal
 
-/* \ingroup SVD_Module
+/** \ingroup SVD_Module
  *
  *
  * \class BDCSVD
@@ -109,7 +109,7 @@ class BDCSVD : public SVDBase<BDCSVD<_MatrixType> > {
   typedef Ref<ArrayXr> ArrayRef;
   typedef Ref<ArrayXi> IndicesRef;
 
-  /* \brief Default Constructor.
+  /** \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via BDCSVD::compute(const MatrixType&).
@@ -121,7 +121,7 @@ class BDCSVD : public SVDBase<BDCSVD<_MatrixType> > {
         m_compV(false),
         m_numIters(0) {}
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem size.
@@ -132,7 +132,7 @@ class BDCSVD : public SVDBase<BDCSVD<_MatrixType> > {
     allocate(rows, cols, computationOptions);
   }
 
-  /* \brief Constructor performing the decomposition of given matrix.
+  /** \brief Constructor performing the decomposition of given matrix.
    *
    * \param matrix the matrix to decompose
    * \param computationOptions optional parameter allowing to specify if you
@@ -151,7 +151,7 @@ class BDCSVD : public SVDBase<BDCSVD<_MatrixType> > {
 
   ~BDCSVD() {}
 
-  /* \brief Method performing the decomposition of given matrix using custom
+  /** \brief Method performing the decomposition of given matrix using custom
    * options.
    *
    * \param matrix the matrix to decompose
@@ -166,7 +166,7 @@ class BDCSVD : public SVDBase<BDCSVD<_MatrixType> > {
    */
   BDCSVD& compute(const MatrixType& matrix, unsigned int computationOptions);
 
-  /* \brief Method performing the decomposition of given matrix using current
+  /** \brief Method performing the decomposition of given matrix using current
    * options.
    *
    * \param matrix the matrix to decompose
@@ -278,7 +278,7 @@ BDCSVD<MatrixType>& BDCSVD<MatrixType>::compute(
 
   const RealScalar considerZero = (std::numeric_limits<RealScalar>::min)();
 
-  //* step -1 - If the problem is too small, directly falls back to JacobiSVD
+  //** step -1 - If the problem is too small, directly falls back to JacobiSVD
   // and return
   if (matrix.cols() < m_algoswap) {
     // FIXME this line involves temporaries
@@ -294,7 +294,7 @@ BDCSVD<MatrixType>& BDCSVD<MatrixType>::compute(
     return *this;
   }
 
-  //* step 0 - Copy the input matrix and apply scaling to reduce
+  //** step 0 - Copy the input matrix and apply scaling to reduce
   // over/under-flows
   RealScalar scale = matrix.cwiseAbs().template maxCoeff<PropagateNaN>();
   if (!(numext::isfinite)(scale)) {
@@ -310,11 +310,11 @@ BDCSVD<MatrixType>& BDCSVD<MatrixType>::compute(
   else
     copy = matrix / scale;
 
-  //* step 1 - Bidiagonalization
+  //** step 1 - Bidiagonalization
   // FIXME this line involves temporaries
   internal::UpperBidiagonalization<MatrixX> bid(copy);
 
-  //* step 2 - Divide & Conquer
+  //** step 2 - Divide & Conquer
   m_naiveU.setZero();
   m_naiveV.setZero();
   // FIXME this line involves a temporary matrix
@@ -326,7 +326,7 @@ BDCSVD<MatrixType>& BDCSVD<MatrixType>::compute(
     return *this;
   }
 
-  //* step 3 - Copy singular values and vectors
+  //** step 3 - Copy singular values and vectors
   for (int i = 0; i < m_diagSize; i++) {
     RealScalar a = abs(m_computed.coeff(i, i));
     m_singularValues.coeffRef(i) = a * scale;
@@ -378,7 +378,7 @@ void BDCSVD<MatrixType>::copyUV(const HouseholderU& householderU,
   }
 }
 
-/* \internal
+/** \internal
  * Performs A = A * B exploiting the special structure of the matrix A.
  * Splitting A as: A = [A1] [A2] such that A1.rows()==n1, then we assume that at
  * least half of the columns of A1 and A2 are zeros. We can thus pack them prior
@@ -1160,7 +1160,7 @@ void BDCSVD<MatrixType>::perturbCol0(const ArrayRef& col0, const ArrayRef& diag,
                       << " "
                       << "\n";
             std::cout << "  " << diag(i) << "\n";
-            Index j = (i < k /*|| l==0*/) ? i : perm(l - 1);
+            Index j = (i < k /**|| l==0*/) ? i : perm(l - 1);
             std::cout << "  "
                       << "j=" << j << "\n";
           }
@@ -1503,7 +1503,7 @@ void BDCSVD<MatrixType>::deflation(Eigen::Index firstCol, Eigen::Index lastCol,
         std::cout << "deflation 4.4 with i = " << i << " because " << diag(i)
                   << " - " << diag(i - 1) << " == " << (diag(i) - diag(i - 1))
                   << " < "
-                  << NumTraits<RealScalar>::epsilon() * /*diag(i)*/ maxDiag
+                  << NumTraits<RealScalar>::epsilon() * /**diag(i)*/ maxDiag
                   << "\n";
 #endif
         eigen_internal_assert(abs(diag(i) - diag(i - 1)) < epsilon_coarse &&
@@ -1525,7 +1525,7 @@ void BDCSVD<MatrixType>::deflation(Eigen::Index firstCol, Eigen::Index lastCol,
 #endif
 }  // end deflation
 
-/* \svd_module
+/** \svd_module
  *
  * \return the singular value decomposition of \c *this computed by Divide &
  * Conquer algorithm

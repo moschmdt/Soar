@@ -347,28 +347,28 @@ EIGEN_STRONG_INLINE Packet2d pset1frombits<Packet2d>(uint64_t from) {
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet4f peven_mask(const Packet4f& /*a*/) {
+EIGEN_STRONG_INLINE Packet4f peven_mask(const Packet4f& /**a*/) {
   return _mm_castsi128_ps(_mm_set_epi32(0, -1, 0, -1));
 }
 template <>
-EIGEN_STRONG_INLINE Packet4i peven_mask(const Packet4i& /*a*/) {
+EIGEN_STRONG_INLINE Packet4i peven_mask(const Packet4i& /**a*/) {
   return _mm_set_epi32(0, -1, 0, -1);
 }
 template <>
-EIGEN_STRONG_INLINE Packet2d peven_mask(const Packet2d& /*a*/) {
+EIGEN_STRONG_INLINE Packet2d peven_mask(const Packet2d& /**a*/) {
   return _mm_castsi128_pd(_mm_set_epi32(0, 0, -1, -1));
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet4f pzero(const Packet4f& /*a*/) {
+EIGEN_STRONG_INLINE Packet4f pzero(const Packet4f& /**a*/) {
   return _mm_setzero_ps();
 }
 template <>
-EIGEN_STRONG_INLINE Packet2d pzero(const Packet2d& /*a*/) {
+EIGEN_STRONG_INLINE Packet2d pzero(const Packet2d& /**a*/) {
   return _mm_setzero_pd();
 }
 template <>
-EIGEN_STRONG_INLINE Packet4i pzero(const Packet4i& /*a*/) {
+EIGEN_STRONG_INLINE Packet4i pzero(const Packet4i& /**a*/) {
   return _mm_setzero_si128();
 }
 

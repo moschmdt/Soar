@@ -1,4 +1,4 @@
-/*
+/**
  * chunk_record.h
  *
  *  Created on: Apr 22, 2016
@@ -84,4 +84,4 @@ class chunk_record {
   chunk_stats stats;
 };
 
-#endif /* CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_CHUNK_RECORD_H_ */
+#endif /** CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_CHUNK_RECORD_H_ */

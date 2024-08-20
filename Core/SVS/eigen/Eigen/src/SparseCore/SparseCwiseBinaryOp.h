@@ -642,7 +642,7 @@ struct sparse_conjunction_evaluator<XprType, IteratorBased, IndexBased>
 
 }  // namespace internal
 
-/*
+/**
  * Implementation of SparseMatrixBase and SparseCwise functions/operators
  */
 

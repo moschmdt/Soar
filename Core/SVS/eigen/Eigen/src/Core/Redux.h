@@ -19,7 +19,7 @@ namespace internal {
 //  * implement other kind of vectorization
 //  * factorize code
 
-/*
+/**
  * Part 1 : the logic deciding a strategy for vectorization and unrolling
  */
 
@@ -101,11 +101,11 @@ struct redux_traits {
 #endif
 };
 
-/*
+/**
  * Part 2 : unrollers
  */
 
-/* no vectorization */
+/** no vectorization */
 
 template <typename Func, typename Evaluator, int Start, int Length>
 struct redux_novec_unroller {
@@ -150,7 +150,7 @@ struct redux_novec_unroller<Func, Evaluator, Start, 0> {
   }
 };
 
-/* vectorization */
+/** vectorization */
 
 template <typename Func, typename Evaluator, int Start, int Length>
 struct redux_vec_unroller {
@@ -189,7 +189,7 @@ struct redux_vec_unroller<Func, Evaluator, Start, 1> {
   }
 };
 
-/*
+/**
  * Part 3 : implementation of all cases
  */
 
@@ -227,7 +227,7 @@ struct redux_impl<Func, Evaluator, DefaultTraversal, CompleteUnrolling>
   typedef typename Evaluator::Scalar Scalar;
   template <typename XprType>
   EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE Scalar
-  run(const Evaluator& eval, const Func& func, const XprType& /*xpr*/) {
+  run(const Evaluator& eval, const Func& func, const XprType& /**xpr*/) {
     return Base::run(eval, func);
   }
 };
@@ -420,11 +420,11 @@ class redux_evaluator : public internal::evaluator<_XprType> {
 
 }  // end namespace internal
 
-/*
+/**
  * Part 4 : public API
  */
 
-/* \returns the result of a full redux operation on the whole matrix or vector
+/** \returns the result of a full redux operation on the whole matrix or vector
  * using \a func
  *
  * The template parameter \a BinaryOp is the type of the functor \a func which
@@ -452,7 +452,7 @@ DenseBase<Derived>::redux(const Func& func) const {
                                                         derived());
 }
 
-/* \returns the minimum of all coefficients of \c *this.
+/** \returns the minimum of all coefficients of \c *this.
  * In case \c *this contains NaN, NaNPropagation determines the behavior:
  *   NaNPropagation == PropagateFast : undefined
  *   NaNPropagation == PropagateNaN : result is NaN
@@ -468,7 +468,7 @@ DenseBase<Derived>::minCoeff() const {
       Eigen::internal::scalar_min_op<Scalar, Scalar, NaNPropagation>());
 }
 
-/* \returns the maximum of all coefficients of \c *this.
+/** \returns the maximum of all coefficients of \c *this.
  * In case \c *this contains NaN, NaNPropagation determines the behavior:
  *   NaNPropagation == PropagateFast : undefined
  *   NaNPropagation == PropagateNaN : result is NaN
@@ -484,7 +484,7 @@ DenseBase<Derived>::maxCoeff() const {
       Eigen::internal::scalar_max_op<Scalar, Scalar, NaNPropagation>());
 }
 
-/* \returns the sum of all coefficients of \c *this
+/** \returns the sum of all coefficients of \c *this
  *
  * If \c *this is empty, then the value 0 is returned.
  *
@@ -498,7 +498,7 @@ DenseBase<Derived>::sum() const {
   return derived().redux(Eigen::internal::scalar_sum_op<Scalar, Scalar>());
 }
 
-/* \returns the mean of all coefficients of *this
+/** \returns the mean of all coefficients of *this
  *
  * \sa trace(), prod(), sum()
  */
@@ -517,7 +517,7 @@ DenseBase<Derived>::mean() const {
 #endif
 }
 
-/* \returns the product of all coefficients of *this
+/** \returns the product of all coefficients of *this
  *
  * Example: \include MatrixBase_prod.cpp
  * Output: \verbinclude MatrixBase_prod.out
@@ -532,7 +532,7 @@ DenseBase<Derived>::prod() const {
   return derived().redux(Eigen::internal::scalar_product_op<Scalar>());
 }
 
-/* \returns the trace of \c *this, i.e. the sum of the coefficients on the main
+/** \returns the trace of \c *this, i.e. the sum of the coefficients on the main
  * diagonal.
  *
  * \c *this can be any matrix, not necessarily square.

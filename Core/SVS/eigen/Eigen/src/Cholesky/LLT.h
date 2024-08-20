@@ -26,7 +26,7 @@ template <typename MatrixType, int UpLo>
 struct LLT_Traits;
 }  // namespace internal
 
-/* \ingroup Cholesky_Module
+/** \ingroup Cholesky_Module
  *
  * \class LLT
  *
@@ -88,7 +88,7 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
 
   typedef internal::LLT_Traits<MatrixType, UpLo> Traits;
 
-  /*
+  /**
    * \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
@@ -96,7 +96,7 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
    */
   LLT() : m_matrix(), m_isInitialized(false) {}
 
-  /* \brief Default Constructor with memory preallocation
+  /** \brief Default Constructor with memory preallocation
    *
    * Like the default constructor but with preallocation of the internal data
    * according to the specified problem \a size.
@@ -110,7 +110,7 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
     compute(matrix.derived());
   }
 
-  /* \brief Constructs a LLT factorization from a given matrix
+  /** \brief Constructs a LLT factorization from a given matrix
    *
    * This overloaded constructor is provided for \link InplaceDecomposition
    * inplace decomposition \endlink when \c MatrixType is a Eigen::Ref.
@@ -123,20 +123,20 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
     compute(matrix.derived());
   }
 
-  /* \returns a view of the upper triangular matrix U */
+  /** \returns a view of the upper triangular matrix U */
   inline typename Traits::MatrixU matrixU() const {
     eigen_assert(m_isInitialized && "LLT is not initialized.");
     return Traits::getU(m_matrix);
   }
 
-  /* \returns a view of the lower triangular matrix L */
+  /** \returns a view of the lower triangular matrix L */
   inline typename Traits::MatrixL matrixL() const {
     eigen_assert(m_isInitialized && "LLT is not initialized.");
     return Traits::getL(m_matrix);
   }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* \returns the solution x of \f$ A x = b \f$ using the current decomposition
+  /** \returns the solution x of \f$ A x = b \f$ using the current decomposition
    * of A.
    *
    * Since this LLT class assumes anyway that the matrix A is invertible, the
@@ -157,7 +157,7 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
   template <typename InputType>
   LLT& compute(const EigenBase<InputType>& matrix);
 
-  /* \returns an estimate of the reciprocal condition number of the matrix of
+  /** \returns an estimate of the reciprocal condition number of the matrix of
    *  which \c *this is the Cholesky decomposition.
    */
   RealScalar rcond() const {
@@ -167,7 +167,7 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
     return internal::rcond_estimate_helper(m_l1_norm, *this);
   }
 
-  /* \returns the LLT decomposition matrix
+  /** \returns the LLT decomposition matrix
    *
    * TODO: document the storage layout
    */
@@ -178,7 +178,7 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
 
   MatrixType reconstructedMatrix() const;
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the matrix.appears not to be positive
@@ -189,7 +189,7 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
     return m_info;
   }
 
-  /* \returns the adjoint of \c *this, that is, a const reference to the
+  /** \returns the adjoint of \c *this, that is, a const reference to the
    * decomposition itself as the underlying matrix is self-adjoint.
    *
    * This method is provided for compatibility with other matrix decompositions,
@@ -221,7 +221,7 @@ class LLT : public SolverBase<LLT<_MatrixType, _UpLo> > {
     EIGEN_STATIC_ASSERT_NON_INTEGER(Scalar);
   }
 
-  /* \internal
+  /** \internal
    * Used to compute and store L
    * The strict upper part is not used and even not initialized.
    */
@@ -422,7 +422,7 @@ struct LLT_Traits<MatrixType, Upper> {
 
 }  // end namespace internal
 
-/* Computes / recomputes the Cholesky decomposition A = LL^* = U^*U of \a
+/** Computes / recomputes the Cholesky decomposition A = LL^* = U^*U of \a
  * matrix
  *
  * \returns a reference to *this
@@ -462,7 +462,7 @@ LLT<MatrixType, _UpLo>& LLT<MatrixType, _UpLo>::compute(
   return *this;
 }
 
-/* Performs a rank one update (or dowdate) of the current decomposition.
+/** Performs a rank one update (or dowdate) of the current decomposition.
  * If A = LL^* before the rank one update,
  * then after it we have LL^* = A + sigma * v v^* where \a v must be a vector
  * of same dimension.
@@ -502,7 +502,7 @@ void LLT<_MatrixType, _UpLo>::_solve_impl_transposed(const RhsType& rhs,
 }
 #endif
 
-/* \internal use x = llt_object.solve(x);
+/** \internal use x = llt_object.solve(x);
  *
  * This is the \em in-place version of solve().
  *
@@ -527,7 +527,7 @@ void LLT<MatrixType, _UpLo>::solveInPlace(
   matrixU().solveInPlace(bAndX);
 }
 
-/* \returns the matrix represented by the decomposition,
+/** \returns the matrix represented by the decomposition,
  * i.e., it returns the product: L L^*.
  * This function is provided for debug purpose. */
 template <typename MatrixType, int _UpLo>
@@ -536,7 +536,7 @@ MatrixType LLT<MatrixType, _UpLo>::reconstructedMatrix() const {
   return matrixL() * matrixL().adjoint().toDenseMatrix();
 }
 
-/* \cholesky_module
+/** \cholesky_module
  * \returns the LLT decomposition of \c *this
  * \sa SelfAdjointView::llt()
  */
@@ -546,7 +546,7 @@ MatrixBase<Derived>::llt() const {
   return LLT<PlainObject>(derived());
 }
 
-/* \cholesky_module
+/** \cholesky_module
  * \returns the LLT decomposition of \c *this
  * \sa SelfAdjointView::llt()
  */

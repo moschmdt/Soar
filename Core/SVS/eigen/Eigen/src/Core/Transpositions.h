@@ -26,49 +26,49 @@ class TranspositionsBase {
   EIGEN_DEVICE_FUNC
   const Derived& derived() const { return *static_cast<const Derived*>(this); }
 
-  /* Copies the \a other transpositions into \c *this */
+  /** Copies the \a other transpositions into \c *this */
   template <typename OtherDerived>
   Derived& operator=(const TranspositionsBase<OtherDerived>& other) {
     indices() = other.indices();
     return derived();
   }
 
-  /* \returns the number of transpositions */
+  /** \returns the number of transpositions */
   EIGEN_DEVICE_FUNC
   Index size() const { return indices().size(); }
-  /* \returns the number of rows of the equivalent permutation matrix */
+  /** \returns the number of rows of the equivalent permutation matrix */
   EIGEN_DEVICE_FUNC
   Index rows() const { return indices().size(); }
-  /* \returns the number of columns of the equivalent permutation matrix */
+  /** \returns the number of columns of the equivalent permutation matrix */
   EIGEN_DEVICE_FUNC
   Index cols() const { return indices().size(); }
 
-  /* Direct access to the underlying index vector */
+  /** Direct access to the underlying index vector */
   EIGEN_DEVICE_FUNC
   inline const StorageIndex& coeff(Index i) const { return indices().coeff(i); }
-  /* Direct access to the underlying index vector */
+  /** Direct access to the underlying index vector */
   inline StorageIndex& coeffRef(Index i) { return indices().coeffRef(i); }
-  /* Direct access to the underlying index vector */
+  /** Direct access to the underlying index vector */
   inline const StorageIndex& operator()(Index i) const { return indices()(i); }
-  /* Direct access to the underlying index vector */
+  /** Direct access to the underlying index vector */
   inline StorageIndex& operator()(Index i) { return indices()(i); }
-  /* Direct access to the underlying index vector */
+  /** Direct access to the underlying index vector */
   inline const StorageIndex& operator[](Index i) const { return indices()(i); }
-  /* Direct access to the underlying index vector */
+  /** Direct access to the underlying index vector */
   inline StorageIndex& operator[](Index i) { return indices()(i); }
 
-  /* const version of indices(). */
+  /** const version of indices(). */
   EIGEN_DEVICE_FUNC
   const IndicesType& indices() const { return derived().indices(); }
-  /* \returns a reference to the stored array representing the transpositions.
+  /** \returns a reference to the stored array representing the transpositions.
    */
   EIGEN_DEVICE_FUNC
   IndicesType& indices() { return derived().indices(); }
 
-  /* Resizes to given size. */
+  /** Resizes to given size. */
   inline void resize(Index newSize) { indices().resize(newSize); }
 
-  /* Sets \c *this to represents an identity transformation */
+  /** Sets \c *this to represents an identity transformation */
   void setIdentity() {
     for (StorageIndex i = 0; i < indices().size(); ++i) coeffRef(i) = i;
   }
@@ -77,7 +77,7 @@ class TranspositionsBase {
   // might be useful when the target matrix expression is complex, e.g.:
   // object.matrix().block(..,..,..,..) = trans *
   // object.matrix().block(..,..,..,..);
-  /*
+  /**
   template<typename MatrixType>
   void applyForwardToRows(MatrixType& mat) const
   {
@@ -95,12 +95,12 @@ class TranspositionsBase {
   }
   */
 
-  /* \returns the inverse transformation */
+  /** \returns the inverse transformation */
   inline Transpose<TranspositionsBase> inverse() const {
     return Transpose<TranspositionsBase>(derived());
   }
 
-  /* \returns the tranpose transformation */
+  /** \returns the tranpose transformation */
   inline Transpose<TranspositionsBase> transpose() const {
     return Transpose<TranspositionsBase>(derived());
   }
@@ -122,7 +122,7 @@ struct traits<
 };
 }  // namespace internal
 
-/* \class Transpositions
+/** \class Transpositions
  * \ingroup Core_Module
  *
  * \brief Represents a sequence of transpositions (row/column interchange)
@@ -166,30 +166,30 @@ class Transpositions
 
   inline Transpositions() {}
 
-  /* Copy constructor. */
+  /** Copy constructor. */
   template <typename OtherDerived>
   inline Transpositions(const TranspositionsBase<OtherDerived>& other)
       : m_indices(other.indices()) {}
 
-  /* Generic constructor from expression of the transposition indices. */
+  /** Generic constructor from expression of the transposition indices. */
   template <typename Other>
   explicit inline Transpositions(const MatrixBase<Other>& indices)
       : m_indices(indices) {}
 
-  /* Copies the \a other transpositions into \c *this */
+  /** Copies the \a other transpositions into \c *this */
   template <typename OtherDerived>
   Transpositions& operator=(const TranspositionsBase<OtherDerived>& other) {
     return Base::operator=(other);
   }
 
-  /* Constructs an uninitialized permutation matrix of given size.
+  /** Constructs an uninitialized permutation matrix of given size.
    */
   inline Transpositions(Index size) : m_indices(size) {}
 
-  /* const version of indices(). */
+  /** const version of indices(). */
   EIGEN_DEVICE_FUNC
   const IndicesType& indices() const { return m_indices; }
-  /* \returns a reference to the stored array representing the transpositions.
+  /** \returns a reference to the stored array representing the transpositions.
    */
   EIGEN_DEVICE_FUNC
   IndicesType& indices() { return m_indices; }
@@ -236,14 +236,14 @@ class Map<
   inline Map(const StorageIndex* indicesPtr, Index size)
       : m_indices(indicesPtr, size) {}
 
-  /* Copies the \a other transpositions into \c *this */
+  /** Copies the \a other transpositions into \c *this */
   template <typename OtherDerived>
   Map& operator=(const TranspositionsBase<OtherDerived>& other) {
     return Base::operator=(other);
   }
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* This is a special case of the templated operator=. Its purpose is to
+  /** This is a special case of the templated operator=. Its purpose is to
    * prevent a default operator= from hiding the templated operator=.
    */
   Map& operator=(const Map& other) {
@@ -252,11 +252,11 @@ class Map<
   }
 #endif
 
-  /* const version of indices(). */
+  /** const version of indices(). */
   EIGEN_DEVICE_FUNC
   const IndicesType& indices() const { return m_indices; }
 
-  /* \returns a reference to the stored array representing the transpositions.
+  /** \returns a reference to the stored array representing the transpositions.
    */
   EIGEN_DEVICE_FUNC
   IndicesType& indices() { return m_indices; }
@@ -286,18 +286,18 @@ class TranspositionsWrapper
   explicit inline TranspositionsWrapper(IndicesType& indices)
       : m_indices(indices) {}
 
-  /* Copies the \a other transpositions into \c *this */
+  /** Copies the \a other transpositions into \c *this */
   template <typename OtherDerived>
   TranspositionsWrapper& operator=(
       const TranspositionsBase<OtherDerived>& other) {
     return Base::operator=(other);
   }
 
-  /* const version of indices(). */
+  /** const version of indices(). */
   EIGEN_DEVICE_FUNC
   const IndicesType& indices() const { return m_indices; }
 
-  /* \returns a reference to the stored array representing the transpositions.
+  /** \returns a reference to the stored array representing the transpositions.
    */
   EIGEN_DEVICE_FUNC
   IndicesType& indices() { return m_indices; }
@@ -306,7 +306,7 @@ class TranspositionsWrapper
   typename IndicesType::Nested m_indices;
 };
 
-/* \returns the \a matrix with the \a transpositions applied to the columns.
+/** \returns the \a matrix with the \a transpositions applied to the columns.
  */
 template <typename MatrixDerived, typename TranspositionsDerived>
 EIGEN_DEVICE_FUNC const
@@ -317,7 +317,7 @@ EIGEN_DEVICE_FUNC const
       matrix.derived(), transpositions.derived());
 }
 
-/* \returns the \a matrix with the \a transpositions applied to the rows.
+/** \returns the \a matrix with the \a transpositions applied to the rows.
  */
 template <typename TranspositionsDerived, typename MatrixDerived>
 EIGEN_DEVICE_FUNC const
@@ -355,7 +355,7 @@ class Transpose<TranspositionsBase<TranspositionsDerived> > {
     return m_transpositions.size();
   }
 
-  /* \returns the \a matrix with the inverse transpositions applied to the
+  /** \returns the \a matrix with the inverse transpositions applied to the
    * columns.
    */
   template <typename OtherDerived>
@@ -365,7 +365,7 @@ class Transpose<TranspositionsBase<TranspositionsDerived> > {
                                                               trt);
   }
 
-  /* \returns the \a matrix with the inverse transpositions applied to the
+  /** \returns the \a matrix with the inverse transpositions applied to the
    * rows.
    */
   template <typename OtherDerived>

@@ -1,4 +1,4 @@
-/*
+/**
  * dprint.h
  *
  *  Created on: Jul 2, 2016
@@ -11,7 +11,7 @@
 
 #ifdef SOAR_RELEASE_VERSION
 
-/* These definitions will cause debug printing to be compiled out */
+/** These definitions will cause debug printing to be compiled out */
 
 #define dprint(mode, format, ...) ((void)0)
 #define dprint_noprefix(mode, format, ...) ((void)0)
@@ -25,7 +25,7 @@
 
 #else
 
-/* Since SOAR_RELEASE_VERSION is off, define debug print macros that do
+/** Since SOAR_RELEASE_VERSION is off, define debug print macros that do
  * something */
 
 #include "output_manager.h"
@@ -37,7 +37,7 @@
 #define dprint_header(mode, h, ...) \
   Output_Manager::Get_OM().debug_print_header(mode, h, ##__VA_ARGS__)
 
-/* -- The rest of these could be migrated to soar format strings -- */
+/** -- The rest of these could be migrated to soar format strings -- */
 #define dprint_saved_test_list(mode, st) \
   Output_Manager::Get_OM().print_saved_test_list(mode, st)
 #define dprint_partial_matches(mode, p_p_node) \
@@ -51,4 +51,4 @@
 
 #endif
 
-#endif /* CORE_SOARKERNEL_SRC_DEBUG_CODE_DPRINT_H_ */
+#endif /** CORE_SOARKERNEL_SRC_DEBUG_CODE_DPRINT_H_ */

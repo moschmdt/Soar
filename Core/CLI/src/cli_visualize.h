@@ -1,4 +1,4 @@
-/*
+/**
  * cli_visualize.h
  *
  *  Created on: Dec 22, 2015
@@ -78,4 +78,4 @@ class VisualizeCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CLI_VISUALIZE_H_ */
+#endif /** CLI_VISUALIZE_H_ */

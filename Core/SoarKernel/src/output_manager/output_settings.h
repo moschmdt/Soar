@@ -1,4 +1,4 @@
-/*
+/**
  * output_settings.h
  *
  *  Created on: Jul 14, 2016
@@ -44,4 +44,4 @@ class OM_Parameters : public soar_module::param_container {
   const std::string get_agent_channel_string(agent* thisAgent);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_OUTPUT_MANAGER_OUTPUT_SETTINGS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_OUTPUT_MANAGER_OUTPUT_SETTINGS_H_ */

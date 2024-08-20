@@ -135,32 +135,32 @@ typedef struct tagKBDLLHOOKSTRUCT {
 
 #ifndef WGL_EXT_swap_control
 
-/* Entry points */
+/** Entry points */
 typedef int(APIENTRY *PFNWGLSWAPINTERVALEXTPROC)(int);
 
-#endif /*WGL_EXT_swap_control*/
+#endif /**WGL_EXT_swap_control*/
 
 #ifndef WGL_ARB_extensions_string
 
-/* Entry points */
+/** Entry points */
 typedef const char *(APIENTRY *PFNWGLGETEXTENSIONSSTRINGARBPROC)(HDC);
 
-#endif /*WGL_ARB_extensions_string*/
+#endif /**WGL_ARB_extensions_string*/
 
 #ifndef WGL_EXT_extension_string
 
-/* Entry points */
+/** Entry points */
 typedef const char *(APIENTRY *PFNWGLGETEXTENSIONSSTRINGEXTPROC)(void);
 
-#endif /*WGL_EXT_extension_string*/
+#endif /**WGL_EXT_extension_string*/
 
 #ifndef WGL_ARB_pixel_format
 
-/* Entry points */
+/** Entry points */
 typedef BOOL(WINAPI *PFNWGLGETPIXELFORMATATTRIBIVARBPROC)(HDC, int, int, UINT,
                                                           const int *, int *);
 
-/* Constants for wglGetPixelFormatAttribivARB */
+/** Constants for wglGetPixelFormatAttribivARB */
 #define WGL_NUMBER_PIXEL_FORMATS_ARB 0x2000
 #define WGL_DRAW_TO_WINDOW_ARB 0x2001
 #define WGL_SUPPORT_OPENGL_ARB 0x2010
@@ -184,45 +184,45 @@ typedef BOOL(WINAPI *PFNWGLGETPIXELFORMATATTRIBIVARBPROC)(HDC, int, int, UINT,
 #define WGL_SAMPLE_BUFFERS_ARB 0x2041
 #define WGL_SAMPLES_ARB 0x2042
 
-/* Constants for WGL_ACCELERATION_ARB */
+/** Constants for WGL_ACCELERATION_ARB */
 #define WGL_NO_ACCELERATION_ARB 0x2025
 #define WGL_GENERIC_ACCELERATION_ARB 0x2026
 #define WGL_FULL_ACCELERATION_ARB 0x2027
 
-/* Constants for WGL_PIXEL_TYPE_ARB */
+/** Constants for WGL_PIXEL_TYPE_ARB */
 #define WGL_TYPE_RGBA_ARB 0x202B
 #define WGL_TYPE_COLORINDEX_ARB 0x202C
 
-#endif /*WGL_ARB_pixel_format*/
+#endif /**WGL_ARB_pixel_format*/
 
 #ifndef WGL_ARB_create_context
 
-/* Entry points */
+/** Entry points */
 typedef HGLRC(WINAPI *PFNWGLCREATECONTEXTATTRIBSARBPROC)(HDC, HGLRC,
                                                          const int *);
 
-/* Tokens for wglCreateContextAttribsARB attributes */
+/** Tokens for wglCreateContextAttribsARB attributes */
 #define WGL_CONTEXT_MAJOR_VERSION_ARB 0x2091
 #define WGL_CONTEXT_MINOR_VERSION_ARB 0x2092
 #define WGL_CONTEXT_LAYER_PLANE_ARB 0x2093
 #define WGL_CONTEXT_FLAGS_ARB 0x2094
 #define WGL_CONTEXT_PROFILE_MASK_ARB 0x9126
 
-/* Bits for WGL_CONTEXT_FLAGS_ARB */
+/** Bits for WGL_CONTEXT_FLAGS_ARB */
 #define WGL_CONTEXT_DEBUG_BIT_ARB 0x0001
 #define WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB 0x0002
 
-/* Bits for WGL_CONTEXT_PROFILE_MASK_ARB */
+/** Bits for WGL_CONTEXT_PROFILE_MASK_ARB */
 #define WGL_CONTEXT_CORE_PROFILE_BIT_ARB 0x00000001
 #define WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB 0x00000002
 
-#endif /*WGL_ARB_create_context*/
+#endif /**WGL_ARB_create_context*/
 
 #ifndef GL_VERSION_3_0
 
 typedef const GLubyte *(APIENTRY *PFNGLGETSTRINGIPROC)(GLenum, GLuint);
 
-#endif /*GL_VERSION_3_0*/
+#endif /**GL_VERSION_3_0*/
 
 //========================================================================
 // DLLs that are loaded at glfwInit()

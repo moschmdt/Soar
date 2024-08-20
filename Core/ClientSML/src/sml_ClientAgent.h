@@ -22,7 +22,7 @@
 #include "sml_ClientWorkingMemory.h"
 #include "sml_ListMap.h"
 
-/* Returns the path to the soar dll.  Hijacks code used by SpawnDebugger */
+/** Returns the path to the soar dll.  Hijacks code used by SpawnDebugger */
 EXPORT std::string get_soarlib_path();
 
 namespace soarxml {
@@ -206,7 +206,7 @@ class EXPORT Agent : public ClientErrors {
   Connection* GetConnection() const;
   WorkingMemory* GetWM() { return &m_WorkingMemory; }
 
-  /*
+  /**
    * @brief This function is called when output is received
    *        from the Soar kernel.
    *
@@ -217,7 +217,7 @@ class EXPORT Agent : public ClientErrors {
    */
   void ReceivedOutput(AnalyzeXML* pIncoming, soarxml::ElementXML* pResponse);
 
-  /*
+  /**
    * @brief This function is called when an event is received
    *        from the Soar kernel.
    *
@@ -235,19 +235,19 @@ class EXPORT Agent : public ClientErrors {
   void ReceivedXMLEvent(smlXMLEventId id, AnalyzeXML* pIncoming,
                         soarxml::ElementXML* pResponse);
 
-  /* NOTE: Slightly different sig as this is called without analyzing the
+  /** NOTE: Slightly different sig as this is called without analyzing the
    * incoming msg so it's a bit faster */
   void ReceivedXMLTraceEvent(smlXMLEventId id,
                              soarxml::ElementXML* pIncomingMsg,
                              soarxml::ElementXML* pResponse);
 
-  /*
+  /**
    * @brief This function is called after output has been received
    *        and processed from the kernel.
    */
   void FireOutputNotification();
 
-  /*
+  /**
    * @brief Call any registered handlers to notify them when
    *        a new working memory element is added to the top
    *        level of the output link.
@@ -255,7 +255,7 @@ class EXPORT Agent : public ClientErrors {
   void ReceivedOutputEvent(WMElement* pWmeAdded);
   bool IsRegisteredForOutputEvent();
 
-  /*
+  /**
    * @brief Returns true if changes to i/o links should be
    *        committed (sent to kernelSML) immediately when they
    *        occur, so the client doesn't need to remember to call commit.
@@ -263,17 +263,17 @@ class EXPORT Agent : public ClientErrors {
   bool IsAutoCommitEnabled();
 
  public:
-  /*
+  /**
    * @brief Returns this agent's name.
    */
   char const* GetAgentName() const { return m_Name.c_str(); }
 
-  /*
+  /**
    * @brief Returns a pointer to the kernel object that owns this Agent.
    */
   Kernel* GetKernel() const { return m_Kernel; }
 
-  /*
+  /**
    * @brief Load a set of productions from a file.
    *
    * The file must currently be on a filesystem that the kernel can
@@ -286,19 +286,19 @@ class EXPORT Agent : public ClientErrors {
    */
   bool LoadProductions(char const* pFilename, bool echoResults = true);
 
-  /*
+  /**
    * @brief Returns the id object for the input link.
    *        The agent retains ownership of this object.
    */
   Identifier* GetInputLink();
 
-  /*
+  /**
    * @brief An alternative that matches the older SGIO interface.
    *        The agent retains ownership of this object.
    */
   Identifier* GetILink() { return GetInputLink(); }
 
-  /*
+  /**
    * @brief Returns the id object for the output link.
    *        The agent retains ownership of this object.
    *        Note this will be null until the first time an agent
@@ -306,7 +306,7 @@ class EXPORT Agent : public ClientErrors {
    */
   Identifier* GetOutputLink();
 
-  /*
+  /**
    * @brief Builds a new WME that has a string value and schedules
    *        it for addition to Soar's input link.
    *
@@ -331,7 +331,7 @@ class EXPORT Agent : public ClientErrors {
   StringElement* CreateStringWME(Identifier* parent, char const* pAttribute,
                                  char const* pValue);
 
-  /*
+  /**
    * @brief Same as CreateStringWME but for a new WME that has
    *        an int as its value.
    *
@@ -347,7 +347,7 @@ class EXPORT Agent : public ClientErrors {
   IntElement* CreateIntWME(Identifier* parent, char const* pAttribute,
                            long long value);
 
-  /*
+  /**
    * @brief Same as CreateStringWME but for a new WME that has
    *        a floating point value.
    *
@@ -363,7 +363,7 @@ class EXPORT Agent : public ClientErrors {
   FloatElement* CreateFloatWME(Identifier* parent, char const* pAttribute,
                                double value);
 
-  /*
+  /**
    * @brief Same as CreateStringWME but for a new WME that has
    *        an identifier as its value.
    *        The identifier value is generated here and will be
@@ -381,7 +381,7 @@ class EXPORT Agent : public ClientErrors {
    */
   Identifier* CreateIdWME(Identifier* parent, char const* pAttribute);
 
-  /*
+  /**
    * @brief Creates a new WME that has an identifier as its value.
    *        The value in this case is the same as an existing identifier.
    *        This allows us to create a graph rather than a tree.
@@ -398,7 +398,7 @@ class EXPORT Agent : public ClientErrors {
   Identifier* CreateSharedIdWME(Identifier* parent, char const* pAttribute,
                                 Identifier* pSharedValue);
 
-  /*
+  /**
    * @brief Update the value of an existing WME.
    *        If "auto commit" is turned off in ClientKernel,
    *        the value is not actually sent to the kernel
@@ -424,7 +424,7 @@ class EXPORT Agent : public ClientErrors {
   void Update(IntElement* pWME, long long value);
   void Update(FloatElement* pWME, double value);
 
-  /*
+  /**
    * @brief This flag controls whether updating a wme to the same
    *        value that it already has causes it to "blink" or not.
    *        Blinking means the wme is removed and an identical wme is added,
@@ -433,7 +433,7 @@ class EXPORT Agent : public ClientErrors {
   void SetBlinkIfNoChange(bool state) { m_BlinkIfNoChange = state; }
   bool IsBlinkIfNoChange() { return m_BlinkIfNoChange; }
 
-  /*
+  /**
    * @brief Schedules a WME from deletion from the input link and removes
    *        it from the client's model of working memory.
    *
@@ -458,7 +458,7 @@ class EXPORT Agent : public ClientErrors {
    */
   bool DestroyWME(WMElement* pWME);
 
-  /*
+  /**
    * @brief Reinitialize this Soar agent.
    *        This will also cause the output link structures stored
    *        here to be erased and the current input link to be sent over
@@ -466,7 +466,7 @@ class EXPORT Agent : public ClientErrors {
    */
   char const* InitSoar();
 
-  /*
+  /**
    * @brief Register an "Output event handler".
    *        This is one way to be notified when output occurs on the output
    *link. You register for a specific attribute name (e.g. "move") and when that
@@ -486,12 +486,12 @@ class EXPORT Agent : public ClientErrors {
   int AddOutputHandler(char const* pAttributeName, OutputEventHandler handler,
                        void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular output event
    */
   bool RemoveOutputHandler(int callbackID);
 
-  /*
+  /**
    * @brief Register for a "RunEvent".
    *        Multiple handlers can be registered for the same event.
    * @param smlEventId     The event we're interested in (see the list below for
@@ -524,12 +524,12 @@ class EXPORT Agent : public ClientErrors {
   int RegisterForRunEvent(smlRunEventId id, RunEventHandler handler,
                           void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular event
    */
   bool UnregisterForRunEvent(int callbackID);
 
-  /*
+  /**
    * @brief Register to be notified when output has been received from the
    *agent. This event is a bit special, because we ensure that the client side
    *data structures have been updated before this event is triggered.  So you
@@ -540,7 +540,7 @@ class EXPORT Agent : public ClientErrors {
                                     void* pUserData, bool addToBack = true);
   bool UnregisterForOutputNotification(int callbackID);
 
-  /*
+  /**
    * @brief Register for a "ProductionEvent".
    *        Multiple handlers can be registered for the same event.
    * @param smlEventId     The event we're interested in (see the list below for
@@ -565,12 +565,12 @@ class EXPORT Agent : public ClientErrors {
                                  ProductionEventHandler handler,
                                  void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular event
    */
   bool UnregisterForProductionEvent(int callbackID);
 
-  /*
+  /**
    * @brief Register for an "PrintEvent".
    *        Multiple handlers can be registered for the same event.
    * @param smlEventId     The event we're interested in (see the list below for
@@ -594,12 +594,12 @@ class EXPORT Agent : public ClientErrors {
                             void* pUserData, bool ignoreOwnEchos = true,
                             bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular event
    */
   bool UnregisterForPrintEvent(int callbackID);
 
-  /*
+  /**
    * @brief Register for an "XMLEvent".
    *        Multiple handlers can be registered for the same event.
    * @param smlEventId     The event we're interested in (see the list below for
@@ -619,12 +619,12 @@ class EXPORT Agent : public ClientErrors {
   int RegisterForXMLEvent(smlXMLEventId id, XMLEventHandler handler,
                           void* pUserData, bool addToBack = true);
 
-  /*
+  /**
    * @brief Unregister for a particular event
    */
   bool UnregisterForXMLEvent(int callbackID);
 
-  /*==============================================================================
+  /**==============================================================================
   ===
   === There are a number of different ways to read information from
   === the output link.  Choose whichever method seems easiest to you.
@@ -670,7 +670,7 @@ class EXPORT Agent : public ClientErrors {
   ===
   ==============================================================================*/
 
-  /*
+  /**
    * @brief Enable or disable output-link change tracking. Do
    *        NOT use if using Commands, GetCommand,
    *        GetOutputLinkChange, AddOutputHandler.
@@ -679,25 +679,25 @@ class EXPORT Agent : public ClientErrors {
     GetWM()->SetOutputLinkChangeTracking(setting);
   }
 
-  /*
+  /**
    * @brief Get number of changes to output link since last cycle.
    */
   int GetNumberOutputLinkChanges();
 
-  /*
+  /**
    * @brief Get the n-th wme added or deleted to output link since
    *        last cycle.
    */
   WMElement* GetOutputLinkChange(int index);
 
-  /*
+  /**
    * @brief Returns true if the n-th wme change to the output-link
    *        since the last cycle was a wme being added.
    *        (false => it was a wme being deleted)
    */
   bool IsOutputLinkChangeAdd(int index);
 
-  /*
+  /**
   * @brief Deprecated: Clears the current list of changes
   *        to the output-link.
   # @deprecated This is now called automatically after each
@@ -705,7 +705,7 @@ class EXPORT Agent : public ClientErrors {
   */
   void ClearOutputLinkChanges();
 
-  /*
+  /**
    * @brief Get the number of "commands".  A command in this context
    *        is an identifier wme that have been added to the top level of
    *        the output-link since the last decision cycle.
@@ -715,7 +715,7 @@ class EXPORT Agent : public ClientErrors {
    */
   int GetNumberCommands();
 
-  /*
+  /**
    * @brief Returns true if there are "commands" available.
    *        A command in this context is an identifier wme that
    *        has been added to the top level of the output-link
@@ -726,7 +726,7 @@ class EXPORT Agent : public ClientErrors {
    */
   bool Commands() { return GetNumberCommands() > 0; }
 
-  /*
+  /**
    * @brief Get the n-th "command".  A command in this context
    *        is an identifier wme that have been added to the top level of
    *        the output-link since the last decision cycle.
@@ -746,18 +746,18 @@ class EXPORT Agent : public ClientErrors {
    */
   Identifier* GetCommand(int index);
 
-  /*
+  /**
    * @brief Send the most recent list of changes to working memory
    *        over to the kernel.
    */
   bool Commit();
 
-  /*
+  /**
    * @brief Returns true if this agent has uncommitted changes.
    */
   bool IsCommitRequired();
 
-  /*
+  /**
    * @brief   Run one Soar agent for the specified number of decisions
    *
    * @returns The result of executing the run command.
@@ -766,7 +766,7 @@ class EXPORT Agent : public ClientErrors {
   char const* RunSelf(int numberSteps, smlRunStepSize stepSize = sml_DECIDE);
   char const* RunSelfForever();
 
-  /*
+  /**
    * @brief   Run Soar until either output is generated or
    *          the maximum number of decisions is reached.
    *
@@ -779,19 +779,19 @@ class EXPORT Agent : public ClientErrors {
    */
   char const* RunSelfTilOutput();
 
-  /*
+  /**
    * @brief Returns true if this agent was part of the last set
    *        of agents that was run.
    */
   bool WasAgentOnRunList();
 
-  /*
+  /**
    * @brief Returns whether the last run for this agent was
    *        interrupted (by a stop call) or completed normally.
    */
   smlRunResult GetResultOfLastRun();
 
-  /*
+  /**
    * @brief Interrupt the currently running Soar agent.
    *
    * Call this after calling "Run" in order to stop a Soar agent.
@@ -807,7 +807,7 @@ class EXPORT Agent : public ClientErrors {
    */
   char const* StopSelf();
 
-  /*
+  /**
    * @brief Resend the complete input link to the kernel
    *        and remove our output link structures.
    *        We do this when the user issues an "init-soar" event.
@@ -816,24 +816,24 @@ class EXPORT Agent : public ClientErrors {
    */
   void Refresh();
 
-  /*
+  /**
    * @brief Returns the phase that the agent will execute when next
    *        asked to run.
    */
   smlPhase GetCurrentPhase();
 
-  /*
+  /**
    * @brief Returns the current decision cycle counter.
    */
   int GetDecisionCycleCounter();
 
-  /*
+  /**
    * @brief Returns the current run state of the agent.
    *        Mostly of use to determine if agent halted in last run.
    */
   smlRunState GetRunState();
 
-  /*
+  /**
    * @brief Process a command line command
    *
    * @param pCommandLine Command line string to process.
@@ -848,7 +848,7 @@ class EXPORT Agent : public ClientErrors {
                                  bool echoResults = false,
                                  bool noFilter = false);
 
-  /*
+  /**
    * @brief Execute a command line command and return the result
    *        as an XML object.
    *
@@ -865,7 +865,7 @@ class EXPORT Agent : public ClientErrors {
   std::string GetSVSOutput();
   std::string SVSQuery(const std::string& q);
 
-  /*
+  /**
    * @brief Get last command line result
    *
    * (This is the last result for any command sent to the kernel,
@@ -875,13 +875,13 @@ class EXPORT Agent : public ClientErrors {
    */
   bool GetLastCommandLineResult();
 
-  /*
+  /**
    * @brief Returns true if this string is the name of a production
    *        that is currently loaded in the agent.
    */
   bool IsProductionLoaded(char const* pProductionName);
 
-  /*
+  /**
    * @brief This method is used to update this client's representation
    *        of the input link to match what is currently on the agent's
    *        input link.
@@ -897,7 +897,7 @@ class EXPORT Agent : public ClientErrors {
    */
   bool SynchronizeInputLink();
 
-  /*
+  /**
    * @brief This method is used to update this client's representation
    *        of the output link to match what is currently on the agent's
    *        output link.
@@ -912,7 +912,7 @@ class EXPORT Agent : public ClientErrors {
    */
   bool SynchronizeOutputLink();
 
-  /*
+  /**
    * @brief This method spawns a debugger to connect to this agent.
    *        Java must be in the path. If jarpath is NULL, the
    *        function will search for SoarJavaDebugger.jar first in
@@ -923,14 +923,14 @@ class EXPORT Agent : public ClientErrors {
    */
   bool SpawnDebugger(int port = -1, const char* jarpath = 0);
 
-  /*
+  /**
    * @brief Kills the previously spawned debugger. Returns false
    *       if the debugger was never spawned or an OS issue occurs
    *       while killing the process.
    */
   bool KillDebugger();
 
-  /*
+  /**
    * @brief Convert a client-side identifier string to kernel-side.
    */
   char const* ConvertIdentifier(char const* pClientIdentifier);

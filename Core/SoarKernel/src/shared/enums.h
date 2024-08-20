@@ -1,4 +1,4 @@
-/*
+/**
  * enums.h
  *
  *  Created on: Jul 17, 2013
@@ -10,7 +10,7 @@
 
 #include "constants.h"
 
-/* ------------------------- debug trace channels -----------------------------
+/** ------------------------- debug trace channels -----------------------------
  *
  * NOTE: IF YOU ADD A NEW TRACE OR DEBUG MODE, MAKE SURE TO INITIALIZE PREFIX
  *       INFO AND INITIAL VALUE IN initialize_debug_trace() in debug.cpp
@@ -317,32 +317,32 @@ enum WME_Field {
 
 enum Print_Header_Type { PrintBoth = 0, PrintAfter = 1, PrintBefore = 2 };
 
-/* -- An implementation of an on/off boolean parameter --*/
+/** -- An implementation of an on/off boolean parameter --*/
 
 enum boolean { off, on };
 
-/* -- Possible modes for numeric indifference -- */
+/** -- Possible modes for numeric indifference -- */
 
 enum ni_mode {
   NUMERIC_INDIFFERENT_MODE_AVG,
   NUMERIC_INDIFFERENT_MODE_SUM,
 };
 
-/* --- Types of tests (can't be 255 -- see rete.cpp) --- */
+/** --- Types of tests (can't be 255 -- see rete.cpp) --- */
 
 enum TestType {
   UNINITIALIZED_TEST = 0,
-  NOT_EQUAL_TEST = 1, /* various relational tests */
+  NOT_EQUAL_TEST = 1, /** various relational tests */
   LESS_TEST = 2,
   GREATER_TEST = 3,
   LESS_OR_EQUAL_TEST = 4,
   GREATER_OR_EQUAL_TEST = 5,
   SAME_TYPE_TEST = 6,
-  DISJUNCTION_TEST = 7, /* item must be one of a list of constants */
+  DISJUNCTION_TEST = 7, /** item must be one of a list of constants */
   CONJUNCTIVE_TEST =
-      8,            /* item must pass each of a list of non-conjunctive tests */
-  GOAL_ID_TEST = 9, /* item must be a goal identifier */
-  IMPASSE_ID_TEST = 10, /* item must be an impasse identifier */
+      8,            /** item must pass each of a list of non-conjunctive tests */
+  GOAL_ID_TEST = 9, /** item must be a goal identifier */
+  IMPASSE_ID_TEST = 10, /** item must be an impasse identifier */
   EQUALITY_TEST = 11,
   SMEM_LINK_TEST = 12,
   SMEM_LINK_NOT_TEST = 13,
@@ -351,7 +351,7 @@ enum TestType {
   NUM_TEST_TYPES
 };
 
-/* -------------------------------
+/** -------------------------------
       Types of Productions
 ------------------------------- */
 
@@ -367,7 +367,7 @@ enum ProductionType {
 // Soar-RL assumes that the production types start at 0 and go to
 // (NUM_PRODUCTION_TYPES-1) sequentially
 
-/* WARNING: preference types must be numbered 0..(NUM_PREFERENCE_TYPES-1),
+/** WARNING: preference types must be numbered 0..(NUM_PREFERENCE_TYPES-1),
    because the slot structure contains an array using these indices. Also
    make sure to update the strings in prefmem.h.  Finally, make sure the
    helper function defined below (for e.g. preference_is_unary) use the
@@ -397,7 +397,7 @@ enum PreferenceType {
   NUM_PREFERENCE_TYPES = 14,
 };
 
-/* --- types of conditions --- */
+/** --- types of conditions --- */
 enum ConditionType {
   POSITIVE_CONDITION,
   NEGATIVE_CONDITION,
@@ -420,7 +420,7 @@ enum SupportType {
 
 enum SOAR_CALLBACK_TYPE  // if you change this, update soar_callback_names
 {
-  NO_CALLBACK, /* Used for missing callback */
+  NO_CALLBACK, /** Used for missing callback */
   AFTER_INIT_AGENT_CALLBACK,
   BEFORE_INIT_SOAR_CALLBACK,
   AFTER_INIT_SOAR_CALLBACK,
@@ -464,10 +464,10 @@ enum SOAR_CALLBACK_TYPE  // if you change this, update soar_callback_names
   PRINT_CALLBACK,
   LOG_CALLBACK,
   INPUT_WME_GARBAGE_COLLECTED_CALLBACK,
-  NUMBER_OF_CALLBACKS /* Not actually a callback   */
-                      /* type.  Used to indicate   */
-                      /* list size and MUST ALWAYS */
-                      /* BE LAST.                  */
+  NUMBER_OF_CALLBACKS /** Not actually a callback   */
+                      /** type.  Used to indicate   */
+                      /** list size and MUST ALWAYS */
+                      /** BE LAST.                  */
 };
 
 enum epmem_variable_key {
@@ -502,4 +502,4 @@ enum smem_variable_key {
   var_act_mode
 };
 
-#endif /* ENUMS_H_ */
+#endif /** ENUMS_H_ */

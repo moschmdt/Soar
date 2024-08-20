@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class RealQZ
@@ -77,7 +77,7 @@ class RealQZ {
                  MaxColsAtCompileTime, 1>
       ColumnVectorType;
 
-  /* \brief Default constructor.
+  /** \brief Default constructor.
    *
    * \param [in] size  Positive integer, size of the matrix whose QZ
    * decomposition will be computed.
@@ -100,7 +100,7 @@ class RealQZ {
         m_isInitialized(false),
         m_computeQZ(true) {}
 
-  /* \brief Constructor; computes real QZ decomposition of given matrices
+  /** \brief Constructor; computes real QZ decomposition of given matrices
    *
    * \param[in]  A          Matrix A.
    * \param[in]  B          Matrix B.
@@ -120,7 +120,7 @@ class RealQZ {
     compute(A, B, computeQZ);
   }
 
-  /* \brief Returns matrix Q in the QZ decomposition.
+  /** \brief Returns matrix Q in the QZ decomposition.
    *
    * \returns A const reference to the matrix Q.
    */
@@ -132,7 +132,7 @@ class RealQZ {
     return m_Q;
   }
 
-  /* \brief Returns matrix Z in the QZ decomposition.
+  /** \brief Returns matrix Z in the QZ decomposition.
    *
    * \returns A const reference to the matrix Z.
    */
@@ -144,7 +144,7 @@ class RealQZ {
     return m_Z;
   }
 
-  /* \brief Returns matrix S in the QZ decomposition.
+  /** \brief Returns matrix S in the QZ decomposition.
    *
    * \returns A const reference to the matrix S.
    */
@@ -153,7 +153,7 @@ class RealQZ {
     return m_S;
   }
 
-  /* \brief Returns matrix S in the QZ decomposition.
+  /** \brief Returns matrix S in the QZ decomposition.
    *
    * \returns A const reference to the matrix S.
    */
@@ -162,7 +162,7 @@ class RealQZ {
     return m_T;
   }
 
-  /* \brief Computes QZ decomposition of given matrix.
+  /** \brief Computes QZ decomposition of given matrix.
    *
    * \param[in]  A          Matrix A.
    * \param[in]  B          Matrix B.
@@ -172,7 +172,7 @@ class RealQZ {
   RealQZ& compute(const MatrixType& A, const MatrixType& B,
                   bool computeQZ = true);
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful, \c NoConvergence
    * otherwise.
@@ -182,14 +182,14 @@ class RealQZ {
     return m_info;
   }
 
-  /* \brief Returns number of performed QR-like iterations.
+  /** \brief Returns number of performed QR-like iterations.
    */
   Index iterations() const {
     eigen_assert(m_isInitialized && "RealQZ is not initialized.");
     return m_global_iter;
   }
 
-  /* Sets the maximal number of iterations allowed to converge to one
+  /** Sets the maximal number of iterations allowed to converge to one
    * eigenvalue or decouple the problem.
    */
   RealQZ& setMaxIterations(Index maxIters) {
@@ -222,7 +222,7 @@ class RealQZ {
 
 };  // RealQZ
 
-/* \internal Reduces S and T to upper Hessenberg - triangular form */
+/** \internal Reduces S and T to upper Hessenberg - triangular form */
 template <typename MatrixType>
 void RealQZ<MatrixType>::hessenbergTriangular() {
   const Index dim = m_S.cols();
@@ -263,7 +263,7 @@ void RealQZ<MatrixType>::hessenbergTriangular() {
   }
 }
 
-/* \internal Computes vector L1 norms of S and T when in Hessenberg-Triangular
+/** \internal Computes vector L1 norms of S and T when in Hessenberg-Triangular
  * form already */
 template <typename MatrixType>
 inline void RealQZ<MatrixType>::computeNorms() {
@@ -277,7 +277,7 @@ inline void RealQZ<MatrixType>::computeNorms() {
   }
 }
 
-/* \internal Look for single small sub-diagonal element S(res, res-1) and
+/** \internal Look for single small sub-diagonal element S(res, res-1) and
  * return res (or 0) */
 template <typename MatrixType>
 inline Index RealQZ<MatrixType>::findSmallSubdiagEntry(Index iu) {
@@ -292,7 +292,7 @@ inline Index RealQZ<MatrixType>::findSmallSubdiagEntry(Index iu) {
   return res;
 }
 
-/* \internal Look for single small diagonal element T(res, res) for res between
+/** \internal Look for single small diagonal element T(res, res) for res between
  * f and l, and return res (or f-1)  */
 template <typename MatrixType>
 inline Index RealQZ<MatrixType>::findSmallDiagEntry(Index f, Index l) {
@@ -306,7 +306,7 @@ inline Index RealQZ<MatrixType>::findSmallDiagEntry(Index f, Index l) {
   return res;
 }
 
-/* \internal decouple 2x2 diagonal block in rows i, i+1 if eigenvalues are real
+/** \internal decouple 2x2 diagonal block in rows i, i+1 if eigenvalues are real
  */
 template <typename MatrixType>
 inline void RealQZ<MatrixType>::splitOffTwoRows(Index i) {
@@ -352,7 +352,7 @@ inline void RealQZ<MatrixType>::splitOffTwoRows(Index i) {
   }
 }
 
-/* \internal use zero in T(z,z) to zero S(l,l-1), working in block f..l */
+/** \internal use zero in T(z,z) to zero S(l,l-1), working in block f..l */
 template <typename MatrixType>
 inline void RealQZ<MatrixType>::pushDownZero(Index z, Index f, Index l) {
   JRs G;
@@ -385,7 +385,7 @@ inline void RealQZ<MatrixType>::pushDownZero(Index z, Index f, Index l) {
   if (m_computeQZ) m_Z.applyOnTheLeft(l, l - 1, G.adjoint());
 }
 
-/* \internal QR-like iterative step for block f..l */
+/** \internal QR-like iterative step for block f..l */
 template <typename MatrixType>
 inline void RealQZ<MatrixType>::step(Index f, Index l, Index iter) {
   using std::abs;

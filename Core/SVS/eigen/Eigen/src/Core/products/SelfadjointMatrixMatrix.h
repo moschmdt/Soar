@@ -283,7 +283,7 @@ struct symm_pack_rhs {
   }
 };
 
-/* Optimized selfadjoint matrix * matrix (_SYMM) product built on top of
+/** Optimized selfadjoint matrix * matrix (_SYMM) product built on top of
  * the general matrix matrix product.
  */
 template <typename Scalar, typename Index, int LhsStorageOrder,
@@ -503,7 +503,7 @@ EIGEN_DONT_INLINE void product_selfadjoint_matrix<
 
 }  // end namespace internal
 
-/*
+/**
  * Wrapper to product_selfadjoint_matrix
  */
 

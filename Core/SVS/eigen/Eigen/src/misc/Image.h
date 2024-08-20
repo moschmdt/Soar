@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \class image_retval_base
+/** \class image_retval_base
  *
  */
 template <typename DecompositionType>

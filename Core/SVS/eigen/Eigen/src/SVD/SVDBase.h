@@ -28,7 +28,7 @@ struct traits<SVDBase<Derived> > : traits<Derived> {
 };
 }  // namespace internal
 
-/* \ingroup SVD_Module
+/** \ingroup SVD_Module
  *
  *
  * \class SVDBase
@@ -101,7 +101,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
   Derived& derived() { return *static_cast<Derived*>(this); }
   const Derived& derived() const { return *static_cast<const Derived*>(this); }
 
-  /* \returns the \a U matrix.
+  /** \returns the \a U matrix.
    *
    * For the SVD decomposition of a n-by-p matrix, letting \a m be the minimum
    * of \a n and \a p, the U matrix is n-by-n if you asked for \link
@@ -121,7 +121,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
     return m_matrixU;
   }
 
-  /* \returns the \a V matrix.
+  /** \returns the \a V matrix.
    *
    * For the SVD decomposition of a n-by-p matrix, letting \a m be the minimum
    * of \a n and \a p, the V matrix is p-by-p if you asked for \link
@@ -141,7 +141,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
     return m_matrixV;
   }
 
-  /* \returns the vector of singular values.
+  /** \returns the vector of singular values.
    *
    * For the SVD decomposition of a n-by-p matrix, letting \a m be the minimum
    * of \a n and \a p, the returned vector has size \a m.  Singular values are
@@ -152,13 +152,13 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
     return m_singularValues;
   }
 
-  /* \returns the number of singular values that are not exactly 0 */
+  /** \returns the number of singular values that are not exactly 0 */
   Index nonzeroSingularValues() const {
     _check_compute_assertions();
     return m_nonzeroSingularValues;
   }
 
-  /* \returns the rank of the matrix of which \c *this is the SVD.
+  /** \returns the rank of the matrix of which \c *this is the SVD.
    *
    * \note This method has to determine which singular values should be
    * considered nonzero. For that, it uses the threshold value that you can
@@ -176,7 +176,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
     return i + 1;
   }
 
-  /* Allows to prescribe a threshold to be used by certain methods, such as
+  /** Allows to prescribe a threshold to be used by certain methods, such as
    * rank() and solve(), which need to determine when singular values are to be
    * considered nonzero. This is not used for the SVD decomposition itself.
    *
@@ -198,7 +198,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
     return derived();
   }
 
-  /* Allows to come back to the default behavior, letting Eigen use its default
+  /** Allows to come back to the default behavior, letting Eigen use its default
    * formula for determining the threshold.
    *
    * You should pass the special object Eigen::Default as parameter here.
@@ -211,7 +211,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
     return derived();
   }
 
-  /* Returns the threshold that will be used by certain methods such as rank().
+  /** Returns the threshold that will be used by certain methods such as rank().
    *
    * See the documentation of setThreshold(const RealScalar&).
    */
@@ -224,10 +224,10 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
                : RealScalar(diagSize) * NumTraits<Scalar>::epsilon();
   }
 
-  /* \returns true if \a U (full or thin) is asked for in this SVD
+  /** \returns true if \a U (full or thin) is asked for in this SVD
    * decomposition */
   inline bool computeU() const { return m_computeFullU || m_computeThinU; }
-  /* \returns true if \a V (full or thin) is asked for in this SVD
+  /** \returns true if \a V (full or thin) is asked for in this SVD
    * decomposition */
   inline bool computeV() const { return m_computeFullV || m_computeThinV; }
 
@@ -235,7 +235,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
   inline Index cols() const { return m_cols; }
 
 #ifdef EIGEN_PARSED_BY_DOXYGEN
-  /* \returns a (least squares) solution of \f$ A x = b \f$ using the current
+  /** \returns a (least squares) solution of \f$ A x = b \f$ using the current
    * SVD decomposition of A.
    *
    * \param b the right-hand-side of the equation to solve.
@@ -252,7 +252,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
   inline const Solve<Derived, Rhs> solve(const MatrixBase<Rhs>& b) const;
 #endif
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful.
    */
@@ -305,7 +305,7 @@ class SVDBase : public SolverBase<SVDBase<Derived> > {
   Index m_nonzeroSingularValues, m_rows, m_cols, m_diagSize;
   RealScalar m_prescribedThreshold;
 
-  /* \brief Default Constructor.
+  /** \brief Default Constructor.
    *
    * Default constructor of SVDBase
    */

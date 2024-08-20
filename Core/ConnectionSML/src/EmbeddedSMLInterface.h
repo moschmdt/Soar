@@ -56,7 +56,7 @@ typedef Connection_Receiver_Handle (*CreateEmbeddedConnectionFunction)(
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief    The sender will call once to this interface to
  *           create the initial connection.
  *
@@ -103,7 +103,7 @@ sml_CreateEmbeddedConnection(Connection_Sender_Handle hSenderConnection,
                              ProcessMessageFunction pSenderProcessMessage,
                              int connectionType, int portToListenOn);
 
-/*
+/**
  * @brief    This function is called by the sender in order to
  *           pass a message to us (the receiver).
  *

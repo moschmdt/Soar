@@ -1,4 +1,4 @@
-/*
+/**
  * cli_trace.h
  *
  *  Created on: Nov 25, 2016
@@ -515,4 +515,4 @@ class TraceCommand : public cli::ParserCommand {
   TraceCommand& operator=(const TraceCommand&);
 };
 }  // namespace cli
-#endif /* CORE_CLI_SRC_CLI_TRACE_H_ */
+#endif /** CORE_CLI_SRC_CLI_TRACE_H_ */

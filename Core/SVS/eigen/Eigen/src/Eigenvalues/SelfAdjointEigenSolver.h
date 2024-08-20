@@ -28,7 +28,7 @@ EIGEN_DEVICE_FUNC ComputationInfo computeFromTridiagonal_impl(
     bool computeEigenvectors, MatrixType& eivec);
 }  // namespace internal
 
-/* \eigenvalues_module \ingroup Eigenvalues_Module
+/** \eigenvalues_module \ingroup Eigenvalues_Module
  *
  *
  * \class SelfAdjointEigenSolver
@@ -86,7 +86,7 @@ class SelfAdjointEigenSolver {
     MaxColsAtCompileTime = MatrixType::MaxColsAtCompileTime
   };
 
-  /* \brief Scalar type for matrices of type \p _MatrixType. */
+  /** \brief Scalar type for matrices of type \p _MatrixType. */
   typedef typename MatrixType::Scalar Scalar;
   typedef Eigen::Index Index;  ///< \deprecated since Eigen 3.3
 
@@ -94,7 +94,7 @@ class SelfAdjointEigenSolver {
                  MaxColsAtCompileTime>
       EigenvectorsType;
 
-  /* \brief Real scalar type for \p _MatrixType.
+  /** \brief Real scalar type for \p _MatrixType.
    *
    * This is just \c Scalar if #Scalar is real (e.g., \c float or
    * \c double), and the type of the real part of \c Scalar if #Scalar is
@@ -105,7 +105,7 @@ class SelfAdjointEigenSolver {
   friend struct internal::direct_selfadjoint_eigenvalues<
       SelfAdjointEigenSolver, Size, NumTraits<Scalar>::IsComplex>;
 
-  /* \brief Type for vector of eigenvalues as returned by eigenvalues().
+  /** \brief Type for vector of eigenvalues as returned by eigenvalues().
    *
    * This is a column vector with entries of type #RealScalar.
    * The length of the vector is the size of \p _MatrixType.
@@ -115,7 +115,7 @@ class SelfAdjointEigenSolver {
   typedef Tridiagonalization<MatrixType> TridiagonalizationType;
   typedef typename TridiagonalizationType::SubDiagonalType SubDiagonalType;
 
-  /* \brief Default constructor for fixed-size matrices.
+  /** \brief Default constructor for fixed-size matrices.
    *
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via compute(). This constructor
@@ -135,7 +135,7 @@ class SelfAdjointEigenSolver {
         m_isInitialized(false),
         m_eigenvectorsOk(false) {}
 
-  /* \brief Constructor, pre-allocates memory for dynamic-size matrices.
+  /** \brief Constructor, pre-allocates memory for dynamic-size matrices.
    *
    * \param [in]  size  Positive integer, size of the matrix whose
    * eigenvalues and eigenvectors will be computed.
@@ -156,7 +156,7 @@ class SelfAdjointEigenSolver {
         m_isInitialized(false),
         m_eigenvectorsOk(false) {}
 
-  /* \brief Constructor; computes eigendecomposition of given matrix.
+  /** \brief Constructor; computes eigendecomposition of given matrix.
    *
    * \param[in]  matrix  Selfadjoint matrix whose eigendecomposition is to
    *    be computed. Only the lower triangular part of the matrix is referenced.
@@ -185,7 +185,7 @@ class SelfAdjointEigenSolver {
     compute(matrix.derived(), options);
   }
 
-  /* \brief Computes eigendecomposition of given matrix.
+  /** \brief Computes eigendecomposition of given matrix.
    *
    * \param[in]  matrix  Selfadjoint matrix whose eigendecomposition is to
    *    be computed. Only the lower triangular part of the matrix is referenced.
@@ -219,7 +219,7 @@ class SelfAdjointEigenSolver {
   EIGEN_DEVICE_FUNC SelfAdjointEigenSolver& compute(
       const EigenBase<InputType>& matrix, int options = ComputeEigenvectors);
 
-  /* \brief Computes eigendecomposition of given matrix using a closed-form
+  /** \brief Computes eigendecomposition of given matrix using a closed-form
    * algorithm
    *
    * This is a variant of compute(const MatrixType&, int options) which
@@ -244,7 +244,7 @@ class SelfAdjointEigenSolver {
   SelfAdjointEigenSolver& computeDirect(const MatrixType& matrix,
                                         int options = ComputeEigenvectors);
 
-  /*
+  /**
    *\brief Computes the eigen decomposition from a tridiagonal symmetric matrix
    *
    * \param[in] diag The vector containing the diagonal of the matrix.
@@ -260,7 +260,7 @@ class SelfAdjointEigenSolver {
       const RealVectorType& diag, const SubDiagonalType& subdiag,
       int options = ComputeEigenvectors);
 
-  /* \brief Returns the eigenvectors of given matrix.
+  /** \brief Returns the eigenvectors of given matrix.
    *
    * \returns  A const reference to the matrix whose columns are the
    * eigenvectors.
@@ -294,7 +294,7 @@ class SelfAdjointEigenSolver {
     return m_eivec;
   }
 
-  /* \brief Returns the eigenvalues of given matrix.
+  /** \brief Returns the eigenvalues of given matrix.
    *
    * \returns A const reference to the column vector containing the eigenvalues.
    *
@@ -316,7 +316,7 @@ class SelfAdjointEigenSolver {
     return m_eivalues;
   }
 
-  /* \brief Computes the positive-definite square root of the matrix.
+  /** \brief Computes the positive-definite square root of the matrix.
    *
    * \returns the positive-definite square root of the matrix
    *
@@ -345,7 +345,7 @@ class SelfAdjointEigenSolver {
     return m_eivec * m_eivalues.cwiseSqrt().asDiagonal() * m_eivec.adjoint();
   }
 
-  /* \brief Computes the inverse square root of the matrix.
+  /** \brief Computes the inverse square root of the matrix.
    *
    * \returns the inverse positive-definite square root of the matrix
    *
@@ -375,7 +375,7 @@ class SelfAdjointEigenSolver {
            m_eivec.adjoint();
   }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful, \c NoConvergence
    * otherwise.
@@ -387,7 +387,7 @@ class SelfAdjointEigenSolver {
     return m_info;
   }
 
-  /* \brief Maximum number of iterations.
+  /** \brief Maximum number of iterations.
    *
    * The algorithm terminates if it does not converge within m_maxIterations * n
    * iterations, where n denotes the size of the matrix. This value is currently
@@ -410,7 +410,7 @@ class SelfAdjointEigenSolver {
 };
 
 namespace internal {
-/* \internal
+/** \internal
  *
  * \eigenvalues_module \ingroup Eigenvalues_Module
  *
@@ -514,7 +514,7 @@ SelfAdjointEigenSolver<MatrixType>::computeFromTridiagonal(
 }
 
 namespace internal {
-/*
+/**
  * \internal
  * \brief Compute the eigendecomposition from a tridiagonal matrix
  *
@@ -613,7 +613,7 @@ struct direct_selfadjoint_eigenvalues<SolverType, 3, false> {
   typedef typename SolverType::Scalar Scalar;
   typedef typename SolverType::EigenvectorsType EigenvectorsType;
 
-  /* \internal
+  /** \internal
    * Computes the roots of the characteristic polynomial of \a m.
    * For numerical stability m.trace() should be near zero and to avoid over- or
    * underflow m should be normalized.

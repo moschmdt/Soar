@@ -15,7 +15,7 @@
 #include <vector>
 
 namespace Eigen {
-/*
+/**
  * \brief Modified Incomplete Cholesky with dual threshold
  *
  * References : C-J. Lin and J. J. Moré, Incomplete Cholesky Factorizations with
@@ -70,7 +70,7 @@ class IncompleteCholesky
   enum { ColsAtCompileTime = Dynamic, MaxColsAtCompileTime = Dynamic };
 
  public:
-  /* Default constructor leaving the object in a partly non-initialized stage.
+  /** Default constructor leaving the object in a partly non-initialized stage.
    *
    * You must call compute() or the pair analyzePattern()/factorize() to make it
    * valid.
@@ -82,7 +82,7 @@ class IncompleteCholesky
         m_analysisIsOk(false),
         m_factorizationIsOk(false) {}
 
-  /* Constructor computing the incomplete factorization for the given matrix \a
+  /** Constructor computing the incomplete factorization for the given matrix \a
    * matrix.
    */
   template <typename MatrixType>
@@ -93,13 +93,13 @@ class IncompleteCholesky
     compute(matrix);
   }
 
-  /* \returns number of rows of the factored matrix */
+  /** \returns number of rows of the factored matrix */
   EIGEN_CONSTEXPR Index rows() const EIGEN_NOEXCEPT { return m_L.rows(); }
 
-  /* \returns number of columns of the factored matrix */
+  /** \returns number of columns of the factored matrix */
   EIGEN_CONSTEXPR Index cols() const EIGEN_NOEXCEPT { return m_L.cols(); }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * It triggers an assertion if \c *this has not been initialized through the
    * respective constructor, or a call to compute() or analyzePattern().
@@ -112,11 +112,11 @@ class IncompleteCholesky
     return m_info;
   }
 
-  /* \brief Set the initial shift parameter \f$ \sigma \f$.
+  /** \brief Set the initial shift parameter \f$ \sigma \f$.
    */
   void setInitialShift(RealScalar shift) { m_initialShift = shift; }
 
-  /* \brief Computes the fill reducing permutation vector using the sparsity
+  /** \brief Computes the fill reducing permutation vector using the sparsity
    * pattern of \a mat
    */
   template <typename MatrixType>
@@ -134,7 +134,7 @@ class IncompleteCholesky
     m_info = Success;
   }
 
-  /* \brief Performs the numerical factorization of the input matrix \a mat
+  /** \brief Performs the numerical factorization of the input matrix \a mat
    *
    * The method analyzePattern() or compute() must have been called beforehand
    * with a matrix having the same pattern.
@@ -144,7 +144,7 @@ class IncompleteCholesky
   template <typename MatrixType>
   void factorize(const MatrixType& mat);
 
-  /* Computes or re-computes the incomplete Cholesky factorization of the input
+  /** Computes or re-computes the incomplete Cholesky factorization of the input
    * matrix \a mat
    *
    * It is a shortcut for a sequential call to the analyzePattern() and
@@ -173,19 +173,19 @@ class IncompleteCholesky
     if (m_perm.rows() == b.rows()) x = m_perm.inverse() * x;
   }
 
-  /* \returns the sparse lower triangular factor L */
+  /** \returns the sparse lower triangular factor L */
   const FactorType& matrixL() const {
     eigen_assert("m_factorizationIsOk");
     return m_L;
   }
 
-  /* \returns a vector representing the scaling factor S */
+  /** \returns a vector representing the scaling factor S */
   const VectorRx& scalingS() const {
     eigen_assert("m_factorizationIsOk");
     return m_scale;
   }
 
-  /* \returns the fill-in reducing permutation P (can be empty for a natural
+  /** \returns the fill-in reducing permutation P (can be empty for a natural
    * ordering) */
   const PermutationType& permutationP() const {
     eigen_assert("m_analysisIsOk");

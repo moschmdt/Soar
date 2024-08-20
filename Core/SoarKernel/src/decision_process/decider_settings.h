@@ -1,4 +1,4 @@
-/*
+/**
  * decider_settings.h
  *
  *  Created on: Sep 11, 2016
@@ -41,4 +41,4 @@ class decider_param_container : public soar_module::param_container {
   void print_settings(agent* thisAgent);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_DECISION_PROCESS_DECIDER_SETTINGS_H_ */
+#endif /** CORE_SOARKERNEL_SRC_DECISION_PROCESS_DECIDER_SETTINGS_H_ */

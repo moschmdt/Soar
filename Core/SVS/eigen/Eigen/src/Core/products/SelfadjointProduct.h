@@ -10,7 +10,7 @@
 #ifndef EIGEN_SELFADJOINT_PRODUCT_H
 #define EIGEN_SELFADJOINT_PRODUCT_H
 
-/*
+/**
  * This file implements a self adjoint product: C += A A^T updating only
  * half of the selfadjoint matrix C.
  * It corresponds to the level 3 SYRK and level 2 SYR Blas routines.

@@ -54,7 +54,7 @@ struct cholmod_configure_matrix<std::complex<double> > {
 
 }  // namespace internal
 
-/* Wraps the Eigen sparse matrix \a mat into a Cholmod sparse matrix object.
+/** Wraps the Eigen sparse matrix \a mat into a Cholmod sparse matrix object.
  * Note that the data are shared.
  */
 template <typename _Scalar, int _Options, typename _StorageIndex>
@@ -112,7 +112,7 @@ const cholmod_sparse viewAsCholmod(
   return res;
 }
 
-/* Returns a view of the Eigen sparse matrix \a mat as Cholmod sparse matrix.
+/** Returns a view of the Eigen sparse matrix \a mat as Cholmod sparse matrix.
  * The data are not copied but shared. */
 template <typename _Scalar, int _Options, typename _Index, unsigned int UpLo>
 cholmod_sparse viewAsCholmod(
@@ -133,7 +133,7 @@ cholmod_sparse viewAsCholmod(
   return res;
 }
 
-/* Returns a view of the Eigen \b dense matrix \a mat as Cholmod dense matrix.
+/** Returns a view of the Eigen \b dense matrix \a mat as Cholmod dense matrix.
  * The data are not copied but shared. */
 template <typename Derived>
 cholmod_dense viewAsCholmod(MatrixBase<Derived>& mat) {
@@ -155,7 +155,7 @@ cholmod_dense viewAsCholmod(MatrixBase<Derived>& mat) {
   return res;
 }
 
-/* Returns a view of the Cholmod sparse matrix \a cm as an Eigen sparse matrix.
+/** Returns a view of the Cholmod sparse matrix \a cm as an Eigen sparse matrix.
  * The data are not copied but shared. */
 template <typename Scalar, int Flags, typename StorageIndex>
 MappedSparseMatrix<Scalar, Flags, StorageIndex> viewAsEigen(
@@ -251,7 +251,7 @@ enum CholmodMode {
   CholmodLDLt
 };
 
-/* \ingroup CholmodSupport_Module
+/** \ingroup CholmodSupport_Module
  * \class CholmodBase
  * \brief The base class for the direct Cholesky factorization of Cholmod
  * \sa class CholmodSupernodalLLT, class CholmodSimplicialLDLT, class
@@ -313,7 +313,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
     return internal::convert_index<StorageIndex, Index>(m_cholmodFactor->n);
   }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the matrix.appears to be negative.
@@ -323,14 +323,14 @@ class CholmodBase : public SparseSolverBase<Derived> {
     return m_info;
   }
 
-  /* Computes the sparse Cholesky decomposition of \a matrix */
+  /** Computes the sparse Cholesky decomposition of \a matrix */
   Derived& compute(const MatrixType& matrix) {
     analyzePattern(matrix);
     factorize(matrix);
     return derived();
   }
 
-  /* Performs a symbolic decomposition on the sparsity pattern of \a matrix.
+  /** Performs a symbolic decomposition on the sparsity pattern of \a matrix.
    *
    * This function is particularly useful when solving for several problems
    * having the same structure.
@@ -351,7 +351,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
     m_factorizationIsOk = false;
   }
 
-  /* Performs a numeric decomposition of \a matrix
+  /** Performs a numeric decomposition of \a matrix
    *
    * The given matrix must have the same sparsity pattern as the matrix on which
    * the symbolic decomposition has been performed.
@@ -372,13 +372,13 @@ class CholmodBase : public SparseSolverBase<Derived> {
     m_factorizationIsOk = true;
   }
 
-  /* Returns a reference to the Cholmod's configuration structure to get a full
+  /** Returns a reference to the Cholmod's configuration structure to get a full
    * control over the performed operations. See the Cholmod user guide for
    * details. */
   cholmod_common& cholmod() { return m_cholmod; }
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_impl(const MatrixBase<Rhs>& b, MatrixBase<Dest>& dest) const {
     eigen_assert(m_factorizationIsOk &&
@@ -409,7 +409,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
     internal::cm_free_dense<StorageIndex>(x_cd, m_cholmod);
   }
 
-  /* \internal */
+  /** \internal */
   template <typename RhsDerived, typename DestDerived>
   void _solve_impl(const SparseMatrixBase<RhsDerived>& b,
                    SparseMatrixBase<DestDerived>& dest) const {
@@ -440,7 +440,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
   }
 #endif  // EIGEN_PARSED_BY_DOXYGEN
 
-  /* Sets the shift parameter that will be used to adjust the diagonal
+  /** Sets the shift parameter that will be used to adjust the diagonal
    * coefficients during the numerical factorization.
    *
    * During the numerical factorization, an offset term is added to the diagonal
@@ -455,14 +455,14 @@ class CholmodBase : public SparseSolverBase<Derived> {
     return derived();
   }
 
-  /* \returns the determinant of the underlying matrix from the current
+  /** \returns the determinant of the underlying matrix from the current
    * factorization */
   Scalar determinant() const {
     using std::exp;
     return exp(logDeterminant());
   }
 
-  /* \returns the log determinant of the underlying matrix from the current
+  /** \returns the log determinant of the underlying matrix from the current
    * factorization */
   Scalar logDeterminant() const {
     using numext::real;
@@ -504,7 +504,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
   };
 
   template <typename Stream>
-  void dumpMemory(Stream& /*s*/) {}
+  void dumpMemory(Stream& /**s*/) {}
 
  protected:
   mutable cholmod_common m_cholmod;
@@ -515,7 +515,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
   int m_analysisIsOk;
 };
 
-/* \ingroup CholmodSupport_Module
+/** \ingroup CholmodSupport_Module
  * \class CholmodSimplicialLLT
  * \brief A simplicial direct Cholesky (LLT) factorization and solver based on
  * Cholmod
@@ -569,7 +569,7 @@ class CholmodSimplicialLLT
   }
 };
 
-/* \ingroup CholmodSupport_Module
+/** \ingroup CholmodSupport_Module
  * \class CholmodSimplicialLDLT
  * \brief A simplicial direct Cholesky (LDLT) factorization and solver based on
  * Cholmod
@@ -622,7 +622,7 @@ class CholmodSimplicialLDLT
   }
 };
 
-/* \ingroup CholmodSupport_Module
+/** \ingroup CholmodSupport_Module
  * \class CholmodSupernodalLLT
  * \brief A supernodal Cholesky (LLT) factorization and solver based on Cholmod
  *
@@ -672,7 +672,7 @@ class CholmodSupernodalLLT
   }
 };
 
-/* \ingroup CholmodSupport_Module
+/** \ingroup CholmodSupport_Module
  * \class CholmodDecomposition
  * \brief A general Cholesky factorization and solver based on Cholmod
  *

@@ -14,7 +14,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the opposite of a scalar
  *
  * \sa class CwiseUnaryOp, MatrixBase::operator-
@@ -40,7 +40,7 @@ struct functor_traits<scalar_opposite_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the absolute value of a scalar
  *
  * \sa class CwiseUnaryOp, Cwise::abs
@@ -67,7 +67,7 @@ struct functor_traits<scalar_abs_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the score of a scalar, to chose a pivot
  *
  * \sa class CwiseUnaryOp
@@ -80,7 +80,7 @@ template <typename Scalar>
 struct functor_traits<scalar_score_coeff_op<Scalar> >
     : functor_traits<scalar_abs_op<Scalar> > {};
 
-/* Avoid recomputing abs when we know the score and they are the same. Not a
+/** Avoid recomputing abs when we know the score and they are the same. Not a
  * true Eigen functor.  */
 template <typename Scalar, typename = void>
 struct abs_knowing_score {
@@ -104,7 +104,7 @@ struct abs_knowing_score<Scalar,
   }
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the squared absolute value of a scalar
  *
  * \sa class CwiseUnaryOp, Cwise::abs2
@@ -131,7 +131,7 @@ struct functor_traits<scalar_abs2_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the conjugate of a complex value
  *
  * \sa class CwiseUnaryOp, MatrixBase::conjugate()
@@ -165,7 +165,7 @@ struct functor_traits<scalar_conjugate_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the phase angle of a complex
  *
  * \sa class CwiseUnaryOp, Cwise::arg
@@ -192,7 +192,7 @@ struct functor_traits<scalar_arg_op<Scalar> > {
     PacketAccess = packet_traits<Scalar>::HasArg
   };
 };
-/* \internal
+/** \internal
  * \brief Template functor to cast a scalar to another type
  *
  * \sa class CwiseUnaryOp, MatrixBase::cast()
@@ -214,7 +214,7 @@ struct functor_traits<scalar_cast_op<Scalar, NewType> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to arithmetically shift a scalar right by a number of
  * bits
  *
@@ -242,7 +242,7 @@ struct functor_traits<scalar_shift_right_op<Scalar, N> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to logically shift a scalar left by a number of bits
  *
  * \sa class CwiseUnaryOp, MatrixBase::shift_left()
@@ -269,7 +269,7 @@ struct functor_traits<scalar_shift_left_op<Scalar, N> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to extract the real part of a complex
  *
  * \sa class CwiseUnaryOp, MatrixBase::real()
@@ -288,7 +288,7 @@ struct functor_traits<scalar_real_op<Scalar> > {
   enum { Cost = 0, PacketAccess = false };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to extract the imaginary part of a complex
  *
  * \sa class CwiseUnaryOp, MatrixBase::imag()
@@ -307,7 +307,7 @@ struct functor_traits<scalar_imag_op<Scalar> > {
   enum { Cost = 0, PacketAccess = false };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to extract the real part of a complex as a reference
  *
  * \sa class CwiseUnaryOp, MatrixBase::real()
@@ -326,7 +326,7 @@ struct functor_traits<scalar_real_ref_op<Scalar> > {
   enum { Cost = 0, PacketAccess = false };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to extract the imaginary part of a complex as a
  * reference
  *
@@ -346,7 +346,7 @@ struct functor_traits<scalar_imag_ref_op<Scalar> > {
   enum { Cost = 0, PacketAccess = false };
 };
 
-/* \internal
+/** \internal
  *
  * \brief Template functor to compute the exponential of a scalar
  *
@@ -392,7 +392,7 @@ struct functor_traits<scalar_exp_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  *
  * \brief Template functor to compute the exponential of a scalar - 1.
  *
@@ -418,7 +418,7 @@ struct functor_traits<scalar_expm1_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  *
  * \brief Template functor to compute the logarithm of a scalar
  *
@@ -456,7 +456,7 @@ struct functor_traits<scalar_log_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  *
  * \brief Template functor to compute the logarithm of 1 plus a scalar value
  *
@@ -482,7 +482,7 @@ struct functor_traits<scalar_log1p_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  *
  * \brief Template functor to compute the base-10 logarithm of a scalar
  *
@@ -507,7 +507,7 @@ struct functor_traits<scalar_log10_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  *
  * \brief Template functor to compute the base-2 logarithm of a scalar
  *
@@ -532,7 +532,7 @@ struct functor_traits<scalar_log2_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the square root of a scalar
  * \sa class CwiseUnaryOp, Cwise::sqrt()
  */
@@ -584,7 +584,7 @@ struct functor_traits<scalar_sqrt_op<bool> > {
   enum { Cost = 1, PacketAccess = packet_traits<bool>::Vectorizable };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the reciprocal square root of a scalar
  * \sa class CwiseUnaryOp, Cwise::rsqrt()
  */
@@ -608,7 +608,7 @@ struct functor_traits<scalar_rsqrt_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the cosine of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::cos()
  */
@@ -631,7 +631,7 @@ struct functor_traits<scalar_cos_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the sine of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::sin()
  */
@@ -654,7 +654,7 @@ struct functor_traits<scalar_sin_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the tan of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::tan()
  */
@@ -677,7 +677,7 @@ struct functor_traits<scalar_tan_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the arc cosine of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::acos()
  */
@@ -700,7 +700,7 @@ struct functor_traits<scalar_acos_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the arc sine of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::asin()
  */
@@ -723,7 +723,7 @@ struct functor_traits<scalar_asin_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the atan of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::atan()
  */
@@ -746,7 +746,7 @@ struct functor_traits<scalar_atan_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the tanh of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::tanh()
  */
@@ -790,7 +790,7 @@ struct functor_traits<scalar_tanh_op<Scalar> > {
 };
 
 #if EIGEN_HAS_CXX11_MATH
-/* \internal
+/** \internal
  * \brief Template functor to compute the atanh of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::atanh()
  */
@@ -808,7 +808,7 @@ struct functor_traits<scalar_atanh_op<Scalar> > {
 };
 #endif
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the sinh of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::sinh()
  */
@@ -832,7 +832,7 @@ struct functor_traits<scalar_sinh_op<Scalar> > {
 };
 
 #if EIGEN_HAS_CXX11_MATH
-/* \internal
+/** \internal
  * \brief Template functor to compute the asinh of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::asinh()
  */
@@ -850,7 +850,7 @@ struct functor_traits<scalar_asinh_op<Scalar> > {
 };
 #endif
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the cosh of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::cosh()
  */
@@ -874,7 +874,7 @@ struct functor_traits<scalar_cosh_op<Scalar> > {
 };
 
 #if EIGEN_HAS_CXX11_MATH
-/* \internal
+/** \internal
  * \brief Template functor to compute the acosh of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::acosh()
  */
@@ -892,7 +892,7 @@ struct functor_traits<scalar_acosh_op<Scalar> > {
 };
 #endif
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the inverse of a scalar
  * \sa class CwiseUnaryOp, Cwise::inverse()
  */
@@ -915,7 +915,7 @@ struct functor_traits<scalar_inverse_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the square of a scalar
  * \sa class CwiseUnaryOp, Cwise::square()
  */
@@ -957,7 +957,7 @@ struct functor_traits<scalar_square_op<bool> > {
   enum { Cost = 0, PacketAccess = packet_traits<bool>::Vectorizable };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the cube of a scalar
  * \sa class CwiseUnaryOp, Cwise::cube()
  */
@@ -999,7 +999,7 @@ struct functor_traits<scalar_cube_op<bool> > {
   enum { Cost = 0, PacketAccess = packet_traits<bool>::Vectorizable };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the rounded value of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::round()
  */
@@ -1023,7 +1023,7 @@ struct functor_traits<scalar_round_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the floor of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::floor()
  */
@@ -1047,7 +1047,7 @@ struct functor_traits<scalar_floor_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the rounded (with current rounding mode)
  * value of a scalar \sa class CwiseUnaryOp, ArrayBase::rint()
  */
@@ -1071,7 +1071,7 @@ struct functor_traits<scalar_rint_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the ceil of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::ceil()
  */
@@ -1095,7 +1095,7 @@ struct functor_traits<scalar_ceil_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute whether a scalar is NaN
  * \sa class CwiseUnaryOp, ArrayBase::isnan()
  */
@@ -1117,7 +1117,7 @@ struct functor_traits<scalar_isnan_op<Scalar> > {
   enum { Cost = NumTraits<Scalar>::MulCost, PacketAccess = false };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to check whether a scalar is +/-inf
  * \sa class CwiseUnaryOp, ArrayBase::isinf()
  */
@@ -1139,7 +1139,7 @@ struct functor_traits<scalar_isinf_op<Scalar> > {
   enum { Cost = NumTraits<Scalar>::MulCost, PacketAccess = false };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to check whether a scalar has a finite value
  * \sa class CwiseUnaryOp, ArrayBase::isfinite()
  */
@@ -1161,7 +1161,7 @@ struct functor_traits<scalar_isfinite_op<Scalar> > {
   enum { Cost = NumTraits<Scalar>::MulCost, PacketAccess = false };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the logical not of a boolean
  *
  * \sa class CwiseUnaryOp, ArrayBase::operator!
@@ -1178,7 +1178,7 @@ struct functor_traits<scalar_boolean_not_op<Scalar> > {
   enum { Cost = NumTraits<bool>::AddCost, PacketAccess = false };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the signum of a scalar
  * \sa class CwiseUnaryOp, Cwise::sign()
  */
@@ -1235,7 +1235,7 @@ struct functor_traits<scalar_sign_op<Scalar> > {
   };
 };
 
-/* \internal
+/** \internal
  * \brief Template functor to compute the logistic function of a scalar
  * \sa class CwiseUnaryOp, ArrayBase::logistic()
  */
@@ -1254,7 +1254,7 @@ struct scalar_logistic_op {
 };
 
 #ifndef EIGEN_GPU_COMPILE_PHASE
-/* \internal
+/** \internal
  * \brief Template specialization of the logistic function for float.
  *
  *  Uses just a 9/10-degree rational interpolant which

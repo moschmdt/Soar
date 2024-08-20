@@ -31,7 +31,7 @@
 #include "Export.h"
 
 // DJP: A quick test of statically linked version of ElementXML
-/*
+/**
 #define WIN_STATIC_LINK
 
 // Hard coding the lib here so I don't have to go and update all of the other
@@ -54,12 +54,12 @@ extern "C" {
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Default constructor.
  */
 EXPORT ElementXML_Handle soarxml_NewElementXML();
 
-/*
+/**
  * @brief Release our reference to this object, possibly
  *        causing it to be deleted.
  *
@@ -67,7 +67,7 @@ EXPORT ElementXML_Handle soarxml_NewElementXML();
  */
 EXPORT int soarxml_ReleaseRef(ElementXML_Handle hXML);
 
-/*
+/**
  * @brief Add a new reference to this object.
  *        The object will only be deleted after calling
  *        releaseRef() one more time than addRef() has been
@@ -78,7 +78,7 @@ EXPORT int soarxml_ReleaseRef(ElementXML_Handle hXML);
  */
 EXPORT int soarxml_AddRef(ElementXML_Handle hXML);
 
-/*
+/**
  * @returns Reports the current reference count (must be > 0)
  */
 EXPORT int soarxml_GetRefCount(ElementXML_Handle hXML);
@@ -89,7 +89,7 @@ EXPORT int soarxml_GetRefCount(ElementXML_Handle hXML);
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Set the tag name for this element.
  *
  * @param  tagName   Tag name can only contain letters, numbers, �.� �-� and
@@ -101,7 +101,7 @@ EXPORT int soarxml_GetRefCount(ElementXML_Handle hXML);
 EXPORT bool soarxml_SetTagName(ElementXML_Handle hXML, char* tagName,
                                bool copyName);
 
-/*
+/**
  * @brief Gets the tag name for this element.
  *
  * @returns The tag name.
@@ -114,7 +114,7 @@ EXPORT char const* soarxml_GetTagName(ElementXML_Handle const hXML);
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Associate a comment with this XML element.
  *        The comment is written in front of the element when stored/parsed.
  *
@@ -128,7 +128,7 @@ EXPORT char const* soarxml_GetTagName(ElementXML_Handle const hXML);
  */
 EXPORT bool soarxml_SetComment(ElementXML_Handle hXML, char const* pComment);
 
-/*
+/**
  * @brief Returns the comment for this element.
  *
  * @returns The comment string for this element (or zero-length string if there
@@ -145,7 +145,7 @@ EXPORT char const* soarxml_GetComment(ElementXML_Handle hXML);
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Adds a child to the list of children of this element.
  *
  * @param  pChild    The child to add.  Will be released when the parent is
@@ -153,12 +153,12 @@ EXPORT char const* soarxml_GetComment(ElementXML_Handle hXML);
  */
 EXPORT void soarxml_AddChild(ElementXML_Handle hXML, ElementXML_Handle hChild);
 
-/*
+/**
  * @brief Returns the number of children of this element.
  */
 EXPORT int soarxml_GetNumberChildren(ElementXML_Handle const hXML);
 
-/*
+/**
  * @brief Returns the n-th child of this element.
  *
  * Children are guaranteed to be returned in the order they were added.
@@ -175,7 +175,7 @@ EXPORT int soarxml_GetNumberChildren(ElementXML_Handle const hXML);
 EXPORT ElementXML_Handle const soarxml_GetChild(ElementXML_Handle const hXML,
                                                 int index);
 
-/*
+/**
  * @brief Returns the parent of this element.
  *
  * The caller should *not* call releaseRef() on this parent.
@@ -185,7 +185,7 @@ EXPORT ElementXML_Handle const soarxml_GetChild(ElementXML_Handle const hXML,
  */
 EXPORT ElementXML_Handle const soarxml_GetParent(ElementXML_Handle const hXML);
 
-/*
+/**
  * @brief Returns a copy of this object.
  *        Generally, this shouldn't be necessary as ref counting
  *        allows multiple clients to point to the same object.
@@ -201,7 +201,7 @@ EXPORT ElementXML_Handle const soarxml_MakeCopy(ElementXML_Handle const hXML);
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Adds an attribute name-value pair.
  *
  * @param attributeName  Attribute name can only contain letters, numbers, �.�
@@ -217,12 +217,12 @@ EXPORT bool soarxml_AddAttribute(ElementXML_Handle hXML, char* attributeName,
                                  char* attributeValue, bool copyName,
                                  bool copyValue);
 
-/*
+/**
  * @brief Get the number of attributes attached to this element.
  */
 EXPORT int soarxml_GetNumberAttributes(ElementXML_Handle const hXML);
 
-/*
+/**
  * @brief Get the name of the n-th attribute of this element.
  *        Attributes may not be returned in the order they were added.
  *
@@ -231,7 +231,7 @@ EXPORT int soarxml_GetNumberAttributes(ElementXML_Handle const hXML);
 EXPORT char const* soarxml_GetAttributeName(ElementXML_Handle const hXML,
                                             int index);
 
-/*
+/**
  * @brief Get the value of the n-th attribute of this element.
  *
  * @param index  The 0-based index of the attribute to return.
@@ -239,7 +239,7 @@ EXPORT char const* soarxml_GetAttributeName(ElementXML_Handle const hXML,
 EXPORT char const* soarxml_GetAttributeValue(ElementXML_Handle const hXML,
                                              int index);
 
-/*
+/**
  * @brief Get the value of the named attribute of this element.
  *
  * @param attName    The name of the attribute to look up.
@@ -256,7 +256,7 @@ EXPORT char const* soarxml_GetAttribute(ElementXML_Handle const hXML,
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Set the character data for this element.
  *
  * NOTE: The characterData will be deleted by this object when it is deleted.
@@ -272,7 +272,7 @@ EXPORT char const* soarxml_GetAttribute(ElementXML_Handle const hXML,
 EXPORT void soarxml_SetCharacterData(ElementXML_Handle hXML,
                                      char* characterData, bool copyData);
 
-/*
+/**
  * @brief Setting the chracter data in this way indicates that this element�s
  *character data should be treated as a binary buffer (so it may contain chars
  *from 0-255, not just ASCII characters).
@@ -292,7 +292,7 @@ EXPORT void soarxml_SetBinaryCharacterData(ElementXML_Handle hXML,
                                            char* characterData, int length,
                                            bool copyData);
 
-/*
+/**
  * @brief Get the character data for this element.
  *
  * @returns  Returns the character data for this element.  If the element has no
@@ -302,13 +302,13 @@ EXPORT void soarxml_SetBinaryCharacterData(ElementXML_Handle hXML,
  */
 EXPORT char const* soarxml_GetCharacterData(ElementXML_Handle const hXML);
 
-/*
+/**
  * @brief Returns true if the character data should be treated as a binary
  *buffer rather than a null-terminated character string.
  */
 EXPORT bool soarxml_IsCharacterDataBinary(ElementXML_Handle const hXML);
 
-/*
+/**
  * @brief Converts a character data buffer into binary data.
  *
  * If binary data is stored in an XML file it will encoded in
@@ -330,7 +330,7 @@ EXPORT bool soarxml_IsCharacterDataBinary(ElementXML_Handle const hXML);
  */
 EXPORT bool soarxml_ConvertCharacterDataToBinary(ElementXML_Handle hXML);
 
-/*
+/**
  * @brief Returns the length of the character data.
  *
  * If the data is a binary buffer this is the size of that buffer.
@@ -339,7 +339,7 @@ EXPORT bool soarxml_ConvertCharacterDataToBinary(ElementXML_Handle hXML);
  */
 EXPORT int soarxml_GetCharacterDataLength(ElementXML_Handle const hXML);
 
-/*
+/**
  * @brief Setting this value to true indicates that this element�s character
  *data should be stored in a CDATA section. By default this value will be false.
  *
@@ -350,7 +350,7 @@ EXPORT int soarxml_GetCharacterDataLength(ElementXML_Handle const hXML);
  */
 EXPORT void soarxml_SetUseCData(ElementXML_Handle hXML, bool useCData);
 
-/*
+/**
  * @brief Returns true if this element's character data should be stored in a
  *CDATA section when streamed to XML.
  */
@@ -362,7 +362,7 @@ EXPORT bool soarxml_GetUseCData(ElementXML_Handle const hXML);
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Converts the XML object to a string.
  *
  * @param includeChildren    Includes all children in the XML output.
@@ -376,7 +376,7 @@ EXPORT char* soarxml_GenerateXMLString(ElementXML_Handle const hXML,
                                        bool includeChildren,
                                        bool insertNewLines);
 
-/*
+/**
  * @brief Returns the length of string needed to represent this object (does not
  *include the trailing null, so add one for that)
  *
@@ -401,7 +401,7 @@ EXPORT int soarxml_DetermineXMLStringLength(ElementXML_Handle const hXML,
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Utility function to allocate memory that the client will pass to the
  *other ElementXML functions.
  *
@@ -411,7 +411,7 @@ EXPORT int soarxml_DetermineXMLStringLength(ElementXML_Handle const hXML,
  */
 EXPORT char* soarxml_AllocateString(int length);
 
-/*
+/**
  * @brief Utility function to release memory allocated by this element and
  *returned to the caller.
  *
@@ -420,7 +420,7 @@ EXPORT char* soarxml_AllocateString(int length);
  */
 EXPORT void soarxml_DeleteString(char* pString);
 
-/*
+/**
  * @brief    Performs an allocation and then copies the contents of the passed
  *in string to the newly allocated string.
  *
@@ -429,7 +429,7 @@ EXPORT void soarxml_DeleteString(char* pString);
  */
 EXPORT char* soarxml_CopyString(char const* original);
 
-/*
+/**
  * @brief    Performs an allocation and then copies the contents of the passed
  *in buffer to the newly allocated buffer. You need to use this rather than
  *copyString if copying binary data (because it can contained embedded nulls).
@@ -441,7 +441,7 @@ EXPORT char* soarxml_CopyString(char const* original);
  */
 EXPORT char* soarxml_CopyBuffer(char const* original, int length);
 
-/*
+/**
  * @brief Adds an attribute name-value pair.
  *
  * NOTE: The attribute name must remain in scope for the life of this object.
@@ -458,7 +458,7 @@ EXPORT bool soarxml_AddAttributeFast(ElementXML_Handle hXML,
                                      char const* attributeName,
                                      char* attributeValue, bool copyValue);
 
-/*
+/**
  * @brief Adds an attribute name-value pair.
  *
  * NOTE: The attribute name and value must remain in scope for the life of this
@@ -473,7 +473,7 @@ EXPORT bool soarxml_AddAttributeFastFast(ElementXML_Handle hXML,
                                          char const* attributeName,
                                          char const* attributeValue);
 
-/*
+/**
  * @brief Set the tag name for this element.
  *
  * NOTE: The caller must ensure that the tag name does not go out of scope
@@ -501,7 +501,7 @@ EXPORT char const* soarxml_GetLastErrorDescription(ElementXML_Handle hXML);
 //
 ////////////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Parse an XML document from a (long) string and return an ElementXML
  *object for the document.
  *
@@ -511,7 +511,7 @@ EXPORT char const* soarxml_GetLastErrorDescription(ElementXML_Handle hXML);
  */
 EXPORT ElementXML_Handle soarxml_ParseXMLFromString(char const* pString);
 
-/*
+/**
  * @brief Parse an XML document from a (long) string and return an ElementXML
  *object for the document.  This version supports a sequence of XML strings
  *which need to be parsed in order (rather than all being part of one document).
@@ -528,7 +528,7 @@ EXPORT ElementXML_Handle soarxml_ParseXMLFromStringSequence(char const* pString,
                                                             size_t startPos,
                                                             size_t* endPos);
 
-/*
+/**
  * @brief Parse an XML document from a file and return an ElementXML object
  *        for the document.
  *
@@ -538,7 +538,7 @@ EXPORT ElementXML_Handle soarxml_ParseXMLFromStringSequence(char const* pString,
  */
 EXPORT ElementXML_Handle soarxml_ParseXMLFromFile(char const* pFilename);
 
-/*
+/**
  * @brief Returns an error message describing reason for error in last parse.
  *
  * Call here if the parsing functions return NULL to find out what went wrong.

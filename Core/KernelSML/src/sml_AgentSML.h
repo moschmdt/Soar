@@ -377,7 +377,7 @@ class EXPORT AgentSML {
 
   void RemoveAllListeners(Connection* pConnection);
 
-  /*
+  /**
    * @brief    Sometimes we wish to temporarily disable and then
    *           re-enable the print callback because we use the Kernel's
    *           print callback to report information that isn't really part of
@@ -393,14 +393,14 @@ class EXPORT AgentSML {
     m_XMLListener.EnablePrintCallback(true);
   }
 
-  /*
+  /**
    * @brief    During an init-soar, the agent generates print callbacks
    *           that need to be flushed before the trace is printed during
    *           the first run.
    */
   void FlushPrintOutput() { m_PrintListener.FlushOutput(NULL, smlEVENT_PRINT); }
 
-  /*
+  /**
    * @brief    Trigger an "echo" event.  This event allows one client
    *           to issue a command and have another client (typically the
    *debugger) listen in on the output.
@@ -410,7 +410,7 @@ class EXPORT AgentSML {
     m_PrintListener.FlushOutput(pConnection, smlEVENT_ECHO);
   }
 
-  /*
+  /**
    * @brief    This is the same as the regular FireEchoEvent, except
    *           it broadcasts to all listeners, even the originator of the
    *command because the self field is not set in this case.
@@ -423,17 +423,17 @@ class EXPORT AgentSML {
     m_PrintListener.FlushOutput(NULL, smlEVENT_ECHO);
   }
 
-  /*
+  /**
    * @brief    Send XML and print events for a simple string message
    */
   void FireSimpleXML(char const* pMsg);
 
-  /*
+  /**
    * @brief    Send a run event
    */
   void FireRunEvent(smlRunEventId eventId);
 
-  /*
+  /**
    * @brief    Converts an id from a client side value to a kernel side value.
    *           We need to be able to do this because the client is adding a
    *collection of wmes at once, so it makes up the ids for those objects. But
@@ -449,7 +449,7 @@ class EXPORT AgentSML {
   void RemoveID(char const* pKernelID);  // BADBAD: this function only
                                          // referenced in commented out code
 
-  /*
+  /**
    * @brief    Converts a time tag from a client side value to
    *           a kernel side one.
    */
@@ -471,7 +471,7 @@ class EXPORT AgentSML {
   // Execute a command line function (through the CLI processor)
   std::string ExecuteCommandLine(std::string const& commmandLine);
 
-  /*
+  /**
    * @brief    Used to select which agents run on the next run command.
    */
   void ScheduleAgentToRun(bool state);
@@ -536,7 +536,7 @@ class EXPORT AgentSML {
  protected:
   void InitializeRuntimeState();
 
-  /*
+  /**
    * @brief    Add an input message to the pending input list
    *           -- it will be processed on the next input phase callback from the
    *kernel. This agent takes ownership of the input message by adding a

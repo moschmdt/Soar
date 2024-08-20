@@ -121,7 +121,7 @@ struct triangular_solver_selector<Lhs, Rhs, Side, Mode, NoUnrolling, Dynamic> {
   }
 };
 
-/*
+/**
  * meta-unrolling implementation
  */
 
@@ -183,7 +183,7 @@ struct triangular_solver_selector<Lhs, Rhs, OnTheRight, Mode, CompleteUnrolling,
 
 }  // end namespace internal
 
-/*
+/**
  * TriangularView methods
  */
 

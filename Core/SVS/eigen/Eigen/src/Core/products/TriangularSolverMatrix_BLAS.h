@@ -1,4 +1,4 @@
-/*
+/**
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -51,24 +51,24 @@ namespace internal {
     static void run(Index size, Index otherSize, const EIGTYPE* _tri,         \
                     Index triStride, EIGTYPE* _other, Index otherIncr,        \
                     Index otherStride,                                        \
-                    level3_blocking<EIGTYPE, EIGTYPE>& /*blocking*/) {        \
+                    level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {        \
       EIGEN_ONLY_USED_FOR_DEBUG(otherIncr);                                   \
       eigen_assert(otherIncr == 1);                                           \
       BlasIndex m = convert_index<BlasIndex>(size),                           \
                 n = convert_index<BlasIndex>(otherSize), lda, ldb;            \
       char side = 'L', uplo, diag = 'N', transa;                              \
-      /* Set alpha_ */                                                        \
+      /** Set alpha_ */                                                        \
       EIGTYPE alpha(1);                                                       \
       ldb = convert_index<BlasIndex>(otherStride);                            \
                                                                               \
       const EIGTYPE* a;                                                       \
-      /* Set trans */                                                         \
+      /** Set trans */                                                         \
       transa =                                                                \
           (TriStorageOrder == RowMajor) ? ((Conjugate) ? 'C' : 'T') : 'N';    \
-      /* Set uplo */                                                          \
+      /** Set uplo */                                                          \
       uplo = IsLower ? 'L' : 'U';                                             \
       if (TriStorageOrder == RowMajor) uplo = (uplo == 'L') ? 'U' : 'L';      \
-      /* Set a, lda */                                                        \
+      /** Set a, lda */                                                        \
       typedef Matrix<EIGTYPE, Dynamic, Dynamic, TriStorageOrder> MatrixTri;   \
       Map<const MatrixTri, 0, OuterStride<> > tri(_tri, size, size,           \
                                                   OuterStride<>(triStride));  \
@@ -83,7 +83,7 @@ namespace internal {
         lda = convert_index<BlasIndex>(triStride);                            \
       }                                                                       \
       if (IsUnitDiag) diag = 'U';                                             \
-      /* call ?trsm*/                                                         \
+      /** call ?trsm*/                                                         \
       BLASFUNC(&side, &uplo, &transa, &diag, &m, &n,                          \
                (const BLASTYPE*)&numext::real_ref(alpha), (const BLASTYPE*)a, \
                &lda, (BLASTYPE*)_other, &ldb);                                \
@@ -116,24 +116,24 @@ EIGEN_BLAS_TRSM_L(scomplex, float, ctrsm_)
     static void run(Index size, Index otherSize, const EIGTYPE* _tri,         \
                     Index triStride, EIGTYPE* _other, Index otherIncr,        \
                     Index otherStride,                                        \
-                    level3_blocking<EIGTYPE, EIGTYPE>& /*blocking*/) {        \
+                    level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {        \
       EIGEN_ONLY_USED_FOR_DEBUG(otherIncr);                                   \
       eigen_assert(otherIncr == 1);                                           \
       BlasIndex m = convert_index<BlasIndex>(otherSize),                      \
                 n = convert_index<BlasIndex>(size), lda, ldb;                 \
       char side = 'R', uplo, diag = 'N', transa;                              \
-      /* Set alpha_ */                                                        \
+      /** Set alpha_ */                                                        \
       EIGTYPE alpha(1);                                                       \
       ldb = convert_index<BlasIndex>(otherStride);                            \
                                                                               \
       const EIGTYPE* a;                                                       \
-      /* Set trans */                                                         \
+      /** Set trans */                                                         \
       transa =                                                                \
           (TriStorageOrder == RowMajor) ? ((Conjugate) ? 'C' : 'T') : 'N';    \
-      /* Set uplo */                                                          \
+      /** Set uplo */                                                          \
       uplo = IsLower ? 'L' : 'U';                                             \
       if (TriStorageOrder == RowMajor) uplo = (uplo == 'L') ? 'U' : 'L';      \
-      /* Set a, lda */                                                        \
+      /** Set a, lda */                                                        \
       typedef Matrix<EIGTYPE, Dynamic, Dynamic, TriStorageOrder> MatrixTri;   \
       Map<const MatrixTri, 0, OuterStride<> > tri(_tri, size, size,           \
                                                   OuterStride<>(triStride));  \
@@ -148,11 +148,11 @@ EIGEN_BLAS_TRSM_L(scomplex, float, ctrsm_)
         lda = convert_index<BlasIndex>(triStride);                            \
       }                                                                       \
       if (IsUnitDiag) diag = 'U';                                             \
-      /* call ?trsm*/                                                         \
+      /** call ?trsm*/                                                         \
       BLASFUNC(&side, &uplo, &transa, &diag, &m, &n,                          \
                (const BLASTYPE*)&numext::real_ref(alpha), (const BLASTYPE*)a, \
                &lda, (BLASTYPE*)_other, &ldb);                                \
-      /*std::cout << "TRMS_L specialization!\n";*/                            \
+      /**std::cout << "TRMS_L specialization!\n";*/                            \
     }                                                                         \
   };
 

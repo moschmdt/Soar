@@ -79,7 +79,7 @@ struct isMuchSmallerThan_scalar_selector<Derived, true> {
 
 }  // end namespace internal
 
-/* \returns \c true if \c *this is approximately equal to \a other, within the
+/** \returns \c true if \c *this is approximately equal to \a other, within the
  * precision determined by \a prec.
  *
  * \note The fuzzy compares are done multiplicatively. Two vectors \f$ v \f$ and
@@ -105,7 +105,7 @@ EIGEN_DEVICE_FUNC bool DenseBase<Derived>::isApprox(
       derived(), other.derived(), prec);
 }
 
-/* \returns \c true if the norm of \c *this is much smaller than \a other,
+/** \returns \c true if the norm of \c *this is much smaller than \a other,
  * within the precision determined by \a prec.
  *
  * \note The fuzzy compares are done multiplicatively. A vector \f$ v \f$ is
@@ -127,7 +127,7 @@ EIGEN_DEVICE_FUNC bool DenseBase<Derived>::isMuchSmallerThan(
                                                                    other, prec);
 }
 
-/* \returns \c true if the norm of \c *this is much smaller than the norm of \a
+/** \returns \c true if the norm of \c *this is much smaller than the norm of \a
  * other, within the precision determined by \a prec.
  *
  * \note The fuzzy compares are done multiplicatively. A vector \f$ v \f$ is

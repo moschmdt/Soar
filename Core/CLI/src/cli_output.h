@@ -1,4 +1,4 @@
-/*
+/**
  * cli_explain.h
  *
  *  Created on: Dec 22, 2015
@@ -30,7 +30,7 @@ class OutputCommand : public cli::ParserCommand {
     std::string subCommandArg;
     bool backwardCompatibleReplacement = false;
 
-    /* Store original argv for CTF and CLOG.  Both sub-commands are still
+    /** Store original argv for CTF and CLOG.  Both sub-commands are still
      * using their original parsing.  Ideally, we would integrate the logic. */
     std::vector<std::string> argv_orig = argv;
     bool hadError = false;
@@ -49,7 +49,7 @@ class OutputCommand : public cli::ParserCommand {
         {'c', "close", OPTARG_NONE},  {0, 0, OPTARG_NONE}};
 
     for (;;) {
-      /* Ignore bad options in CTF command because they could be options for
+      /** Ignore bad options in CTF command because they could be options for
        * command to be executed, which can be anything */
       if (!opt.ProcessOptions(argv, optionsData)) {
         cli.SetError(opt.GetError().c_str());
@@ -61,7 +61,7 @@ class OutputCommand : public cli::ParserCommand {
       if (opt.GetOption() == -1) {
         break;
       }
-      /* To maintain backwards compatibility with warnings/verbose/echo-commands
+      /** To maintain backwards compatibility with warnings/verbose/echo-commands
        */
       switch (opt.GetOption()) {
         case 'e':
@@ -111,4 +111,4 @@ class OutputCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CLI_OUTPUT_H_ */
+#endif /** CLI_OUTPUT_H_ */

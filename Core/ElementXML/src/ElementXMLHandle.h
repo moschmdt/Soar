@@ -15,15 +15,15 @@
 extern "C" {
 #endif
 
-/* Define an ElementXML_Handle as a pointer to this empty structure to give
+/** Define an ElementXML_Handle as a pointer to this empty structure to give
  * users */
-/* a typesafe way to pass ElementXML_Handle's in and out.  In fact it's a
+/** a typesafe way to pass ElementXML_Handle's in and out.  In fact it's a
  * pointer */
-/* to a class, but that's not the client's business--to the client this is an */
-/* arbitrary handle.  If this is ever a problem, it can be typedef'd to a long.
+/** to a class, but that's not the client's business--to the client this is an */
+/** arbitrary handle.  If this is ever a problem, it can be typedef'd to a long.
  */
 struct ElementXML_InterfaceStruct {
-  intptr_t n; /* So that we compiles under 'C' */
+  intptr_t n; /** So that we compiles under 'C' */
 };
 typedef ElementXML_InterfaceStruct* ElementXML_Handle;
 

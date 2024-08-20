@@ -1209,7 +1209,7 @@ EIGEN_DEVICE_FUNC
 /// Output: \verbinclude MatrixBase_col.out
 ///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(column - major)
-/*
+/**
  * \sa row(), class Block */
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE ColXpr col(Index i) {
   return ColXpr(derived(), i);
@@ -1227,7 +1227,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE ConstColXpr col(Index i) const {
 /// Output: \verbinclude MatrixBase_row.out
 ///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(row - major)
-/*
+/**
  * \sa col(), class Block */
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE RowXpr row(Index i) {
   return RowXpr(derived(), i);
@@ -1535,7 +1535,7 @@ innerVectors(Index outerStart, Index outerSize) const {
       IsRowMajor ? outerSize : rows(), IsRowMajor ? cols() : outerSize);
 }
 
-/* \returns the i-th subvector (column or vector) according to the \c Direction
+/** \returns the i-th subvector (column or vector) according to the \c Direction
  * \sa subVectors()
  */
 template <DirectionType Direction>
@@ -1546,7 +1546,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
                                         RowXpr>::type(derived(), i);
 }
 
-/* This is the const version of subVector(Index) */
+/** This is the const version of subVector(Index) */
 template <DirectionType Direction>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
     typename internal::conditional<Direction == Vertical, ConstColXpr,
@@ -1556,7 +1556,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
                                         ConstRowXpr>::type(derived(), i);
 }
 
-/* \returns the number of subvectors (rows or columns) in the direction \c
+/** \returns the number of subvectors (rows or columns) in the direction \c
  * Direction \sa subVector(Index)
  */
 template <DirectionType Direction>

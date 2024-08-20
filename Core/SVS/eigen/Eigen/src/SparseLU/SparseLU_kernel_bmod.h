@@ -16,7 +16,7 @@ namespace internal {
 
 template <int SegSizeAtCompileTime>
 struct LU_kernel_bmod {
-  /* \internal
+  /** \internal
    * \brief Performs numeric block updates from a given supernode to a single
    * column
    *
@@ -113,9 +113,9 @@ template <>
 struct LU_kernel_bmod<1> {
   template <typename BlockScalarVector, typename ScalarVector,
             typename IndexVector>
-  static EIGEN_DONT_INLINE void run(const Index /*segsize*/,
+  static EIGEN_DONT_INLINE void run(const Index /**segsize*/,
                                     BlockScalarVector& dense,
-                                    ScalarVector& /*tempv*/,
+                                    ScalarVector& /**tempv*/,
                                     ScalarVector& lusup, Index& luptr,
                                     const Index lda, const Index nrow,
                                     IndexVector& lsub, const Index lptr,
@@ -125,7 +125,7 @@ struct LU_kernel_bmod<1> {
 template <typename BlockScalarVector, typename ScalarVector,
           typename IndexVector>
 EIGEN_DONT_INLINE void LU_kernel_bmod<1>::run(
-    const Index /*segsize*/, BlockScalarVector& dense, ScalarVector& /*tempv*/,
+    const Index /**segsize*/, BlockScalarVector& dense, ScalarVector& /**tempv*/,
     ScalarVector& lusup, Index& luptr, const Index lda, const Index nrow,
     IndexVector& lsub, const Index lptr, const Index no_zeros) {
   typedef typename ScalarVector::Scalar Scalar;

@@ -26,7 +26,7 @@ struct traits<Inverse<XprType> > : traits<typename XprType::PlainObject> {
 
 }  // end namespace internal
 
-/* \class Inverse
+/** \class Inverse
  *
  * \brief Expression of the inverse of another expression
  *
@@ -80,7 +80,7 @@ class InverseImpl : public internal::generic_xpr_base<Inverse<XprType> >::type {
 
 namespace internal {
 
-/* \internal
+/** \internal
  * \brief Default evaluator for Inverse expression.
  *
  * This default evaluator for Inverse expression simply evaluate the inverse

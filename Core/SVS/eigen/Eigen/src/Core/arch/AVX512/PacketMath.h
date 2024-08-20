@@ -156,7 +156,7 @@ struct packet_traits<double> : default_packet_traits {
   };
 };
 
-/* TODO Implement AVX512 for integers
+/** TODO Implement AVX512 for integers
 template<> struct packet_traits<int>    : default_packet_traits
 {
   typedef Packet16i type;
@@ -245,30 +245,30 @@ pset1frombits<Packet8d>(const numext::uint64_t from) {
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet16f pzero(const Packet16f& /*a*/) {
+EIGEN_STRONG_INLINE Packet16f pzero(const Packet16f& /**a*/) {
   return _mm512_setzero_ps();
 }
 template <>
-EIGEN_STRONG_INLINE Packet8d pzero(const Packet8d& /*a*/) {
+EIGEN_STRONG_INLINE Packet8d pzero(const Packet8d& /**a*/) {
   return _mm512_setzero_pd();
 }
 template <>
-EIGEN_STRONG_INLINE Packet16i pzero(const Packet16i& /*a*/) {
+EIGEN_STRONG_INLINE Packet16i pzero(const Packet16i& /**a*/) {
   return _mm512_setzero_si512();
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet16f peven_mask(const Packet16f& /*a*/) {
+EIGEN_STRONG_INLINE Packet16f peven_mask(const Packet16f& /**a*/) {
   return _mm512_castsi512_ps(
       _mm512_set_epi32(0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1));
 }
 template <>
-EIGEN_STRONG_INLINE Packet16i peven_mask(const Packet16i& /*a*/) {
+EIGEN_STRONG_INLINE Packet16i peven_mask(const Packet16i& /**a*/) {
   return _mm512_set_epi32(0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0, -1, 0,
                           -1);
 }
 template <>
-EIGEN_STRONG_INLINE Packet8d peven_mask(const Packet8d& /*a*/) {
+EIGEN_STRONG_INLINE Packet8d peven_mask(const Packet8d& /**a*/) {
   return _mm512_castsi512_pd(
       _mm512_set_epi32(0, 0, -1, -1, 0, 0, -1, -1, 0, 0, -1, -1, 0, 0, -1, -1));
 }
@@ -617,7 +617,7 @@ EIGEN_STRONG_INLINE Packet8d pfloor<Packet8d>(const Packet8d& a) {
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet16i ptrue<Packet16i>(const Packet16i& /*a*/) {
+EIGEN_STRONG_INLINE Packet16i ptrue<Packet16i>(const Packet16i& /**a*/) {
   return _mm512_set1_epi32(0xffffffffu);
 }
 
@@ -1487,9 +1487,9 @@ EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<Packet8d, 8>& kernel) {
   PACK_OUTPUT_SQ_D(kernel.packet, tmp.packet, 7, 8);
 }
 template <>
-EIGEN_STRONG_INLINE Packet16f pblend(const Selector<16>& /*ifPacket*/,
-                                     const Packet16f& /*thenPacket*/,
-                                     const Packet16f& /*elsePacket*/) {
+EIGEN_STRONG_INLINE Packet16f pblend(const Selector<16>& /**ifPacket*/,
+                                     const Packet16f& /**thenPacket*/,
+                                     const Packet16f& /**elsePacket*/) {
   assert(false && "To be implemented");
   return Packet16f();
 }

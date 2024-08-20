@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \ingroup SparseCore_Module
+/** \ingroup SparseCore_Module
  *
  * \class SparseMatrixBase
  *
@@ -30,7 +30,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
  public:
   typedef typename internal::traits<Derived>::Scalar Scalar;
 
-  /* The numeric type of the expression' coefficients, e.g. float, double, int
+  /** The numeric type of the expression' coefficients, e.g. float, double, int
    * or std::complex<float>, etc.
    *
    * It is an alias for the Scalar type */
@@ -39,7 +39,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
   typedef typename internal::packet_traits<Scalar>::type PacketScalar;
   typedef typename internal::traits<Derived>::StorageKind StorageKind;
 
-  /* The integer type used to \b store indices within a SparseMatrix.
+  /** The integer type used to \b store indices within a SparseMatrix.
    * For a \c SparseMatrix<Scalar,Options,IndexType> it an alias of the third
    * template parameter \c IndexType. */
   typedef typename internal::traits<Derived>::StorageIndex StorageIndex;
@@ -58,14 +58,14 @@ class SparseMatrixBase : public EigenBase<Derived> {
   enum {
 
     RowsAtCompileTime = internal::traits<Derived>::RowsAtCompileTime,
-    /*< The number of rows at compile-time. This is just a copy of the value
+    /**< The number of rows at compile-time. This is just a copy of the value
      * provided by the \a Derived type. If a value is not known at compile-time,
      * it is set to the \a Dynamic constant.
      * \sa MatrixBase::rows(), MatrixBase::cols(), ColsAtCompileTime,
      * SizeAtCompileTime */
 
     ColsAtCompileTime = internal::traits<Derived>::ColsAtCompileTime,
-    /*< The number of columns at compile-time. This is just a copy of the value
+    /**< The number of columns at compile-time. This is just a copy of the value
      * provided by the \a Derived type. If a value is not known at compile-time,
      * it is set to the \a Dynamic constant.
      * \sa MatrixBase::rows(), MatrixBase::cols(), RowsAtCompileTime,
@@ -74,7 +74,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
     SizeAtCompileTime = (internal::size_at_compile_time<
                          internal::traits<Derived>::RowsAtCompileTime,
                          internal::traits<Derived>::ColsAtCompileTime>::ret),
-    /*< This is equal to the number of coefficients, i.e. the number of
+    /**< This is equal to the number of coefficients, i.e. the number of
      * rows times the number of columns, or to \a Dynamic if this is not
      * known at compile-time. \sa RowsAtCompileTime, ColsAtCompileTime */
 
@@ -86,7 +86,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
                                         MaxColsAtCompileTime>::ret),
 
     IsVectorAtCompileTime = RowsAtCompileTime == 1 || ColsAtCompileTime == 1,
-    /*< This is set to true if either the number of rows or the number of
+    /**< This is set to true if either the number of rows or the number of
      * columns is known at compile-time to be equal to 1. Indeed, in that case,
      * we are dealing with a column-vector (if there is only one column) or with
      * a row-vector (if there is only one row). */
@@ -94,12 +94,12 @@ class SparseMatrixBase : public EigenBase<Derived> {
     NumDimensions = int(MaxSizeAtCompileTime) == 1 ? 0
                     : bool(IsVectorAtCompileTime)  ? 1
                                                    : 2,
-    /*< This value is equal to Tensor::NumDimensions, i.e. 0 for scalars, 1 for
+    /**< This value is equal to Tensor::NumDimensions, i.e. 0 for scalars, 1 for
      * vectors, and 2 for matrices.
      */
 
     Flags = internal::traits<Derived>::Flags,
-    /*< This stores expression \ref flags flags which may or may not be
+    /**< This stores expression \ref flags flags which may or may not be
      * inherited by new expressions constructed from this one. See the \ref
      * flags "list of flags".
      */
@@ -116,7 +116,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
 #endif
   };
 
-  /* \internal the return type of MatrixBase::adjoint() */
+  /** \internal the return type of MatrixBase::adjoint() */
   typedef typename internal::conditional<
       NumTraits<Scalar>::IsComplex,
       CwiseUnaryOp<internal::scalar_conjugate_op<Scalar>,
@@ -132,7 +132,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
       PlainObject;
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* This is the "real scalar" type; if the \a Scalar type is already real
+  /** This is the "real scalar" type; if the \a Scalar type is already real
    * numbers (e.g. int, float or double) then \a RealScalar is just the same as
    * \a Scalar. If \a Scalar is \a std::complex<T> then RealScalar is \a T.
    *
@@ -140,19 +140,19 @@ class SparseMatrixBase : public EigenBase<Derived> {
    */
   typedef typename NumTraits<Scalar>::Real RealScalar;
 
-  /* \internal the return type of coeff()
+  /** \internal the return type of coeff()
    */
   typedef typename internal::conditional<_HasDirectAccess, const Scalar&,
                                          Scalar>::type CoeffReturnType;
 
-  /* \internal Represents a matrix with all coefficients equal to one another*/
+  /** \internal Represents a matrix with all coefficients equal to one another*/
   typedef CwiseNullaryOp<internal::scalar_constant_op<Scalar>,
                          Matrix<Scalar, Dynamic, Dynamic> >
       ConstantReturnType;
 
-  /* type of the equivalent dense matrix */
+  /** type of the equivalent dense matrix */
   typedef Matrix<Scalar, RowsAtCompileTime, ColsAtCompileTime> DenseMatrixType;
-  /* type of the equivalent square matrix */
+  /** type of the equivalent square matrix */
   typedef Matrix<Scalar, EIGEN_SIZE_MAX(RowsAtCompileTime, ColsAtCompileTime),
                  EIGEN_SIZE_MAX(RowsAtCompileTime, ColsAtCompileTime)>
       SquareMatrixType;
@@ -172,10 +172,10 @@ class SparseMatrixBase : public EigenBase<Derived> {
 #define EIGEN_CURRENT_STORAGE_BASE_CLASS Eigen::SparseMatrixBase
 #ifdef EIGEN_PARSED_BY_DOXYGEN
 #define EIGEN_DOC_UNARY_ADDONS(                                              \
-    METHOD, OP) /* <p>This method does not change the sparsity of \c *this: \
+    METHOD, OP) /** <p>This method does not change the sparsity of \c *this: \
                    the OP is applied to explicitly stored coefficients only. \
                    \sa SparseCompressedBase::coeffs() </p> */
-#define EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL /* <p> \warning This method  \
+#define EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL /** <p> \warning This method  \
                                                   returns a read-only        \
                                                   expression for any sparse  \
                                                   matrices. \sa \ref         \
@@ -183,7 +183,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
                                                   "Sparse block operations"  \
                                                   </p> */
 #define EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(                                \
-    COND) /* <p> \warning This method returns a read-write expression for    \
+    COND) /** <p> \warning This method returns a read-write expression for    \
              COND sparse matrices only. Otherwise, the returned expression is \
              read-only. \sa \ref TutorialSparse_SubMatrices "Sparse block     \
              operations" </p> */
@@ -205,24 +205,24 @@ class SparseMatrixBase : public EigenBase<Derived> {
 #undef EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
 #undef EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF
 
-  /* \returns the number of rows. \sa cols() */
+  /** \returns the number of rows. \sa cols() */
   inline Index rows() const { return derived().rows(); }
-  /* \returns the number of columns. \sa rows() */
+  /** \returns the number of columns. \sa rows() */
   inline Index cols() const { return derived().cols(); }
-  /* \returns the number of coefficients, which is \a rows()*cols().
+  /** \returns the number of coefficients, which is \a rows()*cols().
    * \sa rows(), cols(). */
   inline Index size() const { return rows() * cols(); }
-  /* \returns true if either the number of rows or the number of columns is
+  /** \returns true if either the number of rows or the number of columns is
    * equal to 1. In other words, this function returns \code rows()==1 ||
    * cols()==1 \endcode \sa rows(), cols(), IsVectorAtCompileTime. */
   inline bool isVector() const { return rows() == 1 || cols() == 1; }
-  /* \returns the size of the storage major dimension,
+  /** \returns the size of the storage major dimension,
    * i.e., the number of columns for a columns major matrix, and the number of
    * rows otherwise */
   Index outerSize() const {
     return (int(Flags) & RowMajorBit) ? this->rows() : this->cols();
   }
-  /* \returns the size of the inner dimension according to the storage order,
+  /** \returns the size of the inner dimension according to the storage order,
    * i.e., the number of rows for a columns major matrix, and the number of cols
    * otherwise */
   Index innerSize() const {
@@ -235,7 +235,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
     return derived();
   }
 
-  SparseMatrixBase() : m_isRValue(false) { /* TODO check flags */
+  SparseMatrixBase() : m_isRValue(false) { /** TODO check flags */
   }
 
   template <typename OtherDerived>
@@ -361,7 +361,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
     return Product<OtherDerived, Derived>(lhs.derived(), rhs.derived());
   }
 
-  /* \returns an expression of P H P^-1 where H is the matrix represented by \c
+  /** \returns an expression of P H P^-1 where H is the matrix represented by \c
    * *this */
   SparseSymmetricPermutationProduct<Derived, Upper | Lower> twistedBy(
       const PermutationMatrix<Dynamic, Dynamic, StorageIndex>& perm) const {
@@ -420,7 +420,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
     return toDense().isApprox(other, prec);
   }
 
-  /* \returns the matrix or vector obtained by evaluating this expression.
+  /** \returns the matrix or vector obtained by evaluating this expression.
    *
    * Notice that in the case of a plain matrix or vector (not an expression)
    * this function just returns a const reference, in order to avoid a useless

@@ -1,4 +1,4 @@
-/*
+/**
  * visualize_wm.h
  *
  *  Created on: Sep 25, 2016
@@ -31,4 +31,4 @@ class WM_Visualization_Map {
   void get_wmes_for_symbol(Symbol* pSym, int pDepth);
 };
 
-#endif /* CORE_SOARKERNEL_SRC_VISUALIZER_VISUALIZE_WM_H_ */
+#endif /** CORE_SOARKERNEL_SRC_VISUALIZER_VISUALIZE_WM_H_ */

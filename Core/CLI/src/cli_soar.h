@@ -1,4 +1,4 @@
-/*
+/**
  * cli_explain.h
  *
  *  Created on: Dec 22, 2015
@@ -54,7 +54,7 @@ class SoarCommand : public cli::ParserCommand {
       if (opt.GetOption() == -1) {
         break;
       }
-      /* To maintain backwards compatibility with set-stop-phase/waitsnc */
+      /** To maintain backwards compatibility with set-stop-phase/waitsnc */
       switch (opt.GetOption()) {
         case 'A':
         case 'B':
@@ -120,4 +120,4 @@ class SoarCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CLI_SOAR_H */
+#endif /** CLI_SOAR_H */

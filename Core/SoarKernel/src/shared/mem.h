@@ -1,4 +1,4 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
@@ -18,9 +18,9 @@
 
 extern void init_memory_utilities(agent* thisAgent);
 
-/* ---------------- */
-/* string utilities */
-/* ---------------- */
+/** ---------------- */
+/** string utilities */
+/** ---------------- */
 
 extern char* make_memory_block_for_string(agent* thisAgent, char const* s);
 extern void free_memory_block_for_string(agent* thisAgent, char* p);
@@ -50,9 +50,9 @@ extern void add_to_growable_string(agent* thisAgent, growable_string* gs,
                                    const char* string_to_add);
 extern void free_growable_string(agent* thisAgent, growable_string gs);
 
-/* ------------------------- */
-/* Cons cell, list utilities */
-/* ------------------------- */
+/** ------------------------- */
+/** Cons cell, list utilities */
+/** ------------------------- */
 
 typedef struct cons_struct {
   void* first;
@@ -72,19 +72,19 @@ extern bool member_of_list(void* item, cons* the_list);
 extern cons* add_if_not_member(agent* thisAgent, void* item, cons* old_list);
 extern void free_list(agent* thisAgent, cons* the_list);
 
-/* Added a void* parameter to cons_test_fn, because remove_pwatch_test_fn(),
+/** Added a void* parameter to cons_test_fn, because remove_pwatch_test_fn(),
    one of the callback functions, requires a third parameter that points to a
    production. In the future, other callback functions of type cons_test_fn may
    need parameters of different types, so a void pointer is best. -AJC (8/7/02)
  */
-/* Added thisAgent to cons_test_fn type, because we are eliminating the
+/** Added thisAgent to cons_test_fn type, because we are eliminating the
    global soar_agent. -AJC (8/7/02) */
 // typedef bool (*cons_test_fn)(cons *c);
 typedef bool (*cons_test_fn)(agent* thisAgent, cons* c, void* data);
 
 typedef bool (*dl_cons_test_fn)(dl_cons* dc, agent* thisAgent);
 
-/* Added a void* parameter to extract_list_elements, because
+/** Added a void* parameter to extract_list_elements, because
    remove_pwatch_test_fn(), one of the callback functions, requires a third
    parameter that points to a production. In the future, other callback
    functions of type cons_test_fn may need parameters of different types, so a
@@ -97,9 +97,9 @@ extern dl_list* extract_dl_list_elements(agent* thisAgent, dl_list** header,
 
 extern bool cons_equality_fn(agent*, cons* c, void* data);
 
-/* ----------------------------- */
-/* Resizable hash table routines */
-/* ----------------------------- */
+/** ----------------------------- */
+/** Resizable hash table routines */
+/** ----------------------------- */
 
 extern uint32_t masks_for_n_low_order_bits[33];
 
@@ -113,19 +113,19 @@ typedef struct item_in_hash_table_struct {
 typedef item_in_hash_table* bucket_array;
 
 typedef struct hash_table_struct {
-  int64_t count;          /* number of items in the table */
-  uint32_t size;          /* number of buckets */
-  short log2size;         /* log (base 2) of size */
-  short minimum_log2size; /* table never shrinks below this size */
+  int64_t count;          /** number of items in the table */
+  uint32_t size;          /** number of buckets */
+  short log2size;         /** log (base 2) of size */
+  short minimum_log2size; /** table never shrinks below this size */
   bucket_array* buckets;
-  hash_function h; /* call this to hash or rehash an item */
+  hash_function h; /** call this to hash or rehash an item */
 } hash_table;
 
 extern struct hash_table_struct* make_hash_table(agent* thisAgent,
                                                  short minimum_log2size,
                                                  hash_function h);
 extern void free_hash_table(agent* thisAgent,
-                            struct hash_table_struct* ht); /* RPM 6/09 */
+                            struct hash_table_struct* ht); /** RPM 6/09 */
 extern void remove_from_hash_table(agent* thisAgent,
                                    struct hash_table_struct* ht, void* item);
 extern void add_to_hash_table(agent* thisAgent, struct hash_table_struct* ht,
@@ -144,7 +144,7 @@ extern void do_for_all_items_in_hash_bucket(struct hash_table_struct* ht,
 
 #endif
 
-/* ======================================================================
+/** ======================================================================
                                  mem.h
 
    Init_memory_utilities() should be called before any of these routines

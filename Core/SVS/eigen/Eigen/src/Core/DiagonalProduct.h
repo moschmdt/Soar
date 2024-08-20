@@ -13,7 +13,7 @@
 
 namespace Eigen {
 
-/* \returns the diagonal matrix product of \c *this by the diagonal matrix \a
+/** \returns the diagonal matrix product of \c *this by the diagonal matrix \a
  * diagonal.
  */
 template <typename Derived>

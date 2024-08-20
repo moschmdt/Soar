@@ -11,7 +11,7 @@
 // This file is a base class plugin containing matrix specifics coefficient wise
 // functions.
 
-/* \returns an expression of the Schur product (coefficient wise product) of
+/** \returns an expression of the Schur product (coefficient wise product) of
  * *this and \a other
  *
  * Example: \include MatrixBase_cwiseProduct.cpp
@@ -28,7 +28,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const EIGEN_CWISE_BINARY_RETURN_TYPE(
       derived(), other.derived());
 }
 
-/* \returns an expression of the coefficient-wise == operator of *this and \a
+/** \returns an expression of the coefficient-wise == operator of *this and \a
  * other
  *
  * \warning this performs an exact comparison, which is generally a bad idea
@@ -50,7 +50,7 @@ cwiseEqual(const EIGEN_CURRENT_STORAGE_BASE_CLASS<OtherDerived> &other) const {
                        const OtherDerived>(derived(), other.derived());
 }
 
-/* \returns an expression of the coefficient-wise != operator of *this and \a
+/** \returns an expression of the coefficient-wise != operator of *this and \a
  * other
  *
  * \warning this performs an exact comparison, which is generally a bad idea
@@ -73,7 +73,7 @@ cwiseNotEqual(
                        const OtherDerived>(derived(), other.derived());
 }
 
-/* \returns an expression of the coefficient-wise min of *this and \a other
+/** \returns an expression of the coefficient-wise min of *this and \a other
  *
  * Example: \include MatrixBase_cwiseMin.cpp
  * Output: \verbinclude MatrixBase_cwiseMin.out
@@ -88,7 +88,7 @@ cwiseMin(const EIGEN_CURRENT_STORAGE_BASE_CLASS<OtherDerived> &other) const {
                        const OtherDerived>(derived(), other.derived());
 }
 
-/* \returns an expression of the coefficient-wise min of *this and scalar \a
+/** \returns an expression of the coefficient-wise min of *this and scalar \a
  * other
  *
  * \sa class CwiseBinaryOp, min()
@@ -100,7 +100,7 @@ cwiseMin(const Scalar &other) const {
   return cwiseMin(Derived::Constant(rows(), cols(), other));
 }
 
-/* \returns an expression of the coefficient-wise max of *this and \a other
+/** \returns an expression of the coefficient-wise max of *this and \a other
  *
  * Example: \include MatrixBase_cwiseMax.cpp
  * Output: \verbinclude MatrixBase_cwiseMax.out
@@ -115,7 +115,7 @@ cwiseMax(const EIGEN_CURRENT_STORAGE_BASE_CLASS<OtherDerived> &other) const {
                        const OtherDerived>(derived(), other.derived());
 }
 
-/* \returns an expression of the coefficient-wise max of *this and scalar \a
+/** \returns an expression of the coefficient-wise max of *this and scalar \a
  * other
  *
  * \sa class CwiseBinaryOp, min()
@@ -127,7 +127,7 @@ cwiseMax(const Scalar &other) const {
   return cwiseMax(Derived::Constant(rows(), cols(), other));
 }
 
-/* \returns an expression of the coefficient-wise quotient of *this and \a
+/** \returns an expression of the coefficient-wise quotient of *this and \a
  * other
  *
  * Example: \include MatrixBase_cwiseQuotient.cpp
@@ -148,7 +148,7 @@ typedef CwiseBinaryOp<internal::scalar_cmp_op<Scalar, Scalar, internal::cmp_EQ>,
                       const Derived, const ConstantReturnType>
     CwiseScalarEqualReturnType;
 
-/* \returns an expression of the coefficient-wise == operator of \c *this and a
+/** \returns an expression of the coefficient-wise == operator of \c *this and a
  * scalar \a s
  *
  * \warning this performs an exact comparison, which is generally a bad idea

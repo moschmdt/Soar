@@ -1,9 +1,9 @@
-/*
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/*
+/**
  *
  *  file:  output_manager.h
  *
@@ -73,7 +73,7 @@ class Output_Manager {
  private:
   Output_Manager();
 
-  /* The following two functions are declared but not implemented to avoid
+  /** The following two functions are declared but not implemented to avoid
    * copies of singletons */
   Output_Manager(Output_Manager const&){};
   void operator=(Output_Manager const&){};
@@ -81,17 +81,17 @@ class Output_Manager {
   agent* m_defaultAgent;
   OM_Parameters* m_params;
 
-  /* -- Global toggles for database, standard out -- */
+  /** -- Global toggles for database, standard out -- */
   bool stdout_mode;
 
-  /* -- Settings for how tests are printed (actual, original production tests,
+  /** -- Settings for how tests are printed (actual, original production tests,
    * test identity) -- */
   bool m_print_actual, m_print_identity;
   bool m_print_actual_effective, m_print_identity_effective;
   char *m_pre_string, *m_post_string;
   int m_column_indent[MAX_COLUMNS];
 
-  /* -- The following tracks column of the next character to print if Soar is
+  /** -- The following tracks column of the next character to print if Soar is
    * writing to std::cout --*/
   int global_printer_output_column;
   void update_printer_columns(agent* pSoarAgent, const char* msg);
@@ -127,7 +127,7 @@ class Output_Manager {
                    const char* format, va_list args);
 
  public:
-  /* -- Array for each trace output mode.  Contains prefix strings and whether
+  /** -- Array for each trace output mode.  Contains prefix strings and whether
    * enabled -- */
   trace_mode_info mode_info[num_trace_modes], saved_mode_info[num_trace_modes];
 
@@ -144,7 +144,7 @@ class Output_Manager {
 
   bool is_trace_enabled(TraceMode mode) { return mode_info[mode].enabled; }
 
-  /* Methods for the cli output command */
+  /** Methods for the cli output command */
   void print_output_summary();
   bool is_printing_to_stdout() { return stdout_mode; };
   void set_printing_to_stdout(bool pEnabled) { stdout_mode = pEnabled; };
@@ -153,7 +153,7 @@ class Output_Manager {
   void clear_default_agent() { m_defaultAgent = NULL; }
   agent* get_default_agent() { return m_defaultAgent; }
 
-  /* Core printing functions */
+  /** Core printing functions */
   void printa(agent* pSoarAgent, const char* msg);
   void printa_sf(agent* pSoarAgent, const char* format, ...);
   void sprinta_sf(agent* thisAgent, std::string& destString, const char* format,
@@ -166,7 +166,7 @@ class Output_Manager {
   void buffer_start_fresh_line(agent* thisAgent, std::string& destString);
   void start_fresh_line(agent* pSoarAgent = NULL);
 
-  /* Print functions that will use default agent if set */
+  /** Print functions that will use default agent if set */
   void print(const char* msg) {
     if (m_defaultAgent) printa(m_defaultAgent, msg);
   }
@@ -174,7 +174,7 @@ class Output_Manager {
   void sprint_sf(std::string& destString, const char* format, ...);
   size_t sprint_sf_cstr(char* dest, size_t dest_size, const char* format, ...);
 
-  /* Versions that will check debug mode and only print if set */
+  /** Versions that will check debug mode and only print if set */
   void debug_print(TraceMode mode, const char* msg);
   void debug_print_sf(TraceMode mode, const char* format, ...);
   void debug_print_sf_noprefix(TraceMode mode, const char* format, ...);
@@ -192,7 +192,7 @@ class Output_Manager {
                            bool pEmptyStringForNullIdentity = false);
   void rhs_value_to_cstring(rhs_value rv, char* dest, size_t dest_size);
 
-  /* Methods to make printing prettier */
+  /** Methods to make printing prettier */
   int get_printer_output_column(agent* thisAgent = NULL);
   void set_printer_output_column(agent* thisAgent = NULL,
                                  int pOutputColumn = 1);
@@ -244,7 +244,7 @@ class Output_Manager {
     for (int i = 0; i < MAX_COLUMNS; i++) m_column_indent[i] = 0;
   }
 
-  /* -- The following should all be refactored into to_string functions to be
+  /** -- The following should all be refactored into to_string functions to be
    * used with format strings -- */
   void print_identifiers(TraceMode mode);
   void print_msc(TraceMode mode, ms_change* p_ms_change);
@@ -257,7 +257,7 @@ class Output_Manager {
   void print_variables(TraceMode mode);
   void print_identity_sets(TraceMode mode);
 
-  /* A single function to print all pre-formatted Soar error messages.  Added
+  /** A single function to print all pre-formatted Soar error messages.  Added
    * to make other code cleaner and easier to parse */
   void display_soar_feedback(agent* thisAgent, SoarCannedMessageType pErrorType,
                              bool shouldPrint = true);
@@ -268,7 +268,7 @@ class Output_Manager {
   void display_ambiguous_command_error(
       agent* thisAgent, std::list<std::string> matched_objects_str);
 
-  /* -- Should be moved elsewhere -- */
+  /** -- Should be moved elsewhere -- */
   void debug_find_and_print_sym(char* find_string);
   char* NULL_SYM_STR;
 };
@@ -308,7 +308,7 @@ inline const char* field_to_string(WME_Field f) {
   return "NO-ELEMENT";
 }
 
-/* ------------------------------------
+/** ------------------------------------
  *    Format strings for Soar printing; note that some of these do
  *    not match their meaning in printf, etc.:
  *
@@ -368,4 +368,4 @@ inline const char* field_to_string(WME_Field f) {
  *       %w   wme
  *       %y   symbol
    ------------------------------------*/
-#endif /* OUTPUT_MANAGER_H_ */
+#endif /** OUTPUT_MANAGER_H_ */

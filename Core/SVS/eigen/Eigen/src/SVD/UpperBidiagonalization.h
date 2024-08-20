@@ -48,7 +48,7 @@ class UpperBidiagonalization {
       Diagonal<const MatrixType, 1>, OnTheRight>
       HouseholderVSequenceType;
 
-  /*
+  /**
    * \brief Default Constructor.
    *
    * The default constructor is useful in cases in which the user intends to
@@ -116,7 +116,7 @@ void upperbidiagonalization_inplace_unblocked(
     tempData = tempVector.data();
   }
 
-  for (Index k = 0; /* breaks at k==cols-1 below */; ++k) {
+  for (Index k = 0; /** breaks at k==cols-1 below */; ++k) {
     Index remainingRows = rows - k;
     Index remainingCols = cols - k - 1;
 
@@ -143,7 +143,7 @@ void upperbidiagonalization_inplace_unblocked(
   }
 }
 
-/* \internal
+/** \internal
  * Helper routine for the block reduction to upper bidiagonal form.
  *
  * Let's partition the matrix A:
@@ -287,7 +287,7 @@ void upperbidiagonalization_blocked_helper(
   }
 }
 
-/* \internal
+/** \internal
  *
  * Implementation of a block-bidiagonal reduction.
  * It is based on the following paper:
@@ -298,7 +298,7 @@ void upperbidiagonalization_blocked_helper(
 template <typename MatrixType, typename BidiagType>
 void upperbidiagonalization_inplace_blocked(
     MatrixType& A, BidiagType& bidiagonal, Index maxBlockSize = 32,
-    typename MatrixType::Scalar* /*tempData*/ = 0) {
+    typename MatrixType::Scalar* /**tempData*/ = 0) {
   typedef typename MatrixType::Scalar Scalar;
   typedef Block<MatrixType, Dynamic, Dynamic> BlockType;
 
@@ -402,7 +402,7 @@ UpperBidiagonalization<_MatrixType>::compute(const _MatrixType& matrix) {
 }
 
 #if 0
-/* \return the Householder QR decomposition of \c *this.
+/** \return the Householder QR decomposition of \c *this.
   *
   * \sa class Bidiagonalization
   */

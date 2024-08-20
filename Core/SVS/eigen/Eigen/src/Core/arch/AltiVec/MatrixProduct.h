@@ -39,7 +39,7 @@
 #include "MatrixProductMMA.h"
 #endif
 
-/*
+/**
  * TODO *
  * - Check StorageOrder on dhs_pack (the innermost second loop seems
  *unvectorized when it could). *
@@ -49,7 +49,7 @@ namespace Eigen {
 
 namespace internal {
 
-/*
+/**
  * Constants and typedefs *
  */
 template <typename Scalar>
@@ -86,11 +86,11 @@ const static Packet16uc p16uc_GETREAL64 = {0,  1,  2,  3,  4,  5,  6,  7,
 const static Packet16uc p16uc_GETIMAG64 = {8,  9,  10, 11, 12, 13, 14, 15,
                                            24, 25, 26, 27, 28, 29, 30, 31};
 
-/*
+/**
  * Single precision real and complex packing *
  * */
 
-/*
+/**
  * Symm packing is related to packing of symmetric adjoint blocks, as expected
  *the packing leaves the diagonal real, whatever is below it is copied from the
  *respective upper diagonal element and conjugated. There's no PanelMode
@@ -378,7 +378,7 @@ struct symm_pack_lhs<double, Index, Pack1, Pack2_dummy, StorageOrder> {
   }
 };
 
-/*
+/**
  * PanelMode
  * Packing might be called several times before being multiplied by gebp_kernel,
  *this happens because on special occasions it fills part of block with other
@@ -980,7 +980,7 @@ struct dhs_cpack<double, Index, DataMapper, Packet, PacketC, StorageOrder,
   }
 };
 
-/*
+/**
  * GEMM utils *
  */
 
@@ -1723,7 +1723,7 @@ EIGEN_STRONG_INLINE void gemm_unrolled_col(
 #undef MAX_UNROLL
 }
 
-/*
+/**
  * GEMM kernels *
  * */
 template <typename Scalar, typename Index, typename Packet, typename RhsPacket,
@@ -2537,7 +2537,7 @@ EIGEN_STRONG_INLINE void gemm_complex(const DataMapper& res,
 #undef advanceCols
 #undef advanceRows
 
-/*
+/**
  * ppc64le template specializations *
  * */
 template <typename Index, typename DataMapper, int Pack1, int Pack2,

@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \namespace Eigen::symbolic
+/** \namespace Eigen::symbolic
  * \ingroup Core_Module
  *
  * This namespace defines a set of classes and functions to build and evaluate
@@ -80,7 +80,7 @@ class ValueExpr<internal::FixedInt<N> > {
   }
 };
 
-/* \class BaseExpr
+/** \class BaseExpr
  * \ingroup Core_Module
  * Common base class of any symbolic expressions
  */
@@ -89,7 +89,7 @@ class BaseExpr {
  public:
   const Derived& derived() const { return *static_cast<const Derived*>(this); }
 
-  /* Evaluate the expression given the \a values of the symbols.
+  /** Evaluate the expression given the \a values of the symbols.
    *
    * \param values defines the values of the symbols, it can either be a
    * SymbolValue or a std::tuple of SymbolValue as constructed by
@@ -275,7 +275,7 @@ struct is_symbolic {
   enum { value = internal::is_convertible<T, BaseExpr<T> >::value };
 };
 
-/* Represents the actual value of a symbol identified by its tag
+/** Represents the actual value of a symbol identified by its tag
  *
  * It is the return type of SymbolValue::operator=, and most of the time this is
  * only way it is used.
@@ -283,27 +283,27 @@ struct is_symbolic {
 template <typename Tag>
 class SymbolValue {
  public:
-  /* Default constructor from the value \a val */
+  /** Default constructor from the value \a val */
   SymbolValue(Index val) : m_value(val) {}
 
-  /* \returns the stored value of the symbol */
+  /** \returns the stored value of the symbol */
   Index value() const { return m_value; }
 
  protected:
   Index m_value;
 };
 
-/* Expression of a symbol uniquely identified by the template parameter type \c
+/** Expression of a symbol uniquely identified by the template parameter type \c
  * tag */
 template <typename tag>
 class SymbolExpr : public BaseExpr<SymbolExpr<tag> > {
  public:
-  /* Alias to the template parameter \c tag */
+  /** Alias to the template parameter \c tag */
   typedef tag Tag;
 
   SymbolExpr() {}
 
-  /* Associate the value \a val to the given symbol \c *this, uniquely
+  /** Associate the value \a val to the given symbol \c *this, uniquely
    * identified by its \c Tag.
    *
    * The returned object should be passed to ExprBase::eval() to evaluate a

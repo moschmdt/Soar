@@ -7,7 +7,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
 
  * NOTE: This file is the modified version of xpivotL.c file in SuperLU
 
@@ -33,7 +33,7 @@
 namespace Eigen {
 namespace internal {
 
-/*
+/**
  * \brief Performs the numerical pivotin on the current column of L, and the
  * CDIV operation.
  *

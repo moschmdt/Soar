@@ -47,7 +47,7 @@ struct traits<Map<PlainObjectType, MapOptions, StrideType> >
 };
 }  // namespace internal
 
-/* \class Map
+/** \class Map
  * \ingroup Core_Module
  *
  * \brief A matrix or vector expression mapping an existing array of data.
@@ -127,7 +127,7 @@ class Map : public MapBase<Map<PlainObjectType, MapOptions, StrideType> > {
                                       : (this->rows() * innerStride());
   }
 
-  /* Constructor in the fixed-size case.
+  /** Constructor in the fixed-size case.
    *
    * \param dataPtr pointer to the array to map
    * \param stride optional Stride object, passing the strides.
@@ -139,7 +139,7 @@ class Map : public MapBase<Map<PlainObjectType, MapOptions, StrideType> > {
     PlainObjectType::Base::_check_template_params();
   }
 
-  /* Constructor in the dynamic-size vector case.
+  /** Constructor in the dynamic-size vector case.
    *
    * \param dataPtr pointer to the array to map
    * \param size the size of the vector expression
@@ -152,7 +152,7 @@ class Map : public MapBase<Map<PlainObjectType, MapOptions, StrideType> > {
     PlainObjectType::Base::_check_template_params();
   }
 
-  /* Constructor in the dynamic-size matrix case.
+  /** Constructor in the dynamic-size matrix case.
    *
    * \param dataPtr pointer to the array to map
    * \param rows the number of rows of the matrix expression

@@ -1,4 +1,4 @@
-/*
+/**
  * cli_wm.h
  *
  *  Created on: Oct 1, 2016
@@ -72,4 +72,4 @@ class WMCommand : public cli::ParserCommand {
 };
 }  // namespace cli
 
-#endif /* CORE_CLI_SRC_CLI_WM_H_ */
+#endif /** CORE_CLI_SRC_CLI_WM_H_ */

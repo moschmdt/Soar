@@ -8,7 +8,7 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-/*
+/**
 
  * NOTE: This file is the modified version of xcolumn_bmod.c file in SuperLU
 
@@ -34,7 +34,7 @@
 namespace Eigen {
 
 namespace internal {
-/*
+/**
  * \brief Performs numeric block updates (sup-col) in topological order
  *
  * \param jcol current column to update
@@ -57,7 +57,7 @@ Index SparseLUImpl<Scalar, StorageIndex>::column_bmod(
   Index jsupno, k, ksub, krep, ksupno;
   Index lptr, nrow, isub, irow, nextlu, new_next, ufirst;
   Index fsupc, nsupc, nsupr, luptr, kfnz, no_zeros;
-  /* krep = representative of current k-th supernode
+  /** krep = representative of current k-th supernode
    * fsupc =  first supernodal column
    * nsupc = number of columns in a supernode
    * nsupr = number of rows in a supernode
@@ -140,7 +140,7 @@ Index SparseLUImpl<Scalar, StorageIndex>::column_bmod(
   }
   glu.xlusup(jcol + 1) = StorageIndex(nextlu);  // close L\U(*,jcol);
 
-  /* For more updates within the panel (also within the current supernode),
+  /** For more updates within the panel (also within the current supernode),
    * should start from the first column of the panel, or the first column
    * of the supernode, whichever is bigger. There are two cases:
    *  1) fsupc < fpanelc, then fst_col <-- fpanelc

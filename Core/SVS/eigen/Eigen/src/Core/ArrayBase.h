@@ -15,7 +15,7 @@ namespace Eigen {
 template <typename ExpressionType>
 class MatrixWrapper;
 
-/* \class ArrayBase
+/** \class ArrayBase
  * \ingroup Core_Module
  *
  * \brief Base class for all 1D and 2D array, and related expressions
@@ -43,7 +43,7 @@ template <typename Derived>
 class ArrayBase : public DenseBase<Derived> {
  public:
 #ifndef EIGEN_PARSED_BY_DOXYGEN
-  /* The base class for a given storage type. */
+  /** The base class for a given storage type. */
   typedef ArrayBase StorageBaseType;
 
   typedef ArrayBase Eigen_BaseClassForSpecializationOfGlobalMathFuncImpl;
@@ -85,7 +85,7 @@ class ArrayBase : public DenseBase<Derived> {
 #ifndef EIGEN_PARSED_BY_DOXYGEN
   typedef typename Base::PlainObject PlainObject;
 
-  /* \internal Represents a matrix with all coefficients equal to one another*/
+  /** \internal Represents a matrix with all coefficients equal to one another*/
   typedef CwiseNullaryOp<internal::scalar_constant_op<Scalar>, PlainObject>
       ConstantReturnType;
 #endif  // not EIGEN_PARSED_BY_DOXYGEN
@@ -103,7 +103,7 @@ class ArrayBase : public DenseBase<Derived> {
 #undef EIGEN_CURRENT_STORAGE_BASE_CLASS
 #undef EIGEN_DOC_UNARY_ADDONS
 
-  /* Special case of the template operator=, in order to prevent the compiler
+  /** Special case of the template operator=, in order to prevent the compiler
    * from generating a default operator= (issue hit with g++ 4.1)
    */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& operator=(
@@ -112,7 +112,7 @@ class ArrayBase : public DenseBase<Derived> {
     return derived();
   }
 
-  /* Set all the entries to \a value.
+  /** Set all the entries to \a value.
    * \sa DenseBase::setConstant(), DenseBase::fill() */
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& operator=(
       const Scalar& value) {
@@ -146,7 +146,7 @@ class ArrayBase : public DenseBase<Derived> {
   EIGEN_DEVICE_FUNC
   const ArrayBase<Derived>& array() const { return *this; }
 
-  /* \returns an \link Eigen::MatrixBase Matrix \endlink expression of this
+  /** \returns an \link Eigen::MatrixBase Matrix \endlink expression of this
    * array \sa MatrixBase::array() */
   EIGEN_DEVICE_FUNC
   MatrixWrapper<Derived> matrix() { return MatrixWrapper<Derived>(derived()); }
@@ -187,7 +187,7 @@ class ArrayBase : public DenseBase<Derived> {
   }
 };
 
-/* replaces \c *this by \c *this - \a other.
+/** replaces \c *this by \c *this - \a other.
  *
  * \returns a reference to \c *this
  */
@@ -201,7 +201,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& ArrayBase<Derived>::operator-=(
   return derived();
 }
 
-/* replaces \c *this by \c *this + \a other.
+/** replaces \c *this by \c *this + \a other.
  *
  * \returns a reference to \c *this
  */
@@ -215,7 +215,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& ArrayBase<Derived>::operator+=(
   return derived();
 }
 
-/* replaces \c *this by \c *this * \a other coefficient wise.
+/** replaces \c *this by \c *this * \a other coefficient wise.
  *
  * \returns a reference to \c *this
  */
@@ -229,7 +229,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& ArrayBase<Derived>::operator*=(
   return derived();
 }
 
-/* replaces \c *this by \c *this / \a other coefficient wise.
+/** replaces \c *this by \c *this / \a other coefficient wise.
  *
  * \returns a reference to \c *this
  */

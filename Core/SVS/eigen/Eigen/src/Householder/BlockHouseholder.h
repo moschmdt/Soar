@@ -18,7 +18,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal */
+/** \internal */
 // template<typename TriangularFactorType,typename VectorsType,typename
 // CoeffsType> void
 // make_block_householder_triangular_factor(TriangularFactorType& triFactor,
@@ -50,7 +50,7 @@ namespace internal {
 //   }
 // }
 
-/* \internal */
+/** \internal */
 // This variant avoid modifications in vectors
 template <typename TriangularFactorType, typename VectorsType,
           typename CoeffsType>
@@ -87,7 +87,7 @@ void make_block_householder_triangular_factor(TriangularFactorType& triFactor,
   }
 }
 
-/* \internal
+/** \internal
  * if forward then perform   mat = H0 * H1 * H2 * mat
  * otherwise perform         mat = H2 * H1 * H0 * mat
  */

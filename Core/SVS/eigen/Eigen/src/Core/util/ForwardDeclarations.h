@@ -236,7 +236,7 @@ struct product_type;
 template <bool>
 struct EnableIf;
 
-/* \internal
+/** \internal
  * \class product_evaluator
  * Products need their own evaluator with more template arguments allowing for
  * easier partial template specializations.

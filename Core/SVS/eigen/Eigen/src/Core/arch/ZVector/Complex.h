@@ -119,10 +119,10 @@ struct unpacket_traits<Packet1cd> {
   typedef Packet1cd half;
 };
 
-/* Forward declaration */
+/** Forward declaration */
 EIGEN_STRONG_INLINE void ptranspose(PacketBlock<Packet2cf, 2>& kernel);
 
-/* complex<double> first */
+/** complex<double> first */
 template <>
 EIGEN_STRONG_INLINE Packet1cd
 pload<Packet1cd>(const std::complex<double>* from) {
@@ -149,7 +149,7 @@ EIGEN_STRONG_INLINE void pstoreu<std::complex<double> >(
 template <>
 EIGEN_STRONG_INLINE Packet1cd
 pset1<Packet1cd>(const std::complex<double>&
-                     from) { /* here we really have to use unaligned loads :( */
+                     from) { /** here we really have to use unaligned loads :( */
   return ploadu<Packet1cd>(&from);
 }
 
@@ -270,7 +270,7 @@ EIGEN_STRONG_INLINE Packet1cd pdiv<Packet1cd>(const Packet1cd& a,
   return Packet1cd(pdiv(res.v, s + vec_perm(s, s, p16uc_REVERSE64)));
 }
 
-EIGEN_STRONG_INLINE Packet1cd pcplxflip /*<Packet1cd>*/ (const Packet1cd& x) {
+EIGEN_STRONG_INLINE Packet1cd pcplxflip /**<Packet1cd>*/ (const Packet1cd& x) {
   return Packet1cd(preverse(Packet2d(x.v)));
 }
 
@@ -282,7 +282,7 @@ EIGEN_STRONG_INLINE void ptranspose(PacketBlock<Packet1cd, 2>& kernel) {
   kernel.packet[0].v = tmp;
 }
 
-/* complex<float> follows */
+/** complex<float> follows */
 template <>
 EIGEN_STRONG_INLINE Packet2cf
 pload<Packet2cf>(const std::complex<float>* from) {
@@ -473,7 +473,7 @@ EIGEN_STRONG_INLINE Packet2cf pdiv<Packet2cf>(const Packet2cf& a,
   return res;
 }
 
-EIGEN_STRONG_INLINE Packet2cf pcplxflip /*<Packet2cf>*/ (const Packet2cf& x) {
+EIGEN_STRONG_INLINE Packet2cf pcplxflip /**<Packet2cf>*/ (const Packet2cf& x) {
   Packet2cf res;
   res.cd[0] = pcplxflip(x.cd[0]);
   res.cd[1] = pcplxflip(x.cd[1]);

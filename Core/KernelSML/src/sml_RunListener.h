@@ -7,7 +7,7 @@
 // This class's HandleEvent method is called when
 // specific events occur within the agent:
 //
-/*
+/**
  *     @li smlEVENT_BEFORE_SMALLEST_STEP
  *     @li smlEVENT_AFTER_SMALLEST_STEP
  *     @li smlEVENT_BEFORE_ELABORATION_CYCLE

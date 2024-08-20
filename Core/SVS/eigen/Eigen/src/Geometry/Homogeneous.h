@@ -12,7 +12,7 @@
 
 namespace Eigen {
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \class Homogeneous
  *
@@ -120,7 +120,7 @@ class Homogeneous : public MatrixBase<Homogeneous<MatrixType, _Direction> >,
   typename MatrixType::Nested m_matrix;
 };
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \returns a vector expression that is one longer than the vector argument,
  * with the value 1 symbolically appended as the last coefficient.
@@ -141,7 +141,7 @@ MatrixBase<Derived>::homogeneous() const {
   return HomogeneousReturnType(derived());
 }
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \returns an expression where the value 1 is symbolically appended as the
  * final coefficient to each column (or row) of the matrix.
@@ -158,7 +158,7 @@ VectorwiseOp<ExpressionType, Direction>::homogeneous() const {
   return HomogeneousReturnType(_expression());
 }
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
   *
   * \brief homogeneous normalization
   *
@@ -187,7 +187,7 @@ MatrixBase<Derived>::hnormalized() const {
          coeff(size() - 1);
 }
 
-/* \geometry_module \ingroup Geometry_Module
+/** \geometry_module \ingroup Geometry_Module
  *
  * \brief column or row-wise homogeneous normalization
  *

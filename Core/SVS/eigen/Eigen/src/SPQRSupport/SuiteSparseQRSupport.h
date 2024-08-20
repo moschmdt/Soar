@@ -36,7 +36,7 @@ struct traits<SPQR_QProduct<SPQRType, Derived> > {
 };
 }  // End namespace internal
 
-/*
+/**
  * \ingroup SPQRSupport_Module
  * \class SPQR
  * \brief Sparse QR factorization based on SuiteSparseQR library
@@ -129,7 +129,7 @@ class SPQR : public SparseSolverBase<SPQR<_MatrixType> > {
 
     MatrixType mat(matrix);
 
-    /* Compute the default threshold as in MatLab, see:
+    /** Compute the default threshold as in MatLab, see:
      * Tim Davis, "Algorithm 915, SuiteSparseQR: Multifrontal Multithreaded
      * Rank-Revealing Sparse QR Factorization, ACM Trans. on Math. Soft. 38(1),
      * 2011, Page 8:3
@@ -159,12 +159,12 @@ class SPQR : public SparseSolverBase<SPQR<_MatrixType> > {
     m_isInitialized = true;
     m_isRUpToDate = false;
   }
-  /*
+  /**
    * Get the number of rows of the input matrix and the Q matrix
    */
   inline Index rows() const { return m_rows; }
 
-  /*
+  /**
    * Get the number of columns of the input matrix.
    */
   inline Index cols() const { return m_cR->ncol; }
@@ -201,7 +201,7 @@ class SPQR : public SparseSolverBase<SPQR<_MatrixType> > {
     m_info = Success;
   }
 
-  /* \returns the sparse triangular factor R. It is a sparse matrix
+  /** \returns the sparse triangular factor R. It is a sparse matrix
    */
   const MatrixType matrixR() const {
     eigen_assert(
@@ -223,7 +223,7 @@ class SPQR : public SparseSolverBase<SPQR<_MatrixType> > {
     eigen_assert(m_isInitialized && "Decomposition is not initialized.");
     return PermutationType(m_E, m_cR->ncol);
   }
-  /*
+  /**
    * Gets the rank of the matrix.
    * It should be equal to matrixQR().cols if the matrix is full-rank
    */
@@ -239,10 +239,10 @@ class SPQR : public SparseSolverBase<SPQR<_MatrixType> > {
     m_tolerance = tol;
   }
 
-  /* \returns a pointer to the SPQR workspace */
+  /** \returns a pointer to the SPQR workspace */
   cholmod_common* cholmodCommon() const { return &m_cc; }
 
-  /* \brief Reports whether previous computation was successful.
+  /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
    *          \c NumericalIssue if the sparse QR can not be computed

@@ -89,28 +89,28 @@ class EXPORT AnalyzeXML {
                           bool insertNewLines = false) const;
   static void DeleteString(char* pString);
 
-  /*
+  /**
    * @brief Look up an argument by name.  Returns NULL if not found.
    */
   char const* GetArgString(char const* pArgName) const {
     return m_ArgMap.GetArgValue(pArgName, -1);
   }
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as a boolean.
    */
   bool GetArgBool(char const* pArgName, bool defaultValue) const {
     return GetArgBool(pArgName, -1, defaultValue);
   }
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as an int.
    */
   int GetArgInt(char const* pArgName, int defaultValue) const {
     return GetArgInt(pArgName, -1, defaultValue);
   }
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as an int64_t.
    */
   int64_t GetArgInt(char const* pArgName, int64_t defaultValue) const {
@@ -126,7 +126,7 @@ class EXPORT AnalyzeXML {
   // could be cleaned up quite a bit.
   //
  protected:
-  /*
+  /**
    * @brief Arguments for commands are either named (e.g. print "-wme s2") or
    *can be looked up based on order (e.g. print s2).  Either all arguments are
    *named or none are (in a valid SML doc). This lookup supports both.  You pass
@@ -139,23 +139,23 @@ class EXPORT AnalyzeXML {
     return m_ArgMap.GetArgValue(pArgName, argPos);
   }
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as a boolean.
    */
   bool GetArgBool(char const* pArgName, int argPos, bool defaultValue) const;
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as an int.
    */
   int GetArgInt(char const* pArgName, int argPos, int defaultValue) const;
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as an int.
    */
   int64_t GetArgInt(char const* pArgName, int argPos,
                     int64_t defaultValue) const;
 
-  /*
+  /**
    * @brief As "GetArgString" but parsed as a double.
    */
   double GetArgFloat(char const* pArgName, int argPos,

@@ -72,7 +72,7 @@ class gemv_traits {
       typename conditional<Vectorizable, _ResPacket, ResScalar>::type ResPacket;
 };
 
-/* Optimized col-major matrix * vector product:
+/** Optimized col-major matrix * vector product:
  * This algorithm processes the matrix per vertical panels,
  * which are then processed horizontaly per chunck of 8*PacketSize x 1 vertical
  * segments.
@@ -363,7 +363,7 @@ EIGEN_DEVICE_FUNC EIGEN_DONT_INLINE void general_matrix_vector_product<
   }
 }
 
-/* Optimized row-major matrix * vector product:
+/** Optimized row-major matrix * vector product:
  * This algorithm processes 4 rows at once that allows to both reduce
  * the number of load/stores of the result by a factor 4 and to reduce
  * the instruction dependency. Moreover, we know that all bands have the

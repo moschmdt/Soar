@@ -1,4 +1,4 @@
-/*
+/**
  * production_record.h
  *
  *  Created on: Apr 22, 2016
@@ -30,4 +30,4 @@ class production_record {
   action* rhs_actions;
 };
 
-#endif /* CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_PRODUCTION_RECORD_H_ */
+#endif /** CORE_SOARKERNEL_SRC_EXPLANATION_MEMORY_PRODUCTION_RECORD_H_ */

@@ -15,7 +15,7 @@ namespace Eigen {
 
 namespace internal {
 
-/* \internal Low-level bi conjugate gradient stabilized algorithm
+/** \internal Low-level bi conjugate gradient stabilized algorithm
  * \param mat The matrix A
  * \param rhs The right hand side vector b
  * \param x On input and initial solution, on output the computed solution.
@@ -120,7 +120,7 @@ struct traits<BiCGSTAB<_MatrixType, _Preconditioner> > {
 
 }  // namespace internal
 
-/* \ingroup IterativeLinearSolvers_Module
+/** \ingroup IterativeLinearSolvers_Module
  * \brief A bi conjugate gradient stabilized solver for sparse square problems
  *
  * This class allows to solve for A.x = b sparse linear problems using a bi
@@ -173,10 +173,10 @@ class BiCGSTAB
   typedef _Preconditioner Preconditioner;
 
  public:
-  /* Default constructor. */
+  /** Default constructor. */
   BiCGSTAB() : Base() {}
 
-  /* Initialize the solver with matrix \a A for further \c Ax=b solving.
+  /** Initialize the solver with matrix \a A for further \c Ax=b solving.
    *
    * This constructor is a shortcut for the default constructor followed
    * by a call to compute().
@@ -191,7 +191,7 @@ class BiCGSTAB
 
   ~BiCGSTAB() {}
 
-  /* \internal */
+  /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_vector_with_guess_impl(const Rhs& b, Dest& x) const {
     m_iterations = Base::maxIterations();
