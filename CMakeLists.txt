@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
-project(Soar VERSION 9.6.2)
+project(Soar VERSION 9.6.3)
 
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_CPPLINT "cpplint")
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 include(GNUInstallDirs)
 
@@ -73,7 +67,12 @@ target_include_directories(Soar PUBLIC
 )
 set_target_properties(Soar
     PROPERTIES
-    PUBLIC_HEADER "${HEADERS}")
+    PUBLIC_HEADER "${HEADERS}"
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED True
+    CMAKE_EXPORT_COMPILE_COMMANDS True)
+
+add_compile_options((-Wall -Wextra -Wpedantic))
 
 # This only sets up the install structure, but no installation happens yet.
 install(TARGETS Soar
