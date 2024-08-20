@@ -8,6 +8,8 @@
 #ifndef CORE_SOARKERNEL_SRC_SHARED_FORWARD_H_
 #define CORE_SOARKERNEL_SRC_SHARED_FORWARD_H_
 
+#include <cstdint>
+
 typedef struct action_struct action;
 typedef struct agent_struct agent;
 typedef struct chunk_cond_struct chunk_cond;
