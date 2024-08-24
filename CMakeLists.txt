@@ -3,7 +3,6 @@ project(soar
   VERSION 9.6.3
   LANGUAGES CXX)
 
-
 find_package(SQLite3 REQUIRED)
 
 include(GNUInstallDirs)
@@ -136,3 +135,6 @@ export(EXPORT SoarTargets
 add_library(soar::soar ALIAS soar)
 
 add_subdirectory(UnitTests)
+
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(Packing)
