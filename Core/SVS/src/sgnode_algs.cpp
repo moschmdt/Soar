@@ -17,7 +17,7 @@ typedef std::set<const sgnode*> c_sgnode_set;
 typedef std::vector<const geometry_node*> c_geom_node_list;
 typedef std::vector<view_line> view_line_list;
 
-/****** Support functions for CCD *******/
+/** Support functions for CCD */
 
 void point_ccd_support(const void* obj, const ccd_vec3_t* dir, ccd_vec3_t* v) {
   const vec3* point = static_cast<const vec3*>(obj);
@@ -116,7 +116,7 @@ double centroid_distance(const sgnode* a, const sgnode* b) {
   return (cb - ca).norm();
 }
 
-/*
+/**
  * Returns the distance between two nodes along a given axis
  *   using their bounding boxes
  *
@@ -144,7 +144,7 @@ double axis_distance(const sgnode* a, const sgnode* b, int axis) {
   }
 }
 
-/*
+/**
  * Returns the distance between two nodes along a given axis
  *   using their bounding boxes
  *
@@ -233,7 +233,7 @@ bool bbox_contains(const sgnode* a, const sgnode* b) {
   return boxa.contains(boxb);
 }
 
-/*
+/**
  * Returns the estimated percentage of node n1
  *   that is contained within node n2
  *   using random sampling
@@ -441,8 +441,8 @@ double convex_occlusion(const sgnode* a, const sgnode* eye,
   return convex_occlusion(view_lines, occluders);
 }
 
-///////////////// adjusting nodes ///////////////
-// Used to make sure bounding boxes dont overlap
+///////////////// adjusting nodes // Used to make sure bounding boxes dont
+/// overlap
 vec3 adjust_on_dims(sgnode* n, std::vector<const sgnode*> targets, int d1,
                     int d2, int d3) {
   vec3 scale = n->get_trans('s');

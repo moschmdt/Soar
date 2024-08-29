@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // Connection class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class represents a logical connection between two entities that are
 // communicating via SML. For example, an environment (the client) and the Soar
@@ -15,7 +14,6 @@
 // Commands formatted as SML (a form of XML) are sent over this connection to
 // issue commands etc.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_CONNECTION_H
 #define SML_CONNECTION_H

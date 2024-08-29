@@ -63,7 +63,7 @@
 #ifndef INTEL_MKL_VERSION
 #undef EIGEN_USE_MKL /** INTEL_MKL_VERSION is not even defined on older \
                         versions */
-#elif INTEL_MKL_VERSION <                                                     \
+#elif INTEL_MKL_VERSION <                                                      \
     100305 /** the intel-mkl-103-release-notes say this was when the lapacke.h \
               interface was added*/
 #undef EIGEN_USE_MKL

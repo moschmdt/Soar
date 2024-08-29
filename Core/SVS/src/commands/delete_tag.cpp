@@ -1,4 +1,4 @@
-/**********************************************************
+/**
  *
  * File: commands/delete_tag
  * Contains:
@@ -9,7 +9,7 @@
  *     ^id <string> - id of the node to delete the tag on
  *     ^tag_name <string> - name of the tag to delete
  *
- **********************************************************/
+ */
 #include <iostream>
 #include <string>
 

@@ -1,16 +1,14 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // Kernel class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This class is used by a client app (e.g. an environment) to represent
 // the top level connection to the Soar kernel.  You start by creating
 // one of these and then creating agents through it etc.
 //
-/////////////////////////////////////////////////////////////////
 #include <cassert>
 #include <iomanip>
 #include <iostream>
@@ -100,28 +98,28 @@ Kernel::Kernel(Connection* pConnection) {
   // #endif
 }
 
-/*************************************************************
+/**
  * @brief Called when an init-soar event happens so we know
  *        to refresh the input/output links.
- *************************************************************/
+ */
 static void InitSoarHandler(smlAgentEventId /*id*/, void* /*pUserData*/,
                             Agent* pAgent) {
   pAgent->Refresh();
 }
 
-/*************************************************************
+/**
  * @brief Called when a dynamically linked library is called
  *    so we can load it into memory and initialize it.
- *************************************************************/
+ */
 static std::string LoadLibraryHandler(smlStringEventId /*id*/,
                                       void* /*pUserData*/, Kernel* pKernel,
                                       char const* pString) {
   return pKernel->LoadExternalLibrary(pString);
 }
-/*************************************************************
+/**
  * @brief Called when a command needs to be passed to a library
  *    that extends the Soar command line interface.
- *************************************************************/
+ */
 static std::string TclLibraryMessageHandler(smlStringEventId /*id*/,
                                             void* /*pUserData*/,
                                             Kernel* pKernel,
@@ -142,31 +140,31 @@ void Kernel::InitEvents() {
   }
 }
 
-/*************************************************************
+/**
  * @brief True if our connection to the kernel has been closed.
  *        (Generally used for remote connections)
- *************************************************************/
+ */
 bool Kernel::IsConnectionClosed() {
   return !GetConnection() || GetConnection()->IsClosed();
 }
 
-/*************************************************************
+/**
  * @brief True if this is a remote connection to the kernel
  *        (i.e. connected over a socket rather than by loading a library)
- *************************************************************/
+ */
 bool Kernel::IsRemoteConnection() {
   return GetConnection() && GetConnection()->IsRemoteConnection();
 }
 
-/*************************************************************
+/**
  * @brief True if this is a direct connection to the kernel
  *        (i.e. direct calls to gSKI are possible)
- *************************************************************/
+ */
 bool Kernel::IsDirectConnection() {
   return GetConnection() && GetConnection()->IsDirectConnection();
 }
 
-/*************************************************************
+/**
  * @brief Preparation for deleting the kernel.
  *        Agents are destroyed at this point (if we own the kernel)
  *        After calling shutdown the kernel cannot be restarted
@@ -174,7 +172,7 @@ bool Kernel::IsDirectConnection() {
  *        This is separated from delete to ensure that messages
  *        relating to system shutdown can be sent in a more stable
  *        state (while the kernel object still exists).
- *************************************************************/
+ */
 void Kernel::Shutdown() {
   m_bShutdown = true;
 
@@ -193,12 +191,12 @@ void Kernel::Shutdown() {
   GetConnection()->CloseConnection();
 }
 
-/*************************************************************
+/**
  * @brief Delete the kernel (or our connection to the kernel)
  *        releasing all memory owned by the kernel.
  *        Users should call "Shutdown" prior to calling delete
  *        to ensure a clean shutdown.
- *************************************************************/
+ */
 Kernel::~Kernel(void) {
   // If the user didn't call shutdown, we'll do it now.
   // It's better for the user to call it so we have a more stable state
@@ -241,7 +239,7 @@ Kernel::~Kernel(void) {
   delete m_pEventMap;
 }
 
-/*************************************************************
+/**
  * @brief Start the event thread.
  *
  * This thread can be used to make sure the client remains responsive
@@ -252,7 +250,7 @@ Kernel::~Kernel(void) {
  * and embedded connections in a new thread.  A client could
  * reasonably choose to turn it off so we'll expose the methods
  * for starting and stopping.
- *************************************************************/
+ */
 bool Kernel::StartEventThread() {
   // This thread is used to listen for events from the kernel
   // when the client is sleeping
@@ -265,7 +263,7 @@ bool Kernel::StartEventThread() {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Stop the event thread.
  *
  * This thread can be used to make sure the client remains responsive
@@ -276,7 +274,7 @@ bool Kernel::StartEventThread() {
  * and embedded connections in a new thread.  A client could
  * reasonably choose to turn it off so we'll expose the methods
  * for starting and stopping.
- *************************************************************/
+ */
 bool Kernel::StopEventThread() {
   // Shut down the event thread
   if (!m_pEventThread) {
@@ -288,10 +286,10 @@ bool Kernel::StopEventThread() {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Turning this on means we'll start dumping output about messages
  *        being sent and received.
- *************************************************************/
+ */
 void Kernel::SetTraceCommunications(bool state) {
   if (m_Connection) {
     m_Connection->SetTraceCommunications(state);
@@ -304,13 +302,13 @@ void Kernel::SetTraceCommunications(bool state) {
 
 bool Kernel::IsTracingCommunications() { return m_bTracingCommunications; }
 
-/*************************************************************
+/**
  * @brief This function is called when we receive a "call" SML
  *        message from the kernel.
  *
  * This is a static method and it's only function is to call
  * a normal member function.
- *************************************************************/
+ */
 ElementXML* Kernel::ReceivedCall(Connection* pConnection, ElementXML* pIncoming,
                                  void* pUserData) {
   Kernel* pKernel = static_cast<Kernel*>(pUserData);
@@ -318,13 +316,13 @@ ElementXML* Kernel::ReceivedCall(Connection* pConnection, ElementXML* pIncoming,
   return pKernel->ProcessIncomingSML(pConnection, pIncoming);
 }
 
-/*************************************************************
+/**
  * @brief If this message is an XML trace message returns
  *        the agent pointer this message is for.
  *        Otherwise returns NULL.
  *        This function is just to boost performance on trace messages
  *        which are really performance critical.
- *************************************************************/
+ */
 Agent* Kernel::IsXMLTraceEvent(ElementXML* pIncomingMsg) {
   //  The message we're looking for has this structure:
   //  <sml><command></command><trace></trace></sml>
@@ -370,10 +368,10 @@ Agent* Kernel::IsXMLTraceEvent(ElementXML* pIncomingMsg) {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief This function is called (indirectly) when we receive a "call" SML
  *        message from the kernel.
- *************************************************************/
+ */
 ElementXML* Kernel::ProcessIncomingSML(Connection* pConnection,
                                        ElementXML* pIncomingMsg) {
   // Create a reply
@@ -465,13 +463,13 @@ void Kernel::ReceivedEvent(AnalyzeXML* pIncoming, ElementXML* pResponse) {
   }
 }
 
-/*************************************************************
+/**
  * @brief This function is called when an event is received
  *        from the Soar kernel.
  *
  * @param pIncoming  The event command
  * @param pResponse  The reply (no real need to fill anything in here currently)
- *************************************************************/
+ */
 void Kernel::ReceivedSystemEvent(smlSystemEventId id, AnalyzeXML* /*pIncoming*/,
                                  ElementXML* /*pResponse*/) {
   // Look up the handler(s) from the map
@@ -495,13 +493,13 @@ void Kernel::ReceivedSystemEvent(smlSystemEventId id, AnalyzeXML* /*pIncoming*/,
   }
 }
 
-/*************************************************************
+/**
  * @brief This function is called when an event is received
  *        from the Soar kernel.
  *
  * @param pIncoming  The event command
  * @param pResponse  The reply (no real need to fill anything in here currently)
- *************************************************************/
+ */
 void Kernel::ReceivedUpdateEvent(smlUpdateEventId id, AnalyzeXML* pIncoming,
                                  ElementXML* /*pResponse*/) {
   // Retrieve the event arguments
@@ -529,13 +527,13 @@ void Kernel::ReceivedUpdateEvent(smlUpdateEventId id, AnalyzeXML* pIncoming,
   }
 }
 
-/*************************************************************
+/**
  * @brief This function is called when an event is received
  *        from the Soar kernel.
  *
  * @param pIncoming  The event command
  * @param pResponse  The reply (no real need to fill anything in here currently)
- *************************************************************/
+ */
 void Kernel::ReceivedStringEvent(smlStringEventId id, AnalyzeXML* pIncoming,
                                  ElementXML* pResponse) {
   char const* pValue = pIncoming->GetArgString(sml_Names::kParamValue);
@@ -564,13 +562,13 @@ void Kernel::ReceivedStringEvent(smlStringEventId id, AnalyzeXML* pIncoming,
   }
 }
 
-/*************************************************************
+/**
  * @brief This function is called when an event is received
  *        from the Soar kernel.
  *
  * @param pIncoming  The event command
  * @param pResponse  The reply (no real need to fill anything in here currently)
- *************************************************************/
+ */
 void Kernel::ReceivedAgentEvent(smlAgentEventId id, AnalyzeXML* pIncoming,
                                 ElementXML* /*pResponse*/) {
   // Get the name of the agent this event refers to.
@@ -608,13 +606,13 @@ void Kernel::ReceivedAgentEvent(smlAgentEventId id, AnalyzeXML* pIncoming,
   }
 }
 
-/*************************************************************
+/**
  * @brief This function is called when an event is received
  *        from the Soar kernel.
  *
  * @param pIncoming  The event command
  * @param pResponse  The reply (the result of executing this rhs function)
- *************************************************************/
+ */
 void Kernel::ReceivedRhsEvent(smlRhsEventId id, AnalyzeXML* pIncoming,
                               ElementXML* pResponse) {
   // Get the function name and the argument to the function
@@ -678,14 +676,14 @@ Soar_Instance* Kernel::CreateSoarManagers() {
    *    Output Manager here should guarantee that they are both created
    *    before the kernel and CommandLineInterface objects.  This is
    *    is important since the output manager might be needed to print
-   *    debug output during initialization.  -- */
+   *    debug output during initialization.  */
 
   Output_Manager::Get_OM();
   Memory_Manager::Get_MPM();
   return (&Soar_Instance::Get_Soar_Instance());
 }
 
-/*************************************************************
+/**
  * @brief Creates a connection to the Soar kernel that is embedded
  *        within the same process as the caller.
  *        (This method is protected - clients should use the two methods above
@@ -709,12 +707,12 @@ Soar_Instance* Kernel::CreateSoarManagers() {
  * @returns A new kernel object which is used to communicate with the kernel.
  *          If an error occurs a Kernel object is still returned.  Call
  *"HadError()" and "GetLastErrorDescription()" on it.
- *************************************************************/
+ */
 Kernel* Kernel::CreateEmbeddedConnection(bool clientThread, bool optimized,
                                          int portToListenOn) {
   ErrorCode errorCode = 0;
 
-  /* -- Create Soar_Instance and Output_Manager singletons -- */
+  /* -- Create Soar_Instance and Output_Manager singletons */
   Soar_Instance* lSoarInstance = CreateSoarManagers();
   Connection* pConnection = Connection::CreateEmbeddedConnection(
       clientThread, optimized, portToListenOn, &errorCode);
@@ -758,7 +756,7 @@ Kernel* Kernel::CreateRemoteConnection(bool sharedFileSystem,
                                        bool ignoreOutput) {
   ErrorCode errorCode = 0;
 
-  /* -- Create Soar_Instance and Output_Manager singletons -- */
+  /* -- Create Soar_Instance and Output_Manager singletons */
   Soar_Instance* lSoarInstance = CreateSoarManagers();
 
   // Initialize the socket library before attempting to create a connection
@@ -802,12 +800,12 @@ Kernel* Kernel::CreateRemoteConnection(bool sharedFileSystem,
   return pKernel;
 }
 
-/*************************************************************
+/**
  * @brief Returns the number of agents (from our list of known agents).
- *************************************************************/
+ */
 int Kernel::GetNumberAgents() { return m_AgentMap.size(); }
 
-/*************************************************************
+/**
  * @brief A client uses its own set of time tag values when it's
  *        talking to the kernel.  This is more efficient than using the
  *        kernel's timetags as that would require a timetag to be passed back
@@ -821,7 +819,7 @@ int Kernel::GetNumberAgents() { return m_AgentMap.size(); }
  *separate part of the time tag space (and a long still allows hundreds of
  *millions of unique wmes for each client before they'll start to run into each
  *other).
- *************************************************************/
+ */
 void Kernel::InitializeTimeTagCounter() {
   AnalyzeXML response;
   if (GetConnection()->SendAgentCommand(
@@ -840,11 +838,11 @@ void Kernel::InitializeTimeTagCounter() {
   }
 }
 
-/*************************************************************
+/**
  * @brief Get the list of agents currently active in the kernel
  *        and create local Agent objects for each one (if we
  *        don't already have that agent registered).
- *************************************************************/
+ */
 void Kernel::UpdateAgentList() {
   AnalyzeXML response;
   if (GetConnection()->SendAgentCommand(&response,
@@ -881,12 +879,12 @@ void Kernel::UpdateAgentList() {
   }
 }
 
-/*************************************************************
+/**
  * @brief Ask the kernel for the current list of connections
  *        and their status information.
  *        This is a snapshot which can then be interrogated through
  *        the other methods.
- *************************************************************/
+ */
 bool Kernel::GetAllConnectionInfo() {
   std::list<ConnectionInfo*> previousList;
 
@@ -1003,11 +1001,11 @@ char const* Kernel::GetAgentStatus(char const* pName) {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief Sets the name and current status of this connection.
  *        This information is sent to the kernel and can be requested
  *        by other clients.
- *************************************************************/
+ */
 bool Kernel::SetConnectionInfo(char const* pName, char const* pConnectionStatus,
                                char const* pAgentStatus) {
   AnalyzeXML response;
@@ -1018,13 +1016,13 @@ bool Kernel::SetConnectionInfo(char const* pName, char const* pConnectionStatus,
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief Looks up an agent by name (from our list of known agents).
  *
  * @returns A pointer to the agent (or NULL if not found).  This object
  *          is owned by the kernel and will be destroyed when the
  *          kernel is destroyed.
- *************************************************************/
+ */
 Agent* Kernel::GetAgent(char const* pAgentName) {
   if (!pAgentName) {
     return NULL;
@@ -1033,29 +1031,29 @@ Agent* Kernel::GetAgent(char const* pAgentName) {
   return m_AgentMap.find(pAgentName);
 }
 
-/*************************************************************
+/**
  * @brief Returns the n-th agent from our list of known agents.
  *        This is slower than GetAgent(pAgentName).
- *************************************************************/
+ */
 Agent* Kernel::GetAgentByIndex(int index) { return m_AgentMap.getIndex(index); }
 
-/*************************************************************
+/**
  * @brief Returns true if this agent pointer is still valid and
  *        can be used.
- *************************************************************/
+ */
 bool Kernel::IsAgentValid(Agent* pAgent) {
   // We check the current list of agent pointers and see if this value is in
   // that list to determine if it is still valid.
   return m_AgentMap.contains(pAgent);
 }
 
-/*************************************************************
+/**
  * @brief Creates a new Soar agent with the given name.
  *
  * @returns A pointer to the new agent structure.  This object
  *          is owned by the kernel and will be destroyed when the
  *          kernel is destroyed.
- *************************************************************/
+ */
 Agent* Kernel::CreateAgent(char const* pAgentName) {
   AnalyzeXML response;
   Agent* agent = NULL;
@@ -1083,10 +1081,10 @@ Agent* Kernel::CreateAgent(char const* pAgentName) {
   return agent;
 }
 
-/*************************************************************
+/**
  * @brief Creates a new Agent* object (not to be confused
  *        with actually creating a Soar agent -- see CreateAgent for that)
- *************************************************************/
+ */
 Agent* Kernel::MakeAgent(char const* pAgentName) {
   if (!pAgentName) {
     return NULL;
@@ -1117,9 +1115,9 @@ Agent* Kernel::MakeAgent(char const* pAgentName) {
   return agent;
 }
 
-/*************************************************************
+/**
  * @brief Destroys an agent in the kernel (and locally).
- *************************************************************/
+ */
 bool Kernel::DestroyAgent(Agent* pAgent) {
   AnalyzeXML response;
 
@@ -1134,15 +1132,15 @@ bool Kernel::DestroyAgent(Agent* pAgent) {
   return false;
 }
 
-/*************************************************************
+/**
  * @brief If filtering is disabled, that means all commands
  *        sent from this client will not be filtered (sent to
  *        external processes that have registered a filter).
  *        The default is that filtering is enabled.
- *************************************************************/
+ */
 void Kernel::EnableFiltering(bool state) { m_FilteringEnabled = state; }
 
-/*************************************************************
+/**
  * @brief Process a command line command
  *
  * @param pCommandLine Command line string to process.
@@ -1152,7 +1150,7 @@ void Kernel::EnableFiltering(bool state) { m_FilteringEnabled = state; }
  * @param noFilter     If true this command line by-passes any external filters
  *that have been registered (this is not common) and is executed immediately.
  * @returns The string form of output from the command.
- *************************************************************/
+ */
 char const* Kernel::ExecuteCommandLine(char const* pCommandLine,
                                        char const* pAgentName, bool echoResults,
                                        bool noFilter) {
@@ -1186,7 +1184,7 @@ char const* Kernel::ExecuteCommandLine(char const* pCommandLine,
   return m_CommandLineResult.c_str();
 }
 
-/*************************************************************
+/**
  * @brief Execute a command line command and return the result
  *        as an XML object.
  *
@@ -1196,7 +1194,7 @@ char const* Kernel::ExecuteCommandLine(char const* pCommandLine,
  *        The caller should pass in an AnalyzeXML object which is then
  *        filled out by the agent during the call.
  * @returns True if the command succeeds.
- *************************************************************/
+ */
 bool Kernel::ExecuteCommandLineXML(char const* pCommandLine,
                                    char const* pAgentName,
                                    ClientAnalyzedXML* pResponse) {
@@ -1212,10 +1210,10 @@ bool Kernel::ExecuteCommandLineXML(char const* pCommandLine,
   return m_CommandLineSucceeded;
 }
 
-/*************************************************************
+/**
  * @brief Calls Commit() for all agents -- sending any queued I/O operations
  *        over to the kernel for processing.
- *************************************************************/
+ */
 void Kernel::CommitAll() {
   int numberAgents = GetNumberAgents();
 
@@ -1225,9 +1223,9 @@ void Kernel::CommitAll() {
   }
 }
 
-/*************************************************************
+/**
  * @brief Returns true if at least one agent has uncommitted changes.
- *************************************************************/
+ */
 bool Kernel::IsCommitRequired() {
   int numberAgents = GetNumberAgents();
 
@@ -1241,14 +1239,14 @@ bool Kernel::IsCommitRequired() {
   return false;
 }
 
-/*************************************************************
+/**
  * @brief   Run Soar for the specified number of decisions
  *
  * This command will currently run all agents.
  *
  * @returns The result of executing the run command.
  *          The output from during the run is sent to a different callback.
- *************************************************************/
+ */
 char const* Kernel::RunAllAgents(int numberSteps, smlRunStepSize stepSize,
                                  smlRunStepSize interleaveStepSize) {
   CommitAll();
@@ -1419,7 +1417,7 @@ char const* Kernel::RunAllTilOutput(smlRunStepSize interleaveStepSize) {
   return pResult;
 }
 
-/*************************************************************
+/**
  * @brief Interrupt the currently running Soar agent.
  *
  * Call this after calling "Run" in order to stop all Soar agents.
@@ -1429,7 +1427,7 @@ char const* Kernel::RunAllTilOutput(smlRunStepSize interleaveStepSize) {
  *
  * The request to Stop may not be honored immediately.
  * Soar will stop at the next point it is considered safe to do so.
- *************************************************************/
+ */
 char const* Kernel::StopAllAgents() {
   std::string cmd = "stop-soar";
 
@@ -1448,12 +1446,12 @@ char const* Kernel::StopAllAgents() {
   return pResult;
 }
 
-/*************************************************************
+/**
  * @brief Returns true if one or more agents are currently running.
  *
  * Can be used in conjunction with StopAllAgents() to make sure
  * all agents have actually terminated their runs.
- *************************************************************/
+ */
 bool Kernel::IsSoarRunning() {
   AnalyzeXML response;
 
@@ -1467,7 +1465,7 @@ bool Kernel::IsSoarRunning() {
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief   Causes the kernel to issue a SYSTEM_START event.
  *
  *          The expectation is that a simulation will be listening
@@ -1476,7 +1474,7 @@ bool Kernel::IsSoarRunning() {
  *
  *          Thus calling this method will generally lead to Soar running
  *          but indirectly through a simulation.
- *************************************************************/
+ */
 bool Kernel::FireStartSystemEvent() {
   AnalyzeXML response;
 
@@ -1486,7 +1484,7 @@ bool Kernel::FireStartSystemEvent() {
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief   Causes the kernel to issue a SYSTEM_STOP event.
  *
  *          A running simulation should listen for this event
@@ -1497,7 +1495,7 @@ bool Kernel::FireStartSystemEvent() {
  *          this event independently.  It's included in the API
  *          for completeness in case we find a use or change the
  *          semantics for "stop-soar".
- *************************************************************/
+ */
 bool Kernel::FireStopSystemEvent() {
   AnalyzeXML response;
 
@@ -1507,7 +1505,7 @@ bool Kernel::FireStopSystemEvent() {
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief   Prevents the kernel from sending an smlEVENT_SYSTEM_STOP
  *          event at the of a run.
  *
@@ -1519,7 +1517,7 @@ bool Kernel::FireStopSystemEvent() {
  *
  *          When the simulation's run completes, it can then manually
  *          request that the kernel fire the event.
- *************************************************************/
+ */
 bool Kernel::SuppressSystemStop(bool state) {
   AnalyzeXML response;
 
@@ -1531,14 +1529,14 @@ bool Kernel::SuppressSystemStop(bool state) {
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief Get last command line result
  *
  * @returns True if the last command line call succeeded.
- *************************************************************/
+ */
 bool Kernel::GetLastCommandLineResult() { return m_CommandLineSucceeded; }
 
-/*************************************************************
+/**
  * @brief If this is an embedded connection using "synchronous execution"
  *        then we need to call this periodically to look for commands
  *        coming in from remote sockets.
@@ -1547,7 +1545,7 @@ bool Kernel::GetLastCommandLineResult() { return m_CommandLineSucceeded; }
  *        thread inside the kernel, so that thread checks for these
  *        incoming commands automatically (without the client
  *        having to call this).
- *************************************************************/
+ */
 bool Kernel::CheckForIncomingCommands() {
   AnalyzeXML response;
   if (GetConnection()->SendAgentCommand(
@@ -1558,7 +1556,7 @@ bool Kernel::CheckForIncomingCommands() {
   return false;
 }
 
-/*************************************************************
+/**
  * @brief See if there are any incoming messages waiting to
  *        be dispatched to event handlers and if so process them.
  *
@@ -1571,14 +1569,14 @@ bool Kernel::CheckForIncomingCommands() {
  *        but doesn't pass a command over to the kernel.
  *
  * @return True if processes at least one event
- *************************************************************/
+ */
 bool Kernel::CheckForIncomingEvents() {
   return (GetConnection()->ReceiveMessages(true));
 }
 
-/*************************************************************
+/**
  * @brief Register for a particular event at the kernel
- *************************************************************/
+ */
 void Kernel::RegisterForEventWithKernel(int id, char const* pAgentName) {
   AnalyzeXML response;
 
@@ -1590,9 +1588,9 @@ void Kernel::RegisterForEventWithKernel(int id, char const* pAgentName) {
       sml_Names::kParamEventID, pEvent);
 }
 
-/*************************************************************
+/**
  * @brief Unregister for a particular event at the kernel
- *************************************************************/
+ */
 void Kernel::UnregisterForEventWithKernel(int id, char const* pAgentName) {
   AnalyzeXML response;
 
@@ -1763,7 +1761,7 @@ class Kernel::TestRhsCallbackFull : public RhsEventMap::ValueTest {
   }
 };
 
-/*************************************************************
+/**
  * @brief Register for a "SystemEvent".
  *        Multiple handlers can be registered for the same event.
  * @param smlEventId     The event we're interested in (see the list below for
@@ -1788,7 +1786,7 @@ class Kernel::TestRhsCallbackFull : public RhsEventMap::ValueTest {
  *
  * @returns Unique ID for this callback.  Required when unregistering this
  *callback.
- *************************************************************/
+ */
 int Kernel::RegisterForSystemEvent(smlSystemEventId id,
                                    SystemEventHandler handler, void* pUserData,
                                    bool addToBack) {
@@ -1823,7 +1821,7 @@ int Kernel::RegisterForSystemEvent(smlSystemEventId id,
   return m_CallbackIDCounter;
 }
 
-/*************************************************************
+/**
  * @brief Register for an "UpdateEvent".
  *        Multiple handlers can be registered for the same event.
  * @param smlEventId     The event we're interested in (see the list below for
@@ -1839,7 +1837,7 @@ int Kernel::RegisterForSystemEvent(smlSystemEventId id,
  *
  * @returns A unique ID for this callback (used to unregister the callback
  *later)
- *************************************************************/
+ */
 int Kernel::RegisterForUpdateEvent(smlUpdateEventId id,
                                    UpdateEventHandler handler, void* pUserData,
                                    bool addToBack) {
@@ -1874,7 +1872,7 @@ int Kernel::RegisterForUpdateEvent(smlUpdateEventId id,
   return m_CallbackIDCounter;
 }
 
-/*************************************************************
+/**
  * @brief Register for an "StringEvent".
  *        Multiple handlers can be registered for the same event.
  * @param smlEventId     The event we're interested in (see the list below for
@@ -1890,7 +1888,7 @@ int Kernel::RegisterForUpdateEvent(smlUpdateEventId id,
  *
  * @returns A unique ID for this callback (used to unregister the callback
  *later)
- *************************************************************/
+ */
 int Kernel::RegisterForStringEvent(smlStringEventId id,
                                    StringEventHandler handler, void* pUserData,
                                    bool addToBack) {
@@ -1925,7 +1923,7 @@ int Kernel::RegisterForStringEvent(smlStringEventId id,
   return m_CallbackIDCounter;
 }
 
-/*************************************************************
+/**
  * @brief Register for an "AgentEvent".
  *        Multiple handlers can be registered for the same event.
  * @param smlEventId     The event we're interested in (see the list below for
@@ -1945,7 +1943,7 @@ int Kernel::RegisterForStringEvent(smlStringEventId id,
  *
  * @returns A unique ID for this callback (used to unregister the callback
  *later)
- *************************************************************/
+ */
 int Kernel::RegisterForAgentEvent(smlAgentEventId id, AgentEventHandler handler,
                                   void* pUserData, bool addToBack) {
   // Start by checking if this id, handler, pUSerData combination has already
@@ -1976,10 +1974,10 @@ int Kernel::RegisterForAgentEvent(smlAgentEventId id, AgentEventHandler handler,
   return m_CallbackIDCounter;
 }
 
-/***
+/**
 ***   RHS functions and message event handlers use the same internal logic,
 *although they look rather different to the user
-***/
+*/
 int Kernel::InternalAddRhsFunction(smlRhsEventId id,
                                    char const* pRhsFunctionName,
                                    RhsEventHandlerCpp handler, bool addToBack) {
@@ -2065,7 +2063,7 @@ RhsEventHandlerCpp funPointer2StdFunction(RhsEventHandler handler,
   };
 }
 
-/*************************************************************
+/**
  * @brief Register a handler for an RHS (right hand side) function.
  *        This function can be called in the RHS of a production firing
  *        allowing a user to quickly extend Soar with custom methods added to
@@ -2098,7 +2096,7 @@ RhsEventHandlerCpp funPointer2StdFunction(RhsEventHandler handler,
  *
  * @returns Unique ID for this callback.  Required when unregistering this
  *callback.
- *************************************************************/
+ */
 int Kernel::AddRhsFunction(char const* pRhsFunctionName,
                            RhsEventHandler handler, void* pUserData,
                            bool addToBack) {
@@ -2106,7 +2104,7 @@ int Kernel::AddRhsFunction(char const* pRhsFunctionName,
   return AddRhsFunction(pRhsFunctionName, newHandler, addToBack);
 }
 
-/*****************************************************
+/**
  * @brief Register a handler for an RHS (right hand side) function. This is
  * functionally the same as the method with the same name that takes a function
  * pointer, but it uses std::function instead, which is more ergonomic C++.
@@ -2120,16 +2118,16 @@ int Kernel::AddRhsFunction(char const* pRhsFunctionName,
   return InternalAddRhsFunction(id, pRhsFunctionName, handler, addToBack);
 }
 
-/*************************************************************
+/**
  * @brief Unregister for a particular RHS function
- *************************************************************/
+ */
 bool Kernel::RemoveRhsFunction(int callbackID) {
   smlRhsEventId id = smlEVENT_RHS_USER_FUNCTION;
 
   return InternalRemoveRhsFunction(id, callbackID);
 }
 
-/*************************************************************
+/**
  * @brief Register a handler for receiving generic messages sent from another
  *client. The content of the messages are up to the client and really aren't
  *related to Soar, but providing the ability to send a message from any client
@@ -2159,7 +2157,7 @@ bool Kernel::RemoveRhsFunction(int callbackID) {
  *
  * @returns Unique ID for this callback.  Required when unregistering this
  *callback.
- *************************************************************/
+ */
 int Kernel::RegisterForClientMessageEvent(char const* pClientName,
                                           ClientMessageHandler handler,
                                           void* pUserData, bool addToBack) {
@@ -2167,7 +2165,7 @@ int Kernel::RegisterForClientMessageEvent(char const* pClientName,
   return RegisterForClientMessageEvent(pClientName, newHandler, addToBack);
 }
 
-/*****************************************************
+/**
  * @brief Register a handler for receiving generic messages sent from another
  * client. This is functionally the same as the method with the same name that
  * takes a function pointer, but it uses std::function instead, which is more
@@ -2186,18 +2184,18 @@ int Kernel::RegisterForClientMessageEvent(char const* pClientName,
   return InternalAddRhsFunction(id, pClientName, handler, addToBack);
 }
 
-/*************************************************************
+/**
  * @brief Unregister for a particular client message
  *        using the ID passed back from RegisterForClientMessageEvent().
  * @returns True if succeeds
- *************************************************************/
+ */
 bool Kernel::UnregisterForClientMessageEvent(int callbackID) {
   smlRhsEventId id = smlEVENT_CLIENT_MESSAGE;
 
   return InternalRemoveRhsFunction(id, callbackID);
 }
 
-/*************************************************************
+/**
  * @brief Send a message to another client (not the Soar kernel).
  *        The other client must have registered for this message to receive it.
  *
@@ -2221,7 +2219,7 @@ bool Kernel::UnregisterForClientMessageEvent(int callbackID) {
  * @param pMessage           The message being sent.
  * @returns The response (if any) from the receiving client.  The string
  *"**NONE**" is reserved to indicate nobody was registered for this event.
- *************************************************************/
+ */
 std::string Kernel::SendClientMessage(Agent* pAgent, char const* pClientName,
                                       char const* pMessage) {
   AnalyzeXML response;
@@ -2239,9 +2237,9 @@ std::string Kernel::SendClientMessage(Agent* pAgent, char const* pClientName,
   return GetLastErrorDescription();
 }
 
-/*************************************************************
+/**
  * @brief Unregister for a particular event
- *************************************************************/
+ */
 bool Kernel::UnregisterForSystemEvent(int callbackID) {
   // Build a test object for the callbackID we're interested in
   TestSystemCallback test(callbackID);
@@ -2266,10 +2264,10 @@ bool Kernel::UnregisterForSystemEvent(int callbackID) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Unregister for a particular event
  * @returns True if succeeds
- *************************************************************/
+ */
 bool Kernel::UnregisterForStringEvent(int callbackID) {
   // Build a test object for the callbackID we're interested in
   TestStringCallback test(callbackID);
@@ -2294,10 +2292,10 @@ bool Kernel::UnregisterForStringEvent(int callbackID) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Unregister for a particular event
  * @returns True if succeeds
- *************************************************************/
+ */
 bool Kernel::UnregisterForUpdateEvent(int callbackID) {
   // Build a test object for the callbackID we're interested in
   TestUpdateCallback test(callbackID);
@@ -2322,9 +2320,9 @@ bool Kernel::UnregisterForUpdateEvent(int callbackID) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Unregister for a particular event
- *************************************************************/
+ */
 bool Kernel::UnregisterForAgentEvent(int callbackID) {
   // Build a test object for the callbackID we're interested in
   TestAgentCallback test(callbackID);
@@ -2349,7 +2347,7 @@ bool Kernel::UnregisterForAgentEvent(int callbackID) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief The smlEVENT_INTERRUPT_CHECK event fires every n-th
  *        step (phase) during a run.  The n is controlled by
  *        this rate.  By setting a larger value there is less
@@ -2363,7 +2361,7 @@ bool Kernel::UnregisterForAgentEvent(int callbackID) {
  *        but those don't offer the same throttle control as this event.
  *
  * @param newRate >= 1
- *************************************************************/
+ */
 bool Kernel::SetInterruptCheckRate(int newRate) {
   // Reject invalid rates
   if (newRate <= 0) {
@@ -2383,7 +2381,7 @@ bool Kernel::SetInterruptCheckRate(int newRate) {
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief The Soar kernel version is based on sending a request
  *        to the kernel asking for its version and returning the
  *        result.
@@ -2398,7 +2396,7 @@ bool Kernel::SetInterruptCheckRate(int newRate) {
  *
  *        All versions are of the form Major.Minor.Release
  *        E.g. 8.6.1
- *************************************************************/
+ */
 std::string Kernel::GetSoarKernelVersion() {
   AnalyzeXML response;
   if (GetConnection()->SendAgentCommand(&response,
@@ -2419,13 +2417,13 @@ std::string Kernel::GetSoarKernelVersion() {
 // Any error should get passed back to caller of LoadExternalLibrary
 typedef char* (*InitLibraryFunction)(Kernel*, int argc, char** argv);
 
-/*************************************************************
+/**
  * @brief Loads an external library (dll/so/dylib) in the local client for the
  * purpose of event or RHS function registration. This can boost performance
  *over using a remote client for purposes such as logging.
  * @param pLibraryCommand the library name and args as passed to the
  *        load-library command (works kind of like echo)
- *************************************************************/
+ */
 
 std::string Kernel::LoadExternalLibrary(const char* pLibraryCommand) {
   // We'll break up the command in to this argv array

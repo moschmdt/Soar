@@ -362,7 +362,7 @@ double group_node::min_project_on_axis(const vec3& axis) const {
   return min;
 }
 
-/*
+/**
  Based on the fact that the support s_T(v) of a geometry under transformation
  T(x) = Bx + c is T(s(Bt(v))), where Bt is the transpose of B.
 
@@ -428,7 +428,7 @@ void convex_node::get_shape_sgel(std::string& s) const {
   s = ss.str();
 }
 
-/*
+/**
  This is a naive implementation. Should be able to get complexity to sublinear.
 */
 void convex_node::gjk_local_support(const vec3& dir, vec3& support) const {
@@ -494,7 +494,7 @@ void ball_node::get_shape_sgel(std::string& s) const {
 
 sgnode* ball_node::clone_sub() const { return new ball_node(get_id(), radius); }
 
-/*
+/**
  This will overestimate the bounding box right now.
 */
 void ball_node::update_shape() {

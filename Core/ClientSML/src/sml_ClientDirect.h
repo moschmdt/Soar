@@ -1,15 +1,13 @@
-/////////////////////////////////////////////////////////////////
 // Client SML Direct header.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Provides methods used to proved optimized
 // direct access to kernel sml when using
 // an embedded connection and doing I/O
 // (which is where performance is most critical).
 //
-/////////////////////////////////////////////////////////////////
 #ifndef SML_CLIENT_DIRECT_H
 #define SML_CLIENT_DIRECT_H
 

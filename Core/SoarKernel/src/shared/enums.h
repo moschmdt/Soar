@@ -10,12 +10,12 @@
 
 #include "constants.h"
 
-/** ------------------------- debug trace channels -----------------------------
+/** debug trace channels -----------------------------
  *
  * NOTE: IF YOU ADD A NEW TRACE OR DEBUG MODE, MAKE SURE TO INITIALIZE PREFIX
  *       INFO AND INITIAL VALUE IN initialize_debug_trace() in debug.cpp
  *
- * ------------------------------------------------------------------------- */
+ * */
 enum TraceMode {
   // Generic
   No_Mode = 0,
@@ -317,18 +317,18 @@ enum WME_Field {
 
 enum Print_Header_Type { PrintBoth = 0, PrintAfter = 1, PrintBefore = 2 };
 
-/** -- An implementation of an on/off boolean parameter --*/
+/** An implementation of an on/off boolean parameter */
 
 enum boolean { off, on };
 
-/** -- Possible modes for numeric indifference -- */
+/** Possible modes for numeric indifference */
 
 enum ni_mode {
   NUMERIC_INDIFFERENT_MODE_AVG,
   NUMERIC_INDIFFERENT_MODE_SUM,
 };
 
-/** --- Types of tests (can't be 255 -- see rete.cpp) --- */
+/** Types of tests (can't be 255 -- see rete.cpp) */
 
 enum TestType {
   UNINITIALIZED_TEST = 0,
@@ -340,8 +340,8 @@ enum TestType {
   SAME_TYPE_TEST = 6,
   DISJUNCTION_TEST = 7, /** item must be one of a list of constants */
   CONJUNCTIVE_TEST =
-      8,            /** item must pass each of a list of non-conjunctive tests */
-  GOAL_ID_TEST = 9, /** item must be a goal identifier */
+      8, /** item must pass each of a list of non-conjunctive tests */
+  GOAL_ID_TEST = 9,     /** item must be a goal identifier */
   IMPASSE_ID_TEST = 10, /** item must be an impasse identifier */
   EQUALITY_TEST = 11,
   SMEM_LINK_TEST = 12,
@@ -351,9 +351,9 @@ enum TestType {
   NUM_TEST_TYPES
 };
 
-/** -------------------------------
+/**
       Types of Productions
-------------------------------- */
+*/
 
 enum ProductionType {
   USER_PRODUCTION_TYPE,
@@ -397,7 +397,7 @@ enum PreferenceType {
   NUM_PREFERENCE_TYPES = 14,
 };
 
-/** --- types of conditions --- */
+/** types of conditions */
 enum ConditionType {
   POSITIVE_CONDITION,
   NEGATIVE_CONDITION,

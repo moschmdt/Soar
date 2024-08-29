@@ -1,14 +1,12 @@
-/////////////////////////////////////////////////////////////////
 // Kernel class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This class is used by a client app (e.g. an environment) to represent
 // the top level connection to the Soar kernel.  You start by creating
 // one of these and then creating agents through it etc.
 //
-/////////////////////////////////////////////////////////////////
 #ifndef SML_KERNEL_H
 #define SML_KERNEL_H
 

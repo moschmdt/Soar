@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // Export file.
 //
-// Date  : May 2006
+// @date  : May 2006
 //
 // This defines EXPORT for use on Windows, Linux, and OS X.
 // This file is shared by several projects.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef EXPORT_H
 #define EXPORT_H

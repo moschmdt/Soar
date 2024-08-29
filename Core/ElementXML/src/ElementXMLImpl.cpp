@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ElementXMLImpl class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : July 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : July 2004
 //
 // This library is responsible for representing an XML document as an object
 // (actually a tree of objects).
@@ -27,7 +26,6 @@
 //  pointer to an object that is owned by a separate DLL is safe, because that
 //  single DLL (ElementXML.dll in this case) is the only one that really access
 //  the data in the class).
-/////////////////////////////////////////////////////////////////
 
 #include <algorithm>  // For "for_each"
 
@@ -161,11 +159,9 @@ static inline long elementxml_atomic_dec(volatile long* v) {
 
 using namespace soarxml;
 
-////////////////////////////////////////////////////////////////
 //
 // Static (class level) functions
 //
-////////////////////////////////////////////////////////////////
 
 static char const* kLT = "&lt;";
 static char const* kGT = "&gt;";
@@ -258,10 +254,10 @@ inline static int CharLength(char base) {
 static char hexChar[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
                            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-/*************************************************************
+/**
  * @brief Converts the binary data into a null-terminated string of hex
  *characters.
- *************************************************************/
+ */
 static char* BinaryToHexChars(char const* pBinaryBuffer, int length) {
   // The output will be exactly twice the length of the input
   // when we do simple hex conversion
@@ -286,9 +282,9 @@ static char binaryVal(char c) {
                                   : c - 'A' + 10;
 }
 
-/*************************************************************
+/**
  * @brief Converts the string of hex characters into binary data.
- *************************************************************/
+ */
 static void HexCharsToBinary(char const* pHexString, char*& pBinaryBuffer,
                              int& length) {
   // This length should always be an exact multiple of 2
@@ -308,11 +304,11 @@ static void HexCharsToBinary(char const* pHexString, char*& pBinaryBuffer,
   }
 }
 
-/*************************************************************
+/**
  * @brief Counts how long a string will be when expanded as
  *        XML output.  That is allowing for replacing
  *        "<" with &lt; etc.
- *************************************************************/
+ */
 inline static int CountXMLLength(xmlStringConst str) {
   int len = 0;
   for (char const* p = str; *p != 0; p++) {
@@ -322,7 +318,7 @@ inline static int CountXMLLength(xmlStringConst str) {
   return len;
 }
 
-/*************************************************************
+/**
  * @brief Adds pAdd to pDest (just like strcat).
  *        BUT returns a pointer to the end of the combined string
  *        unlike strcat.
@@ -331,7 +327,7 @@ inline static int CountXMLLength(xmlStringConst str) {
  *    1) Should test the speed against strcat() + strlen().
  *       They may be faster (if coded in assembler) than this
  *       manual solution.
- *************************************************************/
+ */
 inline static char* AddString(char* pDest, char const* pAdd) {
   while (*pAdd != NUL) {
     *pDest++ = *pAdd++;
@@ -340,14 +336,14 @@ inline static char* AddString(char* pDest, char const* pAdd) {
   return pDest;
 }
 
-/*************************************************************
+/**
  * @brief Adds pAdd to pDest (just like strcat).
  *        BUT returns a pointer to the end of the combined string
  *        unlike strcat.
  *
  *        Also, this version replaces special characters with
  *        their escape sequence.
- *************************************************************/
+ */
 inline static char* AddXMLString(char* pDest, char const* pAdd) {
   char ch = *pAdd++;
   while (ch != NUL) {
@@ -377,9 +373,9 @@ inline static char* AddXMLString(char* pDest, char const* pAdd) {
   return pDest;
 }
 
-/*************************************************************
+/**
  * @brief XML ids can only contain letters, numbers, . - and _.
- *************************************************************/
+ */
 bool ElementXMLImpl::IsValidID(xmlStringConst str) {
   for (char const* p = str; *p != NUL; p++) {
     if (!((*p >= '0' && *p <= '9') || (*p >= 'a' && *p <= 'z') ||
@@ -392,15 +388,13 @@ bool ElementXMLImpl::IsValidID(xmlStringConst str) {
   return true;
 }
 
-////////////////////////////////////////////////////////////////
 //
 // Constructors and destructors
 //
-////////////////////////////////////////////////////////////////
 
-/*************************************************************
+/**
  * @brief Default constructor.
- *************************************************************/
+ */
 ElementXMLImpl::ElementXMLImpl(void) {
   // Default to not using a CDATA section to store character data
   m_UseCData = false;
@@ -430,9 +424,9 @@ static inline void StaticReleaseRef(ElementXMLImpl* pXML) {
   pXML->ReleaseRef();
 }
 
-/*************************************************************
+/**
  * @brief Destructor.
- *************************************************************/
+ */
 ElementXMLImpl::~ElementXMLImpl(void) {
   // Delete the comment
   DeleteString(m_Comment);
@@ -450,7 +444,7 @@ ElementXMLImpl::~ElementXMLImpl(void) {
   std::for_each(m_StringsToDelete.begin(), m_StringsToDelete.end(),
                 &ElementXMLImpl::DeleteString);
 
-  /*
+  /**
   xmlStringListIter iter = m_StringsToDelete.begin() ;
 
   while (iter != m_StringsToDelete.end())
@@ -469,7 +463,7 @@ ElementXMLImpl::~ElementXMLImpl(void) {
   // function because it's beyond me how to use std::mem_fun_ref and friends to
   // call directly to the member.
   std::for_each(m_Children.begin(), m_Children.end(), &StaticReleaseRef);
-  /*
+  /**
   xmlListIter iterChildren = m_Children.begin() ;
 
   while (iterChildren != m_Children.end())
@@ -482,13 +476,13 @@ ElementXMLImpl::~ElementXMLImpl(void) {
   */
 }
 
-/*************************************************************
+/**
  * @brief Returns a copy of this object.
  *        Generally, this shouldn't be necessary as ref counting
  *        allows multiple clients to point to the same object.
  *
  *        Call ReleaseRef() on the returned object when you are done with it.
- *************************************************************/
+ */
 ElementXMLImpl* ElementXMLImpl::MakeCopy() const {
   ElementXMLImpl* pCopy = new ElementXMLImpl();
 
@@ -535,10 +529,10 @@ ElementXMLImpl* ElementXMLImpl::MakeCopy() const {
   return pCopy;
 }
 
-/*************************************************************
+/**
  * @brief Release our reference to this object, possibly
  *        causing it to be deleted.
- *************************************************************/
+ */
 int ElementXMLImpl::ReleaseRef() {
   // Have to store this locally, before we call "delete this"
   volatile long refCount = elementxml_atomic_dec(&m_RefCount);
@@ -550,30 +544,28 @@ int ElementXMLImpl::ReleaseRef() {
   return static_cast<int>(refCount);
 }
 
-/*************************************************************
+/**
  * @brief Add a new reference to this object.
  *        The object will only be deleted after calling
  *        releaseRef() one more time than addRef() has been
  *        called.
- *************************************************************/
+ */
 int ElementXMLImpl::AddRef() {
   elementxml_atomic_inc(&m_RefCount);
 
   return static_cast<int>(m_RefCount);
 }
 
-/*************************************************************
+/**
  * @returns Reports the current reference count (must be > 0)
- *************************************************************/
+ */
 int ElementXMLImpl::GetRefCount() { return static_cast<int>(m_RefCount); }
 
-////////////////////////////////////////////////////////////////
 //
 // Tag functions (e.g the tag in <name>...</name> is "name")
 //
-////////////////////////////////////////////////////////////////
 
-/*************************************************************
+/**
  * @brief Set the tag name for this element.
  *
  * NOTE: The tagName becomes owned by this XML object and will be deleted
@@ -582,7 +574,7 @@ int ElementXMLImpl::GetRefCount() { return static_cast<int>(m_RefCount); }
  *
  * @param  tagName   Tag name can only contain letters, numbers, . - and _.
  * @returns  true if the tag name is valid.
- *************************************************************/
+ */
 bool ElementXMLImpl::SetTagName(char* tagName, bool copyName) {
   // Decide if we're taking ownership of this string or not.
   if (copyName) {
@@ -595,7 +587,7 @@ bool ElementXMLImpl::SetTagName(char* tagName, bool copyName) {
   return SetTagNameFast(tagName);
 }
 
-/*************************************************************
+/**
  * @brief Set the tag name for this element.
  *
  * NOTE: The caller must ensure that the tag name does not go out of scope
@@ -604,7 +596,7 @@ bool ElementXMLImpl::SetTagName(char* tagName, bool copyName) {
  *
  * @param  tagName   Tag name can only contain letters, numbers, . - and _.
  * @returns  true if the tag name is valid.
- *************************************************************/
+ */
 bool ElementXMLImpl::SetTagNameFast(char const* tagName) {
 #ifdef DEBUG
   if (!IsValidID(tagName)) {
@@ -617,28 +609,26 @@ bool ElementXMLImpl::SetTagNameFast(char const* tagName) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Gets the tag name for this element.
  *
  * @returns The tag name.
- *************************************************************/
+ */
 char const* ElementXMLImpl::GetTagName() const { return m_TagName; }
 
-////////////////////////////////////////////////////////////////
 //
 // Child element functions.
 //
 // These allow a single ElementXMLImpl object to represent a complete
 // XML document through its children.
 //
-////////////////////////////////////////////////////////////////
 
-/*************************************************************
+/**
  * @brief Adds a child to the list of children of this element.
  *
  * @param  pChild    The child to add.  Will be released when the parent is
  *destroyed.
- *************************************************************/
+ */
 void ElementXMLImpl::AddChild(ElementXMLImpl* pChild) {
   if (pChild == NULL) {
     return;
@@ -648,21 +638,21 @@ void ElementXMLImpl::AddChild(ElementXMLImpl* pChild) {
   this->m_Children.push_back(pChild);
 }
 
-/*************************************************************
+/**
  * @brief Returns the number of children of this element.
- *************************************************************/
+ */
 int ElementXMLImpl::GetNumberChildren() const {
   return static_cast<int>(this->m_Children.size());
 }
 
-/*************************************************************
+/**
  * @brief Returns the n-th child of this element.
  *
  * Children are guaranteed to be returned in the order they were added.
  * If index is out of range returns NULL.
  *
  * @param index  The 0-based index of the child to return.
- *************************************************************/
+ */
 ElementXMLImpl const* ElementXMLImpl::GetChild(int index) const {
   if (index < 0 || index >= static_cast<int>(m_Children.size())) {
     return NULL;
@@ -671,24 +661,22 @@ ElementXMLImpl const* ElementXMLImpl::GetChild(int index) const {
   return m_Children[index];
 }
 
-/*************************************************************
+/**
  * @brief Returns the parent of this element.
  *
  * The caller should *not* call releaseRef() on this parent.
  * If you wish to keep it, you can call addRef() (and then later releaseRef()).
  *
  * @returns NULL if has no parent.
- *************************************************************/
+ */
 ElementXMLImpl const* ElementXMLImpl::GetParent() const { return m_pParent; }
 
-////////////////////////////////////////////////////////////////
 //
 // Attribute functions (e.g an attribute in <name first="doug">...</name> is
 // first="doug")
 //
-////////////////////////////////////////////////////////////////
 
-/*************************************************************
+/**
  * @brief Adds an attribute name-value pair.
  *
  * NOTE: The caller must ensure that the attribute name does not go out of scope
@@ -702,7 +690,7 @@ ElementXMLImpl const* ElementXMLImpl::GetParent() const { return m_pParent; }
  *and _.
  * @param attributeValue Can be any string.
  * @returns true if attribute name is valid (debug mode only)
- *************************************************************/
+ */
 bool ElementXMLImpl::AddAttribute(char* attributeName, char* attributeValue,
                                   bool copyName, bool copyValue) {
   // Decide if we're taking ownership of this string or not.
@@ -717,7 +705,7 @@ bool ElementXMLImpl::AddAttribute(char* attributeName, char* attributeValue,
   return AddAttributeFast(attributeName, attributeValue, copyValue);
 }
 
-/*************************************************************
+/**
  * @brief Adds an attribute name-value pair.
  *
  * NOTE: The caller must ensure that the attribute name does not go out of scope
@@ -731,7 +719,7 @@ bool ElementXMLImpl::AddAttribute(char* attributeName, char* attributeValue,
  *and _.
  * @param attributeValue Can be any string.
  * @returns true if attribute name is valid (debug mode only)
- *************************************************************/
+ */
 bool ElementXMLImpl::AddAttributeFast(char const* attributeName,
                                       char* attributeValue, bool copyValue) {
   // Decide if we're taking ownership of this string or not.
@@ -755,7 +743,7 @@ bool ElementXMLImpl::AddAttributeFast(char const* attributeName,
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Adds an attribute name-value pair.
  *
  * NOTE: The attribute name and value must remain in scope for the life of this
@@ -765,7 +753,7 @@ bool ElementXMLImpl::AddAttributeFast(char const* attributeName,
  *and _.
  * @param attributeValue Can be any string.
  * @returns true if attribute name is valid (debug mode only)
- *************************************************************/
+ */
 bool ElementXMLImpl::AddAttributeFastFast(char const* attributeName,
                                           char const* attributeValue) {
 #ifdef DEBUG
@@ -781,20 +769,20 @@ bool ElementXMLImpl::AddAttributeFastFast(char const* attributeName,
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Get the number of attributes attached to this element.
- *************************************************************/
+ */
 int ElementXMLImpl::GetNumberAttributes() const {
   return static_cast<int>(m_AttributeMap.size());
 }
 
-/*************************************************************
+/**
  * @brief Get the name of the n-th attribute of this element.
  *        Attributes may not be returned in the order they were added.
  *
  * @param index  The 0-based index of the attribute to return.
  * @returns NULL if index is out of range.
- *************************************************************/
+ */
 const char* ElementXMLImpl::GetAttributeName(int index) const {
   xmlAttributeMapConstIter mapIter = m_AttributeMap.begin();
 
@@ -812,11 +800,11 @@ const char* ElementXMLImpl::GetAttributeName(int index) const {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief Get the value of the n-th attribute of this element.
  *
  * @param index  The 0-based index of the attribute to return.
- *************************************************************/
+ */
 const char* ElementXMLImpl::GetAttributeValue(int index) const {
   xmlAttributeMapConstIter mapIter = m_AttributeMap.begin();
 
@@ -834,13 +822,13 @@ const char* ElementXMLImpl::GetAttributeValue(int index) const {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief Get the value of the named attribute of this element.
  *
  * @param attName    The name of the attribute to look up.
  * @returns The value of the named attribute (or null if this attribute doesn't
  *exist).
- *************************************************************/
+ */
 const char* ElementXMLImpl::GetAttribute(const char* attName) const {
   // Note: We can't use the apparently simpler "return m_AttributeMap[attName]"
   // for two reasons. First, this will create an object in the map if one didn't
@@ -858,7 +846,7 @@ const char* ElementXMLImpl::GetAttribute(const char* attName) const {
   return iter->second;
 }
 
-/*************************************************************
+/**
  * @brief Associate a comment with this XML element.
  *        The comment is written in front of the element when stored/parsed.
  *
@@ -869,18 +857,18 @@ const char* ElementXMLImpl::GetAttribute(const char* attName) const {
  *API to support so it seems unnecessary.
  *
  * @param Comment    The comment string.
- *************************************************************/
+ */
 bool ElementXMLImpl::SetComment(const char* comment) {
   m_Comment = CopyString(comment);
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Returns the comment for this element.
  *
  * @returns The comment string for this element (or zero-length string if there
  *is none)
- *************************************************************/
+ */
 char const* ElementXMLImpl::GetComment() {
   if (m_Comment) {
     return m_Comment;
@@ -888,21 +876,19 @@ char const* ElementXMLImpl::GetComment() {
   return "";
 }
 
-////////////////////////////////////////////////////////////////
 //
 // Character data functions (e.g the character data in <name>Albert
 // Einstein</name> is "Albert Einstein")
 //
-////////////////////////////////////////////////////////////////
 
-/*************************************************************
+/**
  * @brief Set the character data for this element.
  *
  * @param characterData  The character data passed in should *not* replace
  *special characters such as < and & with the XML escape sequences &lt; etc.
  *                       These values will be converted when the XML stream is
  *created.
- *************************************************************/
+ */
 void ElementXMLImpl::SetCharacterData(char* characterData, bool copyData) {
   // Decide if we're taking ownership of this string or not.
   if (copyData) {
@@ -933,14 +919,14 @@ void ElementXMLImpl::SetBinaryCharacterData(char* characterData, int length,
   this->m_BinaryDataLength = length;
 }
 
-/*************************************************************
+/**
  * @brief Get the character data for this element.
  *
  * @returns  Returns the character data for this element.  If the element has no
  *character data, returns zero-length string. The character data returned will
  *not include any XML escape sequences (e.g. &lt;). It will include the original
  *special characters (e.g. "<").
- *************************************************************/
+ */
 char const* ElementXMLImpl::GetCharacterData() const {
   if (this->m_CharacterData) {
     return this->m_CharacterData;
@@ -948,15 +934,15 @@ char const* ElementXMLImpl::GetCharacterData() const {
   return "";
 }
 
-/*************************************************************
+/**
  * @brief Returns true if the character data should be treated as a binary
  *buffer rather than a null-terminated character string.
- *************************************************************/
+ */
 bool ElementXMLImpl::IsCharacterDataBinary() const {
   return this->m_DataIsBinary;
 }
 
-/*************************************************************
+/**
  * @brief Converts a character data buffer into binary data.
  *
  * If binary data is stored in an XML file it will encoded in
@@ -975,7 +961,7 @@ bool ElementXMLImpl::IsCharacterDataBinary() const {
  *effect.
  *
  * @returns True if buffer is binary after conversion.
- *************************************************************/
+ */
 bool ElementXMLImpl::ConvertCharacterDataToBinary() {
   if (!m_DataIsBinary && m_CharacterData) {
     // These are filled in by the conversion function
@@ -990,11 +976,11 @@ bool ElementXMLImpl::ConvertCharacterDataToBinary() {
   return this->m_DataIsBinary;
 }
 
-/*************************************************************
+/**
  * @brief Converts the stored binary data into a string of
  *        characters (hex for now, or base64 later)
  *        which can be safely stored in XML text.
- *************************************************************/
+ */
 bool ElementXMLImpl::ConvertBinaryDataToCharacters() {
   if (m_DataIsBinary && m_CharacterData) {
     char* pHexString = BinaryToHexChars(m_CharacterData, m_BinaryDataLength);
@@ -1006,13 +992,13 @@ bool ElementXMLImpl::ConvertBinaryDataToCharacters() {
   return !m_DataIsBinary;
 }
 
-/*************************************************************
+/**
  * @brief Returns the length of the character data.
  *
  * If the data is a binary buffer this is the size of that buffer.
  * If the data is a null terminated string this is the length of the string + 1
  *(for the null).
- *************************************************************/
+ */
 int ElementXMLImpl::GetCharacterDataLength() const {
   if (!m_CharacterData) {
     return 0;
@@ -1025,28 +1011,26 @@ int ElementXMLImpl::GetCharacterDataLength() const {
   }
 }
 
-/*************************************************************
+/**
  * @brief Setting this value to true indicates that this elements character data
  *should be stored in a CDATA section. By default this value will be false.
  *
  * @param useCData   true if this elements character data should be stored in a
  *CDATA section.
- *************************************************************/
+ */
 void ElementXMLImpl::SetUseCData(bool useCData) { this->m_UseCData = useCData; }
 
-/*************************************************************
+/**
  * @brief Returns true if this element's character data should be stored in a
  *CDATA section when streamed to XML.
- *************************************************************/
+ */
 bool ElementXMLImpl::GetUseCData() const { return this->m_UseCData; }
 
-////////////////////////////////////////////////////////////////
 //
 // Generator
 //
-////////////////////////////////////////////////////////////////
 
-/*************************************************************
+/**
  * @brief Converts the XML object to a string.
  *
  * @param includeChildren    Includes all children in the XML output.
@@ -1055,7 +1039,7 @@ bool ElementXMLImpl::GetUseCData() const { return this->m_UseCData; }
  *
  * @returns The string form of the object.  Caller must delete with
  *DeleteString().
- *************************************************************/
+ */
 char* ElementXMLImpl::GenerateXMLString(bool includeChildren,
                                         bool insertNewLines) const {
   // Work out how much space we will need
@@ -1074,7 +1058,7 @@ char* ElementXMLImpl::GenerateXMLString(bool includeChildren,
   return pStr;
 }
 
-/*************************************************************
+/**
  * @brief Returns the length of string needed to represent this object.
  *
  * @param depth              How deep into the XML tree we are (can be used to
@@ -1082,7 +1066,7 @@ char* ElementXMLImpl::GenerateXMLString(bool includeChildren,
  * @param includeChildren    Includes all children in the XML output.
  * @param insertNewlines     Add newlines to space out the tags to be more
  *human-readable
- *************************************************************/
+ */
 int ElementXMLImpl::DetermineXMLStringLength(int depth, bool includeChildren,
                                              bool insertNewLines) const {
   int len = 0;
@@ -1175,7 +1159,7 @@ int ElementXMLImpl::DetermineXMLStringLength(int depth, bool includeChildren,
   return len;
 }
 
-/*************************************************************
+/**
  * @brief Converts the XML object to a string.
  *
  * @param depth              How deep we are into the XML tree
@@ -1185,7 +1169,7 @@ int ElementXMLImpl::DetermineXMLStringLength(int depth, bool includeChildren,
  * @param insertNewlines     Add newlines to space out the tags to be more
  *human-readable
  * @returns Pointer to the end of the string.
- *************************************************************/
+ */
 char* ElementXMLImpl::GenerateXMLString(int depth, char* pStart, int maxLength,
                                         bool includeChildren,
                                         bool insertNewLines) const {
@@ -1305,7 +1289,7 @@ char* ElementXMLImpl::GenerateXMLString(int depth, char* pStart, int maxLength,
   return pStr;
 }
 
-/*************************************************************
+/**
  * @brief    Performs an allocation and then copies the contents of the passed
  *in buffer to the newly allocated buffer. You need to use this rather than
  *copyString if copying binary data (because it can contained embedded nulls).
@@ -1314,7 +1298,7 @@ char* ElementXMLImpl::GenerateXMLString(int depth, char* pStart, int maxLength,
  *NULL.
  * @param length     The length of the buffer to copy (this exact length will be
  *allocated--no trailing NULL is added).
- *************************************************************/
+ */
 char* ElementXMLImpl::CopyBuffer(char const* original, int length) {
   if (original == NULL || length <= 0) {
     return NULL;

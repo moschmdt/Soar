@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // TagWme class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : September 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : September 2004
 //
 // Represents an SML node which represents an argument for a command and has
 // the tag <wme>.
@@ -12,7 +11,6 @@
 // and type information for the value (which defaults to string)
 // Can also specify an action (e.g. add or remove)
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_TAG_WME_H
 #define SML_TAG_WME_H

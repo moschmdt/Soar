@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Cocoa/NSOpenGL
 // API Version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2009-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
 // This software is provided 'as-is', without any express or implied
@@ -25,17 +23,14 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Enable and disable system keys
-//========================================================================
 
 void _glfwPlatformEnableSystemKeys( void )
 {
@@ -48,4 +43,3 @@ void _glfwPlatformDisableSystemKeys( void )
     // I don't think it's really possible to disable stuff like Exposé
     // except in full-screen mode.
 }
-

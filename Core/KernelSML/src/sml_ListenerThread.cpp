@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ListenerThread class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Listens for incoming remote connections and creates
 // a new connection object for each one.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <stdio.h>  // To concat file name for socket file deletion
 #include <time.h>   // To get clock
@@ -116,7 +114,7 @@ void ListenerThread::Run() {
   // This code shouldn't be necessary since the we unlink existing files on
   // start and since the file is in the user's home, permissions for that won't
   // be an issue
-  /*
+  /**
       char f_name[256];
       sprintf( f_name, "%s%d", sock::GetLocalSocketDir().c_str(),
      static_cast<int64_t>(m_Port)); sml::PrintDebugFormat( "Attempting to delete

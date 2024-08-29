@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // EmbeddedConnectionAsynch class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class represents a logical connection between two entities that are
 // communicating via SML (a form of XML).  In the embedded case that this class
@@ -16,7 +15,6 @@
 // But for now, be aware that if you're changing something here you should
 // probably also be changing it there.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <iostream>
@@ -39,7 +37,7 @@ EmbeddedConnectionAsynch::~EmbeddedConnectionAsynch() {
   }
 }
 
-/*************************************************************
+/**
  * @brief Send a message to the other side of this connection.
  *
  * For an asynchronous connection this is done by adding
@@ -49,7 +47,7 @@ EmbeddedConnectionAsynch::~EmbeddedConnectionAsynch() {
  * a context switch and another thread to run to actually execute
  * this command.  To get a response call GetResponseForID()
  * and wait for the response to occur.
- *************************************************************/
+ */
 void EmbeddedConnectionAsynch::SendMsg(ElementXML* pMsg) {
   ClearError();
 
@@ -83,7 +81,7 @@ void EmbeddedConnectionAsynch::SendMsg(ElementXML* pMsg) {
   }
 }
 
-/*************************************************************
+/**
  * @brief Adds the message to a queue of responses which we're waiting
  *        to pair with the commands that triggered them.
  *
@@ -94,7 +92,7 @@ void EmbeddedConnectionAsynch::SendMsg(ElementXML* pMsg) {
  *        as they are responses to commands that have come out of the
  *        expected order.  This can only happen when multiple threads
  *        submit commands.
- *************************************************************/
+ */
 void EmbeddedConnectionAsynch::AddResponseToList(ElementXML* pResponse) {
   if (pResponse == NULL) {
     return;
@@ -140,14 +138,14 @@ void EmbeddedConnectionAsynch::AddResponseToList(ElementXML* pResponse) {
   }
 }
 
-/*************************************************************
+/**
  * @brief    Searches the list of responses to see if there's already
  *           been a response generated for this particular message ID.
  *
  * The list of messages has a fixed maximum size, so this lookup is
  * a constant time operation.  If the client is only issuing
  * calls on a single thread, the list will always be empty.
- *************************************************************/
+ */
 ElementXML* EmbeddedConnectionAsynch::IsResponseInList(char const* pID) {
   soar_thread::Lock lock(&m_ListMutex);
 
@@ -168,10 +166,10 @@ ElementXML* EmbeddedConnectionAsynch::IsResponseInList(char const* pID) {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief    Returns true if the given response message is
  *           an acknowledgement for a message with the given ID.
- *************************************************************/
+ */
 bool EmbeddedConnectionAsynch::DoesResponseMatch(ElementXML* pResponse,
                                                  char const* pID) {
   if (!pResponse || !pID) {
@@ -196,10 +194,10 @@ bool EmbeddedConnectionAsynch::DoesResponseMatch(ElementXML* pResponse,
   return false;
 }
 
-/*************************************************************
+/**
  * @brief    Look for a response to the given message (based on its ID).
  *           Optionally, wait for that response to come in.
- *************************************************************/
+ */
 ElementXML* EmbeddedConnectionAsynch::GetResponseForID(char const* pID,
                                                        bool wait) {
   ElementXML* pResponse = NULL;
@@ -288,11 +286,11 @@ ElementXML* EmbeddedConnectionAsynch::GetResponseForID(char const* pID,
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief    Retrieve any messages we've been sent and process them.
  *
  *           Returns true if at least one message has been read.
- *************************************************************/
+ */
 bool EmbeddedConnectionAsynch::ReceiveMessages(bool allMessages) {
   // Make sure only one thread is sending messages at a time
   // (This allows us to run a separate thread in clients polling for events even

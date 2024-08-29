@@ -1,4 +1,4 @@
-/***************************************************
+/**
  *
  * File: filters/monitor_object.cpp
  *
@@ -21,7 +21,7 @@
  * 			position of the node, and its initial position
  * 		This can be used to track how far an object has moved over time
  *
- *********************************************************/
+ */
 #include <cassert>
 #include <iostream>
 #include <map>

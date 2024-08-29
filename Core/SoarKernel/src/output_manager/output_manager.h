@@ -7,8 +7,7 @@
  *
  *  file:  output_manager.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef OUTPUT_MANAGER_H_
 #define OUTPUT_MANAGER_H_
@@ -81,18 +80,18 @@ class Output_Manager {
   agent* m_defaultAgent;
   OM_Parameters* m_params;
 
-  /** -- Global toggles for database, standard out -- */
+  /** Global toggles for database, standard out */
   bool stdout_mode;
 
-  /** -- Settings for how tests are printed (actual, original production tests,
-   * test identity) -- */
+  /** Settings for how tests are printed (actual, original production tests,
+   * test identity) */
   bool m_print_actual, m_print_identity;
   bool m_print_actual_effective, m_print_identity_effective;
   char *m_pre_string, *m_post_string;
   int m_column_indent[MAX_COLUMNS];
 
-  /** -- The following tracks column of the next character to print if Soar is
-   * writing to std::cout --*/
+  /** The following tracks column of the next character to print if Soar is
+   * writing to std::cout */
   int global_printer_output_column;
   void update_printer_columns(agent* pSoarAgent, const char* msg);
 
@@ -127,8 +126,8 @@ class Output_Manager {
                    const char* format, va_list args);
 
  public:
-  /** -- Array for each trace output mode.  Contains prefix strings and whether
-   * enabled -- */
+  /** Array for each trace output mode.  Contains prefix strings and whether
+   * enabled */
   trace_mode_info mode_info[num_trace_modes], saved_mode_info[num_trace_modes];
 
   uint64_t settings[num_output_sysparams];
@@ -244,8 +243,8 @@ class Output_Manager {
     for (int i = 0; i < MAX_COLUMNS; i++) m_column_indent[i] = 0;
   }
 
-  /** -- The following should all be refactored into to_string functions to be
-   * used with format strings -- */
+  /** The following should all be refactored into to_string functions to be
+   * used with format strings */
   void print_identifiers(TraceMode mode);
   void print_msc(TraceMode mode, ms_change* p_ms_change);
   void print_partial_matches(TraceMode mode, rete_node* pNode);
@@ -268,7 +267,7 @@ class Output_Manager {
   void display_ambiguous_command_error(
       agent* thisAgent, std::list<std::string> matched_objects_str);
 
-  /** -- Should be moved elsewhere -- */
+  /** Should be moved elsewhere */
   void debug_find_and_print_sym(char* find_string);
   char* NULL_SYM_STR;
 };
@@ -308,7 +307,7 @@ inline const char* field_to_string(WME_Field f) {
   return "NO-ELEMENT";
 }
 
-/** ------------------------------------
+/**
  *    Format strings for Soar printing; note that some of these do
  *    not match their meaning in printf, etc.:
  *
@@ -367,5 +366,5 @@ inline const char* field_to_string(WME_Field f) {
  *       %u   uint64_t
  *       %w   wme
  *       %y   symbol
-   ------------------------------------*/
+ */
 #endif /** OUTPUT_MANAGER_H_ */

@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // echo command file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com
-// Date  : 2004
+// @author: Jonathan Voigt, voigtjr@gmail.com
+// @date  : 2004
 //
-/////////////////////////////////////////////////////////////////
 
 #include "cli_CommandLineInterface.h"
 #include "portability.h"

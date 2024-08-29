@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // Lock class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Recursively locks a section of code so that only one thread can be executing
 // in it at a time.
@@ -33,7 +32,6 @@
 //    }
 // }
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef THREAD_LOCK_H
 #define THREAD_LOCK_H

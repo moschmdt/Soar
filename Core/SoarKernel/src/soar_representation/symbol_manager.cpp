@@ -1,4 +1,4 @@
-/*
+/**
  * symbol_factory.cpp
  *
  *  Created on: Aug 19, 2016
@@ -39,7 +39,7 @@ Symbol_Manager::~Symbol_Manager() {
   free_hash_table(thisAgent, float_constant_hash_table);
 }
 
-/* -------------------------------------------------------------------
+/**
                            Hash Functions
 
    Compress() takes a 32-bit hash value and compresses it down to a few
@@ -54,7 +54,7 @@ Symbol_Manager::~Symbol_Manager() {
    operate on the symbol table entries for the five kinds of symbols--
    these routines are the callback hashing functions used by the
    resizable hash table routines.
-------------------------------------------------------------------- */
+*/
 
 uint32_t compress(uint32_t h, short num_bits) {
   uint32_t result;
@@ -85,9 +85,9 @@ uint32_t hash_string(const char* s) /* AGR 600 */
   return h;
 }
 
-/* -----------------------------------------
+/**
    Hashing symbols using their basic info
------------------------------------------ */
+*/
 
 uint32_t hash_variable_raw_info(const char* name, short num_bits) {
   return compress(hash_string(name), num_bits);
@@ -112,9 +112,9 @@ uint32_t hash_float_constant_raw_info(double value, short num_bits) {
   return compress(static_cast<uint32_t>(value), num_bits);
 }
 
-/* ---------------------------------------------------
+/**
    Hashing symbols using their symbol table entries
---------------------------------------------------- */
+*/
 
 uint32_t hash_variable(void* item, short num_bits) {
   varSymbol* var;
@@ -148,7 +148,7 @@ uint32_t hash_float_constant(void* item, short num_bits) {
   return compress(static_cast<uint32_t>(fc->value), num_bits);
 }
 
-/* -----------------------------------------------------------------
+/**
                        Symbol Table Routines
 
    Initialization:
@@ -199,7 +199,7 @@ uint32_t hash_float_constant(void* item, short num_bits) {
      (the desired prefix of the new symbol's name), and "counter" (a
      pointer to a counter (uint64_t) that is incremented to produce
      new gensym names).
------------------------------------------------------------------ */
+*/
 
 void Symbol_Manager::init_symbol_tables() {
   variable_hash_table = make_hash_table(thisAgent, 0, hash_variable);
@@ -546,7 +546,7 @@ Symbol* Symbol_Manager::make_float_constant(double value) {
   return sym;
 }
 
-/* -----------------------------------------------------------------
+/**
                        Predefined Symbols
 
    Certain symbols are used so frequently that we create them at
@@ -559,7 +559,7 @@ Symbol* Symbol_Manager::make_float_constant(double value) {
    symbol_add_ref() should be called, etc.--it's just that when the
    symbol isn't really being used, it stays around because the count
    is still 1.
------------------------------------------------------------------ */
+*/
 
 void Symbol_Manager::create_predefined_symbols() {
   soarSymbols.crlf_symbol = make_str_constant("\n");
@@ -853,11 +853,11 @@ void Symbol_Manager::release_predefined_symbols() {
   symbol_remove_ref(&(soarSymbols.smem_sym_math_query_min));
 }
 
-/* -------------------------------------------------------------------
+/**
 
                          Deallocate Symbol
 
-------------------------------------------------------------------- */
+*/
 
 void Symbol_Manager::deallocate_symbol(Symbol*& sym) {
   switch (sym->symbol_type) {
@@ -906,7 +906,7 @@ void Symbol_Manager::deallocate_symbol(Symbol*& sym) {
   sym = NULL;
 }
 
-/* -------------------------------------------------------------------
+/**
                        Other Symbol Utilities
 
    Reset_id_counters() is called during an init-soar to reset the id
@@ -928,7 +928,7 @@ void Symbol_Manager::deallocate_symbol(Symbol*& sym) {
    (the desired prefix of the new symbol's name), and "counter" (a
    pointer to a counter (uint64_t) that is incremented to produce
    new gensym names).
-------------------------------------------------------------------- */
+*/
 
 bool print_identifier_ref_info(agent* thisAgent, void* item, void* userdata) {
   Symbol* sym;
@@ -1103,7 +1103,7 @@ void Symbol_Manager::reset_variable_generator(
   cons* c;
   int i;
 
-  /* --- reset counts, and increment the gensym number --- */
+  /* reset counts, and increment the gensym number */
   for (i = 0; i < 26; i++) {
     gensymed_variable_count[i] = 1;
   }
@@ -1113,7 +1113,7 @@ void Symbol_Manager::reset_variable_generator(
     current_variable_gensym_number = 1;
   }
 
-  /* --- mark all variables in the given conds and actions --- */
+  /* mark all variables in the given conds and actions */
   tc = get_new_tc_number(thisAgent);
   var_list = NIL;
   add_all_variables_in_condition_list(thisAgent, conds_with_vars_to_avoid, tc,
@@ -1155,7 +1155,7 @@ Symbol* Symbol_Manager::generate_new_variable(const char* prefix) {
     }
     /* -- A variable with that name already existed.  make_variable just
      * returned it and incremented its refcount, so reverse that refcount
-     * addition and try again. -- */
+     * addition and try again. */
     symbol_remove_ref(&New);
   }
 
@@ -1164,10 +1164,10 @@ Symbol* Symbol_Manager::generate_new_variable(const char* prefix) {
   return New;
 }
 
-/* ----------------------------------------------------------------
+/**
    Takes a list of symbols and returns a copy of the same list,
    incrementing the reference count on each symbol in the list.
----------------------------------------------------------------- */
+*/
 
 cons* Symbol_Manager::copy_symbol_list_adding_references(cons* sym_list) {
   cons *c, *first, *prev;
@@ -1192,9 +1192,9 @@ cons* Symbol_Manager::copy_symbol_list_adding_references(cons* sym_list) {
   return first;
 }
 
-/* ----------------------------------------------------------------
+/**
    Frees a list of symbols, decrementing their reference counts.
----------------------------------------------------------------- */
+*/
 
 void Symbol_Manager::deallocate_symbol_list_removing_references(
     cons*& sym_list) {

@@ -1,15 +1,12 @@
-/////////////////////////////////////////////////////////////////
 // List of event ids
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // These are the events that an SML agent can listen for
 //
-// ==========================================
-// READ THESE NOTES BEFORE CHANGING THIS FILE:
-// ==========================================
-//
+// // READ THESE NOTES BEFORE CHANGING THIS FILE:
+// //
 // There are several constraints on the IDs in these event enums.
 //
 // First, each value must be a unique integer.
@@ -35,7 +32,6 @@
 // Fourth, when you add a new event you need to add a string form for it
 //         to the sml::Events class (defined in ConnectionSML\sml_Events.cpp)
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_EVENT_ID_H
 #define SML_EVENT_ID_H
@@ -312,13 +308,11 @@ enum smlStopLocationFlags {
   sml_STOP_AFTER_DECISION_CYCLE = 1 << 2
 };
 
-/////////////////////////////////////////////////////////////////
 // Map event ids to and from strings
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : March 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : March 2005
 //
-/////////////////////////////////////////////////////////////////
 
 // This class is used to convert to and from the string form of these IDs
 class EXPORT Events {

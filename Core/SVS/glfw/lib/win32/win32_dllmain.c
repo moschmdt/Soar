@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Win32/WGL
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,16 +24,13 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
 #if defined(GLFW_BUILD_DLL)
 
-//========================================================================
 // GLFW DLL entry point
-//========================================================================
 
 BOOL WINAPI DllMain( HINSTANCE instance, DWORD reason, LPVOID reserved )
 {
@@ -46,4 +41,3 @@ BOOL WINAPI DllMain( HINSTANCE instance, DWORD reason, LPVOID reserved )
 }
 
 #endif // GLFW_BUILD_DLL
-

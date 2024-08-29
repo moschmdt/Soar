@@ -3,14 +3,14 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** ======================================================================
+/**
                              lexer.h
 
   The lexer reads strings and returns a stream of lexemes.  Get_lexeme() is
   the main routine; it looks for the next lexeme in the input, and stores
   it in the member variable "lexeme".
 
-====================================================================== */
+*/
 
 #ifndef LEXER_H
 #define LEXER_H

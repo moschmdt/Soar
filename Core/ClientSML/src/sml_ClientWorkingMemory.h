@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // WorkingMemory class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This class is used to represent Soar's working memory.
 // We maintain a copy of this on the client so we can just
@@ -17,7 +16,6 @@
 // in the list of deltas (e.g. change value A->B->C can remove the
 // A->B change (since it's overwritten by B->C).
 //
-/////////////////////////////////////////////////////////////////
 #ifndef SML_WORKING_MEMORY_H
 #define SML_WORKING_MEMORY_H
 

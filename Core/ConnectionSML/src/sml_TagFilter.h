@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // TagFilter class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : April 2006
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : April 2006
 //
 // Represents a command that is being sent/received by a command line filter.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_TAG_FILTER_H
 #define SML_TAG_FILTER_H

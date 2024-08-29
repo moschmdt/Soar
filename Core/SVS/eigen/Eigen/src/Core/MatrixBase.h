@@ -334,7 +334,7 @@ class MatrixBase : public DenseBase<Derived> {
   /** \returns true if at least one pair of coefficients of \c *this and \a
    * other are not exactly equal to each other. \warning When using floating
    * point scalar values you probably should rather use a fuzzy comparison such
-   * as isApprox() \sa isApprox(), operator== */
+   * as isApprox() \sa isApprox(), operator*/
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC inline bool operator!=(
       const MatrixBase<OtherDerived>& other) const {
@@ -376,8 +376,7 @@ class MatrixBase : public DenseBase<Derived> {
     return ArrayWrapper<const Derived>(derived());
   }
 
-  /////////// LU module ///////////
-
+  /////////// LU module
   inline const FullPivLU<PlainObject> fullPivLu() const;
   inline const PartialPivLU<PlainObject> partialPivLu() const;
 
@@ -402,32 +401,27 @@ class MatrixBase : public DenseBase<Derived> {
   EIGEN_DEVICE_FUNC
   Scalar determinant() const;
 
-  /////////// Cholesky module ///////////
-
+  /////////// Cholesky module
   inline const LLT<PlainObject> llt() const;
   inline const LDLT<PlainObject> ldlt() const;
 
-  /////////// QR module ///////////
-
+  /////////// QR module
   inline const HouseholderQR<PlainObject> householderQr() const;
   inline const ColPivHouseholderQR<PlainObject> colPivHouseholderQr() const;
   inline const FullPivHouseholderQR<PlainObject> fullPivHouseholderQr() const;
   inline const CompleteOrthogonalDecomposition<PlainObject>
   completeOrthogonalDecomposition() const;
 
-  /////////// Eigenvalues module ///////////
-
+  /////////// Eigenvalues module
   inline EigenvaluesReturnType eigenvalues() const;
   inline RealScalar operatorNorm() const;
 
-  /////////// SVD module ///////////
-
+  /////////// SVD module
   inline JacobiSVD<PlainObject> jacobiSvd(
       unsigned int computationOptions = 0) const;
   inline BDCSVD<PlainObject> bdcSvd(unsigned int computationOptions = 0) const;
 
-  /////////// Geometry module ///////////
-
+  /////////// Geometry module
 #ifndef EIGEN_PARSED_BY_DOXYGEN
   /// \internal helper struct to form the return type of the cross product
   template <typename OtherDerived>
@@ -488,8 +482,7 @@ class MatrixBase : public DenseBase<Derived> {
   EIGEN_DEVICE_FUNC
   inline const HNormalizedReturnType hnormalized() const;
 
-  ////////// Householder module ///////////
-
+  ////////// Householder module
   EIGEN_DEVICE_FUNC
   void makeHouseholderInPlace(Scalar& tau, RealScalar& beta);
   template <typename EssentialPart>
@@ -502,8 +495,7 @@ class MatrixBase : public DenseBase<Derived> {
   EIGEN_DEVICE_FUNC void applyHouseholderOnTheRight(
       const EssentialPart& essential, const Scalar& tau, Scalar* workspace);
 
-  ///////// Jacobi module /////////
-
+  ///////// Jacobi module
   template <typename OtherScalar>
   EIGEN_DEVICE_FUNC void applyOnTheLeft(Index p, Index q,
                                         const JacobiRotation<OtherScalar>& j);
@@ -511,8 +503,7 @@ class MatrixBase : public DenseBase<Derived> {
   EIGEN_DEVICE_FUNC void applyOnTheRight(Index p, Index q,
                                          const JacobiRotation<OtherScalar>& j);
 
-  ///////// SparseCore module /////////
-
+  ///////// SparseCore module
   template <typename OtherDerived>
   EIGEN_STRONG_INLINE const typename SparseMatrixBase<
       OtherDerived>::template CwiseProductDenseReturnType<Derived>::Type
@@ -520,8 +511,7 @@ class MatrixBase : public DenseBase<Derived> {
     return other.cwiseProduct(derived());
   }
 
-  ///////// MatrixFunctions module /////////
-
+  ///////// MatrixFunctions module
   typedef typename internal::stem_function<Scalar>::type StemFunction;
 #define EIGEN_MATRIX_FUNCTION(ReturnType, Name, Description)                 \
   /** \returns an expression of the matrix Description of \c *this. \brief   \

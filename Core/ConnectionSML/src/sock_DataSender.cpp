@@ -4,7 +4,6 @@
 
 using namespace sock;
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : DataSender::SendBuffer
 //
 // Return type    : bool
@@ -14,7 +13,6 @@ using namespace sock;
 //                  The outgoing format on the socket will be
 //                  a 4-byte length followed by the string of characters.
 //
-/////////////////////////////////////////////////////////////////////
 bool DataSender::SendString(char const* pString) {
   uint32_t len = static_cast<uint32_t>(strlen(pString));
 
@@ -31,7 +29,6 @@ bool DataSender::SendString(char const* pString) {
   return ok;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : DataSender::SendBuffer
 //
 // Return type    : bool
@@ -41,7 +38,6 @@ bool DataSender::SendString(char const* pString) {
 //                  The outgoing format on the socket will be
 //                  a 4-byte length followed by the string of characters.
 //
-/////////////////////////////////////////////////////////////////////
 bool DataSender::ReceiveString(std::string* pString) {
   uint32_t netLen = 0;
 

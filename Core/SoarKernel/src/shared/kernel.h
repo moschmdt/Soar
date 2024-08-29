@@ -47,19 +47,17 @@
  * because of a sequence of dependent instantiation firings in the top state.
  * - This option was turned on in Soar 6 to 8.6 and turned off in 9.0 to 9.5.1b
  */
-/**  RETE stat tracking                     Note:  May be broken right now though
- * bug might be superficial */
+/**  RETE stat tracking                     Note:  May be broken right now
+ * though bug might be superficial */
 
 #define BUG_139_WORKAROUND
-// #define BUG_139_WORKAROUND_WARNING
-// #define DO_TOP_LEVEL_COND_REF_CTS
-// #define TOKEN_SHARING_STATS           /** get statistics on token counts with
+
 // and without sharing */ #define SHARING_FACTORS               /** gather
 // statistics on beta node sharing */ #define NULL_ACTIVATION_STATS         /**
 // gather statistics on null activation */
 
 /** Timer settings */
-// #define NO_TIMING_STUFF             /** Eliminates all timing statistics. */
+
 #ifndef NO_TIMING_STUFF /** Tracks additional statistics on how much time is \
                            spent in various parts of the system. */
 //    #define DETAILED_TIMING_STATS
@@ -70,13 +68,12 @@
  * cost, spreading can be "more disabled" by eliminating that record-keeping.*/
 #define SPREADING_ACTIVATION_ENABLED
 
-/** --------------- Compiler directives for debugging ---------------------- *
+/** Compiler directives for debugging ---------------------- *
  *   Note: #defines that enable trace messages pf SQL processing and errors   *
  *   can be found in soar_db.cpp                                              */
-/** =============================== */
+/** */
 #ifdef SOAR_RELEASE_VERSION
 
-// #define MEMORY_POOL_STATS
 #define MEM_POOLS_ENABLED 1
 #ifdef MEM_POOLS_ENABLED
 #define USE_MEM_POOL_ALLOCATORS 1
@@ -85,9 +82,8 @@
 
 /** Memory settings */
 
-// #define DEBUG_MEMORY            /** Fills with garbage on deallocation. Can be
-// set to also zero out memory on init.*/ #define MEMORY_POOL_STATS /** Collects
-// memory pool stats for stats command */
+// be set to also zero out memory on init.*/ #define MEMORY_POOL_STATS /**
+// Collects memory pool stats for stats command */
 #define MEM_POOLS_ENABLED \
   1 /** Whether to use memory pools or the heap for allocation */
 #ifdef MEM_POOLS_ENABLED
@@ -97,12 +93,11 @@
 
 /** The following provide trace messages that could not be easily switch to
  * dprints */
-// #define DEBUG_EPMEM_WME_ADD
-// #define DEBUG_WATERFALL       /** Use DT_WATERFALL. This setting adds
+
 // retraction and nil goal retraction list printing */ #define DEBUG_GDS /** Use
 // DT_GDS and DT_GDS_HIGH.  This setting just adds parent instantiations that it
-// recurses through */ #define DEBUG_INCOMING_SML    /** Prints message coming in
-// via KernelSML::ProcessIncomingSML */
+// recurses through */ #define DEBUG_INCOMING_SML    /** Prints message coming
+// in via KernelSML::ProcessIncomingSML */
 
 #endif
 

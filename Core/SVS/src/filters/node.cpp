@@ -11,7 +11,7 @@
 
 typedef std::map<sgnode*, const filter_params*> node_param_map;
 
-/*
+/**
  This filter takes an "id" parameter and outputs a pointer to the node
  with that name in the scene graph.
 */

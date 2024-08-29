@@ -1,9 +1,8 @@
-/*************************************************************************
+/**
  *
  *  file:  callback.cpp
  *
- * =======================================================================
- *
+ *  *
  * Description: This file contains the callback facility processing.
  *
  * Exported functions:
@@ -19,8 +18,7 @@
  * per callback type and the entry is a pointer to a list.  The list
  * contains installed callbacks, one callback per list cons cell.
  *
- * =======================================================================
- */
+ *  */
 
 #include "callback.h"
 

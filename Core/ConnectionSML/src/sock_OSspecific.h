@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // OSSpecific class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // The parts of the socket code that are specific to the operating system.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef CT_OS_SPECIFIC_H
 #define CT_OS_SPECIFIC_H

@@ -724,7 +724,7 @@ pset1<Packet4h2>(const Eigen::half& from) {
 }
 
 // We now need this visible on both host and device.
-// #if defined(EIGEN_CUDA_ARCH) || defined(EIGEN_HIPCC) ||
+
 // (defined(EIGEN_CUDACC) && EIGEN_COMP_CLANG && !EIGEN_COMP_NVCC)
 namespace {
 
@@ -1814,7 +1814,6 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE half2 pmax<half2>(const half2& a,
   return combine_half(r1, r2);
 }
 
-// #endif // defined(EIGEN_CUDA_ARCH) || defined(EIGEN_HIPCC) ||
 // (defined(EIGEN_CUDACC) && EIGEN_COMP_CLANG && !EIGEN_COMP_NVCC)
 
 #endif  // defined(EIGEN_HAS_CUDA_FP16) || defined(EIGEN_HAS_HIP_FP16)

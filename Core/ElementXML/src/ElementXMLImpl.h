@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // ElementXMLImpl class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : July 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : July 2004
 //
 // This library is responsible for representing an XML document as an object
 // (actually a tree of objects).
@@ -25,7 +24,6 @@
 //  pointer to an object that is owned by a separate DLL is safe, because that
 //  single DLL (ElementXML.dll in this case) is the only one that really access
 //  the data in the class).
-/////////////////////////////////////////////////////////////////
 
 #ifndef ELEMENTXML_IMPL_H
 #define ELEMENTXML_IMPL_H
@@ -137,11 +135,9 @@ class EXPORT ElementXMLImpl {
   static bool IsValidID(xmlStringConst str);
 
  public:
-  ////////////////////////////////////////////////////////////////
   //
   // Constructors and destructors
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Default constructor.
@@ -185,11 +181,9 @@ class EXPORT ElementXMLImpl {
    */
   char const* GetLastErrorDescription() { return NULL; }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Tag functions (e.g the tag in <name>...</name> is "name")
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Set the tag name for this element.
@@ -216,14 +210,12 @@ class EXPORT ElementXMLImpl {
    */
   char const* GetTagName() const;
 
-  ////////////////////////////////////////////////////////////////
   //
   // Child element functions.
   //
   // These allow a single ElementXMLImpl object to represent a complete
   // XML document through its children.
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Adds a child to the list of children of this element.
@@ -271,12 +263,10 @@ class EXPORT ElementXMLImpl {
    */
   ElementXMLImpl* MakeCopy() const;
 
-  ////////////////////////////////////////////////////////////////
   //
   // Attribute functions (e.g an attribute in <name first="doug">...</name> is
   // first="doug")
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Adds an attribute name-value pair.
@@ -355,12 +345,10 @@ class EXPORT ElementXMLImpl {
    */
   char const* GetComment();
 
-  ////////////////////////////////////////////////////////////////
   //
   // Character data functions (e.g the character data in <name>Albert
   // Einstein</name> is "Albert Einstein")
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Set the character data for this element.
@@ -470,11 +458,9 @@ class EXPORT ElementXMLImpl {
    */
   bool GetUseCData() const;
 
-  ////////////////////////////////////////////////////////////////
   //
   // Generator
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Converts the XML object to a string.
@@ -501,7 +487,6 @@ class EXPORT ElementXMLImpl {
   int DetermineXMLStringLength(int depth, bool includeChildren,
                                bool insertNewLines) const;
 
-  ////////////////////////////////////////////////////////////////
   //
   // String and memory functions
   //
@@ -512,7 +497,6 @@ class EXPORT ElementXMLImpl {
   // We may decide that a particular allocator will be used to do this (e.g.
   // new[] and delete[]), but in general it's safest to use these functions.
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Utility function to allocate memory that the client will pass to the

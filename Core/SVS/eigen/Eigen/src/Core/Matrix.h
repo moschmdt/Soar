@@ -470,8 +470,7 @@ class Matrix
     return this->innerSize();
   }
 
-  /////////// Geometry module ///////////
-
+  /////////// Geometry module
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC explicit Matrix(
       const RotationBase<OtherDerived, ColsAtCompileTime>& r);

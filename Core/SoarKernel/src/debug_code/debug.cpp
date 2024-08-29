@@ -1,15 +1,15 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "COPYING" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*------------------------------------------------------------------
+/**
                        debug.cpp
 
    @brief debug.cpp provides some utility functions for inspecting and
           manipulating the data structures of the Soar kernel at run
           time.
------------------------------------------------------------------- */
+*/
 
 #include "debug.h"
 

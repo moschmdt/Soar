@@ -1,14 +1,12 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // Identifier class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // Working memory element that has an ID value.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 
@@ -288,7 +286,7 @@ void Identifier::SetSymbol(IdentifierSymbol* p_ID) {
   WMElement::SetSymbol(p_ID);
 }
 
-/*************************************************************
+/**
  * @brief Returns the n-th WME that has the given attribute
  *        and this identifier as its parent (or NULL).
  *
@@ -296,7 +294,7 @@ void Identifier::SetSymbol(IdentifierSymbol* p_ID) {
  * @param index          0 based index of values for this attribute
  *                      (> 0 only needed for multi-valued attributes)
  * @exception std::invalid_argument when attribute is no child of WME.
- *************************************************************/
+ */
 WMElement* Identifier::FindByAttribute(char const* pAttribute,
                                        int index) const {
   for (ChildrenConstIter iter = m_pSymbol->m_Children.begin();
@@ -316,35 +314,35 @@ WMElement* Identifier::FindByAttribute(char const* pAttribute,
   throw std::invalid_argument(err_msg);
 }
 
-/*************************************************************
+/**
  * @brief Adds "^status complete" as a child of this identifier.
- *************************************************************/
+ */
 void Identifier::AddStatusComplete() {
   GetAgent()->CreateStringWME(this, "status", "complete");
 }
 
-/*************************************************************
+/**
  * @brief Adds "^status error" as a child of this identifier.
- *************************************************************/
+ */
 void Identifier::AddStatusError() {
   GetAgent()->CreateStringWME(this, "status", "error");
 }
 
-/*************************************************************
+/**
  * @brief Adds "^error-code <code>" as a child of this identifier.
- *************************************************************/
+ */
 void Identifier::AddErrorCode(int errorCode) {
   GetAgent()->CreateIntWME(this, "error-code", errorCode);
 }
 
-/*************************************************************
+/**
  * @brief Searches for a child of this identifier that has the given
  *        time tag.
  *        (The search is recursive over all children).
  *
  * @param timeTag    The tag to look for (e.g. +12 for kernel side or -15 for
  *client side)
- *************************************************************/
+ */
 WMElement* Identifier::FindFromTimeTag(long long timeTag) const {
   // SLOWSLOW: We could use a hash table to speed this up and replace O(n) with
   // O(1). Right now that will only impact performance when elements are removed
@@ -379,14 +377,14 @@ WMElement* Identifier::FindFromTimeTag(long long timeTag) const {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief Gets the n-th child.
  *        Ownership of this WME is retained by the agent.
  *
  *        This is an O(n) operation.  We could expose the iterator directly
  *        but we want to export this interface to Java/Tcl etc. and this is
  *easier.
- *************************************************************/
+ */
 WMElement* Identifier::GetChild(int index) {
   for (ChildrenIter iter = m_pSymbol->m_Children.begin();
        iter != m_pSymbol->m_Children.end(); iter++) {

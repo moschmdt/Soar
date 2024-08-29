@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // EventThread class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : January 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : January 2005
 //
 // This thread can be used by a client to keep it alive to incoming
 // events even when the main client is sleeping.
@@ -16,7 +15,6 @@
 // client until it wakes up.  This thread is one way to make sure the
 // client remains responsive.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <time.h>  // To get clock
 
@@ -30,7 +28,7 @@ EventThread::EventThread(Connection* pConnection) {
   m_pConnection = pConnection;
 }
 
-/*************************************************************
+/**
  * @brief The event thread's logic.
  *        When this method exits, the thread shuts down.
  *
@@ -56,7 +54,7 @@ EventThread::EventThread(Connection* pConnection) {
  * fast (Sleep(0)) or pausing for decent spans (Sleep(5)) which
  * will lead to close to 0% CPU usage when everyone is sleeping
  * (empirical tests on my laptop show 0%).
- *************************************************************/
+ */
 void EventThread::Run() {
   // When we last received a message (if its recent we barely sleep so we're
   // maximally responsive)
@@ -64,7 +62,7 @@ void EventThread::Run() {
 
   // How long to wait before sleeping (currently 1 sec)
   clock_t delay = CLOCKS_PER_SEC;
-  /*
+  /**
   #ifdef _DEBUG
       sml::PrintDebugFormat("Starting EventThread\n") ;
       int64_t counter = 0 ;
@@ -81,7 +79,7 @@ void EventThread::Run() {
       last = clock();
     }
 
-    /*
+    /**
     #ifdef _DEBUG
             counter++ ;
             if (counter % 1000 == 0)
@@ -107,7 +105,7 @@ void EventThread::Run() {
     }
   }
 
-  /*
+  /**
   #ifdef _DEBUG
       sml::PrintDebugFormat("EventThread terminated\n") ;
   #endif

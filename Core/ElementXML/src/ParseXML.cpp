@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ParseXML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class is used to parse an XML document from a file/string and
 // create an ElementXMLImpl object that represents it.
@@ -23,7 +22,6 @@
 //  and the receiver of the document must decode it manually by calling
 //  ConvertBinaryDataToCharacters()).
 //
-/////////////////////////////////////////////////////////////////
 
 #include "ElementXMLImpl.h"
 #include "ParseXML.h"
@@ -84,7 +82,7 @@ char ParseXML::GetEscapeChar() {
     return ' ';
   }
 
-  /*
+  /**
   static char const* kLT   = "&lt;" ;
   static char const* kGT   = "&gt;" ;
   static char const* kAMP  = "&amp;" ;
@@ -110,12 +108,12 @@ char ParseXML::GetEscapeChar() {
   return ' ';
 }
 
-/************************************************************************
+/**
  *
  * This is the main lexical analyser functions--gets the next
  * token from the input stream (e.g. an identifier, or a symbol etc.)
  *
- *************************************************************************/
+ */
 void ParseXML::GetNextToken() {
   // Used to store current char
   char ch = 0;
@@ -275,7 +273,7 @@ void ParseXML::GetNextToken() {
   SetCurrentToken(identifier.str(), kIdentifier);
 }
 
-/************************************************************************
+/**
  *
  * Parse an XML element and its children.  This is the main parsing
  * function.  The lexical analyser contains a references to the input
@@ -286,7 +284,7 @@ void ParseXML::GetNextToken() {
  *
  * @return The element that has just been read from the input stream.
  *
- *************************************************************************/
+ */
 ElementXMLImpl* ParseXML::ParseElement() {
   // Check if we're starting with a comment
   while (Have(kComment)) {

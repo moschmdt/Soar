@@ -146,9 +146,7 @@ void SMem_Manager::respond_to_cmd(bool store_only) {
   }
 
   while (state != NULL) {
-    ////////////////////////////////////////////////////////////////////////////
     thisAgent->SMem->timers->api->start();
-    ////////////////////////////////////////////////////////////////////////////
 
     // make sure this state has had some sort of change to the cmd
     // NOTE: we only care one-level deep!
@@ -386,9 +384,7 @@ void SMem_Manager::respond_to_cmd(bool store_only) {
         path = cmd_bad;
       }
 
-      ////////////////////////////////////////////////////////////////////////////
       thisAgent->SMem->timers->api->stop();
-      ////////////////////////////////////////////////////////////////////////////
 
       // process command
       if (path != cmd_bad) {
@@ -438,9 +434,7 @@ void SMem_Manager::respond_to_cmd(bool store_only) {
         } else if (path == cmd_store_new) {
           symbol_list::iterator sym_p;
 
-          ////////////////////////////////////////////////////////////////////////////
           thisAgent->SMem->timers->storage->start();
-          ////////////////////////////////////////////////////////////////////////////
 
           // start transaction (if not lazy)
           if (thisAgent->SMem->settings->lazy_commit->get_value() == off) {
@@ -466,15 +460,11 @@ void SMem_Manager::respond_to_cmd(bool store_only) {
             thisAgent->SMem->SQL->commit->execute(soar_module::op_reinit);
           }
 
-          ////////////////////////////////////////////////////////////////////////////
           thisAgent->SMem->timers->storage->stop();
-          ////////////////////////////////////////////////////////////////////////////
         } else if (path == cmd_store) {
           symbol_list::iterator sym_p;
 
-          ////////////////////////////////////////////////////////////////////////////
           thisAgent->SMem->timers->storage->start();
-          ////////////////////////////////////////////////////////////////////////////
 
           // start transaction (if not lazy)
           if (thisAgent->SMem->settings->lazy_commit->get_value() == off) {
@@ -500,11 +490,9 @@ void SMem_Manager::respond_to_cmd(bool store_only) {
             thisAgent->SMem->SQL->commit->execute(soar_module::op_reinit);
           }
 
-          ////////////////////////////////////////////////////////////////////////////
           thisAgent->SMem->timers->storage->stop();
-          ////////////////////////////////////////////////////////////////////////////
-          /*
-           *     prohibit_set = new soar_module::sqlite_statement(new_db,
+          /**
+ *     prohibit_set = new soar_module::sqlite_statement(new_db,
 "UPDATE smem_prohibited SET prohibited=1,dirty=1 WHERE lti_id=?");
 add(prohibit_set);
 
@@ -513,7 +501,7 @@ smem_prohibited (lti_id,prohibited,dirty) VALUES (?,0,0)"); add(prohibit_add);
 
 prohibit_check = new soar_module::sqlite_statement(new_db, "SELECT lti_id,dirty
 FROM smem_prohibited WHERE lti_id=? AND prohibited=1"); add(prohibit_check);
-           */
+ */
         } else if (path == cmd_prohibit) {
           symbol_list::iterator sym_p;
 
@@ -525,7 +513,7 @@ FROM smem_prohibited WHERE lti_id=? AND prohibited=1"); add(prohibit_check);
             }
             SQL->prohibit_check->reinitialize();
           }
-          /*
+          /**
            * This allows prohibits to modify BLA without a query present.
            */
         }
@@ -570,9 +558,7 @@ FROM smem_prohibited WHERE lti_id=? AND prohibited=1"); add(prohibit_check);
       // clear cue wmes
       cue_wmes.clear();
     } else {
-      ////////////////////////////////////////////////////////////////////////////
       thisAgent->SMem->timers->api->stop();
-      ////////////////////////////////////////////////////////////////////////////
     }
 
     // free space from aug list

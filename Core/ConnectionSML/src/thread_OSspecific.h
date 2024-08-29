@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // OSspecific class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Operating system specific thread methods.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef THREAD_OS_SPECIFIC_H
 #define THREAD_OS_SPECIFIC_H

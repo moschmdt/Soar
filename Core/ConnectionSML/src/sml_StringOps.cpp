@@ -1,23 +1,21 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // StringOps
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : July 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : July 2004
 //
 // It's often useful to abstract over the string operations,
 // in case a particular library fails to provide the implementation
 // in the way we expect.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <iostream>
 #include <sstream>
 
 #include "sml_StringOps.h"
 
-/*************************************************************
+/**
  * @brief A utility function, splits a command line into argument
  *        tokens and stores them in the argumentVector string.
  * @return returns negative if there is an error, otherwise it
@@ -43,7 +41,7 @@
  *           -52 Unmatched | and ( and "
  *           -56 Unmatched | and ( and {
  *           -60 Unmatched | and ( and { and "
- *************************************************************/
+ */
 int sml::Tokenize(std::string cmdline,
                   std::vector<std::string>& argumentVector) {
   int argc = 0;

@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // RunScheduler class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : May 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : May 2005
 //
 // Used to run Soar and send appropriate events so that an environment
 // can function well in concert with a debugger.
 //
-/////////////////////////////////////////////////////////////////
 #ifndef SML_RUN_SCHEDULER_H
 #define SML_RUN_SCHEDULER_H
 

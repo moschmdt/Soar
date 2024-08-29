@@ -1162,7 +1162,6 @@ EIGEN_STRONG_INLINE Packet4d predux_half_dowto4<Packet8d>(const Packet8d& a) {
 
 template <>
 EIGEN_STRONG_INLINE float predux_mul<Packet16f>(const Packet16f& a) {
-// #ifdef EIGEN_VECTORIZE_AVX512DQ
 #if 0
   Packet8f lane0 = _mm512_extractf32x8_ps(a, 0);
   Packet8f lane1 = _mm512_extractf32x8_ps(a, 1);

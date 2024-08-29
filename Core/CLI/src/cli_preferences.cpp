@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // preferences command file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com
-// Date  : 2004
+// @author: Jonathan Voigt, voigtjr@gmail.com
+// @date  : 2004
 //
-/////////////////////////////////////////////////////////////////
 
 #include "agent.h"
 #include "cli_CommandLineInterface.h"
@@ -29,15 +27,14 @@
 using namespace cli;
 using namespace sml;
 
-/*
-*    This procedure parses a string to determine if it is a
-*      lexeme for an existing attribute.
-*
-* Side effects:
-*    None.
-*
-===============================
-*/
+/**
+ *    This procedure parses a string to determine if it is a
+ *      lexeme for an existing attribute.
+ *
+ * Side effects:
+ *    None.
+ *
+ */
 
 bool read_attribute_from_string(agent* thisAgent, Symbol* id, char* the_lexeme,
                                 Symbol** attr) {
@@ -86,23 +83,22 @@ bool read_attribute_from_string(agent* thisAgent, Symbol* id, char* the_lexeme,
   return false;
 }
 
-/*
-*
-*    This procedure prints a preference and the production
-*      which is the source of the preference.
-*
-* Results:
-*    Tcl status code.
-*
-* Side effects:
-*    Prints the preference and its source production.
-*
-* NOTE:  The called of this routine should be stepping thru slots only,
-*        (not stepping thru WMEs) and therefore input wmes and arch-wmes
-*        are already excluded and we can print :I when o_support is false.
-*
-===============================
-*/
+/**
+ *
+ *    This procedure prints a preference and the production
+ *      which is the source of the preference.
+ *
+ * Results:
+ *    Tcl status code.
+ *
+ * Side effects:
+ *    Prints the preference and its source production.
+ *
+ * NOTE:  The called of this routine should be stepping thru slots only,
+ *        (not stepping thru WMEs) and therefore input wmes and arch-wmes
+ *        are already excluded and we can print :I when o_support is false.
+ *
+ */
 void print_preference_and_source(agent* thisAgent, preference* pref,
                                  bool print_source, wme_trace_type wtt,
                                  double* selection_probability = 0) {
@@ -128,7 +124,7 @@ void print_preference_and_source(agent* thisAgent, preference* pref,
     SNPRINTF(dest, sizeof(dest), "%#.16g", pref->numeric_value);
     dest[sizeof(dest) - 1] = '\0'; /* ensure null termination */
     {
-      /* --- strip off trailing zeros --- */
+      /* strip off trailing zeros */
       char* start_of_exponent;
       char* end_of_mantissa;
       start_of_exponent = dest;

@@ -3,7 +3,7 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** =======================================================================
+/**
                                 decide.h
 
    Decide.cpp contains the decider as well as routine for managing working
@@ -22,7 +22,7 @@
    changes, we call mark_context_slot_as_acceptable_preference_changed().
 
    see decide.cpp for more information in the comments.
-======================================================================= */
+*/
 
 #ifndef DECIDE_H
 #define DECIDE_H
@@ -32,7 +32,7 @@
 
 #include "kernel.h"
 
-/** ------------------------------------------------------------------------
+/**
            Goal Dependency Set
 
    The Goal Dependency Set is a data structure used in Operand2 to maintain
@@ -70,7 +70,7 @@ typedef struct gds_struct {
   wme* wmes_in_gds; /** pointer to the dll of WMEs in GDS of goal */
 } goal_dependency_set;
 
-/** ------------------------------------------------------------------------
+/**
                                 Slots
 
    Fields in a slot:
@@ -122,7 +122,7 @@ typedef struct gds_struct {
       acceptable_preference_changed:  for context slots only; this is zero
         if no acceptable or require preference in this slot has changed;
         if one has changed, it points to a dl_cons.
------------------------------------------------------------------------- */
+*/
 
 extern void post_link_addition(agent* thisAgent, Symbol* from, Symbol* to);
 extern void post_link_removal(agent* thisAgent, Symbol* from, Symbol* to);
@@ -151,7 +151,7 @@ extern byte run_preference_semantics(agent* thisAgent, slot* s,
 extern preference* run_non_context_preference_semantics(agent* thisAgent,
                                                         slot* s);
 
-/** ---------------------------------------------------------------------
+/**
                       Top-Level Decider Routines
 
    Init_decider() should be called at startup time to initialize this
@@ -169,7 +169,7 @@ extern preference* run_non_context_preference_semantics(agent* thisAgent,
 
    Print_lowest_slot_in_context_stack() is used for the watch 0 trace
    to print the context slot that was just decided.
---------------------------------------------------------------------- */
+*/
 
 extern void remove_wmes_for_context_slot(
     agent* thisAgent, slot* s); /** added this prototype -ajc (5/1/02) */

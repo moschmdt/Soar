@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ListenerNamedPipe class
 //
-// Author: Bob Marinier
-// Date  : 5/2007
+// @author: Bob Marinier
+// @date  : 5/2007
 //
 // Based on ListenerSocket class
 //
@@ -12,7 +11,6 @@
 // Clients then connect through this name to create a pipe which is
 // actually used to send data.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifdef ENABLE_NAMED_PIPES
 
@@ -24,15 +22,12 @@
 
 using namespace sock;
 
-//////////////////////////////////////////////////////////////////////
 // Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 ListenerNamedPipe::ListenerNamedPipe() {}
 
 ListenerNamedPipe::~ListenerNamedPipe() {}
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ListenerNamedPipe::CreateListener
 //
 // Return type    : bool
@@ -41,7 +36,6 @@ ListenerNamedPipe::~ListenerNamedPipe() {}
 // Description    : Create a non-blocking socket that listens
 //                  on a specific port.
 //
-/////////////////////////////////////////////////////////////////////
 bool ListenerNamedPipe::CreateListener(int port) {
   CTDEBUG_ENTER_METHOD("ListenerNamedPipe::CreateListener");
 
@@ -60,7 +54,7 @@ bool ListenerNamedPipe::CreateListener(int port) {
   this->name.append(pipeName.str().c_str());
   // sml::PrintDebugFormat("Listening on %s", name.c_str()) ;
 
-  /*// Should only call this once
+  // Should only call this once
   if (m_hPipe != INVALID_HANDLE_VALUE)
   {
       sml::PrintDebug("Error: Already listening--closing the existing listener")
@@ -94,7 +88,6 @@ bool ListenerNamedPipe::CreateListener(int port) {
   return true;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ListenerNamedPipe::CheckForClientConnection
 //
 // Return type    : NamedPipe*
@@ -105,7 +98,6 @@ bool ListenerNamedPipe::CreateListener(int port) {
 //
 //                  NULL is returned if there is no new connection.
 //
-/////////////////////////////////////////////////////////////////////
 NamedPipe* ListenerNamedPipe::CheckForClientConnection() {
   CTDEBUG_ENTER_METHOD("ListenerNamedPipe::CheckForClientConnection");
 

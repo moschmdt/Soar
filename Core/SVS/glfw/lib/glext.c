@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,14 +24,13 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
 #ifndef GL_VERSION_3_0
 #define GL_NUM_EXTENSIONS                 0x821D
@@ -47,9 +44,7 @@
 #define GL_CONTEXT_PROFILE_MASK           0x9126
 #endif
 
-//========================================================================
 // Parses the OpenGL version string and extracts the version number
-//========================================================================
 
 void _glfwParseGLVersion( int *major, int *minor, int *rev )
 {
@@ -93,9 +88,7 @@ void _glfwParseGLVersion( int *major, int *minor, int *rev )
     *rev = _rev;
 }
 
-//========================================================================
 // Check if a string can be found in an OpenGL extension string
-//========================================================================
 
 int _glfwStringInExtensionString( const char *string,
                                   const GLubyte *extensions )
@@ -129,9 +122,7 @@ int _glfwStringInExtensionString( const char *string,
 }
 
 
-//========================================================================
 // Reads back OpenGL context properties from the current context
-//========================================================================
 
 void _glfwRefreshContextParams( void )
 {
@@ -171,13 +162,11 @@ void _glfwRefreshContextParams( void )
 }
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Check if an OpenGL extension is available at runtime
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwExtensionSupported( const char *extension )
 {
@@ -239,10 +228,8 @@ GLFWAPI int GLFWAPIENTRY glfwExtensionSupported( const char *extension )
 }
 
 
-//========================================================================
 // Get the function pointer to an OpenGL function.  This function can be
 // used to get access to extended OpenGL functions.
-//========================================================================
 
 GLFWAPI void * GLFWAPIENTRY glfwGetProcAddress( const char *procname )
 {
@@ -256,9 +243,7 @@ GLFWAPI void * GLFWAPIENTRY glfwGetProcAddress( const char *procname )
 }
 
 
-//========================================================================
 // Returns the OpenGL version
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwGetGLVersion( int *major, int *minor, int *rev )
 {
@@ -281,4 +266,3 @@ GLFWAPI void GLFWAPIENTRY glfwGetGLVersion( int *major, int *minor, int *rev )
         *rev = _glfwWin.glRevision;
     }
 }
-

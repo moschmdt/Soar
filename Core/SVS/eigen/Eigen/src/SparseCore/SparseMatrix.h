@@ -456,8 +456,6 @@ class SparseMatrix : public SparseCompressedBase<
     }
   }
 
-  //---
-
   template <typename InputIterators>
   void setFromTriplets(const InputIterators& begin, const InputIterators& end);
 
@@ -471,8 +469,6 @@ class SparseMatrix : public SparseCompressedBase<
 
   template <typename DupFunctor>
   void collapseDuplicates(DupFunctor dup_func = DupFunctor());
-
-  //---
 
   /** \internal
    * same as insert(Index,Index) except that the indices are given relative to

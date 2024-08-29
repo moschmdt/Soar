@@ -11,9 +11,7 @@
 #ifndef EIGEN_MACROS_H
 #define EIGEN_MACROS_H
 
-//------------------------------------------------------------------------------------------
 // Eigen version and basic defaults
-//------------------------------------------------------------------------------------------
 
 #define EIGEN_WORLD_VERSION 3
 #define EIGEN_MAJOR_VERSION 4
@@ -57,9 +55,7 @@
 #define EIGEN_STACK_ALLOCATION_LIMIT 131072
 #endif
 
-//------------------------------------------------------------------------------------------
 // Compiler identification, EIGEN_COMP_*
-//------------------------------------------------------------------------------------------
 
 /// \internal EIGEN_COMP_GNUC set to 1 for all compilers compatible with GCC
 #ifdef __GNUC__
@@ -235,9 +231,7 @@
 #define EIGEN_GCC3_OR_OLDER 0
 #endif
 
-//------------------------------------------------------------------------------------------
 // Architecture identification, EIGEN_ARCH_*
-//------------------------------------------------------------------------------------------
 
 #if defined(__x86_64__) || (defined(_M_X64) && !defined(_M_ARM64EC)) || \
     defined(__amd64)
@@ -349,9 +343,7 @@
 #define EIGEN_ARCH_PPC 0
 #endif
 
-//------------------------------------------------------------------------------------------
 // Operating system identification, EIGEN_OS_*
-//------------------------------------------------------------------------------------------
 
 /// \internal EIGEN_OS_UNIX set to 1 if the OS is a unix variant
 #if defined(__unix__) || defined(__unix)
@@ -464,9 +456,7 @@
 #define EIGEN_OS_SOLARIS 0
 #endif
 
-//------------------------------------------------------------------------------------------
 // Detect GPU compilers and architectures
-//------------------------------------------------------------------------------------------
 
 // NVCC is not supported as the target platform for HIPCC
 // Note that this also makes EIGEN_CUDACC and EIGEN_HIPCC mutually exclusive
@@ -595,9 +585,7 @@
 #define SYCL_DEVICE_ONLY
 #endif
 
-//------------------------------------------------------------------------------------------
 // Detect Compiler/Architecture/OS specific features
-//------------------------------------------------------------------------------------------
 
 #if EIGEN_GNUC_AT_MOST(4, 3) && !EIGEN_COMP_CLANG
 // see bug 89
@@ -928,9 +916,7 @@
 #endif
 #endif
 
-//------------------------------------------------------------------------------------------
 // Preprocessor programming helpers
-//------------------------------------------------------------------------------------------
 
 // This macro can be used to prevent from macro expansion, e.g.:
 //   std::max EIGEN_NOT_A_MACRO(a,b)
@@ -1323,34 +1309,34 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void ignore_unused_variable(const T&) {}
  * documentation in a single line.
  */
 
-#define EIGEN_GENERIC_PUBLIC_INTERFACE(Derived)                               \
-  typedef typename Eigen::internal::traits<Derived>::Scalar                   \
+#define EIGEN_GENERIC_PUBLIC_INTERFACE(Derived)                                \
+  typedef typename Eigen::internal::traits<Derived>::Scalar                    \
       Scalar; /**!< \brief Numeric type, e.g. float, double, int or            \
-                 std::complex<float>. */                                      \
-  typedef typename Eigen::NumTraits<Scalar>::Real                             \
+                 std::complex<float>. */                                       \
+  typedef typename Eigen::NumTraits<Scalar>::Real                              \
       RealScalar; /**!< \brief The underlying numeric type for composed scalar \
-                     types. \details In cases where Scalar is e.g.            \
-                     std::complex<T>, T were corresponding to RealScalar. */  \
-  typedef typename Base::CoeffReturnType                                      \
+                     types. \details In cases where Scalar is e.g.             \
+                     std::complex<T>, T were corresponding to RealScalar. */   \
+  typedef typename Base::CoeffReturnType                                       \
       CoeffReturnType; /**!< \brief The return type for coefficient access.    \
-                          \details Depending on whether the object allows     \
-                          direct coefficient access (e.g. for a MatrixXd),    \
-                          this type is either 'const Scalar&' or simply       \
-                          'Scalar' for objects that do not allow direct       \
-                          coefficient access. */                              \
-  typedef typename Eigen::internal::ref_selector<Derived>::type Nested;       \
-  typedef typename Eigen::internal::traits<Derived>::StorageKind StorageKind; \
-  typedef                                                                     \
-      typename Eigen::internal::traits<Derived>::StorageIndex StorageIndex;   \
-  enum CompileTimeTraits {                                                    \
-    RowsAtCompileTime = Eigen::internal::traits<Derived>::RowsAtCompileTime,  \
-    ColsAtCompileTime = Eigen::internal::traits<Derived>::ColsAtCompileTime,  \
-    Flags = Eigen::internal::traits<Derived>::Flags,                          \
-    SizeAtCompileTime = Base::SizeAtCompileTime,                              \
-    MaxSizeAtCompileTime = Base::MaxSizeAtCompileTime,                        \
-    IsVectorAtCompileTime = Base::IsVectorAtCompileTime                       \
-  };                                                                          \
-  using Base::derived;                                                        \
+                          \details Depending on whether the object allows      \
+                          direct coefficient access (e.g. for a MatrixXd),     \
+                          this type is either 'const Scalar&' or simply        \
+                          'Scalar' for objects that do not allow direct        \
+                          coefficient access. */                               \
+  typedef typename Eigen::internal::ref_selector<Derived>::type Nested;        \
+  typedef typename Eigen::internal::traits<Derived>::StorageKind StorageKind;  \
+  typedef                                                                      \
+      typename Eigen::internal::traits<Derived>::StorageIndex StorageIndex;    \
+  enum CompileTimeTraits {                                                     \
+    RowsAtCompileTime = Eigen::internal::traits<Derived>::RowsAtCompileTime,   \
+    ColsAtCompileTime = Eigen::internal::traits<Derived>::ColsAtCompileTime,   \
+    Flags = Eigen::internal::traits<Derived>::Flags,                           \
+    SizeAtCompileTime = Base::SizeAtCompileTime,                               \
+    MaxSizeAtCompileTime = Base::MaxSizeAtCompileTime,                         \
+    IsVectorAtCompileTime = Base::IsVectorAtCompileTime                        \
+  };                                                                           \
+  using Base::derived;                                                         \
   using Base::const_cast_derived;
 
 // FIXME Maybe the EIGEN_DENSE_PUBLIC_INTERFACE could be removed as importing

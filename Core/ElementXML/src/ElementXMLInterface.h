@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // ElementXMLInterface file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This file offers a C level interface to the ElementXML code.
 // The real functionality is within a C++ ElementXML class but it's easier to
@@ -20,7 +19,6 @@
 // This class will not support the full capabilities of XML which is now a
 // complex language. It will support just the subset that is necessary for SML
 // (Soar Markup Language) which is intended to be its primary customer.
-/////////////////////////////////////////////////////////////////
 
 #ifndef ELEMENTXMLINTERFACE_H
 #define ELEMENTXMLINTERFACE_H
@@ -48,11 +46,9 @@ projects
 extern "C" {
 #endif
 
-////////////////////////////////////////////////////////////////
 //
 // Constructors and destructors
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Default constructor.
@@ -83,11 +79,9 @@ EXPORT int soarxml_AddRef(ElementXML_Handle hXML);
  */
 EXPORT int soarxml_GetRefCount(ElementXML_Handle hXML);
 
-////////////////////////////////////////////////////////////////
 //
 // Tag functions (e.g the tag in <name>...</name> is "name")
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Set the tag name for this element.
@@ -108,11 +102,9 @@ EXPORT bool soarxml_SetTagName(ElementXML_Handle hXML, char* tagName,
  */
 EXPORT char const* soarxml_GetTagName(ElementXML_Handle const hXML);
 
-////////////////////////////////////////////////////////////////
 //
 // Comment functions (<!-- .... --> marks the bounds of a comment)
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Associate a comment with this XML element.
@@ -136,14 +128,12 @@ EXPORT bool soarxml_SetComment(ElementXML_Handle hXML, char const* pComment);
  */
 EXPORT char const* soarxml_GetComment(ElementXML_Handle hXML);
 
-////////////////////////////////////////////////////////////////
 //
 // Child element functions.
 //
 // These allow a single ElementXML object to represent a complete
 // XML document through its children.
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Adds a child to the list of children of this element.
@@ -194,12 +184,10 @@ EXPORT ElementXML_Handle const soarxml_GetParent(ElementXML_Handle const hXML);
  */
 EXPORT ElementXML_Handle const soarxml_MakeCopy(ElementXML_Handle const hXML);
 
-////////////////////////////////////////////////////////////////
 //
 // Attribute functions (e.g an attribute in <name first="doug">...</name> is
 // first="doug")
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Adds an attribute name-value pair.
@@ -249,12 +237,10 @@ EXPORT char const* soarxml_GetAttributeValue(ElementXML_Handle const hXML,
 EXPORT char const* soarxml_GetAttribute(ElementXML_Handle const hXML,
                                         char const* attName);
 
-////////////////////////////////////////////////////////////////
 //
 // Character data functions (e.g the character data in <name>Albert
 // Einstein</name> is "Albert Einstein")
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Set the character data for this element.
@@ -356,11 +342,9 @@ EXPORT void soarxml_SetUseCData(ElementXML_Handle hXML, bool useCData);
  */
 EXPORT bool soarxml_GetUseCData(ElementXML_Handle const hXML);
 
-////////////////////////////////////////////////////////////////
 //
 // Generator
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Converts the XML object to a string.
@@ -388,7 +372,6 @@ EXPORT int soarxml_DetermineXMLStringLength(ElementXML_Handle const hXML,
                                             bool includeChildren,
                                             bool insertNewLines);
 
-////////////////////////////////////////////////////////////////
 //
 // String and memory functions
 //
@@ -399,7 +382,6 @@ EXPORT int soarxml_DetermineXMLStringLength(ElementXML_Handle const hXML,
 // We may decide that a particular allocator will be used to do this (e.g. new[]
 // and delete[]), but in general it's safest to use these functions.
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Utility function to allocate memory that the client will pass to the
@@ -486,20 +468,16 @@ EXPORT bool soarxml_AddAttributeFastFast(ElementXML_Handle hXML,
  */
 EXPORT bool soarxml_SetTagNameFast(ElementXML_Handle hXML, char const* tagName);
 
-////////////////////////////////////////////////////////////////
 //
 // Error reporting functions.
 //
-////////////////////////////////////////////////////////////////
 EXPORT int soarxml_GetLastError(ElementXML_Handle hXML);
 
 EXPORT char const* soarxml_GetLastErrorDescription(ElementXML_Handle hXML);
 
-////////////////////////////////////////////////////////////////
 //
 // Parsing functions
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief Parse an XML document from a (long) string and return an ElementXML

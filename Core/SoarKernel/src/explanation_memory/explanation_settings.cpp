@@ -1,4 +1,4 @@
-/*
+/**
  * explanation_settings.cpp
  *
  *  Created on: Sep 26, 2016

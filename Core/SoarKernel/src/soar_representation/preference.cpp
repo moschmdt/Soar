@@ -17,12 +17,12 @@
 #include "working_memory.h"
 #include "working_memory_activation.h"
 
-/* -------------------------------------------------------------------
+/**
    Make_preference() creates a new preference structure of the given type
    with the given id/attribute/value/referent.  (Referent is only used
    for binary preferences.)  The preference is not yet added to preference
    memory, however.
--------------------------------------------------------------------*/
+*/
 
 preference* make_preference(agent* thisAgent, PreferenceType type, Symbol* id,
                             Symbol* attr, Symbol* value, Symbol* referent,
@@ -228,12 +228,12 @@ void deallocate_preference(agent* thisAgent, preference* pref,
   deallocate_preference_contents(thisAgent, pref, dont_cache);
 }
 
-/* -------------------------------------------------------------------
+/**
    Possibly_deallocate_preference_and_clones() checks whether a given
    preference and all its clones have reference_count 0, and deallocates
    them all if they do.  It returns true if they were actually
    deallocated, false otherwise.
--------------------------------------------------------------------*/
+*/
 /* IMPORTANT: Any changes made to possibly_deallocate_preference_and_clones
  * should also be made to corresponding code in deallocate_instantiation */
 
@@ -267,11 +267,11 @@ bool possibly_deallocate_preference_and_clones(agent* thisAgent,
   return true;
 }
 
-/* -------------------------------------------------------------------
+/**
    Remove_preference_from_clones() splices a given preference out of the
    list of clones.  If the preference's reference_count is 0, it also
    deallocates it and returns true.  Otherwise it returns false.
--------------------------------------------------------------------*/
+*/
 
 bool remove_preference_from_clones_and_deallocate(agent* thisAgent,
                                                   preference* pref) {
@@ -296,10 +296,10 @@ bool remove_preference_from_clones_and_deallocate(agent* thisAgent,
   }
 }
 
-/* ---------------------------------------------------------------------
+/**
    Add_preference_to_tm() adds a given preference to preference memory (and
    hence temporary memory).
----------------------------------------------------------------------*/
+*/
 
 bool add_preference_to_tm(agent* thisAgent, preference* pref) {
   slot* s = make_slot(thisAgent, pref->id, pref->attr);
@@ -439,9 +439,9 @@ bool add_preference_to_tm(agent* thisAgent, preference* pref) {
   return true;
 }
 
-/* ---------------------------------------------------------------------
+/**
    Remove_preference_from_tm() removes a given preference from PM and TM.
----------------------------------------------------------------------*/
+*/
 
 void remove_preference_from_tm(agent* thisAgent, preference* pref) {
   slot* s;
@@ -483,7 +483,7 @@ void remove_preference_from_tm(agent* thisAgent, preference* pref) {
   preference_remove_ref(thisAgent, pref);
 }
 
-/* ---------------------------------------------------------------------
+/**
    Process_o_rejects_and_deallocate_them() handles the processing of
    o-supported reject preferences.  This routine is called from the firer
    and passed a list of all the o-rejects generated in the current
@@ -491,7 +491,7 @@ void remove_preference_from_tm(agent* thisAgent, preference* pref) {
    preference structures).  This routine removes all preferences for
    matching values from TM, and deallocates the o-reject preferences when
    done.
----------------------------------------------------------------------*/
+*/
 
 void process_o_rejects_and_deallocate_them(agent* thisAgent,
                                            preference* o_rejects,

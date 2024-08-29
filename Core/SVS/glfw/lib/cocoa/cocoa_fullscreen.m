@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Cocoa/NSOpenGL
 // API Version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2009-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
 // This software is provided 'as-is', without any express or implied
@@ -25,13 +23,10 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
-//========================================================================
 // Check whether the display mode should be included in enumeration
-//========================================================================
 
 static BOOL modeIsGood( NSDictionary *mode )
 {
@@ -47,9 +42,7 @@ static BOOL modeIsGood( NSDictionary *mode )
 }
 
 
-//========================================================================
 // Convert Core Graphics display mode to GLFW video mode
-//========================================================================
 
 static GLFWvidmode vidmodeFromCGDisplayMode( NSDictionary *mode )
 {
@@ -67,13 +60,11 @@ static GLFWvidmode vidmodeFromCGDisplayMode( NSDictionary *mode )
 }
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Get a list of available video modes
-//========================================================================
 
 int _glfwPlatformGetVideoModes( GLFWvidmode *list, int maxcount )
 {
@@ -93,12 +84,9 @@ int _glfwPlatformGetVideoModes( GLFWvidmode *list, int maxcount )
 }
 
 
-//========================================================================
 // Get the desktop video mode
-//========================================================================
 
 void _glfwPlatformGetDesktopMode( GLFWvidmode *mode )
 {
     *mode = vidmodeFromCGDisplayMode( CGDisplayCurrentMode( CGMainDisplayID() ) );
 }
-

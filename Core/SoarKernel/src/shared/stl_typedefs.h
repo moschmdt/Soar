@@ -174,7 +174,7 @@ typedef std::unordered_map<uint64_t, instantiation_record*>
 typedef std::unordered_map<uint64_t, condition_record*> condition_record_map;
 typedef std::unordered_map<uint64_t, action_record*> action_record_map;
 typedef std::unordered_map<uint64_t, production*> production_map;
-/**------ SMem stl typedefs ------*/
+/** SMem stl typedefs */
 // - Could create allocator versions of a lot of these
 // - Many of these could be replaced by more general versions above.  Same with
 // epmem

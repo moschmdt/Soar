@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Win32/WGL
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,7 +24,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #ifndef _platform_h_
 #define _platform_h_
@@ -45,9 +42,7 @@
 
 #include "../../include/GL/glfw.h"
 
-//========================================================================
 // Hack: Define things that some <windows.h>'s do not define
-//========================================================================
 
 // Some old versions of w32api (used by MinGW and Cygwin) define
 // WH_KEYBOARD_LL without typedef:ing KBDLLHOOKSTRUCT (!)
@@ -59,11 +54,9 @@
 #endif
 #endif
 
-//------------------------------------------------------------------------
 // ** NOTE **  If this gives you compiler errors and you are using MinGW
 // (or Dev-C++), update to w32api version 1.3 or later:
 // http://sourceforge.net/project/showfiles.php?group_id=2435
-//------------------------------------------------------------------------
 #ifndef WH_KEYBOARD_LL
 #define WH_KEYBOARD_LL 13
 typedef struct tagKBDLLHOOKSTRUCT {
@@ -224,9 +217,7 @@ typedef const GLubyte *(APIENTRY *PFNGLGETSTRINGIPROC)(GLenum, GLuint);
 
 #endif /**GL_VERSION_3_0*/
 
-//========================================================================
 // DLLs that are loaded at glfwInit()
-//========================================================================
 
 // gdi32.dll function pointer typedefs
 #ifndef _GLFW_NO_DLOAD_GDI32
@@ -274,23 +265,16 @@ typedef DWORD(WINAPI *TIMEGETTIME_T)(void);
 #define _glfw_timeGetTime timeGetTime
 #endif  // _GLFW_NO_DLOAD_WINMM
 
-//========================================================================
 // GLFW platform specific types
-//========================================================================
 
-//------------------------------------------------------------------------
 // Pointer length integer
-//------------------------------------------------------------------------
 typedef INT_PTR GLFWintptr;
 
-//------------------------------------------------------------------------
 // Window structure
-//------------------------------------------------------------------------
 typedef struct _GLFWwin_struct _GLFWwin;
 
 struct _GLFWwin_struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // User callback functions
   GLFWwindowsizefun windowSizeCallback;
   GLFWwindowclosefun windowCloseCallback;
@@ -339,8 +323,7 @@ struct _GLFWwin_struct {
 
   PFNGLGETSTRINGIPROC GetStringi;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // Platform specific window resources
   HDC DC;              // Private GDI device context
   HGLRC context;       // Permanent rendering context
@@ -372,12 +355,9 @@ struct _GLFWwin_struct {
 
 GLFWGLOBAL _GLFWwin _glfwWin;
 
-//------------------------------------------------------------------------
 // User input status (most of this should go in _GLFWwin)
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Mouse status
   int MousePosX, MousePosY;
   int WheelPos;
@@ -392,16 +372,13 @@ GLFWGLOBAL struct {
   int StickyMouseButtons;
   int KeyRepeat;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // Platform specific internal variables
   int MouseMoved, OldMouseX, OldMouseY;
 
 } _glfwInput;
 
-//------------------------------------------------------------------------
 // Library global data
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
   // Window opening hints
   _GLFWhints hints;
@@ -409,8 +386,7 @@ GLFWGLOBAL struct {
   // Initial desktop mode
   GLFWvidmode desktopMode;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   HINSTANCE instance;  // Instance of the application
 
   // Timer data
@@ -454,14 +430,11 @@ GLFWGLOBAL struct {
 
 } _glfwLibrary;
 
-//------------------------------------------------------------------------
 // Thread record (one for each thread)
-//------------------------------------------------------------------------
 typedef struct _GLFWthread_struct _GLFWthread;
 
 struct _GLFWthread_struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Pointer to previous and next threads in linked list
   _GLFWthread *Previous, *Next;
 
@@ -469,36 +442,29 @@ struct _GLFWthread_struct {
   GLFWthread ID;
   GLFWthreadfun Function;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // System side thread information
   HANDLE Handle;
   DWORD WinID;
 };
 
-//------------------------------------------------------------------------
 // General thread information
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Next thread ID to use (increments for every created thread)
   GLFWthread NextID;
 
   // First thread in linked list (always the main thread)
   _GLFWthread First;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // Critical section lock
   CRITICAL_SECTION CriticalSection;
 
 } _glfwThrd;
 
-//========================================================================
 // Macros for encapsulating critical code sections (i.e. making parts
 // of GLFW thread safe)
-//========================================================================
 
 // Thread list management
 #define ENTER_THREAD_CRITICAL_SECTION \
@@ -506,9 +472,7 @@ GLFWGLOBAL struct {
 #define LEAVE_THREAD_CRITICAL_SECTION \
   LeaveCriticalSection(&_glfwThrd.CriticalSection);
 
-//========================================================================
 // Various Windows version constants
-//========================================================================
 
 #define _GLFW_WIN_UNKNOWN 0x0000  // Earlier than 95 or NT4
 #define _GLFW_WIN_95 0x0001
@@ -521,9 +485,7 @@ GLFWGLOBAL struct {
 #define _GLFW_WIN_NET_SERVER 0x0104
 #define _GLFW_WIN_UNKNOWN_NT 0x0105  // Later than .NET Server
 
-//========================================================================
 // Prototypes for platform specific internal functions
-//========================================================================
 
 // Time
 void _glfwInitTimer(void);

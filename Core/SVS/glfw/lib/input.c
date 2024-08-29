@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,14 +24,11 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//========================================================================
 // Return key state
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetKey( int key )
 {
@@ -59,9 +54,7 @@ GLFWAPI int GLFWAPIENTRY glfwGetKey( int key )
 }
 
 
-//========================================================================
 // Return mouse button state
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetMouseButton( int button )
 {
@@ -87,9 +80,7 @@ GLFWAPI int GLFWAPIENTRY glfwGetMouseButton( int button )
 }
 
 
-//========================================================================
 // Return mouse cursor position
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwGetMousePos( int *xpos, int *ypos )
 {
@@ -110,9 +101,7 @@ GLFWAPI void GLFWAPIENTRY glfwGetMousePos( int *xpos, int *ypos )
 }
 
 
-//========================================================================
 // Sets the mouse cursor position
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetMousePos( int xpos, int ypos )
 {
@@ -142,9 +131,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetMousePos( int xpos, int ypos )
 }
 
 
-//========================================================================
 // Return mouse wheel position
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetMouseWheel( void )
 {
@@ -158,9 +145,7 @@ GLFWAPI int GLFWAPIENTRY glfwGetMouseWheel( void )
 }
 
 
-//========================================================================
 // Set mouse wheel position
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetMouseWheel( int pos )
 {
@@ -174,9 +159,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetMouseWheel( int pos )
 }
 
 
-//========================================================================
 // Set callback function for keyboard input
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetKeyCallback( GLFWkeyfun cbfun )
 {
@@ -190,9 +173,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetKeyCallback( GLFWkeyfun cbfun )
 }
 
 
-//========================================================================
 // Set callback function for character input
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetCharCallback( GLFWcharfun cbfun )
 {
@@ -206,9 +187,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetCharCallback( GLFWcharfun cbfun )
 }
 
 
-//========================================================================
 // Set callback function for mouse clicks
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetMouseButtonCallback( GLFWmousebuttonfun cbfun )
 {
@@ -222,9 +201,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetMouseButtonCallback( GLFWmousebuttonfun cbfun )
 }
 
 
-//========================================================================
 // Set callback function for mouse moves
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetMousePosCallback( GLFWmouseposfun cbfun )
 {
@@ -245,9 +222,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetMousePosCallback( GLFWmouseposfun cbfun )
 }
 
 
-//========================================================================
 // Set callback function for mouse wheel
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetMouseWheelCallback( GLFWmousewheelfun cbfun )
 {
@@ -266,4 +241,3 @@ GLFWAPI void GLFWAPIENTRY glfwSetMouseWheelCallback( GLFWmousewheelfun cbfun )
         cbfun( _glfwInput.WheelPos );
     }
 }
-

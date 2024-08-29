@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,16 +24,13 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "internal.h"
 
 
-//========================================================================
 // Opens a GLFW stream with a file
-//========================================================================
 
 int _glfwOpenFileStream( _GLFWstream *stream, const char* name, const char* mode )
 {
@@ -51,9 +46,7 @@ int _glfwOpenFileStream( _GLFWstream *stream, const char* name, const char* mode
 }
 
 
-//========================================================================
 // Opens a GLFW stream with a memory block
-//========================================================================
 
 int _glfwOpenBufferStream( _GLFWstream *stream, void *data, long size )
 {
@@ -65,9 +58,7 @@ int _glfwOpenBufferStream( _GLFWstream *stream, void *data, long size )
 }
 
 
-//========================================================================
 // Reads data from a GLFW stream
-//========================================================================
 
 long _glfwReadStream( _GLFWstream *stream, void *data, long size )
 {
@@ -100,9 +91,7 @@ long _glfwReadStream( _GLFWstream *stream, void *data, long size )
 }
 
 
-//========================================================================
 // Returns the current position of a GLFW stream
-//========================================================================
 
 long _glfwTellStream( _GLFWstream *stream )
 {
@@ -120,9 +109,7 @@ long _glfwTellStream( _GLFWstream *stream )
 }
 
 
-//========================================================================
 // Sets the current position of a GLFW stream
-//========================================================================
 
 int _glfwSeekStream( _GLFWstream *stream, long offset, int whence )
 {
@@ -177,9 +164,7 @@ int _glfwSeekStream( _GLFWstream *stream, long offset, int whence )
 }
 
 
-//========================================================================
 // Closes a GLFW stream
-//========================================================================
 
 void _glfwCloseStream( _GLFWstream *stream )
 {
@@ -192,4 +177,3 @@ void _glfwCloseStream( _GLFWstream *stream )
 
     memset( stream, 0, sizeof(_GLFWstream) );
 }
-

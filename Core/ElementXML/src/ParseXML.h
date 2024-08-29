@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // ParseXML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class is used to parse an XML document from a file/string and
 // create an ElementXMLImpl object that represents it.
@@ -21,7 +20,6 @@
 //  and the receiver of the document must decode it manually by calling
 //  ConvertBinaryDataToCharacters()).
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef PARSE_XML_H
 #define PARSE_XML_H

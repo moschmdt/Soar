@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // WorkingMemory class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This class is used to represent Soar's working memory.
 // We maintain a copy of this on the client so we can just
@@ -19,7 +18,6 @@
 // in the list of deltas (e.g. change value A->B->C can remove the
 // A->B change (since it's overwritten by B->C).
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 
@@ -236,12 +234,12 @@ void WorkingMemory::ClearOutputLinkChanges() {
   // }
 }
 
-/*************************************************************
+/**
  * @brief This function is called when an output wme has been added.
  *
  * @param pWmeXML    The output WME being added
  * @param tracing    True if generating debug output
- *************************************************************/
+ */
 bool WorkingMemory::ReceivedOutputAddition(ElementXML* pWmeXML, bool tracing) {
   // We're adding structure to the output link
   char const* pID = pWmeXML->GetAttribute(
@@ -356,7 +354,7 @@ bool WorkingMemory::ReceivedOutputAddition(ElementXML* pWmeXML, bool tracing) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Some output WMEs will come to us "out of order".
  *        That's to say, a child of an identifier appears before
  *        the identifier (e.g. (X ^name me) before (Y ^person X)).
@@ -368,7 +366,7 @@ bool WorkingMemory::ReceivedOutputAddition(ElementXML* pWmeXML, bool tracing) {
  *
  * @param pPossibleParent    The identifier that may have orphaned children to
  *attach.
- *************************************************************/
+ */
 bool WorkingMemory::TryToAttachOrphanedChildren(Identifier* pPossibleParent) {
   if (m_OutputOrphans.empty()) {
     return false;
@@ -408,12 +406,12 @@ bool WorkingMemory::TryToAttachOrphanedChildren(Identifier* pPossibleParent) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief This function is called when an output wme has been removed.
  *
  * @param pWmeXML    The output WME being removed
  * @param tracing    True if generating debug output
- *************************************************************/
+ */
 bool WorkingMemory::ReceivedOutputRemoval(ElementXML* pWmeXML, bool tracing) {
   // We're removing structure from the output link
   char const* pTimeTag = pWmeXML->GetAttribute(
@@ -458,14 +456,14 @@ bool WorkingMemory::ReceivedOutputRemoval(ElementXML* pWmeXML, bool tracing) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief This function is called when output is received
  *        from the Soar kernel.
  *
  * @param pIncoming  The output command (list of wmes added/removed from output
  *link)
  * @param pResponse  The reply (no real need to fill anything in here currently)
- *************************************************************/
+ */
 bool WorkingMemory::ReceivedOutput(AnalyzeXML* pIncoming,
                                    ElementXML* /*pResponse*/) {
 #ifdef _DEBUG
@@ -593,10 +591,10 @@ void WorkingMemory::SetAgent(Agent* agent) {
 #endif  // SML_DIRECT
 }
 
-/*************************************************************
+/**
  * @brief Returns the id object for the input link.
  *        The agent retains ownership of this object.
- *************************************************************/
+ */
 Identifier* WorkingMemory::GetInputLink() {
   if (!m_InputLink) {
     AnalyzeXML response;
@@ -612,7 +610,7 @@ Identifier* WorkingMemory::GetInputLink() {
   return m_InputLink;
 }
 
-/*************************************************************
+/**
  * @brief This method is used to update this client's representation
  *        of the input link to match what is currently on the agent's
  *        input link.
@@ -623,7 +621,7 @@ Identifier* WorkingMemory::GetInputLink() {
  *
  *        NOTE: If two clients try to modify the input link at once we don't
  *        make any guarantees about what will or won't work.
- *************************************************************/
+ */
 bool WorkingMemory::SynchronizeInputLink() {
   // Not supported for direct connections
   // if (GetConnection()->IsDirectConnection())
@@ -735,7 +733,7 @@ bool WorkingMemory::SynchronizeInputLink() {
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief This method is used to update this client's representation
  *        of the output link to match what is currently on the agent's
  *        output link.
@@ -746,7 +744,7 @@ bool WorkingMemory::SynchronizeInputLink() {
  *output link structures in the client are usually automatically kept in synch
  *with the agent. It's here in case a client connects to an existing kernel and
  *agent and wants to get up to date on the current state of the output link.
- *************************************************************/
+ */
 bool WorkingMemory::SynchronizeOutputLink() {
   // Not supported for direct connections
   // if (GetConnection()->IsDirectConnection())
@@ -782,13 +780,13 @@ bool WorkingMemory::SynchronizeOutputLink() {
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief Returns the id object for the output link.
  *        The agent retains ownership of this object.
  *
  * The value will be NULL until the first output phase has executed
  * in the Soar kernel and we've received the information from the kernel.
- *************************************************************/
+ */
 Identifier* WorkingMemory::GetOutputLink() {
   // auto-enable output link change tracking only if the user hasn't
   // specifically disabled it.
@@ -799,7 +797,7 @@ Identifier* WorkingMemory::GetOutputLink() {
   return m_OutputLink;
 }
 
-/*************************************************************
+/**
  * @brief Builds a new WME that has a string value and schedules
  *        it for addition to Soar's input link.
  *
@@ -808,7 +806,7 @@ Identifier* WorkingMemory::GetOutputLink() {
  *        deletes the parent identifier.
  *        The WME is not added to Soar's input link until the
  *        client calls "Commit".
- *************************************************************/
+ */
 StringElement* WorkingMemory::CreateStringWME(Identifier* parent,
                                               char const* pAttribute,
                                               char const* pValue) {
@@ -846,10 +844,10 @@ StringElement* WorkingMemory::CreateStringWME(Identifier* parent,
   return pWME;
 }
 
-/*************************************************************
+/**
  * @brief Same as CreateStringWME but for a new WME that has
  *        an int as its value.
- *************************************************************/
+ */
 IntElement* WorkingMemory::CreateIntWME(Identifier* parent,
                                         char const* pAttribute,
                                         long long value) {
@@ -886,10 +884,10 @@ IntElement* WorkingMemory::CreateIntWME(Identifier* parent,
   return pWME;
 }
 
-/*************************************************************
+/**
  * @brief Same as CreateStringWME but for a new WME that has
  *        a floating point value.
- *************************************************************/
+ */
 FloatElement* WorkingMemory::CreateFloatWME(Identifier* parent,
                                             char const* pAttribute,
                                             double value) {
@@ -927,11 +925,11 @@ FloatElement* WorkingMemory::CreateFloatWME(Identifier* parent,
   return pWME;
 }
 
-/*************************************************************
+/**
  * @brief Update the value of an existing WME.
  *        The value is not actually sent to the kernel
  *        until "Commit" is called.
- *************************************************************/
+ */
 void WorkingMemory::UpdateString(StringElement* pWME, char const* pValue) {
   if (!pWME || !pValue) {
     return;
@@ -1084,7 +1082,7 @@ void WorkingMemory::UpdateFloat(FloatElement* pWME, double value) {
   }
 }
 
-/*************************************************************
+/**
  * @brief Create a new ID for use by the client.
  *        The kernel will assign its own ids when the WME
  *        is really added, so it needs to know to map back and forth.
@@ -1093,7 +1091,7 @@ void WorkingMemory::UpdateFloat(FloatElement* pWME, double value) {
  *        for IDs the kernel creates (although this should just help
  *        humans keep track of what's going on--shouldn't matter to
  *        the system).
- *************************************************************/
+ */
 void WorkingMemory::GenerateNewID(char const* pAttribute, std::string* pID) {
   long long id = GetAgent()->GetKernel()->GenerateNextID();
 
@@ -1119,10 +1117,10 @@ void WorkingMemory::GenerateNewID(char const* pAttribute, std::string* pID) {
   pID->append(to_string(id, temp));
 }
 
-/*************************************************************
+/**
  * @brief Same as CreateStringWME but for a new WME that has
  *        an identifier as its value.
- *************************************************************/
+ */
 Identifier* WorkingMemory::CreateIdWME(Identifier* parent,
                                        char const* pAttribute) {
   assert(m_Agent == parent->GetAgent());
@@ -1163,11 +1161,11 @@ Identifier* WorkingMemory::CreateIdWME(Identifier* parent,
   return pWME;
 }
 
-/*************************************************************
+/**
  * @brief Creates a new WME that has an identifier as its value.
  *        The value in this case is the same as an existing identifier.
  *        This allows us to create a graph rather than a tree.
- *************************************************************/
+ */
 Identifier* WorkingMemory::CreateSharedIdWME(Identifier* parent,
                                              char const* pAttribute,
                                              Identifier* pSharedValue) {
@@ -1221,7 +1219,7 @@ Identifier* WorkingMemory::CreateSharedIdWME(Identifier* parent,
   return pWME;
 }
 
-/*************************************************************
+/**
  * @brief Schedules a WME from deletion from the input link and removes
  *        it from the client's model of working memory.
  *
@@ -1229,7 +1227,7 @@ Identifier* WorkingMemory::CreateSharedIdWME(Identifier* parent,
  *        DestroyWME().
  *        The WME is not removed from the input link until
  *        the client calls "Commit"
- *************************************************************/
+ */
 bool WorkingMemory::DestroyWME(WMElement* pWME) {
   assert(m_Agent == pWME->GetAgent());
 
@@ -1272,9 +1270,9 @@ bool WorkingMemory::DestroyWME(WMElement* pWME) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Generate a unique integer id (a time tag)
- *************************************************************/
+ */
 long long WorkingMemory::GenerateTimeTag() {
   // We use negative tags on the client, so we don't mistake them
   // for ones from the real kernel.
@@ -1283,24 +1281,24 @@ long long WorkingMemory::GenerateTimeTag() {
   return tag;
 }
 
-/*************************************************************
+/**
  * @brief Returns true if wmes have been added and not yet committed.
- *************************************************************/
+ */
 bool WorkingMemory::IsCommitRequired() { return (m_DeltaList.GetSize() != 0); }
 
-/*************************************************************
+/**
  * @brief Returns true if changes to i/o links should be
  *        committed (sent to kernelSML) immediately when they
  *        occur, so the client doesn't need to remember to call commit.
- *************************************************************/
+ */
 bool WorkingMemory::IsAutoCommitEnabled() {
   return m_Agent->IsAutoCommitEnabled();
 }
 
-/*************************************************************
+/**
  * @brief Send the most recent list of changes to working memory
  *        over to the kernel.
- *************************************************************/
+ */
 bool WorkingMemory::Commit() {
   int deltas = m_DeltaList.GetSize();
 
@@ -1357,12 +1355,12 @@ bool WorkingMemory::Commit() {
   return ok;
 }
 
-/*************************************************************
+/**
  * @brief Resend the complete input link to the kernel
  *        and remove our output link structures.
  *        We do this when the user issues an "init-soar" event.
  *        There should be no reason for the client to call this method directly.
- *************************************************************/
+ */
 void WorkingMemory::Refresh() {
   if (m_InputLink) {
     AnalyzeXML response;

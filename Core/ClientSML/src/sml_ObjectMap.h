@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // ObjectMap class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This class is used to keep a map of objects which we own.
 // When the map is deleted, so are the objects within the map.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_OBJECT_MAP_H
 #define SML_OBJECT_MAP_H

@@ -1,16 +1,15 @@
 
 
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  rhsfun.cpp
  *
- * =======================================================================
- *                   RHS Function Management
+ *  *                   RHS Function Management
  *
  * The system maintains a list of available RHS functions.  Functions
  * can appear on the RHS of productions either as values (in make actions
@@ -32,8 +31,7 @@
  *
  * Init_built_in_rhs_functions() should be called at system startup time
  * to setup all the built-in functions.
- * =======================================================================
- */
+ *  */
 
 #include "rhs_functions.h"
 
@@ -192,17 +190,16 @@ void remove_rhs_function(agent* thisAgent,
   thisAgent->symbolManager->symbol_remove_ref(&name);
 }
 
-/* ====================================================================
-
+/**
                Code for Executing Built-In RHS Functions
 
-====================================================================  */
+*/
 
-/* --------------------------------------------------------------------
+/**
                                 Write
 
    Takes any number of arguments, and prints each one.
--------------------------------------------------------------------- */
+*/
 
 Symbol* write_rhs_function_code(agent* thisAgent, cons* args,
                                 void* /*user_data*/) {
@@ -214,8 +211,8 @@ Symbol* write_rhs_function_code(agent* thisAgent, cons* args,
 
     for (; args != NIL; args = args->rest) {
       arg = static_cast<symbol_struct*>(args->first);
-      /* --- Note use of false here--print the symbol itself, not a rereadable
-     version of it --- */
+      /* Note use of false here--print the symbol itself, not a rereadable
+     version of it */
       string = arg->to_string();
       add_to_growable_string(thisAgent, &gs, string);  // for XML generation
       thisAgent->outputManager->printa(thisAgent, string);
@@ -230,12 +227,12 @@ Symbol* write_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* --------------------------------------------------------------------
+/**
                                  Trace
 
    Same as Write, but first arg specifies a trace level for output.
    Prints if trace level is >= to given arg value.
--------------------------------------------------------------------- */
+*/
 
 Symbol* trace_rhs_function_code(agent* thisAgent, cons* args,
                                 void* /*user_data*/) {
@@ -260,8 +257,8 @@ Symbol* trace_rhs_function_code(agent* thisAgent, cons* args,
 
       for (; args != NIL; args = args->rest) {
         arg = static_cast<symbol_struct*>(args->first);
-        /* --- Note use of false here--print the symbol itself, not a rereadable
-         * version of it --- */
+        /* Note use of false here--print the symbol itself, not a rereadable
+         * version of it */
         string = arg->to_string();
         add_to_growable_string(thisAgent, &gs, string);  // for XML generation
         thisAgent->outputManager->printa(thisAgent, string);
@@ -277,12 +274,12 @@ Symbol* trace_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* --------------------------------------------------------------------
+/**
                                  Log
 
    Same as Log, but prints only if output log level for the given arg value is
 on.
--------------------------------------------------------------------- */
+*/
 
 Symbol* log_rhs_function_code(agent* thisAgent, cons* args,
                               void* /*user_data*/) {
@@ -308,8 +305,8 @@ Symbol* log_rhs_function_code(agent* thisAgent, cons* args,
 
       for (; args != NIL; args = args->rest) {
         arg = static_cast<symbol_struct*>(args->first);
-        /* --- Note use of false here--print the symbol itself, not a rereadable
-         * version of it --- */
+        /* Note use of false here--print the symbol itself, not a rereadable
+         * version of it */
         string = arg->to_string();
         add_to_growable_string(thisAgent, &gs, string);  // for XML generation
         thisAgent->outputManager->printa(thisAgent, string);
@@ -325,11 +322,11 @@ Symbol* log_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* --------------------------------------------------------------------
+/**
                                 Crlf
 
    Just returns a str_constant whose print name is a line feed.
--------------------------------------------------------------------- */
+*/
 
 Symbol* crlf_rhs_function_code(agent* thisAgent, cons* /*args*/,
                                void* /*user_data*/) {
@@ -338,11 +335,11 @@ Symbol* crlf_rhs_function_code(agent* thisAgent, cons* /*args*/,
   return thisAgent->symbolManager->soarSymbols.crlf_symbol;
 }
 
-/* --------------------------------------------------------------------
+/**
                                 Halt
 
    Just sets a flag indicating that the system has halted.
--------------------------------------------------------------------- */
+*/
 
 Symbol* halt_rhs_function_code(agent* thisAgent, cons* /*args*/,
                                void* /*user_data*/) {
@@ -352,14 +349,14 @@ Symbol* halt_rhs_function_code(agent* thisAgent, cons* /*args*/,
   return NIL;
 }
 
-/* --------------------------------------------------------------------
+/**
                          Make-constant-symbol
 
    Returns a newly generated str_constant.  If no arguments are given,
    the constant will start with "constant".  If one or more arguments
    are given, the constant will start with a string equal to the
    concatenation of those arguments.
--------------------------------------------------------------------- */
+*/
 
 Symbol* make_constant_symbol_rhs_function_code(agent* thisAgent, cons* args,
                                                void* /*user_data*/) {
@@ -383,12 +380,12 @@ Symbol* make_constant_symbol_rhs_function_code(agent* thisAgent, cons* args,
       buf.str().c_str(), &thisAgent->mcs_counter);
 }
 
-/* --------------------------------------------------------------------
+/**
                                Timestamp
 
    Returns a newly generated str_constant whose name is a representation
    of the current local time.
--------------------------------------------------------------------- */
+*/
 
 Symbol* dc_rhs_function_code(agent* thisAgent, cons* /*args*/,
                              void* /*user_data*/) {
@@ -420,12 +417,12 @@ Symbol* timestamp_rhs_function_code(agent* thisAgent, cons* /*args*/,
   return thisAgent->symbolManager->make_str_constant(buf);
 }
 
-/* --------------------------------------------------------------------
+/**
                               Accept
 
    Waits for the user to type a line of input; then returns the first
    symbol from that line.
--------------------------------------------------------------------- */
+*/
 
 Symbol* accept_rhs_function_code(agent* thisAgent, cons* /*args*/,
                                  void* /*user_data*/) {
@@ -534,9 +531,9 @@ Symbol* set_lti_id_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* ---------------------------------------------------------------------
+/**
   Capitalize a Symbol
------------------------------------------------------------------------- */
+*/
 
 Symbol* capitalize_symbol_rhs_function_code(agent* thisAgent, cons* args,
                                             void* /*user_data*/) {
@@ -573,7 +570,7 @@ Symbol* capitalize_symbol_rhs_function_code(agent* thisAgent, cons* args,
 }
 
 /* AGR 520 begin     6-May-94 */
-/* ------------------------------------------------------------
+/**
    2 general purpose rhs functions by Gary.
 ------------------------------------------------------------
 
@@ -637,7 +634,7 @@ strlen <val> - returns the string length of the output string so that
                   writes foo padding on the left with enough blanks so that
                   the length of the output is always at least 4 characters.
 
------------------------------------------------------------- */
+*/
 
 Symbol* ifeq_rhs_function_code(agent* thisAgent, cons* args,
                                void* /*user_data*/) {
@@ -650,7 +647,7 @@ Symbol* ifeq_rhs_function_code(agent* thisAgent, cons* args,
     return NIL;
   }
 
-  /* --- two or more arguments --- */
+  /* two or more arguments */
   arg1 = static_cast<symbol_struct*>(args->first);
   c = args->rest;
   arg2 = static_cast<symbol_struct*>(c->first);
@@ -748,8 +745,8 @@ Symbol* strlen_rhs_function_code(agent* thisAgent, cons* args,
 
   arg = static_cast<symbol_struct*>(args->first);
 
-  /* --- Note use of false here--print the symbol itself, not a rereadable
-     version of it --- */
+  /* Note use of false here--print the symbol itself, not a rereadable
+     version of it */
   string = arg->to_string();
 
   return thisAgent->symbolManager->make_int_constant(
@@ -757,12 +754,12 @@ Symbol* strlen_rhs_function_code(agent* thisAgent, cons* args,
 }
 /* AGR 520     end */
 
-/* --------------------------------------------------------------------
+/**
                               dont_learn
 
 Hack for learning.  Allow user to denote states in which learning
 shouldn't occur when "learning" is set to "except".
--------------------------------------------------------------------- */
+*/
 
 Symbol* dont_learn_rhs_function_code(agent* thisAgent, cons* args,
                                      void* /*user_data*/) {
@@ -804,12 +801,12 @@ Symbol* dont_learn_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* --------------------------------------------------------------------
+/**
                               force_learn
 
 Hack for learning.  Allow user to denote states in which learning
 should occur when "learning" is set to "only".
--------------------------------------------------------------------- */
+*/
 
 Symbol* force_learn_rhs_function_code(agent* thisAgent, cons* args,
                                       void* /*user_data*/) {
@@ -851,9 +848,8 @@ Symbol* force_learn_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* ====================================================================
-                  RHS Deep copy recursive helper functions
-====================================================================  */
+/*                   RHS Deep copy recursive helper functions
+ */
 void recursive_deep_copy_helper(
     agent* thisAgent, Symbol* id_to_process, Symbol* parent_id,
     std::unordered_map<Symbol*, Symbol*>& processedSymbols);
@@ -953,9 +949,8 @@ void recursive_deep_copy_helper(
   }
 }
 
-/* ====================================================================
-                  RHS Deep copy function
-====================================================================  */
+/*                   RHS Deep copy function
+ */
 Symbol* deep_copy_rhs_function_code(agent* thisAgent, cons* args,
                                     void* /*user_data*/) {
   /* Getting the argument symbol */
@@ -975,12 +970,12 @@ Symbol* deep_copy_rhs_function_code(agent* thisAgent, cons* args,
   return retval;
 }
 
-/* --------------------------------------------------------------------
+/**
                                 Count
 
    Takes arbitrary arguments and adds one to the associated
    dynamic counters.
--------------------------------------------------------------------- */
+*/
 
 Symbol* count_rhs_function_code(agent* thisAgent, cons* args,
                                 void* /*user_data*/) {
@@ -989,8 +984,8 @@ Symbol* count_rhs_function_code(agent* thisAgent, cons* args,
 
   for (; args != NIL; args = args->rest) {
     arg = static_cast<symbol_struct*>(args->first);
-    /* --- Note use of false here--print the symbol itself, not a rereadable
-     * version of it --- */
+    /* Note use of false here--print the symbol itself, not a rereadable
+     * version of it */
     string = arg->to_string();
     (*thisAgent->dyn_counters)[string]++;
   }
@@ -998,12 +993,12 @@ Symbol* count_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* --------------------------------------------------------------------
+/**
                                 Wait
 
    Puts the curret thread to sleep for the specified number of
    milliseconds
--------------------------------------------------------------------- */
+*/
 
 Symbol* wait_rhs_function_code(agent* thisAgent, cons* args,
                                void* /*user_data*/) {
@@ -1021,11 +1016,11 @@ Symbol* wait_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* --------------------------------------------------------------------
+/**
                                 Xml To WME
 
     Auto converts xml strings into WME structures
--------------------------------------------------------------------- */
+*/
 
 // Forward declare
 Symbol* xmltowme_from_xml_internal(agent* thisAgent, ElementXML_Handle element,
@@ -1158,11 +1153,10 @@ Symbol* xmltowme_rhs_function_code(agent* thisAgent, cons* args,
   return xmltowme_from_xml(thisAgent, handle, NULL);
 }
 
-/* ====================================================================
-
+/**
                   Initialize the Built-In RHS Functions
 
-====================================================================  */
+*/
 
 void init_built_in_rhs_functions(agent* thisAgent) {
   /* Note that there are four RHS functions that are defined in

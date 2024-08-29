@@ -64,7 +64,7 @@ class EXPORT Symbol_Manager {
     return &id_counter[name_letter];
   }
 
-  /** --------------------------------------------------------------------
+  /**
                            Variable Generator
 
      These routines are used for generating new variables.  The variables
@@ -79,7 +79,7 @@ class EXPORT Symbol_Manager {
      used.  Then call generate_new_variable() any number of times; each
      time, you give it a string to use as the prefix for the new variable's
      name.  The prefix string should not include the opening "<".
-  -------------------------------------------------------------------- */
+  */
 
   void reset_variable_generator(condition* conds_with_vars_to_avoid,
                                 action* actions_with_vars_to_avoid);

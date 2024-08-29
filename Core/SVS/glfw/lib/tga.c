@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,9 +24,7 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
-//========================================================================
 // Description:
 //
 // TGA format image file loader. This module supports version 1 Targa
@@ -36,19 +32,16 @@
 //  - Pixel format may only be 8, 24 or 32 bits
 //  - Colormaps must be no longer than 256 entries
 //
-//========================================================================
 
 
 #include "internal.h"
 
 
-//************************************************************************
-//****            GLFW internal functions & declarations              ****
-//************************************************************************
+//**
+//**            GLFW internal functions & declarations              ****
+//**
 
-//========================================================================
 // TGA file header information
-//========================================================================
 
 typedef struct {
     int idlen;                 // 1 byte
@@ -89,9 +82,7 @@ typedef struct {
 #define _TGA_ORIGIN_UR 3
 
 
-//========================================================================
 // Read TGA file header (and check that it is valid)
-//========================================================================
 
 static int ReadTGAHeader( _GLFWstream *s, _tga_header_t *h )
 {
@@ -145,9 +136,7 @@ static int ReadTGAHeader( _GLFWstream *s, _tga_header_t *h )
     }
 }
 
-//========================================================================
 // Read Run-Length Encoded data
-//========================================================================
 
 static void ReadTGA_RLE( unsigned char *buf, int size, int bpp,
                          _GLFWstream *s )
@@ -197,9 +186,7 @@ static void ReadTGA_RLE( unsigned char *buf, int size, int bpp,
 }
 
 
-//========================================================================
 // Read a TGA image from a file
-//========================================================================
 
 int _glfwReadTGA( _GLFWstream *s, GLFWimage *img, int flags )
 {
@@ -401,4 +388,3 @@ int _glfwReadTGA( _GLFWstream *s, GLFWimage *img, int flags )
 
     return 1;
 }
-

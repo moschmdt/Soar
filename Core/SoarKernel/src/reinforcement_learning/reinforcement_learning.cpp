@@ -72,9 +72,7 @@ void RL_Manager::clean_up_for_agent_deletion() {
   delete thisAgent->prediction;
 }
 
-/////////////////////////////////////////////////////
 // Parameters
-/////////////////////////////////////////////////////
 
 const std::vector<std::pair<std::string, param_accessor<double>*> >&
 rl_param_container::get_documentation_params() {
@@ -296,12 +294,7 @@ bool rl_apoptosis_predicate<T>::operator()(T /*val*/) {
           rl_param_container::apoptosis_none);
 }
 
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////
 // Stats
-/////////////////////////////////////////////////////
 
 rl_stat_container::rl_stat_container(agent* new_agent)
     : stat_container(new_agent) {
@@ -321,16 +314,10 @@ rl_stat_container::rl_stat_container(agent* new_agent)
   add(global_reward);
 };
 
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
-
 // quick shortcut to determine if rl is enabled
 bool rl_enabled(agent* thisAgent) {
   return (thisAgent->RL->rl_params->learning->get_value() == on);
 }
-
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
 
 inline void rl_add_ref(Symbol* goal, production* prod) {
   goal->id->rl_info->prev_op_rl_rules->push_back(prod);
@@ -363,9 +350,6 @@ void rl_clear_refs(Symbol* goal) {
   rules->clear();
 }
 
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
-
 // resets rl data structures
 void rl_reset_data(agent* thisAgent) {
   Symbol* goal = thisAgent->top_goal;
@@ -394,9 +378,6 @@ void rl_remove_refs_for_prod(agent* thisAgent, production* prod) {
     rl_remove_ref(state, prod);
   }
 }
-
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
 
 // returns true if a template is valid
 bool rl_valid_template(production* prod) {
@@ -468,7 +449,7 @@ void rl_rule_meta(agent* thisAgent, production* prod) {
       accessor->set_param(prod, param_value_str);
     }
 
-    /*
+    /**
     std::string search( "rlupdates=" );
 
     if ( doc.length() > search.length() )
@@ -485,9 +466,9 @@ void rl_rule_meta(agent* thisAgent, production* prod) {
   }
 }
 
-/***************************************************************************
+/**
  * Function     : is_natural_number
- **************************************************************************/
+ */
 
 bool is_whole_number(const char* str) {
   if (!str || !*str) {
@@ -504,9 +485,6 @@ bool is_whole_number(const char* str) {
 
   return true;
 }
-
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
 
 // gets the auto-assigned id of a template instantiation
 int rl_get_template_id(const char* prod_name) {
@@ -676,9 +654,6 @@ void rl_add_goal_or_impasse_tests_to_conds(agent* thisAgent,
     }
   }
 }
-
-/////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
 
 // gathers discounted reward for a state
 void rl_tabulate_reward_value_for_goal(agent* thisAgent, Symbol* goal) {
@@ -1035,7 +1010,7 @@ void rl_perform_update(agent* thisAgent, double op_value, bool op_rl,
             prod->documentation =
                 make_memory_block_for_string(thisAgent, doc_ss.str().c_str());
 
-            /*
+            /**
             std::string rlupdates( "rlupdates=" );
             std::string val;
             to_string( static_cast< uint64_t >( prod->rl_update_count ), val );

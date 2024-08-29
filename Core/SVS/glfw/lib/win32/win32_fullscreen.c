@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Win32/WGL
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,18 +24,15 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Convert BPP to RGB bits based on "best guess"
-//========================================================================
 
 static void bpp2rgb( int bpp, int *r, int *g, int *b )
 {
@@ -64,9 +59,7 @@ static void bpp2rgb( int bpp, int *r, int *g, int *b )
 }
 
 
-//========================================================================
 // Return closest video mode by dimensions, refresh rate and bits per pixel
-//========================================================================
 
 int _glfwGetClosestVideoModeBPP( int *w, int *h, int *bpp, int *refresh )
 {
@@ -131,9 +124,7 @@ int _glfwGetClosestVideoModeBPP( int *w, int *h, int *bpp, int *refresh )
 }
 
 
-//========================================================================
 // Return closest video mode by dimensions, refresh rate and channel sizes
-//========================================================================
 
 static int getClosestVideoMode( int *w, int *h,
                                 int *r, int *g, int *b,
@@ -160,9 +151,7 @@ static int getClosestVideoMode( int *w, int *h,
 }
 
 
-//========================================================================
 // Change the current video mode
-//========================================================================
 
 void _glfwSetVideoModeMODE( int mode )
 {
@@ -205,9 +194,7 @@ void _glfwSetVideoModeMODE( int mode )
 }
 
 
-//========================================================================
 // Change the current video mode
-//========================================================================
 
 void _glfwSetVideoMode( int *w, int *h, int r, int g, int b, int refresh )
 {
@@ -221,13 +208,11 @@ void _glfwSetVideoMode( int *w, int *h, int r, int g, int b, int refresh )
 }
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Get a list of available video modes
-//========================================================================
 
 int _glfwPlatformGetVideoModes( GLFWvidmode *list, int maxcount )
 {
@@ -300,9 +285,7 @@ int _glfwPlatformGetVideoModes( GLFWvidmode *list, int maxcount )
 }
 
 
-//========================================================================
 // Get the desktop video mode
-//========================================================================
 
 void _glfwPlatformGetDesktopMode( GLFWvidmode *mode )
 {
@@ -317,4 +300,3 @@ void _glfwPlatformGetDesktopMode( GLFWvidmode *mode )
     mode->Height = dm.dmPelsHeight;
     bpp2rgb( dm.dmBitsPerPel, &mode->RedBits, &mode->GreenBits, &mode->BlueBits );
 }
-

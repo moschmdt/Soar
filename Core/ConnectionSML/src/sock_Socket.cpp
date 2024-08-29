@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // Socket class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // Represents a socket.
 //
@@ -20,7 +19,6 @@
 // The server is passed a new socket when it checks for incoming connections
 // on the listener socket.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <signal.h>
 #include <stdio.h>
@@ -38,9 +36,7 @@
 
 using namespace sock;
 
-//////////////////////////////////////////////////////////////////////
 // Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 Socket::Socket() {
   m_hSocket = NO_CONNECTION;
@@ -70,14 +66,12 @@ Socket::Socket(SOCKET hSocket) {
 
 Socket::~Socket() { Close(); }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : GetLocalIPAddress
 //
 // Return type    : char*
 //
 // Description    : Get the IP address as a string "aaaa.bbbb.cccc.dddd"
 //
-/////////////////////////////////////////////////////////////////////
 char* sock::GetLocalIPAddress() {
   // Look up the local host's IP address
   uint32_t hostID = GetLocalIP();
@@ -91,7 +85,6 @@ char* sock::GetLocalIPAddress() {
   return pHost;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : GetLocalIP
 //
 // Return type    : uint32_t
@@ -101,7 +94,6 @@ char* sock::GetLocalIPAddress() {
 //                  1) Use gethostname and then gethostbyname
 //                  2) Create UDP socket and call getsockname
 //
-/////////////////////////////////////////////////////////////////////
 uint32_t sock::GetLocalIP() {
   char szLclHost[1024];
   HOSTENT* lpstHostent;
@@ -153,7 +145,6 @@ uint32_t sock::GetLocalIP() {
   return stLclAddr.sin_addr.s_addr;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : GetLocalSocketDir
 //
 // Return type    : std::string
@@ -161,7 +152,6 @@ uint32_t sock::GetLocalIP() {
 // Description    : Get the path to the directory that contains the local socket
 // file
 //
-/////////////////////////////////////////////////////////////////////
 #ifdef ENABLE_LOCAL_SOCKETS
 std::string sock::GetLocalSocketDir() {
   std::string dir = getenv("HOME");
@@ -170,7 +160,6 @@ std::string sock::GetLocalSocketDir() {
 }
 #endif
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : IsErrorWouldBlock
 //
 // Return type    : static bool
@@ -178,7 +167,6 @@ std::string sock::GetLocalSocketDir() {
 // Description    : Returns true if the error from the socket
 //                  is that making the call would cause it to block.
 //
-/////////////////////////////////////////////////////////////////////
 #ifdef NON_BLOCKING
 static bool IsErrorWouldBlock() {
   int error = ERROR_NUMBER;
@@ -187,7 +175,6 @@ static bool IsErrorWouldBlock() {
 }
 #endif
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : Socket::SendBuffer
 //
 // Return type    : bool
@@ -198,7 +185,6 @@ static bool IsErrorWouldBlock() {
 //                  This may require repeated calls to the low level "send"
 //                  call.
 //
-/////////////////////////////////////////////////////////////////////
 bool Socket::SendBuffer(char const* pSendBuffer, uint32_t bufferSize) {
   CTDEBUG_ENTER_METHOD("Socket::SendBuffer");
 
@@ -254,7 +240,6 @@ bool Socket::SendBuffer(char const* pSendBuffer, uint32_t bufferSize) {
   return true;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : Socket::IsReadDataAvailable
 //
 // Argument       : int secondsWait -- Seconds part of how long to wait for data
@@ -267,7 +252,6 @@ bool Socket::SendBuffer(char const* pSendBuffer, uint32_t bufferSize) {
 //                  In that case the next read will return 0 bytes w/o an error
 //                  indicating that the socket is closed.
 //
-/////////////////////////////////////////////////////////////////////
 bool Socket::IsReadDataAvailable(int secondsWait, int millisecondsWait) {
   assert(millisecondsWait < 1000 &&
          "specified milliseconds must be less than 1000");
@@ -287,7 +271,6 @@ bool Socket::IsReadDataAvailable(int secondsWait, int millisecondsWait) {
   fd_set set;
   FD_ZERO(&set);
 
-  //////
   // This _MSC_VER test is legit, for a warning C4127: conditional expression is
   // constant in a windows-defined FD_SET macro below
 #ifdef _MSC_VER
@@ -299,7 +282,6 @@ bool Socket::IsReadDataAvailable(int secondsWait, int millisecondsWait) {
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
-  //////
 
   // Wait for milliseconds for select to return (can be 0 to just poll)
   TIMEVAL zero;
@@ -320,7 +302,7 @@ bool Socket::IsReadDataAvailable(int secondsWait, int millisecondsWait) {
   }
 
   bool bIsSet = FD_ISSET(hSock, &set) ? true : false;
-  /*
+  /**
       if (bIsSet)
           sml::PrintDebug("Read data IS available") ;
       else
@@ -329,7 +311,6 @@ bool Socket::IsReadDataAvailable(int secondsWait, int millisecondsWait) {
   return bIsSet;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ReceiveBuffer
 //
 // Return type    : bool
@@ -338,7 +319,6 @@ bool Socket::IsReadDataAvailable(int secondsWait, int millisecondsWait) {
 //
 // Description    : Receive a buffer of data.
 //
-/////////////////////////////////////////////////////////////////////
 bool Socket::ReceiveBuffer(char* pRecvBuffer, uint32_t bufferSize) {
   CTDEBUG_ENTER_METHOD("Socket::ReceiveBuffer");
 
@@ -429,14 +409,12 @@ bool Socket::ReceiveBuffer(char* pRecvBuffer, uint32_t bufferSize) {
   return true;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : Socket::CloseInternal
 //
 // Return type    : void
 //
 // Description    : Close down the socket.
 //
-/////////////////////////////////////////////////////////////////////
 void Socket::CloseInternal() {
   if (m_hSocket) {
     // Let the other side know we're shutting down

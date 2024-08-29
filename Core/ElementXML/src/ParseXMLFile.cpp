@@ -1,17 +1,15 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ParseXMLFile class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class is used to parse an XML document from a file/string and
 // create an ElementXML object that represents it.
 //
 // This class reads from a file.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cstdio>
 
@@ -56,11 +54,11 @@ void ParseXMLFile::ReadLine() {
   }
 }
 
-/************************************************************************
+/**
  *
  * Read the next character from the input file.
  *
- *************************************************************************/
+ */
 void ParseXMLFile::GetNextChar() {
   // When we're at the end of file, we're done.
   if (IsError() || IsEOF()) {

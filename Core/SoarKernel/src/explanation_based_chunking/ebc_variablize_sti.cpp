@@ -29,7 +29,7 @@ void Explanation_Based_Chunker::sti_variablize_test(test pTest,
     /* Create a new variable.  If constant is being variablized just used
      * 'c' instead of first letter of id name.  We now don't use 'o' for
      * non-operators and don't use 's' for non-states.  That makes things
-     * clearer in chunks because of standard naming conventions. --- */
+     * clearer in chunks because of standard naming conventions. */
     char prefix_char = static_cast<char>(tolower(lMatchedSym->id->name_letter));
     if ((((prefix_char == 's') || (prefix_char == 'S')) &&
          !lMatchedSym->id->isa_goal) ||
@@ -87,7 +87,7 @@ void Explanation_Based_Chunker::sti_variablize_rhs_symbol(
   has_variablization = (iter_sym != m_sym_to_var_map->end());
 
   if (!has_variablization && rs->referent->is_sti()) {
-    /* -- First time we've encountered an unbound rhs var. -- */
+    /* -- First time we've encountered an unbound rhs var. */
     prefix[0] = static_cast<char>(tolower(rs->referent->id->name_letter));
     prefix[1] = 0;
     var = thisAgent->symbolManager->generate_new_variable(prefix);

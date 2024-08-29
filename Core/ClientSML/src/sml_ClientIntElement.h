@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // IntElement class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // Working memory element that has an int value.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_INT_ELEMENT_H
 #define SML_INT_ELEMENT_H

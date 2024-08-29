@@ -1,4 +1,4 @@
-/**********************************************************
+/**
  *
  * File: commands/extract.cpp
  * Contains:
@@ -12,7 +12,7 @@
  *
  *  Implementation of soar parsing in filter_table.cpp
  *    parse_filter_spec
- **********************************************************/
+ */
 #include <iostream>
 
 #include "command.h"
@@ -188,7 +188,7 @@ class extract_command : public command, public filter_input::listener {
       return str == def;
     }
 
-    /*
+    /**
      The filter_val has a struct representation. For now, always treat the
      symbol as being different. In the future, maybe compare the substructure of
      an id and the map representation to see if they have the same

@@ -106,50 +106,50 @@
 
 #include "filter.h"
 
-/////// Node Functions ///////
-typedef bool node_test(sgnode* a, sgnode* b, const filter_params* p);
+/////// Node Functions typedef bool node_test(sgnode* a, sgnode* b, const
+///filter_params* p);
 
 typedef double node_comparison(sgnode* a, sgnode* b, const filter_params* p);
 
 typedef double node_evaluation(sgnode* a, const filter_params* p);
 
-////// Node Select Range Filter //////
-class node_select_range_filter : public select_filter<sgnode*> {
- public:
-  node_select_range_filter(Symbol* root, soar_interface* si,
-                           filter_input* input)
-      : select_filter<sgnode*>(root, si, input),
-        range_min(-1000000000),
-        range_max(1000000000),
-        include_min(true),
-        include_max(true) {}
+////// Node Select Range Filter class node_select_range_filter : public
+///select_filter<sgnode*> {
+public:
+node_select_range_filter(Symbol* root, soar_interface* si, filter_input* input)
+    : select_filter<sgnode*>(root, si, input),
+      range_min(-1000000000),
+      range_max(1000000000),
+      include_min(true),
+      include_max(true) {}
 
-  void set_min(bool sel_min) { range_min = sel_min; }
-  void set_max(bool sel_max) { range_max = sel_max; }
-  void set_include_min(bool inc_min) { include_min = inc_min; }
-  void set_include_max(bool inc_max) { include_max = inc_max; }
-  void set_range_from_params(const filter_params* p);
-  bool falls_in_range(double val);
+void set_min(bool sel_min) { range_min = sel_min; }
+void set_max(bool sel_max) { range_max = sel_max; }
+void set_include_min(bool inc_min) { include_min = inc_min; }
+void set_include_max(bool inc_max) { include_max = inc_max; }
+void set_range_from_params(const filter_params* p);
+bool falls_in_range(double val);
 
- private:
-  double range_min;
-  double range_max;
-  bool include_min;
-  bool include_max;
-};
+private:
+double range_min;
+double range_max;
+bool include_min;
+bool include_max;
+}
+;
 
-/////// Node Test Filters //////
-class node_test_filter : public map_filter<bool> {
- public:
-  node_test_filter(Symbol* root, soar_interface* si, filter_input* input,
-                   node_test* test)
-      : map_filter<bool>(root, si, input), test(test) {}
+/////// Node Test Filters class node_test_filter : public map_filter<bool> {
+public:
+node_test_filter(Symbol* root, soar_interface* si, filter_input* input,
+                 node_test* test)
+    : map_filter<bool>(root, si, input), test(test) {}
 
-  bool compute(const filter_params* p, bool& out);
+bool compute(const filter_params* p, bool& out);
 
- private:
-  node_test* test;
-};
+private:
+node_test* test;
+}
+;
 
 class node_test_select_filter : public select_filter<sgnode*> {
  public:
@@ -168,18 +168,19 @@ class node_test_select_filter : public select_filter<sgnode*> {
   bool select_true;
 };
 
-////// Node Comparison Filters //////
-class node_comparison_filter : public map_filter<double> {
- public:
-  node_comparison_filter(Symbol* root, soar_interface* si, filter_input* input,
-                         node_comparison* comp)
-      : map_filter<double>(root, si, input), comp(comp) {}
+////// Node Comparison Filters class node_comparison_filter : public
+///map_filter<double> {
+public:
+node_comparison_filter(Symbol* root, soar_interface* si, filter_input* input,
+                       node_comparison* comp)
+    : map_filter<double>(root, si, input), comp(comp) {}
 
-  bool compute(const filter_params* p, double& out);
+bool compute(const filter_params* p, double& out);
 
- private:
-  node_comparison* comp;
-};
+private:
+node_comparison* comp;
+}
+;
 
 class node_comparison_select_filter : public node_select_range_filter {
  public:
@@ -205,18 +206,19 @@ class node_comparison_rank_filter : public rank_filter {
   node_comparison* comp;
 };
 
-////// Node Evaluation Filters //////
-class node_evaluation_filter : public map_filter<double> {
- public:
-  node_evaluation_filter(Symbol* root, soar_interface* si, filter_input* input,
-                         node_evaluation* eval)
-      : map_filter<double>(root, si, input), eval(eval) {}
+////// Node Evaluation Filters class node_evaluation_filter : public
+///map_filter<double> {
+public:
+node_evaluation_filter(Symbol* root, soar_interface* si, filter_input* input,
+                       node_evaluation* eval)
+    : map_filter<double>(root, si, input), eval(eval) {}
 
-  bool compute(const filter_params* p, double& out);
+bool compute(const filter_params* p, double& out);
 
- private:
-  node_evaluation* eval;
-};
+private:
+node_evaluation* eval;
+}
+;
 
 class node_evaluation_select_filter : public node_select_range_filter {
  public:

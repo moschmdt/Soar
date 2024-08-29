@@ -4,7 +4,7 @@
 #include "kernel.h"
 #include "stl_typedefs.h"
 
-/** -------------------------------------------------------------------
+/**
                              Conditions
 
    Conditions are used for two things:  (1) to represent the LHS of newly
@@ -36,28 +36,28 @@
         this structure gives information for that will be used in backtracing.
 
       reorder:  (reserved for use by the reorderer)
-------------------------------------------------------------------- */
+*/
 
-/** --- info on conditions used for backtracing (and by the rete) --- */
+/** info on conditions used for backtracing (and by the rete) */
 typedef struct bt_info_struct {
   wme* wme_;              /** the actual wme that was matched */
   goal_stack_level level; /** level (at firing time) of the id of the wme */
   preference* trace;      /** preference for BT, or NIL */
 } bt_info;
 
-/** --- info on conditions used only by the reorderer --- */
+/** info on conditions used only by the reorderer */
 typedef struct reorder_info_struct {
   cons* vars_requiring_bindings;          /** used only during reordering */
   struct condition_struct* next_min_cost; /** used only during reordering */
 } reorder_info;
 
-/** --- info on negated conjunctive conditions only --- */
+/** info on negated conjunctive conditions only */
 typedef struct ncc_info_struct {
   struct condition_struct* top;
   struct condition_struct* bottom;
 } ncc_info;
 
-/** --- finally, the structure of a condition --- */
+/** finally, the structure of a condition */
 typedef struct condition_struct {
   ConditionType type;
   bool already_in_tc;                  /** used only by cond_is_in_tc stuff */
@@ -80,9 +80,9 @@ typedef struct condition_struct {
 
 } condition;
 
-/** ------------------------ */
+/** */
 /** Utilities for conditions */
-/** ------------------------ */
+/** */
 
 condition* make_condition(agent* thisAgent, test pId = NULL, test pAttr = NULL,
                           test pValue = NULL);

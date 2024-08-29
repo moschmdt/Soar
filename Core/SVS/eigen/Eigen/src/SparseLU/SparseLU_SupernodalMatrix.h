@@ -211,8 +211,8 @@ template <typename Scalar, typename Index_>
 template <typename Dest>
 void MappedSuperNodalMatrix<Scalar, Index_>::solveInPlace(
     MatrixBase<Dest>& X) const {
-  /** Explicit type conversion as the Index type of MatrixBase<Dest> may be wider
-   * than Index */
+  /** Explicit type conversion as the Index type of MatrixBase<Dest> may be
+   * wider than Index */
   //    eigen_assert(X.rows() <= NumTraits<Index>::highest());
   //    eigen_assert(X.cols() <= NumTraits<Index>::highest());
   Index n = int(X.rows());

@@ -1,11 +1,9 @@
-/////////////////////////////////////////////////////////////////
 // smem command file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com,
+// @author: Jonathan Voigt, voigtjr@gmail.com,
 //         Nate Derbinsky, nlderbin@umich.edu
-// Date  : 2009
+// @date  : 2009
 //
-/////////////////////////////////////////////////////////////////
 
 #include "agent.h"
 #include "cli_CommandLineInterface.h"

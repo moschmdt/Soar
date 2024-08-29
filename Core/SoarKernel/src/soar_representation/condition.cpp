@@ -11,9 +11,9 @@
 #include "symbol_manager.h"
 #include "test.h"
 
-/* ----------------------------------------------------------------
+/**
    Deallocates a condition list (including any NCC's and tests in it).
----------------------------------------------------------------- */
+*/
 
 void deallocate_condition(agent* thisAgent, condition*& cond) {
   if (cond->type == CONJUNCTIVE_NEGATION_CONDITION) {
@@ -66,9 +66,9 @@ condition* make_condition(agent* thisAgent, test pId, test pAttr, test pValue) {
   return cond;
 }
 
-/* ----------------------------------------------------------------
+/**
    Returns a new copy of the given condition.
----------------------------------------------------------------- */
+*/
 
 condition* copy_condition(agent* thisAgent, condition* cond,
                           bool pUnify_variablization_identity,
@@ -129,10 +129,10 @@ condition* copy_condition(agent* thisAgent, condition* cond,
   return New;
 }
 
-/* ----------------------------------------------------------------
+/**
    Copies the given condition list, returning pointers to the
    top-most and bottom-most conditions in the new copy.
----------------------------------------------------------------- */
+*/
 
 void copy_condition_list(agent* thisAgent, condition* top_cond,
                          condition** dest_top, condition** dest_bottom,
@@ -163,9 +163,9 @@ void copy_condition_list(agent* thisAgent, condition* top_cond,
   *dest_bottom = prev;
 }
 
-/* ----------------------------------------------------------------
+/**
    Returns true iff the two conditions are identical.
----------------------------------------------------------------- */
+*/
 
 bool conditions_are_equal(condition* c1, condition* c2) {
   if (c1->type != c2->type) {
@@ -208,9 +208,9 @@ bool conditions_are_equal(condition* c1, condition* c2) {
   return false; /* unreachable, but without it, gcc -Wall warns here */
 }
 
-/* ----------------------------------------------------------------
+/**
    Returns a hash value for the given condition.
----------------------------------------------------------------- */
+*/
 
 uint32_t hash_condition(agent* thisAgent, condition* cond) {
   uint32_t result;

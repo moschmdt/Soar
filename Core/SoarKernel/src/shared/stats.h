@@ -3,7 +3,7 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** -- stats.h
+/** stats.h
  *
  *    This file used to be utilities.h, but most stuff seemed to fit better
  *    elsewhere.  There's code for two legacy experimental modes still in
@@ -21,9 +21,7 @@
 #include "kernel.h"
 #include "soar_db.h"
 
-//////////////////////////////////////////////////////////
 // Statistics database
-//////////////////////////////////////////////////////////
 
 class stats_statement_container
     : public soar_module::sqlite_statement_container {

@@ -91,10 +91,10 @@ EIGEN_BLAS_RANKUPDATE_SPECIALIZE(float)
     };                                                                    \
     static EIGEN_STRONG_INLINE void run(                                  \
         Index size, Index depth, const EIGTYPE* lhs, Index lhsStride,     \
-        const EIGTYPE* /**rhs*/, Index /**rhsStride*/, EIGTYPE* res,        \
+        const EIGTYPE* /**rhs*/, Index /**rhsStride*/, EIGTYPE* res,      \
         Index resStride, EIGTYPE alpha,                                   \
-        level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {                \
-      /** typedef Matrix<EIGTYPE, Dynamic, Dynamic, RhsStorageOrder>       \
+        level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {               \
+      /** typedef Matrix<EIGTYPE, Dynamic, Dynamic, RhsStorageOrder>      \
        * MatrixRhs;*/                                                     \
                                                                           \
       BlasIndex lda = convert_index<BlasIndex>(lhsStride),                \
@@ -125,9 +125,9 @@ EIGEN_BLAS_RANKUPDATE_SPECIALIZE(float)
     };                                                                         \
     static EIGEN_STRONG_INLINE void run(                                       \
         Index size, Index depth, const EIGTYPE* lhs, Index lhsStride,          \
-        const EIGTYPE* /**rhs*/, Index /**rhsStride*/, EIGTYPE* res,             \
+        const EIGTYPE* /**rhs*/, Index /**rhsStride*/, EIGTYPE* res,           \
         Index resStride, EIGTYPE alpha,                                        \
-        level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {                     \
+        level3_blocking<EIGTYPE, EIGTYPE>& /**blocking*/) {                    \
       typedef Matrix<EIGTYPE, Dynamic, Dynamic, AStorageOrder> MatrixType;     \
                                                                                \
       BlasIndex lda = convert_index<BlasIndex>(lhsStride),                     \
@@ -141,7 +141,7 @@ EIGEN_BLAS_RANKUPDATE_SPECIALIZE(float)
                                                                                \
       alpha_ = alpha.real();                                                   \
       beta_ = 1.0;                                                             \
-      /** Copy with conjugation in some cases*/                                 \
+      /** Copy with conjugation in some cases*/                                \
       MatrixType a;                                                            \
       if (conjA) {                                                             \
         Map<const MatrixType, 0, OuterStride<> > mapA(                         \

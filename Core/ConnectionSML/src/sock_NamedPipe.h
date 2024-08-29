@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // NamedPipe class
 //
-// Author: Bob Marinier
-// Date  : 5/2007
+// @author: Bob Marinier
+// @date  : 5/2007
 //
 // Based on Socket class.
 //
@@ -20,7 +19,6 @@
 // The server is passed a new named pipe when it checks for incoming connections
 // on the listener pipe.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef NAMED_PIPE_H
 #define NAMED_PIPE_H
@@ -33,7 +31,6 @@
 namespace sock {
 
 // Define PIPE_NON_BLOCKING to make all pipes non-blocking pipes.
-// #define PIPE_NON_BLOCKING
 
 #ifdef PIPE_NON_BLOCKING
 #define PIPE_TYPE PIPE_NOWAIT

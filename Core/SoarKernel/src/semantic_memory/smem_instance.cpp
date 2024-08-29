@@ -1,4 +1,4 @@
-/*
+/**
  * smem_install.cpp
  *
  *  Created on: Aug 21, 2016
@@ -189,9 +189,7 @@ void SMem_Manager::install_memory(
     symbol_triple_list& meta_wmes, symbol_triple_list& retrieval_wmes,
     smem_install_type install_type, uint64_t depth, std::set<uint64_t>* visited,
     std::queue<std::pair<Symbol*, uint64_t>>* to_install) {
-  ////////////////////////////////////////////////////////////////////////////
   timers->ncb_retrieval->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   // get the ^result header for this state
   Symbol* result_header = NULL;
@@ -315,7 +313,5 @@ void SMem_Manager::install_memory(
     delete visited;
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   timers->ncb_retrieval->stop();
-  ////////////////////////////////////////////////////////////////////////////
 }

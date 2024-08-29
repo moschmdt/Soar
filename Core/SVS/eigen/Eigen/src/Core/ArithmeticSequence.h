@@ -87,9 +87,7 @@ struct cleanup_seq_incr {
 
 }  // namespace internal
 
-//--------------------------------------------------------------------------------
 // seq(first,last,incr) and seqN(first,size,incr)
-//--------------------------------------------------------------------------------
 
 template <typename FirstType = Index, typename SizeType = Index,
           typename IncrType = internal::FixedInt<1> >

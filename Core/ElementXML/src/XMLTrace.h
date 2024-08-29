@@ -1,11 +1,10 @@
 #ifndef SOARXML_XMLTRACE_H
 #define SOARXML_XMLTRACE_H
 
-/////////////////////////////////////////////////////////////////
 // XMLTrace class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : April 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : April 2005
 //
 // Represents a piece of structured trace information generated
 // during the course of a run.
@@ -34,7 +33,6 @@
 // the work are created on the heap in the ElementXML DLL. This is the Pimpl
 // pattern.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 

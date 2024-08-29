@@ -1,6 +1,6 @@
 /**
  * libccd
- * ---------------------------------
+ *
  * Copyright (c)2010-2013 Daniel Fiser <danfis@danfis.cz>
  *
  *
@@ -45,7 +45,6 @@ extern "C" {
 
 typedef float ccd_real_t;
 
-// # define CCD_EPS 1E-6
 #define CCD_EPS FLT_EPSILON
 
 #define CCD_REAL_MAX FLT_MAX
@@ -64,7 +63,6 @@ typedef float ccd_real_t;
 #ifdef CCD_DOUBLE
 typedef double ccd_real_t;
 
-// # define CCD_EPS 1E-10
 #define CCD_EPS DBL_EPSILON
 
 #define CCD_REAL_MAX DBL_MAX

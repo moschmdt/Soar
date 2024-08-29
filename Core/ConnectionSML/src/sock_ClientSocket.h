@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // ClientSocket class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // Creates a socket by connecting to a server at a known
 // IP address and port number.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef CT_CLIENT_SOCKET_H
 #define CT_CLIENT_SOCKET_H
@@ -21,7 +19,6 @@ class ClientSocket : public Socket {
   ClientSocket();
   virtual ~ClientSocket();
 
-  /////////////////////////////////////////////////////////////////////
   // Function name  : CTClientSocket::ConnectToServer
   //
   // Return type    : bool
@@ -30,7 +27,6 @@ class ClientSocket : public Socket {
   //
   // Description    : Connect to a server
   //
-  /////////////////////////////////////////////////////////////////////
   bool ConnectToServer(char const* netAddress, int port);
 };
 

@@ -34,7 +34,7 @@ namespace Eigen {
     PREFIX##gssvx(options, A, perm_c, perm_r, etree, equed, R, C, L, U, work, \
                   lwork, B, X, recip_pivot_growth, rcond, ferr, berr, &gLU,   \
                   &mem_usage, stats, info);                                   \
-    return mem_usage.for_lu; /** bytes used by the factor storage */           \
+    return mem_usage.for_lu; /** bytes used by the factor storage */          \
   }
 #else  // version < 5.0
 #define DECL_GSSVX(PREFIX, FLOATTYPE, KEYTYPE)                                \
@@ -56,7 +56,7 @@ namespace Eigen {
     PREFIX##gssvx(options, A, perm_c, perm_r, etree, equed, R, C, L, U, work, \
                   lwork, B, X, recip_pivot_growth, rcond, ferr, berr,         \
                   &mem_usage, stats, info);                                   \
-    return mem_usage.for_lu; /** bytes used by the factor storage */           \
+    return mem_usage.for_lu; /** bytes used by the factor storage */          \
   }
 #endif
 
@@ -91,7 +91,7 @@ DECL_GSSVX(z, double, std::complex<double>)
     PREFIX##gsisx(options, A, perm_c, perm_r, etree, equed, R, C, L, U, work, \
                   lwork, B, X, recip_pivot_growth, rcond, &mem_usage, stats,  \
                   info);                                                      \
-    return mem_usage.for_lu; /** bytes used by the factor storage */           \
+    return mem_usage.for_lu; /** bytes used by the factor storage */          \
   }
 
 DECL_GSISX(s, float, float)

@@ -78,9 +78,7 @@ class change_tracking_list {
   //   Frees up memory for all items within the list
   virtual ~change_tracking_list() { clear(); }
 
-  ////////////////////////
   // Changing the list
-  ////////////////////////
 
   // Puts an item in the list
   //   will invoke ctlist_listener::handle_ctlist_add
@@ -137,9 +135,7 @@ class change_tracking_list {
     assert(false);
   }
 
-  ////////////////////////
   // Managing the list
-  ////////////////////////
 
   // Clears all changes in the list so all items remaining are marked as current
   // Updates all lists so there is nothing in the removed or changed lists
@@ -177,9 +173,7 @@ class change_tracking_list {
     clear_removed();
   }
 
-  ///////////////////////
   // change listeners
-  ///////////////////////
   void listen(ctlist_listener<T>* l) { listeners.push_back(l); }
 
   void unlisten(ctlist_listener<T>* l) {
@@ -190,9 +184,7 @@ class change_tracking_list {
     }
   }
 
-  //////////////////////
   // accessors
-  /////////////////////
 
   // current:
   //   all items in the list (including added + changed)

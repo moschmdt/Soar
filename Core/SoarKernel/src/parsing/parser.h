@@ -3,7 +3,7 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** ======================================================================
+/**
                               parser.h
 
                      The Production (SP) Parser
@@ -15,7 +15,7 @@
    and returns a condition list (or NIL if an error occurred).
    Parse_rhs() reads an RHS, setting "dest_rhs" to point to the resulting
    action list; it returns true if successful, false if any error occurred.
-====================================================================== */
+*/
 
 #ifndef PARSER_H
 #define PARSER_H

@@ -147,9 +147,9 @@ EIGEN_STRONG_INLINE void pstoreu<std::complex<double> >(
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet1cd
-pset1<Packet1cd>(const std::complex<double>&
-                     from) { /** here we really have to use unaligned loads :( */
+EIGEN_STRONG_INLINE Packet1cd pset1<Packet1cd>(
+    const std::complex<double>&
+        from) { /** here we really have to use unaligned loads :( */
   return ploadu<Packet1cd>(&from);
 }
 

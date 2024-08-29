@@ -11,8 +11,7 @@
 #include "symbol.h"
 #include "symbol_manager.h"
 
-/* ======================================================================
-
+/**
                         Slot Management Routines
 
    Find_slot() looks for an existing slot for a given id/attr pair, and
@@ -24,7 +23,7 @@
    the preferences for a slot change.  This updates the list of
    changed_slots and highest_goal_whose_context_changed for use by the
    decider.
-====================================================================== */
+*/
 
 slot* find_slot(Symbol* id, Symbol* attr) {
   slot* s;
@@ -115,7 +114,7 @@ void mark_slot_as_changed(agent* thisAgent, slot* s) {
   }
 }
 
-/* -----------------------------------------------------------------
+/**
                       Slot Garbage Collection
 
    Old slots are garbage collected as follows:  whenever we notice that
@@ -128,7 +127,7 @@ void mark_slot_as_changed(agent* thisAgent, slot* s) {
    At the end of the phase, we call remove_garbage_slots(), which
    scans through each marked slot and garbage collects it if it has
    no wmes or preferences.
------------------------------------------------------------------ */
+*/
 
 void mark_slot_for_possible_removal(agent* thisAgent, slot* s) {
   if (s->marked_for_possible_removal) {
@@ -150,12 +149,12 @@ void remove_garbage_slots(agent* thisAgent) {
     free_cons(thisAgent, c);
 
     if (s->wmes || s->all_preferences) {
-      /* --- don't deallocate it if it still has any wmes or preferences --- */
+      /* don't deallocate it if it still has any wmes or preferences */
       s->marked_for_possible_removal = false;
       continue;
     }
 
-    /* --- deallocate the slot --- */
+    /* deallocate the slot */
     if (s->OSK_prefs) {
       clear_preference_list(thisAgent, s->OSK_prefs);
     }

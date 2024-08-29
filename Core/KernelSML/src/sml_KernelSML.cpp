@@ -1,17 +1,15 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // KernelSML class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class represents the translation point between SML and gSKI.
 //
 // It will maintain the information needed to communicate with gSKI
 // and send and receive messages to the client (a tool or simulation).
 //
-/////////////////////////////////////////////////////////////////
 
 #include <stdlib.h>
 
@@ -46,9 +44,9 @@ static soarxml::ElementXML* AddErrorMsg(Connection* pConnection,
   return pResponse;
 }
 
-/*************************************************************
+/**
  * @brief    Creates the singleton kernel object.
- *************************************************************/
+ */
 KernelSML* KernelSML::CreateKernelSML(int portToListenOn) {
   return new KernelSML(portToListenOn);
 }
@@ -135,10 +133,10 @@ KernelSML::~KernelSML() {
   delete m_pRunScheduler;
 }
 
-/*************************************************************
+/**
  * @brief    Shutdown any connections and sockets in preparation
  *           for the kernel process exiting.
- *************************************************************/
+ */
 void KernelSML::Shutdown() { m_pConnectionManager->Shutdown(); }
 
 void KernelSML::SetStopPoint(bool forever, smlRunStepSize runStepSize,
@@ -150,9 +148,9 @@ void KernelSML::SetStopPoint(bool forever, smlRunStepSize runStepSize,
   }
 }
 
-/*************************************************************
+/**
  * @brief    Notify listeners that this event has occured.
- *************************************************************/
+ */
 std::string KernelSML::FireLoadLibraryEvent(char const* pLibraryCommand) {
   const int kBufferLength = 10000;
   char response[kBufferLength];
@@ -195,14 +193,13 @@ std::string KernelSML::FireCliExtensionMessageEvent(
 
   return response;
 }
-//////////////////////////////////////
 
-/*************************************************************
+/**
  * @brief    Send this message out to any clients that are listening.
  *           These messages are from one client to another--kernelSML is just
  *           facilitating the message passing process without knowing/caring
  *what is being passed.
- *************************************************************/
+ */
 std::string KernelSML::SendClientMessage(AgentSML* pAgentSML,
                                          char const* pMessageType,
                                          char const* pMessage) {
@@ -220,12 +217,12 @@ std::string KernelSML::SendClientMessage(AgentSML* pAgentSML,
   return response;
 }
 
-/*************************************************************
+/**
  * @brief    Send this command line out to all clients that have
  *           registered a filter.  The result is the processed
  *           version of the command line.
  *           Returns true if at least one filter was registered.
- *************************************************************/
+ */
 bool KernelSML::SendFilterMessage(AgentSML* pAgent, char const* pCommandLine,
                                   std::string* pResult) {
   std::string s_response;
@@ -245,9 +242,9 @@ bool KernelSML::SendFilterMessage(AgentSML* pAgent, char const* pCommandLine,
   }
 }
 
-/*************************************************************
+/**
  * @brief    Returns true if at least one filter is registered.
- *************************************************************/
+ */
 bool KernelSML::HasFilterRegistered() {
   ConnectionList* pListeners =
       m_RhsListener.GetRhsListeners(sml_Names::kFilterName);
@@ -255,26 +252,26 @@ bool KernelSML::HasFilterRegistered() {
   return (pListeners && pListeners->size() > 0);
 }
 
-/*************************************************************
+/**
  * @brief Convert from a string version of an event to the int (enum) version.
  *        Returns smlEVENT_INVALID_EVENT (== 0) if the string is not recognized.
- *************************************************************/
+ */
 int KernelSML::ConvertStringToEvent(char const* pStr) {
   return m_pEventMap->ConvertToEvent(pStr);
 }
 
-/*************************************************************
+/**
  * @brief Convert from int version of an event to the string form.
  *        Returns NULL if the id is not recognized.
- *************************************************************/
+ */
 char const* KernelSML::ConvertEventToString(int id) {
   return m_pEventMap->ConvertToString(id);
 }
 
-/*************************************************************
+/**
  * @brief    Add a new connection to the list of connections
  *           we're aware of to this soar kernel.
- *************************************************************/
+ */
 void KernelSML::AddConnection(Connection* pConnection) {
   m_pConnectionManager->AddConnection(pConnection);
 
@@ -282,20 +279,20 @@ void KernelSML::AddConnection(Connection* pConnection) {
   this->FireSystemEvent(smlEVENT_AFTER_CONNECTION);
 }
 
-/*************************************************************
+/**
  * @brief    Receive and process any messages from remote connections
  *           that are waiting on a socket.
  *           Returning false indicates we should stop checking
  *           for more messages (and presumably shutdown completely).
- *************************************************************/
+ */
 bool KernelSML::ReceiveAllMessages() {
   return m_pConnectionManager->ReceiveAllMessages();
 }
 
-/*************************************************************
+/**
  * @brief    There should always be exactly one local connection
  *           to us (the process that loaded us).
- *************************************************************/
+ */
 Connection* KernelSML::GetEmbeddedConnection() {
   int index = 0;
   for (Connection* pConnection =
@@ -309,22 +306,22 @@ Connection* KernelSML::GetEmbeddedConnection() {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief    Stop the thread that is used to receive messages
  *           from remote connections.  We do this when we're
  *           using a "synchronized" embedded connection, which
  *           means commands execute in the client's thread instead
  *           of the receiver thread.
- *************************************************************/
+ */
 void KernelSML::StopReceiverThread() {
   m_pConnectionManager->StopReceiverThread();
 }
 
-/*************************************************************
+/**
  * @brief Turning this on means we'll start dumping output about messages
  *        being sent and received.  Currently this only applies to remote
  *connections.
- *************************************************************/
+ */
 void KernelSML::SetTraceCommunications(bool state) {
   m_pConnectionManager->SetTraceCommunications(state);
 }
@@ -333,17 +330,17 @@ bool KernelSML::IsTracingCommunications() {
   return m_pConnectionManager->IsTracingCommunications();
 }
 
-/*************************************************************
+/**
  * @brief    Returns the number of agents.
- *************************************************************/
+ */
 int KernelSML::GetNumberAgents() {
   // FIXME: this function should return unsigned
   return static_cast<int>(m_AgentMap.size());
 }
 
-/*************************************************************
+/**
  * @brief    Remove any event listeners for this connection.
- *************************************************************/
+ */
 void KernelSML::RemoveAllListeners(Connection* pConnection) {
   // Remove any agent specific listeners
   for (AgentMapIter iter = m_AgentMap.begin(); iter != m_AgentMap.end();
@@ -361,9 +358,9 @@ void KernelSML::RemoveAllListeners(Connection* pConnection) {
   m_StringListener.RemoveAllListeners(pConnection);
 }
 
-/*************************************************************
+/**
  * @brief    Delete the agent sml object for this agent.
- *************************************************************/
+ */
 bool KernelSML::DeleteAgentSML(const char* agentName) {
   // See if we already have an object in our map
   AgentMapIter iter = m_AgentMap.find(agentName);
@@ -392,12 +389,12 @@ bool KernelSML::DeleteAgentSML(const char* agentName) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief    Return a string to the caller.
  *
  * @param pResult    This is the string to be returned.
  * @returns  False if the string is NULL.
- *************************************************************/
+ */
 bool KernelSML::ReturnResult(Connection* pConnection,
                              soarxml::ElementXML* pResponse,
                              char const* pResult) {
@@ -410,9 +407,9 @@ bool KernelSML::ReturnResult(Connection* pConnection,
   return true;
 }
 
-/*************************************************************
+/**
  * @brief    Return an integer result to the caller.
- *************************************************************/
+ */
 bool KernelSML::ReturnIntResult(Connection* pConnection,
                                 soarxml::ElementXML* pResponse,
                                 int64_t result) {
@@ -423,9 +420,9 @@ bool KernelSML::ReturnIntResult(Connection* pConnection,
   return true;
 }
 
-/*************************************************************
+/**
  * @brief    Return a boolean result to the caller.
- *************************************************************/
+ */
 bool KernelSML::ReturnBoolResult(Connection* pConnection,
                                  soarxml::ElementXML* pResponse, bool result) {
   char const* pResult = result ? sml_Names::kTrue : sml_Names::kFalse;
@@ -433,9 +430,9 @@ bool KernelSML::ReturnBoolResult(Connection* pConnection,
   return true;
 }
 
-/*************************************************************
+/**
  * @brief    Return an invalid argument error to the caller.
- *************************************************************/
+ */
 bool KernelSML::InvalidArg(Connection* pConnection,
                            soarxml::ElementXML* pResponse,
                            char const* pCommandName,
@@ -450,9 +447,9 @@ bool KernelSML::InvalidArg(Connection* pConnection,
   return true;
 }
 
-/*************************************************************
+/**
  * @brief    Look up an agent from its name.
- *************************************************************/
+ */
 AgentSML* KernelSML::GetAgentSML(char const* pAgentName) {
   if (!pAgentName) {
     return NULL;
@@ -468,12 +465,12 @@ AgentSML* KernelSML::GetAgentSML(char const* pAgentName) {
   }
 }
 
-/*************************************************************
+/**
  * @brief    Defines which phase we stop before when running by decision.
  *           E.g. Pass input phase to stop just after generating output and
  *before receiving input. This is a setting which modifies the future behavior
  *of "run <n> --decisions" commands.
- *************************************************************/
+ */
 void KernelSML::SetStopBefore(smlPhase phase) {
   m_pRunScheduler->SetStopBefore(phase);
   this->FireSystemEvent(smlEVENT_SYSTEM_PROPERTY_CHANGED);
@@ -491,9 +488,9 @@ top_level_phase KernelSML::ConvertSMLToSoarPhase(smlPhase phase) {
   return static_cast<top_level_phase>(phase);
 }
 
-/*************************************************************
+/**
  * @brief    Request that all agents stop soon
- *************************************************************/
+ */
 void KernelSML::InterruptAllAgents(smlStopLocationFlags stopLoc) {
   for (AgentMapIter iter = m_AgentMap.begin(); iter != m_AgentMap.end();
        iter++) {
@@ -510,10 +507,10 @@ void KernelSML::ClearAllInterrupts() {
   }
 }
 
-/*************************************************************
+/**
  * @brief    Take an incoming command and call the appropriate
  *           handler to process it.
- *************************************************************/
+ */
 bool KernelSML::ProcessCommand(char const* pCommandName,
                                Connection* pConnection, AnalyzeXML* pIncoming,
                                soarxml::ElementXML* pResponse) {
@@ -561,13 +558,13 @@ bool KernelSML::ProcessCommand(char const* pCommandName,
   return true;
 }
 
-/*************************************************************
+/**
  * @brief    Takes an incoming SML message and responds with
  *           an appropriate response message.
  *
  * @param pConnection    The connection this message came in on.
  * @param pIncoming      The incoming message
- *************************************************************/
+ */
 soarxml::ElementXML* KernelSML::ProcessIncomingSML(
     Connection* pConnection, soarxml::ElementXML* pIncomingMsg) {
   if (!pIncomingMsg || !pConnection) {

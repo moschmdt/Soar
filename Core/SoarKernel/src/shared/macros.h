@@ -1,4 +1,4 @@
-/** -------------- Macros for safe counters ------------*/
+/** Macros for safe counters */
 
 #define increment_counter(counter) \
   counter++;                       \
@@ -8,7 +8,7 @@
   counter += amt;                    \
   if (counter < lastcnt) counter = amt;
 
-/** ---------------------------------------------------------------------
+/**
      Macros for Inserting and Removing Stuff from Doubly-Linked Lists
 
    Note: fast_remove_from_dll() is the same as remove_from_dll() except
@@ -18,7 +18,7 @@
    the list.  At some point we might want to go through all the code
    and have it use fast_remove_from_dll(), but it's probably not worth
    the effort right now.
--------------------------------------------------------------------- */
+*/
 
 /** This macro cannot be easily converted to an inline function.
    Some additional changes are required.

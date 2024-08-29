@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,18 +24,15 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Get a list of available video modes
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetVideoModes( GLFWvidmode *list, int maxcount )
 {
@@ -78,9 +73,7 @@ GLFWAPI int GLFWAPIENTRY glfwGetVideoModes( GLFWvidmode *list, int maxcount )
 }
 
 
-//========================================================================
 // Get the desktop video mode
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwGetDesktopMode( GLFWvidmode *mode )
 {
@@ -91,4 +84,3 @@ GLFWAPI void GLFWAPIENTRY glfwGetDesktopMode( GLFWvidmode *mode )
 
     *mode = _glfwLibrary.desktopMode;
 }
-

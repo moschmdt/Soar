@@ -1,15 +1,12 @@
-/*************************************************************************
+/**
  *
  *  file:  backtrace.cpp
  *
- * =======================================================================
- *  Backtracing structures and routines.  See also explain.c
- * =======================================================================
- */
+ *  *  Backtracing structures and routines.  See also explain.c
+ *  */
 
-/* ====================================================================
-                        Backtracing routines
-   ==================================================================== */
+/*                         Backtracing routines
+ */
 
 #include <stdlib.h>
 
@@ -34,8 +31,7 @@
 
 using namespace soar_TraceNames;
 
-/* ====================================================================
-
+/**
                             Backtracing
 
    Three sets of conditions are maintained during backtracing:  locals,
@@ -53,7 +49,7 @@ using namespace soar_TraceNames;
    macros below are used to add conditions to these sets.  The negated
    conditions are maintained in the chunk_cond_set "negated_set."
 
-==================================================================== */
+*/
 
 void Explanation_Based_Chunker::add_to_grounds(condition* cond) {
   if ((cond)->bt.wme_->tc != grounds_tc) {
@@ -71,7 +67,7 @@ void Explanation_Based_Chunker::add_to_locals(condition* cond) {
   push(thisAgent, (cond), locals);
 }
 
-/* -------------------------------------------------------------------
+/**
                      Backtrace Through Instantiation
 
    This routine BT's through a given instantiation.  The general method
@@ -82,7 +78,7 @@ void Explanation_Based_Chunker::add_to_locals(condition* cond) {
         ids tested in top-level positive conditions
      3. Scan through the instantiated conditions; add each one to the
         appropriate set (locals, grounds, negated_set).
-------------------------------------------------------------------- */
+*/
 
 void Explanation_Based_Chunker::backtrace_through_instantiation(
     preference* pPref, condition* trace_cond, uint64_t bt_depth,
@@ -119,7 +115,7 @@ void Explanation_Based_Chunker::backtrace_through_instantiation(
       inst->explain_depth = bt_depth;
     }
   }
-  /* --- if the instantiation has already been BT'd, don't repeat it --- */
+  /* if the instantiation has already been BT'd, don't repeat it */
   if (inst->backtrace_number == backtrace_number) {
     if (thisAgent->trace_settings[TRACE_BACKTRACING_SYSPARAM]) {
       thisAgent->outputManager->printa(
@@ -148,7 +144,7 @@ void Explanation_Based_Chunker::backtrace_through_instantiation(
     backtrace_through_OSK(inst->OSK_proposal_prefs, inst->explain_depth);
   }
 
-  /* --- scan through conditions, collect grounds and locals --- */
+  /* scan through conditions, collect grounds and locals */
   negateds_to_print = NIL;
 
   for (c = inst->top_of_instantiated_conditions; c != NIL; c = c->next) {
@@ -178,7 +174,7 @@ void Explanation_Based_Chunker::backtrace_through_instantiation(
     }
   }
 
-  /* --- if tracing BT, print the resulting conditions, etc. --- */
+  /* if tracing BT, print the resulting conditions, etc. */
   if (thisAgent->trace_settings[TRACE_BACKTRACING_SYSPARAM]) {
     thisAgent->outputManager->printa(thisAgent, "  -->Grounds:\n");
     xml_begin_tag(thisAgent, kTagGrounds);
@@ -203,12 +199,12 @@ void Explanation_Based_Chunker::backtrace_through_instantiation(
   }
 }
 
-/* ---------------------------------------------------------------
+/**
                              Trace Locals
 
    This routine backtraces through locals, and keeps doing so until
    there are no more locals to BT.
---------------------------------------------------------------- */
+*/
 void Explanation_Based_Chunker::backtrace_through_OSK(cons* pOSKPrefList,
                                                       uint64_t lExplainDepth) {
   cons* l_OSK_prefs;
@@ -278,8 +274,8 @@ void Explanation_Based_Chunker::trace_locals() {
       xml_begin_tag(thisAgent, kTagBacktrace);
       xml_end_tag(thisAgent, kTagBacktrace);
     }
-    /* --- for augmentations of the local goal id, either handle the
-     * "^quiescence t" test or discard it --- */
+    /* for augmentations of the local goal id, either handle the
+     * "^quiescence t" test or discard it */
     Symbol* thisID = cond->data.tests.id_test->eq_test->data.referent;
     Symbol* thisAttr = cond->data.tests.attr_test->eq_test->data.referent;
     Symbol* thisValue = cond->data.tests.value_test->eq_test->data.referent;
@@ -322,7 +318,7 @@ void Explanation_Based_Chunker::perform_dependency_analysis() {
 
   thisAgent->explanationMemory->set_backtrace_number(backtrace_number);
 
-  /* Backtrace through the instantiation that produced each result --- */
+  /* Backtrace through the instantiation that produced each result */
   for (pref = m_results; pref != NIL; pref = pref->next_result) {
     if (thisAgent->trace_settings[TRACE_BACKTRACING_SYSPARAM]) {
       thisAgent->outputManager->printa(thisAgent, "\nFor result preference ");

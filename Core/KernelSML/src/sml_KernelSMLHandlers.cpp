@@ -1,16 +1,14 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // KernelSML handlers file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // These are the command handler methods for KernelSML.
 // Just moved to a separate implementation file to
 // keep the code more manageable.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "agent.h"
 #include "debug.h"
@@ -133,7 +131,7 @@ bool fileExistsAndIsDir(const char* path) {
   return (stat(path, &st) == 0 && !S_ISDIR(st.st_mode));
 #endif
 }
-/*************************************************************
+/**
  * @brief    A command handler (SML message->appropriate gSKI handling).
  *
  * @param pAgent         The agent this command is for (can be NULL if the
@@ -147,7 +145,7 @@ bool fileExistsAndIsDir(const char* path) {
  * @returns False if we had an error and wish to generate a generic error
  *message (based on the incoming call + pError) True if the call succeeded or we
  *generated another more specific error already.
- *************************************************************/
+ */
 bool KernelSML::HandleCreateAgent(AgentSML* pAgentSML, char const* pCommandName,
                                   Connection* pConnection,
                                   AnalyzeXML* pIncoming,
@@ -215,7 +213,7 @@ bool KernelSML::HandleCreateAgent(AgentSML* pAgentSML, char const* pCommandName,
 
   if (!Soar_Instance::Get_Soar_Instance().was_run_from_unit_test()) {
     /* -- Load user settings for this agent.  Checks current working
-     *    directory, dll path and the SOAR_HOME environment variable -- */
+     *    directory, dll path and the SOAR_HOME environment variable */
     std::string lFileName("settings.soar");
     std::string directory = searchForFile(lFileName);
     if (!directory.empty()) {
@@ -240,7 +238,7 @@ bool KernelSML::HandleCreateAgent(AgentSML* pAgentSML, char const* pCommandName,
 
 std::string searchForFile(std::string& pFileName) {
   /* -- Load user settings for this agent.  Checks current working
-   *    directory, dll path and the SOAR_HOME environment variable -- */
+   *    directory, dll path and the SOAR_HOME environment variable */
   std::string directory;
   char buf[1024];
   char* ret;

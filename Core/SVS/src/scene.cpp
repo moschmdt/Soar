@@ -19,7 +19,7 @@
 
 const std::string root_id = "world";
 
-/*
+/**
  Native properties are currently the position, rotation, and scaling
  transforms of a node, named px, py, pz, rx, ry, rz, sx, sy, sz.
 */
@@ -244,7 +244,7 @@ int scene::parse_add(std::vector<std::string>& f, std::string& error) {
   }
   assert(mods.size() == vals.size());
 
-  /*
+  /**
    Go through once to figure out what type of node this should be
   */
   is_convex = false;
@@ -272,7 +272,7 @@ int scene::parse_add(std::vector<std::string>& f, std::string& error) {
     n = new group_node(id);
   }
 
-  /*
+  /**
    Go through again to apply transforms
   */
   for (size_t i = 0, iend = mods.size(); i < iend; ++i) {

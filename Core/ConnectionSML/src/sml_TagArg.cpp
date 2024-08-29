@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // TagArg class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // Represents an SML node which represents an argument for a command and has
 // the tag <arg>.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "sml_TagArg.h"
 

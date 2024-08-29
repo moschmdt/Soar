@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,9 +24,7 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
-//========================================================================
 // Description:
 //
 // This module acts as an interface for different image file formats (the
@@ -50,7 +46,6 @@
 // method is included when GL_SGIS_generate_mipmap is not supported (it
 // generates all mipmaps of a 256x256 RGB texture in ~3 ms on a P3-500).
 //
-//========================================================================
 
 
 #include "internal.h"
@@ -64,13 +59,11 @@
 #endif // GL_SGIS_generate_mipmap
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Upsample image, from size w1 x h1 to w2 x h2
-//========================================================================
 
 static void UpsampleImage( unsigned char *src, unsigned char *dst,
     int w1, int h1, int w2, int h2, int bpp )
@@ -140,9 +133,7 @@ static void UpsampleImage( unsigned char *src, unsigned char *dst,
 }
 
 
-//========================================================================
 // Build the next mip-map level
-//========================================================================
 
 static int HalveImage( GLubyte *src, int *width, int *height,
     int components )
@@ -207,9 +198,7 @@ static int HalveImage( GLubyte *src, int *width, int *height,
 }
 
 
-//========================================================================
 // Rescales an image into power-of-two dimensions
-//========================================================================
 
 static int RescaleImage( GLFWimage* image )
 {
@@ -265,13 +254,11 @@ static int RescaleImage( GLFWimage* image )
 }
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Read an image from a named file
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwReadImage( const char *name, GLFWimage *img,
     int flags )
@@ -341,9 +328,7 @@ GLFWAPI int GLFWAPIENTRY glfwReadImage( const char *name, GLFWimage *img,
 }
 
 
-//========================================================================
 // Read an image file from a memory buffer
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwReadMemoryImage( const void *data, long size, GLFWimage *img, int flags )
 {
@@ -412,9 +397,7 @@ GLFWAPI int GLFWAPIENTRY glfwReadMemoryImage( const void *data, long size, GLFWi
 }
 
 
-//========================================================================
 // Free allocated memory for an image
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwFreeImage( GLFWimage *img )
 {
@@ -439,9 +422,7 @@ GLFWAPI void GLFWAPIENTRY glfwFreeImage( GLFWimage *img )
 }
 
 
-//========================================================================
 // Read an image from a file, and upload it to texture memory
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwLoadTexture2D( const char *name, int flags )
 {
@@ -477,9 +458,7 @@ GLFWAPI int GLFWAPIENTRY glfwLoadTexture2D( const char *name, int flags )
 }
 
 
-//========================================================================
 // Read an image from a buffer, and upload it to texture memory
-//========================================================================
 
 GLFWAPI int  GLFWAPIENTRY glfwLoadMemoryTexture2D( const void *data, long size, int flags )
 {
@@ -515,9 +494,7 @@ GLFWAPI int  GLFWAPIENTRY glfwLoadMemoryTexture2D( const void *data, long size, 
 }
 
 
-//========================================================================
 // Upload an image object to texture memory
-//========================================================================
 
 GLFWAPI int  GLFWAPIENTRY glfwLoadTextureImage2D( GLFWimage *img, int flags )
 {
@@ -626,4 +603,3 @@ GLFWAPI int  GLFWAPIENTRY glfwLoadTextureImage2D( GLFWimage *img, int flags )
 
     return GL_TRUE;
 }
-

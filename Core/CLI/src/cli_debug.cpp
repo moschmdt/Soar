@@ -1,11 +1,8 @@
-/*------------------------------------------------------------------
-                       set cli command
-
-   @author Mazin Assanie
-
-   @date 2007
-
------------------------------------------------------------------- */
+/**
+  set cli command
+  @author Mazin Assanie
+  @date 2007
+*/
 
 #include <time.h>
 

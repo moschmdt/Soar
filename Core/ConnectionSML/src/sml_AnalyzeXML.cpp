@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // AnalyzeXML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // An SML document consists of a series of elements.  We want to be
 // able to ask questions like "give me the <result> tag" element and
@@ -16,7 +15,6 @@
 // and then each request becomes a look up.
 //
 // This class represents those references into the document.
-/////////////////////////////////////////////////////////////////
 
 #include <cstdlib>
 
@@ -129,9 +127,9 @@ double AnalyzeXML::GetResultFloat(double defaultValue) const {
   return value;
 }
 
-/*************************************************************
+/**
  * @brief As "GetArgValue" but parsed as a boolean.
- *************************************************************/
+ */
 bool AnalyzeXML::GetArgBool(char const* pArgName, int argPos,
                             bool defaultValue) const {
   char const* pValue = m_ArgMap.GetArgValue(pArgName, argPos);
@@ -150,9 +148,9 @@ bool AnalyzeXML::GetArgBool(char const* pArgName, int argPos,
   }
 }
 
-/*************************************************************
+/**
  * @brief As "GetArgValue" but parsed as an int.
- *************************************************************/
+ */
 int AnalyzeXML::GetArgInt(char const* pArgName, int argPos,
                           int defaultValue) const {
   char const* pValue = m_ArgMap.GetArgValue(pArgName, argPos);
@@ -181,9 +179,9 @@ int64_t AnalyzeXML::GetArgInt(char const* pArgName, int argPos,
   return value;
 }
 
-/*************************************************************
+/**
  * @brief As "GetArgValue" but parsed as an double.
- *************************************************************/
+ */
 double AnalyzeXML::GetArgFloat(char const* pArgName, int argPos,
                                double defaultValue) const {
   char const* pValue = m_ArgMap.GetArgValue(pArgName, argPos);
@@ -198,7 +196,7 @@ double AnalyzeXML::GetArgFloat(char const* pArgName, int argPos,
   return value;
 }
 
-/*************************************************************
+/**
  * @brief Make a sequential pass and find some of the interesting tags.
  *
  * Go through the XML document and see which tags we recognize.
@@ -208,7 +206,7 @@ double AnalyzeXML::GetArgFloat(char const* pArgName, int argPos,
  * speeding things up for the command tags.
  *
  * @param pRootXML   The SML document to analyze
- *************************************************************/
+ */
 void AnalyzeXML::Analyze(ElementXML const* pRootXML) {
   // If we've already used this object to run an analysis before
   // we need to delete any existing references and start over

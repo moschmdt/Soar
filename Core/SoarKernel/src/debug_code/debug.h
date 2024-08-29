@@ -1,4 +1,4 @@
-/**------------------------------------------------------------------
+/**
                        debug.h
 
    @brief debug.h provides some utility functions for inspecting and
@@ -9,7 +9,7 @@
            experimental chunking and memory consolidation branches
            later.)
 
------------------------------------------------------------------- */
+*/
 
 #ifndef SOARDEBUG_H
 #define SOARDEBUG_H

@@ -8,9 +8,9 @@
 #include "scene.h"
 #include "sgnode.h"
 
-/**********************************************
+/**
  * member functions for filter_val_c<sgnode*>
- ***********************************************/
+ */
 
 void filter_val_c<sgnode*>::get_rep(
     std::map<std::string, std::string>& rep) const {
@@ -24,9 +24,9 @@ std::string filter_val_c<sgnode*>::toString() const {
   return ss.str();
 }
 
-/*********
+/**
  * filter
- ********/
+ */
 
 filter::filter(Symbol* root, soar_interface* si, filter_input* in)
     : root(root), si(si), status_wme(NULL), input(in) {

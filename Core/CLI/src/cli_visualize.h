@@ -8,6 +8,7 @@
 #ifndef CLI_VISUALIZE_H_
 #define CLI_VISUALIZE_H_
 
+#include "cli_CommandLineInterface.h"
 #include "cli_Options.h"
 #include "cli_Parser.h"
 #include "misc.h"

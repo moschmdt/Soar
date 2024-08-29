@@ -3,7 +3,7 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** ---------------------------------------------------------------------
+/**
                      Preference Management Routines
 
    Make_preference() creates a new preference structure of the given type
@@ -32,7 +32,7 @@
    preference structures).  This routine removes all preferences for
    matching values from TM, and deallocates the o-reject preferences when
    done.
---------------------------------------------------------------------- */
+*/
 
 #ifndef PREFMEM_H
 #define PREFMEM_H
@@ -41,7 +41,7 @@
 #include "kernel.h"
 #include "stl_typedefs.h"
 
-/** ------------------------------------------------------------------------
+/**
                                Preferences
 
    Fields in a preference:
@@ -105,7 +105,7 @@
           (hence it couldn't possibly be needed anymore)
    or (2) its match goal is removed from the context stack
           (hence there's no way we'll ever want to BT through it)
------------------------------------------------------------------------- */
+*/
 
 typedef struct preference_struct {
   PreferenceType type; /** acceptable, better, etc. */

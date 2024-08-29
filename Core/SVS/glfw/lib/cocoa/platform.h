@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Cocoa/NSOpenGL
 // API Version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2009-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
 // This software is provided 'as-is', without any express or implied
@@ -25,7 +23,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #ifndef _platform_h_
 #define _platform_h_
@@ -50,23 +47,16 @@ typedef const GLubyte *(APIENTRY *PFNGLGETSTRINGIPROC)(GLenum, GLuint);
 
 #endif /**GL_VERSION_3_0*/
 
-//========================================================================
 // GLFW platform specific types
-//========================================================================
 
-//------------------------------------------------------------------------
 // Pointer length integer
-//------------------------------------------------------------------------
 typedef intptr_t GLFWintptr;
 
-//------------------------------------------------------------------------
 // Window structure
-//------------------------------------------------------------------------
 typedef struct _GLFWwin_struct _GLFWwin;
 
 struct _GLFWwin_struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // User callback functions
   GLFWwindowsizefun windowSizeCallback;
   GLFWwindowclosefun windowCloseCallback;
@@ -115,8 +105,7 @@ struct _GLFWwin_struct {
 
   PFNGLGETSTRINGIPROC GetStringi;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   id window;
   id pixelFormat;
   id context;
@@ -126,20 +115,16 @@ struct _GLFWwin_struct {
 
 GLFWGLOBAL _GLFWwin _glfwWin;
 
-//------------------------------------------------------------------------
 // Library global data
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Window opening hints
   _GLFWhints hints;
 
   // Initial desktop mode
   GLFWvidmode desktopMode;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // Timer data
   struct {
     double base;
@@ -157,12 +142,9 @@ GLFWGLOBAL struct {
 
 } _glfwLibrary;
 
-//------------------------------------------------------------------------
 // User input status (some of this should go in _GLFWwin)
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Mouse status
   int MousePosX, MousePosY;
   int WheelPos;
@@ -177,15 +159,12 @@ GLFWGLOBAL struct {
   int StickyMouseButtons;
   int KeyRepeat;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   double WheelPosFloating;
 
 } _glfwInput;
 
-//------------------------------------------------------------------------
 // Thread information
-//------------------------------------------------------------------------
 typedef struct _GLFWthread_struct _GLFWthread;
 
 // Thread record (one for each thread)
@@ -214,10 +193,8 @@ GLFWGLOBAL struct {
 
 } _glfwThrd;
 
-//========================================================================
 // Macros for encapsulating critical code sections (i.e. making parts
 // of GLFW thread safe)
-//========================================================================
 
 // Define so we can use the same thread code as X11
 #define _glfw_numprocessors(n)                        \
@@ -240,9 +217,7 @@ GLFWGLOBAL struct {
 #define LEAVE_THREAD_CRITICAL_SECTION \
   pthread_mutex_unlock(&_glfwThrd.CriticalSection);
 
-//========================================================================
 // Prototypes for platform specific internal functions
-//========================================================================
 
 // Time
 void _glfwInitTimer(void);

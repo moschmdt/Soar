@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // KernelSMLInterface file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This file provides a C level interface into the KernelSML library and
 // implements "EmbeddedSMLInterface.h" (so there is no KernelSMLInteface.h
@@ -17,7 +16,6 @@
 // and kernel happen to be in the same process) or the SML can be sent as a
 // regular XML stream.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "ElementXML.h"
 #include "EmbeddedSMLInterface.h"

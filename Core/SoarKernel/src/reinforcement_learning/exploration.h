@@ -7,17 +7,14 @@
  *
  *  file:  exploration.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef EXPLORATION_H
 #define EXPLORATION_H
 
 #include "kernel.h"
 
-//////////////////////////////////////////////////////////
 // Exploration Types
-//////////////////////////////////////////////////////////
 typedef struct exploration_parameter_struct {
   const char* name;
   double value;
@@ -26,9 +23,7 @@ typedef struct exploration_parameter_struct {
   double rates[EXPLORATION_REDUCTIONS];
 } exploration_parameter;
 
-//////////////////////////////////////////////////////////
 // Exploration Policies
-//////////////////////////////////////////////////////////
 
 // validity
 extern bool exploration_valid_policy(const char* policy_name);
@@ -45,9 +40,7 @@ extern bool exploration_set_policy(agent* thisAgent, const int policy);
 // get exploration policy
 extern const int exploration_get_policy(agent* thisAgent);
 
-//////////////////////////////////////////////////////////
 // Exploration Policy Parameters
-//////////////////////////////////////////////////////////
 
 // add parameter
 extern exploration_parameter* exploration_add_parameter(
@@ -91,9 +84,7 @@ extern bool exploration_set_parameter_value(agent* thisAgent,
 // update parameters according to their reduction policies/rates
 extern void exploration_update_parameters(agent* thisAgent);
 
-//////////////////////////////////////////////////////////
 // Reduction Policies
-//////////////////////////////////////////////////////////
 
 // policy <=> name conversion
 extern const int exploration_convert_reduction_policy(const char* policy_name);
@@ -124,9 +115,7 @@ extern bool exploration_set_reduction_policy(agent* thisAgent,
                                              const int parameter,
                                              const int policy);
 
-//////////////////////////////////////////////////////////
 // Reduction Rates
-//////////////////////////////////////////////////////////
 
 // validate reduction rate
 extern bool exploration_valid_reduction_rate(agent* thisAgent,
@@ -158,9 +147,7 @@ extern bool exploration_set_reduction_rate(agent* thisAgent,
                                            const int policy,
                                            double reduction_rate);
 
-//////////////////////////////////////////////////////////
 // Decision Procedures
-//////////////////////////////////////////////////////////
 
 // selects a candidate based upon the current exploration mode
 extern preference* exploration_choose_according_to_policy(

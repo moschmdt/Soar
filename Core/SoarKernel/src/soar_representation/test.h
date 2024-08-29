@@ -1,4 +1,4 @@
-/** -------------------------------------------------------------------
+/**
                               test.h
 
    Tests in conditions can be blank tests (null), tests for equality
@@ -11,7 +11,7 @@
          support chunking of other symbol types and adding all test
          types to chunks.  The previous system differed significantly.
          - MMA 2013
-------------------------------------------------------------------- */
+*/
 
 #ifndef TEST_H_
 #define TEST_H_
@@ -22,7 +22,7 @@
 template <typename T>
 inline void allocate_cons(agent* thisAgent, T* dest_cons_pointer);
 
-/** -- test_info stores information about a test.  If nil, the test is
+/** test_info stores information about a test.  If nil, the test is
  *    considered blank.
  *
  *    The original_test pointer stores the test that was defined when the
@@ -51,11 +51,11 @@ typedef struct test_struct {
   Identity* identity;
 } test_info;
 
-/** --- Note that the test typedef is a *pointer* to a test struct. A test is
- *     considered blank when that pointer is nil. --- */
+/** Note that the test typedef is a *pointer* to a test struct. A test is
+ *     considered blank when that pointer is nil. */
 typedef test_info* test;
 
-/** --- Descriptions of these functions can be found in the test.cpp --- */
+/** Descriptions of these functions can be found in the test.cpp */
 char first_letter_from_test(test t);
 bool tests_are_equal(test t1, test t2, bool neg);
 bool tests_identical(test t1, test t2, bool considerIdentity = false);
@@ -80,7 +80,7 @@ void add_test_if_not_already_there(agent* thisAgent, test* t, test new_test,
 
 cons* delete_test_from_conjunct(agent* thisAgent, test* t, cons* pDeleteItem);
 
-/** --- Some functions related to tests that used to be in rete.cpp */
+/** Some functions related to tests that used to be in rete.cpp */
 
 void add_hash_info_to_id_test(agent* thisAgent, condition* cond, byte field_num,
                               rete_node_level levels_up);

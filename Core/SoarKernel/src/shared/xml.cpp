@@ -1,9 +1,8 @@
-/*************************************************************************
+/**
  *
  *  file:  xml.cpp
  *
- * =======================================================================
- *
+ *  *
  * Contains methods for generating XML objects in response to kernel commands.
  *
  * The commands are modelled after the existing kernel functions which are tied
@@ -19,8 +18,7 @@
  * results from commands). This new approach is more efficient to both create
  * and to subsequently use.
  *
- * =======================================================================
- */
+ *  */
 
 #include "xml.h"
 

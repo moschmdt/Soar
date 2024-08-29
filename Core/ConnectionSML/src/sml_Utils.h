@@ -1,15 +1,13 @@
 #ifndef SML_UTILS_H
 #define SML_UTILS_H
 
-/////////////////////////////////////////////////////////////////
 // Utility header
 //
-// Author: Jonathan Voigt, Bob Marinier
-// Date  : June 2007
+// @author: Jonathan Voigt, Bob Marinier
+// @date  : June 2007
 //
 // This header collects some useful code used throughout Soar.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "Export.h"
 
@@ -40,7 +38,6 @@ namespace sml {
     if (!(x)) return NULL; \
   }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : Sleep
 //
 // Argument       : int secs
@@ -49,33 +46,27 @@ namespace sml {
 //
 // Description    : Sleep for the specified seconds and milliseconds
 //
-/////////////////////////////////////////////////////////////////////
 void EXPORT Sleep(int secs, int msecs);
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ReportSystemErrorMessage
 //
 // Return type    : void
 //
 // Description    : Get the text of the most recent system error
 //
-/////////////////////////////////////////////////////////////////////
 void EXPORT ReportSystemErrorMessage();
 
-/////////////////////////////////////////////////////////////////
 // Debug stuff
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // Some handy methods for displaying debug output and for
 // tracking entry and exit from functions.
 //
-/////////////////////////////////////////////////////////////////
 
 // Have to comment this in before we can turn on dump of method entry and exit
 // (currently used in socket code)
-// #define DEBUG_CALLS
 
 void EXPORT PrintDebugMethod(char const* pMethodName, char const* pStr);
 void EXPORT PrintDebug(char const* pStr);
@@ -174,7 +165,6 @@ class EXPORT CTDebugEnterMethod {
 #endif  // DEBUG_CALLS
 
 ///// End debug stuff
-////////////////////////////
 
 }  // namespace sml
 

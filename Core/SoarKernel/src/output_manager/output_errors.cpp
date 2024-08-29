@@ -1,16 +1,16 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "COPYING" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*------------------------------------------------------------------
+/**
              errors.cpp
 
    @brief This file contains functions that print error messages in
    the various parts of the kernel.  Moving it here allows the logic
    to be cleaner and easier to read.
 
------------------------------------------------------------------- */
+*/
 
 #include "agent.h"
 #include "ebc.h"

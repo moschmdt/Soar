@@ -1,4 +1,4 @@
-/*
+/**
  * smem_timers.cpp
  *
  *  Created on: Aug 21, 2016

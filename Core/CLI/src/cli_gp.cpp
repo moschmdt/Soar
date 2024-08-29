@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // gp command file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com, Bob Marinier
-// Date  : 2008
+// @author: Jonathan Voigt, voigtjr@gmail.com, Bob Marinier
+// @date  : 2008
 //
-/////////////////////////////////////////////////////////////////
 
 #include <iostream>
 #include <sstream>

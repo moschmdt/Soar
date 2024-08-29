@@ -1,11 +1,9 @@
-/////////////////////////////////////////////////////////////////
 // rl command file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com,
+// @author: Jonathan Voigt, voigtjr@gmail.com,
 //         Nate Derbinsky, nlderbin@umich.edu
-// Date  : 2007
+// @date  : 2007
 //
-/////////////////////////////////////////////////////////////////
 
 #include <map>
 #include <vector>

@@ -1,22 +1,20 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // AgentListener class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : September 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : September 2004
 //
 // This class's HandleEvent method is called when
 // specific events occur within the agent:
 //
-/*
+/**
  *     smlEVENT_AFTER_AGENT_CREATED,
  *     smlEVENT_BEFORE_AGENT_DESTROYED,
  *     smlEVENT_BEFORE_AGENTS_RUN_STEP,
  *     smlEVENT_BEFORE_AGENT_REINITIALIZED,
  *     smlEVENT_AFTER_AGENT_REINITIALIZED,
  */
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 

@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // RunListener class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : September 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : September 2004
 //
 // This class's HandleEvent method is called when
 // specific events occur within the agent:
@@ -20,7 +19,6 @@
  *     @li smlEVENT_BEFORE_RUNNING
  *     @li smlEVENT_AFTER_RUNNING
  */
-/////////////////////////////////////////////////////////////////
 
 #ifndef RUN_LISTENER_H
 #define RUN_LISTENER_H

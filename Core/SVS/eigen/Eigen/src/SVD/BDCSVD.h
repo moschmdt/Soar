@@ -19,8 +19,6 @@
 
 #ifndef EIGEN_BDCSVD_H
 #define EIGEN_BDCSVD_H
-// #define EIGEN_BDCSVD_DEBUG_VERBOSE
-// #define EIGEN_BDCSVD_SANITY_CHECKS
 
 #ifdef EIGEN_BDCSVD_SANITY_CHECKS
 #undef eigen_internal_assert

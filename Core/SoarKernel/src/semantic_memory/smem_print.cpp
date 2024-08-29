@@ -1,4 +1,4 @@
-/*
+/**
  * smem_print.cpp
  *
  *  Created on: Aug 21, 2016
@@ -69,7 +69,7 @@ bool SMem_Manager::export_smem(uint64_t lti_id, std::string& result_text,
 
 void SMem_Manager::create_store_set(ltm_set* store_set, uint64_t lti_id,
                                     uint64_t depth) {
-  /*
+  /**
    * This populates the input argument store_set (a ltm set) with a given
    * lti_id's contents. scijones Sept 9, 2016.
    */

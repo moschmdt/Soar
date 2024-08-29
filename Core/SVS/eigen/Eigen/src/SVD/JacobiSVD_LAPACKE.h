@@ -50,11 +50,11 @@ namespace Eigen {
               unsigned int computationOptions) {                              \
     typedef Matrix<EIGTYPE, Dynamic, Dynamic, EIGCOLROW, Dynamic, Dynamic>    \
         MatrixType;                                                           \
-    /**typedef MatrixType::Scalar Scalar;*/                                    \
-    /**typedef MatrixType::RealScalar RealScalar;*/                            \
+    /**typedef MatrixType::Scalar Scalar;*/                                   \
+    /**typedef MatrixType::RealScalar RealScalar;*/                           \
     allocate(matrix.rows(), matrix.cols(), computationOptions);               \
                                                                               \
-    /**const RealScalar precision = RealScalar(2) *                            \
+    /**const RealScalar precision = RealScalar(2) *                           \
      * NumTraits<Scalar>::epsilon();*/                                        \
     m_nonzeroSingularValues = m_diagSize;                                     \
                                                                               \
@@ -98,7 +98,7 @@ namespace Eigen {
         (LAPACKE_RTYPE*)m_singularValues.data(), u, ldu, vt, ldvt,            \
         superb.data());                                                       \
     if (computeV()) m_matrixV = localV.adjoint();                             \
-    /** for(int i=0;i<m_diagSize;i++) if (m_singularValues.coeffRef(i) <       \
+    /** for(int i=0;i<m_diagSize;i++) if (m_singularValues.coeffRef(i) <      \
      * precision) { m_nonzeroSingularValues--;                                \
      * m_singularValues.coeffRef(i)=RealScalar(0);}*/                         \
     m_isInitialized = true;                                                   \

@@ -3,7 +3,7 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** =======================================================================
+/**
                                  io_soar.h
 
                   General Soar I/O System Routines
@@ -21,7 +21,7 @@
    once per elaboration cycle.  (once per Decision cycle in Soar 8).
    The output module is notified about WM changes via a call to
    inform_output_module_of_wm_changes().
-======================================================================= */
+*/
 
 #ifndef IO_H
 #define IO_H
@@ -50,7 +50,7 @@ extern void inform_output_module_of_wm_changes(agent* thisAgent,
 extern Symbol* get_next_io_symbol_from_text_input_line(
     agent* thisAgent, char** text_read_position); /** in io.cpp */
 
-/** =======================================================================
+/**
                             Input Functions
 
    Input functions take one parameter--a mode (integer) indicating why the
@@ -106,7 +106,7 @@ extern Symbol* get_next_io_symbol_from_text_input_line(
    TOP_STATE_JUST_REMOVED.  Remove_input_wme() normally returns true,
    indicating success.  It returns false if an error occurs (e.g., if the
    wme argument isn't in WM).
-======================================================================= */
+*/
 
 #define TOP_STATE_JUST_CREATED 1
 #define NORMAL_INPUT_CYCLE 2
@@ -124,7 +124,7 @@ extern wme* add_input_wme(agent* thisAgent, Symbol* id, Symbol* attr,
                           Symbol* value);
 extern bool remove_input_wme(agent* thisAgent, wme* w);
 
-/** =======================================================================
+/**
                             Output Functions
 
    Output functions take two parameters--a mode (integer) indicating why the
@@ -159,7 +159,7 @@ extern bool remove_input_wme(agent* thisAgent, wme* w);
    "id" or "attr" (or both) can be specified as "don't care" by giving
    NULL (0) pointers for them instead of pointers to symbols.  If no matching
    wme is found, the function returns a NULL pointer.
-======================================================================= */
+*/
 
 typedef struct io_wme_struct {
   struct io_wme_struct* next; /** points to next io_wme in the chain */

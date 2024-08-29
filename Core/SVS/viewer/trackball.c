@@ -1,4 +1,4 @@
-/*
+/**
  * (c) Copyright 1993, 1994, Silicon Graphics, Inc.
  * ALL RIGHTS RESERVED
  * Permission to use, copy, modify, and distribute this software for
@@ -34,7 +34,7 @@
  *
  * OpenGL(TM) is a trademark of Silicon Graphics, Inc.
  */
-/*
+/**
  * Trackball code:
  *
  * Implementation of a virtual trackball.
@@ -55,7 +55,7 @@
 #include <math.h>
 #include "trackball.h"
 
-/*
+/**
  * This size should really be based on the distance from the center of
  * rotation to the point on the object underneath the mouse.  That
  * point would then track the mouse as closely as possible.  This is a
@@ -64,7 +64,7 @@
  */
 #define TRACKBALLSIZE  (0.8f)
 
-/*
+/**
  * Local function prototypes (not defined in trackball.h)
  */
 static double tb_project_to_sphere(double, double, double);
@@ -147,7 +147,7 @@ vadd(const double src1[3], const double src2[3], double dst[3])
 	dst[2] = src1[2] + src2[2];
 }
 
-/*
+/**
  * Ok, simulate a track-ball.  Project the points onto the virtual
  * trackball, then figure out the axis of rotation, which is the cross
  * product of P1 P2 and O P1 (O is the center of the ball, 0,0,0)
@@ -175,25 +175,25 @@ trackball(double q[4], double sz, double p1x, double p1y, double p2x, double p2y
 		return;
 	}
 
-	/*
+	/**
 	 * First, figure out z-coordinates for projection of P1 and P2 to
 	 * deformed sphere
 	 */
 	vset(p1,p1x,p1y,tb_project_to_sphere(sz,p1x,p1y));
 	vset(p2,p2x,p2y,tb_project_to_sphere(sz,p2x,p2y));
 
-	/*
+	/**
 	 *  Now, we want the cross product of P1 and P2
 	 */
 	vcross(p2,p1,a);
 
-	/*
+	/**
 	 *  Figure out how much to rotate around that axis.
 	 */
 	vsub(p1,p2,d);
 	t = vlength(d) / (2.0*sz);
 
-	/*
+	/**
 	 * Avoid problems with out-of-control values...
 	 */
 	if (t > 1.0) t = 1.0;
@@ -202,7 +202,7 @@ trackball(double q[4], double sz, double p1x, double p1y, double p2x, double p2y
 	axis_to_quat(a, phi, q);
 }
 
-/*
+/**
  *  Given an axis and angle, compute quaternion.
  */
 void
@@ -214,7 +214,7 @@ axis_to_quat(const double a[3], double phi, double q[4])
 	q[3] = cos(phi/2.0);
 }
 
-/*
+/**
  * Project an x,y pair onto a sphere of radius r OR a hyperbolic sheet
  * if we are away from the center of the sphere.
  */
@@ -233,7 +233,7 @@ tb_project_to_sphere(double r, double x, double y)
 	return z;
 }
 
-/*
+/**
  * Given two rotations, e1 and e2, expressed as quaternion rotations,
  * figure out the equivalent single rotation and stuff it into dest.
  *
@@ -284,7 +284,7 @@ printf("tf = %f %f %f %f\n", tf[0], tf[1], tf[2], tf[3]);
 	}
 }
 
-/*
+/**
  * Quaternions always obey:  a^2 + b^2 + c^2 + d^2 = 1.0
  * If they don't add up to 1.0, dividing by their magnitued will
  * renormalize them.
@@ -307,7 +307,7 @@ normalize_quat(double q[4])
 		q[i] /= mag;
 }
 
-/*
+/**
  * Build a rotation matrix, given a quaternion rotation.
  *
  */
@@ -334,4 +334,3 @@ build_rotmatrix(double m[4][4], const double q[4])
 	m[3][2] = 0.0;
 	m[3][3] = 1.0;
 }
-

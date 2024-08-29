@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Cocoa/NSOpenGL
 // API Version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2009-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
 // This software is provided 'as-is', without any express or implied
@@ -25,7 +23,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
@@ -34,9 +31,7 @@
 // Needed for _NSGetProgname
 #include <crt_externs.h>
 
-//========================================================================
 // GLFW application class
-//========================================================================
 
 @interface GLFWApplication : NSApplication
 @end
@@ -67,9 +62,7 @@
 - (void)setAppleMenu:(NSMenu *)m;
 @end
 
-//========================================================================
 // Try to figure out what the calling application is called
-//========================================================================
 
 static NSString *findAppName( void )
 {
@@ -116,13 +109,11 @@ static NSString *findAppName( void )
 }
 
 
-//========================================================================
 // Set up the menu bar (manually)
 // This is nasty, nasty stuff -- calls to undocumented semi-private APIs that
 // could go away at any moment, lots of stuff that really should be
 // localize(d|able), etc.  Loading a nib would save us this horror, but that
 // doesn't seem like a good thing to require of GLFW's clients.
-//========================================================================
 
 static void setUpMenuBar( void )
 {
@@ -188,9 +179,7 @@ static void setUpMenuBar( void )
 }
 
 
-//========================================================================
 // Initialize the Cocoa Application Kit
-//========================================================================
 
 static GLboolean initializeAppKit( void )
 {
@@ -213,10 +202,8 @@ static GLboolean initializeAppKit( void )
 }
 
 
-//========================================================================
 // Delegate for window related notifications
 // (but also used as an application delegate)
-//========================================================================
 
 @interface GLFWWindowDelegate : NSObject
 @end
@@ -303,9 +290,7 @@ static GLboolean initializeAppKit( void )
 
 @end
 
-//========================================================================
 // Converts a Mac OS X keycode to a GLFW keycode
-//========================================================================
 
 static int convertMacKeyCode( unsigned int macKeyCode )
 {
@@ -454,9 +439,7 @@ static int convertMacKeyCode( unsigned int macKeyCode )
 }
 
 
-//========================================================================
 // Content view class for the GLFW window
-//========================================================================
 
 @interface GLFWContentView : NSView
 @end
@@ -627,14 +610,12 @@ static int convertMacKeyCode( unsigned int macKeyCode )
 @end
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Here is where the window is created, and the OpenGL rendering context is
 // created
-//========================================================================
 
 int  _glfwPlatformOpenWindow( int width, int height,
                               const _GLFWwndconfig *wndconfig,
@@ -861,9 +842,7 @@ int  _glfwPlatformOpenWindow( int width, int height,
 }
 
 
-//========================================================================
 // Properly kill the window / video display
-//========================================================================
 
 void _glfwPlatformCloseWindow( void )
 {
@@ -896,9 +875,7 @@ void _glfwPlatformCloseWindow( void )
 }
 
 
-//========================================================================
 // Set the window title
-//========================================================================
 
 void _glfwPlatformSetWindowTitle( const char *title )
 {
@@ -907,9 +884,7 @@ void _glfwPlatformSetWindowTitle( const char *title )
 }
 
 
-//========================================================================
 // Set the window size
-//========================================================================
 
 void _glfwPlatformSetWindowSize( int width, int height )
 {
@@ -917,9 +892,7 @@ void _glfwPlatformSetWindowSize( int width, int height )
 }
 
 
-//========================================================================
 // Set the window position
-//========================================================================
 
 void _glfwPlatformSetWindowPos( int x, int y )
 {
@@ -937,9 +910,7 @@ void _glfwPlatformSetWindowPos( int x, int y )
 }
 
 
-//========================================================================
 // Iconify the window
-//========================================================================
 
 void _glfwPlatformIconifyWindow( void )
 {
@@ -947,9 +918,7 @@ void _glfwPlatformIconifyWindow( void )
 }
 
 
-//========================================================================
 // Restore (un-iconify) the window
-//========================================================================
 
 void _glfwPlatformRestoreWindow( void )
 {
@@ -957,9 +926,7 @@ void _glfwPlatformRestoreWindow( void )
 }
 
 
-//========================================================================
 // Swap buffers
-//========================================================================
 
 void _glfwPlatformSwapBuffers( void )
 {
@@ -968,9 +935,7 @@ void _glfwPlatformSwapBuffers( void )
 }
 
 
-//========================================================================
 // Set double buffering swap interval
-//========================================================================
 
 void _glfwPlatformSwapInterval( int interval )
 {
@@ -979,9 +944,7 @@ void _glfwPlatformSwapInterval( int interval )
 }
 
 
-//========================================================================
 // Write back window parameters into GLFW window structure
-//========================================================================
 
 void _glfwPlatformRefreshWindowParams( void )
 {
@@ -1045,9 +1008,7 @@ void _glfwPlatformRefreshWindowParams( void )
 }
 
 
-//========================================================================
 // Poll for new window and input events
-//========================================================================
 
 void _glfwPlatformPollEvents( void )
 {
@@ -1072,9 +1033,7 @@ void _glfwPlatformPollEvents( void )
 }
 
 
-//========================================================================
 // Wait for new window and input events
-//========================================================================
 
 void _glfwPlatformWaitEvents( void )
 {
@@ -1091,9 +1050,7 @@ void _glfwPlatformWaitEvents( void )
 }
 
 
-//========================================================================
 // Hide mouse cursor (lock it)
-//========================================================================
 
 void _glfwPlatformHideMouseCursor( void )
 {
@@ -1102,9 +1059,7 @@ void _glfwPlatformHideMouseCursor( void )
 }
 
 
-//========================================================================
 // Show mouse cursor (unlock it)
-//========================================================================
 
 void _glfwPlatformShowMouseCursor( void )
 {
@@ -1113,9 +1068,7 @@ void _glfwPlatformShowMouseCursor( void )
 }
 
 
-//========================================================================
 // Set physical mouse cursor position
-//========================================================================
 
 void _glfwPlatformSetMouseCursorPos( int x, int y )
 {
@@ -1136,4 +1089,3 @@ void _glfwPlatformSetMouseCursorPos( int x, int y )
         CGDisplayMoveCursorToPoint( CGMainDisplayID(), targetPoint );
     }
 }
-

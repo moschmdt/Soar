@@ -46,7 +46,7 @@ class Explanation_Based_Chunker {
   rhs_function* lti_link_function;
   Symbol* deep_copy_sym_expanded;
 
-  /** --- lists of symbols (PS names) declared chunk-free and chunky --- */
+  /** lists of symbols (PS names) declared chunk-free and chunky */
   cons* chunk_free_problem_spaces;
   cons* chunky_problem_spaces; /** AGR MVL1 */
 
@@ -184,7 +184,7 @@ class Explanation_Based_Chunker {
   char* chunk_name_prefix;
   char* justification_name_prefix;
 
-  /** -- A counter for variablization and instantiation id's - */
+  /** A counter for variablization and instantiation id's - */
   uint64_t inst_id_counter;
   uint64_t prod_id_counter;
   uint64_t inst_identity_counter;
@@ -249,8 +249,8 @@ class Explanation_Based_Chunker {
    * merge or eliminate positive conditions on the LHS of a chunk. */
   triple_merge_map* cond_merge_map;
 
-  /** List of STIs created in the sub-state that are linked to LTMs.  Used to add
-   * link-stm-to-ltm actions */
+  /** List of STIs created in the sub-state that are linked to LTMs.  Used to
+   * add link-stm-to-ltm actions */
   rhs_value_list* local_linked_STIs;
 
   /** Explanation/identity generation methods */

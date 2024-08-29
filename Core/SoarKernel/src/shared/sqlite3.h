@@ -1754,10 +1754,10 @@ struct sqlite3_mem_methods {
   void (*xFree)(void *);          /** Free a prior allocation */
   void *(*xRealloc)(void *, int); /** Resize an allocation */
   int (*xSize)(void *);           /** Return the size of an allocation */
-  int (*xRoundup)(int);           /** Round up request size to allocation size */
-  int (*xInit)(void *);           /** Initialize the memory allocator */
-  void (*xShutdown)(void *);      /** Deinitialize the memory allocator */
-  void *pAppData;                 /** Argument to xInit() and xShutdown() */
+  int (*xRoundup)(int);      /** Round up request size to allocation size */
+  int (*xInit)(void *);      /** Initialize the memory allocator */
+  void (*xShutdown)(void *); /** Deinitialize the memory allocator */
+  void *pAppData;            /** Argument to xInit() and xShutdown() */
 };
 
 /**
@@ -10407,8 +10407,10 @@ SQLITE_API int sqlite3_deserialize(
 ** should be treated as read-only.
 */
 #define SQLITE_DESERIALIZE_FREEONCLOSE 1 /** Call sqlite3_free() on close */
-#define SQLITE_DESERIALIZE_RESIZEABLE 2  /** Resize using sqlite3_realloc64() */
-#define SQLITE_DESERIALIZE_READONLY 4    /** Database is read-only */
+#define SQLITE_DESERIALIZE_RESIZEABLE                                      \
+  2                                   /** Resize using sqlite3_realloc64() \
+                                       */
+#define SQLITE_DESERIALIZE_READONLY 4 /** Database is read-only */
 
 /**
 ** Undo the hack that converts floating point types to integer for
@@ -12730,13 +12732,14 @@ struct fts5_tokenizer {
       Fts5Tokenizer *, void *pCtx,
       int flags, /** Mask of FTS5_TOKENIZE_* flags */
       const char *pText, int nText,
-      int (*xToken)(void *pCtx, /** Copy of 2nd argument to xTokenize() */
-                    int tflags, /** Mask of FTS5_TOKEN_* flags */
-                    const char *pToken, /** Pointer to buffer containing token */
-                    int nToken,         /** Size of token in bytes */
-                    int iStart, /** Byte offset of token within input text */
-                    int iEnd /** Byte offset of end of token within input text */
-                    ));
+      int (*xToken)(
+          void *pCtx,         /** Copy of 2nd argument to xTokenize() */
+          int tflags,         /** Mask of FTS5_TOKEN_* flags */
+          const char *pToken, /** Pointer to buffer containing token */
+          int nToken,         /** Size of token in bytes */
+          int iStart,         /** Byte offset of token within input text */
+          int iEnd /** Byte offset of end of token within input text */
+          ));
 };
 
 /** Flags that may be passed as the third argument to xTokenize() */

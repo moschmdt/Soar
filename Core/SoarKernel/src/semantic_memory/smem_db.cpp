@@ -1,4 +1,4 @@
-/*
+/**
  * smem_db.cpp
  *
  *  Created on: Aug 21, 2016
@@ -1251,8 +1251,6 @@ smem_statement_container::smem_statement_container(agent* new_agent)
   add(add_committed_fingerprint);
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Temporal Hash Functions (smem::hash)
 //
 // The rete has symbol hashing, but the values are
@@ -1264,8 +1262,6 @@ smem_statement_container::smem_statement_container(agent* new_agent)
 // very similar, but with enough differences that I
 // separated them out for clarity.
 //
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 smem_hash_id SMem_Manager::hash_add_type(byte symbol_type) {
   SQL->hash_add_type->bind_int(1, symbol_type);
@@ -1349,9 +1345,7 @@ smem_hash_id SMem_Manager::hash_str(char* val, bool add_on_fail) {
 smem_hash_id SMem_Manager::hash(Symbol* sym, bool add_on_fail) {
   smem_hash_id return_val = NIL;
 
-  ////////////////////////////////////////////////////////////////////////////
   timers->hash->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   if (sym->is_constant()) {
     if ((!sym->smem_hash) || (sym->smem_valid != smem_validation)) {
@@ -1380,9 +1374,7 @@ smem_hash_id SMem_Manager::hash(Symbol* sym, bool add_on_fail) {
     return_val = sym->smem_hash;
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   timers->hash->stop();
-  ////////////////////////////////////////////////////////////////////////////
 
   return return_val;
 }
@@ -1456,9 +1448,7 @@ Symbol* SMem_Manager::rhash_(byte symbol_type, smem_hash_id hash_value) {
 void SMem_Manager::init_db() {
   if (connected()) return;
 
-  ////////////////////////////////////////////////////////////////////////////
   timers->init->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   const char* db_path;
   bool tabula_rasa = false;
@@ -1495,7 +1485,7 @@ void SMem_Manager::init_db() {
       std::string schema_version, version_error_message;
 
       /* -- Set switch_to_memory true in case we have any errors with the
-       * database -- */
+       * database */
       switch_to_memory = true;
 
       if (DB->sql_is_new_db(sql_is_new)) {
@@ -1752,9 +1742,7 @@ void SMem_Manager::init_db() {
     }
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   timers->init->stop();
-  ////////////////////////////////////////////////////////////////////////////
 }
 
 // gets an SMem variable from the database
@@ -2055,7 +2043,7 @@ uint64_t SMem_Manager::add_new_LTI() {
   //      *
   //      * - scijones 2016
   //      */
-  //        /*
+  //        /**
   //         * As it turns out, the above solution can be bad too, so I've
   //         commented it out.
   //         * Basically, just setting one id to max int ruins things with the

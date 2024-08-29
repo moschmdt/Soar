@@ -40,11 +40,9 @@ class filter_val {
   virtual void reset_dirty() = 0;
 };
 
-////////////////////////////////////////
 // class filter_val_c<T>
 //   implements the filter_val interface
 //   for most types
-/////////////////////////////////////////
 template <typename T>
 class filter_val_c : public filter_val  // c for concrete
 {
@@ -126,9 +124,7 @@ void inline filter_val_c<bbox>::get_rep(
   rep["max-z"] = tostring(max[2]);
 }
 
-//////////////////////////////////////
 // template specialization for sgnode
-//////////////////////////////////////
 
 typedef filter_val_c<sgnode*> sgnode_filter_val;
 

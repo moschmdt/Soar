@@ -162,9 +162,9 @@ struct half : public half_impl::half_base {
   // Nothing to do here
   // HIP fp16 header file has a definition for __half_raw
 #elif defined(EIGEN_HAS_CUDA_FP16)
-// Note that EIGEN_CUDA_SDK_VER is set to 0 even when compiling with HIP, so
-// (EIGEN_CUDA_SDK_VER < 90000) is true even for HIP!  So keeping this within
-// #if defined(EIGEN_HAS_CUDA_FP16) is needed
+  // Note that EIGEN_CUDA_SDK_VER is set to 0 even when compiling with HIP, so
+  // (EIGEN_CUDA_SDK_VER < 90000) is true even for HIP!  So keeping this within
+
 #if defined(EIGEN_CUDA_SDK_VER) && EIGEN_CUDA_SDK_VER < 90000
   typedef half_impl::__half_raw __half_raw;
 #endif

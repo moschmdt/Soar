@@ -1,4 +1,4 @@
-/*
+/**
  * decider_settings.cpp
  *
  *  Created on: Sep 11, 2016

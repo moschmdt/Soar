@@ -1,16 +1,14 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ListenerSocket class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // A server application creates a listener socket on a specific port.
 // Clients then connect through this port to create a socket which is
 // actually used to send data.
 //
-/////////////////////////////////////////////////////////////////
 #include <stdio.h>
 
 #include <sstream>
@@ -22,13 +20,10 @@
 
 using namespace sock;
 
-//////////////////////////////////////////////////////////////////////
 // Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 ListenerSocket::~ListenerSocket() {}
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ListenerSocket::CreateListener
 //
 // Return type    : bool
@@ -37,7 +32,6 @@ ListenerSocket::~ListenerSocket() {}
 // Description    : Create a non-blocking socket that listens
 //                  on a specific port.
 //
-/////////////////////////////////////////////////////////////////////
 bool ListenerSocket::CreateListener(int port, bool local) {
   CTDEBUG_ENTER_METHOD("ListenerSocket::CreateListener");
 
@@ -172,7 +166,6 @@ bool ListenerSocket::CreateListener(int port, bool local) {
   return true;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ListenerSocket::CheckForClientConnection
 //
 // Return type    : CTSocket*
@@ -183,7 +176,6 @@ bool ListenerSocket::CreateListener(int port, bool local) {
 //
 //                  NULL is returned if there is no new connection.
 //
-/////////////////////////////////////////////////////////////////////
 Socket* ListenerSocket::CheckForClientConnection() {
   CTDEBUG_ENTER_METHOD("ListenerSocket::CheckForClientConnection");
 

@@ -17,9 +17,9 @@ test var_test_bound_in_reconstructed_conds(agent* thisAgent, condition* cond,
                                            byte where_field_num,
                                            rete_node_level where_levels_up);
 
-/*--------------------------------------------------------------
+/**
    Deallocates the given rhs_value.
---------------------------------------------------------------*/
+*/
 
 void deallocate_rhs_value(agent* thisAgent, rhs_value rv) {
   cons* c;
@@ -40,9 +40,9 @@ void deallocate_rhs_value(agent* thisAgent, rhs_value rv) {
   }
 }
 
-/*--------------------------------------------------------------
+/**
    Returns a new copy of the given rhs_value.
---------------------------------------------------------------*/
+*/
 
 rhs_value copy_rhs_value(agent* thisAgent, rhs_value rv, bool get_identity_set,
                          bool get_cloned_identity) {
@@ -96,9 +96,9 @@ rhs_value copy_rhs_value(agent* thisAgent, rhs_value rv, bool get_identity_set,
   }
 }
 
-/*--------------------------------------------------------------
+/**
    Deallocates the given action (singly-linked) list.
---------------------------------------------------------------*/
+*/
 
 void deallocate_action_list(agent* thisAgent, action* actions) {
   action* a;
@@ -110,7 +110,7 @@ void deallocate_action_list(agent* thisAgent, action* actions) {
     if (a->type == FUNCALL_ACTION) {
       deallocate_rhs_value(thisAgent, a->value);
     } else {
-      /*- make actions -*/
+      /* make actions */
       deallocate_rhs_value(thisAgent, a->id);
       deallocate_rhs_value(thisAgent, a->attr);
       deallocate_rhs_value(thisAgent, a->value);
@@ -122,10 +122,10 @@ void deallocate_action_list(agent* thisAgent, action* actions) {
   }
 }
 
-/*---------------------------------------------------------------
+/**
    Find first letter of rhs_value, or '*' if nothing appropriate.
    (See comments on first_letter_from_symbol for more explanation.)
----------------------------------------------------------------*/
+*/
 
 char first_letter_from_rhs_value(rhs_value rv) {
   if (rhs_value_is_symbol(rv)) {
@@ -134,8 +134,7 @@ char first_letter_from_rhs_value(rhs_value rv) {
   return '*'; /* function calls, reteloc's, unbound variables */
 }
 
-/* =====================================================================
-
+/**
    Finding all variables from rhs_value's, actions, and action lists
 
    These routines collect all the variables in rhs_value's, etc.  Their
@@ -145,7 +144,7 @@ char first_letter_from_rhs_value(rhs_value rv) {
    Warning: These are part of the reorderer and handle only productions
    in non-reteloc, etc. format.  They don't handle reteloc's or
    RHS unbound variables.
-===================================================================== */
+*/
 
 void add_all_variables_in_rhs_value(agent* thisAgent, rhs_value rv,
                                     tc_number tc, cons** var_list) {
@@ -154,13 +153,13 @@ void add_all_variables_in_rhs_value(agent* thisAgent, rhs_value rv,
   Symbol* sym;
 
   if (rhs_value_is_symbol(rv)) {
-    /*- ordinary values (i.e., symbols) -*/
+    /* ordinary values (i.e., symbols) */
     sym = rhs_value_to_symbol(rv);
     if (sym->is_variable()) {
       sym->mark_if_unmarked(thisAgent, tc, var_list);
     }
   } else {
-    /*- function calls -*/
+    /* function calls */
     fl = rhs_value_to_funcall_list(rv);
     for (c = fl->rest; c != NIL; c = c->rest) {
       add_all_variables_in_rhs_value(thisAgent, static_cast<char*>(c->first),
@@ -179,7 +178,7 @@ void add_all_variables_in_action(agent* thisAgent, action* a, tc_number tc,
   Symbol* id;
 
   if (a->type == MAKE_ACTION) {
-    /*- ordinary make actions -*/
+    /* ordinary make actions */
     id = rhs_value_to_symbol(a->id);
     if (id->is_variable()) {
       id->mark_if_unmarked(thisAgent, tc, var_list);
@@ -190,7 +189,7 @@ void add_all_variables_in_action(agent* thisAgent, action* a, tc_number tc,
       add_all_variables_in_rhs_value(thisAgent, a->referent, tc, var_list);
     }
   } else {
-    /*- function call actions -*/
+    /* function call actions */
     add_all_variables_in_rhs_value(thisAgent, a->value, tc, var_list);
   }
 }
@@ -204,15 +203,14 @@ void add_all_variables_in_action_list(agent* thisAgent, action* actions,
   }
 }
 
-/* =====================================================================
-
+/**
    Finding the variables bound in tests, conditions, and condition lists
 
    These routines collect the variables that are bound in equality tests.
    Their "var_list" arguments should either be NIL or else should point
    to the header of the list of marked variables being constructed.
 
-===================================================================== */
+*/
 
 void add_bound_variables_in_rhs_value(agent* thisAgent, rhs_value rv,
                                       tc_number tc, cons** var_list) {
@@ -221,13 +219,13 @@ void add_bound_variables_in_rhs_value(agent* thisAgent, rhs_value rv,
   Symbol* sym;
 
   if (rhs_value_is_symbol(rv)) {
-    /*- ordinary values (i.e., symbols) -*/
+    /* ordinary values (i.e., symbols) */
     sym = rhs_value_to_symbol(rv);
     if (sym->symbol_type == VARIABLE_SYMBOL_TYPE) {
       sym->mark_if_unmarked(thisAgent, tc, var_list);
     }
   } else {
-    /*- function calls -*/
+    /* function calls */
     fl = rhs_value_to_funcall_list(rv);
     for (c = fl->rest; c != NIL; c = c->rest) {
       add_bound_variables_in_rhs_value(thisAgent, static_cast<char*>(c->first),
@@ -241,7 +239,7 @@ void add_bound_variables_in_action(agent* thisAgent, action* a, tc_number tc,
   Symbol* id;
 
   if (a->type == MAKE_ACTION) {
-    /*- ordinary make actions -*/
+    /* ordinary make actions */
     id = rhs_value_to_symbol(a->id);
     add_bound_variables_in_rhs_value(thisAgent, a->id, tc, var_list);
     add_bound_variables_in_rhs_value(thisAgent, a->attr, tc, var_list);
@@ -250,7 +248,7 @@ void add_bound_variables_in_action(agent* thisAgent, action* a, tc_number tc,
       add_bound_variables_in_rhs_value(thisAgent, a->referent, tc, var_list);
     }
   } else {
-    /*- function call actions -*/
+    /* function call actions */
     add_bound_variables_in_rhs_value(thisAgent, a->value, tc, var_list);
   }
 }
@@ -292,7 +290,7 @@ action* copy_action(agent* thisAgent, action* pAction) {
   }
   return new_action;
 }
-/*-----------------------------------------------------------------
+/**
              Reconstructing the RHS Actions of a Production
 
    When we print a production (but not when we fire one), we have to
@@ -302,7 +300,7 @@ action* copy_action(agent* thisAgent, action* pAction) {
    or "the 7th RHS unbound variable".  The routines below copy rhs_value's
    and actions, and substitute variable names for such references.
    For RHS unbound variables, we gensym new variable names.
------------------------------------------------------------------*/
+*/
 
 rhs_value create_RHS_value(agent* thisAgent, rhs_value rv, condition* cond,
                            char first_letter, ExplainTraceType ebcTraceType) {

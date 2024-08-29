@@ -1,14 +1,12 @@
-/*************************************************************************
+/**
  *
  *  file:  mem.cpp
  *
- * ====================================================================
- * Memory allocation and deallocation, string, linked list, and resizable
+ *  * Memory allocation and deallocation, string, linked list, and resizable
  * hash table utilities.
  * Init_memory_utilities() should be called before any of these routines
  * are used.
- * =======================================================================
- */
+ *  */
 
 #include "mem.h"
 
@@ -20,8 +18,7 @@
 #include "print.h"
 #include "run_soar.h"
 
-/* ====================================================================
-
+/**
                           String Utilities
 
    Make_memory_block_for_string() takes a pointer to a string, allocates
@@ -44,7 +41,7 @@
    parts:  memsize_of_growable_string(), length_of_growable_string(),
    and (most importantly) text_of_growable_string(), which is of type
    (char *).
-==================================================================== */
+*/
 
 char* make_memory_block_for_string(agent* thisAgent, char const* s) {
   char* p;
@@ -103,8 +100,7 @@ void free_growable_string(agent* thisAgent, growable_string gs) {
   thisAgent->memoryManager->free_memory(gs, STRING_MEM_USAGE);
 }
 
-/* ====================================================================
-
+/**
                     Cons Cell and List Utilities
 
    This provides a simple facility for manipulating generic lists, just
@@ -131,7 +127,7 @@ void free_growable_string(agent* thisAgent, growable_string gs) {
    the callback function is called on each element of the list, and should
    return true for the elements to be extracted.  The two extraction
    functions return a list (or dl_list) of the extracted elements.
-==================================================================== */
+*/
 
 cons* destructively_reverse_list(cons* c) {
   cons *prev, *current, *next;
@@ -244,8 +240,6 @@ dl_list* extract_dl_list_elements(agent* thisAgent, dl_list** header,
     tail_of_extracted_elements = dc;
   }
 
-  /************************************************************************/
-
   if (first_extracted_element) {
     tail_of_extracted_elements->next = NIL;
   }
@@ -257,8 +251,7 @@ bool cons_equality_fn(agent*, cons* c, void* data) {
   return (c->first == data);
 }
 
-/* ====================================================================
-
+/**
                    Resizable Hash Table Routines
 
    We use hash tables in various places, and don't want to have to fix
@@ -289,157 +282,156 @@ bool cons_equality_fn(agent*, cons* c, void* data) {
    normally return false.  If the callback function ever returns true,
    iteration over the hash table items stops and the do_for_xxx()
    routine returns immediately.
-==================================================================== */
+*/
 
-uint32_t masks_for_n_low_order_bits[33] = {
-    0x00000000, 0x00000001, 0x00000003, 0x00000007, 0x0000000F, 0x0000001F,
-    0x0000003F, 0x0000007F, 0x000000FF, 0x000001FF, 0x000003FF, 0x000007FF,
-    0x00000FFF, 0x00001FFF, 0x00003FFF, 0x00007FFF, 0x0000FFFF, 0x0001FFFF,
-    0x0003FFFF, 0x0007FFFF, 0x000FFFFF, 0x001FFFFF, 0x003FFFFF, 0x007FFFFF,
-    0x00FFFFFF, 0x01FFFFFF, 0x03FFFFFF, 0x07FFFFFF, 0x0FFFFFFF, 0x1FFFFFFF,
-    0x3FFFFFFF, 0x7FFFFFFF, 0xFFFFFFFF};
+  uint32_t masks_for_n_low_order_bits[33] = {
+      0x00000000, 0x00000001, 0x00000003, 0x00000007, 0x0000000F, 0x0000001F,
+      0x0000003F, 0x0000007F, 0x000000FF, 0x000001FF, 0x000003FF, 0x000007FF,
+      0x00000FFF, 0x00001FFF, 0x00003FFF, 0x00007FFF, 0x0000FFFF, 0x0001FFFF,
+      0x0003FFFF, 0x0007FFFF, 0x000FFFFF, 0x001FFFFF, 0x003FFFFF, 0x007FFFFF,
+      0x00FFFFFF, 0x01FFFFFF, 0x03FFFFFF, 0x07FFFFFF, 0x0FFFFFFF, 0x1FFFFFFF,
+      0x3FFFFFFF, 0x7FFFFFFF, 0xFFFFFFFF};
 
-struct hash_table_struct* make_hash_table(agent* thisAgent,
-                                          short minimum_log2size,
-                                          hash_function h) {
-  hash_table* ht;
+  struct hash_table_struct* make_hash_table(
+      agent * thisAgent, short minimum_log2size, hash_function h) {
+    hash_table* ht;
 
-  ht =
-      static_cast<hash_table_struct*>(thisAgent->memoryManager->allocate_memory(
-          sizeof(hash_table), HASH_TABLE_MEM_USAGE));
-  ht->count = 0;
-  if (minimum_log2size < 1) {
-    minimum_log2size = 1;
+    ht = static_cast<hash_table_struct*>(
+        thisAgent->memoryManager->allocate_memory(sizeof(hash_table),
+                                                  HASH_TABLE_MEM_USAGE));
+    ht->count = 0;
+    if (minimum_log2size < 1) {
+      minimum_log2size = 1;
+    }
+    ht->size = static_cast<uint32_t>(1) << minimum_log2size;
+    ht->log2size = minimum_log2size;
+    ht->minimum_log2size = minimum_log2size;
+    ht->buckets = static_cast<item_in_hash_table_struct**>(
+        thisAgent->memoryManager->allocate_memory_and_zerofill(
+            ht->size * sizeof(char*), HASH_TABLE_MEM_USAGE));
+    ht->h = h;
+    return ht;
   }
-  ht->size = static_cast<uint32_t>(1) << minimum_log2size;
-  ht->log2size = minimum_log2size;
-  ht->minimum_log2size = minimum_log2size;
-  ht->buckets = static_cast<item_in_hash_table_struct**>(
-      thisAgent->memoryManager->allocate_memory_and_zerofill(
-          ht->size * sizeof(char*), HASH_TABLE_MEM_USAGE));
-  ht->h = h;
-  return ht;
-}
 
-void resize_hash_table(agent* thisAgent, hash_table* ht, short new_log2size) {
-  uint32_t i;
-  bucket_array* new_buckets;
-  item_in_hash_table *item, *next;
-  uint32_t hash_value;
-  uint32_t new_size;
+  void resize_hash_table(agent * thisAgent, hash_table * ht,
+                         short new_log2size) {
+    uint32_t i;
+    bucket_array* new_buckets;
+    item_in_hash_table *item, *next;
+    uint32_t hash_value;
+    uint32_t new_size;
 
-  new_size = static_cast<uint32_t>(1) << new_log2size;
-  new_buckets =
-      (bucket_array*)thisAgent->memoryManager->allocate_memory_and_zerofill(
-          new_size * sizeof(char*), HASH_TABLE_MEM_USAGE);
+    new_size = static_cast<uint32_t>(1) << new_log2size;
+    new_buckets =
+        (bucket_array*)thisAgent->memoryManager->allocate_memory_and_zerofill(
+            new_size * sizeof(char*), HASH_TABLE_MEM_USAGE);
 
-  for (i = 0; i < ht->size; i++) {
-    for (item = *(ht->buckets + i); item != NIL; item = next) {
-      next = item->next;
-      /* --- insert item into new buckets --- */
-      hash_value = (*(ht->h))(item, new_log2size);
-      item->next = *(new_buckets + hash_value);
-      *(new_buckets + hash_value) = item;
+    for (i = 0; i < ht->size; i++) {
+      for (item = *(ht->buckets + i); item != NIL; item = next) {
+        next = item->next;
+        /* insert item into new buckets */
+        hash_value = (*(ht->h))(item, new_log2size);
+        item->next = *(new_buckets + hash_value);
+        *(new_buckets + hash_value) = item;
+      }
+    }
+
+    thisAgent->memoryManager->free_memory(ht->buckets, HASH_TABLE_MEM_USAGE);
+    ht->buckets = new_buckets;
+    ht->size = new_size;
+    ht->log2size = new_log2size;
+  }
+
+  /* RPM 6/09 */
+  void free_hash_table(agent * thisAgent, struct hash_table_struct * ht) {
+    thisAgent->memoryManager->free_memory(ht->buckets, HASH_TABLE_MEM_USAGE);
+    thisAgent->memoryManager->free_memory(ht, HASH_TABLE_MEM_USAGE);
+  }
+
+  void remove_from_hash_table(agent * thisAgent, struct hash_table_struct * ht,
+                              void* item) {
+    uint32_t hash_value;
+    item_in_hash_table *this_one, *prev;
+
+    this_one = static_cast<item_in_hash_table_struct*>(item);
+    hash_value = (*(ht->h))(item, ht->log2size);
+    if (*(ht->buckets + hash_value) == this_one) {
+      /* hs is the first one on the list for the bucket */
+      *(ht->buckets + hash_value) = this_one->next;
+    } else {
+      /* hs is not the first one on the list, so find its predecessor */
+      prev = *(ht->buckets + hash_value);
+      while (prev && prev->next != this_one) {
+        prev = prev->next;
+      }
+      if (!prev) {
+        /* Reaching here means that we couldn't find this_one item */
+        assert(prev && "Couldn't find item to remove from hash table!");
+        return;
+      }
+      prev->next = this_one->next;
+    }
+    this_one->next = NIL; /* just for safety */
+    /* update count and possibly resize the table */
+    ht->count--;
+    if ((ht->count < ht->size / 2) && (ht->log2size > ht->minimum_log2size)) {
+      resize_hash_table(thisAgent, ht, ht->log2size - 1);
     }
   }
 
-  thisAgent->memoryManager->free_memory(ht->buckets, HASH_TABLE_MEM_USAGE);
-  ht->buckets = new_buckets;
-  ht->size = new_size;
-  ht->log2size = new_log2size;
-}
+  void add_to_hash_table(agent * thisAgent, struct hash_table_struct * ht,
+                         void* item) {
+    uint32_t hash_value;
+    item_in_hash_table* this_one;
 
-/* RPM 6/09 */
-void free_hash_table(agent* thisAgent, struct hash_table_struct* ht) {
-  thisAgent->memoryManager->free_memory(ht->buckets, HASH_TABLE_MEM_USAGE);
-  thisAgent->memoryManager->free_memory(ht, HASH_TABLE_MEM_USAGE);
-}
-
-void remove_from_hash_table(agent* thisAgent, struct hash_table_struct* ht,
-                            void* item) {
-  uint32_t hash_value;
-  item_in_hash_table *this_one, *prev;
-
-  this_one = static_cast<item_in_hash_table_struct*>(item);
-  hash_value = (*(ht->h))(item, ht->log2size);
-  if (*(ht->buckets + hash_value) == this_one) {
-    /* --- hs is the first one on the list for the bucket --- */
-    *(ht->buckets + hash_value) = this_one->next;
-  } else {
-    /* --- hs is not the first one on the list, so find its predecessor --- */
-    prev = *(ht->buckets + hash_value);
-    while (prev && prev->next != this_one) {
-      prev = prev->next;
+    this_one = static_cast<item_in_hash_table_struct*>(item);
+    ht->count++;
+    if (ht->count >= ht->size * 2) {
+      resize_hash_table(thisAgent, ht, ht->log2size + 1);
     }
-    if (!prev) {
-      /* Reaching here means that we couldn't find this_one item */
-      assert(prev && "Couldn't find item to remove from hash table!");
-      return;
+    hash_value = (*(ht->h))(item, ht->log2size);
+    this_one->next = *(ht->buckets + hash_value);
+    *(ht->buckets + hash_value) = this_one;
+  }
+
+  void do_for_all_items_in_hash_table(
+      agent * thisAgent, struct hash_table_struct * ht,
+      hash_table_callback_fn2 f, void* userdata) {
+    uint32_t hash_value;
+    item_in_hash_table* item;
+
+    for (hash_value = 0; hash_value < ht->size; hash_value++) {
+      item = (item_in_hash_table*)(*(ht->buckets + hash_value));
+      for (; item != NIL; item = item->next)
+        if ((*f)(thisAgent, item, userdata)) {
+          return;
+        }
     }
-    prev->next = this_one->next;
   }
-  this_one->next = NIL; /* just for safety */
-  /* --- update count and possibly resize the table --- */
-  ht->count--;
-  if ((ht->count < ht->size / 2) && (ht->log2size > ht->minimum_log2size)) {
-    resize_hash_table(thisAgent, ht, ht->log2size - 1);
-  }
-}
 
-void add_to_hash_table(agent* thisAgent, struct hash_table_struct* ht,
-                       void* item) {
-  uint32_t hash_value;
-  item_in_hash_table* this_one;
+  void do_for_all_items_in_hash_bucket(struct hash_table_struct * ht,
+                                       hash_table_callback_fn f,
+                                       uint32_t hash_value) {
+    item_in_hash_table* item;
 
-  this_one = static_cast<item_in_hash_table_struct*>(item);
-  ht->count++;
-  if (ht->count >= ht->size * 2) {
-    resize_hash_table(thisAgent, ht, ht->log2size + 1);
-  }
-  hash_value = (*(ht->h))(item, ht->log2size);
-  this_one->next = *(ht->buckets + hash_value);
-  *(ht->buckets + hash_value) = this_one;
-}
-
-void do_for_all_items_in_hash_table(agent* thisAgent,
-                                    struct hash_table_struct* ht,
-                                    hash_table_callback_fn2 f, void* userdata) {
-  uint32_t hash_value;
-  item_in_hash_table* item;
-
-  for (hash_value = 0; hash_value < ht->size; hash_value++) {
+    hash_value = hash_value & masks_for_n_low_order_bits[ht->log2size];
     item = (item_in_hash_table*)(*(ht->buckets + hash_value));
     for (; item != NIL; item = item->next)
-      if ((*f)(thisAgent, item, userdata)) {
+      if ((*f)(item)) {
         return;
       }
   }
-}
 
-void do_for_all_items_in_hash_bucket(struct hash_table_struct* ht,
-                                     hash_table_callback_fn f,
-                                     uint32_t hash_value) {
-  item_in_hash_table* item;
+  /**
+                         Module Initialization
 
-  hash_value = hash_value & masks_for_n_low_order_bits[ht->log2size];
-  item = (item_in_hash_table*)(*(ht->buckets + hash_value));
-  for (; item != NIL; item = item->next)
-    if ((*f)(item)) {
-      return;
-    }
-}
+     This routine should be called before anything else in this file
+     is used.
+  */
 
-/* ====================================================================
-
-                       Module Initialization
-
-   This routine should be called before anything else in this file
-   is used.
-==================================================================== */
-
-void init_memory_utilities(agent* thisAgent) {
-  thisAgent->memoryManager->init_memory_pool(MP_cons_cell, sizeof(cons),
-                                             "cons cell");
-  thisAgent->memoryManager->init_memory_pool(MP_dl_cons, sizeof(dl_cons),
-                                             "dl cons");
-}
+  void init_memory_utilities(agent * thisAgent) {
+    thisAgent->memoryManager->init_memory_pool(MP_cons_cell, sizeof(cons),
+                                               "cons cell");
+    thisAgent->memoryManager->init_memory_pool(MP_dl_cons, sizeof(dl_cons),
+                                               "dl cons");
+  }

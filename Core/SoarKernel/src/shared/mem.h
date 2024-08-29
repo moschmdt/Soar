@@ -18,9 +18,9 @@
 
 extern void init_memory_utilities(agent* thisAgent);
 
-/** ---------------- */
+/** */
 /** string utilities */
-/** ---------------- */
+/** */
 
 extern char* make_memory_block_for_string(agent* thisAgent, char const* s);
 extern void free_memory_block_for_string(agent* thisAgent, char* p);
@@ -50,9 +50,9 @@ extern void add_to_growable_string(agent* thisAgent, growable_string* gs,
                                    const char* string_to_add);
 extern void free_growable_string(agent* thisAgent, growable_string gs);
 
-/** ------------------------- */
+/** */
 /** Cons cell, list utilities */
-/** ------------------------- */
+/** */
 
 typedef struct cons_struct {
   void* first;
@@ -97,9 +97,9 @@ extern dl_list* extract_dl_list_elements(agent* thisAgent, dl_list** header,
 
 extern bool cons_equality_fn(agent*, cons* c, void* data);
 
-/** ----------------------------- */
+/** */
 /** Resizable hash table routines */
-/** ----------------------------- */
+/** */
 
 extern uint32_t masks_for_n_low_order_bits[33];
 
@@ -144,7 +144,7 @@ extern void do_for_all_items_in_hash_bucket(struct hash_table_struct* ht,
 
 #endif
 
-/** ======================================================================
+/**
                                  mem.h
 
    Init_memory_utilities() should be called before any of these routines
@@ -261,4 +261,4 @@ extern void do_for_all_items_in_hash_bucket(struct hash_table_struct* ht,
      normally return false.  If the callback function ever returns true,
      iteration over the hash table items stops and the do_for_xxx()
      routine returns immediately.
-====================================================================== */
+*/

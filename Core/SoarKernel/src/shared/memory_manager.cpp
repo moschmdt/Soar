@@ -11,8 +11,7 @@
 #include "sml_Names.h"
 #include "stats.h"
 
-/* ====================================================================
-
+/**
                           Memory Pool Routines
 
    To allocate and free memory items efficiently at run time, we use
@@ -32,7 +31,7 @@
    are used to allocate and free items.  Print_memory_pool_statistics()
    prints stats about the various pools in use and how much memory each
    is using.
-==================================================================== */
+*/
 
 #define DEFAULT_INTERLEAVE_FACTOR 1
 /* should be 1 for maximum speed, but to avoid a gradual slowdown due
@@ -182,7 +181,7 @@ void Memory_Manager::add_block_to_memory_pool(memory_pool* pThisPool) {
   size_t size, i, item_num, interleave_factor;
   char *item, *prev_item;
 
-  /* --- allocate a new block for the pool --- */
+  /* allocate a new block for the pool */
   size = pThisPool->item_size * pThisPool->items_per_block + sizeof(char*);
   new_block = static_cast<char*>(allocate_memory(size, POOL_MEM_USAGE));
   *(char**)new_block = static_cast<char*>(pThisPool->first_block);
@@ -195,7 +194,7 @@ by comparison, we shouldn't check for every block added to any pool, since that
 is unduly expensive can we keep a block counter on the agent and check it modulo
 some function of the limit?
    */
-  /*
+  /**
 uint64_t total = 0;
 for (i=0; i<NUM_MEM_USAGE_CODES; i++) total += memory_for_usage[i];
 
@@ -210,7 +209,7 @@ thisAgent->Decider->settings[DECIDER_MAX_MEMORY_USAGE]);
 
    */
 
-  /* --- link up the new entries onto the free list --- */
+  /* link up the new entries onto the free list */
   interleave_factor = DEFAULT_INTERLEAVE_FACTOR;
   if (interleave_factor >= pThisPool->items_per_block) {
     interleave_factor = 1;
@@ -231,8 +230,7 @@ thisAgent->Decider->settings[DECIDER_MAX_MEMORY_USAGE]);
   pThisPool->free_list = new_block + sizeof(char*);
 }
 
-/* ====================================================================
-
+/**
                    Basic Memory Allocation Utilities
 
    All memory blocks are allocated via calls to allocate_memory().  It
@@ -243,7 +241,7 @@ thisAgent->Decider->settings[DECIDER_MAX_MEMORY_USAGE]);
    is used purely for statistics keeping.
 
    Print_memory_statistics() prints out stats on the memory usage.
-==================================================================== */
+*/
 
 void* Memory_Manager::allocate_memory(size_t size, int usage_code) {
   char* p;

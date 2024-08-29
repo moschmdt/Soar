@@ -67,7 +67,7 @@ namespace Eigen {
     }                                                                       \
                                                                             \
     lda = internal::convert_index<lapack_int>(m_eivec.outerStride());       \
-    char jobz, uplo = 'L' /**, range='A'*/;                                  \
+    char jobz, uplo = 'L' /**, range='A'*/;                                 \
     jobz = computeEigenvectors ? 'V' : 'N';                                 \
                                                                             \
     info = LAPACKE_##LAPACKE_NAME(LAPACK_COL_MAJOR, jobz, uplo, n,          \

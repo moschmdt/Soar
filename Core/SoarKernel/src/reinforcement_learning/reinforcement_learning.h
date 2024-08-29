@@ -7,8 +7,7 @@
  *
  *  file:  reinforcement_learning.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef REINFORCEMENT_LEARNING_H
 #define REINFORCEMENT_LEARNING_H
@@ -22,9 +21,7 @@
 #include "production.h"
 #include "soar_module.h"
 
-//////////////////////////////////////////////////////////
 // RL Constants
-//////////////////////////////////////////////////////////
 
 // more specific forms of no change impasse types
 // made negative to never conflict with impasse constants
@@ -60,9 +57,7 @@ struct RL_Trace {
   std::map<std::vector<std::string>, Entry> split;
 };
 
-//////////////////////////////////////////////////////////
 // RL Parameters
-//////////////////////////////////////////////////////////
 
 class rl_learning_param;
 class rl_apoptosis_param;
@@ -196,9 +191,7 @@ class rl_apoptosis_predicate : public soar_module::agent_predicate<T> {
   bool operator()(T val);
 };
 
-//////////////////////////////////////////////////////////
 // RL Statistics
-//////////////////////////////////////////////////////////
 
 class rl_stat_container : public soar_module::stat_container {
  public:
@@ -209,9 +202,7 @@ class rl_stat_container : public soar_module::stat_container {
   rl_stat_container(agent* new_agent);
 };
 
-//////////////////////////////////////////////////////////
 // RL Types
-//////////////////////////////////////////////////////////
 
 // rl data associated with each state
 typedef struct rl_data_struct {
@@ -232,24 +223,18 @@ typedef struct rl_data_struct {
 // used to manage apoptosis
 typedef soar_module::bla_object_memory<production, 10, 50> rl_production_memory;
 
-//////////////////////////////////////////////////////////
 // Maintenance
-//////////////////////////////////////////////////////////
 
 // remove Soar-RL references to productions
 extern void rl_remove_refs_for_prod(agent* thisAgent, production* prod);
 extern void rl_clear_refs(Symbol* goal);
 
-//////////////////////////////////////////////////////////
 // Parameter Get/Set/Validate
-//////////////////////////////////////////////////////////
 
 // shortcut for determining if Soar-RL is enabled
 extern bool rl_enabled(agent* thisAgent);
 
-//////////////////////////////////////////////////////////
 // Production Validation
-//////////////////////////////////////////////////////////
 
 // validate template
 extern bool rl_valid_template(production* prod);
@@ -263,9 +248,7 @@ extern void rl_rule_meta(agent* thisAgent, production* prod);
 // template instantiation
 extern int rl_get_template_id(const char* prod_name);
 
-//////////////////////////////////////////////////////////
 // Template Tracking
-//////////////////////////////////////////////////////////
 
 // initializes agent's tracking of template-originated rl-rules
 extern void rl_initialize_template_tracking(agent* thisAgent);
@@ -280,9 +263,7 @@ extern int rl_next_template_id(agent* thisAgent);
 // reverts internal counter
 extern void rl_revert_template_id(agent* thisAgent);
 
-//////////////////////////////////////////////////////////
 // Template Behavior
-//////////////////////////////////////////////////////////
 
 // builds a new Soar-RL rule from a template instantiation
 extern Symbol* rl_build_template_instantiation(
@@ -294,9 +275,7 @@ extern Symbol* rl_build_template_instantiation(
 extern void rl_add_goal_or_impasse_tests_to_conds(agent* thisAgent,
                                                   condition* all_conds);
 
-//////////////////////////////////////////////////////////
 // Reward
-//////////////////////////////////////////////////////////
 
 // tabulation of a single goal's reward
 extern void rl_tabulate_reward_value_for_goal(agent* thisAgent, Symbol* goal);
@@ -304,9 +283,7 @@ extern void rl_tabulate_reward_value_for_goal(agent* thisAgent, Symbol* goal);
 // tabulation of all agent goal reward
 extern void rl_tabulate_reward_values(agent* thisAgent);
 
-//////////////////////////////////////////////////////////
 // Updates
-//////////////////////////////////////////////////////////
 
 // Store and update data that will be needed later to perform a Bellman update
 // for the current operator

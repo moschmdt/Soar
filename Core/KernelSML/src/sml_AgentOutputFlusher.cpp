@@ -1,12 +1,10 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // AgentOutputFlusher class file.
 //
-// Author: Jonathan Voigt
-// Date  : February 2005
+// @author: Jonathan Voigt
+// @date  : February 2005
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 

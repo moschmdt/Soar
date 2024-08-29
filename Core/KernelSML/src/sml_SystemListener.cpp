@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // SystemListener class file.
 //
-// Author: Doug Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Doug Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // This class's HandleEvent method is called when
 // specific events occur within the kernel (copied from sml_Events.h):
@@ -22,7 +21,6 @@
 //  been changed (note: no longer includes sysparams which are agent-level)
 //  smlEVENT_LAST_SYSTEM_EVENT = smlEVENT_SYSTEM_PROPERTY_CHANGED
 //} ;
-/////////////////////////////////////////////////////////////////
 
 #include "sml_AgentSML.h"
 #include "sml_Connection.h"

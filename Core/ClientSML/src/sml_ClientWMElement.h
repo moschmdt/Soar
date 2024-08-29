@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // WMElement class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This is the base class for all working memory elements.
 // Every WME consists of an ID, attribute and value.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_WORKING_MEMORY_ELEMENT_H
 #define SML_WORKING_MEMORY_ELEMENT_H

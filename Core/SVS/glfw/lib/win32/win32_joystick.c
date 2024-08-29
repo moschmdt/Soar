@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Win32/WGL
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,18 +24,15 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Return GL_TRUE if joystick is present, else return GL_FALSE.
-//========================================================================
 
 static int _glfwJoystickPresent( int joy )
 {
@@ -66,9 +61,7 @@ static int _glfwJoystickPresent( int joy )
 }
 
 
-//========================================================================
 // Calculate joystick position
-//========================================================================
 
 static float _glfwCalcJoystickPos( DWORD pos, DWORD min, DWORD max )
 {
@@ -80,13 +73,11 @@ static float _glfwCalcJoystickPos( DWORD pos, DWORD min, DWORD max )
 
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Determine joystick capabilities
-//========================================================================
 
 int _glfwPlatformGetJoystickParam( int joy, int param )
 {
@@ -127,9 +118,7 @@ int _glfwPlatformGetJoystickParam( int joy, int param )
 }
 
 
-//========================================================================
 // Get joystick axis positions
-//========================================================================
 
 int _glfwPlatformGetJoystickPos( int joy, float *pos, int numaxes )
 {
@@ -192,9 +181,7 @@ int _glfwPlatformGetJoystickPos( int joy, float *pos, int numaxes )
 }
 
 
-//========================================================================
 // Get joystick button states
-//========================================================================
 
 int _glfwPlatformGetJoystickButtons( int joy, unsigned char *buttons,
     int numbuttons )
@@ -230,4 +217,3 @@ int _glfwPlatformGetJoystickButtons( int joy, unsigned char *buttons,
 
     return button;
 }
-

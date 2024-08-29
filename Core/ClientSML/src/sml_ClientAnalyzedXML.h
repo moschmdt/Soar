@@ -1,18 +1,15 @@
-/////////////////////////////////////////////////////////////////
-// ClientAnalyzedXML class
-//
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : September 2005
-//
-// Represents an XML message that has been analyzed to identify
-// where parameters and other important values occur within the message.
-// This allows an efficient "random access" to the values within the message
-// and provides some level of abstraction over exactly how the message is
-// structured.
-//
-// It's a subset of the functionality offered by AnalyzeXML.
-//
-/////////////////////////////////////////////////////////////////
+/// ClientAnalyzedXML class
+///
+/// @author: Douglas Pearson, www.threepenny.net
+/// @date  : September 2005
+///
+/// Represents an XML message that has been analyzed to identify
+/// where parameters and other important values occur within the message.
+/// This allows an efficient "random access" to the values within the message
+/// and provides some level of abstraction over exactly how the message is
+/// structured.
+///
+/// It's a subset of the functionality offered by AnalyzeXML.
 
 #ifndef SML_CLIENT_ANALYZED_XML_H
 #define SML_CLIENT_ANALYZED_XML_H

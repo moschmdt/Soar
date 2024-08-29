@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // ListenerNamedPipe class
 //
-// Author: Bob Marinier
-// Date  : 5/2007
+// @author: Bob Marinier
+// @date  : 5/2007
 //
 // Based on ListenerSocket class
 //
@@ -10,7 +9,6 @@
 // Clients then connect through this name to create a pipe which is
 // actually used to send data.
 //
-/////////////////////////////////////////////////////////////////
 #ifndef LISTENER_NAMED_PIPE_H
 #define LISTENER_NAMED_PIPE_H
 

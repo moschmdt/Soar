@@ -1,16 +1,14 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // EmbeddedConnection class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class represents a logical connection between two entities that are
 // communicating via SML (a form of XML).  In the embedded case that this class
 // represents, both entities are within the same process.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <iostream>
@@ -38,17 +36,17 @@ EmbeddedConnection::EmbeddedConnection() {
 
 EmbeddedConnection::~EmbeddedConnection() { delete m_pLastResponse; }
 
-/*************************************************************
+/**
  * @brief Simple function that does the casting from the handle
  *        (which we passed to the other side of the connection)
  *        back to its original object.
- *************************************************************/
+ */
 EmbeddedConnection* GetConnectionFromHandle(
     Connection_Receiver_Handle hConnection) {
   return reinterpret_cast<EmbeddedConnection*>(hConnection);
 }
 
-/*************************************************************
+/**
  * @brief    This is the raw function which will be called by the other
  *           side of the embeddded connection to pass a message.
  *           In some sense, all message passing starts here.
@@ -76,7 +74,7 @@ EmbeddedConnection* GetConnectionFromHandle(
  *   "he who creates is the only one who accesses and deletes" ensures no
  *   such problems and that's the model we're using here.
  *
- *************************************************************/
+ */
 ElementXML_Handle LocalProcessMessage(
     Connection_Receiver_Handle hReceiverConnection,
     ElementXML_Handle hIncomingMsg, int action) {
@@ -136,9 +134,9 @@ ElementXML_Handle LocalProcessMessage(
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief Create an embedded connection to a kernel
- *************************************************************/
+ */
 bool EmbeddedConnection::AttachConnection(bool optimized, int portToListenOn) {
   ClearError();
   if (optimized && !IsAsynchronous()) {
@@ -163,14 +161,14 @@ bool EmbeddedConnection::AttachConnection(bool optimized, int portToListenOn) {
   return true;
 }
 
-/*************************************************************
+/**
  * @brief Each side of the communication (client and kernel) will
  *        have an EmbeddedConnection object.
  *
  *        This function is used to link the two together
  *        (e.g. this tells the client which object in the kernel to
  *         use when sending a command to the kernel).
- *************************************************************/
+ */
 void EmbeddedConnection::AttachConnectionInternal(
     Connection_Receiver_Handle hConnection,
     ProcessMessageFunction pProcessMessage) {
@@ -179,16 +177,16 @@ void EmbeddedConnection::AttachConnectionInternal(
   m_pProcessMessageFunction = pProcessMessage;
 }
 
-/*************************************************************
+/**
  * @brief Returns true if this connection has been closed or
  *        is otherwise not usable.
- *************************************************************/
+ */
 bool EmbeddedConnection::IsClosed() { return (m_hConnection == NULL); }
 
-/*************************************************************
+/**
  * @brief Shut down the connection.  In this case we release
  *        our connection handle.
- *************************************************************/
+ */
 void EmbeddedConnection::CloseConnection() {
   ClearError();
 
@@ -200,10 +198,10 @@ void EmbeddedConnection::CloseConnection() {
   m_hConnection = NULL;
 }
 
-/*************************************************************
+/**
  * @brief Setting this to true prints out lots of debug
  *        information to stderr and a trace file.
- *************************************************************/
+ */
 void EmbeddedConnection::SetTraceCommunications(bool state) {
   ClearError();
 

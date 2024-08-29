@@ -1,13 +1,13 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  lexer.cpp
  *
- * ===================================================================== */
+ * */
 
 #include "lexer.h"
 
@@ -55,9 +55,8 @@ void Lexer::get_next_char() {
   }
 }
 
-/* ======================================================================
-                         Lexer Utility Routines
-====================================================================== */
+/*                          Lexer Utility Routines
+ */
 
 inline void Lexer::record_position_of_start_of_lexeme() {
   // TODO: rewrite this, since the lexer no longer keeps track of files
@@ -182,13 +181,12 @@ bool Lexer::determine_type_of_constituent_string() {
   return true;
 }
 
-/* ======================================================================
-                        Lex such-and-such Routines
+/*                         Lex such-and-such Routines
   These routines are called from get_lexeme().  Which routine gets called
   depends on the first character of the new lexeme being read.  Each routine's
   job is to finish reading the lexeme and store the necessary items in
   the member variable "lexeme".
-====================================================================== */
+*/
 
 void Lexer::lex_eof() {
   store_and_advance();
@@ -387,8 +385,8 @@ void Lexer::lex_plus() {
   bool could_be_floating_point;
 
   read_constituent_string();
-  /* --- if we stopped at '.', it might be a floating-point number, so be
-     careful to check for this case --- */
+  /* if we stopped at '.', it might be a floating-point number, so be
+     careful to check for this case */
   if (current_char == '.') {
     could_be_floating_point = true;
     for (i = 1; i < current_lexeme.length(); i++)
@@ -410,8 +408,8 @@ void Lexer::lex_minus() {
   bool could_be_floating_point;
 
   read_constituent_string();
-  /* --- if we stopped at '.', it might be a floating-point number, so be
-     careful to check for this case --- */
+  /* if we stopped at '.', it might be a floating-point number, so be
+     careful to check for this case */
   if (current_char == '.') {
     could_be_floating_point = true;
     for (i = 1; i < current_lexeme.length(); i++)
@@ -438,8 +436,8 @@ void Lexer::lex_digit() {
   bool could_be_floating_point;
 
   read_constituent_string();
-  /* --- if we stopped at '.', it might be a floating-point number, so be
-     careful to check for this case --- */
+  /* if we stopped at '.', it might be a floating-point number, so be
+     careful to check for this case */
   if (current_char == '.') {
     could_be_floating_point = true;
     for (i = 1; i < current_lexeme.length(); i++)
@@ -508,12 +506,11 @@ void Lexer::lex_quote() {
   } while (true);
 }
 
-/* ======================================================================
-                             Get lexeme
+/*                              Get lexeme
   This is the main routine called from outside the lexer.  It reads past
   any whitespace, then calls some lex_xxx routine (using the lexer_routines[]
   table) based on the first character of the lexeme.
-====================================================================== */
+*/
 
 bool Lexer::get_lexeme() {
   current_lexeme.lex_string = "";
@@ -564,7 +561,7 @@ void Lexer::consume_whitespace_and_comments() {
 bool Lexer::init() {
   unsigned int i;
 
-  /* --- setup constituent_char array --- */
+  /* setup constituent_char array */
   char extra_constituents[] = "$%&*+-/:<=>?_@";
   for (i = 0; i < 256; i++) {
     //
@@ -579,12 +576,12 @@ bool Lexer::init() {
     }
   }
 
-  /* --- setup whitespace array --- */
+  /* setup whitespace array */
   for (i = 0; i < 256; i++) {
     whitespace[i] = (isspace(i) != 0);
   }
 
-  /* --- setup number_starters array --- */
+  /* setup number_starters array */
   for (i = 0; i < 256; i++) {
     switch (i) {
       case '+':
@@ -601,7 +598,7 @@ bool Lexer::init() {
     }
   }
 
-  /* --- setup lexer_routines array --- */
+  /* setup lexer_routines array */
   //
   // I go to some effort here to insure that values do not
   // get overwritten.  That could cause problems in a multi-
@@ -712,7 +709,7 @@ void Lexer::determine_possible_symbol_types_for_string(
   *possible_fc = false;
   *rereadable = false;
 
-  /* --- check if it's an integer or floating point number --- */
+  /* check if it's an integer or floating point number */
   if (number_starters[static_cast<unsigned char>(*s)]) {
     ch = s;
     if ((*ch == '+') || (*ch == '-')) ch++; /* optional leading + or - */
@@ -730,8 +727,8 @@ void Lexer::determine_possible_symbol_types_for_string(
     }
   }
 
-  /* --- make sure it's entirely constituent characters --- */
-  /* --- check for rereadability --- */
+  /* make sure it's entirely constituent characters */
+  /* check for rereadability */
   all_alphanum = true;
   for (ch = s; *ch != '\0'; ch++) {
     if (!isalnum(*ch)) {
@@ -744,18 +741,18 @@ void Lexer::determine_possible_symbol_types_for_string(
     *rereadable = true;
   }
 
-  /* --- any string of constituents could be a sym constant --- */
+  /* any string of constituents could be a sym constant */
   *possible_sc = true;
 
-  /* --- check whether it's a variable --- */
+  /* check whether it's a variable */
   if ((*s == '<') && (*(s + length_of_s - 1) == '>')) *possible_var = true;
 
-  /* --- check if it's an identifier --- */
+  /* check if it's an identifier */
   // long term identifiers start with @
   ch = s;
 
   if (isalpha(*ch) && *(++ch) != '\0') {
-    /* --- is the rest of the string an integer? --- */
+    /* is the rest of the string an integer? */
     while (isdigit(*ch)) ch++;
     if (*ch == '\0') *possible_id = true;
   }

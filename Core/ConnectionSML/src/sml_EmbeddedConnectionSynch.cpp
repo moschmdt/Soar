@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // EmbeddedConnectionSynch class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class represents a logical connection between two entities that are
 // communicating via SML (a form of XML).  In the embedded case that this class
@@ -12,7 +11,6 @@
 // variant, the two entities execute in the same thread (so we're just dealing
 // with direct function calls).
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <iostream>
@@ -27,13 +25,13 @@
 using namespace sml;
 using namespace soarxml;
 
-/*************************************************************
+/**
  * @brief Send the message over to the other side of the connection
  *        and store the response.
  *
  *        The caller can pick up the response later with a
  *        call to GetResponseForID().
- *************************************************************/
+ */
 void EmbeddedConnectionSynch::SendMsg(ElementXML* pMsg) {
   ClearError();
 
@@ -69,7 +67,7 @@ void EmbeddedConnectionSynch::SendMsg(ElementXML* pMsg) {
   m_pLastResponse->Attach(hResponse);
 }
 
-/*************************************************************
+/**
  * @brief Look up the response to a particular message.
  *
  *       We require these calls to be paired with the order the messages
@@ -80,7 +78,7 @@ void EmbeddedConnectionSynch::SendMsg(ElementXML* pMsg) {
  *       As a result, we only store a single response at a time
  *       and this must match the message we just sent (since its a synchronous
  *       connection so it's executed immediately).
- *************************************************************/
+ */
 ElementXML* EmbeddedConnectionSynch::GetResponseForID(char const* /*pID*/,
                                                       bool /*wait*/) {
   // For the embedded connection there's no ambiguity over what was the "last"

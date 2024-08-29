@@ -44,7 +44,7 @@ void init_instantiation_pool(agent* thisAgent) {
       MP_instantiation, sizeof(instantiation), "instantiation");
 }
 
-/*--------------------------------------------------------------------
+/**
  Find Clone For Level
 
  This routines take a given preference and finds the clone of it whose
@@ -54,7 +54,7 @@ void init_instantiation_pool(agent* thisAgent) {
  the right level, NIL is returned.
 
  REQUIRES: a pref that is not at the target level.  Caller must check.
- ----------------------------------------------------------------------- */
+ */
 
 preference* find_clone_for_level(preference* p, goal_stack_level level) {
   preference* clone;
@@ -73,13 +73,12 @@ preference* find_clone_for_level(preference* p, goal_stack_level level) {
   return NIL;
 }
 
-/* =======================================================================
-
+/**
  Firer Utilities
 
- ======================================================================= */
+ */
 
-/* -----------------------------------------------------------------------
+/**
  Find Match Goal
 
  Given an instantiation, this routines looks at the instantiated
@@ -87,7 +86,7 @@ preference* find_clone_for_level(preference* p, goal_stack_level level) {
  inst->match_goal_level.  If there is a match goal, match_goal is set
  to point to the goal identifier.  If no goal was matched, match_goal
  is set to NIL and match_goal_level is set to ATTRIBUTE_IMPASSE_LEVEL.
- ----------------------------------------------------------------------- */
+ */
 
 void find_match_goal(agent* thisAgent, instantiation* inst) {
   Symbol* lowest_goal_so_far;
@@ -175,7 +174,7 @@ goal_stack_level get_match_goal(condition* top_cond) {
     return ATTRIBUTE_IMPASSE_LEVEL;
   }
 }
-/* -----------------------------------------------------------------------
+/**
 
  Executing the RHS Actions of an Instantiation
 
@@ -193,7 +192,7 @@ goal_stack_level get_match_goal(condition* top_cond) {
  new gensyms.  These gensyms are then stored in the rhs_variable_bindings
  array, so if the same unbound variable is encountered a second time
  it will be instantiated with the same gensym.
- ----------------------------------------------------------------------- */
+ */
 
 uint64_t get_rhs_function_first_arg_identity(agent* thisAgent, rhs_value rv) {
   cons* fl;
@@ -469,7 +468,7 @@ abort_execute_action: /* control comes here when some error occurred */
   return NIL;
 }
 
-/* -----------------------------------------------------------------------
+/**
                     Run-Time O-Support Calculation
 
    This routine calculates o-support for each preference for the given
@@ -508,7 +507,7 @@ abort_execute_action: /* control comes here when some error occurred */
           It doesn't look at the attr field, or at any negative or NCC's.
           I'm not sure whether this is right or not.  (It's a pretty
           obscure case, though.)
------------------------------------------------------------------------ */
+*/
 void calculate_support_for_instantiation_preferences(
     agent* thisAgent, instantiation* inst, instantiation* original_inst) {
   preference* pref;
@@ -654,7 +653,7 @@ void calculate_support_for_instantiation_preferences(
   }
 }
 
-/* -----------------------------------------------------------------------
+/**
  Finalize New Instantiation Stuff
 
  This routine fills in a newly created instantiation structure with
@@ -675,7 +674,7 @@ void calculate_support_for_instantiation_preferences(
  pref's for the match goal
  - if "need_to_do_support_calculations" is true, calculates o-support
  for preferences_generated;
- ----------------------------------------------------------------------- */
+ */
 void finalize_instantiation(agent* thisAgent, instantiation* inst,
                             bool need_to_do_support_calculations,
                             instantiation* original_inst, bool addToGoal,
@@ -1037,13 +1036,13 @@ inline bool trace_firings_of_inst(agent* thisAgent, instantiation* inst) {
            ((inst)->prod->trace_firings)));
 }
 
-/* -----------------------------------------------------------------------
+/**
  Create Instantiation
 
  This builds the instantiation for a new match, and adds it to
  newly_created_instantiations.  It also calls chunk_instantiation() to
  do any necessary chunk or justification building.
- ----------------------------------------------------------------------- */
+ */
 void create_instantiation(agent* thisAgent, production* prod,
                           struct token_struct* tok, wme* w) {
   instantiation* inst;
@@ -1227,12 +1226,12 @@ void create_instantiation(agent* thisAgent, production* prod,
                           static_cast<soar_call_data>(inst));
 }
 
-/* -----------------------------------------------------------------------
+/**
  Deallocate Instantiation
 
  This deallocates the given instantiation.  This should only be invoked
  from possibly_deallocate_instantiation().
- ----------------------------------------------------------------------- */
+ */
 
 void deallocate_instantiation(agent* thisAgent, instantiation*& inst) {
   if (inst->in_newly_created) {
@@ -1286,9 +1285,9 @@ void deallocate_instantiation(agent* thisAgent, instantiation*& inst) {
 
         if (cond->bt.trace) {
           preference* lPref = cond->bt.trace;
-/* -----------------------
+/**
  * preference_remove_ref()
- * ----------------------- */
+ * */
 #ifndef DO_TOP_LEVEL_COND_REF_CTS
           if (lInst->match_goal_level > TOP_GOAL_LEVEL)
 #endif
@@ -1323,9 +1322,9 @@ void deallocate_instantiation(agent* thisAgent, instantiation*& inst) {
                 clone = next;
               }
 
-              /* ------------------------------
+              /**
                * deallocate_preference() part 1
-               * ------------------------------ */
+               * */
               if (lPref->in_tm) {
                 remove_preference_from_tm(thisAgent, lPref);
               }
@@ -1339,9 +1338,9 @@ void deallocate_instantiation(agent* thisAgent, instantiation*& inst) {
               remove_from_dll(lPref->inst->preferences_generated, lPref,
                               inst_next, inst_prev);
 
-              /* -----------------------------------
+              /**
                * possibly_deallocate_instantiation()
-               * ----------------------------------- */
+               * */
               if ((!lPref->inst->preferences_generated) &&
                   (!lPref->inst->in_ms)) {
                 next_iter = l_instantiation_list.insert(next_iter, lPref->inst);
@@ -1415,11 +1414,11 @@ void deallocate_instantiation(agent* thisAgent, instantiation*& inst) {
   inst = NULL;
 }
 
-/* -----------------------------------------------------------------------
+/**
  Retract Instantiation
 
  This retracts the given instantiation.
- ----------------------------------------------------------------------- */
+ */
 
 void retract_instantiation(agent* thisAgent, instantiation* inst) {
   preference *pref, *next;
@@ -1558,7 +1557,7 @@ instantiation* make_architectural_instantiation_for_memory_system(
   return inst;
 }
 
-/* ------------------------------------------------------------------
+/**
             make_architectural_instantiation_for_impasse_item
 
    When we backtrace through a (goal ^item) augmentation, we want
@@ -1581,7 +1580,7 @@ instantiation* make_architectural_instantiation_for_memory_system(
    See the section above on Preference Semantics.  It also allows
    the GDS to backtrace through ^items properly.
 
------------------------------------------------------------------- */
+*/
 
 preference* make_architectural_instantiation_for_impasse_item(
     agent* thisAgent, Symbol* goal, preference* cand) {

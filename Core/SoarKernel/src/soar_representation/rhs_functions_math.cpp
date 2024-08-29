@@ -1,11 +1,9 @@
-/*************************************************************************
+/**
  *
  *  file:  rhs_functions_math.cpp
  *
- * =======================================================================
- *  Support routines for doing math in the RHS of productions.
- * =======================================================================
- */
+ *  *  Support routines for doing math in the RHS of productions.
+ *  */
 
 #include <math.h>
 #include <stdlib.h>
@@ -24,12 +22,12 @@
 #include "symbol_manager.h"
 #include "working_memory.h"
 
-/* --------------------------------------------------------------------
+/**
                                 Plus
 
    Takes any number of int_constant or float_constant arguments, and
    returns their sum.
--------------------------------------------------------------------- */
+*/
 
 Symbol* plus_rhs_function_code(agent* thisAgent, cons* args,
                                void* /*user_data*/) {
@@ -75,12 +73,12 @@ Symbol* plus_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_int_constant(i);
 }
 
-/* --------------------------------------------------------------------
+/**
                                 Times
 
    Takes any number of int_constant or float_constant arguments, and
    returns their product.
--------------------------------------------------------------------- */
+*/
 
 Symbol* times_rhs_function_code(agent* thisAgent, cons* args,
                                 void* /*user_data*/) {
@@ -126,14 +124,14 @@ Symbol* times_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_int_constant(i);
 }
 
-/* --------------------------------------------------------------------
+/**
                                 Minus
 
    Takes one or more int_constant or float_constant arguments.
    If 0 arguments, returns NIL (error).
    If 1 argument (x), returns -x.
    If >=2 arguments (x, y1, ..., yk), returns x - y1 - ... - yk.
--------------------------------------------------------------------- */
+*/
 
 Symbol* minus_rhs_function_code(agent* thisAgent, cons* args,
                                 void* /*user_data*/) {
@@ -160,7 +158,7 @@ Symbol* minus_rhs_function_code(agent* thisAgent, cons* args,
   }
 
   if (!args->rest) {
-    /* --- only one argument --- */
+    /* only one argument */
     arg = static_cast<symbol_struct*>(args->first);
     if (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) {
       return thisAgent->symbolManager->make_int_constant(-arg->ic->value);
@@ -168,7 +166,7 @@ Symbol* minus_rhs_function_code(agent* thisAgent, cons* args,
     return thisAgent->symbolManager->make_float_constant(-arg->fc->value);
   }
 
-  /* --- two or more arguments --- */
+  /* two or more arguments */
   arg = static_cast<symbol_struct*>(args->first);
   float_found = false;
   if (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) {
@@ -201,14 +199,14 @@ Symbol* minus_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_int_constant(i);
 }
 
-/* --------------------------------------------------------------------
+/**
                      Floating-Point Division
 
    Takes one or more int_constant or float_constant arguments.
    If 0 arguments, returns NIL (error).
    If 1 argument (x), returns 1/x.
    If >=2 arguments (x, y1, ..., yk), returns x / y1 / ... / yk.
--------------------------------------------------------------------- */
+*/
 
 Symbol* fp_divide_rhs_function_code(agent* thisAgent, cons* args,
                                     void* /*user_data*/) {
@@ -233,7 +231,7 @@ Symbol* fp_divide_rhs_function_code(agent* thisAgent, cons* args,
   }
 
   if (!args->rest) {
-    /* --- only one argument --- */
+    /* only one argument */
     arg = static_cast<symbol_struct*>(args->first);
     if (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) {
       f = static_cast<double>(arg->ic->value);
@@ -248,7 +246,7 @@ Symbol* fp_divide_rhs_function_code(agent* thisAgent, cons* args,
     return NIL;
   }
 
-  /* --- two or more arguments --- */
+  /* two or more arguments */
   arg = static_cast<symbol_struct*>(args->first);
   if (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) {
     f = static_cast<double>(arg->ic->value);
@@ -278,11 +276,11 @@ Symbol* fp_divide_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_float_constant(f);
 }
 
-/* --------------------------------------------------------------------
+/**
                      Integer Division (Quotient)
 
    Takes two int_constant arguments, and returns their quotient.
--------------------------------------------------------------------- */
+*/
 
 Symbol* div_rhs_function_code(agent* thisAgent, cons* args,
                               void* /*user_data*/) {
@@ -381,12 +379,12 @@ Symbol* product_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_int_constant(product);
 }
 
-/* --------------------------------------------------------------------
+/**
                           Integer Modulus
 
    Takes two int_constant arguments (x,y) and returns (x mod y), i.e.,
    the remainder after dividing x by y.
--------------------------------------------------------------------- */
+*/
 
 Symbol* mod_rhs_function_code(agent* thisAgent, cons* args,
                               void* /*user_data*/) {
@@ -419,12 +417,12 @@ Symbol* mod_rhs_function_code(agent* thisAgent, cons* args,
      (a/b)*b + a%b == a. */
 }
 
-/* --------------------------------------------------------------------
+/**
                                 Min
 
    Takes any number of int_constant or float_constant arguments,
    and returns the minimum value in the list
--------------------------------------------------------------------- */
+*/
 
 Symbol* min_rhs_function_code(agent* thisAgent, cons* args,
                               void* /*user_data*/) {
@@ -480,12 +478,12 @@ Symbol* min_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_int_constant(min_i);
 }
 
-/* --------------------------------------------------------------------
+/**
                                Max
 
    Takes any number of int_constant or float_constant arguments,
    and returns the maximum value in the list
--------------------------------------------------------------------- */
+*/
 
 Symbol* max_rhs_function_code(agent* thisAgent, cons* args,
                               void* /*user_data*/) {
@@ -541,7 +539,7 @@ Symbol* max_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_int_constant(max_i);
 }
 
-/*
+/**
  * SIN_RHS_FUNCTION_CODE
  *
  * Returns as a float the sine of an angle measured in radians.
@@ -572,7 +570,7 @@ Symbol* sin_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_float_constant(sin(arg_value));
 }
 
-/*
+/**
  * COS_RHS_FUNCTION_CODE
  *
  * Returns as a float the cosine of an angle measured in radians.
@@ -602,7 +600,7 @@ Symbol* cos_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_float_constant(cos(arg_value));
 }
 
-/*
+/**
  * SQRT_RHS_FUNCTION_CODE
  *
  * Returns as a float the square root of its argument (integer or float).
@@ -632,7 +630,7 @@ Symbol* sqrt_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_float_constant(sqrt(arg_value));
 }
 
-/*
+/**
  * ATAN2_RHS_FUNCTION_CODE
  *
  * Returns as a float in radians the arctangent of (first_arg/second_arg)
@@ -691,7 +689,7 @@ Symbol* atan2_rhs_function_code(agent* thisAgent, cons* args,
       atan2(numer_value, denom_value));
 }
 
-/*
+/**
  * ABS_RHS_FUNCTION_CODE
  *
  * Returns the absolute value of a float as a float, of an int as an int.
@@ -722,13 +720,13 @@ Symbol* abs_rhs_function_code(agent* thisAgent, cons* args,
   return return_value;
 }
 
-/* --------------------------------------------------------------------
+/**
                          int
 
    Casts the given symbol into an integer.  If the symbol is a sym
    constant, a conversion is done.  If the symbol is a float, then
    the integer portion is returned.
--------------------------------------------------------------------- */
+*/
 
 Symbol* int_rhs_function_code(agent* thisAgent, cons* args,
                               void* /*user_data*/) {
@@ -784,13 +782,13 @@ Symbol* int_rhs_function_code(agent* thisAgent, cons* args,
   return NIL;
 }
 
-/* --------------------------------------------------------------------
+/**
                          float
 
    Casts the given symbol into an float.  If the symbol is a sym
    constant, a conversion is done.  If the symbol is an int, then
    the integer portion is converted.
--------------------------------------------------------------------- */
+*/
 
 Symbol* float_rhs_function_code(agent* thisAgent, cons* args,
                                 void* /*user_data*/) {
@@ -848,10 +846,10 @@ Symbol* float_rhs_function_code(agent* thisAgent, cons* args,
 /* voigtjr 6/12/2007: added these built in functions on laird's request
 these are straight out of the <8.6 kernel */
 
-/***********************************************************
+/**
 These RHS functions are used in the Quake-Soar agent.  They
 are modified versions of the routines taken from TacAir-Soar.
-*************************************************************/
+*/
 
 /* "Normalizes" an integral heading to be between -180 and +180 */
 int64_t normalize_heading_int(int64_t n) {
@@ -940,14 +938,14 @@ Symbol* round_off_heading_air_rhs_function_code(agent* thisAgent, cons* args,
   }
 
   if (!args->rest) {
-    /* --- only one argument --- */
+    /* only one argument */
     thisAgent->outputManager->printa(
         thisAgent,
         "Error: 'round_off_heading' function called with only one argument.\n");
     return NIL;
   }
 
-  /* --- two or more arguments --- */
+  /* two or more arguments */
   arg = static_cast<Symbol*>(args->first);
   if (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) {
     n = static_cast<double>(arg->ic->value);
@@ -957,7 +955,7 @@ Symbol* round_off_heading_air_rhs_function_code(agent* thisAgent, cons* args,
 
   c = args->rest;
   if (c->rest) {
-    /* --- more than two arguments --- */
+    /* more than two arguments */
     thisAgent->outputManager->printa(thisAgent,
                                      "Error: 'round_off_heading' function "
                                      "called with more than two arguments.\n");
@@ -983,11 +981,11 @@ Symbol* round_off_heading_air_rhs_function_code(agent* thisAgent, cons* args,
 
 /* code for round_off_heading */
 
-/* --------------------------------------------------------------------
+/**
                                 round_off
 
  Takes two numbers and returns the first rounded to the nearest second.
--------------------------------------------------------------------- */
+*/
 Symbol* round_off_air_rhs_function_code(agent* thisAgent, cons* args,
                                         void* /*user_data*/) {
   Symbol* arg;
@@ -1003,14 +1001,14 @@ Symbol* round_off_air_rhs_function_code(agent* thisAgent, cons* args,
   }
 
   if (!args->rest) {
-    /* --- only one argument --- */
+    /* only one argument */
     thisAgent->outputManager->printa(
         thisAgent,
         "Error: 'round_off' function called with only one argument.\n");
     return NIL;
   }
 
-  /* --- two or more arguments --- */
+  /* two or more arguments */
   arg = static_cast<Symbol*>(args->first);
   if (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) {
     n = static_cast<double>(arg->ic->value);
@@ -1020,7 +1018,7 @@ Symbol* round_off_air_rhs_function_code(agent* thisAgent, cons* args,
 
   c = args->rest;
   if (c->rest) {
-    /* --- more than two arguments --- */
+    /* more than two arguments */
     thisAgent->outputManager->printa(
         thisAgent,
         "Error: 'round_off' function called with more than two arguments.\n");
@@ -1147,11 +1145,11 @@ int64_t heading_to_point(int64_t current_x, int64_t current_y, int64_t x,
   return convert(bracket_rad_to_deg(heading));
 }
 
-/* --------------------------------------------------------------------
+/**
                                 compute-heading
 
  Takes 4 args and returns integer heading from x1,y1 to x2,y2
--------------------------------------------------------------------- */
+*/
 
 Symbol* compute_heading_rhs_function_code(agent* thisAgent, cons* args,
                                           void* /*user_data*/) {
@@ -1224,11 +1222,11 @@ Symbol* compute_heading_rhs_function_code(agent* thisAgent, cons* args,
       heading_to_point(current_x, current_y, waypoint_x, waypoint_y));
 }
 
-/* --------------------------------------------------------------------
+/**
                                 compute-range
 
  Takes 4 args and returns integer range from x1,y1 to x2,y2
--------------------------------------------------------------------- */
+*/
 
 Symbol* compute_range_rhs_function_code(agent* thisAgent, cons* args,
                                         void* /*user_data*/) {
@@ -1301,13 +1299,13 @@ Symbol* compute_range_rhs_function_code(agent* thisAgent, cons* args,
            (current_y - waypoint_y) * (current_y - waypoint_y))));
 }
 
-/* --------------------------------------------------------------------
+/**
                                 rand-float
 
  Takes an optional integer argument.
  Returns [0,1.0] of no argument, or if argument is not positive.
  Returns [0,n] if argument is positive.
--------------------------------------------------------------------- */
+*/
 Symbol* rand_float_rhs_function_code(agent* thisAgent, cons* args,
                                      void* /*user_data*/) {
   double n = 0;
@@ -1336,13 +1334,13 @@ Symbol* rand_float_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_float_constant(SoarRand());
 }
 
-/* --------------------------------------------------------------------
+/**
                                 rand-int
 
  Takes an optional integer argument.
  Returns [-2^31,2^31-1] of no argument, or if argument is not positive.
  Returns [0,n] if argument is positive.
--------------------------------------------------------------------- */
+*/
 Symbol* rand_int_rhs_function_code(agent* thisAgent, cons* args,
                                    void* /*user_data*/) {
   int64_t n = 0;
@@ -1631,7 +1629,7 @@ struct wme_val_stats {
         sum_square(0.0) {}
 };
 
-/*
+/**
  * Helper for set-based processes.  This calls the given fn for each wme in the
  * set being processed.
  *
@@ -1795,7 +1793,7 @@ Symbol* stdev_wme(agent* thisAgent, wme* wme_to_sum, void* data) {
   return NIL;
 };
 
-/*
+/**
  * A right hand side function that can count the members of a set.
  *
  * Pass the soar id of the set (first parameter) and the name of the
@@ -1812,7 +1810,7 @@ Symbol* set_count_rhs_function_code(agent* thisAgent, cons* args,
   return thisAgent->symbolManager->make_int_constant(stats.count);
 }
 
-/*
+/**
  * A right hand side function that sum the members of a set.
  *
  * Pass the soar id of the set (first parameter) and the name of the
@@ -1835,7 +1833,7 @@ Symbol* set_sum_rhs_function_code(agent* thisAgent, cons* args,
              : thisAgent->symbolManager->make_str_constant("NaN");
 }
 
-/*
+/**
  * A right hand side function that multiplies the members of a set.
  *
  * Pass the soar id of the set (first parameter) and the name of the
@@ -1858,7 +1856,7 @@ Symbol* set_multiply_rhs_function_code(agent* thisAgent, cons* args,
              : thisAgent->symbolManager->make_str_constant("NaN");
 }
 
-/*
+/**
  * A right hand side function that finds the minimum of a set.
  *
  * Pass the soar id of the set (first parameter) and the name of the
@@ -1879,7 +1877,7 @@ Symbol* set_min_rhs_function_code(agent* thisAgent, cons* args,
              : thisAgent->symbolManager->make_str_constant("NaN");
 }
 
-/*
+/**
  * A right hand side function that finds the maximum of a set.
  *
  * Pass the soar id of the set (first parameter) and the name of the
@@ -1900,7 +1898,7 @@ Symbol* set_max_rhs_function_code(agent* thisAgent, cons* args,
              : thisAgent->symbolManager->make_str_constant("NaN");
 }
 
-/*
+/**
  * A right hand side function that finds the range of a set.
  *
  * Pass the soar id of the set (first parameter) and the name of the
@@ -1921,7 +1919,7 @@ Symbol* set_range_rhs_function_code(agent* thisAgent, cons* args,
                            : thisAgent->symbolManager->make_str_constant("NaN");
 }
 
-/*
+/**
  * A right hand side function that finds the mean value of a set.
  *
  * Pass the soar id of the set (first parameter) and the name of the
@@ -1945,7 +1943,7 @@ Symbol* set_mean_rhs_function_code(agent* thisAgent, cons* args,
   }
 }
 
-/*
+/**
  * A right hand side function that finds the standard deviation of a set.
  *
  * Pass the soar id of the set (first parameter) and the name of the
@@ -1972,11 +1970,9 @@ Symbol* set_stdev_rhs_function_code(agent* thisAgent, cons* args,
   }
 }
 
-/* ====================================================================
-
+/**
                   Initialize the Built-In RHS Math Functions
 
-====================================================================
 */
 
 void init_built_in_rhs_math_functions(agent* thisAgent) {

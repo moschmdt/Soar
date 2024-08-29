@@ -1,4 +1,4 @@
-/***************************************************
+/**
  *
  * File: filters/intersect.cpp
  *
@@ -22,7 +22,7 @@
  *    Returns:
  *      sgnode b - if a intersects b
  *
- *********************************************************/
+ */
 #include <string>
 
 #include "filter_table.h"
@@ -43,36 +43,47 @@ bool intersect_test(sgnode* a, sgnode* b, const filter_params* p) {
   }
 }
 
-////// filter intersect //////
-filter* make_intersect_filter(Symbol* root, soar_interface* si, scene* scn,
+////// filter intersect filter* make_intersect_filter(Symbol* root,
+/// soar_interface* si, scene* scn,
                               filter_input* input) {
-  return new node_test_filter(root, si, input, &intersect_test);
-}
+                                return new node_test_filter(root, si, input,
+                                                            &intersect_test);
+                              }
 
-filter_table_entry* intersect_filter_entry() {
-  filter_table_entry* e = new filter_table_entry();
-  e->name = "intersect";
-  e->description = "Returns true if a intersects b";
-  e->parameters["a"] = "Sgnode a";
-  e->parameters["b"] = "Sgnode b";
-  e->parameters["intersect_type"] = "Either bbox or hull";
-  e->create = &make_intersect_filter;
-  return e;
-}
+                              filter_table_entry* intersect_filter_entry() {
+                                filter_table_entry* e =
+                                    new filter_table_entry();
+                                e->name = "intersect";
+                                e->description =
+                                    "Returns true if a intersects b";
+                                e->parameters["a"] = "Sgnode a";
+                                e->parameters["b"] = "Sgnode b";
+                                e->parameters["intersect_type"] =
+                                    "Either bbox or hull";
+                                e->create = &make_intersect_filter;
+                                return e;
+                              }
 
-////// filter intersect_select //////
-filter* make_intersect_select_filter(Symbol* root, soar_interface* si,
+                              ////// filter intersect_select filter*
+                              /// make_intersect_select_filter(Symbol* root,
+                              /// soar_interface* si,
                                      scene* scn, filter_input* input) {
-  return new node_test_select_filter(root, si, input, &intersect_test);
-}
+                                       return new node_test_select_filter(
+                                           root, si, input, &intersect_test);
+                                     }
 
-filter_table_entry* intersect_select_filter_entry() {
-  filter_table_entry* e = new filter_table_entry();
-  e->name = "intersect_select";
-  e->description = "Selects b if a intersects b";
-  e->parameters["a"] = "Sgnode a";
-  e->parameters["b"] = "Sgnode b";
-  e->parameters["intersect_type"] = "Either bbox or hull";
-  e->create = &make_intersect_select_filter;
-  return e;
-}
+                                     filter_table_entry*
+                                     intersect_select_filter_entry() {
+                                       filter_table_entry* e =
+                                           new filter_table_entry();
+                                       e->name = "intersect_select";
+                                       e->description =
+                                           "Selects b if a intersects b";
+                                       e->parameters["a"] = "Sgnode a";
+                                       e->parameters["b"] = "Sgnode b";
+                                       e->parameters["intersect_type"] =
+                                           "Either bbox or hull";
+                                       e->create =
+                                           &make_intersect_select_filter;
+                                       return e;
+                                     }

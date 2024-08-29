@@ -1,14 +1,13 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  trace.cpp
  *
- * =======================================================================
- *
+ *  *
  *                   Trace Format Routines
  *
  * This file contains definitions and routines for dealing with the trace
@@ -16,8 +15,7 @@
  * strings (with % escape sequences in them).  At entry time, Soar 6
  * parses these strings into trace_format structures.
  *
- * =======================================================================
- */
+ *  */
 
 #include "trace.h"
 
@@ -43,7 +41,7 @@
 
 using namespace soar_TraceNames;
 
-/* --- trace format types --- */
+/* trace format types */
 
 enum trace_format_type {
   STRING_TFT,                      /* print a string */
@@ -67,7 +65,7 @@ enum trace_format_type {
   NEWLINE_TFT
 }; /* print a newline */
 
-/* --- trace_format structure --- */
+/* trace_format structure */
 
 typedef struct trace_format_struct {
   struct trace_format_struct* next; /* next in linked list of format items */
@@ -81,11 +79,11 @@ typedef struct trace_format_struct {
   } data;
 } trace_format;
 
-/* ----------------------------------------------------------------------
+/**
                      Deallocate Trace Format List
 
    This deallocates all the memory used by a (list of) trace_format.
----------------------------------------------------------------------- */
+*/
 
 void deallocate_trace_format_list(agent* thisAgent, trace_format* tf) {
   trace_format* next;
@@ -120,7 +118,7 @@ void deallocate_trace_format_list(agent* thisAgent, trace_format* tf) {
   }
 }
 
-/* ----------------------------------------------------------------------
+/**
                    Trace Format String Parsing Routines
 
    Parse_format_string() parses a format string and returns a trace_format
@@ -144,7 +142,7 @@ void deallocate_trace_format_list(agent* thisAgent, trace_format* tf) {
    the current location up to the end of the item--a string, an escape
    sequence (with arguments), etc.  The end of an item is delineated by
    the end-of-string, a "[" or "]", or the end of the escape sequence.
----------------------------------------------------------------------- */
+*/
 
 const char* format;
 const char* format_string_error_message;
@@ -199,19 +197,19 @@ cons* parse_attribute_path_in_brackets(agent* thisAgent) {
   char name[MAX_LEXEME_LENGTH + 20], *ch;
   Symbol* sym;
 
-  /* --- look for opening bracket --- */
+  /* look for opening bracket */
   if (*format != '[') {
     format_string_error_message = "Expected '[' followed by attribute (path)";
     return NIL;
   }
   format++;
 
-  /* --- check for '*' (null path) --- */
+  /* check for '*' (null path) */
   if (*format == '*') {
     path = NIL;
     format++;
   } else {
-    /* --- normal case: read the attribute path --- */
+    /* normal case: read the attribute path */
     path = NIL;
     while (true) {
       ch = name;
@@ -241,7 +239,7 @@ cons* parse_attribute_path_in_brackets(agent* thisAgent) {
     path = destructively_reverse_list(path);
   }
 
-  /* --- look for closing bracket --- */
+  /* look for closing bracket */
   if (*format != ']') {
     format_string_error_message = "'[' without closing ']'";
     thisAgent->symbolManager->deallocate_symbol_list_removing_references(path);
@@ -256,7 +254,7 @@ trace_format* parse_pattern_in_brackets(agent* thisAgent,
                                         bool read_opening_bracket) {
   trace_format *first, *prev, *New;
 
-  /* --- look for opening bracket --- */
+  /* look for opening bracket */
   if (read_opening_bracket) {
     if (*format != '[') {
       format_string_error_message = "Expected '[' followed by attribute path";
@@ -265,7 +263,7 @@ trace_format* parse_pattern_in_brackets(agent* thisAgent,
     format++;
   }
 
-  /* --- read pattern --- */
+  /* read pattern */
   prev = NIL;
   first = NIL; /* unnecessary, but gcc -Wall warns without it */
   while ((*format != 0) && (*format != ']')) {
@@ -292,7 +290,7 @@ trace_format* parse_pattern_in_brackets(agent* thisAgent,
     first = NIL;
   }
 
-  /* --- look for closing bracket --- */
+  /* look for closing bracket */
   if (*format != ']') {
     format_string_error_message = "'[' without closing ']'";
     deallocate_trace_format_list(thisAgent, first);
@@ -337,7 +335,7 @@ trace_format* parse_item_from_format_string(agent* thisAgent) {
     return tf;
   }
 
-  /* --- otherwise *format is '%', so parse the escape sequence --- */
+  /* otherwise *format is '%', so parse the escape sequence */
 
   if (!strncmp(format, "%v", 2)) {
     format += 2;
@@ -579,17 +577,17 @@ trace_format* parse_item_from_format_string(agent* thisAgent) {
     return tf;
   }
 
-  /* --- if we haven't recognized it yet, we don't understand it --- */
+  /* if we haven't recognized it yet, we don't understand it */
   format_string_error_message = "Unrecognized escape sequence";
   return NIL;
 }
 
-/* ----------------------------------------------------------------------
+/**
                       Print Trace Format List
 
    This routine takes a trace format (list) and prints it out as a format
    string (without the surrounding quotation marks).
----------------------------------------------------------------------- */
+*/
 
 void print_trace_format_list(agent* thisAgent, trace_format* tf) {
   cons* c;
@@ -708,8 +706,7 @@ void print_trace_format_list(agent* thisAgent, trace_format* tf) {
   }
 }
 
-/* ======================================================================
-                    Trace Format Specification Tables
+/*                     Trace Format Specification Tables
 
    We maintain tables of object trace formats and selection trace formats.
    Trace formats that apply to any *|g|p|s|o are stored in the arrays
@@ -740,9 +737,9 @@ void print_trace_format_list(agent* thisAgent, trace_format* tf) {
 
    Print_all_trace_formats() prints out either all existing stack trace
    or object trace formats.
-====================================================================== */
+*/
 
-/* --- trace formats that don't test the object name --- */
+/* trace formats that don't test the object name */
 
 typedef struct tracing_rule_struct {
   /* Warning: this MUST be the first field, for the hash table routines */
@@ -758,7 +755,7 @@ inline uint32_t hash_name_restriction(Symbol* name, short num_bits) {
   return name->hash_id & masks_for_n_low_order_bits[num_bits];
 }
 
-/* --- hash function for resizable hash table routines --- */
+/* hash function for resizable hash table routines */
 uint32_t tracing_rule_hash_function(void* item, short num_bits) {
   tracing_rule* tr;
 
@@ -766,7 +763,7 @@ uint32_t tracing_rule_hash_function(void* item, short num_bits) {
   return hash_name_restriction(tr->name_restriction, num_bits);
 }
 
-/* --- hash tables for stack and object traces --- */
+/* hash tables for stack and object traces */
 
 void init_tracing(agent* thisAgent) {
   int i;
@@ -802,7 +799,7 @@ trace_format* lookup_trace_format(agent* thisAgent, bool stack_trace,
       }
     return NIL;
   }
-  /* --- no name restriction --- */
+  /* no name restriction */
   if (stack_trace) {
     return thisAgent->stack_tf_for_anything[type_restriction];
   } else {
@@ -838,7 +835,7 @@ bool remove_trace_format(agent* thisAgent, bool stack_trace,
     thisAgent->symbolManager->symbol_remove_ref(&name_restriction);
     return true;
   }
-  /* --- no name restriction --- */
+  /* no name restriction */
   if (stack_trace) {
     format = &(thisAgent->stack_tf_for_anything[type_restriction]);
   } else {
@@ -858,17 +855,17 @@ bool add_trace_format(agent* thisAgent, bool stack_trace, int type_restriction,
   trace_format* new_tf;
   hash_table* ht;
 
-  /* --- parse the format string into a trace_format --- */
+  /* parse the format string into a trace_format */
   new_tf = parse_format_string(thisAgent, format_string);
   if (!new_tf) {
     return false;
   }
 
-  /* --- first remove any existing trace format with same conditions --- */
+  /* first remove any existing trace format with same conditions */
   remove_trace_format(thisAgent, stack_trace, type_restriction,
                       name_restriction);
 
-  /* --- now add the new one --- */
+  /* now add the new one */
   if (name_restriction) {
     thisAgent->symbolManager->symbol_add_ref(name_restriction);
     if (stack_trace) {
@@ -885,7 +882,7 @@ bool add_trace_format(agent* thisAgent, bool stack_trace, int type_restriction,
     add_to_hash_table(thisAgent, ht, tr);
     return true;
   }
-  /* --- no name restriction --- */
+  /* no name restriction */
   if (stack_trace) {
     thisAgent->stack_tf_for_anything[type_restriction] = new_tf;
   } else {
@@ -999,20 +996,20 @@ void print_all_trace_formats_tcl(agent* thisAgent, bool stack_trace, FILE* f) {
 }
 
 inline void set_print_trace_formats(agent* thisAgent) {
-  /* --- add default object trace formats --- */
+  /* add default object trace formats */
   add_trace_format(thisAgent, false, FOR_ANYTHING_TF, NIL,
                    "%id %ifdef[(%v[name])]");
   add_trace_format(thisAgent, false, FOR_STATES_TF, NIL,
                    "%id %ifdef[(%v[attribute] %v[impasse])]");
-  /***********  enable when determine tagged output format
+  /**  enable when determine tagged output format
   { Symbol *evaluate_object_sym;
     evaluate_object_sym = make_str_constant (thisAgent, "evaluate-object");
     add_trace_format (thisAgent, false, FOR_OPERATORS_TF, evaluate_object_sym,
                       "%id (evaluate-object %o[object])");
     symbol_remove_ref (thisAgent, evaluate_object_sym);
   }
-  *************/
-  /* --- add default stack trace formats --- */
+  */
+  /* add default stack trace formats */
   add_trace_format(thisAgent, true, FOR_STATES_TF, NIL,
                    "%right[6,%dc]: %rsd[   ]==>S: %cs");
   add_trace_format(thisAgent, true, FOR_OPERATORS_TF, NIL,
@@ -1021,21 +1018,21 @@ inline void set_print_trace_formats(agent* thisAgent) {
 inline void set_tagged_trace_formats(agent* thisAgent) {
   // KJC 03/05:  trying this for tagged output
 
-  /* --- add tagged object trace formats --- */
+  /* add tagged object trace formats */
   add_trace_format(thisAgent, false, FOR_ANYTHING_TF, NIL,
                    "%id\" %ifdef[name=\"%v[name]\"]");
   add_trace_format(thisAgent, false, FOR_STATES_TF, NIL,
                    "%id\" %ifdef[impasse_object=\"%v[attribute]\" "
                    "impasse_type=\"%v[impasse]\"]");
-  /***********  enable when determine tagged output format
+  /**  enable when determine tagged output format
   { Symbol *evaluate_object_sym;
     evaluate_object_sym = make_str_constant (thisAgent, "evaluate-object");
     add_trace_format (thisAgent, false, FOR_OPERATORS_TF, evaluate_object_sym,
                       "%id (evaluate-object %o[object])");
     symbol_remove_ref (thisAgent, evaluate_object_sym);
   }
-  *************/
-  /* --- add tagged stack trace formats --- */
+  */
+  /* add tagged stack trace formats */
 
   add_trace_format(thisAgent, true, FOR_STATES_TF, NIL,
                    "<state stack_level=\"%sd\" decision_cycle_count=\"%dc\" "
@@ -1045,14 +1042,13 @@ inline void set_tagged_trace_formats(agent* thisAgent) {
                    "current_operator_id=\"%co>");
 }
 
-/* ======================================================================
-                      Trace Format List To String
+/*                       Trace Format List To String
 
    Trace_format_list_to_string() is the main routine which, given a
    trace format and a current object, builds and returns a growable_string
    for that object's printout.  A number of helper routines are used by
    trace_format_list_to_string().
-====================================================================== */
+*/
 
 growable_string object_to_trace_string(agent* thisAgent, Symbol* object);
 
@@ -1065,14 +1061,14 @@ struct tracing_parameters {
   bool allow_cycle_counts; /* true means allow %dc and %ec */
 } tparams;
 
-/* ----------------------------------------------------------------
+/**
    Adds all values of the given attribute path off the given object
    to the "*result" growable_string.  If "recursive" is true, the
    values are printed recursively as objects, rather than as simple
    atomic values.  "*count" is incremented each time a value is
    printed.  (To get a count of how many values were printed, the
    caller should initialize this to 0, then call this routine.)
----------------------------------------------------------------- */
+*/
 
 void add_values_of_attribute_path(agent* thisAgent, Symbol* object, cons* path,
                                   growable_string* result, bool recursive,
@@ -1097,14 +1093,14 @@ void add_values_of_attribute_path(agent* thisAgent, Symbol* object, cons* path,
     return;
   }
 
-  /* --- not at end of path yet --- */
-  /* --- can't follow any more path segments off of a non-identifier --- */
+  /* not at end of path yet */
+  /* can't follow any more path segments off of a non-identifier */
   if (object->symbol_type != IDENTIFIER_SYMBOL_TYPE) {
     return;
   }
 
-  /* --- call this routine recursively on any wme matching the first segment
-     of the attribute path --- */
+  /* call this routine recursively on any wme matching the first segment
+     of the attribute path */
   for (w = object->id->impasse_wmes; w != NIL; w = w->next)
     if (w->attr == path->first)
       add_values_of_attribute_path(thisAgent, w->value, path->rest, result,
@@ -1121,12 +1117,12 @@ void add_values_of_attribute_path(agent* thisAgent, Symbol* object, cons* path,
   }
 }
 
-/* ----------------------------------------------------------------
+/**
    Adds info for a wme to the given "*result" growable_string. If
    "print_attribute" is true, then "^att-name" is included.  If
    "recursive" is true, the value is printed recursively as an
    object, rather than as a simple atomic value.
----------------------------------------------------------------- */
+*/
 
 void add_trace_for_wme(agent* thisAgent, growable_string* result, wme* w,
                        bool print_attribute, bool recursive) {
@@ -1150,7 +1146,7 @@ void add_trace_for_wme(agent* thisAgent, growable_string* result, wme* w,
   }
 }
 
-/* ----------------------------------------------------------------
+/**
    Adds the trace for values of a given attribute path off a given
    object, to the given "*result" growable_string.  If
    "print_attributes" is true, then "^att-name" is included.  If
@@ -1158,7 +1154,7 @@ void add_trace_for_wme(agent* thisAgent, growable_string* result, wme* w,
    objects, rather than as a simple atomic value.  If the given path
    is NIL, then all values of all attributes of the given object
    are printed.
----------------------------------------------------------------- */
+*/
 
 void add_trace_for_attribute_path(agent* thisAgent, Symbol* object, cons* path,
                                   growable_string* result,
@@ -1221,11 +1217,11 @@ void add_trace_for_attribute_path(agent* thisAgent, Symbol* object, cons* path,
   free_growable_string(thisAgent, values);
 }
 
-/* ----------------------------------------------------------------
+/**
    This is the main routine here.  It returns a growable_string,
    given a trace format list (the format to use) and an object (the
    object being printed).
----------------------------------------------------------------- */
+*/
 
 growable_string trace_format_list_to_string(agent* thisAgent, trace_format* tf,
                                             Symbol* object) {
@@ -1400,8 +1396,7 @@ growable_string trace_format_list_to_string(agent* thisAgent, trace_format* tf,
   return result;
 }
 
-/* ======================================================================
-               Building Traces for Object and Selections
+/*                Building Traces for Object and Selections
 
    Find_appropriate_trace_format() looks for an applicable trace_format
    among the current set of tracing rules.
@@ -1413,7 +1408,7 @@ growable_string trace_format_list_to_string(agent* thisAgent, trace_format* tf,
    the current state, a "selection_type" (one of FOR_OPERATORS_TF, etc.),
    and a flag indicating whether %dc, %ec, etc. escapes should be
    allowed, and returns a growable_string to use for the trace.
-====================================================================== */
+*/
 
 /* prevents infinite loops when printing circular
      structures */
@@ -1422,13 +1417,13 @@ trace_format* find_appropriate_trace_format(agent* thisAgent, bool stack_trace,
                                             int type, Symbol* name) {
   trace_format* tf;
 
-  /* --- first try to find the exact one --- */
+  /* first try to find the exact one */
   tf = lookup_trace_format(thisAgent, stack_trace, type, name);
   if (tf) {
     return tf;
   }
 
-  /* --- failing that, try ignoring the type but retaining the name --- */
+  /* failing that, try ignoring the type but retaining the name */
   if (type != FOR_ANYTHING_TF) {
     tf = lookup_trace_format(thisAgent, stack_trace, FOR_ANYTHING_TF, name);
     if (tf) {
@@ -1436,7 +1431,7 @@ trace_format* find_appropriate_trace_format(agent* thisAgent, bool stack_trace,
     }
   }
 
-  /* --- failing that, try ignoring the name but retaining the type --- */
+  /* failing that, try ignoring the name but retaining the type */
   if (name) {
     tf = lookup_trace_format(thisAgent, stack_trace, type, NIL);
     if (tf) {
@@ -1444,7 +1439,7 @@ trace_format* find_appropriate_trace_format(agent* thisAgent, bool stack_trace,
     }
   }
 
-  /* --- last resort: find a format that applies to anything at all --- */
+  /* last resort: find a format that applies to anything at all */
   return lookup_trace_format(thisAgent, stack_trace, FOR_ANYTHING_TF, NIL);
 }
 
@@ -1455,9 +1450,9 @@ growable_string object_to_trace_string(agent* thisAgent, Symbol* object) {
   Symbol* name;
   struct tracing_parameters saved_tparams;
 
-  /* --- If it's not an identifier, just print it as an atom.  Also, if it's
+  /* If it's not an identifier, just print it as an atom.  Also, if it's
      already being printed, print it as an atom to avoid getting into an
-     infinite loop. --- */
+     infinite loop. */
   if ((object->symbol_type != IDENTIFIER_SYMBOL_TYPE) ||
       (object->tc_num == thisAgent->tf_printing_tc)) {
     gs = make_blank_growable_string(thisAgent);
@@ -1465,10 +1460,10 @@ growable_string object_to_trace_string(agent* thisAgent, Symbol* object) {
     return gs;
   }
 
-  /* --- mark it as being printed --- */
+  /* mark it as being printed */
   object->tc_num = thisAgent->tf_printing_tc;
 
-  /* --- determine the type and name of the object --- */
+  /* determine the type and name of the object */
   if (object->id->isa_goal) {
     type_of_object = FOR_STATES_TF;
   } else if (object->id->isa_operator) {
@@ -1479,10 +1474,10 @@ growable_string object_to_trace_string(agent* thisAgent, Symbol* object) {
 
   name = find_name_of_object(thisAgent, object);
 
-  /* --- find the trace format to use --- */
+  /* find the trace format to use */
   tf = find_appropriate_trace_format(thisAgent, false, type_of_object, name);
 
-  /* --- now call trace_format_list_to_string() --- */
+  /* now call trace_format_list_to_string() */
   if (tf) {
     saved_tparams = tparams;
     tparams.current_s = tparams.current_o = NIL;
@@ -1490,7 +1485,7 @@ growable_string object_to_trace_string(agent* thisAgent, Symbol* object) {
     gs = trace_format_list_to_string(thisAgent, tf, object);
     tparams = saved_tparams;
   } else {
-    /* --- no applicable trace format, so just print the object itself --- */
+    /* no applicable trace format, so just print the object itself */
     gs = make_blank_growable_string(thisAgent);
     add_to_growable_string(thisAgent, &gs, object->to_string(true));
   }
@@ -1508,18 +1503,18 @@ growable_string selection_to_trace_string(agent* thisAgent, Symbol* object,
   growable_string gs;
   struct tracing_parameters saved_tparams;
 
-  /* --- find the problem space name --- */
+  /* find the problem space name */
   name = NIL;
 
-  /* --- find the trace format to use --- */
+  /* find the trace format to use */
   tf = find_appropriate_trace_format(thisAgent, true, selection_type, name);
 
-  /* --- if there's no applicable trace format, print nothing --- */
+  /* if there's no applicable trace format, print nothing */
   if (!tf) {
     return make_blank_growable_string(thisAgent);
   }
 
-  /* --- save/restore tparams, and call trace_format_list_to_string() --- */
+  /* save/restore tparams, and call trace_format_list_to_string() */
   saved_tparams = tparams;
   tparams.current_s = tparams.current_o = NIL;
   if (current_state) {
@@ -1535,8 +1530,7 @@ growable_string selection_to_trace_string(agent* thisAgent, Symbol* object,
   return gs;
 }
 
-/* ======================================================================
-                   Printing Object and Stack Traces
+/*                    Printing Object and Stack Traces
 
    Print_object_trace() takes an object (any symbol).  It prints
    the trace for that object.  Print_stack_trace() takes a (context)
@@ -1545,7 +1539,7 @@ growable_string selection_to_trace_string(agent* thisAgent, Symbol* object,
    %dc and %ec escapes (this flag should normally be true for watch 0
    traces but false during a "pgs" command).  It prints the trace for
    that context object.
-====================================================================== */
+*/
 
 void print_object_trace(agent* thisAgent, Symbol* object) {
   growable_string gs;

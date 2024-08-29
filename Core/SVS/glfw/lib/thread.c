@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,19 +24,16 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Find pointer to thread with a matching ID
-//========================================================================
 
 _GLFWthread * _glfwGetThreadPointer( int ID )
 {
@@ -56,9 +51,7 @@ _GLFWthread * _glfwGetThreadPointer( int ID )
 }
 
 
-//========================================================================
 // Append thread to thread list
-//========================================================================
 
 void _glfwAppendThread( _GLFWthread * t )
 {
@@ -75,9 +68,7 @@ void _glfwAppendThread( _GLFWthread * t )
 }
 
 
-//========================================================================
 // Remove thread from thread list
-//========================================================================
 
 void _glfwRemoveThread( _GLFWthread * t )
 {
@@ -94,13 +85,11 @@ void _glfwRemoveThread( _GLFWthread * t )
 
 
 
-//************************************************************************
-//****                     GLFW user functions                        ****
-//************************************************************************
+//**
+//**                     GLFW user functions                        ****
+//**
 
-//========================================================================
 // Create a new thread
-//========================================================================
 
 GLFWAPI GLFWthread GLFWAPIENTRY glfwCreateThread( GLFWthreadfun fun,
                                                   void *arg )
@@ -116,10 +105,8 @@ GLFWAPI GLFWthread GLFWAPIENTRY glfwCreateThread( GLFWthreadfun fun,
 }
 
 
-//========================================================================
 // Kill a thread. NOTE: THIS IS A VERY DANGEROUS OPERATION, AND SHOULD NOT
 // BE USED EXCEPT IN EXTREME SITUATIONS!
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwDestroyThread( GLFWthread ID )
 {
@@ -139,9 +126,7 @@ GLFWAPI void GLFWAPIENTRY glfwDestroyThread( GLFWthread ID )
 }
 
 
-//========================================================================
 // Wait for a thread to die
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwWaitThread( GLFWthread ID, int waitmode )
 {
@@ -161,9 +146,7 @@ GLFWAPI int GLFWAPIENTRY glfwWaitThread( GLFWthread ID, int waitmode )
 }
 
 
-//========================================================================
 // Return the thread ID for the current thread
-//========================================================================
 
 GLFWAPI GLFWthread GLFWAPIENTRY glfwGetThreadID( void )
 {
@@ -177,9 +160,7 @@ GLFWAPI GLFWthread GLFWAPIENTRY glfwGetThreadID( void )
 }
 
 
-//========================================================================
 // Create a mutual exclusion object
-//========================================================================
 
 GLFWAPI GLFWmutex GLFWAPIENTRY glfwCreateMutex( void )
 {
@@ -193,9 +174,7 @@ GLFWAPI GLFWmutex GLFWAPIENTRY glfwCreateMutex( void )
 }
 
 
-//========================================================================
 // Destroy a mutual exclusion object
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwDestroyMutex( GLFWmutex mutex )
 {
@@ -209,9 +188,7 @@ GLFWAPI void GLFWAPIENTRY glfwDestroyMutex( GLFWmutex mutex )
 }
 
 
-//========================================================================
 // Request access to a mutex
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwLockMutex( GLFWmutex mutex )
 {
@@ -225,9 +202,7 @@ GLFWAPI void GLFWAPIENTRY glfwLockMutex( GLFWmutex mutex )
 }
 
 
-//========================================================================
 // Release a mutex
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwUnlockMutex( GLFWmutex mutex )
 {
@@ -241,9 +216,7 @@ GLFWAPI void GLFWAPIENTRY glfwUnlockMutex( GLFWmutex mutex )
 }
 
 
-//========================================================================
 // Create a new condition variable object
-//========================================================================
 
 GLFWAPI GLFWcond GLFWAPIENTRY glfwCreateCond( void )
 {
@@ -257,9 +230,7 @@ GLFWAPI GLFWcond GLFWAPIENTRY glfwCreateCond( void )
 }
 
 
-//========================================================================
 // Destroy a condition variable object
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwDestroyCond( GLFWcond cond )
 {
@@ -273,9 +244,7 @@ GLFWAPI void GLFWAPIENTRY glfwDestroyCond( GLFWcond cond )
 }
 
 
-//========================================================================
 // Wait for a condition to be raised
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwWaitCond( GLFWcond cond, GLFWmutex mutex,
                                         double timeout )
@@ -290,9 +259,7 @@ GLFWAPI void GLFWAPIENTRY glfwWaitCond( GLFWcond cond, GLFWmutex mutex,
 }
 
 
-//========================================================================
 // Signal a condition to one waiting thread
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSignalCond( GLFWcond cond )
 {
@@ -306,9 +273,7 @@ GLFWAPI void GLFWAPIENTRY glfwSignalCond( GLFWcond cond )
 }
 
 
-//========================================================================
 // Broadcast a condition to all waiting threads
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwBroadcastCond( GLFWcond cond )
 {
@@ -322,11 +287,9 @@ GLFWAPI void GLFWAPIENTRY glfwBroadcastCond( GLFWcond cond )
 }
 
 
-//========================================================================
 // Return the number of processors in the system. This information can be
 // useful for determining the optimal number of threads to use for
 // performing a certain task.
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetNumberOfProcessors( void )
 {
@@ -338,4 +301,3 @@ GLFWAPI int GLFWAPIENTRY glfwGetNumberOfProcessors( void )
 
     return _glfwPlatformGetNumberOfProcessors();
 }
-

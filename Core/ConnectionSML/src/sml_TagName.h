@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // TagName class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Represents an SML node which represents a named object and
 // has the tag <name>
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_TAG_NAME_H
 #define SML_TAG_NAME_H

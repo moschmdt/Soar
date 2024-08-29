@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    X11/GLX
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,18 +24,17 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-/*
+/**
  * Marcus: This code was originally written by Markus G. Kuhn.
  * I have made some slight changes (trimmed it down a bit from >60 KB to
  * 20 KB), but the functionality is the same.
  */
 
-/*
+/**
  * This module converts keysym values into the corresponding ISO 10646
  * (UCS, Unicode) values.
  *
@@ -63,9 +60,9 @@
  */
 
 
-//************************************************************************
-//****                KeySym to Unicode mapping table                 ****
-//************************************************************************
+//**
+//**                KeySym to Unicode mapping table                 ****
+//**
 
 static struct codepair {
   unsigned short keysym;
@@ -851,13 +848,11 @@ static struct codepair {
 };
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Convert X11 KeySym to Unicode
-//========================================================================
 
 long _glfwKeySym2Unicode( KeySym keysym )
 {

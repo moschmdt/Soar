@@ -55,7 +55,7 @@ std::istream& get_nonblank_line(std::istream& is, std::string& line) {
   return is;
 }
 
-/*
+/**
  Upper bound on range is non-inclusive.
 */
 void sample(int k, int low, int high, std::vector<int>& output) {

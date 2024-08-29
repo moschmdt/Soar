@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    X11/GLX
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,20 +24,17 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 #include <limits.h>
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Convert BPP to RGB bits (based on "best guess")
-//========================================================================
 
 static void BPP2RGB( int bpp, int *r, int *g, int *b )
 {
@@ -63,9 +58,7 @@ static void BPP2RGB( int bpp, int *r, int *g, int *b )
 }
 
 
-//========================================================================
 // Finds the video mode closest in size to the specified desired size
-//========================================================================
 
 int _glfwGetClosestVideoMode( int screen, int *width, int *height, int *rate )
 {
@@ -189,9 +182,7 @@ int _glfwGetClosestVideoMode( int screen, int *width, int *height, int *rate )
 }
 
 
-//========================================================================
 // Change the current video mode
-//========================================================================
 
 void _glfwSetVideoModeMODE( int screen, int mode, int rate )
 {
@@ -279,9 +270,7 @@ void _glfwSetVideoModeMODE( int screen, int mode, int rate )
 }
 
 
-//========================================================================
 // Change the current video mode
-//========================================================================
 
 void _glfwSetVideoMode( int screen, int *width, int *height, int *rate )
 {
@@ -295,9 +284,7 @@ void _glfwSetVideoMode( int screen, int *width, int *height, int *rate )
 }
 
 
-//========================================================================
 // Restore the previously saved (original) video mode
-//========================================================================
 
 void _glfwRestoreVideoMode( void )
 {
@@ -337,9 +324,9 @@ void _glfwRestoreVideoMode( void )
 
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
 struct _glfwResolution
 {
@@ -347,9 +334,7 @@ struct _glfwResolution
     int height;
 };
 
-//========================================================================
 // List available video modes
-//========================================================================
 
 int _glfwPlatformGetVideoModes( GLFWvidmode *list, int maxcount )
 {
@@ -501,9 +486,7 @@ int _glfwPlatformGetVideoModes( GLFWvidmode *list, int maxcount )
 }
 
 
-//========================================================================
 // Get the desktop video mode
-//========================================================================
 
 void _glfwPlatformGetDesktopMode( GLFWvidmode *mode )
 {
@@ -564,4 +547,3 @@ void _glfwPlatformGetDesktopMode( GLFWvidmode *mode )
     mode->Width  = DisplayWidth( dpy, screen );
     mode->Height = DisplayHeight( dpy, screen );
 }
-

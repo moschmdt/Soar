@@ -47,7 +47,7 @@ extern "C" {
 #endif
 #endif /** NULL */
 
-/** ------------------- BEGIN SYSTEM/COMPILER SPECIFIC -------------------- */
+/** BEGIN SYSTEM/COMPILER SPECIFIC */
 
 /** Please report any probles that you find with your compiler, which may
  * be solved in this section! There are several compilers that I have not
@@ -123,7 +123,7 @@ typedef unsigned short wchar_t;
 #define _WCHAR_T_DEFINED
 #endif /** _WCHAR_T_DEFINED */
 
-/** ---------------- GLFW related system specific defines ----------------- */
+/** GLFW related system specific defines */
 
 #if defined(_WIN32) && defined(GLFW_BUILD_DLL)
 
@@ -152,7 +152,7 @@ typedef unsigned short wchar_t;
 
 #endif
 
-/** -------------------- END SYSTEM/COMPILER SPECIFIC --------------------- */
+/** END SYSTEM/COMPILER SPECIFIC */
 
 /** Include standard OpenGL headers: GLFW uses GL_FALSE/GL_TRUE, and it is
  * convenient for the user to only have to include <GL/glfw.h>. This also

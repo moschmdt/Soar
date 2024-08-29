@@ -1,14 +1,12 @@
-/////////////////////////////////////////////////////////////////
 // EmbeddedConnectionSynch class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class represents a logical connection between two entities that are
 // communicating via SML (a form of XML).  In the embedded case that this class
 // represents, both entities are within the same process.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_EMBEDDEDCONNECTION_SYNCH_H
 #define SML_EMBEDDEDCONNECTION_SYNCH_H

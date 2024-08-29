@@ -673,8 +673,7 @@ class VectorwiseOp {
         _expression(), isVertical ? factor : 1, isHorizontal ? factor : 1);
   }
 
-  /////////// Artithmetic operators ///////////
-
+  /////////// Artithmetic operators
   /** Copies the vector \a other to each subvector of \c *this */
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC ExpressionType& operator=(
@@ -796,8 +795,7 @@ class VectorwiseOp {
 
   EIGEN_DEVICE_FUNC inline void reverseInPlace();
 
-  /////////// Geometry module ///////////
-
+  /////////// Geometry module
   typedef Homogeneous<ExpressionType, Direction> HomogeneousReturnType;
   EIGEN_DEVICE_FUNC
   HomogeneousReturnType homogeneous() const;

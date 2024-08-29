@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // TagError class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // Represents an SML node which represents an error in a result with
 // the tag <error>.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_TAG_ERROR_H
 #define SML_TAG_ERROR_H

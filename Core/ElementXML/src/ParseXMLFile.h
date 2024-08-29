@@ -1,15 +1,13 @@
-/////////////////////////////////////////////////////////////////
 // ParseXMLFile class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class is used to parse an XML document from a file/string and
 // create an ElementXML object that represents it.
 //
 // This version reads from a file.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef PARSE_XML_FILE_H
 #define PARSE_XML_FILE_H

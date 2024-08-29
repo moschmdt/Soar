@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    X11/GLX
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,7 +24,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
@@ -51,21 +48,17 @@
 #endif
 
 
-//========================================================================
 // The X error code as provided to the X error handler
-//========================================================================
 
 static unsigned long _glfwErrorCode = Success;
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Error handler for BadMatch errors when requesting context with
 // unavailable OpenGL versions using the GLX_ARB_create_context extension
-//========================================================================
 
 static int errorHandler( Display *display, XErrorEvent *event )
 {
@@ -74,9 +67,7 @@ static int errorHandler( Display *display, XErrorEvent *event )
 }
 
 
-//========================================================================
 // Checks whether the event is a MapNotify for the specified window
-//========================================================================
 
 static Bool isMapNotify( Display *d, XEvent *e, char *arg )
 {
@@ -84,10 +75,8 @@ static Bool isMapNotify( Display *d, XEvent *e, char *arg )
 }
 
 
-//========================================================================
 // Retrieve a single window property of the specified type
 // Inspired by fghGetWindowProperty from freeglut
-//========================================================================
 
 static unsigned long getWindowProperty( Window window,
                                         Atom property,
@@ -120,9 +109,7 @@ static unsigned long getWindowProperty( Window window,
 }
 
 
-//========================================================================
 // Check whether the specified atom is supported
-//========================================================================
 
 static Atom getSupportedAtom( Atom* supportedAtoms,
                               unsigned long atomCount,
@@ -146,9 +133,7 @@ static Atom getSupportedAtom( Atom* supportedAtoms,
 }
 
 
-//========================================================================
 // Check whether the running window manager is EWMH-compliant
-//========================================================================
 
 static GLboolean checkForEWMH( void )
 {
@@ -236,9 +221,7 @@ static GLboolean checkForEWMH( void )
     return GL_TRUE;
 }
 
-//========================================================================
 // Translates an X Window key to internal coding
-//========================================================================
 
 static int translateKey( int keycode )
 {
@@ -365,9 +348,7 @@ static int translateKey( int keycode )
 }
 
 
-//========================================================================
 // Translates an X Window event to Unicode
-//========================================================================
 
 static int translateChar( XKeyEvent *event )
 {
@@ -381,9 +362,7 @@ static int translateChar( XKeyEvent *event )
 }
 
 
-//========================================================================
 // Create a blank cursor (for locked mouse mode)
-//========================================================================
 
 static Cursor createNULLCursor( Display *display, Window root )
 {
@@ -409,10 +388,8 @@ static Cursor createNULLCursor( Display *display, Window root )
 }
 
 
-//========================================================================
 // Returns the specified attribute of the specified GLXFBConfig
 // NOTE: Do not call this unless we have found GLX 1.3+ or GLX_SGIX_fbconfig
-//========================================================================
 
 static int getFBConfigAttrib( GLXFBConfig fbconfig, int attrib )
 {
@@ -431,9 +408,7 @@ static int getFBConfigAttrib( GLXFBConfig fbconfig, int attrib )
 }
 
 
-//========================================================================
 // Return a list of available and usable framebuffer configs
-//========================================================================
 
 static _GLFWfbconfig *getFBConfigs( unsigned int *found )
 {
@@ -550,9 +525,7 @@ static _GLFWfbconfig *getFBConfigs( unsigned int *found )
 }
 
 
-//========================================================================
 // Create the OpenGL context using the legacy interface
-//========================================================================
 
 static GLXContext createLegacyContext( GLXFBConfig fbconfig )
 {
@@ -575,9 +548,7 @@ static GLXContext createLegacyContext( GLXFBConfig fbconfig )
 }
 
 
-//========================================================================
 // Create the OpenGL context
-//========================================================================
 
 #define setGLXattrib( attribs, index, attribName, attribValue ) \
     attribs[index++] = attribName; \
@@ -743,9 +714,7 @@ static int createContext( const _GLFWwndconfig *wndconfig, GLXFBConfigID fbconfi
 #undef setGLXattrib
 
 
-//========================================================================
 // Initialize GLX-specific extensions
-//========================================================================
 
 static void initGLXExtensions( void )
 {
@@ -844,9 +813,7 @@ static void initGLXExtensions( void )
 }
 
 
-//========================================================================
 // Create the X11 window (and its colormap)
-//========================================================================
 
 static GLboolean createWindow( int width, int height,
                                const _GLFWwndconfig *wndconfig )
@@ -1005,9 +972,7 @@ static GLboolean createWindow( int width, int height,
 }
 
 
-//========================================================================
 // Enter fullscreen mode
-//========================================================================
 
 static void enterFullscreenMode( void )
 {
@@ -1104,9 +1069,7 @@ static void enterFullscreenMode( void )
                   _glfwWin.width / 2, _glfwWin.height / 2 );
 }
 
-//========================================================================
 // Leave fullscreen mode
-//========================================================================
 
 static void leaveFullscreenMode( void )
 {
@@ -1157,10 +1120,8 @@ static void leaveFullscreenMode( void )
     }
 }
 
-//========================================================================
 // Get and process next X event (called by _glfwPlatformPollEvents)
 // Returns GL_TRUE if a window close request was received
-//========================================================================
 
 static GLboolean processSingleEvent( void )
 {
@@ -1450,14 +1411,12 @@ static GLboolean processSingleEvent( void )
 
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Here is where the window is created, and
 // the OpenGL rendering context is created
-//========================================================================
 
 int _glfwPlatformOpenWindow( int width, int height,
                              const _GLFWwndconfig* wndconfig,
@@ -1556,9 +1515,7 @@ int _glfwPlatformOpenWindow( int width, int height,
 }
 
 
-//========================================================================
 // Properly kill the window/video display
-//========================================================================
 
 void _glfwPlatformCloseWindow( void )
 {
@@ -1602,9 +1559,7 @@ void _glfwPlatformCloseWindow( void )
 }
 
 
-//========================================================================
 // Set the window title
-//========================================================================
 
 void _glfwPlatformSetWindowTitle( const char *title )
 {
@@ -1614,9 +1569,7 @@ void _glfwPlatformSetWindowTitle( const char *title )
 }
 
 
-//========================================================================
 // Set the window size
-//========================================================================
 
 void _glfwPlatformSetWindowSize( int width, int height )
 {
@@ -1665,9 +1618,7 @@ void _glfwPlatformSetWindowSize( int width, int height )
 }
 
 
-//========================================================================
 // Set the window position.
-//========================================================================
 
 void _glfwPlatformSetWindowPos( int x, int y )
 {
@@ -1675,9 +1626,7 @@ void _glfwPlatformSetWindowPos( int x, int y )
 }
 
 
-//========================================================================
 // Window iconification
-//========================================================================
 
 void _glfwPlatformIconifyWindow( void )
 {
@@ -1692,9 +1641,7 @@ void _glfwPlatformIconifyWindow( void )
 }
 
 
-//========================================================================
 // Window un-iconification
-//========================================================================
 
 void _glfwPlatformRestoreWindow( void )
 {
@@ -1709,9 +1656,7 @@ void _glfwPlatformRestoreWindow( void )
 }
 
 
-//========================================================================
 // Swap OpenGL buffers and poll any new events
-//========================================================================
 
 void _glfwPlatformSwapBuffers( void )
 {
@@ -1720,9 +1665,7 @@ void _glfwPlatformSwapBuffers( void )
 }
 
 
-//========================================================================
 // Set double buffering swap interval
-//========================================================================
 
 void _glfwPlatformSwapInterval( int interval )
 {
@@ -1746,9 +1689,7 @@ void _glfwPlatformSwapInterval( int interval )
 }
 
 
-//========================================================================
 // Read back framebuffer parameters from the context
-//========================================================================
 
 void _glfwPlatformRefreshWindowParams( void )
 {
@@ -1844,9 +1785,7 @@ void _glfwPlatformRefreshWindowParams( void )
 }
 
 
-//========================================================================
 // Poll for new window and input events
-//========================================================================
 
 void _glfwPlatformPollEvents( void )
 {
@@ -1887,9 +1826,7 @@ void _glfwPlatformPollEvents( void )
 }
 
 
-//========================================================================
 // Wait for new window and input events
-//========================================================================
 
 void _glfwPlatformWaitEvents( void )
 {
@@ -1903,9 +1840,7 @@ void _glfwPlatformWaitEvents( void )
 }
 
 
-//========================================================================
 // Hide mouse cursor (lock it)
-//========================================================================
 
 void _glfwPlatformHideMouseCursor( void )
 {
@@ -1934,9 +1869,7 @@ void _glfwPlatformHideMouseCursor( void )
 }
 
 
-//========================================================================
 // Show mouse cursor (unlock it)
-//========================================================================
 
 void _glfwPlatformShowMouseCursor( void )
 {
@@ -1958,9 +1891,7 @@ void _glfwPlatformShowMouseCursor( void )
 }
 
 
-//========================================================================
 // Set physical mouse cursor position
-//========================================================================
 
 void _glfwPlatformSetMouseCursorPos( int x, int y )
 {
@@ -1970,4 +1901,3 @@ void _glfwPlatformSetMouseCursorPos( int x, int y )
 
     XWarpPointer( _glfwLibrary.display, None, _glfwWin.window, 0,0,0,0, x, y );
 }
-

@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Cocoa/NSOpenGL
 // API Version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2009-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
 // This software is provided 'as-is', without any express or implied
@@ -25,7 +23,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include <sys/param.h>
 
@@ -42,9 +39,7 @@
 
 @end
 
-//========================================================================
 // Change to our application bundle's resources directory, if present
-//========================================================================
 
 static void changeToResourcesDirectory( void )
 {
@@ -81,9 +76,7 @@ static void changeToResourcesDirectory( void )
 }
 
 
-//========================================================================
 // Terminate GLFW when exiting application
-//========================================================================
 
 static void glfw_atexit( void )
 {
@@ -91,9 +84,7 @@ static void glfw_atexit( void )
 }
 
 
-//========================================================================
 // Initialize GLFW thread package
-//========================================================================
 
 static void initThreads( void )
 {
@@ -112,13 +103,11 @@ static void initThreads( void )
 }
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Initialize the GLFW library
-//========================================================================
 
 int _glfwPlatformInit( void )
 {
@@ -163,9 +152,7 @@ int _glfwPlatformInit( void )
 }
 
 
-//========================================================================
 // Close window, if open, and shut down GLFW
-//========================================================================
 
 int _glfwPlatformTerminate( void )
 {
@@ -192,4 +179,3 @@ int _glfwPlatformTerminate( void )
 
     return GL_TRUE;
 }
-

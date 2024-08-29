@@ -1,11 +1,9 @@
-/*************************************************************************
+/**
  *
  *  file:  exploration.cpp
  *
- * =======================================================================
- * Description  :  Various functions for exploration
- * =======================================================================
- */
+ *  * Description  :  Various functions for exploration
+ *  */
 
 #include "exploration.h"
 
@@ -33,9 +31,9 @@
 
 using namespace soar_TraceNames;
 
-/***************************************************************************
+/**
  * Function     : exploration_valid_policy
- **************************************************************************/
+ */
 
 bool exploration_valid_policy(const char* policy_name) {
   return exploration_convert_policy(policy_name) != 0;
@@ -45,9 +43,9 @@ bool exploration_valid_policy(const int policy) {
   return policy > 0 && policy < USER_SELECT_INVALID;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_convert_policy
- **************************************************************************/
+ */
 const int exploration_convert_policy(const char* policy_name) {
   if (!strcmp(policy_name, "boltzmann")) {
     return USER_SELECT_BOLTZMANN;
@@ -94,9 +92,9 @@ const char* exploration_convert_policy(const int policy) {
   return NULL;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_set_policy
- **************************************************************************/
+ */
 bool exploration_set_policy(agent* thisAgent, const char* policy_name) {
   const int policy = exploration_convert_policy(policy_name);
 
@@ -116,17 +114,17 @@ bool exploration_set_policy(agent* thisAgent, const int policy) {
   return false;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_get_policy
- **************************************************************************/
+ */
 const int exploration_get_policy(agent* thisAgent) {
   return static_cast<int>(
       thisAgent->Decider->settings[DECIDER_EXPLORATION_POLICY]);
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_add_parameter
- **************************************************************************/
+ */
 exploration_parameter* exploration_add_parameter(double value,
                                                  bool (*val_func)(double),
                                                  const char* name) {
@@ -142,9 +140,9 @@ exploration_parameter* exploration_add_parameter(double value,
   return newbie;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_convert_parameter
- **************************************************************************/
+ */
 const int exploration_convert_parameter(agent* thisAgent, const char* name) {
   for (int i = 0; i < EXPLORATION_PARAMS; ++i)
     if (!strcmp(name, thisAgent->RL->exploration_params[i]->name)) {
@@ -161,9 +159,9 @@ const char* exploration_convert_parameter(agent* thisAgent,
              : NULL;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_valid_parameter
- **************************************************************************/
+ */
 const bool exploration_valid_parameter(agent* thisAgent, const char* name) {
   return exploration_convert_parameter(thisAgent, name) != EXPLORATION_PARAMS;
 }
@@ -172,9 +170,9 @@ const bool exploration_valid_parameter(agent* thisAgent, const int parameter) {
   return exploration_convert_parameter(thisAgent, parameter) != NULL;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_get_parameter_value
- **************************************************************************/
+ */
 double exploration_get_parameter_value(agent* thisAgent,
                                        const char* parameter) {
   const int param = exploration_convert_parameter(thisAgent, parameter);
@@ -193,21 +191,21 @@ double exploration_get_parameter_value(agent* thisAgent, const int parameter) {
   return 0;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_validate_epsilon
- **************************************************************************/
+ */
 bool exploration_validate_epsilon(double value) {
   return value >= 0 && value <= 1;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_validate_temperature
- **************************************************************************/
+ */
 bool exploration_validate_temperature(double value) { return value > 0; }
 
-/***************************************************************************
+/**
  * Function     : exploration_valid_parameter_value
- **************************************************************************/
+ */
 bool exploration_valid_parameter_value(agent* thisAgent, const char* name,
                                        double value) {
   const int param = exploration_convert_parameter(thisAgent, name);
@@ -227,9 +225,9 @@ bool exploration_valid_parameter_value(agent* thisAgent, const int parameter,
   return false;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_set_parameter_value
- **************************************************************************/
+ */
 bool exploration_set_parameter_value(agent* thisAgent, const char* name,
                                      double value) {
   const int param = exploration_convert_parameter(thisAgent, name);
@@ -252,23 +250,23 @@ bool exploration_set_parameter_value(agent* thisAgent, const int parameter,
   }
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_get_auto_update
- **************************************************************************/
+ */
 bool exploration_get_auto_update(agent* thisAgent) {
   return (thisAgent->Decider->settings[DECIDER_AUTO_REDUCE] != false);
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_set_auto_update
- **************************************************************************/
+ */
 bool exploration_set_auto_update(agent* thisAgent, bool setting) {
   return (thisAgent->Decider->settings[DECIDER_AUTO_REDUCE] = setting);
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_update_parameters
- **************************************************************************/
+ */
 void exploration_update_parameters(agent* thisAgent) {
   if (exploration_get_auto_update(thisAgent)) {
     for (int i = 0; i < EXPLORATION_PARAMS; ++i) {
@@ -300,9 +298,9 @@ void exploration_update_parameters(agent* thisAgent) {
   }
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_convert_reduction_policy
- **************************************************************************/
+ */
 const int exploration_convert_reduction_policy(const char* policy_name) {
   if (!strcmp(policy_name, "exponential")) {
     return EXPLORATION_REDUCTION_EXPONENTIAL;
@@ -325,9 +323,9 @@ const char* exploration_convert_reduction_policy(const int policy) {
   return NULL;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_get_reduction_policy
- **************************************************************************/
+ */
 const int exploration_get_reduction_policy(agent* thisAgent,
                                            const char* parameter) {
   const int param = exploration_convert_parameter(thisAgent, parameter);
@@ -347,9 +345,9 @@ const int exploration_get_reduction_policy(agent* thisAgent,
   }
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_valid_reduction_policy
- **************************************************************************/
+ */
 bool exploration_valid_reduction_policy(agent* /*thisAgent*/,
                                         const char* /*parameter*/,
                                         const char* policy_name) {
@@ -369,9 +367,9 @@ bool exploration_valid_reduction_policy(agent* /*thisAgent*/,
   return exploration_convert_reduction_policy(policy) != NULL;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_set_reduction_policy
- **************************************************************************/
+ */
 bool exploration_set_reduction_policy(agent* thisAgent, const char* parameter,
                                       const char* policy_name) {
   const int param = exploration_convert_parameter(thisAgent, parameter);
@@ -400,9 +398,9 @@ bool exploration_set_reduction_policy(agent* thisAgent, const int parameter,
   return false;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_valid_reduction_rate
- **************************************************************************/
+ */
 bool exploration_valid_reduction_rate(agent* thisAgent, const char* parameter,
                                       const char* policy_name,
                                       double reduction_rate) {
@@ -442,23 +440,23 @@ bool exploration_valid_reduction_rate(agent* thisAgent, const int parameter,
   return false;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_valid_exponential
- **************************************************************************/
+ */
 bool exploration_valid_exponential(double reduction_rate) {
   return reduction_rate >= 0 && reduction_rate <= 1;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_valid_linear
- **************************************************************************/
+ */
 bool exploration_valid_linear(double reduction_rate) {
   return reduction_rate >= 0;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_get_reduction_rate
- **************************************************************************/
+ */
 double exploration_get_reduction_rate(agent* thisAgent, const char* parameter,
                                       const char* policy_name) {
   const int param = exploration_convert_parameter(thisAgent, parameter);
@@ -484,9 +482,9 @@ double exploration_get_reduction_rate(agent* thisAgent, const int parameter,
   return 0;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_set_reduction_rate
- **************************************************************************/
+ */
 bool exploration_set_reduction_rate(agent* thisAgent, const char* parameter,
                                     const char* policy_name,
                                     double reduction_rate) {
@@ -518,9 +516,9 @@ bool exploration_set_reduction_rate(agent* thisAgent, const int parameter,
   return false;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_choose_according_to_policy
- **************************************************************************/
+ */
 preference* exploration_choose_according_to_policy(agent* thisAgent, slot* s,
                                                    preference* candidates) {
   const int exploration_policy = exploration_get_policy(thisAgent);
@@ -625,9 +623,9 @@ preference* exploration_choose_according_to_policy(agent* thisAgent, slot* s,
   return return_val;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_probability_according_to_policy, bazald
- **************************************************************************/
+ */
 double exploration_probability_according_to_policy(agent* thisAgent, slot* s,
                                                    preference* candidates,
                                                    preference* selection) {
@@ -735,9 +733,9 @@ double exploration_probability_according_to_policy(agent* thisAgent, slot* s,
   }
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_randomly_select
- **************************************************************************/
+ */
 preference* exploration_randomly_select(preference* candidates,
                                         const bool& update_rho) {
   unsigned int cand_count = 0;
@@ -759,9 +757,9 @@ preference* exploration_randomly_select(preference* candidates,
   return cand;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_probabilistically_select
- **************************************************************************/
+ */
 preference* exploration_probabilistically_select(preference* candidates) {
   // IF THIS FUNCTION CHANGES, SEE soar_ecPrintPreferences
 
@@ -805,7 +803,7 @@ preference* exploration_probabilistically_select(preference* candidates) {
   return NIL;
 }
 
-/*
+/**
  * Select a candidate whose Q-value is Q_i with probability
  *
  * e^(Q_i / t) / sum(j=1 to n, e^(Q_j / t)).
@@ -886,9 +884,9 @@ preference* exploration_boltzmann_select(agent* thisAgent,
   return NIL;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_epsilon_greedy_select
- **************************************************************************/
+ */
 preference* exploration_epsilon_greedy_select(agent* thisAgent,
                                               preference* candidates) {
   const double epsilon =
@@ -927,9 +925,9 @@ preference* exploration_epsilon_greedy_select(agent* thisAgent,
   return cand;
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_get_highest_q_value_pref
- **************************************************************************/
+ */
 preference* exploration_get_highest_q_value_pref(preference* candidates) {
   preference* top_cand = candidates;
   double top_value = candidates->numeric_value;
@@ -967,9 +965,9 @@ preference* exploration_get_highest_q_value_pref(preference* candidates) {
   }
 }
 
-/***************************************************************************
+/**
  * Function     : exploration_compute_value_of_candidate
- **************************************************************************/
+ */
 void exploration_compute_value_of_candidate(agent* thisAgent, preference* cand,
                                             slot* s, double default_value) {
   if (!cand) {

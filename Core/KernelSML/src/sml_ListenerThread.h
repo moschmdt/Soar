@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // ListenerThread class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Listens for incoming remote connections and creates
 // a new connection object for each one.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef LISTENER_THREAD_H
 #define LISTENER_THREAD_H

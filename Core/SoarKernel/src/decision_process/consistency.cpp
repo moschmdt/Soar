@@ -1,13 +1,11 @@
-/*************************************************************************
+/**
  *
  *  file:  consistency.cpp
  *
- * =======================================================================
- *
+ *  *
  * Source code for Operand2/Waterfall specific functions in the kernel.
  *
- * =======================================================================
- * Revision history:
+ *  * Revision history:
  *
  * 05 May 97: Created for version 2.0 of Operand2
  * REW
@@ -321,13 +319,13 @@ void remove_current_decision(agent* thisAgent, slot* s) {
   do_buffered_wm_and_ownership_changes(thisAgent);
 }
 
-/* ------------------------------------------------------------------
+/**
                        Check Context Slot Decisions
 
    This scans down the goal stack and checks the consistency of the current
    decision versus the current preferences for the slot, if the preferences
    have changed.
------------------------------------------------------------------- */
+*/
 
 bool check_context_slot_decisions(agent* thisAgent, goal_stack_level level) {
   Symbol* goal;
@@ -456,7 +454,7 @@ void print_retraction(agent* thisAgent, ms_change* msc) {
         thisAgent, "%eRetraction exists but has no p_node");
   }
 }
-/* ---------------------------------------------------------------------- */
+/* */
 /* Find the highest goal of activity among the current assertions and
  * retractions */
 
@@ -588,7 +586,7 @@ Symbol* highest_active_goal_apply(agent* thisAgent, Symbol* start_goal,
   return NIL;
 }
 
-/* ---------------------------------------------------------------------- */
+/* */
 
 /* active_production_type_at_goal
 
@@ -606,7 +604,7 @@ int active_production_type_at_goal(Symbol* goal) {
   }
 }
 
-/* ---------------------------------------------------------------------- */
+/* */
 
 bool goal_stack_consistent_through_goal(agent* thisAgent, Symbol* goal) {
   bool test;
@@ -650,7 +648,7 @@ bool goal_stack_consistent_through_goal(agent* thisAgent, Symbol* goal) {
 }
 /* REW: end   08.20.97 */
 
-/* ---------------------------------------------------------------------- */
+/* */
 
 /* REW: begin 05.05.97 */
 
@@ -671,7 +669,7 @@ void initialize_consistency_calculations_for_new_decision(agent* thisAgent) {
   }
 }
 
-/* ---------------------------------------------------------------------- */
+/* */
 
 /* determine_highest_active_production_level_in_stack_apply()
 
@@ -932,7 +930,7 @@ void determine_highest_active_production_level_in_stack_apply(
 /* REW: end   05.05.97 */
 
 /* KJC: begin 10.04.98 */ /* swiped from REW's determine_highest_active... */
-/* ---------------------------------------------------------------------- */
+/* */
 
 /* determine_highest_active_production_level_in_stack_propose()
 

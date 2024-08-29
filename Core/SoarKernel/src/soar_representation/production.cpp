@@ -1,14 +1,12 @@
-/*************************************************************************
+/**
  *
  *  file:  production.cpp
  *
- * ====================================================================
- *                    Production Utilities
+ *  *                    Production Utilities
  *
  * This file contains various utility routines for manipulating
  * Init_production_utilities() should be called before anything else here.
- * =======================================================================
- */
+ *  */
 
 #include "production.h"
 
@@ -52,8 +50,7 @@ void init_production_utilities(agent* thisAgent) {
 
 ********************************************************************* */
 
-/* =====================================================================
-
+/**
               Increment TC Counter and Return New TC Number
 
    Get_new_tc_number() is called from lots of places.  Any time we need
@@ -66,7 +63,7 @@ void init_production_utilities(agent* thisAgent) {
    the counter ever wraps around back to 0, we bump it up to 1 and
    reset the the tc_num fields on all existing identifiers and variables
    to 0.
-===================================================================== */
+*/
 
 tc_number get_new_tc_number(agent* thisAgent) {
   /* This was originally a global variable. For the present I'll move it here,
@@ -80,8 +77,7 @@ tc_number get_new_tc_number(agent* thisAgent) {
   return thisAgent->current_tc_number;
 }
 
-/* =====================================================================
-
+/**
                Marking, Unmarking, and Collecting Symbols
 
    Sometimes in addition to marking symbols using their tc_num fields,
@@ -98,7 +94,7 @@ tc_number get_new_tc_number(agent* thisAgent) {
    Symbol_is_constant_or_marked_variable() tests whether the given symbol
    is either a constant (non-variable) or a variable marked with the
    given tc number.
-===================================================================== */
+*/
 
 void unmark_identifiers_and_free_list(agent* thisAgent, cons* id_list) {
   cons* next;
@@ -126,8 +122,7 @@ void unmark_variables_and_free_list(agent* thisAgent, cons* var_list) {
   }
 }
 
-/* =====================================================================
-
+/**
    Finding the variables bound in tests, conditions, and condition lists
 
    These routines collect the variables that are bound in equality tests.
@@ -139,7 +134,7 @@ void unmark_variables_and_free_list(agent* thisAgent, cons* var_list) {
    it also consider whether the LTIs level can be determined by being linked
    to a LHS element or a RHS action that has already been executed.
 
-===================================================================== */
+*/
 
 void add_bound_variables_in_condition(agent* thisAgent, condition* c,
                                       tc_number tc, cons** var_list) {
@@ -182,8 +177,7 @@ void add_all_variables_in_condition_list(agent* thisAgent, condition* cond_list,
   }
 }
 
-/* ====================================================================
-
+/**
               Transitive Closure for Conditions and Actions
 
    These routines do transitive closure calculations for tests,
@@ -209,7 +203,7 @@ void add_all_variables_in_condition_list(agent* thisAgent, condition* cond_list,
         don't call symbol_remove_ref() on the symbols in them).
 
   Warning:  actions must not contain reteloc's or rhs unbound variables here.
-==================================================================== */
+*/
 
 void add_symbol_to_tc(agent* thisAgent, Symbol* sym, tc_number tc,
                       cons** id_list, cons** var_list) {
@@ -264,7 +258,7 @@ bool cond_is_in_tc(agent* thisAgent, condition* cond, tc_number tc) {
     return test_is_in_tc(cond->data.tests.id_test, tc);
   }
 
-  /* --- conjunctive negations:  keep trying to add stuff to the TC --- */
+  /* conjunctive negations:  keep trying to add stuff to the TC */
   new_ids = NIL;
   new_vars = NIL;
   for (c = cond->data.ncc.top; c != NIL; c = c->next) {
@@ -284,14 +278,14 @@ bool cond_is_in_tc(agent* thisAgent, condition* cond, tc_number tc) {
     }
   }
 
-  /* --- complete TC found, look for anything that didn't get hit --- */
+  /* complete TC found, look for anything that didn't get hit */
   result = true;
   for (c = cond->data.ncc.top; c != NIL; c = c->next)
     if (!c->already_in_tc) {
       result = false;
     }
 
-  /* --- unmark identifiers and variables that we just marked --- */
+  /* unmark identifiers and variables that we just marked */
   unmark_identifiers_and_free_list(thisAgent, new_ids);
   unmark_variables_and_free_list(thisAgent, new_vars);
 
@@ -369,7 +363,7 @@ production* make_production(agent* thisAgent, ProductionType type, Symbol* name,
       a->support = UNKNOWN_SUPPORT;
     }
   } else {
-    /* --- for justifications --- */
+    /* for justifications */
     /* force run-time o-support (it'll only be done once) */
     for (a = *rhs_top; a != NIL; a = a->next) {
       a->support = UNKNOWN_SUPPORT;
@@ -523,13 +517,12 @@ void excise_all_productions(agent* thisAgent, bool print_sharp_sign,
   }
 }
 
-/****************************/
-/* ----------------------------------------------------------------
+/**
  This returns a boolean that indicates that one condition is
  greater than another in some ordering of the conditions. The ordering
  is dependent upon the hash-value of each of the tests in the
  condition.
-------------------------------------------------------------------*/
+*/
 
 #define NON_EQUAL_TEST_RETURN_VAL 0 /* some unusual number */
 
@@ -553,12 +546,12 @@ uint32_t canonical_test(test t) {
 
 #define CANONICAL_TEST_ORDER canonical_test
 
-/*
+/**
 #define CANONICAL_TEST_ORDER hash_test
 */
 
 bool canonical_cond_greater(condition* c1, condition* c2)
-/*
+/**
 
  Original:  676,362 total rete nodes (1 dummy + 560045 positive + 4
             unhashed positive + 2374 negative + 113938 p_nodes)

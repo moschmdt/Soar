@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,19 +24,16 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #define _init_c_
 #include "internal.h"
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Initialize various GLFW state
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwInit( void )
 {
@@ -74,9 +69,7 @@ GLFWAPI int GLFWAPIENTRY glfwInit( void )
 
 
 
-//========================================================================
 // Close window and kill all threads.
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwTerminate( void )
 {
@@ -97,9 +90,7 @@ GLFWAPI void GLFWAPIENTRY glfwTerminate( void )
 }
 
 
-//========================================================================
 // Get GLFW version
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwGetVersion( int *major, int *minor, int *rev )
 {
@@ -107,4 +98,3 @@ GLFWAPI void GLFWAPIENTRY glfwGetVersion( int *major, int *minor, int *rev )
     if( minor != NULL ) *minor = GLFW_VERSION_MINOR;
     if( rev   != NULL ) *rev   = GLFW_VERSION_REVISION;
 }
-

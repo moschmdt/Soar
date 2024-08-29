@@ -1,11 +1,11 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
 #include "soar_db.h"
 
-/* ---------------- SQL Callback functions for sql debug modes-------------- */
+/* SQL Callback functions for sql debug modes*/
 
 #ifdef DEBUG_SQL_PROFILE
 static void profile_sql(void* context, const char* sql, sqlite3_uint64 ns) {

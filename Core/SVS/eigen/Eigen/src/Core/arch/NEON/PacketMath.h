@@ -88,7 +88,7 @@ EIGEN_STRONG_INLINE Packet4f shuffle1(const Packet4f& m, int mask) {
 }
 
 // fuctionally equivalent to _mm_shuffle_ps in SSE when interleave
-// == false (i.e. shuffle<false>(m, n, mask) equals _mm_shuffle_ps(m, n, mask)),
+//  false (i.e. shuffle<false>(m, n, mask) equals _mm_shuffle_ps(m, n, mask)),
 // interleave m and n when interleave == true. Currently used in
 // LU/arch/InverseSize4.h to enable a shared implementation for fast inversion
 // of matrices of size 4.

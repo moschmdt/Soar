@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // Event handler stuff
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // This includes the events that an SML agent can listen for and definitions
 // for the handlers that will be called.
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_CLIENT_EVENT_ID_H
 #define SML_CLIENT_EVENT_ID_H

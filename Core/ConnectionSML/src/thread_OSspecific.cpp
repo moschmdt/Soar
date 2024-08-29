@@ -1,14 +1,12 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // OSspecific class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Operating system specific thread methods.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 
@@ -18,9 +16,7 @@ using namespace soar_thread;
 
 #ifdef _WIN32
 
-//////////////////////////////////////////////////////////////////////
 // Windows Versions
-//////////////////////////////////////////////////////////////////////
 
 void soar_thread::BeginThread(ThreadFuncPtr inThreadFuncPtr, void* inParam) {
   // Must compile with the /MT switch (for multi-threaded libraries)
@@ -83,9 +79,7 @@ class WindowsEvent : public OSSpecificEvent {
 OSSpecificEvent* soar_thread::MakeEvent() { return new WindowsEvent(); }
 
 #else
-//////////////////////////////////////////////////////////////////////
 // Linux/POSIX Versions -- untested
-//////////////////////////////////////////////////////////////////////
 
 #include <errno.h>
 

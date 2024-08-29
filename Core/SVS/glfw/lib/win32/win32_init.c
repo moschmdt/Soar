@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Win32/WGL
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,7 +24,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
@@ -37,13 +34,11 @@
 
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Load necessary libraries (DLLs)
-//========================================================================
 
 static int _glfwInitLibraries( void )
 {
@@ -112,9 +107,7 @@ static int _glfwInitLibraries( void )
 }
 
 
-//========================================================================
 // Unload used libraries (DLLs)
-//========================================================================
 
 static void _glfwFreeLibraries( void )
 {
@@ -138,9 +131,7 @@ static void _glfwFreeLibraries( void )
 }
 
 
-//========================================================================
 // Initialize GLFW thread package
-//========================================================================
 
 static void _glfwInitThreads( void )
 {
@@ -160,9 +151,7 @@ static void _glfwInitThreads( void )
 }
 
 
-//========================================================================
 // Terminate GLFW thread package
-//========================================================================
 
 static void _glfwTerminateThreads( void )
 {
@@ -201,9 +190,7 @@ static void _glfwTerminateThreads( void )
 }
 
 
-//========================================================================
 // Terminate GLFW when exiting application
-//========================================================================
 
 void _glfwTerminate_atexit( void )
 {
@@ -212,13 +199,11 @@ void _glfwTerminate_atexit( void )
 
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Initialize various GLFW state
-//========================================================================
 
 int _glfwPlatformInit( void )
 {
@@ -324,9 +309,7 @@ int _glfwPlatformInit( void )
 }
 
 
-//========================================================================
 // Close window and kill all threads
-//========================================================================
 
 int _glfwPlatformTerminate( void )
 {
@@ -355,4 +338,3 @@ int _glfwPlatformTerminate( void )
 
     return GL_TRUE;
 }
-

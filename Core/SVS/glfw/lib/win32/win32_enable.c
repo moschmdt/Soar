@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Win32/WGL
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,19 +24,16 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Low level keyboard hook (system callback) function
 // Used to disable system keys under Windows NT
-//========================================================================
 
 static LRESULT CALLBACK keyboardHook( int nCode, WPARAM wParam, LPARAM lParam )
 {
@@ -101,13 +96,11 @@ static LRESULT CALLBACK keyboardHook( int nCode, WPARAM wParam, LPARAM lParam )
 
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Enable system keys
-//========================================================================
 
 void _glfwPlatformEnableSystemKeys( void )
 {
@@ -128,9 +121,7 @@ void _glfwPlatformEnableSystemKeys( void )
     }
 }
 
-//========================================================================
 // Disable system keys
-//========================================================================
 
 void _glfwPlatformDisableSystemKeys( void )
 {
@@ -152,4 +143,3 @@ void _glfwPlatformDisableSystemKeys( void )
         (void) SystemParametersInfo( SPI_SETSCREENSAVERRUNNING, TRUE, &dummy, 0 );
     }
 }
-

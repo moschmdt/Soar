@@ -3,9 +3,9 @@
 #include "filter.h"
 #include "scene.h"
 
-/*********************************************************
+/**
  * class filter_input
- ********************************************************/
+ */
 
 filter_input::~filter_input() {
   for (size_t i = 0, iend = input_info.size(); i < iend; ++i) {
@@ -44,9 +44,9 @@ void filter_input::clear() {
   }
 }
 
-/*********************************************************
+/**
  * class concat_filter_input
- ********************************************************/
+ */
 
 void concat_filter_input::combine(const input_table& inputs) {
   for (size_t i = 0, iend = inputs.size(); i < iend; ++i) {
@@ -76,9 +76,9 @@ void concat_filter_input::reset_sub() { val2params.clear(); }
 
 void concat_filter_input::clear_sub() { val2params.clear(); }
 
-/*********************************************************
+/**
  * class product_filter_input
- ********************************************************/
+ */
 void product_filter_input::combine(const input_table& inputs) {
   val2param_map::iterator k;
   param_set_list::iterator l;
@@ -124,7 +124,7 @@ void product_filter_input::reset_sub() { val2params.clear(); }
 
 void product_filter_input::clear_sub() { val2params.clear(); }
 
-/*
+/**
  Generate all combinations of inputs that involve at least one new
  input.  Do this by iterating over the input lists.  For the i^th
  input list, take the cartesian product of the old inputs from lists

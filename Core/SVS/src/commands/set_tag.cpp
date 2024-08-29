@@ -1,4 +1,4 @@
-/**********************************************************
+/**
  *
  * File: commands/set_tag.cpp
  * Contains:
@@ -10,7 +10,7 @@
  *     ^id <string> - id of the node to set the tag on
  *     ^tag_name <string> - name of the tag to set
  *     ^tag_value <string> - value of the tag to set
- **********************************************************/
+ */
 #include <iostream>
 #include <string>
 

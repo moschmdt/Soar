@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ReceiverThread class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Listens for incoming remote commands sent from external
 // processes (e.g. commands from a debugger).
 //
-/////////////////////////////////////////////////////////////////
 
 #include <time.h>  // To get clock
 
@@ -52,7 +50,7 @@ void ReceiverThread::Run() {
 
   while (!m_QuitNow) {
 #ifdef _DEBUG
-    /*
+    /**
     // Every so often report that we're alive
     if (clock() - report > CLOCKS_PER_SEC * 3)
     {

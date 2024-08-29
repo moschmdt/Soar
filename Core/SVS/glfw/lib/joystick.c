@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,18 +24,15 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Determine joystick capabilities
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetJoystickParam( int joy, int param )
 {
@@ -50,9 +45,7 @@ GLFWAPI int GLFWAPIENTRY glfwGetJoystickParam( int joy, int param )
 }
 
 
-//========================================================================
 // Get joystick axis positions
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetJoystickPos( int joy, float *pos, int numaxes )
 {
@@ -73,9 +66,7 @@ GLFWAPI int GLFWAPIENTRY glfwGetJoystickPos( int joy, float *pos, int numaxes )
 }
 
 
-//========================================================================
 // Get joystick button states
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetJoystickButtons( int joy,
                                                  unsigned char *buttons,
@@ -96,4 +87,3 @@ GLFWAPI int GLFWAPIENTRY glfwGetJoystickButtons( int joy,
 
     return _glfwPlatformGetJoystickButtons( joy, buttons, numbuttons );
 }
-

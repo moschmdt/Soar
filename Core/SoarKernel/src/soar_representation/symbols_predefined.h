@@ -9,10 +9,10 @@
 #define CORE_SOARKERNEL_SRC_SOAR_REPRESENTATION_SYMBOLS_PREDEFINED_H_
 
 typedef struct predefined_sym_struct {
-  /** ---------------- Predefined Symbols -------------------------
+  /** Predefined Symbols -------------------------
      Certain symbols are used so frequently that we create them at
      system startup time and never deallocate them.
-     ------------------------------------------------------------- */
+     */
 
   Symbol* at_symbol;
   Symbol* crlf_symbol;

@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Cocoa/NSOpenGL
 // API Version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2009-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
 // This software is provided 'as-is', without any express or implied
@@ -25,17 +23,14 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Check if an OpenGL extension is available at runtime
-//========================================================================
 
 int _glfwPlatformExtensionSupported( const char *extension )
 {
@@ -44,9 +39,7 @@ int _glfwPlatformExtensionSupported( const char *extension )
 }
 
 
-//========================================================================
 // Get the function pointer to an OpenGL function
-//========================================================================
 
 void * _glfwPlatformGetProcAddress( const char *procname )
 {
@@ -61,4 +54,3 @@ void * _glfwPlatformGetProcAddress( const char *procname )
 
     return symbol;
 }
-

@@ -13,8 +13,6 @@
 #include "symbol_manager.h"
 #include "working_memory.h"
 
-// #include "Export.h"
-
 // extern EXPORT Symbol* make_str_constant(agent* thisAgent, char const* name);
 // extern EXPORT Symbol* make_int_constant(agent* thisAgent, int64_t value);
 // extern EXPORT Symbol* make_float_constant(agent* thisAgent, double value);

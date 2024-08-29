@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // Base class for setting and reporting errors.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_CLIENT_ERRORS_H
 #define SML_CLIENT_ERRORS_H

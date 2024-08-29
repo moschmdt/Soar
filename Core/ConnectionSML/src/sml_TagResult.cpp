@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // TagResult class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // Represents an SML node which represents the result of a command with
 // the tag <result>.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "sml_TagResult.h"
 

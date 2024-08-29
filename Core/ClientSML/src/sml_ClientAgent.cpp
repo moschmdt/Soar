@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // Agent class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This class is used by a client app (e.g. an environment) to represent
 // a Soar agent and to send commands and I/O to and from that agent.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 #include <fstream>
@@ -1222,7 +1220,7 @@ smlRunResult Agent::GetResultOfLastRun() {
   return result;
 }
 
-/*
+/**
 bool Agent::SetStopSelfOnOutput(bool state)
 {
     AnalyzeXML response ;

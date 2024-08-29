@@ -1,14 +1,12 @@
-/////////////////////////////////////////////////////////////////
 // ConnectionManager class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Used by a server (the kernel in our case usually) to manager
 // a listener socket and then keep a list of connections that
 // come in over that listener.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef CONNECTION_MANAGER_H
 #define CONNECTION_MANAGER_H

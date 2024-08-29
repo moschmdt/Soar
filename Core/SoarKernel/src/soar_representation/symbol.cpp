@@ -1,22 +1,20 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  sybol.cpp
  *
- * =======================================================================
- *
+ *  *
  *                 Symbol Table Routines
  *
  * Soar uses five kinds of symbols:  symbolic constants, integer
  * constants, floating-point constants, identifiers, and variables.
  * We use five resizable hash tables, one for each kind of symbol.
  *
- * =======================================================================
- */
+ *  */
 
 #include "symbol.h"
 
@@ -29,7 +27,7 @@
 #include "run_soar.h"
 #include "symbol_manager.h"
 
-/* -----------------------------------------------------------------
+/**
                        First Letter From Symbol
 
    When creating dummy variables or identifiers, we try to give them
@@ -39,7 +37,7 @@
    a symbol and tries to figure out a reasonable choice of starting
    letter for a variable or identifier to follow it.  If it can't
    find a reasonable choice, it returns '*'.
------------------------------------------------------------------ */
+*/
 
 char first_letter_from_symbol(Symbol* sym) {
   switch (sym->symbol_type) {
@@ -58,9 +56,9 @@ char first_letter_from_symbol(Symbol* sym) {
   }
 }
 
-/***************************************************************************
+/**
  * Function     : get_number_from_symbol
- **************************************************************************/
+ */
 double get_number_from_symbol(Symbol* sym) {
   if (sym->symbol_type == FLOAT_CONSTANT_SYMBOL_TYPE) {
     return sym->fc->value;

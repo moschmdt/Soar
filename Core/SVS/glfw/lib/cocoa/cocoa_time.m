@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Cocoa/NSOpenGL
 // API Version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2009-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
 // This software is provided 'as-is', without any express or implied
@@ -25,7 +23,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
@@ -33,9 +30,7 @@
 #include <sys/time.h>
 
 
-//========================================================================
 // Return raw time
-//========================================================================
 
 static uint64_t getRawTime( void )
 {
@@ -43,9 +38,7 @@ static uint64_t getRawTime( void )
 }
 
 
-//========================================================================
 // Initialise timer
-//========================================================================
 
 void _glfwInitTimer( void )
 {
@@ -57,13 +50,11 @@ void _glfwInitTimer( void )
 }
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Return timer value in seconds
-//========================================================================
 
 double _glfwPlatformGetTime( void )
 {
@@ -72,9 +63,7 @@ double _glfwPlatformGetTime( void )
 }
 
 
-//========================================================================
 // Set timer value in seconds
-//========================================================================
 
 void _glfwPlatformSetTime( double time )
 {
@@ -83,9 +72,7 @@ void _glfwPlatformSetTime( double time )
 }
 
 
-//========================================================================
 // Put a thread to sleep for a specified amount of time
-//========================================================================
 
 void _glfwPlatformSleep( double time )
 {
@@ -132,4 +119,3 @@ void _glfwPlatformSleep( double time )
     pthread_mutex_destroy( &mutex );
     pthread_cond_destroy( &cond );
 }
-

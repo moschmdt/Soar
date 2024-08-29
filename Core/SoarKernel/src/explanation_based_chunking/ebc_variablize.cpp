@@ -42,7 +42,7 @@ uint64_t Explanation_Based_Chunker::variablize_rhs_value(
     }
   }
   if (!has_variablization && rs->referent->is_sti()) {
-    /* -- First time we've encountered an unbound rhs var. -- */
+    /* -- First time we've encountered an unbound rhs var. */
     prefix[0] = static_cast<char>(tolower(rs->referent->id->name_letter));
     prefix[1] = 0;
     var = thisAgent->symbolManager->generate_new_variable(prefix);

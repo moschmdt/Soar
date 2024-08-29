@@ -37,7 +37,7 @@
 #define dprint_header(mode, h, ...) \
   Output_Manager::Get_OM().debug_print_header(mode, h, ##__VA_ARGS__)
 
-/** -- The rest of these could be migrated to soar format strings -- */
+/** The rest of these could be migrated to soar format strings */
 #define dprint_saved_test_list(mode, st) \
   Output_Manager::Get_OM().print_saved_test_list(mode, st)
 #define dprint_partial_matches(mode, p_p_node) \

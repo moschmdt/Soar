@@ -2,8 +2,7 @@
  *
  *  file:  soar_db.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef SOAR_DB_H
 #define SOAR_DB_H
@@ -15,15 +14,13 @@
 #include "soar_module.h"
 #include "sqlite3.h"
 
-/** -- Tracing functions that print SQL processing and errors -- */
+/** Tracing functions that print SQL processing and errors */
 //    #define DEBUG_SQL_ERRORS
 //    #define DEBUG_SQL_QUERIES
 //    #define DEBUG_SQL_PROFILE
 
 namespace soar_module {
-///////////////////////////////////////////////////////////////////////////
 // Constants/Enums
-///////////////////////////////////////////////////////////////////////////
 
 // when preparing statements with strings, read till the first zero terminator
 #define SQLITE_PREP_STR_MAX -1
@@ -57,9 +54,6 @@ enum page_choices {
   page_64k
 };
 enum opt_choices { opt_safety, opt_speed };
-
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
 
 template <typename T>
 class status_object {
@@ -95,16 +89,11 @@ class status_object {
   inline const char* get_errmsg() { return my_errmsg; }
 };
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
 class database : public status_object<db_status> {
  public:
   database() { set_status(disconnected); }
 };
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
 class statement : public status_object<statement_status> {
  protected:
   const char* sql;
@@ -181,9 +170,6 @@ class statement : public status_object<statement_status> {
   }
 };
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
 class statement_container {
  protected:
   std::list<statement*>* statements;
@@ -223,9 +209,6 @@ class statement_container {
   }
 };
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
 class sqlite_database : public database {
  protected:
   sqlite3* my_db;
@@ -263,9 +246,6 @@ class sqlite_database : public database {
   inline bool sql_simple_get_string(const char* sql, std::string& return_value);
   inline bool sql_is_new_db(bool& return_value);
 };
-
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
 
 class sqlite_statement : public statement {
  protected:
@@ -393,9 +373,6 @@ class sqlite_statement : public statement {
   }
 };
 
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
 class sqlite_statement_container : public statement_container {
  protected:
   std::list<const char*>* structures;
@@ -441,9 +418,6 @@ class sqlite_statement_container : public statement_container {
     }
   }
 };
-
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
 
 class sqlite_statement_pool;
 

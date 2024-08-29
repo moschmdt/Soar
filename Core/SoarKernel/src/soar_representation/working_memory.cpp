@@ -18,8 +18,7 @@
 
 using namespace soar_TraceNames;
 
-/* ======================================================================
-
+/**
              Working Memory Management and Utility Routines
 
    Reset_wme_timetags() resets the wme timetag generator back to 1.
@@ -44,7 +43,7 @@ using namespace soar_TraceNames;
    Find_name_of_object() is a utility function for finding the value of
    the ^name attribute on a given object (Symbol).  It returns the name,
    or NIL if the object has no name.
-====================================================================== */
+*/
 
 WM_Manager::WM_Manager(agent* myAgent) {
   thisAgent = myAgent;
@@ -136,7 +135,7 @@ wme* make_wme(agent* thisAgent, Symbol* id, Symbol* attr, Symbol* value,
   return w;
 }
 
-/* --- lists of buffered WM changes --- */
+/* lists of buffered WM changes */
 
 void add_wme_to_wm(agent* thisAgent, wme* w) {
   push(thisAgent, w, thisAgent->wmes_to_add);
@@ -200,18 +199,18 @@ void do_buffered_wm_changes(agent* thisAgent) {
 #endif
 #endif
 
-  /* --- if no wme changes are buffered, do nothing --- */
+  /* if no wme changes are buffered, do nothing */
   if (!thisAgent->wmes_to_add && !thisAgent->wmes_to_remove) return;
 
-  /* --- call output module in case any changes are output link changes --- */
+  /* call output module in case any changes are output link changes */
   inform_output_module_of_wm_changes(thisAgent, thisAgent->wmes_to_add,
                                      thisAgent->wmes_to_remove);
 
-  /* --- invoke callback routine.  wmes_to_add and wmes_to_remove can   --- */
-  /* --- be fetched from the agent structure.                           --- */
+  /* invoke callback routine.  wmes_to_add and wmes_to_remove can   */
+  /* be fetched from the agent structure.                           */
   soar_invoke_callbacks(thisAgent, WM_CHANGES_CALLBACK, 0);
 
-/* --- stuff wme changes through the rete net --- */
+/* stuff wme changes through the rete net */
 #ifndef NO_TIMING_STUFF
 #ifdef DETAILED_TIMING_STATS
   local_timer.start();
@@ -278,7 +277,7 @@ void do_buffered_wm_changes(agent* thisAgent) {
       local_timer);
 #endif
 #endif
-  /* --- warn if watching wmes and same wme was added and removed -- */
+  /* warn if watching wmes and same wme was added and removed */
   if (thisAgent->trace_settings[TRACE_WM_CHANGES_SYSPARAM]) {
     for (c = thisAgent->wmes_to_add; c != NIL; c = next_c) {
       next_c = c->rest;
@@ -299,7 +298,7 @@ void do_buffered_wm_changes(agent* thisAgent) {
     }
   }
 
-  /* --- do tracing and cleanup stuff --- */
+  /* do tracing and cleanup stuff */
   for (c = thisAgent->wmes_to_add; c != NIL; c = next_c) {
     next_c = c->rest;
     w = static_cast<wme_struct*>(c->first);

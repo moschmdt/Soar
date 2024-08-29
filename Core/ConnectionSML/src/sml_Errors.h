@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // Error Code List
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // List of error codes SML functions can return.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_ERRORS_H
 #define SML_ERRORS_H

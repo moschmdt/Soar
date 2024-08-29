@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // learn command file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com
-// Date  : 2004
+// @author: Jonathan Voigt, voigtjr@gmail.com
+// @date  : 2004
 //
-/////////////////////////////////////////////////////////////////
 
 #include <algorithm>
 #include <cassert>
@@ -1323,7 +1321,7 @@ void read_pattern_and_get_matching_productions(
     current_pf_list = NIL;
     return;
   }
-  /*
+  /**
   print("Valid condition list:\n");
   print_condition_list(clist,0,false);
   print("\nMatches:\n");
@@ -1423,7 +1421,7 @@ void read_rhs_pattern_and_get_matching_productions(
     return;
   }
 
-  /*
+  /**
   print("Valid RHS:\n");
   print_action_list(alist,0,false);
   print("\nMatches:\n");

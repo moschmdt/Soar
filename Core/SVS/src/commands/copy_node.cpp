@@ -1,4 +1,4 @@
-/**********************************************************
+/**
  *
  * File: commands/copy_node.cpp
  * Contains:
@@ -17,7 +17,7 @@
  *     ^copy_tags <bool> [Optional] - whether to copy tags from source
  *     ^tags <tags> [Optional] - any std::string att/val pairs underneath added
  *as tags
- **********************************************************/
+ */
 #include <iostream>
 #include <map>
 #include <string>

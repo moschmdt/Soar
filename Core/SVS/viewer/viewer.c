@@ -8,7 +8,7 @@
 #include "viewer.h"
 #include "trackball.h"
 
-/*
+/**
  For GRID_LINES = 10, there would be 20 lines along x axis and 20 lines
  along y axis (exclude axes). Each line is composed of 4 doubles (x1, y1), (x2, y2)
 */
@@ -47,7 +47,7 @@ static int show_grid = 1;
 static real grid_size = 1.0;
 static int redraw = 0;
 
-/*
+/**
  0 = screenshots requested by keyboard
  1 = screenshots requested by input
 */
@@ -77,7 +77,7 @@ void GLFWCALL win_refresh_callback(void);
 int main(int argc, char *argv[]) {
 	int i, signal_redraw;
 	GLFWthread input_thread;
-	
+
 	if (glfwInit() == GL_FALSE) {
 		error("Failed to init glfw");
 	}
@@ -88,30 +88,30 @@ int main(int argc, char *argv[]) {
 	if (!(redraw_lock = glfwCreateMutex()))
 		error("Failed to create redraw lock mutex.");
 	init_semaphore(&redraw_semaphore);
-	
+
 	for (i = 1; i < argc; ++i) {
 		if (strcmp(argv[i], "-d") == 0) {
 			debug = 1;
 		}
 	}
-	
+
 	if (!init_input(argc, argv))
 		exit(1);
-	
+
 	if (glfwOpenWindow(scr_width, scr_height, 0, 0, 0, 0, DEPTH_BITS, 0, GLFW_WINDOW) == GL_FALSE)
 	{
 		error("Failed to open glfw window");
 	}
 	glfwSetWindowTitle("SVS viewer");
 	glfwSetMouseWheel(0);
-	
+
 	glfwSetWindowSizeCallback(win_resize_callback);
 	glfwSetWindowRefreshCallback(win_refresh_callback);
 	glfwSetKeyCallback(keyboard_callback);
 	glfwSetMouseButtonCallback(mouse_button_callback);
 	glfwSetMouseWheelCallback(mouse_wheel_callback);
 	glfwSetMousePosCallback(mouse_position_callback);
-	
+
 	glClearColor(bg_color[0], bg_color[1], bg_color[2], bg_color[3]);
 	glShadeModel(GL_FLAT);
 	glEnable(GL_DEPTH_TEST);
@@ -120,16 +120,16 @@ int main(int argc, char *argv[]) {
 	glEnable(GL_COLOR_MATERIAL);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, geom_specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, geom_shininess);
-	
+
 	init_grid();
 	init_font();
 	init_layers();
-	
+
 	input_thread = glfwCreateThread(proc_input, NULL);
 	if (input_thread < 0) {
 		error("Unable to create input thread");
 	}
-	
+
 	reset_camera(&cam, '1');
 	cam.ortho = 0;
 	set_redraw();
@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
 void GLFWCALL keyboard_callback(int key, int state) {
 	if (state == GLFW_RELEASE)
 		return;
-	
+
 	switch (key) {
 		case '1':
 		case '2':
@@ -188,7 +188,7 @@ void GLFWCALL keyboard_callback(int key, int state) {
 
 void GLFWCALL mouse_button_callback(int button, int state) {
 	int x, y;
-	
+
 	if (button == GLFW_MOUSE_BUTTON_LEFT && state == GLFW_PRESS) {
 		glfwGetMousePos(&x, &y);
 		if (scene_button_hit_test(SCENE_MENU_OFFSET, scr_height - SCENE_MENU_OFFSET, x, scr_height - y)) {
@@ -209,15 +209,15 @@ void GLFWCALL mouse_wheel_callback(int pos) {
 void GLFWCALL mouse_position_callback(int x, int y) {
 	static int ox = -1, oy = -1;
 	int shift, ctrl, dx, dy;
-	
+
 	dx = x - ox;
 	dy = y - oy;
 	ox = x;
 	oy = y;
-	
+
 	if (glfwGetMouseButton(GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE)
 		return;
-	
+
 	shift = (glfwGetKey(GLFW_KEY_LSHIFT) == GLFW_PRESS) ||
 	        (glfwGetKey(GLFW_KEY_RSHIFT) == GLFW_PRESS);
 
@@ -238,7 +238,7 @@ void GLFWCALL mouse_position_callback(int x, int y) {
 void init_grid() {
 	int i, j;
 	real g;
-	
+
 	g = GRID_LINES * grid_size;
 	i = 0;
 	for (j = -GRID_LINES; j <= GRID_LINES; ++j) {
@@ -249,7 +249,7 @@ void init_grid() {
 		grid_verts[i++] = j * grid_size; /* x2 */
 		grid_verts[i++] = g;             /* y2 */
 	}
-	
+
 	for (j = -GRID_LINES; j <= GRID_LINES; ++j) {
 		if (j == 0)
 			continue;
@@ -258,26 +258,26 @@ void init_grid() {
 		grid_verts[i++] = g;              /* x2 */
 		grid_verts[i++] = j * grid_size;  /* y2 */
 	}
-	
+
 	assert(i == GRID_VERTS_SIZE);
 }
 
 void draw_grid() {
 	real g = GRID_LINES * grid_size;
-	
+
 	setup3d();
 	glDisable(GL_LIGHTING);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glColor4dv(grid_color);
 	glVertexPointer(2, GL_DOUBLE, 0, grid_verts);
 	glDrawArrays(GL_LINES, 0, GRID_VERTS_SIZE / 2);
-	
+
 	glColor4dv(grid_x_color);
 	glBegin(GL_LINES);
 		glVertex3f(0.0, -g, 0.0);
 		glVertex3f(0.0, g, 0.0);
 	glEnd();
-	
+
 	glColor4dv(grid_y_color);
 	glBegin(GL_LINES);
 		glVertex3f(-g, 0.0, 0.0);
@@ -288,11 +288,11 @@ void draw_grid() {
 
 void draw_screen() {
 	int i;
-	
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (show_grid)
 		draw_grid();
-	
+
 	glfwLockMutex(scene_lock);
 	if (curr_scene) {
 		for (i = 0; i < NLAYERS; ++i) {
@@ -300,14 +300,14 @@ void draw_screen() {
 		}
 		draw_labels();
 	}
-	
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(0.0, (GLfloat) scr_width, 0.0, (GLfloat) scr_height);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	draw_scene_buttons(SCENE_MENU_OFFSET, scr_height - SCENE_MENU_OFFSET);
-	
+
 	glFinish();
 	for (i = 0; i < 2; ++i) {
 		if (screenshot_path[i][0] != '\0') {
@@ -349,7 +349,7 @@ void rotate_camera(camera *c, int x, int y, int dx, int dy) {
 	p1y = (scr_height - 2.0 * lasty) / (double) scr_height;
 	p2x = (2.0 * x - scr_width) / (double) scr_width;
 	p2y = (scr_height - 2.0 * y) / (double) scr_height;
-	
+
 	/* printf("rotate in: %g %g %g %g\n", p1x, p1y, p2x, p2y); */
 	trackball(q1, 0.8, p1x, p1y, p2x, p2y);
 	q2[0] = c->q[0]; q2[1] = c->q[1]; q2[2] = c->q[2]; q2[3] = c->q[3];
@@ -406,22 +406,22 @@ void init_geom(geometry *g, char *name) {
 	}
 	g->layer = 0;
 	g->line_width = 1.0;
-	
+
 	set_vec3(g->pos, 0.0, 0.0, 0.0);
 	set_vec3(g->scale, 1.0, 1.0, 1.0);
 	set_vec3(g->axis, 0.0, 0.0, 1.0);
 	g->angle = 0.0;
 	copy_vec3(geom_default_color, g->color);
-	
+
 	g->vertices = NULL;
 	g->indexes = NULL;
 	g->ninds = 0;
-	
+
 	g->quadric = NULL;
 	g->radius = -1.0;
-	
+
 	g->text = NULL;
-	
+
 	g->next = NULL;
 }
 
@@ -450,7 +450,7 @@ void free_geom_shape(geometry *g) {
 
 void set_geom_vertices(geometry *g, real *vertices, int nverts) {
 	int i, ninds, indexes[MAX_INDS];
-	
+
 	free_geom_shape(g);
 	g->vertices = (real *) malloc(sizeof(real) * nverts);
 	for (i = 0; i < nverts; ++i) {
@@ -469,9 +469,9 @@ void set_geom_vertices(geometry *g, real *vertices, int nverts) {
 		g->indexes[i] = indexes[i];
 	}
 	g->ninds = ninds;
-	
+
 	if (g->ninds >= 3) {
-		/*
+		/**
 		 Since each vertex in a triangle share the same normal, there are
 		 ninds/3 normals, each of size 3, so the normals array is length
 		 ninds
@@ -501,13 +501,13 @@ void calc_normals(geometry *g) {
 	int i, j;
 	vec3 e1, e2;
 	real *v1, *v2, *v3, *n;
-	
+
 	for (i = 0; i < g->ninds; i += 3) {
 		v1 = &g->vertices[g->indexes[i] * 3];
 		v2 = &g->vertices[g->indexes[i+1] * 3];
 		v3 = &g->vertices[g->indexes[i+2] * 3];
 		n = &g->normals[i];
-		
+
 		copy_vec3(v1, e1);
 		subtract_vec3(e1, v2);
 		copy_vec3(v2, e2);
@@ -518,14 +518,14 @@ void calc_normals(geometry *g) {
 
 void draw_geom(geometry *g) {
 	int i;
-	
+
 	glColor3dv(g->color);
 	glLineWidth(g->line_width);
 	glPushMatrix();
 	glTranslated(g->pos[0], g->pos[1], g->pos[2]);
 	glRotated(g->angle * 180 / PI, g->axis[0], g->axis[1], g->axis[2]);
 	glScaled(g->scale[0], g->scale[1], g->scale[2]);
-	
+
 	if (g->ninds >= 0) {
 		glVertexPointer(3, GL_DOUBLE, 0, g->vertices);
 		if (g->ninds == 1) {
@@ -563,10 +563,10 @@ void draw_geom(geometry *g) {
 
 scene *find_or_add_scene(char *name) {
 	scene *s;
-	
+
 	for (s = scene_head; s && strcmp(s->name, name) != 0; s = s->next)
 		;
-	
+
 	if (!s) {
 		if (!(s = (scene *) malloc(sizeof(scene)))) {
 			perror("find_or_add_scene: ");
@@ -584,7 +584,7 @@ scene *find_or_add_scene(char *name) {
 int delete_scenes(char *pattern) {
 	int n;
 	scene *p, *s;
-	
+
 	for (n = 0, p = NULL, s = scene_head; s ; ) {
 		if (match(pattern, s->name)) {
 			if (p) {
@@ -611,7 +611,7 @@ int delete_scenes(char *pattern) {
 
 void init_scene(scene *s, char *name) {
 	int i;
-	
+
 	s->name = strdup(name);
 	if (!s->name) {
 		perror("init_scene: ");
@@ -626,10 +626,10 @@ void destroy_geom(geometry *g) {
 	free(g->name);
 	free(g);
 }
-	
+
 void destroy_scene(scene *s) {
 	geometry *p, *pn;
-	
+
 	free(s->name);
 	for (p = s->geoms; p; ) {
 		pn = p->next;
@@ -641,7 +641,7 @@ void destroy_scene(scene *s) {
 
 void setup3d() {
 	real aspect;
-	
+
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
 	aspect = scr_width / (double) scr_height;
@@ -650,7 +650,7 @@ void setup3d() {
 	} else {
 		gluPerspective(cam.fovy, aspect, NEAR_CLIP, FAR_CLIP);
 	}
-	
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	apply_camera(&cam);
@@ -662,7 +662,7 @@ void draw_layer(scene *s, int layer_num) {
 	layer *l;
 	geometry *g;
 	int empty;
-	
+
 	if (layer_num > 0) {
 		for (empty = 1, g = s->geoms; g; g = g->next) {
 			if (g->layer == layer_num) {
@@ -674,7 +674,7 @@ void draw_layer(scene *s, int layer_num) {
 			return;
 		}
 	}
-	
+
 	l = &layers[layer_num];
 	if (l->lighting) {
 		glEnable(GL_LIGHTING);
@@ -684,7 +684,7 @@ void draw_layer(scene *s, int layer_num) {
 	if (l->clear_depth) {
 		glClear(GL_DEPTH_BUFFER_BIT);
 	}
-	
+
 	if (l->flat) {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -694,7 +694,7 @@ void draw_layer(scene *s, int layer_num) {
 	} else {
 		setup3d();
 	}
-	
+
 	if (!l->wireframe) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	} else {
@@ -708,7 +708,7 @@ void draw_layer(scene *s, int layer_num) {
 		}
 	}
 	glDisableClientState(GL_VERTEX_ARRAY);
-		
+
 	glGetDoublev(GL_PROJECTION_MATRIX, l->last_projection);
 	glGetDoublev(GL_MODELVIEW_MATRIX, l->last_modelview);
 	glGetIntegerv(GL_VIEWPORT, l->last_view);
@@ -719,11 +719,11 @@ void draw_labels() {
 	layer *l;
 	geometry *g;
 	real wx, wy, wz;
-	
+
 	if (!curr_scene) {
 		return;
 	}
-	
+
 	for (i = 0; i < NLAYERS; ++i) {
 		l = &layers[i];
 		if (!l->draw_names) {
@@ -737,7 +737,7 @@ void draw_labels() {
 		glLoadIdentity();
 		glColor3dv(geom_label_color);
 		glDisable(GL_LIGHTING);
-		
+
 		for (g = curr_scene->geoms; g; g = g->next) {
 			if (g->layer == i) {
 				gluProject(g->pos[0], g->pos[1], g->pos[2], l->last_modelview, l->last_projection, l->last_view, &wx, &wy, &wz);
@@ -750,7 +750,7 @@ void draw_labels() {
 int match_scenes(char *pattern, scene *scns[], int n) {
 	int m;
 	scene *p;
-	
+
 	for (m = 0, p = scene_head; p && m < n; p = p->next) {
 		if (match(pattern, p->name))
 			scns[m++] = p;
@@ -761,13 +761,13 @@ int match_scenes(char *pattern, scene *scns[], int n) {
 geometry *find_or_add_geom(scene *s, char *name) {
 	int i;
 	geometry *g;
-	
+
 	for (g = s->geoms; g; g = g->next) {
 		if (strcmp(g->name, name) == 0) {
 			return g;
 		}
 	}
-	
+
 	if (!(g = (geometry *) malloc(sizeof(geometry)))) {
 		perror("find_or_add_geom: ");
 		exit(1);
@@ -781,7 +781,7 @@ geometry *find_or_add_geom(scene *s, char *name) {
 int match_geoms(scene *s, char *pattern, geometry **geoms, int n) {
 	int m;
 	geometry *g;
-	
+
 	for (m = 0, g = s->geoms; g && m < n; g = g->next) {
 		if (match(pattern, g->name))
 			geoms[m++] = g;
@@ -792,7 +792,7 @@ int match_geoms(scene *s, char *pattern, geometry **geoms, int n) {
 int delete_geoms(scene *s, char *pattern) {
 	int n;
 	geometry *p, *g;
-	
+
 	for (n = 0, p = NULL, g = s->geoms; g; ) {
 		if (match(pattern, g->name)) {
 			if (p) {
@@ -816,7 +816,7 @@ int delete_geoms(scene *s, char *pattern) {
 int scene_button_hit_test(GLuint x0, GLuint y0, GLuint x, GLuint y) {
 	scene *p;
 	GLuint yb, w;
-	
+
 	for (yb = y0, p = scene_head; p; yb -= FONT_HEIGHT, p = p->next) {
 		w = strlen(p->name) * FONT_WIDTH;
 		if (p != curr_scene &&
@@ -832,13 +832,13 @@ int scene_button_hit_test(GLuint x0, GLuint y0, GLuint x, GLuint y) {
 
 void draw_scene_buttons(GLuint x, GLuint y) {
 	scene *p;
-	
+
 	glDisable(GL_LIGHTING);
 	glColor3dv(scene_text_color);
 	for (p = scene_head; p; p = p->next, y -= FONT_HEIGHT) {
 		if (p == curr_scene)
 			glColor3dv(active_scene_text_color);
-		
+
 		draw_text(p->name, x, y);
 		glColor3dv(scene_text_color);
 	}
@@ -848,7 +848,7 @@ void screenshot(char *path) {
 	FILE *out;
 	unsigned char *pixels;
 	int i, j, k;
-	
+
 	pixels = calloc(3 * scr_width * scr_height, sizeof(unsigned char));
 	if (!pixels) {
 		error("out of memory");
@@ -859,10 +859,10 @@ void screenshot(char *path) {
 		return;
 	}
 	fprintf(out, "P6\n%d %d\n255\n", scr_width, scr_height);
-	
+
 	glReadBuffer(GL_BACK);
 	glReadPixels(0, 0, scr_width, scr_height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-	
+
 	for (i = scr_height - 1; i >= 0; --i) {
 		for (j = 0; j < scr_width; ++j) {
 			k = (i * scr_width + j) * 3;

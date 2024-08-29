@@ -1,17 +1,15 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  ebc_build.cpp
  *
- * =======================================================================
- *  These are the routines that support printing Soar data structures.
+ *  *  These are the routines that support printing Soar data structures.
  *
- * =======================================================================
- */
+ *  */
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -45,8 +43,7 @@
 
 using namespace soar_TraceNames;
 
-/* =====================================================================
-
+/**
                            Results Calculation
 
    Get_results_for_instantiation() finds and returns the result preferences
@@ -59,7 +56,7 @@ using namespace soar_TraceNames;
    Add_pref_to_results() adds a preference to the results.
    Add_results_for_id() adds any preferences for the given identifier.
    Identifiers are marked with results_tc_number as they are added.
-===================================================================== */
+*/
 inline bool pref_has_identity_set_in_field(preference* pPref,
                                            WME_Field pField) {
   if (pField == ID_ELEMENT) {
@@ -200,7 +197,7 @@ void Explanation_Based_Chunker::add_pref_to_results(preference* pref,
                                                     WME_Field pField) {
   preference* p;
 
-  /* --- if an equivalent pref is already a result, don't add this one --- */
+  /* if an equivalent pref is already a result, don't add this one */
   for (p = m_results; p != NIL; p = p->next_result) {
     if (p->id != pref->id) continue;
     if (p->attr != pref->attr) continue;
@@ -211,7 +208,7 @@ void Explanation_Based_Chunker::add_pref_to_results(preference* pref,
     return;
   }
 
-  /* --- if pref isn't at the right level, find a clone that is --- */
+  /* if pref isn't at the right level, find a clone that is */
   if (pref->inst->match_goal_level != m_results_match_goal_level) {
     for (p = pref->next_clone; p != NIL; p = p->next_clone)
       if (p->inst->match_goal_level == m_results_match_goal_level) {
@@ -228,7 +225,7 @@ void Explanation_Based_Chunker::add_pref_to_results(preference* pref,
     pref = p;
   }
 
-  /* --- add this preference to the result list --- */
+  /* add this preference to the result list */
   pref->next_result = m_results;
   m_results = pref;
   if (pref->identities.id &&
@@ -256,7 +253,7 @@ void Explanation_Based_Chunker::add_pref_to_results(preference* pref,
     }
   }
 
-  /* --- follow transitive closure through value, referent links --- */
+  /* follow transitive closure through value, referent links */
   add_results_if_needed(pref->value, pref, VALUE_ELEMENT);
   if (preference_is_binary(pref->type)) {
     add_results_if_needed(pref->referent, pref, REFERENT_ELEMENT);
@@ -275,7 +272,7 @@ void Explanation_Based_Chunker::add_results_if_needed(Symbol* pSym,
         ((pSym)->tc_num != m_results_tc)) {
       pSym->tc_num = m_results_tc;
 
-      /* --- scan through all preferences and wmes for all slots for this id ---
+      /* scan through all preferences and wmes for all slots for this id ---
        */
       for (w = pSym->id->input_wmes; w != NIL; w = w->next) {
         add_results_if_needed(w->value, w->preference,
@@ -291,7 +288,7 @@ void Explanation_Based_Chunker::add_results_if_needed(Symbol* pSym,
                                 w->preference ? VALUE_ELEMENT : NO_ELEMENT);
         }
       } /* end of for slots loop */
-      /* --- now scan through extra prefs and look for any with this id --- */
+      /* now scan through extra prefs and look for any with this id */
       for (pref = m_extra_results; pref != NIL; pref = pref->inst_next) {
         if (pref->id == pSym) {
           add_pref_to_results(pref, pPref, pField);
@@ -319,8 +316,7 @@ void Explanation_Based_Chunker::get_results_for_instantiation() {
   }
 }
 
-/* ====================================================================
-
+/**
      Chunk Conditions, and Chunk Conditions Set Manipulation Routines
 
    These structures have two uses.  First, for every ground condition,
@@ -338,9 +334,9 @@ void Explanation_Based_Chunker::get_results_for_instantiation() {
    I used one type of structure for both of these uses, (1) for simplicity
    and (2) to avoid having to do a second allocation when we move
    negated conditions over to the ground set.
-==================================================================== */
+*/
 
-/* --------------------------------------------------------------------
+/**
                       Chunk Cond Set Routines
 
    Init_chunk_cond_set() initializes a given chunk_cond_set to be empty.
@@ -356,7 +352,7 @@ void Explanation_Based_Chunker::get_results_for_instantiation() {
 
    Remove_from_chunk_cond_set() removes a given chunk_cond from a given
    chunk_cond_set, but doesn't deallocate it.
--------------------------------------------------------------------- */
+*/
 
 /* set of all negated conditions we encounter during backtracing--these are
  * all potentials and (some of them) are added to the grounds in one pass at
@@ -373,7 +369,7 @@ void Explanation_Based_Chunker::init_chunk_cond_set(chunk_cond_set* set) {
 
 /* -- Note:  add_to_chunk_cond_set and make_chunk_cond_for_negated_condition are
  * both only used for negative conditions and NCCS.  Used in a single line in
- *           backtrace_through_instantiation() -- */
+ *           backtrace_through_instantiation() */
 
 chunk_cond* Explanation_Based_Chunker::make_chunk_cond_for_negated_condition(
     condition* cond) {
@@ -405,11 +401,11 @@ bool Explanation_Based_Chunker::add_to_chunk_cond_set(chunk_cond_set* set,
         break;
       }
   if (old) {
-    /* --- the new condition was already in the set; so don't add it --- */
+    /* the new condition was already in the set; so don't add it */
     thisAgent->memoryManager->free_with_pool(MP_chunk_cond, new_cc);
     return false;
   }
-  /* --- add new_cc to the table --- */
+  /* add new_cc to the table */
   insert_at_head_of_dll(set->all, new_cc, next, prev);
   insert_at_head_of_dll(set->table[new_cc->compressed_hash_value], new_cc,
                         next_in_bucket, prev_in_bucket);
@@ -423,13 +419,12 @@ void Explanation_Based_Chunker::remove_from_chunk_cond_set(chunk_cond_set* set,
                   prev_in_bucket);
 }
 
-/* ====================================================================
-
+/**
                  Other Miscellaneous Chunking Routines
 
-==================================================================== */
+*/
 
-/* --------------------------------------------------------------------
+/**
             Build Chunk Conds For Grounds And Add Negateds
 
    This routine is called once backtracing is finished.  It goes through
@@ -448,7 +443,7 @@ void Explanation_Based_Chunker::remove_from_chunk_cond_set(chunk_cond_set* set,
    TC of the ground set.  At exit, this TC indicates the set of identifiers
    in the grounds.  (This is used immediately afterwards to figure out
    which Nots must be added to the chunk.)
--------------------------------------------------------------------- */
+*/
 
 inline void add_cond(condition** c, condition** prev, condition** first) {
   if (*prev) {
@@ -471,14 +466,14 @@ void Explanation_Based_Chunker::create_initial_chunk_condition_lists() {
 
   c_vrblz = NIL; /* unnecessary, but gcc -Wall warns without it */
 
-  /* --- build instantiated conds for grounds --- */
+  /* build instantiated conds for grounds */
   prev_vrblz = NIL;
   while (grounds) {
     c = grounds;
     grounds = grounds->rest;
     ground = static_cast<condition_struct*>(c->first);
     free_cons(thisAgent, c);
-    /* --- make the instantiated condition --- */
+    /* make the instantiated condition */
 
     c_vrblz = copy_condition(thisAgent, ground, true, should_unify_and_simplify,
                              true, true);
@@ -505,14 +500,14 @@ void Explanation_Based_Chunker::create_initial_chunk_condition_lists() {
       }
     }
 
-    /* --- Add condition and add to the TC so we can see if NCCs are grounded.
-     * --- */
+    /* Add condition and add to the TC so we can see if NCCs are grounded.
+     * */
     add_cond(&c_vrblz, &prev_vrblz, &first_vrblz);
     add_cond_to_tc(thisAgent, ground, tc_to_use, NIL, NIL);
   }
 
-  /* --- scan through negated conditions and check which ones are connected to
-   * the grounds --- */
+  /* scan through negated conditions and check which ones are connected to
+   * the grounds */
   if (thisAgent->trace_settings[TRACE_BACKTRACING_SYSPARAM]) {
     thisAgent->outputManager->printa(
         thisAgent, "\n\n*** Adding Grounded Negated Conditions ***\n");
@@ -524,7 +519,7 @@ void Explanation_Based_Chunker::create_initial_chunk_condition_lists() {
     cc = negated_set.all;
     remove_from_chunk_cond_set(&negated_set, cc);
     if (cond_is_in_tc(thisAgent, cc->cond, tc_to_use)) {
-      /* --- negated cond is in the TC, so add it to the grounds --- */
+      /* negated cond is in the TC, so add it to the grounds */
       if (thisAgent->trace_settings[TRACE_BACKTRACING_SYSPARAM]) {
         thisAgent->outputManager->printa(thisAgent, "\n-->Moving to grounds: ");
         print_condition(thisAgent, cc->cond);
@@ -533,7 +528,7 @@ void Explanation_Based_Chunker::create_initial_chunk_condition_lists() {
 
       add_cond(&c_vrblz, &prev_vrblz, &first_vrblz);
     } else {
-      /* --- not in TC, so discard the condition --- */
+      /* not in TC, so discard the condition */
 
       if (ebc_settings[SETTING_EBC_ALLOW_LOCAL_NEGATIONS] == false) {
         if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM]) {
@@ -569,7 +564,7 @@ void Explanation_Based_Chunker::create_initial_chunk_condition_lists() {
   }
 }
 
-/* --------------------------------------------------------------------
+/**
                      Add Goal or Impasse Tests
 
    This routine adds goal id or impasse id tests to the variablized
@@ -580,7 +575,7 @@ void Explanation_Based_Chunker::create_initial_chunk_condition_lists() {
    a goal/impasse.  (Note:  actually, in the current implementation of
    chunking, it's impossible for an impasse id to end up in the ground
    set.  So part of this code is unnecessary.)
--------------------------------------------------------------------- */
+*/
 
 void Explanation_Based_Chunker::add_goal_or_impasse_tests() {
   condition* cc;
@@ -610,21 +605,21 @@ void Explanation_Based_Chunker::add_goal_or_impasse_tests() {
   }
 }
 
-/* --------------------------------------------------------------------
+/**
                        Make Clones of Results
 
    When we build the initial instantiation of the new chunk, we have
    to fill in preferences_generated with *copies* of all the result
    preferences.  These copies are clones of the results.  This routine
    makes these clones and fills in chunk_inst->preferences_generated.
--------------------------------------------------------------------- */
+*/
 
 void Explanation_Based_Chunker::make_clones_of_results() {
   preference *lClonedPref, *lResultPref;
   m_chunk_inst->preferences_generated = NIL;
   for (lResultPref = m_results; lResultPref != NIL;
        lResultPref = lResultPref->next_result) {
-    /* --- copy the preference --- */
+    /* copy the preference */
     lClonedPref = make_preference(
         thisAgent, lResultPref->type, lResultPref->id, lResultPref->attr,
         lResultPref->value, lResultPref->referent,
@@ -677,11 +672,11 @@ void Explanation_Based_Chunker::make_clones_of_results() {
             lResultPref->identities.referent->get_identity();
     }
 
-    /* --- put it onto the list for chunk_inst --- */
+    /* put it onto the list for chunk_inst */
     insert_at_head_of_dll(m_chunk_inst->preferences_generated, lClonedPref,
                           inst_next, inst_prev);
 
-    /* --- insert it into the list of clones for this preference --- */
+    /* insert it into the list of clones for this preference */
     lClonedPref->next_clone = lResultPref;
     lClonedPref->prev_clone = lResultPref->prev_clone;
     lResultPref->prev_clone = lClonedPref;
@@ -710,10 +705,10 @@ void Explanation_Based_Chunker::remove_chunk_instantiation() {
 bool Explanation_Based_Chunker::can_learn_from_instantiation() {
   preference* pref;
 
-  /* --- if it only matched an attribute impasse, don't chunk --- */
+  /* if it only matched an attribute impasse, don't chunk */
   if (!m_inst->match_goal) return false;
 
-  /* --- if no preference is above the match goal level, exit --- */
+  /* if no preference is above the match goal level, exit */
   for (pref = m_inst->preferences_generated; pref != NIL;
        pref = pref->inst_next)
     if (pref->id->id->level < m_inst->match_goal_level) break;
@@ -836,7 +831,7 @@ void Explanation_Based_Chunker::learn_rule_from_instance(
   local_timer.set_enabled(&(thisAgent->timers_enabled));
 #endif
 
-  /* --- If we're over MAX_CHUNKS, abort chunk --- */
+  /* If we're over MAX_CHUNKS, abort chunk */
   if (chunks_this_d_cycle >= max_chunks) {
     thisAgent->outputManager->display_soar_feedback(
         thisAgent, ebc_error_max_chunks,
@@ -1065,7 +1060,7 @@ void Explanation_Based_Chunker::learn_rule_from_instance(
   bool lAddedSuccessfully = add_chunk_to_rete();
 
   if (lAddedSuccessfully) {
-    /* --- Add chunk instantiation to list of newly generated instantiations ---
+    /* Add chunk instantiation to list of newly generated instantiations ---
      */
     m_chunk_inst->next = (*new_inst_list);
     (*new_inst_list) = m_chunk_inst;

@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // AgentOutputFlusher class file.
 //
-// Author: Jonathan Voigt
-// Date  : February 2005
+// @author: Jonathan Voigt
+// @date  : February 2005
 //
-/////////////////////////////////////////////////////////////////
 #ifndef AGENT_OUTPUT_FLUSHER_H
 #define AGENT_OUTPUT_FLUSHER_H
 

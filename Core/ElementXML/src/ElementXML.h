@@ -5,11 +5,10 @@
 
 #include "Export.h"
 
-/////////////////////////////////////////////////////////////////
 // ElementXML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This library is responsible for representing an XML document as an object
 // (actually a tree of objects).
@@ -67,7 +66,6 @@
 // the work are created on the heap in the ElementXML DLL. This is the Pimpl
 // pattern.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "ElementXMLInterface.h"
 
@@ -106,11 +104,9 @@ class EXPORT ElementXML {
     return true;
   }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Constructors and destructors
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Default constructor.
@@ -188,11 +184,9 @@ class EXPORT ElementXML {
    */
   int GetRefCount() { return ::soarxml_GetRefCount(m_hXML); }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Ownership functions
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Takes ownership of an existing handle.
@@ -235,11 +229,9 @@ class EXPORT ElementXML {
    */
   ElementXML_Handle GetXMLHandle() const { return m_hXML; }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Tag functions (e.g the tag in <name>...</name> is "name")
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Set the tag name for this element.
@@ -301,11 +293,9 @@ class EXPORT ElementXML {
     return strcmp(pThisTag, pTagName) == 0;
   }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Comment functions (<!-- .... --> marks the bounds of a comment)
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Associate a comment with this XML element.
@@ -331,14 +321,12 @@ class EXPORT ElementXML {
    */
   char const* GetComment() const { return ::soarxml_GetComment(m_hXML); }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Child element functions.
   //
   // These allow a single ElementXML object to represent a complete
   // XML document through its children.
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Adds a child to the list of children of this element.
@@ -421,12 +409,10 @@ class EXPORT ElementXML {
     return new ElementXML(hCopy);
   }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Attribute functions (e.g an attribute in <name first="doug">...</name> is
   // first="doug")
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Adds an attribute name-value pair.
@@ -494,12 +480,10 @@ class EXPORT ElementXML {
     return ::soarxml_GetAttribute(m_hXML, attName);
   }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Character data functions (e.g the character data in <name>Albert
   // Einstein</name> is "Albert Einstein")
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Set the character data for this element.
@@ -610,11 +594,9 @@ class EXPORT ElementXML {
    */
   bool GetUseCData() const { return ::soarxml_GetUseCData(m_hXML); }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Generator
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Converts the XML object to a string.
@@ -645,7 +627,6 @@ class EXPORT ElementXML {
                                               insertNewLines);
   }
 
-  ////////////////////////////////////////////////////////////////
   //
   // String and memory functions
   //
@@ -656,7 +637,6 @@ class EXPORT ElementXML {
   // We may decide that a particular allocator will be used to do this (e.g.
   // new[] and delete[]), but in general it's safest to use these functions.
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Utility function to allocate memory that the client will pass to the
@@ -704,11 +684,9 @@ class EXPORT ElementXML {
     return ::soarxml_CopyBuffer(original, length);
   }
 
-  ////////////////////////////////////////////////////////////////
   //
   // Parsing functions
   //
-  ////////////////////////////////////////////////////////////////
 
   /**
    * @brief Parse an XML document from a (long) string and return an ElementXML

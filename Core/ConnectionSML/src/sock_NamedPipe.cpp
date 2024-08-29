@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // NamedPipe class
 //
-// Author: Bob Marinier
-// Date  : 5/2007
+// @author: Bob Marinier
+// @date  : 5/2007
 //
 // Based on Socket class.
 //
@@ -22,7 +21,6 @@
 // The server is passed a new named pipe when it checks for incoming connections
 // on the listener pipe.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifdef ENABLE_NAMED_PIPES
 
@@ -39,9 +37,7 @@
 
 using namespace sock;
 
-//////////////////////////////////////////////////////////////////////
 // Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 NamedPipe::NamedPipe() {
   m_hPipe = INVALID_HANDLE_VALUE;
@@ -63,7 +59,6 @@ static bool IsErrorWouldBlock() {
 }
 #endif
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : NamedPipe::SendBuffer
 //
 // Return type    : bool
@@ -74,7 +69,6 @@ static bool IsErrorWouldBlock() {
 //                  This may require repeated calls to the low level "send"
 //                  call.
 //
-/////////////////////////////////////////////////////////////////////
 bool NamedPipe::SendBuffer(char const* pSendBuffer, uint32_t bufferSize) {
   CTDEBUG_ENTER_METHOD("NamedPipe::SendBuffer");
 
@@ -130,7 +124,6 @@ bool NamedPipe::SendBuffer(char const* pSendBuffer, uint32_t bufferSize) {
   return true;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : NamedPipe::IsReadDataAvailable
 //
 // Argument       : int secondsWait -- Seconds part of how long to wait for data
@@ -143,7 +136,6 @@ bool NamedPipe::SendBuffer(char const* pSendBuffer, uint32_t bufferSize) {
 //                  In that case the next read will return 0 bytes w/o an error
 //                  indicating that the pipe is closed.
 //
-/////////////////////////////////////////////////////////////////////
 bool NamedPipe::IsReadDataAvailable(int /*secondsWait*/,
                                     int /*millisecondsWait*/) {
   CTDEBUG_ENTER_METHOD("NamedPipe::IsReadDataAvailable");
@@ -191,7 +183,6 @@ bool NamedPipe::IsReadDataAvailable(int /*secondsWait*/,
   return bytesAvail > 0;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ReceiveBuffer
 //
 // Return type    : bool
@@ -200,7 +191,6 @@ bool NamedPipe::IsReadDataAvailable(int /*secondsWait*/,
 //
 // Description    : Receive a buffer of data.
 //
-/////////////////////////////////////////////////////////////////////
 bool NamedPipe::ReceiveBuffer(char* pRecvBuffer, uint32_t bufferSize) {
   CTDEBUG_ENTER_METHOD("Socket::ReceiveBuffer");
 
@@ -302,14 +292,12 @@ bool NamedPipe::ReceiveBuffer(char* pRecvBuffer, uint32_t bufferSize) {
   return true;
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : NamedPipe::CloseInternal
 //
 // Return type    : void
 //
 // Description    : Close down the pipe.
 //
-/////////////////////////////////////////////////////////////////////
 void NamedPipe::CloseInternal() {
   if (m_hPipe != INVALID_HANDLE_VALUE) {
     FlushFileBuffers(m_hPipe);

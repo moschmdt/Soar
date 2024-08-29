@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // TagCommand class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // Represents an SML node which represents a command and has
 // the tag <command>.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_TAG_COMMANDH
 #define SML_TAG_COMMANDH

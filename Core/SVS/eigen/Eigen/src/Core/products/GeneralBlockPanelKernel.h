@@ -258,7 +258,7 @@ void evaluateProductBlockingSizesHeuristic(Index& k, Index& m, Index& n,
 #ifdef EIGEN_DEBUG_SMALL_PRODUCT_BLOCKS
     const Index actual_l2 = l3;
 #else
-    const Index actual_l2 = 1572864;  // == 1.5 MB
+    const Index actual_l2 = 1572864;  //  1.5 MB
 #endif
 
     // Here, nc is chosen such that a block of kc x nc of the rhs fit within
@@ -291,7 +291,7 @@ void evaluateProductBlockingSizesHeuristic(Index& k, Index& m, Index& n,
       //    Here we allow one more sweep if this gives us a perfect match, thus
       //    the commented "-1"
       n = (n % nc) == 0 ? nc
-                        : (nc - Traits::nr * ((nc /**-1*/ - (n % nc)) /
+                        : (nc - Traits::nr * ((nc /**1*/ - (n % nc)) /
                                               (Traits::nr * (n / nc + 1))));
     } else if (old_k == k) {
       // So far, no blocking at all, i.e., kc==k, and nc==n.
@@ -319,7 +319,7 @@ void evaluateProductBlockingSizesHeuristic(Index& k, Index& m, Index& n,
       else if (mc == 0)
         return;
       m = (m % mc) == 0 ? mc
-                        : (mc - Traits::mr * ((mc /**-1*/ - (m % mc)) /
+                        : (mc - Traits::mr * ((mc /**1*/ - (m % mc)) /
                                               (Traits::mr * (m / mc + 1))));
     }
   }
@@ -1454,7 +1454,7 @@ struct lhs_process_one_packet {
   do {                                                                     \
     EIGEN_ASM_COMMENT("begin step of gebp micro kernel 1/half/quarterX1"); \
     EIGEN_ASM_COMMENT("Note: these asm comments work around bug 935!");    \
-    /** FIXME: why unaligned???? */                                         \
+    /** FIXME: why unaligned???? */                                        \
     traits.loadLhsUnaligned(&blA[(0 + 1 * K) * LhsProgress], A0);          \
     traits.loadRhs(&blB[(0 + K) * RhsProgress], B_0);                      \
     traits.madd(A0, B_0, C0, B_0, fix<0>);                                 \
@@ -1656,7 +1656,7 @@ gebp_kernel<LhsScalar, RhsScalar, Index, DataMapper, mr, nr, ConjugateLhs,
     internal::prefetch(blA + (3 * K + 16) * LhsProgress);                 \
     if (EIGEN_ARCH_ARM || EIGEN_ARCH_MIPS) {                              \
       internal::prefetch(blB + (4 * K + 16) * RhsProgress);               \
-    } /** Bug 953 */                                                       \
+    } /** Bug 953 */                                                      \
     traits.loadLhs(&blA[(0 + 3 * K) * LhsProgress], A0);                  \
     traits.loadLhs(&blA[(1 + 3 * K) * LhsProgress], A1);                  \
     traits.loadLhs(&blA[(2 + 3 * K) * LhsProgress], A2);                  \

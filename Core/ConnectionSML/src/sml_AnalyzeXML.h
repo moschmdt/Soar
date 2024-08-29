@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // AnalyzeXML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // An SML document consists of a series of elements.  We want to be
 // able to ask questions like "give me the <result> tag" element and
@@ -15,7 +14,6 @@
 //
 // This class represents those references into the document.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef ANALYZE_XML_H
 #define ANALYZE_XML_H

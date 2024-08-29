@@ -1,14 +1,12 @@
-/////////////////////////////////////////////////////////////////
 // RemoteConnection class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // This class represents a logical connection between two entities that are
 // communicating via SML over a socket. For example, an environment (the client)
 // and the Soar kernel.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_REMOTE_CONNECTION_H
 #define SML_REMOTE_CONNECTION_H

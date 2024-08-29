@@ -61,7 +61,8 @@ class OutputCommand : public cli::ParserCommand {
       if (opt.GetOption() == -1) {
         break;
       }
-      /** To maintain backwards compatibility with warnings/verbose/echo-commands
+      /** To maintain backwards compatibility with
+       * warnings/verbose/echo-commands
        */
       switch (opt.GetOption()) {
         case 'e':

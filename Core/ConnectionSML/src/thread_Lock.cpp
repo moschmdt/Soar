@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // Lock class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Locks a section of code so that only one thread can be executing in it
 // at a time.
@@ -18,7 +17,6 @@
 //    public: void MyMethod() { Lock lock(&m_Mutex) ; Safely modify data now ; }
 // }
 //
-/////////////////////////////////////////////////////////////////
 
 #include "thread_Lock.h"
 #include "thread_OSspecific.h"

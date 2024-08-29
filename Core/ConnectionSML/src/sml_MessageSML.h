@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // MessageSML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // Represents an SML node which is the top-level document in an SML message
 // and has the tag <sml>.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_NODESMLH
 #define SML_NODESMLH

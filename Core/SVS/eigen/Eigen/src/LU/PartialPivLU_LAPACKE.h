@@ -42,7 +42,7 @@ namespace internal {
 #define EIGEN_LAPACKE_LU_PARTPIV(EIGTYPE, LAPACKE_TYPE, LAPACKE_PREFIX)    \
   template <int StorageOrder>                                              \
   struct partial_lu_impl<EIGTYPE, StorageOrder, lapack_int> {              \
-    /** \internal performs the LU decomposition in-place of the matrix      \
+    /** \internal performs the LU decomposition in-place of the matrix     \
      * represented */                                                      \
     static lapack_int blocked_lu(Index rows, Index cols, EIGTYPE* lu_data, \
                                  Index luStride,                           \
@@ -53,7 +53,7 @@ namespace internal {
       lapack_int matrix_order, first_zero_pivot;                           \
       lapack_int m, n, lda, *ipiv, info;                                   \
       EIGTYPE* a;                                                          \
-      /** Set up parameters for ?getrf */                                   \
+      /** Set up parameters for ?getrf */                                  \
       matrix_order =                                                       \
           StorageOrder == RowMajor ? LAPACK_ROW_MAJOR : LAPACK_COL_MAJOR;  \
       lda = convert_index<lapack_int>(luStride);                           \
@@ -72,7 +72,7 @@ namespace internal {
       }                                                                    \
                                                                            \
       eigen_assert(info >= 0);                                             \
-      /** something should be done with nb_transpositions */                \
+      /** something should be done with nb_transpositions */               \
                                                                            \
       first_zero_pivot = info;                                             \
       return first_zero_pivot;                                             \

@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // EmbeddedSMLInterface file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This file provides a C level interface into that a module (DLL) must support
 // if it can be loaded as an "embedded connection".  So the KernelSML and
@@ -15,7 +14,6 @@
 // and kernel happen to be in the same process) or the SML can be sent as a
 // regular XML stream.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef EMBEDDED_SML_INTERFACE_H
 #define EMBEDDED_SML_INTERFACE_H
@@ -24,7 +22,6 @@
 #include "sml_Handles.h"
 
 // For test
-// #define WIN_STATIC_LINK
 
 // get definition of EXPORT
 #include "Export.h"
@@ -43,7 +40,6 @@ typedef ElementXML_Handle (*ProcessMessageFunction)(Connection_Receiver_Handle,
 typedef Connection_Receiver_Handle (*CreateEmbeddedConnectionFunction)(
     Connection_Sender_Handle, ProcessMessageFunction, int, int);
 
-////////////////////////////////////////////////////////////////
 //
 // Embedded SML Interface
 //
@@ -54,7 +50,6 @@ typedef Connection_Receiver_Handle (*CreateEmbeddedConnectionFunction)(
 // The module implementing this interface is the receiver.
 // The module calling to this interface is the sender.
 //
-////////////////////////////////////////////////////////////////
 
 /**
  * @brief    The sender will call once to this interface to

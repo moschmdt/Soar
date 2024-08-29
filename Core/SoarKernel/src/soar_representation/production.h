@@ -56,13 +56,13 @@ typedef struct production_struct {
 
 } production;
 
-/** ========================================================================
+/**
 
    Various utility routines for manipulating productions and parts thereof.
    Also includes the reorderer and compile-time o-support calculations.
 
    Init_production_utilities() should be called before anything else here.
-======================================================================== */
+*/
 
 /** This structure is used to break ties in favor of non-multi-attributes */
 typedef struct multi_attributes_struct {
@@ -73,7 +73,7 @@ typedef struct multi_attributes_struct {
 
 void init_production_utilities(agent* thisAgent);
 
-/** --------------------------------------------------------------------
+/**
                       Transitive Closure Utilities
                Marking, Unmarking, and Collecting Symbols
 
@@ -110,7 +110,7 @@ void init_production_utilities(agent* thisAgent);
         don't call symbol_remove_ref() on the symbols in them).
 
   Warning:  actions must not contain reteloc's or rhs unbound variables here.
--------------------------------------------------------------------- */
+*/
 
 tc_number get_new_tc_number(agent* thisAgent);
 
@@ -126,7 +126,7 @@ bool action_is_in_tc(action* a, tc_number tc);
 void add_all_variables_in_condition_list(agent* thisAgent, condition* cond_list,
                                          tc_number tc, cons** var_list);
 
-/** -------------------------------------------------------------------
+/**
                          Production Management
 
     For each type of production, we maintain a doubly-linked list of
@@ -153,7 +153,7 @@ void add_all_variables_in_condition_list(agent* thisAgent, condition* cond_list,
     Deallocate_production() and excise_production() do just what they
     say.  Normally deallocate_production() should be invoked only via
     the production_remove_ref() macro.
-------------------------------------------------------------------- */
+*/
 ProdReorderFailureType reorder_and_validate_lhs_and_rhs(
     agent* thisAgent, condition** lhs_top, action** rhs_top, bool reorder_nccs,
     matched_symbol_list* ungrounded_syms = NULL,
@@ -181,7 +181,7 @@ inline void production_remove_ref(agent* thisAgent, production* p) {
 }
 
 #endif
-/** -------------------------------------------------------------------
+/**
                             production.h
 
    Fields in a production:
@@ -231,4 +231,4 @@ inline void production_remove_ref(agent* thisAgent, production* p) {
       +1 if it's in production memory (i.e., hasn't been excised)
       +1 for each existing instantiation pointing to it
    We deallocate a production if its reference_count goes to 0.
-------------------------------------------------------------------- */
+*/

@@ -7,8 +7,7 @@
  *
  *  file:  semantic_memory.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef SEMANTIC_MEMORY_H
 #define SEMANTIC_MEMORY_H
@@ -21,7 +20,6 @@
 #include "smem_structs.h"
 #include "stl_typedefs.h"
 
-// #define SMEM_EXPERIMENT  // hijack the main SMem function for tight-loop
 // experimentation/timing
 
 class SMem_Manager {

@@ -1,4 +1,4 @@
-/***************************************************
+/**
  *
  * File: filters/calculate_placement.cpp
  *
@@ -24,7 +24,7 @@
  *down on the axis, A distance of 0 indicates they are aligned on that axis
  *(share the same value)
  *
- *********************************************************/
+ */
 #include <string>
 
 #include "filter_table.h"
@@ -119,26 +119,41 @@ class calculate_placement_filter : public map_filter<vec3> {
   }
 };
 
-///// filter calculate_placement //////
-filter* make_calculate_placement_filter(Symbol* root, soar_interface* si,
+///// filter calculate_placement filter* make_calculate_placement_filter(Symbol*
+/// root, soar_interface* si,
                                         scene* scn, filter_input* input) {
-  return new calculate_placement_filter(root, si, input);
-}
+                                          return new calculate_placement_filter(
+                                              root, si, input);
+                                        }
 
-filter_table_entry* calculate_placement_filter_entry() {
-  filter_table_entry* e = new filter_table_entry();
-  e->name = "calculate_placement";
-  e->description =
-      "Outputs a position for node a that satisfies the axis separation "
-      "constraints relative to node b";
-  e->parameters["a"] = "The node being placed";
-  e->parameters["b"] = "The node acting as a reference to place node a";
-  e->parameters["x_axis_separation"] =
-      "Desired separation between a and b along the x axis (default is 0)";
-  e->parameters["y_axis_separation"] =
-      "Desired separation between a and b along the y axis (default is 0)";
-  e->parameters["z_axis_separation"] =
-      "Desired separation between a and b along the z axis (default is 0)";
-  e->create = &make_calculate_placement_filter;
-  return e;
-}
+                                        filter_table_entry*
+                                        calculate_placement_filter_entry() {
+                                          filter_table_entry* e =
+                                              new filter_table_entry();
+                                          e->name = "calculate_placement";
+                                          e->description =
+                                              "Outputs a position for node a "
+                                              "that satisfies the axis "
+                                              "separation "
+                                              "constraints relative to node b";
+                                          e->parameters["a"] =
+                                              "The node being placed";
+                                          e->parameters["b"] =
+                                              "The node acting as a reference "
+                                              "to place node a";
+                                          e->parameters["x_axis_separation"] =
+                                              "Desired separation between a "
+                                              "and b along the x axis (default "
+                                              "is 0)";
+                                          e->parameters["y_axis_separation"] =
+                                              "Desired separation between a "
+                                              "and b along the y axis (default "
+                                              "is 0)";
+                                          e->parameters["z_axis_separation"] =
+                                              "Desired separation between a "
+                                              "and b along the z axis (default "
+                                              "is 0)";
+                                          e->create =
+                                              &make_calculate_placement_filter;
+                                          return e;
+                                        }

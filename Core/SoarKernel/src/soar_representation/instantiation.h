@@ -100,7 +100,7 @@ preference* make_architectural_instantiation_for_impasse_item(agent* thisAgent,
                                                               Symbol* goal,
                                                               preference* cand);
 
-/** -------------------------------------------------------------------
+/**
                               Instantiations
 
    Instantiations record two main things:
@@ -159,5 +159,5 @@ preference* make_architectural_instantiation_for_impasse_item(agent* thisAgent,
    The reference count is kept implicitly using the preferences_generated
    and in_ms fields.  We deallocate an instantiation if its reference count
    goes to 0.
-------------------------------------------------------------------- */
+*/
 #endif

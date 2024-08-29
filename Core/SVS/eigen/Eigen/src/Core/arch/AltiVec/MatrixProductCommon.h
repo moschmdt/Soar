@@ -1,4 +1,4 @@
-// #define EIGEN_POWER_USE_PREFETCH  // Use prefetching in gemm routines
+
 #ifdef EIGEN_POWER_USE_PREFETCH
 #define EIGEN_POWER_PREFETCH(p) prefetch(p)
 #else

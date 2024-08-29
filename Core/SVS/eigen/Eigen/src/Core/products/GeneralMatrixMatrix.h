@@ -297,7 +297,7 @@ template <int StorageOrder, typename _LhsScalar, typename _RhsScalar,
           int MaxRows, int MaxCols, int MaxDepth, int KcFactor>
 class gemm_blocking_space<StorageOrder, _LhsScalar, _RhsScalar, MaxRows,
                           MaxCols, MaxDepth, KcFactor,
-                          true /** == FiniteAtCompileTime */>
+                          true /** FiniteAtCompileTime */>
     : public level3_blocking<
           typename conditional<StorageOrder == RowMajor, _RhsScalar,
                                _LhsScalar>::type,

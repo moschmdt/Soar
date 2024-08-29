@@ -1,16 +1,14 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // DeltaList class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This class records the list of changes that have
 // occured to working memory since it was last sent
 // to the kernel (the "delta").
 //
-/////////////////////////////////////////////////////////////////
 
 #include "sml_ClientIdentifier.h"
 #include "sml_ClientWMElement.h"

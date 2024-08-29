@@ -4,8 +4,7 @@
  */
 
 /**
- *=======================================================================
- *
+ * *
  * File: callback.h
  *
  * Description: This file contains the callback facility header decls.
@@ -25,8 +24,7 @@
  * per callback type and the entry is a pointer to a list.  The list
  * contains installed callbacks, one callback per list cons cell.
  *
- * =======================================================================
- */
+ *  */
 
 /** Two points about this enumeration: a) The first entry is not */
 /** a valid callback because 0 is used to indicate an invalid or */
@@ -39,7 +37,7 @@
 #include "Export.h"
 #include "kernel.h"
 
-/** --------------------------------------------------------------------
+/**
 
   All callback functions installed by the user must use the function
   soar_add_callback.  The type signature of all callback functions is
@@ -258,7 +256,7 @@
    appropriate agent variable.  (For most parameters, this means
    looking at the sysparams[] array.)
 
--------------------------------------------------------------------- */
+*/
 
 #ifndef CALLBACK_H
 #define CALLBACK_H

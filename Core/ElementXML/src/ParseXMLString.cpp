@@ -1,17 +1,15 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ParseXMLString class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class is used to parse an XML document from a file/string and
 // create an ElementXML object that represents it.
 //
 // This class reads from a string.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "ElementXMLImpl.h"
 #include "ParseXMLString.h"

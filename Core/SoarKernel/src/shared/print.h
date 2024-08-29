@@ -3,11 +3,11 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** ======================================================================
+/**
 
                                 print.h
 
-====================================================================== */
+*/
 
 #ifndef PRINT_H
 #define PRINT_H
@@ -31,7 +31,7 @@ void print_spaces(agent* thisAgent, int n);
 void filtered_print_wme_remove(agent* thisAgent, wme* w);
 void filtered_print_wme_add(agent* thisAgent, wme* w);
 
-/** ------------------------------------------------------------------------
+/**
                 String to Escaped String Conversion
            {Symbol, Test, RHS Value} to String Conversion
 
@@ -51,12 +51,12 @@ void filtered_print_wme_add(agent* thisAgent, wme* w);
 
    Rhs_value_to_string() takes an rhs_value and produces a string
    representation.  The rhs_value MUST NOT be a reteloc.
------------------------------------------------------------------------ */
+*/
 
 const std::string string_to_escaped_string(const char* s,
                                            char first_and_last_char);
 
-/** -----------------------------------------------------------------------
+/**
              Print Condition List, Action List, Production
 
    Print_condition_list() prints a list of conditions.  The "indent"
@@ -73,7 +73,7 @@ const std::string string_to_escaped_string(const char* s,
    Print_production() prints a given production, optionally using internal
    format.
 
------------------------------------------------------------------------ */
+*/
 
 void print_condition_list(agent* thisAgent, condition* conds, int indent,
                           bool internal);
@@ -83,7 +83,7 @@ void print_production(agent* thisAgent, production* p, bool internal);
 void print_consed_list_of_condition_wmes(agent* thisAgent, cons* c, int indent);
 void print_consed_list_of_conditions(agent* thisAgent, cons* c, int indent);
 
-/** -----------------------------------------------------------------------
+/**
                        Other Printing Utilities
 
    Print_condition() prints a single condition.  Print_action() prints
@@ -101,7 +101,7 @@ void print_consed_list_of_conditions(agent* thisAgent, cons* c, int indent);
    an instantiation's production name and the wmes it matched, using a
    given wme_trace_type (e.g., TIMETAG_WME_TRACE). Action is printing,
    firing or retracting -- added March 05 KJC.
------------------------------------------------------------------------ */
+*/
 
 void print_condition(agent* thisAgent, condition* cond);
 void print_action(agent* thisAgent, action* a);

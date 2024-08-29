@@ -61,7 +61,7 @@ void Explanation_Based_Chunker::add_explanation_to_condition(
   alpha_mem* am = node->b.posneg.alpha_mem_;
   rete_test* rt = node->b.posneg.other_tests;
 
-  /* For hashed nodes, copy identity from relative condition position --- */
+  /* For hashed nodes, copy identity from relative condition position */
   if ((node->node_type == MP_BNODE) || (node->node_type == NEGATIVE_BNODE)) {
     add_var_test_bound_identity_to_id_test(cond, node->left_hash_loc_field_num,
                                            node->left_hash_loc_levels_up);
@@ -83,7 +83,7 @@ void Explanation_Based_Chunker::add_explanation_to_condition(
         !cond->data.tests.value_test->data.referent->is_variable()));
 
   if (needs_eq_tests) {
-    /* -- Now process any additional relational test -- */
+    /* -- Now process any additional relational test */
     for (; rt != NIL; rt = rt->next) {
       if (test_is_variable_relational_test(rt->type) &&
           (relational_test_type_to_test_type(
@@ -123,7 +123,7 @@ void Explanation_Based_Chunker::add_explanation_to_condition(
     }
   }
 
-  /* -- Now process any additional relational test -- */
+  /* -- Now process any additional relational test */
   rt = node->b.posneg.other_tests;
   for (; rt != NIL; rt = rt->next) {
     chunk_test = NULL;

@@ -19,7 +19,7 @@
  * Define PRINT_CALLBACKS to enable dumping of callback argvs to stdout before
  * the callback is called.
  */
-// #define PRINT_CALLBACKS 1
+
 #ifdef PRINT_CALLBACKS
 #include <iostream>
 #endif

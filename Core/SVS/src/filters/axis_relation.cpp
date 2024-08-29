@@ -1,4 +1,4 @@
-/***************************************************
+/**
  *
  * File: filters/axis_relation.cpp
  *
@@ -24,7 +24,7 @@
  *   Returns:
  *    sgnode b if the axis_distance satisfies the specified relation
  *
- *********************************************************/
+ */
 #include <string>
 
 #include "filter_table.h"

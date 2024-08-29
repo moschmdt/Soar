@@ -33,8 +33,8 @@ struct scalar_constant_op {
 template <typename Scalar>
 struct functor_traits<scalar_constant_op<Scalar> > {
   enum {
-    Cost = 0 /** as the constant value should be loaded in register only once for
-                the whole expression */
+    Cost = 0 /** as the constant value should be loaded in register only once
+                for the whole expression */
     ,
     PacketAccess = packet_traits<Scalar>::Vectorizable,
     IsRepeatable = true

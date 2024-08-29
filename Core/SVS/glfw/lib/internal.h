@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,15 +24,12 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #ifndef _internal_h_
 #define _internal_h_
 
-//========================================================================
 // GLFWGLOBAL is a macro that places all global variables in the init.c
 // module (all other modules reference global variables as 'extern')
-//========================================================================
 
 #if defined(_init_c_)
 #define GLFWGLOBAL
@@ -42,27 +37,21 @@
 #define GLFWGLOBAL extern
 #endif
 
-//========================================================================
 // Input handling definitions
-//========================================================================
 
 // Internal key and button state/action definitions
 #define GLFW_STICK 2
 
-//========================================================================
 // System independent include files
-//========================================================================
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-//------------------------------------------------------------------------
 // Window opening hints (set by glfwOpenWindowHint)
 // A bucket of semi-random stuff bunched together for historical reasons
 // This is used only by the platform independent code and only to store
 // parameters passed to us by glfwOpenWindowHint
-//------------------------------------------------------------------------
 typedef struct {
   int refreshRate;
   int accumRedBits;
@@ -80,19 +69,15 @@ typedef struct {
   int glProfile;
 } _GLFWhints;
 
-//------------------------------------------------------------------------
 // Platform specific definitions goes in platform.h (which also includes
 // glfw.h)
-//------------------------------------------------------------------------
 
 #include "platform.h"
 
-//------------------------------------------------------------------------
 // Parameters relating to the creation of the context and window but not
 // directly related to the properties of the framebuffer
 // This is used to pass window and context creation parameters from the
 // platform independent code to the platform specific code
-//------------------------------------------------------------------------
 typedef struct {
   int mode;
   int refreshRate;
@@ -104,13 +89,11 @@ typedef struct {
   int glProfile;
 } _GLFWwndconfig;
 
-//------------------------------------------------------------------------
 // Framebuffer configuration descriptor, i.e. buffers and their sizes
 // Also a platform specific ID used to map back to the actual backend APIs
 // This is used to pass framebuffer parameters from the platform independent
 // code to the platform specific code, and also to enumerate and select
 // available framebuffer configurations
-//------------------------------------------------------------------------
 typedef struct {
   int redBits;
   int greenBits;
@@ -128,9 +111,7 @@ typedef struct {
   GLFWintptr platformID;
 } _GLFWfbconfig;
 
-//========================================================================
 // System independent global variables (GLFW internals)
-//========================================================================
 
 // Flag indicating if GLFW has been initialized
 #if defined(_init_c_)
@@ -139,9 +120,7 @@ int _glfwInitialized = 0;
 GLFWGLOBAL int _glfwInitialized;
 #endif
 
-//------------------------------------------------------------------------
 // Abstract data stream (for image I/O)
-//------------------------------------------------------------------------
 typedef struct {
   FILE *file;
   void *data;
@@ -149,9 +128,7 @@ typedef struct {
   long size;
 } _GLFWstream;
 
-//========================================================================
 // Prototypes for platform specific implementation functions
-//========================================================================
 
 // Init/terminate
 int _glfwPlatformInit(void);
@@ -215,9 +192,7 @@ void _glfwPlatformHideMouseCursor(void);
 void _glfwPlatformShowMouseCursor(void);
 void _glfwPlatformSetMouseCursorPos(int x, int y);
 
-//========================================================================
 // Prototypes for platform independent internal functions
-//========================================================================
 
 // Window management (window.c)
 void _glfwClearWindowHints(void);

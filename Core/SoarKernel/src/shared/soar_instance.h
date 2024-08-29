@@ -71,9 +71,9 @@ class EXPORT Soar_Instance {
   std::unordered_map<std::string, Soar_Loaded_Library*>* m_loadedLibraries;
 };
 
-/** -- getSoarInstance is used by libraries to retrieve the
+/** getSoarInstance is used by libraries to retrieve the
  *    SoarInstance via a SWIG proxy function.  It is a bit of a hack
- *    currently used CLI libraries like the SoarTcl library module. -- */
+ *    currently used CLI libraries like the SoarTcl library module. */
 
 EXPORT Soar_Instance* getSoarInstance();
 EXPORT Output_Manager* getOM();

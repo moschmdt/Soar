@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,18 +24,15 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Return timer value in seconds
-//========================================================================
 
 GLFWAPI double GLFWAPIENTRY glfwGetTime( void )
 {
@@ -51,9 +46,7 @@ GLFWAPI double GLFWAPIENTRY glfwGetTime( void )
 }
 
 
-//========================================================================
 // Set timer value in seconds
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetTime( double time )
 {
@@ -67,9 +60,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetTime( double time )
 }
 
 
-//========================================================================
 // Put a thread to sleep for a specified amount of time
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSleep( double time )
 {
@@ -81,4 +72,3 @@ GLFWAPI void GLFWAPIENTRY glfwSleep( double time )
 
     _glfwPlatformSleep( time );
 }
-

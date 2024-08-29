@@ -105,7 +105,6 @@ typedef Block<const Derived, Dynamic, Dynamic, true>
 
 /// \returns an expression of a block in \c *this with either dynamic or fixed
 /// sizes.
-///
 /// \param  startRow  the first row in the block
 /// \param  startCol  the first column in the block
 /// \param  blockRows number of rows in the block, specified at either run-time
@@ -114,13 +113,10 @@ typedef Block<const Derived, Dynamic, Dynamic, true>
 /// handling the number of rows in the block, typically Index. \tparam NColsType
 /// the type of the value handling the number of columns in the block, typically
 /// Index.
-///
 /// Example using runtime (aka dynamic) sizes: \include
 /// MatrixBase_block_int_int_int_int.cpp Output: \verbinclude
 /// MatrixBase_block_int_int_int_int.out
-///
 /// \newin{3.4}:
-///
 /// The number of rows \a blockRows and columns \a blockCols can also be
 /// specified at compile-time by passing Eigen::fix<N>, or Eigen::fix<N>(n) as
 /// arguments. In the later case, \c n plays the role of a runtime fallback
@@ -128,25 +124,19 @@ typedef Block<const Derived, Dynamic, Dynamic, true>
 /// number of rows \c NRows and dynamic number of columns \c cols: \code
 /// mat.block(i,j,fix<NRows>,cols)
 /// \endcode
-///
 /// This function thus fully covers the features offered by the following
 /// overloads block<NRows,NCols>(Index, Index), and block<NRows,NCols>(Index,
 /// Index, Index, Index) that are thus obsolete. Indeed, this generic version
 /// avoids redundancy, it preserves the argument order, and prevents the need to
 /// rely on the template keyword in templated code.
-///
 /// but with less redundancy and more consistency as it does not modify the
 /// argument order and seamlessly enable hybrid fixed/dynamic sizes.
-///
 /// \note Even in the case that the returned expression has dynamic size, in the
 /// case when it is applied to a fixed-size matrix, it inherits a fixed maximal
 /// size, which means that evaluating it does not cause a dynamic memory
 /// allocation.
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa class Block, fix, fix<N>(int)
-///
 template <typename NRowsType, typename NColsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -186,25 +176,19 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 
 /// \returns a expression of a top-right corner of \c *this with either dynamic
 /// or fixed sizes.
-///
 /// \param cRows the number of rows in the corner
 /// \param cCols the number of columns in the corner
 /// \tparam NRowsType the type of the value handling the number of rows in the
 /// block, typically Index. \tparam NColsType the type of the value handling the
 /// number of columns in the block, typically Index.
-///
 /// Example with dynamic sizes: \include MatrixBase_topRightCorner_int_int.cpp
 /// Output: \verbinclude MatrixBase_topRightCorner_int_int.out
-///
 /// The number of rows \a blockRows and columns \a blockCols can also be
 /// specified at compile-time by passing Eigen::fix<N>, or Eigen::fix<N>(n) as
 /// arguments. See \link block(Index,Index,NRowsType,NColsType) block() \endlink
 /// for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NRowsType, typename NColsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -241,17 +225,12 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns an expression of a fixed-size top-right corner of \c *this.
-///
 /// \tparam CRows the number of rows in the corner
 /// \tparam CCols the number of columns in the corner
-///
 /// Example: \include MatrixBase_template_int_int_topRightCorner.cpp
 /// Output: \verbinclude MatrixBase_template_int_int_topRightCorner.out
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa class Block, block<int,int>(Index,Index)
-///
 template <int CRows, int CCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<CRows, CCols>::Type
 topRightCorner() {
@@ -269,25 +248,19 @@ EIGEN_DEVICE_FUNC
 }
 
 /// \returns an expression of a top-right corner of \c *this.
-///
 /// \tparam CRows number of rows in corner as specified at compile-time
 /// \tparam CCols number of columns in corner as specified at compile-time
 /// \param  cRows number of rows in corner as specified at run-time
 /// \param  cCols number of columns in corner as specified at run-time
-///
 /// This function is mainly useful for corners where the number of rows is
 /// specified at compile-time and the number of columns is specified at
 /// run-time, or vice versa. The compile-time and run-time information should
 /// not contradict. In other words, \a cRows should equal \a CRows unless \a
 /// CRows is \a Dynamic, and the same for the number of columns.
-///
 /// Example: \include MatrixBase_template_int_int_topRightCorner_int_int.cpp
 /// Output: \verbinclude MatrixBase_template_int_int_topRightCorner_int_int.out
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa class Block
-///
 template <int CRows, int CCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<CRows, CCols>::Type
 topRightCorner(Index cRows, Index cCols) {
@@ -306,25 +279,19 @@ EIGEN_DEVICE_FUNC
 
 /// \returns an expression of a top-left corner of \c *this  with either dynamic
 /// or fixed sizes.
-///
 /// \param cRows the number of rows in the corner
 /// \param cCols the number of columns in the corner
 /// \tparam NRowsType the type of the value handling the number of rows in the
 /// block, typically Index. \tparam NColsType the type of the value handling the
 /// number of columns in the block, typically Index.
-///
 /// Example: \include MatrixBase_topLeftCorner_int_int.cpp
 /// Output: \verbinclude MatrixBase_topLeftCorner_int_int.out
-///
 /// The number of rows \a blockRows and columns \a blockCols can also be
 /// specified at compile-time by passing Eigen::fix<N>, or Eigen::fix<N>(n) as
 /// arguments. See \link block(Index,Index,NRowsType,NColsType) block() \endlink
 /// for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NRowsType, typename NColsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -359,17 +326,12 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns an expression of a fixed-size top-left corner of \c *this.
-///
 /// The template parameters CRows and CCols are the number of rows and columns
 /// in the corner.
-///
 /// Example: \include MatrixBase_template_int_int_topLeftCorner.cpp
 /// Output: \verbinclude MatrixBase_template_int_int_topLeftCorner.out
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int CRows, int CCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<CRows, CCols>::Type
 topLeftCorner() {
@@ -385,25 +347,19 @@ EIGEN_DEVICE_FUNC
 }
 
 /// \returns an expression of a top-left corner of \c *this.
-///
 /// \tparam CRows number of rows in corner as specified at compile-time
 /// \tparam CCols number of columns in corner as specified at compile-time
 /// \param  cRows number of rows in corner as specified at run-time
 /// \param  cCols number of columns in corner as specified at run-time
-///
 /// This function is mainly useful for corners where the number of rows is
 /// specified at compile-time and the number of columns is specified at
 /// run-time, or vice versa. The compile-time and run-time information should
 /// not contradict. In other words, \a cRows should equal \a CRows unless \a
 /// CRows is \a Dynamic, and the same for the number of columns.
-///
 /// Example: \include MatrixBase_template_int_int_topLeftCorner_int_int.cpp
 /// Output: \verbinclude MatrixBase_template_int_int_topLeftCorner_int_int.out
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa class Block
-///
 template <int CRows, int CCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<CRows, CCols>::Type
 topLeftCorner(Index cRows, Index cCols) {
@@ -422,25 +378,19 @@ EIGEN_DEVICE_FUNC
 
 /// \returns an expression of a bottom-right corner of \c *this  with either
 /// dynamic or fixed sizes.
-///
 /// \param cRows the number of rows in the corner
 /// \param cCols the number of columns in the corner
 /// \tparam NRowsType the type of the value handling the number of rows in the
 /// block, typically Index. \tparam NColsType the type of the value handling the
 /// number of columns in the block, typically Index.
-///
 /// Example: \include MatrixBase_bottomRightCorner_int_int.cpp
 /// Output: \verbinclude MatrixBase_bottomRightCorner_int_int.out
-///
 /// The number of rows \a blockRows and columns \a blockCols can also be
 /// specified at compile-time by passing Eigen::fix<N>, or Eigen::fix<N>(n) as
 /// arguments. See \link block(Index,Index,NRowsType,NColsType) block() \endlink
 /// for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NRowsType, typename NColsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -479,17 +429,12 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns an expression of a fixed-size bottom-right corner of \c *this.
-///
 /// The template parameters CRows and CCols are the number of rows and columns
 /// in the corner.
-///
 /// Example: \include MatrixBase_template_int_int_bottomRightCorner.cpp
 /// Output: \verbinclude MatrixBase_template_int_int_bottomRightCorner.out
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int CRows, int CCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<CRows, CCols>::Type
 bottomRightCorner() {
@@ -507,26 +452,20 @@ EIGEN_DEVICE_FUNC
 }
 
 /// \returns an expression of a bottom-right corner of \c *this.
-///
 /// \tparam CRows number of rows in corner as specified at compile-time
 /// \tparam CCols number of columns in corner as specified at compile-time
 /// \param  cRows number of rows in corner as specified at run-time
 /// \param  cCols number of columns in corner as specified at run-time
-///
 /// This function is mainly useful for corners where the number of rows is
 /// specified at compile-time and the number of columns is specified at
 /// run-time, or vice versa. The compile-time and run-time information should
 /// not contradict. In other words, \a cRows should equal \a CRows unless \a
 /// CRows is \a Dynamic, and the same for the number of columns.
-///
 /// Example: \include MatrixBase_template_int_int_bottomRightCorner_int_int.cpp
 /// Output: \verbinclude
 /// MatrixBase_template_int_int_bottomRightCorner_int_int.out
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa class Block
-///
 template <int CRows, int CCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<CRows, CCols>::Type
 bottomRightCorner(Index cRows, Index cCols) {
@@ -545,25 +484,19 @@ EIGEN_DEVICE_FUNC
 
 /// \returns an expression of a bottom-left corner of \c *this  with either
 /// dynamic or fixed sizes.
-///
 /// \param cRows the number of rows in the corner
 /// \param cCols the number of columns in the corner
 /// \tparam NRowsType the type of the value handling the number of rows in the
 /// block, typically Index. \tparam NColsType the type of the value handling the
 /// number of columns in the block, typically Index.
-///
 /// Example: \include MatrixBase_bottomLeftCorner_int_int.cpp
 /// Output: \verbinclude MatrixBase_bottomLeftCorner_int_int.out
-///
 /// The number of rows \a blockRows and columns \a blockCols can also be
 /// specified at compile-time by passing Eigen::fix<N>, or Eigen::fix<N>(n) as
 /// arguments. See \link block(Index,Index,NRowsType,NColsType) block() \endlink
 /// for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NRowsType, typename NColsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -600,17 +533,12 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns an expression of a fixed-size bottom-left corner of \c *this.
-///
 /// The template parameters CRows and CCols are the number of rows and columns
 /// in the corner.
-///
 /// Example: \include MatrixBase_template_int_int_bottomLeftCorner.cpp
 /// Output: \verbinclude MatrixBase_template_int_int_bottomLeftCorner.out
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int CRows, int CCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<CRows, CCols>::Type
 bottomLeftCorner() {
@@ -628,26 +556,20 @@ EIGEN_DEVICE_FUNC
 }
 
 /// \returns an expression of a bottom-left corner of \c *this.
-///
 /// \tparam CRows number of rows in corner as specified at compile-time
 /// \tparam CCols number of columns in corner as specified at compile-time
 /// \param  cRows number of rows in corner as specified at run-time
 /// \param  cCols number of columns in corner as specified at run-time
-///
 /// This function is mainly useful for corners where the number of rows is
 /// specified at compile-time and the number of columns is specified at
 /// run-time, or vice versa. The compile-time and run-time information should
 /// not contradict. In other words, \a cRows should equal \a CRows unless \a
 /// CRows is \a Dynamic, and the same for the number of columns.
-///
 /// Example: \include MatrixBase_template_int_int_bottomLeftCorner_int_int.cpp
 /// Output: \verbinclude
 /// MatrixBase_template_int_int_bottomLeftCorner_int_int.out
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa class Block
-///
 template <int CRows, int CCols>
 EIGEN_STRONG_INLINE typename FixedBlockXpr<CRows, CCols>::Type bottomLeftCorner(
     Index cRows, Index cCols) {
@@ -664,22 +586,16 @@ bottomLeftCorner(Index cRows, Index cCols) const {
 }
 
 /// \returns a block consisting of the top rows of \c *this.
-///
 /// \param n the number of rows in the block
 /// \tparam NRowsType the type of the value handling the number of rows in the
 /// block, typically Index.
-///
 /// Example: \include MatrixBase_topRows_int.cpp
 /// Output: \verbinclude MatrixBase_topRows_int.out
-///
 /// The number of rows \a n can also be specified at compile-time by passing
 /// Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(row - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NRowsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -709,20 +625,14 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns a block consisting of the top rows of \c *this.
-///
 /// \tparam N the number of rows in the block as specified at compile-time
 /// \param n the number of rows in the block as specified at run-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include MatrixBase_template_int_topRows.cpp
 /// Output: \verbinclude MatrixBase_template_int_topRows.out
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(row - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename NRowsBlockXpr<N>::Type topRows(
     Index n = N) {
@@ -737,22 +647,16 @@ topRows(Index n = N) const {
 }
 
 /// \returns a block consisting of the bottom rows of \c *this.
-///
 /// \param n the number of rows in the block
 /// \tparam NRowsType the type of the value handling the number of rows in the
 /// block, typically Index.
-///
 /// Example: \include MatrixBase_bottomRows_int.cpp
 /// Output: \verbinclude MatrixBase_bottomRows_int.out
-///
 /// The number of rows \a n can also be specified at compile-time by passing
 /// Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(row - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NRowsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -784,20 +688,14 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns a block consisting of the bottom rows of \c *this.
-///
 /// \tparam N the number of rows in the block as specified at compile-time
 /// \param n the number of rows in the block as specified at run-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include MatrixBase_template_int_bottomRows.cpp
 /// Output: \verbinclude MatrixBase_template_int_bottomRows.out
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(row - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename NRowsBlockXpr<N>::Type
 bottomRows(Index n = N) {
@@ -813,23 +711,17 @@ bottomRows(Index n = N) const {
 }
 
 /// \returns a block consisting of a range of rows of \c *this.
-///
 /// \param startRow the index of the first row in the block
 /// \param n the number of rows in the block
 /// \tparam NRowsType the type of the value handling the number of rows in the
 /// block, typically Index.
-///
 /// Example: \include DenseBase_middleRows_int.cpp
 /// Output: \verbinclude DenseBase_middleRows_int.out
-///
 /// The number of rows \a n can also be specified at compile-time by passing
 /// Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(row - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NRowsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -859,21 +751,15 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns a block consisting of a range of rows of \c *this.
-///
 /// \tparam N the number of rows in the block as specified at compile-time
 /// \param startRow the index of the first row in the block
 /// \param n the number of rows in the block as specified at run-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include DenseBase_template_int_middleRows.cpp
 /// Output: \verbinclude DenseBase_template_int_middleRows.out
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(row - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename NRowsBlockXpr<N>::Type
 middleRows(Index startRow, Index n = N) {
@@ -889,22 +775,16 @@ middleRows(Index startRow, Index n = N) const {
 }
 
 /// \returns a block consisting of the left columns of \c *this.
-///
 /// \param n the number of columns in the block
 /// \tparam NColsType the type of the value handling the number of columns in
 /// the block, typically Index.
-///
 /// Example: \include MatrixBase_leftCols_int.cpp
 /// Output: \verbinclude MatrixBase_leftCols_int.out
-///
 /// The number of columns \a n can also be specified at compile-time by passing
 /// Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(column - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NColsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -934,20 +814,14 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns a block consisting of the left columns of \c *this.
-///
 /// \tparam N the number of columns in the block as specified at compile-time
 /// \param n the number of columns in the block as specified at run-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include MatrixBase_template_int_leftCols.cpp
 /// Output: \verbinclude MatrixBase_template_int_leftCols.out
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(column - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename NColsBlockXpr<N>::Type leftCols(
     Index n = N) {
@@ -962,22 +836,16 @@ leftCols(Index n = N) const {
 }
 
 /// \returns a block consisting of the right columns of \c *this.
-///
 /// \param n the number of columns in the block
 /// \tparam NColsType the type of the value handling the number of columns in
 /// the block, typically Index.
-///
 /// Example: \include MatrixBase_rightCols_int.cpp
 /// Output: \verbinclude MatrixBase_rightCols_int.out
-///
 /// The number of columns \a n can also be specified at compile-time by passing
 /// Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(column - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NColsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -1009,20 +877,14 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns a block consisting of the right columns of \c *this.
-///
 /// \tparam N the number of columns in the block as specified at compile-time
 /// \param n the number of columns in the block as specified at run-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include MatrixBase_template_int_rightCols.cpp
 /// Output: \verbinclude MatrixBase_template_int_rightCols.out
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(column - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename NColsBlockXpr<N>::Type rightCols(
     Index n = N) {
@@ -1038,23 +900,17 @@ rightCols(Index n = N) const {
 }
 
 /// \returns a block consisting of a range of columns of \c *this.
-///
 /// \param startCol the index of the first column in the block
 /// \param numCols the number of columns in the block
 /// \tparam NColsType the type of the value handling the number of columns in
 /// the block, typically Index.
-///
 /// Example: \include DenseBase_middleCols_int.cpp
 /// Output: \verbinclude DenseBase_middleCols_int.out
-///
 /// The number of columns \a n can also be specified at compile-time by passing
 /// Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(column - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <typename NColsType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -1085,21 +941,15 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns a block consisting of a range of columns of \c *this.
-///
 /// \tparam N the number of columns in the block as specified at compile-time
 /// \param startCol the index of the first column in the block
 /// \param n the number of columns in the block as specified at run-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include DenseBase_template_int_middleCols.cpp
 /// Output: \verbinclude DenseBase_template_int_middleCols.out
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(column - major)
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename NColsBlockXpr<N>::Type
 middleCols(Index startCol, Index n = N) {
@@ -1115,29 +965,21 @@ middleCols(Index startCol, Index n = N) const {
 }
 
 /// \returns a fixed-size expression of a block of \c *this.
-///
 /// The template parameters \a NRows and \a NCols are the number of
 /// rows and columns in the block.
-///
 /// \param startRow the first row in the block
 /// \param startCol the first column in the block
-///
 /// Example: \include MatrixBase_block_int_int.cpp
 /// Output: \verbinclude MatrixBase_block_int_int.out
-///
 /// \note The usage of of this overload is discouraged from %Eigen 3.4, better
 /// used the generic block(Index,Index,NRowsType,NColsType), here is the
 /// one-to-one equivalence: \code mat.template block<NRows,NCols>(i,j)  <-->
 /// mat.block(i,j,fix<NRows>,fix<NCols>) \endcode
-///
 /// \note since block is a templated member, the keyword template has to be used
 /// if the matrix type is also a template parameter: \code m.template
 /// block<3,3>(1,1); \endcode
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int NRows, int NCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<NRows, NCols>::Type
 block(Index startRow, Index startCol) {
@@ -1155,23 +997,19 @@ EIGEN_DEVICE_FUNC
 }
 
 /// \returns an expression of a block of \c *this.
-///
 /// \tparam NRows number of rows in block as specified at compile-time
 /// \tparam NCols number of columns in block as specified at compile-time
 /// \param  startRow  the first row in the block
 /// \param  startCol  the first column in the block
 /// \param  blockRows number of rows in block as specified at run-time
 /// \param  blockCols number of columns in block as specified at run-time
-///
 /// This function is mainly useful for blocks where the number of rows is
 /// specified at compile-time and the number of columns is specified at
 /// run-time, or vice versa. The compile-time and run-time information should
 /// not contradict. In other words, \a blockRows should equal \a NRows unless \a
 /// NRows is \a Dynamic, and the same for the number of columns.
-///
 /// Example: \include MatrixBase_template_int_int_block_int_int_int_int.cpp
 /// Output: \verbinclude MatrixBase_template_int_int_block_int_int_int_int.out
-///
 /// \note The usage of of this overload is discouraged from %Eigen 3.4, better
 /// used the generic block(Index,Index,NRowsType,NColsType), here is the
 /// one-to-one complete equivalence: \code mat.template
@@ -1180,11 +1018,8 @@ EIGEN_DEVICE_FUNC
 /// e.g., NRows==Dynamic and NCols!=Dynamic, then the equivalence becomes: \code
 /// mat.template block<Dynamic,NCols>(i,j,rows,NCols)  <-->
 /// mat.block(i,j,rows,fix<NCols>) \endcode
-///
 EIGEN_DOC_BLOCK_ADDONS_NOT_INNER_PANEL
-///
 /// \sa block(Index,Index,NRowsType,NColsType), class Block
-///
 template <int NRows, int NCols>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedBlockXpr<NRows, NCols>::Type
 block(Index startRow, Index startCol, Index blockRows, Index blockCols) {
@@ -1204,10 +1039,8 @@ EIGEN_DEVICE_FUNC
 
 /// \returns an expression of the \a i-th column of \c *this. Note that the
 /// numbering starts at 0.
-///
 /// Example: \include MatrixBase_col.cpp
 /// Output: \verbinclude MatrixBase_col.out
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(column - major)
 /**
  * \sa row(), class Block */
@@ -1222,10 +1055,8 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE ConstColXpr col(Index i) const {
 
 /// \returns an expression of the \a i-th row of \c *this. Note that the
 /// numbering starts at 0.
-///
 /// Example: \include MatrixBase_row.cpp
 /// Output: \verbinclude MatrixBase_row.out
-///
 EIGEN_DOC_BLOCK_ADDONS_INNER_PANEL_IF(row - major)
 /**
  * \sa col(), class Block */
@@ -1240,28 +1071,21 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE ConstRowXpr row(Index i) const {
 
 /// \returns an expression of a segment (i.e. a vector block) in \c *this with
 /// either dynamic or fixed sizes.
-///
 /// \only_for_vectors
-///
 /// \param start the first coefficient in the segment
 /// \param n the number of coefficients in the segment
 /// \tparam NType the type of the value handling the number of coefficients in
 /// the segment, typically Index.
-///
 /// Example: \include MatrixBase_segment_int_int.cpp
 /// Output: \verbinclude MatrixBase_segment_int_int.out
-///
 /// The number of coefficients \a n can also be specified at compile-time by
 /// passing Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 /// \note Even in the case that the returned expression has dynamic size, in the
 /// case when it is applied to a fixed-size vector, it inherits a fixed maximal
 /// size, which means that evaluating it does not cause a dynamic memory
 /// allocation.
-///
 /// \sa block(Index,Index,NRowsType,NColsType), fix<N>, fix<N>(int), class Block
-///
 template <typename NType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -1294,27 +1118,20 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 
 /// \returns an expression of the first coefficients of \c *this with either
 /// dynamic or fixed sizes.
-///
 /// \only_for_vectors
-///
 /// \param n the number of coefficients in the segment
 /// \tparam NType the type of the value handling the number of coefficients in
 /// the segment, typically Index.
-///
 /// Example: \include MatrixBase_start_int.cpp
 /// Output: \verbinclude MatrixBase_start_int.out
-///
 /// The number of coefficients \a n can also be specified at compile-time by
 /// passing Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 /// \note Even in the case that the returned expression has dynamic size, in the
 /// case when it is applied to a fixed-size vector, it inherits a fixed maximal
 /// size, which means that evaluating it does not cause a dynamic memory
 /// allocation.
-///
 /// \sa class Block, block(Index,Index)
-///
 template <typename NType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -1347,27 +1164,20 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 
 /// \returns an expression of a last coefficients of \c *this with either
 /// dynamic or fixed sizes.
-///
 /// \only_for_vectors
-///
 /// \param n the number of coefficients in the segment
 /// \tparam NType the type of the value handling the number of coefficients in
 /// the segment, typically Index.
-///
 /// Example: \include MatrixBase_end_int.cpp
 /// Output: \verbinclude MatrixBase_end_int.out
-///
 /// The number of coefficients \a n can also be specified at compile-time by
 /// passing Eigen::fix<N>, or Eigen::fix<N>(n) as arguments. See \link
 /// block(Index,Index,NRowsType,NColsType) block() \endlink for the details.
-///
 /// \note Even in the case that the returned expression has dynamic size, in the
 /// case when it is applied to a fixed-size vector, it inherits a fixed maximal
 /// size, which means that evaluating it does not cause a dynamic memory
 /// allocation.
-///
 /// \sa class Block, block(Index,Index)
-///
 template <typename NType>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -1403,22 +1213,16 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 
 /// \returns a fixed-size expression of a segment (i.e. a vector block) in \c
 /// *this
-///
 /// \only_for_vectors
-///
 /// \tparam N the number of coefficients in the segment as specified at
 /// compile-time \param start the index of the first element in the segment
 /// \param n the number of coefficients in the segment as specified at
 /// compile-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include MatrixBase_template_int_segment.cpp
 /// Output: \verbinclude MatrixBase_template_int_segment.out
-///
 /// \sa segment(Index,NType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedSegmentReturnType<N>::Type
 segment(Index start, Index n = N) {
@@ -1436,21 +1240,15 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns a fixed-size expression of the first coefficients of \c *this.
-///
 /// \only_for_vectors
-///
 /// \tparam N the number of coefficients in the segment as specified at
 /// compile-time \param  n the number of coefficients in the segment as
 /// specified at run-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include MatrixBase_template_int_start.cpp
 /// Output: \verbinclude MatrixBase_template_int_start.out
-///
 /// \sa head(NType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedSegmentReturnType<N>::Type
 head(Index n = N) {
@@ -1468,21 +1266,15 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 }
 
 /// \returns a fixed-size expression of the last coefficients of \c *this.
-///
 /// \only_for_vectors
-///
 /// \tparam N the number of coefficients in the segment as specified at
 /// compile-time \param  n the number of coefficients in the segment as
 /// specified at run-time
-///
 /// The compile-time and run-time information should not contradict. In other
 /// words, \a n should equal \a N unless \a N is \a Dynamic.
-///
 /// Example: \include MatrixBase_template_int_end.cpp
 /// Output: \verbinclude MatrixBase_template_int_end.out
-///
 /// \sa tail(NType), class Block
-///
 template <int N>
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename FixedSegmentReturnType<N>::Type
 tail(Index n = N) {
@@ -1501,7 +1293,6 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 
 /// \returns the \a outer -th column (resp. row) of the matrix \c *this if \c
 /// *this is col-major (resp. row-major).
-///
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE InnerVectorReturnType
 innerVector(Index outer) {
   return InnerVectorReturnType(derived(), outer);
@@ -1509,7 +1300,6 @@ innerVector(Index outer) {
 
 /// \returns the \a outer -th column (resp. row) of the matrix \c *this if \c
 /// *this is col-major (resp. row-major). Read-only.
-///
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const ConstInnerVectorReturnType
 innerVector(Index outer) const {
   return ConstInnerVectorReturnType(derived(), outer);
@@ -1517,7 +1307,6 @@ innerVector(Index outer) const {
 
 /// \returns the \a outer -th column (resp. row) of the matrix \c *this if \c
 /// *this is col-major (resp. row-major).
-///
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE InnerVectorsReturnType
 innerVectors(Index outerStart, Index outerSize) {
   return Block<Derived, Dynamic, Dynamic, true>(
@@ -1527,7 +1316,6 @@ innerVectors(Index outerStart, Index outerSize) {
 
 /// \returns the \a outer -th column (resp. row) of the matrix \c *this if \c
 /// *this is col-major (resp. row-major). Read-only.
-///
 EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const ConstInnerVectorsReturnType
 innerVectors(Index outerStart, Index outerSize) const {
   return Block<const Derived, Dynamic, Dynamic, true>(

@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // ClientXML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : March 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : March 2005
 //
 // This class is used to represent XML messages
 // that are being returned to the client.
@@ -10,7 +9,6 @@
 // The implementation is a reduced subset of ElementXML
 // (the parts required for getting values without setting them).
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_CLIENT_XML_H
 #define SML_CLIENT_XML_H

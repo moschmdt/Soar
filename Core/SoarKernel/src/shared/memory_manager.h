@@ -24,8 +24,7 @@
  * - Agent caches a pointer to MPM to ease access.  Also made
  *   refactoring slightly less painful.
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef MEMPOOL_MANAGER_H_
 #define MEMPOOL_MANAGER_H_
@@ -52,8 +51,8 @@ typedef struct memory_pool_struct {
   void* free_list; /** header of chain of free items */
   MemoryPoolType index;
   size_t
-      used_count;   /** used for statistics only when #def'd MEMORY_POOL_STATS */
-  size_t item_size; /** bytes per item */
+      used_count; /** used for statistics only when #def'd MEMORY_POOL_STATS */
+  size_t item_size;       /** bytes per item */
   size_t items_per_block; /** number of items in each big block */
   size_t num_blocks;      /** number of big blocks in use by this pool */
   void* first_block;      /** header of chain of blocks */
@@ -63,9 +62,9 @@ typedef struct memory_pool_struct {
   memory_pool_struct() : initialized(false) {}
 } memory_pool;
 
-/** ----------------------- */
+/** */
 /** basic memory allocation */
-/** ----------------------- */
+/** */
 
 /** Note:  DEBUG_MEMORY currently does nothing on allocation. It previously
  * filled with zero's on allocation and 0xbbb on deallocation.  The reasoning is
@@ -300,8 +299,8 @@ class Memory_Manager {
   //        memory_pool         slot_pool;
   //        memory_pool         gds_pool;
   //
-  //        /** ----------------------- Misc. top-level stuff
-  //        -------------------------- */
+  //        /** Misc. top-level stuff
+  //        */
   //
   //        memory_pool         action_pool;
   //        memory_pool         test_pool;
@@ -310,8 +309,8 @@ class Memory_Manager {
   //        memory_pool         production_pool;
   //        memory_pool         rhs_symbol_pool;
   //
-  //        /** ----------------------- Reorderer stuff
-  //        -------------------------- */
+  //        /** Reorderer stuff
+  //        */
   //
   //        memory_pool         saved_test_pool;
   //

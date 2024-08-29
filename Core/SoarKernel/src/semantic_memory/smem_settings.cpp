@@ -1,4 +1,4 @@
-/*
+/**
  * smem_param.cpp
  *
  *  Created on: Aug 21, 2016

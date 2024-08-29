@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // Identifier class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // Working memory element that has an ID as its value.
 //
@@ -11,7 +10,6 @@
 // So for (I6 ^name N1) the triplet is the WME (Identifier class)
 // and "N1" is the IdentifierSymbol.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_IDENTIFIER_H
 #define SML_IDENTIFIER_H

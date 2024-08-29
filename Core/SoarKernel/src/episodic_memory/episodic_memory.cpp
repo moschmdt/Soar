@@ -23,11 +23,7 @@
 #include "working_memory_activation.h"
 #include "xml.h"
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Bookmark strings to help navigate the code
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 // parameters                   epmem::param
 // stats                        epmem::stats
@@ -53,11 +49,7 @@
 
 // high-level api               epmem::api
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Parameter Functions (epmem::params)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 epmem_param_container::epmem_param_container(agent* new_agent)
     : soar_module::param_container(new_agent) {
@@ -66,9 +58,7 @@ epmem_param_container::epmem_param_container(agent* new_agent)
       "learning", off, new soar_module::f_predicate<boolean>());
   add(learning);
 
-  ////////////////////
   // Encoding
-  ////////////////////
 
   // phase
   phase = new soar_module::constant_param<phase_choices>(
@@ -98,9 +88,7 @@ epmem_param_container::epmem_param_container(agent* new_agent)
       "exclusions", new soar_module::f_predicate<const char*>, thisAgent);
   add(exclusions);
 
-  ////////////////////
   // Storage
-  ////////////////////
 
   // database
   database = new soar_module::constant_param<db_choices>(
@@ -125,9 +113,7 @@ epmem_param_container::epmem_param_container(agent* new_agent)
       "lazy-commit", on, new epmem_db_predicate<boolean>(thisAgent));
   add(lazy_commit);
 
-  ////////////////////
   // Retrieval
-  ////////////////////
 
   // graph-match
   graph_match = new soar_module::boolean_param(
@@ -140,9 +126,7 @@ epmem_param_container::epmem_param_container(agent* new_agent)
       new soar_module::f_predicate<double>());
   add(balance);
 
-  ////////////////////
   // Performance
-  ////////////////////
 
   // timers
   timers = new soar_module::constant_param<soar_module::timer::timer_level>(
@@ -180,9 +164,7 @@ epmem_param_container::epmem_param_container(agent* new_agent)
   opt->add_mapping(epmem_param_container::opt_speed, "performance");
   add(opt);
 
-  ////////////////////
   // Experimental
-  ////////////////////
 
   gm_ordering = new soar_module::constant_param<gm_ordering_choices>(
       "graph-match-ordering", gm_order_undefined,
@@ -231,17 +213,15 @@ bool epmem_db_predicate<T>::operator()(T /*val*/) {
           soar_module::connected);
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_enabled
  * Author       : Nate Derbinsky
  * Notes        : Shortcut function to system parameter
- **************************************************************************/
+ */
 bool epmem_enabled(agent* thisAgent) {
   return (thisAgent->EpMem->epmem_params->learning->get_value() == on);
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Temporal Hash Functions (epmem::hash)
 //
 // The rete has symbol hashing, but the values are
@@ -253,8 +233,6 @@ bool epmem_enabled(agent* thisAgent) {
 // very similar, but with enough differences that I
 // separated them out for clarity.
 //
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 inline epmem_hash_id epmem_temporal_hash_add_type(agent* thisAgent,
                                                   byte sym_type) {
@@ -537,9 +515,7 @@ epmem_hash_id epmem_temporal_hash(agent* thisAgent, Symbol* sym,
                                   bool add_on_fail) {
   epmem_hash_id return_val = NIL;
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->hash->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   if (sym->is_constant()) {
     if ((!sym->epmem_hash) ||
@@ -572,18 +548,12 @@ epmem_hash_id epmem_temporal_hash(agent* thisAgent, Symbol* sym,
     return_val = sym->epmem_hash;
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->hash->stop();
-  ////////////////////////////////////////////////////////////////////////////
 
   return return_val;
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Statistic Functions (epmem::stats)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 epmem_stat_container::epmem_stat_container(agent* new_agent)
     : soar_module::stat_container(new_agent) {
@@ -703,9 +673,7 @@ epmem_stat_container::epmem_stat_container(agent* new_agent)
       "rit-min-step-2", 0, new epmem_db_predicate<int64_t>(thisAgent));
   add(rit_min_step_2);
 
-  /////////////////////////////
   // connect to rit state
-  /////////////////////////////
 
   // graph
   thisAgent->EpMem->epmem_rit_state_graph[EPMEM_RIT_STATE_NODE].offset.stat =
@@ -780,11 +748,7 @@ int64_t epmem_mem_high_stat::get_value() {
   return thisAgent->EpMem->epmem_db->memory_highwater();
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Timer Functions (epmem::timers)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 epmem_timer_container::epmem_timer_container(agent* new_agent)
     : soar_module::timer_container(new_agent) {
@@ -901,9 +865,7 @@ epmem_timer_container::epmem_timer_container(agent* new_agent)
                                         soar_module::timer::three);
   add(query_sql_end_point);
 
-  /////////////////////////////
   // connect to rit state
-  /////////////////////////////
 
   // graph
   thisAgent->EpMem->epmem_rit_state_graph[EPMEM_RIT_STATE_NODE].timer =
@@ -930,11 +892,7 @@ epmem_timer::epmem_timer(const char* new_name, agent* new_agent,
     : soar_module::timer(new_name, new_agent, new_level,
                          new epmem_timer_level_predicate(new_agent)) {}
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Statement Functions (epmem::statements)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 void epmem_common_statement_container::create_graph_tables() {
   add_structure(
@@ -1590,17 +1548,13 @@ epmem_graph_statement_container::epmem_graph_statement_container(
   }
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // WME Functions (epmem::wmes)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
-/***************************************************************************
+/**
  * Function     : epmem_get_augs_of_id
  * Author       : Nate Derbinsky
  * Notes        : This routine gets all wmes rooted at an id.
- **************************************************************************/
+ */
 epmem_wme_list* epmem_get_augs_of_id(Symbol* id, tc_number tc) {
   slot* s;
   wme* w;
@@ -1723,22 +1677,18 @@ inline void epmem_buffer_add_wme(agent* thisAgent, symbol_triple_list& my_list,
   thisAgent->symbolManager->symbol_add_ref(value);
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Variable Functions (epmem::var)
 //
 // Variables are key-value pairs stored in the database
 // that are necessary to maintain a store between
 // multiple runs of Soar.
 //
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
-/***************************************************************************
+/**
  * Function     : epmem_get_variable
  * Author       : Nate Derbinsky
  * Notes        : Gets an EpMem variable from the database
- **************************************************************************/
+ */
 bool epmem_get_variable(agent* thisAgent, epmem_variable_key variable_id,
                         int64_t* variable_value) {
   soar_module::exec_result status;
@@ -1757,11 +1707,11 @@ bool epmem_get_variable(agent* thisAgent, epmem_variable_key variable_id,
   return (status == soar_module::row);
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_set_variable
  * Author       : Nate Derbinsky
  * Notes        : Sets an EpMem variable in the database
- **************************************************************************/
+ */
 void epmem_set_variable(agent* thisAgent, epmem_variable_key variable_id,
                         int64_t variable_value) {
   soar_module::sqlite_statement* var_set =
@@ -1773,17 +1723,13 @@ void epmem_set_variable(agent* thisAgent, epmem_variable_key variable_id,
   var_set->execute(soar_module::op_reinit);
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // RIT Functions (epmem::rit)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
-/***************************************************************************
+/**
  * Function     : epmem_rit_fork_node
  * Author       : Nate Derbinsky
  * Notes        : Implements the forkNode function of RIT
- **************************************************************************/
+ */
 int64_t epmem_rit_fork_node(int64_t lower, int64_t upper,
                             bool /*bounds_offset*/, int64_t* step_return,
                             epmem_rit_state* rit_state) {
@@ -1823,11 +1769,11 @@ int64_t epmem_rit_fork_node(int64_t lower, int64_t upper,
   return node;
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_rit_clear_left_right
  * Author       : Nate Derbinsky
  * Notes        : Clears the left/right relations populated during prep
- **************************************************************************/
+ */
 void epmem_rit_clear_left_right(agent* thisAgent) {
   thisAgent->EpMem->epmem_stmts_common->rit_truncate_left->execute(
       soar_module::op_reinit);
@@ -1835,11 +1781,11 @@ void epmem_rit_clear_left_right(agent* thisAgent) {
       soar_module::op_reinit);
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_rit_add_left
  * Author       : Nate Derbinsky
  * Notes        : Adds a range to the left relation
- **************************************************************************/
+ */
 void epmem_rit_add_left(agent* thisAgent, epmem_time_id min,
                         epmem_time_id max) {
   thisAgent->EpMem->epmem_stmts_common->rit_add_left->bind_int(1, min);
@@ -1848,28 +1794,26 @@ void epmem_rit_add_left(agent* thisAgent, epmem_time_id min,
       soar_module::op_reinit);
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_rit_add_right
  * Author       : Nate Derbinsky
  * Notes        : Adds a node to the to the right relation
- **************************************************************************/
+ */
 void epmem_rit_add_right(agent* thisAgent, epmem_time_id id) {
   thisAgent->EpMem->epmem_stmts_common->rit_add_right->bind_int(1, id);
   thisAgent->EpMem->epmem_stmts_common->rit_add_right->execute(
       soar_module::op_reinit);
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_rit_prep_left_right
  * Author       : Nate Derbinsky
  * Notes        : Implements the computational components of the RIT
  *                query algorithm
- **************************************************************************/
+ */
 void epmem_rit_prep_left_right(agent* thisAgent, int64_t lower, int64_t upper,
                                epmem_rit_state* rit_state) {
-  ////////////////////////////////////////////////////////////////////////////
   rit_state->timer->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   int64_t offset = rit_state->offset.stat->get_value();
   int64_t node, step;
@@ -1934,16 +1878,14 @@ void epmem_rit_prep_left_right(agent* thisAgent, int64_t lower, int64_t upper,
     }
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   rit_state->timer->stop();
-  ////////////////////////////////////////////////////////////////////////////
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_rit_insert_interval
  * Author       : Nate Derbinsky
  * Notes        : Inserts an interval in the RIT
- **************************************************************************/
+ */
 void epmem_rit_insert_interval(agent* thisAgent, int64_t lower, int64_t upper,
                                epmem_node_id id, epmem_rit_state* rit_state,
                                int64_t lti_id = 0) {
@@ -2033,11 +1975,7 @@ void epmem_rit_insert_interval(agent* thisAgent, int64_t lower, int64_t upper,
   rit_state->add_query->execute(soar_module::op_reinit);
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Clean-Up Functions (epmem::clean)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 void epmem_clear_transient_structures(agent* thisAgent) {
   epmem_parent_id_pool::iterator p;
@@ -2092,12 +2030,12 @@ void epmem_clear_transient_structures(agent* thisAgent) {
   thisAgent->EpMem->epmem_wme_adds->clear();
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_close
  * Author       : Nate Derbinsky
  * Notes        : Performs cleanup operations when the database needs
  *                to be closed (end soar, manual close, etc)
- **************************************************************************/
+ */
 void epmem_close(agent* thisAgent) {
   if (thisAgent->EpMem->epmem_db->get_status() == soar_module::connected) {
     print_sysparam_trace(thisAgent, TRACE_EPMEM_SYSPARAM,
@@ -2156,12 +2094,12 @@ void epmem_reinit(agent* thisAgent) {
     epmem_close(thisAgent);
   }
 }
-/***************************************************************************
+/**
  * Function     : epmem_clear_result
  * Author       : Nate Derbinsky
  * Notes        : Removes any WMEs produced by EpMem resulting from
  *                a command
- **************************************************************************/
+ */
 void epmem_clear_result(agent* thisAgent, Symbol* state) {
   preference* pref;
 
@@ -2175,11 +2113,11 @@ void epmem_clear_result(agent* thisAgent, Symbol* state) {
   }
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_reset
  * Author       : Nate Derbinsky
  * Notes        : Performs cleanup when a state is removed
- **************************************************************************/
+ */
 void epmem_reset(agent* thisAgent, Symbol* state) {
   if (state == NULL) {
     state = thisAgent->top_goal;
@@ -2211,13 +2149,9 @@ void epmem_switch_db_mode(agent* thisAgent, std::string& buf, bool readonly) {
   epmem_init_db(thisAgent, readonly);
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Initialization Functions (epmem::init)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
-/***************************************************************************
+/**
  * Function     : epmem_init_db
  * Author       : Nate Derbinsky
  * Notes        : Opens the SQLite database and performs all
@@ -2226,7 +2160,7 @@ void epmem_switch_db_mode(agent* thisAgent, std::string& buf, bool readonly) {
  *                The readonly param should only be used in
  *                experimentation where you don't want to alter
  *                previous database state.
- **************************************************************************/
+ */
 
 void epmem_init_db(agent* thisAgent, bool readonly) {
   if (thisAgent->EpMem->epmem_db->get_status() != soar_module::disconnected) {
@@ -2236,9 +2170,7 @@ void epmem_init_db(agent* thisAgent, bool readonly) {
     return;
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->init->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   const char* db_path;
   if (thisAgent->EpMem->epmem_params->database->get_value() ==
@@ -2488,8 +2420,6 @@ void epmem_init_db(agent* thisAgent, bool readonly) {
       thisAgent->EpMem->epmem_rit_state_graph[EPMEM_RIT_STATE_EDGE].add_query =
           thisAgent->EpMem->epmem_stmts_graph->add_epmem_wmes_identifier_range;
 
-      ////
-
       // get/set RIT variables
       {
         int64_t var_val = NIL;
@@ -2556,8 +2486,6 @@ void epmem_init_db(agent* thisAgent, bool readonly) {
           }
         }
       }
-
-      ////
 
       // get max time
       {
@@ -2732,16 +2660,10 @@ void epmem_init_db(agent* thisAgent, bool readonly) {
     }
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->init->stop();
-  ////////////////////////////////////////////////////////////////////////////
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Storage Functions (epmem::storage)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 /* **************************************************************************
 
@@ -3361,9 +3283,7 @@ void epmem_new_episode(agent* thisAgent) {
     return;
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->storage->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   epmem_time_id time_counter = thisAgent->EpMem->epmem_stats->time->get_value();
 
@@ -3639,13 +3559,9 @@ void epmem_new_episode(agent* thisAgent) {
     { thisAgent->EpMem->epmem_wme_adds->clear(); }
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->storage->stop();
-  ////////////////////////////////////////////////////////////////////////////
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Non-Cue-Based Retrieval Functions (epmem::ncb)
 //
 // NCB retrievals occur when you know the episode you
@@ -3656,14 +3572,12 @@ void epmem_new_episode(agent* thisAgent) {
 // This occurs at the end of a cue-based query, or
 // in response to a retrieve/next/previous command.
 //
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
-/***************************************************************************
+/**
  * Function     : epmem_valid_episode
  * Author       : Nate Derbinsky
  * Notes        : Returns true if the temporal id is valid
- **************************************************************************/
+ */
 bool epmem_valid_episode(agent* thisAgent, epmem_time_id memory_id) {
   bool return_val = false;
 
@@ -3737,7 +3651,7 @@ inline void _epmem_install_id_wme(
   }
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_install_memory
  * Author       : Nate Derbinsky
  * Notes        : Reconstructs an episode in working memory.
@@ -3750,15 +3664,13 @@ inline void _epmem_install_id_wme(
  *                that the graph-match has a match and creates
  *                a mapping of identifiers that should be recorded
  *                during reconstruction.
- **************************************************************************/
+ */
 void epmem_install_memory(agent* thisAgent, Symbol* state,
                           epmem_time_id memory_id,
                           symbol_triple_list& meta_wmes,
                           symbol_triple_list& retrieval_wmes,
                           epmem_id_mapping* id_record = NULL) {
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->ncb_retrieval->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   // get the ^result header for this state
   Symbol* result_header = state->id->epmem_info->result_wme->value;
@@ -3776,9 +3688,7 @@ void epmem_install_memory(agent* thisAgent, Symbol* state,
         thisAgent->symbolManager->soarSymbols.epmem_sym_no_memory);
     state->id->epmem_info->last_memory = EPMEM_MEMID_NONE;
 
-    ////////////////////////////////////////////////////////////////////////////
     thisAgent->EpMem->epmem_timers->ncb_retrieval->stop();
-    ////////////////////////////////////////////////////////////////////////////
 
     return;
   }
@@ -4004,22 +3914,18 @@ void epmem_install_memory(agent* thisAgent, Symbol* state,
   // adjust stat
   thisAgent->EpMem->epmem_stats->ncb_wmes->set_value(num_wmes);
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->ncb_retrieval->stop();
-  ////////////////////////////////////////////////////////////////////////////
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_next_episode
  * Author       : Nate Derbinsky
  * Notes        : Returns the next valid temporal id.  This is really
  *                only an issue if you implement episode dynamics like
  *                forgetting.
- **************************************************************************/
+ */
 epmem_time_id epmem_next_episode(agent* thisAgent, epmem_time_id memory_id) {
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->next->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   epmem_time_id return_val = EPMEM_MEMID_NONE;
 
@@ -4034,25 +3940,21 @@ epmem_time_id epmem_next_episode(agent* thisAgent, epmem_time_id memory_id) {
     my_q->reinitialize();
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->next->stop();
-  ////////////////////////////////////////////////////////////////////////////
 
   return return_val;
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_previous_episode
  * Author       : Nate Derbinsky
  * Notes        : Returns the last valid temporal id.  This is really
  *                only an issue if you implement episode dynamics like
  *                forgetting.
- **************************************************************************/
+ */
 epmem_time_id epmem_previous_episode(agent* thisAgent,
                                      epmem_time_id memory_id) {
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->prev->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   epmem_time_id return_val = EPMEM_MEMID_NONE;
 
@@ -4067,15 +3969,11 @@ epmem_time_id epmem_previous_episode(agent* thisAgent,
     my_q->reinitialize();
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->prev->stop();
-  ////////////////////////////////////////////////////////////////////////////
 
   return return_val;
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Cue-Based Retrieval (epmem::cbr)
 //
 // Cue-based retrievals are searches in response to
@@ -4156,12 +4054,8 @@ epmem_time_id epmem_previous_episode(agent* thisAgent,
 // current episode's cardinality/score.  Thus we achieve
 // the Soar mantra of only processing changes!
 //
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////
 // Justin's Stuff
-//////////////////////////////////////////////////////////
 
 #define QUERY_DEBUG 0
 
@@ -4346,7 +4240,7 @@ epmem_literal* epmem_build_dnf(wme* cue_wme,
   //  (lacking this "else", essentially) is done with an additional command when
   //  the query is issued to epmem.
   //  TODO: Actually implement that extra (agent-initiated epmem-link) command.
-  /*
+  /**
    * scijones - May 2 2017 My first try at implementing this is just to copy the
    * old code that was here in the first place before we changed ltis to be
    * instance-based.
@@ -5605,11 +5499,7 @@ void epmem_process_query(agent* thisAgent, Symbol* state, Symbol* pos_query,
   thisAgent->EpMem->epmem_timers->query->stop();
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // Visualization (epmem::viz)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
 inline std::string _epmem_print_sti(epmem_node_id id) {
   std::string t1, t2;
@@ -5970,22 +5860,16 @@ void epmem_visualize_episode(agent* thisAgent, epmem_time_id memory_id,
   { buf->append("\n}\n"); }
 }
 
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 // API Implementation (epmem::api)
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
 
-/***************************************************************************
+/**
  * Function     : epmem_consider_new_episode
  * Author       : Nate Derbinsky
  * Notes        : Based upon trigger/force parameter settings, potentially
  *                records a new episode
- **************************************************************************/
+ */
 bool epmem_consider_new_episode(agent* thisAgent) {
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->trigger->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   const int64_t force = thisAgent->EpMem->epmem_params->force->get_value();
   bool new_memory = false;
@@ -6021,9 +5905,7 @@ bool epmem_consider_new_episode(agent* thisAgent) {
         epmem_param_container::force_off);
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   thisAgent->EpMem->epmem_timers->trigger->stop();
-  ////////////////////////////////////////////////////////////////////////////
 
   if (new_memory) {
     epmem_new_episode(thisAgent);
@@ -6152,11 +6034,11 @@ void inline _epmem_respond_to_cmd_parse(
   }
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_respond_to_cmd
  * Author       : Nate Derbinsky
  * Notes        : Implements the Soar-EpMem API
- **************************************************************************/
+ */
 void epmem_respond_to_cmd(agent* thisAgent) {
   epmem_attach(thisAgent);
 
@@ -6193,9 +6075,7 @@ void epmem_respond_to_cmd(agent* thisAgent) {
   bool do_wm_phase = false;
 
   while (state != NULL) {
-    ////////////////////////////////////////////////////////////////////////////
     thisAgent->EpMem->epmem_timers->api->start();
-    ////////////////////////////////////////////////////////////////////////////
     // make sure this state has had some sort of change to the cmd
     new_cue = false;
     wme_count = 0;
@@ -6259,9 +6139,7 @@ void epmem_respond_to_cmd(agent* thisAgent) {
                                   next, previous, query, neg_query, prohibit,
                                   before, after, cue_wmes);
 
-      ////////////////////////////////////////////////////////////////////////////
       thisAgent->EpMem->epmem_timers->api->stop();
-      ////////////////////////////////////////////////////////////////////////////
 
       retrieval_wmes.clear();
       meta_wmes.clear();
@@ -6371,9 +6249,7 @@ void epmem_respond_to_cmd(agent* thisAgent) {
       // clear cue wmes
       cue_wmes.clear();
     } else {
-      ////////////////////////////////////////////////////////////////////////////
       thisAgent->EpMem->epmem_timers->api->stop();
-      ////////////////////////////////////////////////////////////////////////////
     }
 
     // free space from command aug list
@@ -6385,24 +6261,20 @@ void epmem_respond_to_cmd(agent* thisAgent) {
   }
 
   if (do_wm_phase) {
-    ////////////////////////////////////////////////////////////////////////////
     thisAgent->EpMem->epmem_timers->wm_phase->start();
-    ////////////////////////////////////////////////////////////////////////////
 
     do_working_memory_phase(thisAgent);
 
-    ////////////////////////////////////////////////////////////////////////////
     thisAgent->EpMem->epmem_timers->wm_phase->stop();
-    ////////////////////////////////////////////////////////////////////////////
   }
 }
 
-/***************************************************************************
+/**
  * Function     : epmem_go
  * Author       : Nate Derbinsky
  * Notes        : The kernel calls this function to implement Soar-EpMem:
  *                consider new storage and respond to any commands
- **************************************************************************/
+ */
 void epmem_go(agent* thisAgent, bool allow_store) {
   thisAgent->EpMem->epmem_timers->total->start();
 

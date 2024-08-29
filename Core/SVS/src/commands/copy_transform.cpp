@@ -1,4 +1,4 @@
-/**********************************************************
+/**
  *
  * File: commands/copy_transform.cpp
  * Contains:
@@ -13,7 +13,7 @@
  *transform ^rotation << yes no >> [Optional] - whether to copy the rotation
  *transform ^scale << yes no >> [Optional] - whether to copy the scale transform
  *     (These all default to no)
- **********************************************************/
+ */
 #include <iostream>
 #include <map>
 #include <string>

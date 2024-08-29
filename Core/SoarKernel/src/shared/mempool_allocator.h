@@ -7,8 +7,7 @@
  *
  *  file:  mempool_allocator.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef MEMPOOL_ALLOCATOR_H
 #define MEMPOOL_ALLOCATOR_H
@@ -29,9 +28,7 @@
 // just for Soar modules
 namespace soar_module {
 
-///////////////////////////////////////////////////////////////////////////
 // Memory Pool Allocators
-///////////////////////////////////////////////////////////////////////////
 
 #ifdef USE_MEM_POOL_ALLOCATORS
 

@@ -1,16 +1,14 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  soar_module.cpp
  *
- * =======================================================================
- * Description  :  Useful functions for Soar modules
- * =======================================================================
- */
+ *  * Description  :  Useful functions for Soar modules
+ *  */
 
 #include "soar_module.h"
 
@@ -41,9 +39,7 @@ timer::timer(const char* new_name, agent* new_agent, timer_level new_level,
   reset();
 }
 
-/////////////////////////////////////////////////////////////
 // Utility functions
-/////////////////////////////////////////////////////////////
 
 wme* add_module_wme(agent* thisAgent, Symbol* id, Symbol* attr, Symbol* value,
                     bool isSingleton) {

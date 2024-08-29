@@ -1,6 +1,6 @@
 /**
  * libccd
- * ---------------------------------
+ *
  * Copyright (c)2010,2011 Daniel Fiser <danfis@danfis.cz>
  *
  *

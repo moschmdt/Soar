@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // stats command file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com
-// Date  : 2004
+// @author: Jonathan Voigt, voigtjr@gmail.com
+// @date  : 2004
 //
-/////////////////////////////////////////////////////////////////
 
 #include <iomanip>
 
@@ -871,7 +869,7 @@ void CommandLineInterface::GetReteStats() {
 
   get_all_node_count_stats(thisAgent);
 
-  /* --- print table headers --- */
+  /* print table headers */
 #ifdef SHARING_FACTORS
   m_Result
       << "      Node Type            Actual  If no merging  If no sharing\n";
@@ -882,7 +880,7 @@ void CommandLineInterface::GetReteStats() {
   m_Result << "---------------------  ----------  -------------\n";
 #endif
 
-  /* --- print main table --- */
+  /* print main table */
   for (i = 0; i < 256; i++)
     if (*bnode_type_names[i]) {
       m_Result << std::setw(21) << bnode_type_names[i] << "  " << std::setw(10)
@@ -894,7 +892,7 @@ void CommandLineInterface::GetReteStats() {
       m_Result << "\n";
     }
 
-    /* --- print table end (totals) --- */
+    /* print table end (totals) */
 #ifdef SHARING_FACTORS
   m_Result
       << "---------------------  ----------  -------------  -------------\n";

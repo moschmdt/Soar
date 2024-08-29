@@ -125,9 +125,10 @@ struct LU_kernel_bmod<1> {
 template <typename BlockScalarVector, typename ScalarVector,
           typename IndexVector>
 EIGEN_DONT_INLINE void LU_kernel_bmod<1>::run(
-    const Index /**segsize*/, BlockScalarVector& dense, ScalarVector& /**tempv*/,
-    ScalarVector& lusup, Index& luptr, const Index lda, const Index nrow,
-    IndexVector& lsub, const Index lptr, const Index no_zeros) {
+    const Index /**segsize*/, BlockScalarVector& dense,
+    ScalarVector& /**tempv*/, ScalarVector& lusup, Index& luptr,
+    const Index lda, const Index nrow, IndexVector& lsub, const Index lptr,
+    const Index no_zeros) {
   typedef typename ScalarVector::Scalar Scalar;
   typedef typename IndexVector::Scalar StorageIndex;
   Scalar f = dense(lsub(lptr + no_zeros));

@@ -1,14 +1,12 @@
-/////////////////////////////////////////////////////////////////
 // OutputDeltaList class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This class records the list of changes that have
 // occured to the output-link since the client
 // last asked for them.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_OUTPUT_DELTA_LIST_H
 #define SML_OUTPUT_DELTA_LIST_H

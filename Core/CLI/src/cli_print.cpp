@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // print command file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com
-// Date  : 2004
+// @author: Jonathan Voigt, voigtjr@gmail.com
+// @date  : 2004
 //
-/////////////////////////////////////////////////////////////////
 
 #include "agent.h"
 #include "cli_CommandLineInterface.h"
@@ -306,7 +304,7 @@ void print_augs_of_id(agent* thisAgent, Symbol* id, int depth, int maxdepth,
 
   id->tc_num = tc;  // mark id as printed
 
-  /* --- first, count all direct augmentations of this id --- */
+  /* first, count all direct augmentations of this id */
   num_attr = 0;
   for (w = id->id->impasse_wmes; w != NIL; w = w->next) {
     num_attr++;
@@ -323,7 +321,7 @@ void print_augs_of_id(agent* thisAgent, Symbol* id, int depth, int maxdepth,
     }
   }
 
-  /* --- next, construct the array of wme pointers and sort them --- */
+  /* next, construct the array of wme pointers and sort them */
   list = (wme**)thisAgent->memoryManager->allocate_memory(
       num_attr * sizeof(wme*), MISCELLANEOUS_MEM_USAGE);
   attr = 0;
@@ -343,7 +341,7 @@ void print_augs_of_id(agent* thisAgent, Symbol* id, int depth, int maxdepth,
   }
   qsort(list, num_attr, sizeof(wme*), compare_attr);
 
-  /* --- finally, print the sorted wmes and deallocate the array --- */
+  /* finally, print the sorted wmes and deallocate the array */
 
   // RPM 4/07 If this is a tree print, then for each wme in the list, print it
   // and its children
@@ -359,7 +357,7 @@ void print_augs_of_id(agent* thisAgent, Symbol* id, int depth, int maxdepth,
 
       if (depth > 1) {
         // we're not done yet
-        /* --- call this routine recursively --- */
+        /* call this routine recursively */
         print_augs_of_id(thisAgent, w->attr, depth - 1, maxdepth, intern, tree,
                          tc);
         print_augs_of_id(thisAgent, w->value, depth - 1, maxdepth, intern, tree,
@@ -400,7 +398,7 @@ void print_augs_of_id(agent* thisAgent, Symbol* id, int depth, int maxdepth,
     if (depth > 1) {
       for (attr = 0; attr < num_attr; attr++) {
         w = list[attr];
-        /* --- call this routine recursively --- */
+        /* call this routine recursively */
         print_augs_of_id(thisAgent, w->attr, depth - 1, maxdepth, intern, tree,
                          tc);
         print_augs_of_id(thisAgent, w->value, depth - 1, maxdepth, intern, tree,
@@ -441,12 +439,12 @@ void mark_depths_augs_of_id(agent* thisAgent, Symbol* id, int depth,
   id->id->depth = depth;  // set the depth of this id
   id->tc_num = tc;
 
-  /* --- if depth<=1, we're done --- */
+  /* if depth<=1, we're done */
   if (depth <= 1) {
     return;
   }
 
-  /* --- call this routine recursively --- */
+  /* call this routine recursively */
   for (w = id->id->input_wmes; w != NIL; w = w->next) {
     mark_depths_augs_of_id(thisAgent, w->attr, depth - 1, tc);
     mark_depths_augs_of_id(thisAgent, w->value, depth - 1, tc);
@@ -504,8 +502,8 @@ void do_print_for_wme(agent* thisAgent, wme* w, int depth, bool intern,
   }
 }
 
-/* --- Read and consume one pattern element.  Return 0 if error, 1 if "*",
-otherwise return 2 and set dest_sym to find_symbol() result. --- */
+/* Read and consume one pattern element.  Return 0 if error, 1 if "*",
+otherwise return 2 and set dest_sym to find_symbol() result. */
 int read_pattern_component(agent* thisAgent, soar::Lexeme* lexeme,
                            Symbol** dest_sym) {
   if (strcmp(lexeme->string(), "*") == 0) {

@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // OutputListener class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : September 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : September 2004
 //
 // This class's HandleEvent method is called when
 // the agent adds wmes to the output link.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef OUTPUT_LISTENER_H
 #define OUTPUT_LISTENER_H

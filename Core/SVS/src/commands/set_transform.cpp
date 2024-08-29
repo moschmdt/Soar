@@ -1,4 +1,4 @@
-/**********************************************************
+/**
  *
  * File: commands/set_transform.cpp
  * Contains:
@@ -11,7 +11,7 @@
  *     ^rotation <vec3> [Optional] - desired rotation
  *     ^scale <vec3> [Optional] - desired scale
  *      (Can set any or all of these)
- **********************************************************/
+ */
 
 #include <iostream>
 #include <map>

@@ -1,4 +1,4 @@
-/*
+/**
  * smem_store.cpp
  *
  *  Created on: Aug 21, 2016
@@ -69,7 +69,7 @@ void SMem_Manager::deallocate_ltm(ltm_object* pLTM, bool free_ltm) {
   }
 }
 
-/*
+/**
  * This is intended to allow the user to remove part or all of information
  * stored on a LTI. (All attributes, selected attributes, or just values from
  * particular attributes.)
@@ -326,7 +326,7 @@ void SMem_Manager::LTM_to_DB(uint64_t pLTI_ID, ltm_slot_map* children,
     }
   }
 
-  /*
+  /**
    * Here, the delta between what the children of the lti used to be and
    * what they are now is calculated and used to determine what spreading
    * likelihoods need to be recalculated (since the network structure that
@@ -335,7 +335,7 @@ void SMem_Manager::LTM_to_DB(uint64_t pLTI_ID, ltm_slot_map* children,
   if (new_children != NULL) {
     if (remove_old_children) {  // This is when the delta needs to be
                                 // calculated.
-      /*
+      /**
        * Delta: Loop over the new children.
        * Check if they are also old children.
        * If so, calculate the delta and store that into ne children as the new
@@ -482,7 +482,7 @@ void SMem_Manager::LTM_to_DB(uint64_t pLTI_ID, ltm_slot_map* children,
           SQL->web_add->bind_double(5, web_act);
           if (ever_updated_edge_weight &&
               edge_weights.find(p->second) != edge_weights.end()) {
-            /*
+            /**
              * This will currently silently fail if the user doesn't supply all
              * of the edge weights that they should. Some will be initialized to
              * fan and others will not. The first round of normalization will

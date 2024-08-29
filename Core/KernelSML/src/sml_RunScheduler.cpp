@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // Run class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : May 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : May 2005
 //
 // Used to run Soar and send appropriate events so that an environment
 // can function well in concert with a debugger.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 
@@ -28,20 +26,20 @@ RunScheduler::RunScheduler(KernelSML* pKernelSML) {
   m_StopBeforePhase = sml_APPLY_PHASE;
 }
 
-/*************************************************************
+/**
  * @brief    Each agent is set to either run or not when the
  *           next Run command is executed.
- *************************************************************/
+ */
 void RunScheduler::ScheduleAgentToRun(AgentSML* pAgentSML, bool state) {
   if (pAgentSML) {
     pAgentSML->ScheduleAgentToRun(state);
   }
 }
 
-/*************************************************************
+/**
  * @brief    Sets all agents to either run or not when the
  *           next Run command is executed.
- *************************************************************/
+ */
 void RunScheduler::ScheduleAllAgentsToRun(bool state) {
   for (AgentMapIter iter = m_pKernelSML->m_AgentMap.begin();
        iter != m_pKernelSML->m_AgentMap.end(); iter++) {
@@ -49,11 +47,11 @@ void RunScheduler::ScheduleAllAgentsToRun(bool state) {
     pAgentSML->ScheduleAgentToRun(state);
   }
 }
-/********************************************************************
+/**
  * @brief    This is a method for getting the default value
  *           for the interleaveStepSize for running agents.
  *
- *********************************************************************/
+ */
 smlRunStepSize RunScheduler::DefaultInterleaveStepSize(
     bool forever, smlRunStepSize runStepSize) {
   if (forever) {
@@ -78,10 +76,10 @@ smlRunStepSize RunScheduler::DefaultInterleaveStepSize(
   }
 }
 
-/********************************************************************
+/**
  * @brief    Don't try to Run with an nonsense interleaveStepSize
  *
- *********************************************************************/
+ */
 bool RunScheduler::VerifyStepSizeForRunType(bool forever,
                                             smlRunStepSize runStepSize,
                                             smlRunStepSize interleave) {
@@ -107,9 +105,9 @@ bool RunScheduler::VerifyStepSizeForRunType(bool forever,
       return false;
   }
 }
-/*************************************************************************
+/**
  * @brief    Returns true if phase1 is later in the execution cycle than phase2
- **************************************************************************/
+ */
 static bool IsPhaseLater(smlPhase phase1, smlPhase phase2) {
   // Right now the enum is in the correct order, but if we change Soar we
   // might need to make this more complex.
@@ -117,9 +115,9 @@ static bool IsPhaseLater(smlPhase phase1, smlPhase phase2) {
   return phase1 > phase2;
 }
 
-/*************************************************************************
+/**
  * @brief    Returns the agent whose phase we should synch up to.
- **************************************************************************/
+ */
 AgentSML* RunScheduler::GetAgentToSynchronizeWith() {
   AgentSML* pSynchAgent = NULL;
 
@@ -150,9 +148,9 @@ AgentSML* RunScheduler::GetAgentToSynchronizeWith() {
   return pSynchAgent;
 }
 
-/*************************************************************************
+/**
  * @brief    Returns true if all agents scheduled to run are in the same phase.
- **************************************************************************/
+ */
 bool RunScheduler::AreAgentsSynchronized(AgentSML* pSynchAgent) {
   if (!pSynchAgent) {
     return true;
@@ -175,9 +173,9 @@ bool RunScheduler::AreAgentsSynchronized(AgentSML* pSynchAgent) {
   return same;
 }
 
-/*************************************************************************
+/**
  * @brief    Agent will run one fewer RunType if not at m_StopBeforePhase.
- **************************************************************************/
+ */
 bool RunScheduler::AllAgentsAtStopBeforePhase() {
   bool same = true;
   for (AgentMapIter iter = m_pKernelSML->m_AgentMap.begin();
@@ -197,9 +195,9 @@ bool RunScheduler::AllAgentsAtStopBeforePhase() {
   return same;
 }
 
-/*************************************************************************
+/**
  * @brief    Returns true if the given agent has reached the end of its run
- **************************************************************************/
+ */
 bool RunScheduler::IsAgentFinished(AgentSML* pAgentSML, bool forever,
                                    smlRunStepSize runStepSize, uint64_t count) {
   uint64_t current = pAgentSML->GetRunCounter(runStepSize);
@@ -229,10 +227,10 @@ bool RunScheduler::IsAgentFinished(AgentSML* pAgentSML, bool forever,
   return finished;
 }
 
-/********************************************************************
+/**
  * @brief    Some agents will complete a RunType sooner than others.
  *           This list records who still hasn't finished.
- *********************************************************************/
+ */
 void RunScheduler::InitializeStepList() {
   // We only check the agents that are scheduled to run.
   // This allows us to start <n> agents and have them drop out as they
@@ -246,10 +244,10 @@ void RunScheduler::InitializeStepList() {
   }
 }
 
-/********************************************************************
+/**
  * @brief    Returns true if all currently active agents have not yet
  *           completed a RunType.
- *********************************************************************/
+ */
 bool RunScheduler::AgentsStillStepping() {
   // We only check the agents that are scheduled to run.
   // This allows us to start <n> agents and have them drop out as they
@@ -267,9 +265,9 @@ bool RunScheduler::AgentsStillStepping() {
   return false;
 }
 
-/*************************************************************************
+/**
  * @brief    This event is fired to indicate that the agent is about to run.
- **************************************************************************/
+ */
 void RunScheduler::FireBeforeRunStartsEvents() {
   for (AgentMapIter iter = m_pKernelSML->m_AgentMap.begin();
        iter != m_pKernelSML->m_AgentMap.end(); iter++) {
@@ -281,12 +279,12 @@ void RunScheduler::FireBeforeRunStartsEvents() {
   }
 }
 
-/********************************************************************
+/**
  * @brief    Agents maintain a number of counters (for how many phase,
  *           decisions etc.) they have ever executed.
  *           We use these counters to determine when a run should stop.
- *********************************************************************/
-/*
+ */
+/**
 void RunScheduler::RecordInitialRunCounters(smlRunStepSize runStepSize)
 {
     for (AgentMapIter iter = m_pKernelSML->m_AgentMap.begin() ; iter !=
@@ -319,7 +317,7 @@ void RunScheduler::InitializeRunCounters(smlRunStepSize runStepSize) {
     }
   }
 }
-/********************************************************************
+/**
  * @brief    Certain events are designed to fire "after the agents have done
  *useful work". We use these to update the environment. The most common example
  *is after all agents have completed the output phase the environment is updated
@@ -329,7 +327,7 @@ void RunScheduler::InitializeRunCounters(smlRunStepSize runStepSize) {
  *then update the world after the run completes.  Well, by listening for the
  *event anyone can issue the "run x" command--specifically either the debugger
  *or the environment and the environment still behaves correctly.
- *********************************************************************/
+ */
 void RunScheduler::InitializeUpdateWorldEvents(bool addListeners) {
   for (AgentMapIter iter = m_pKernelSML->m_AgentMap.begin();
        iter != m_pKernelSML->m_AgentMap.end(); iter++) {
@@ -348,10 +346,10 @@ void RunScheduler::InitializeUpdateWorldEvents(bool addListeners) {
   }
 }
 
-/********************************************************************
+/**
  * @brief    Returns true if all currently active agents have completed
  *           the output phase (they may not have generated output).
- *********************************************************************/
+ */
 bool RunScheduler::AreAllOutputPhasesComplete() {
   // We only check the agents that are still scheduled to run.
   // This allows us to start <n> agents and have some drop out (stopped by user
@@ -407,14 +405,14 @@ bool RunScheduler::AreAllOutputPhasesComplete() {
   return false;
 }
 
-/********************************************************************
+/**
  * @brief    Returns true if all currently active agents have generated
  *           output.  (This is a tighter requirement than just having
  *           completed the output phase).
  *           Called only after HaveAllCompletedOutput is true, and that
  *           method worries about interrupted and halted agents, so this
  *           method doesn't have to duplicate that logic.
- *********************************************************************/
+ */
 bool RunScheduler::HaveAllGeneratedOutput() {
   for (AgentMapIter iter = m_pKernelSML->m_AgentMap.begin();
        iter != m_pKernelSML->m_AgentMap.end(); iter++) {
@@ -431,12 +429,12 @@ bool RunScheduler::HaveAllGeneratedOutput() {
 
   return true;
 }
-/********************************************************************
+/**
  * @brief     Users and applications can choose to have agents always
  *            stop before a particular phase.  If all agents have finished
  *            finished running, this routine will check whether they
  *            need to be stepped to a different phase.
- *********************************************************************/
+ */
 void RunScheduler::MoveTo_StopBeforePhase(bool forever,
                                           smlRunStepSize runStepSize) {
   // If we ran by decision_cycle and we've run the appropriate number of
@@ -531,11 +529,11 @@ void RunScheduler::MoveTo_StopBeforePhase(bool forever,
   }
 }
 
-/********************************************************************
+/**
  * @brief    Check if the "AFTER_ALL_OUTPUT_PHASES" event should be
  *           fired or not.  Then check if the "AFTER_ALL_GENERATED_OUTPUT"
  *           event should be fired or not.
- *********************************************************************/
+ */
 void RunScheduler::TestForFiringUpdateWorldEvents() {
   if (AreAllOutputPhasesComplete()) {
     // If so fire the after_all_output_phases event
@@ -564,9 +562,9 @@ void RunScheduler::TestForFiringUpdateWorldEvents() {
     }
   }
 }
-/********************************************************************
+/**
  * @brief    Clean up for the update world events.
- *********************************************************************/
+ */
 void RunScheduler::TerminateUpdateWorldEvents(bool removeListeners) {
   for (AgentMapIter iter = m_pKernelSML->m_AgentMap.begin();
        iter != m_pKernelSML->m_AgentMap.end(); iter++) {
@@ -578,7 +576,7 @@ void RunScheduler::TerminateUpdateWorldEvents(bool removeListeners) {
     }
   }
 }
-/********************************************************************
+/**
 * @brief    Return most severe RunResult of
             gSKI_RUN_ERROR,
             gSKI_RUN_EXECUTING,
@@ -586,7 +584,7 @@ void RunScheduler::TerminateUpdateWorldEvents(bool removeListeners) {
             gSKI_RUN_COMPLETED,
             gSKI_RUN_COMPLETED_AND_INTERRUPTED
 
-*********************************************************************/
+*/
 smlRunResult RunScheduler::GetOverallRunResult() {
   smlRunResult overallResult = sml_RUN_COMPLETED;
 
@@ -602,11 +600,11 @@ smlRunResult RunScheduler::GetOverallRunResult() {
   return overallResult;
 }
 
-/********************************************************************
+/**
  * @brief    Checks to see if any-agents on the runlist were halted.
  *           Returns true if any agent has runstate == halted.
  *           Does not remove anyone from the run list.
- *********************************************************************/
+ */
 bool RunScheduler::AnAgentHaltedDuringRun() {
   for (AgentMapIter iter = m_pKernelSML->m_AgentMap.begin();
        iter != m_pKernelSML->m_AgentMap.end(); iter++) {
@@ -621,11 +619,11 @@ bool RunScheduler::AnAgentHaltedDuringRun() {
   return false;
 }
 
-/********************************************************************
+/**
  * @brief    Checks each agent to see if it has finished running.
  *           Returns true if all agents are done.
  *           Does not remove anyone from the run list.
- *********************************************************************/
+ */
 bool RunScheduler::TestIfAllFinished(bool forever, smlRunStepSize runStepSize,
                                      uint64_t count) {
   bool allDone = true;
@@ -645,12 +643,12 @@ bool RunScheduler::TestIfAllFinished(bool forever, smlRunStepSize runStepSize,
   return allDone;
 }
 
-/********************************************************************
+/**
  * @brief    Returns true if some agents are currently running.
- *********************************************************************/
+ */
 bool RunScheduler::IsRunning() { return m_IsRunning; }
 
-/*************************************************************
+/**
  * @brief    Run all agents previously marked as being scheduled to run.
  *
  * @param runStepSize -- decision/phase etc.
@@ -664,7 +662,7 @@ bool RunScheduler::IsRunning() { return m_IsRunning; }
  *
  * @return Not clear on how to set this when have multiple agents.
  *         Can query each for "GetLastRunResult()".
- *************************************************************/
+ */
 smlRunResult RunScheduler::RunScheduledAgents(
     bool forever, smlRunStepSize runStepSize, uint64_t count,
     smlRunFlags runFlags, smlRunStepSize interleaveStepSize, bool synchronize) {

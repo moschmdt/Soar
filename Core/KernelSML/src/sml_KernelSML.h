@@ -1,15 +1,13 @@
-/////////////////////////////////////////////////////////////////
 // KernelSML class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This class represents the translation point between SML and gSKI.
 //
 // It will maintain the information needed to communicate with gSKI
 // and send and receive messages to the client (a tool or simulation).
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_KERNEL_SML_H
 #define SML_KERNEL_SML_H

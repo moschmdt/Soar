@@ -1,13 +1,11 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // RhsFunction class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : March 2007
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : March 2007
 //
 // Support for right hand side functions.
-/////////////////////////////////////////////////////////////////
 
 #include <iostream>
 

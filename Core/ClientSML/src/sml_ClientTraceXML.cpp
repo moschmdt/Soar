@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ClientTraceXML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : March 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : March 2005
 //
 // This class is used to represent XML messages
 // that contain trace output from a Soar.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "sml_ClientTraceXML.h"
 #include "sml_Names.h"
@@ -102,7 +100,7 @@ bool ClientTraceXML::IsTagLearning() const {
 }
 
 // Production
-/*
+/**
 <production prod_name="my*prod" documentation="my doc string"
 type="[:chunk|:default|:justification ;# not reloadable]"
 declared-support="[:i-support|:o-support]">
@@ -235,7 +233,7 @@ bool ClientTraceXML::IsTagActionSideMarker() const {
 }
 
 // Backtrace tags
-/*
+/**
 1) the backtrace for each of the results
 2) a trace of the "locals"
 

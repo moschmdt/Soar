@@ -236,7 +236,8 @@ EIGEN_STRONG_INLINE std::complex<float> predux_mul<Packet2cf>(
   return pfirst(pmul(a, Packet2cf(_mm_movehl_ps(a.v, a.v))));
 }
 
-EIGEN_STRONG_INLINE Packet2cf pcplxflip /** <Packet2cf> */ (const Packet2cf& x) {
+EIGEN_STRONG_INLINE Packet2cf
+    pcplxflip /** <Packet2cf> */ (const Packet2cf& x) {
   return Packet2cf(vec4f_swizzle1(x.v, 1, 0, 3, 2));
 }
 
@@ -378,9 +379,9 @@ ploadu<Packet1cd>(const std::complex<double>* from) {
       ploadu<Packet2d>((const double*)from));
 }
 template <>
-EIGEN_STRONG_INLINE Packet1cd
-pset1<Packet1cd>(const std::complex<double>&
-                     from) { /** here we really have to use unaligned loads :( */
+EIGEN_STRONG_INLINE Packet1cd pset1<Packet1cd>(
+    const std::complex<double>&
+        from) { /** here we really have to use unaligned loads :( */
   return ploadu<Packet1cd>(&from);
 }
 
@@ -442,7 +443,8 @@ EIGEN_STRONG_INLINE Packet1cd pdiv<Packet1cd>(const Packet1cd& a,
   return Packet1cd(_mm_div_pd(res.v, _mm_add_pd(s, _mm_shuffle_pd(s, s, 0x1))));
 }
 
-EIGEN_STRONG_INLINE Packet1cd pcplxflip /** <Packet1cd> */ (const Packet1cd& x) {
+EIGEN_STRONG_INLINE Packet1cd
+    pcplxflip /** <Packet1cd> */ (const Packet1cd& x) {
   return Packet1cd(preverse(Packet2d(x.v)));
 }
 

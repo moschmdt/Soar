@@ -225,7 +225,7 @@ class QuaternionBase : public RotationBase<Derived, 3> {
   /** \returns true if at least one pair of coefficients of \c *this and \a
    * other are not exactly equal to each other. \warning When using floating
    * point scalar values you probably should rather use a fuzzy comparison such
-   * as isApprox() \sa isApprox(), operator== */
+   * as isApprox() \sa isApprox(), operator*/
   template <class OtherDerived>
   EIGEN_DEVICE_FUNC inline bool operator!=(
       const QuaternionBase<OtherDerived>& other) const {

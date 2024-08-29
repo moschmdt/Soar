@@ -1,4 +1,4 @@
-/*
+/**
  * smem_activation.cpp
  *
  *  Created on: Aug 21, 2016
@@ -103,9 +103,7 @@ double SMem_Manager::lti_calc_base(uint64_t pLTI_ID, int64_t time_now,
 double SMem_Manager::lti_activate(uint64_t pLTI_ID, bool add_access,
                                   uint64_t num_edges, double touches,
                                   bool increment_timer) {
-  ////////////////////////////////////////////////////////////////////////////
   timers->act->start();
-  ////////////////////////////////////////////////////////////////////////////
 
   int64_t time_now;
   bool prohibited = false;
@@ -128,7 +126,7 @@ double SMem_Manager::lti_activate(uint64_t pLTI_ID, bool add_access,
       time_now = smem_max_cycle - 1;
     }
 
-    /*
+    /**
      * Prohibits are set up such that the only thing we need to do is flip the
      * prohibit bit and the normal updating behavior should take care of most
      * things (with the exception of what we expressly do under the prohibit
@@ -189,7 +187,7 @@ double SMem_Manager::lti_activate(uint64_t pLTI_ID, bool add_access,
     statistics->act_updates->set_value(statistics->act_updates->get_value() +
                                        1);
   } else {
-    /*
+    /**
      * If we are not adding an access, we need to remove the old history so that
      * recalculation takes into account the prohibit having occurred. The big
      * difference is that we'll have to leave it prohibited, just not dirty.
@@ -358,9 +356,7 @@ double SMem_Manager::lti_activate(uint64_t pLTI_ID, bool add_access,
     // SQL->act_set->execute(soar_module::op_reinit);
   }
 
-  ////////////////////////////////////////////////////////////////////////////
   timers->act->stop();
-  ////////////////////////////////////////////////////////////////////////////
 
   return new_base + modified_spread;
 }
@@ -830,7 +826,7 @@ inline soar_module::sqlite_statement* SMem_Manager::setup_manual_web_crawl(
 void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
                                bool do_manual_crawl,
                                smem_weighted_cue_list::iterator* cand_set) {
-  /*
+  /**
    * The goal of this function is to as lazily as possible give spreading
    * activation values when needed. Lazy to such a point that we basically do
    * queries twice instead of once just to avoid calculating extra spreading
@@ -855,9 +851,7 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
    *      3.2 - do the math
    *      3.3 - make into new val
    */
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading->start();
-  ////////////////////////////////////////////////////////////////////////////
   std::map<uint64_t, std::list<std::pair<uint64_t, double>>*> lti_trajectories;
   timers->spreading_wma_3->start();
   batch_invalidate_from_lti();
@@ -866,9 +860,7 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
   // smem_param_container::deterministic)
   {  // One can do random walks or one can simulate them by doing a
      // breadth-first traversal with coefficients. This is the latter.
-    ////////////////////////////////////////////////////////////////////////////
     timers->spreading_1->start();
-    ////////////////////////////////////////////////////////////////////////////
     for (std::set<uint64_t>::iterator it = smem_context_additions->begin();
          it != smem_context_additions->end();
          ++it) {  // We keep track of old walks. If we haven't changed smem, no
@@ -900,9 +892,7 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
         SQL->lti_count_num_appearances_insert->execute(soar_module::op_reinit);
       }
     }
-    ////////////////////////////////////////////////////////////////////////////
     timers->spreading_1->stop();
-    ////////////////////////////////////////////////////////////////////////////
   }
   /*else
   {//Random walks can be handled a little differently.
@@ -938,20 +928,14 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
           SQL->trajectory_get->reinitialize();
       }
   }*/
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_2->start();
-  ////////////////////////////////////////////////////////////////////////////
   for (std::map<uint64_t, std::list<std::pair<uint64_t, double>>*>::iterator
            to_delete = lti_trajectories.begin();
        to_delete != lti_trajectories.end(); ++to_delete) {
     delete to_delete->second;
   }
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_2->stop();
-  ////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_3->start();
-  ////////////////////////////////////////////////////////////////////////////
   soar_module::sqlite_statement* add_fingerprint = SQL->add_fingerprint;
   soar_module::sqlite_statement* select_fingerprint = SQL->select_fingerprint;
   for (std::set<uint64_t>::iterator it = smem_context_additions->begin();
@@ -1003,9 +987,7 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
     // The insert is then the normal insert. A select/insert combo would be
     // nice, but that doesn't make sense with the sqlite api.
   }
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_3->stop();
-  ////////////////////////////////////////////////////////////////////////////
   // soar_module::sqlite_statement* add_uncommitted_fingerprint =
   // SQL->add_uncommitted_fingerprint; soar_module::sqlite_statement*
   // remove_fingerprint_reversal = SQL->remove_fingerprint_reversal; for
@@ -1019,9 +1001,7 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
   // remove_fingerprint_reversal->bind_int(2,(*it));
   // remove_fingerprint_reversal->execute(soar_module::op_reinit);
   //}
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_4->start();
-  ////////////////////////////////////////////////////////////////////////////
   smem_context_additions->clear();
   soar_module::sqlite_statement* delete_old_spread = SQL->delete_old_spread;
   // soar_module::sqlite_statement* delete_old_uncommitted_spread =
@@ -1095,12 +1075,8 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
     delete_old_spread->bind_int(1, (*source_it));
     delete_old_spread->execute(soar_module::op_reinit);
   }
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_4->stop();
-  ////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_5->start();
-  ////////////////////////////////////////////////////////////////////////////
   smem_context_removals->clear();
   double prev_base;
   double raw_prob;
@@ -1130,12 +1106,8 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
     }
   }
   list_current_spread->reinitialize();
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_5->stop();
-  ////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_6->start();
-  ////////////////////////////////////////////////////////////////////////////
   // gotta calculate correct denominator for baseline value
   double baseline_denom = settings->spreading_continue_probability->get_value();
   double decay_const = baseline_denom;
@@ -1149,19 +1121,13 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
       (do_manual_crawl ? &pruned_candidates : current_candidates);
   std::unordered_set<uint64_t> updated_candidates;
   // spreaded_to->clear();
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_6->stop();
-  ////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_7->start();
-  ////////////////////////////////////////////////////////////////////////////
   for (std::set<uint64_t>::iterator candidate = actual_candidates->begin();
        candidate != actual_candidates->end();
        ++candidate)  // for every sink that has some spread, we calculate
   {
-    ////////////////////////////////////////////////////////////////////////////
     timers->spreading_7_1->start();
-    ////////////////////////////////////////////////////////////////////////////
     if (spreaded_to->find(*candidate) != spreaded_to->end()) {
       SQL->act_lti_fake_get->bind_int(1, *candidate);
       SQL->act_lti_fake_get->execute();
@@ -1181,12 +1147,8 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
       // SQL->act_lti_fake_get->reinitialize();
       spreaded_to->erase(*candidate);
     }
-    ////////////////////////////////////////////////////////////////////////////
     timers->spreading_7_1->stop();
-    ////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
     timers->spreading_7_2->start();
-    ////////////////////////////////////////////////////////////////////////////
     calc_current_spread->bind_int(1, (*candidate));
     while (calc_current_spread->execute() == soar_module::row &&
            calc_current_spread->column_double(2)) {
@@ -1199,9 +1161,7 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
             spreaded_to->end())  //(updated_candidates.find(*candidate) ==
                                  // updated_candidates.end())
         {
-          ////////////////////////////////////////////////////////////////////////////
           timers->spreading_7_2_1->start();
-          ////////////////////////////////////////////////////////////////////////////
           (*spreaded_to)[*candidate] = 1;
           SQL->act_lti_get->bind_int(1, *candidate);
           SQL->act_lti_get->execute();
@@ -1209,13 +1169,9 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
               1);  // This is the spread before changes.
           prev_base = SQL->act_lti_get->column_double(0);
           SQL->act_lti_get->reinitialize();
-          ////////////////////////////////////////////////////////////////////////////
           timers->spreading_7_2_1->stop();
-          ////////////////////////////////////////////////////////////////////////////
         } else {
-          ////////////////////////////////////////////////////////////////////////////
           timers->spreading_7_2_2->start();
-          ////////////////////////////////////////////////////////////////////////////
           already_in_spread_table = true;
           // if (!(updated_candidates.find(*candidate) ==
           // updated_candidates.end()))
@@ -1226,13 +1182,9 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
               1);  // This is the spread before changes.
           prev_base = SQL->act_lti_fake_get->column_double(0);
           SQL->act_lti_fake_get->reinitialize();
-          ////////////////////////////////////////////////////////////////////////////
           timers->spreading_7_2_2->stop();
-          ////////////////////////////////////////////////////////////////////////////
         }
-        ////////////////////////////////////////////////////////////////////////////
         timers->spreading_7_2_3->start();
-        ////////////////////////////////////////////////////////////////////////////
         if (updated_candidates.find(*candidate) ==
             updated_candidates
                 .end()) {  // If we have yet to update the spread to this
@@ -1240,19 +1192,17 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
           spread = 0;
           updated_candidates.insert(*candidate);
         }
-        ////////////////////////////////////////////////////////////////////////////
         timers->spreading_7_2_3->stop();
-        ////////////////////////////////////////////////////////////////////////////
-        /*
-                        if (settings->spreading_normalization->get_value() ==
-           off && settings->spreading_traversal->get_value() ==
-           smem_param_container::deterministic &&
-           settings->spreading_loop_avoidance->get_value() == on)
-                        {
-                            raw_prob =
-           (((double)(calc_uncommitted_spread->column_double(2))));
-                        }
-                        else*/
+        /**
+                if (settings->spreading_normalization->get_value() ==
+   off && settings->spreading_traversal->get_value() ==
+   smem_param_container::deterministic &&
+   settings->spreading_loop_avoidance->get_value() == on)
+                {
+                    raw_prob =
+   (((double)(calc_uncommitted_spread->column_double(2))));
+                }
+                else*/
         // Alright, the big point here is to make the magnitude of activation in
         // some manner depend on the magnitude of the WMA of the source of the
         // spread. That's weird, but whatever. The big deal is to translate the
@@ -1264,9 +1214,7 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
         // activation. I'll basically add the WMAs individual activations
         // together like they were all boosting the same thing. This should
         // normalize in a sense. Whatever, this is the first stab.
-        ////////////////////////////////////////////////////////////////////////////
         timers->spreading_7_2_4->start();
-        ////////////////////////////////////////////////////////////////////////////
         wma_decay_element total_element;
         total_element.this_wme = NULL;
         total_element.just_removed = false;
@@ -1309,16 +1257,12 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
             }
           }
         }
-        ////////////////////////////////////////////////////////////////////////////
         timers->spreading_7_2_4->stop();
-        ////////////////////////////////////////////////////////////////////////////
         // For now, I'm not going to deal with the Petrov approximation and
         // leave this value incorrectly truncated so that old activations are
         // just completely ignored. In theory, BLA corresponds to log-odds, so I
         // guess we're dealing with odds for the above value.
-        ////////////////////////////////////////////////////////////////////////////
         timers->spreading_7_2_5->start();
-        ////////////////////////////////////////////////////////////////////////////
         double wma_multiplicative_factor =
             pre_logd_wma /
             (1.0 + pre_logd_wma);  // 1;//pre_logd_wma/(1.0+pre_logd_wma);
@@ -1356,12 +1300,8 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
                  ? additional
                  : additional + spread);  // Now, we've adjusted the activation
                                           // according to this new addition.
-        ////////////////////////////////////////////////////////////////////////////
         timers->spreading_7_2_5->stop();
-        ////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////
         timers->spreading_7_2_6->start();
-        ////////////////////////////////////////////////////////////////////////////
         SQL->act_lti_child_ct_get->bind_int(1, *candidate);
         SQL->act_lti_child_ct_get->execute();
 
@@ -1383,18 +1323,14 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
         } else {
           new_base = prev_base;
         }
-        ////////////////////////////////////////////////////////////////////////////
         timers->spreading_7_2_6->stop();
-        ////////////////////////////////////////////////////////////////////////////
         // SQL->add_committed_fingerprint->bind_int(1,*candidate);
         // SQL->add_committed_fingerprint->bind_double(2,(double)(calc_current_spread->column_double(2)));
         // SQL->add_committed_fingerprint->bind_double(3,(double)(calc_current_spread->column_double(1)));
         // SQL->add_committed_fingerprint->bind_int(4,(calc_current_spread->column_int(4)));
         // SQL->add_committed_fingerprint->execute(soar_module::op_reinit);
         if (already_in_spread_table) {
-          ////////////////////////////////////////////////////////////////////////////
           timers->spreading_7_2_7->start();
-          ////////////////////////////////////////////////////////////////////////////
           SQL->act_lti_fake_set->bind_double(
               1, ((static_cast<double>(prev_base) == 0) ? (SMEM_ACT_LOW)
                                                         : (prev_base)));
@@ -1402,13 +1338,9 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
           SQL->act_lti_fake_set->bind_double(3, modified_spread + new_base);
           SQL->act_lti_fake_set->bind_int(4, *candidate);
           SQL->act_lti_fake_set->execute(soar_module::op_reinit);
-          ////////////////////////////////////////////////////////////////////////////
           timers->spreading_7_2_7->stop();
-          ////////////////////////////////////////////////////////////////////////////
         } else {
-          ////////////////////////////////////////////////////////////////////////////
           timers->spreading_7_2_8->start();
-          ////////////////////////////////////////////////////////////////////////////
           SQL->act_lti_fake_insert->bind_int(1, *candidate);
           SQL->act_lti_fake_insert->bind_double(
               2, ((static_cast<double>(prev_base) == 0) ? (SMEM_ACT_LOW)
@@ -1429,17 +1361,13 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
           // involve not pulling lti activations from the default table when it
           // has spread.
 
-          ////////////////////////////////////////////////////////////////////////////
           timers->spreading_7_2_8->stop();
-          ////////////////////////////////////////////////////////////////////////////
         }
       }
       /*else
       {
-          ////////////////////////////////////////////////////////////////////////////
-          thisAgent->smem_timers->spreading_4->start();
-          ////////////////////////////////////////////////////////////////////////////
-          bool remove = (((*spreaded_to)[*candidate]) == 1);
+                    thisAgent->smem_timers->spreading_4->start();
+                    bool remove = (((*spreaded_to)[*candidate]) == 1);
           (*spreaded_to)[*candidate] = (*spreaded_to)[*candidate] - 1;
           if ((*spreaded_to)[*candidate]==-1)
           {// This shouldn't actually ever happen.
@@ -1525,26 +1453,18 @@ void SMem_Manager::calc_spread(std::set<uint64_t>* current_candidates,
               SQL->act_lti_set->bind_int(4, *candidate);
               SQL->act_lti_set->execute(soar_module::op_reinit);
           }
-          ////////////////////////////////////////////////////////////////////////////
-          thisAgent->smem_timers->spreading_4->stop();
-          ////////////////////////////////////////////////////////////////////////////
-      }*/
+                    thisAgent->smem_timers->spreading_4->stop();
+                }*/
     }
     calc_current_spread->reinitialize();
-    ////////////////////////////////////////////////////////////////////////////
     timers->spreading_7_2->stop();
-    ////////////////////////////////////////////////////////////////////////////
     // SQL->prepare_delete_committed_fingerprint->bind_int(1,*candidate);
     // SQL->prepare_delete_committed_fingerprint->execute(soar_module::op_reinit);
   }
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading_7->stop();
-  ////////////////////////////////////////////////////////////////////////////
   // SQL->delete_committed_fingerprint->execute(soar_module::op_reinit);
   // SQL->delete_committed_fingerprint_2->execute(soar_module::op_reinit);
-  ////////////////////////////////////////////////////////////////////////////
   timers->spreading->stop();
-  ////////////////////////////////////////////////////////////////////////////
 }
 
 void SMem_Manager::invalidate_trajectories(

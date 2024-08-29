@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // UpdateListener class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : May 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : May 2005
 //
 // This class's HandleEvent method is called when
 // specific events occur within the agent:
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef UPDATE_LISTENER_H
 #define UPDATE_LISTENER_H

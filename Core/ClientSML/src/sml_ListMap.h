@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // ListMap class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // This class represents a map from T1 to a list of
 // objects of type T2.
@@ -14,7 +13,6 @@
 // deleted when the map or list is destroyed (since we're planning
 // to go from ints to function pointers).
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_LIST_MAP_H
 #define SML_LIST_MAP_H

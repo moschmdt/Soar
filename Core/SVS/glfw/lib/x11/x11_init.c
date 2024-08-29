@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    X11/GLX
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,19 +24,16 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Initialize GLFW thread package
-//========================================================================
 
 static void initThreads( void )
 {
@@ -61,9 +56,7 @@ static void initThreads( void )
 }
 
 
-//========================================================================
 // Terminate GLFW thread package
-//========================================================================
 
 static void terminateThreads( void )
 {
@@ -102,9 +95,7 @@ static void terminateThreads( void )
 }
 
 
-//========================================================================
 // Dynamically load libraries
-//========================================================================
 
 static void initLibraries( void )
 {
@@ -131,9 +122,7 @@ static void initLibraries( void )
 }
 
 
-//========================================================================
 // Terminate GLFW when exiting application
-//========================================================================
 
 static void glfw_atexit( void )
 {
@@ -141,9 +130,7 @@ static void glfw_atexit( void )
 }
 
 
-//========================================================================
 // Initialize X11 display
-//========================================================================
 
 static int initDisplay( void )
 {
@@ -198,9 +185,7 @@ static int initDisplay( void )
 }
 
 
-//========================================================================
 // Terminate X11 display
-//========================================================================
 
 static void terminateDisplay( void )
 {
@@ -213,13 +198,11 @@ static void terminateDisplay( void )
 }
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Initialize various GLFW state
-//========================================================================
 
 int _glfwPlatformInit( void )
 {
@@ -250,9 +233,7 @@ int _glfwPlatformInit( void )
 }
 
 
-//========================================================================
 // Close window and kill all threads
-//========================================================================
 
 int _glfwPlatformTerminate( void )
 {
@@ -287,4 +268,3 @@ int _glfwPlatformTerminate( void )
 
     return GL_TRUE;
 }
-

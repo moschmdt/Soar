@@ -1,6 +1,6 @@
 /**
  * libccd
- * ---------------------------------
+ *
  * Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
  *
  *
@@ -99,9 +99,7 @@ _ccd_inline void ccdListAppend(ccd_list_t *l, ccd_list_t *item);
  */
 _ccd_inline void ccdListDel(ccd_list_t *item);
 
-///
 /// INLINES:
-///
 
 _ccd_inline void ccdListInit(ccd_list_t *l) {
   l->next = l;

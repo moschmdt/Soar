@@ -1,6 +1,6 @@
 /**
  * libccd
- * ---------------------------------
+ *
  * Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
  *
  *
@@ -31,7 +31,7 @@ extern "C" {
 #define CCD_PT_EDGE 2
 #define CCD_PT_FACE 3
 
-#define __CCD_PT_EL                                                \
+#define __CCD_PT_EL                                                 \
   int type;           /**! type of element */                       \
   ccd_real_t dist;    /**! distance from origin */                  \
   ccd_vec3_t witness; /**! witness point of projection of origin */ \

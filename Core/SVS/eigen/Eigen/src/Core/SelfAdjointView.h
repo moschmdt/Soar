@@ -269,13 +269,11 @@ class SelfAdjointView
     return typename MatrixType::ConstDiagonalReturnType(m_matrix);
   }
 
-  /////////// Cholesky module ///////////
-
+  /////////// Cholesky module
   const LLT<PlainObject, UpLo> llt() const;
   const LDLT<PlainObject, UpLo> ldlt() const;
 
-  /////////// Eigenvalue module ///////////
-
+  /////////// Eigenvalue module
   /** Real part of #Scalar */
   typedef typename NumTraits<Scalar>::Real RealScalar;
   /** Return type of eigenvalues() */

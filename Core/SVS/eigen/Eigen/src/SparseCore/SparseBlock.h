@@ -381,8 +381,6 @@ class BlockImpl<const SparseMatrix<_Scalar, _Options, _StorageIndex>, BlockRows,
   BlockImpl(const SparseMatrixBase<Derived>& xpr);
 };
 
-//----------
-
 /** Generic implementation of sparse Block expression.
  * Real-only.
  */

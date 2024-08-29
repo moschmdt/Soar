@@ -1,14 +1,13 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  output_manager.cpp
  *
- * =======================================================================
- */
+ *  */
 
 #include "output_manager.h"
 
@@ -114,7 +113,7 @@ Output_Manager::Output_Manager() {
 #endif
 
   /* -- This is a string used when trying to print a null symbol.  Not sure if
-   * this is the best place to put it.  Leaving here for now. -- */
+   * this is the best place to put it.  Leaving here for now. */
   NULL_SYM_STR = strdup("NULL");
 }
 

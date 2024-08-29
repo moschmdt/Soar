@@ -1,9 +1,8 @@
-/*************************************************************************
+/**
  *
  *  file:  io.cpp
  *
- * =======================================================================
- *
+ *  *
  *
  *                General Soar I/O System Routines
  *
@@ -21,8 +20,7 @@
  * The output module is notified about WM changes via a call to
  * inform_output_module_of_wm_changes().
  *
- * =======================================================================
- */
+ *  */
 
 #include "io_link.h"
 
@@ -50,15 +48,14 @@ using namespace soar_TraceNames;
 
 void gds_invalid_so_remove_goal(agent* thisAgent, wme* w);
 
-/* ====================================================================
-                  Adding New Input and Output Functions
+/*                   Adding New Input and Output Functions
 
    The system maintains a list of all the input functions to be called
    every input cycle, and another list of all the symbol-to-function
    mappings for output commands.  Add_input_function() and
    add_output_function() should be called at system startup time to
    install each I/O function.
-==================================================================== */
+*/
 
 void add_input_function(agent* thisAgent, soar_callback_fn f,
                         soar_callback_data cb_data,
@@ -115,8 +112,7 @@ void remove_output_function(agent* thisAgent, const char* name) {
   soar_remove_callback(thisAgent, OUTPUT_PHASE_CALLBACK, name);
 }
 
-/* ====================================================================
-                            Input Routines
+/*                             Input Routines
 
    Get_new_io_identifier(), get_io_str_constant(), get_io_int_constant(),
    and get_io_float_constant() just call the appropriate symbol table
@@ -135,7 +131,7 @@ void remove_output_function(agent* thisAgent, const char* name) {
    be bullet-proofed against bad arguments to get_xxx(), add_input_wme(),
    and remove_input_wme().  Right now add_input_wme() and remove_input_wme()
    do some error checking, but they're nowhere near bullet-proof.
-==================================================================== */
+*/
 
 Symbol* get_new_io_identifier(agent* thisAgent, char first_letter) {
   return thisAgent->symbolManager->make_new_identifier(first_letter,
@@ -178,7 +174,7 @@ void release_io_symbol(agent* thisAgent, Symbol* sym) {
 wme* add_input_wme(agent* thisAgent, Symbol* id, Symbol* attr, Symbol* value) {
   wme* w;
 
-  /* --- a little bit of error checking --- */
+  /* a little bit of error checking */
   if (!(id && attr && value)) {
     thisAgent->outputManager->printa_sf(
         thisAgent,
@@ -186,7 +182,7 @@ wme* add_input_wme(agent* thisAgent, Symbol* id, Symbol* attr, Symbol* value) {
     return NIL;
   }
 
-  /* --- go ahead and add the wme --- */
+  /* go ahead and add the wme */
   w = make_wme(thisAgent, id, attr, value, false);
   insert_at_head_of_dll(id->id->input_wmes, w, next, prev);
 
@@ -238,7 +234,7 @@ wme* find_input_wme_by_timetag_from_id(agent* thisAgent, Symbol* idSym,
 bool remove_input_wme(agent* thisAgent, wme* w) {
   wme* temp;
 
-  /* --- a little bit of error checking --- */
+  /* a little bit of error checking */
   if (!w) {
     thisAgent->outputManager->printa_sf(
         thisAgent,
@@ -261,7 +257,7 @@ bool remove_input_wme(agent* thisAgent, wme* w) {
   /* Note: for efficiency, it might be better to use a hash table for the
   above test, rather than scanning the linked list.  We could have one
   global hash table for all the input wmes in the system. */
-  /* --- go ahead and remove the wme --- */
+  /* go ahead and remove the wme */
   remove_from_dll(w->id->id->input_wmes, w, next, prev);
   /* REW: begin 09.15.96 */
   if (w->gds) {
@@ -280,7 +276,7 @@ bool remove_input_wme(agent* thisAgent, wme* w) {
 
 void do_input_cycle(agent* thisAgent) {
   if (thisAgent->prev_top_state && (!thisAgent->top_state)) {
-    /* --- top state was just removed --- */
+    /* top state was just removed */
     soar_invoke_callbacks(
         thisAgent, INPUT_PHASE_CALLBACK,
         reinterpret_cast<soar_call_data>(TOP_STATE_JUST_REMOVED));
@@ -292,9 +288,9 @@ void do_input_cycle(agent* thisAgent) {
     thisAgent->io_header_output = NIL; /* KJC added 3/3/99 */
     thisAgent->io_header_link = NIL;   /* KJC added 3/3/99 */
   } else if ((!thisAgent->prev_top_state) && thisAgent->top_state) {
-    /* --- top state was just created --- */
+    /* top state was just created */
     /* Create io structure on top state. */
-    /*
+    /**
       thisAgent->io_header = get_new_io_identifier (thisAgent, 'I');
       thisAgent->io_header_link = add_input_wme (thisAgent,
       thisAgent->top_state,
@@ -309,10 +305,10 @@ void do_input_cycle(agent* thisAgent) {
       thisAgent->symbolManager->make_str_constant("output-link"),
       thisAgent->io_header_output);
     */
-    /* --- add top state io link before calling input phase callback so
-     * --- code can use "wmem" command.
+    /* add top state io link before calling input phase callback so
+     * code can use "wmem" command.
      */
-    /*
+    /**
       do_buffered_wm_and_ownership_changes(thisAgent);
 
       soar_invoke_callbacks(thisAgent, thisAgent, INPUT_PHASE_CALLBACK,
@@ -320,30 +316,29 @@ void do_input_cycle(agent* thisAgent) {
     */
   }
 
-  /* --- if there is a top state, do the normal input cycle --- */
+  /* if there is a top state, do the normal input cycle */
 
   if (thisAgent->top_state) {
     soar_invoke_callbacks(thisAgent, INPUT_PHASE_CALLBACK,
                           reinterpret_cast<soar_call_data>(NORMAL_INPUT_CYCLE));
   }
 
-  /* --- do any WM resulting changes --- */
+  /* do any WM resulting changes */
   do_buffered_wm_and_ownership_changes(thisAgent);
 
-  /* --- save current top state for next time --- */
+  /* save current top state for next time */
   thisAgent->prev_top_state = thisAgent->top_state;
 
-  /* --- reset the output-link status flag to false
-   * --- when running til output, only want to stop if agent
-   * --- does add-wme to output.  don't stop if add-wme done
-   * --- during input cycle (eg simulator updates sensor status)
+  /* reset the output-link status flag to false
+   * when running til output, only want to stop if agent
+   * does add-wme to output.  don't stop if add-wme done
+   * during input cycle (eg simulator updates sensor status)
    *     KJC 11/23/98
    */
   thisAgent->output_link_changed = false;
 }
 
-/* ====================================================================
-                          Output Routines
+/*                           Output Routines
 
    Inform_output_module_of_wm_changes() and do_output_cycle() are the
    two top-level entry points to the output routines.  The former is
@@ -366,9 +361,9 @@ void do_input_cycle(agent* thisAgent) {
    eventually do_output_cycle() gets called.  It scans through the list
    of output links and calls the necessary output function for each
    link that has changed in some way (add/modify/remove).
-==================================================================== */
+*/
 
-/* --- output link statuses --- */
+/* output link statuses */
 #define NEW_OL_STATUS 0       /* just created it */
 #define UNCHANGED_OL_STATUS 1 /* normal status */
 #define MODIFIED_BUT_SAME_TC_OL_STATUS \
@@ -380,7 +375,7 @@ void do_input_cycle(agent* thisAgent) {
                                changed */
 #define REMOVED_OL_STATUS 4 /* link has just been removed */
 
-/* --------------------------------------------------------------------
+/**
                    Output Link Status Updates on WM Changes
 
    Top-state link changes:
@@ -404,7 +399,7 @@ void do_input_cycle(agent* thisAgent) {
 
    Note that we don't update all the TC information after every WM change.
    The TC info doesn't get updated until do_output_cycle() is called.
--------------------------------------------------------------------- */
+*/
 
 #define LINK_NAME_SIZE 1024
 void update_for_top_state_wme_addition(agent* thisAgent, wme* w) {
@@ -412,14 +407,14 @@ void update_for_top_state_wme_addition(agent* thisAgent, wme* w) {
   soar_callback* cb;
   char link_name[LINK_NAME_SIZE];
 
-  /* --- check whether the attribute is an output function --- */
+  /* check whether the attribute is an output function */
   w->attr->to_string(false, false, link_name, LINK_NAME_SIZE);
   cb = soar_exists_callback_id(thisAgent, OUTPUT_PHASE_CALLBACK, link_name);
   if (!cb) {
     return;
   }
 
-  /* --- create new output link structure --- */
+  /* create new output link structure */
   thisAgent->memoryManager->allocate_with_pool(MP_output_link, &ol);
   insert_at_head_of_dll(thisAgent->existing_output_links, ol, next, prev);
 
@@ -428,7 +423,7 @@ void update_for_top_state_wme_addition(agent* thisAgent, wme* w) {
   wme_add_ref(w, true);
   ol->ids_in_tc = NIL;
   ol->cb = cb;
-  /* --- make wme point to the structure --- */
+  /* make wme point to the structure */
   w->output_link = ol;
 
   /* SW 07 10 2003
@@ -454,7 +449,7 @@ void update_for_top_state_wme_addition(agent* thisAgent, wme* w) {
   // thisAgent->output_link_tc_num = get_new_tc_number(thisAgent);
   // ol->link_wme->value->id->tc_num = thisAgent->output_link_tc_num;
   // thisAgent->output_link_for_tc = ol;
-  ///* --- add output_link to id's list --- */
+  ///* add output_link to id's list */
   // push(thisAgent, thisAgent->output_link_for_tc,
   // ol->link_wme->value->id->associated_output_links);
 }
@@ -473,13 +468,13 @@ void update_for_io_wme_change(wme* w) {
   for (c = w->id->id->associated_output_links; c != NIL; c = c->rest) {
     ol = static_cast<output_link_struct*>(c->first);
     if (w->value->symbol_type == IDENTIFIER_SYMBOL_TYPE) {
-      /* --- mark ol "modified" --- */
+      /* mark ol "modified" */
       if ((ol->status == UNCHANGED_OL_STATUS) ||
           (ol->status == MODIFIED_BUT_SAME_TC_OL_STATUS)) {
         ol->status = MODIFIED_OL_STATUS;
       }
     } else {
-      /* --- mark ol "modified but same tc" --- */
+      /* mark ol "modified but same tc" */
       if (ol->status == UNCHANGED_OL_STATUS) {
         ol->status = MODIFIED_BUT_SAME_TC_OL_STATUS;
       }
@@ -532,7 +527,7 @@ void inform_output_module_of_wm_changes(agent* thisAgent,
   }
 }
 
-/* --------------------------------------------------------------------
+/**
                      Updating Link TC Information
 
    We make no attempt to do the TC updating intelligently.  Whenever the
@@ -542,7 +537,7 @@ void inform_output_module_of_wm_changes(agent* thisAgent,
 
    Remove_output_link_tc_info() and calculate_output_link_tc_info() are
    the main routines here.
--------------------------------------------------------------------- */
+*/
 
 void remove_output_link_tc_info(agent* thisAgent, output_link* ol) {
   cons *c, *prev_c;
@@ -555,7 +550,7 @@ void remove_output_link_tc_info(agent* thisAgent, output_link* ol) {
     id = static_cast<symbol_struct*>(c->first);
     free_cons(thisAgent, c);
 
-    /* --- remove "ol" from the list of associated_output_links(id) --- */
+    /* remove "ol" from the list of associated_output_links(id) */
     prev_c = NIL;
     for (c = id->id->associated_output_links; c != NIL; prev_c = c, c = c->rest)
       if (c->first == ol) {
@@ -583,24 +578,24 @@ void add_id_to_output_link_tc(agent* thisAgent, Symbol* id) {
   slot* s;
   wme* w;
 
-  /* --- if id is already in the TC, exit --- */
+  /* if id is already in the TC, exit */
   if (id->tc_num == thisAgent->output_link_tc_num) {
     return;
   }
   id->tc_num = thisAgent->output_link_tc_num;
 
-  /* --- add id to output_link's list --- */
+  /* add id to output_link's list */
   push(thisAgent, id, thisAgent->output_link_for_tc->ids_in_tc);
   thisAgent->symbolManager->symbol_add_ref(
       id); /* make sure the id doesn't get deallocated before we
 have a chance to free the cons cell we just added */
 
-  /* --- add output_link to id's list --- */
+  /* add output_link to id's list */
   push(thisAgent, thisAgent->output_link_for_tc,
        id->id->associated_output_links);
 
-  /* --- do TC through working memory --- */
-  /* --- scan through all wmes for all slots for this id --- */
+  /* do TC through working memory */
+  /* scan through all wmes for all slots for this id */
   for (w = id->id->input_wmes; w != NIL; w = w->next)
     if (w->value->symbol_type == IDENTIFIER_SYMBOL_TYPE) {
       add_id_to_output_link_tc(thisAgent, w->value);
@@ -615,18 +610,18 @@ have a chance to free the cons cell we just added */
 }
 
 void calculate_output_link_tc_info(agent* thisAgent, output_link* ol) {
-  /* --- if link doesn't have any substructure, there's no TC --- */
+  /* if link doesn't have any substructure, there's no TC */
   if (ol->link_wme->value->symbol_type != IDENTIFIER_SYMBOL_TYPE) {
     return;
   }
 
-  /* --- do TC starting with the link wme's value --- */
+  /* do TC starting with the link wme's value */
   thisAgent->output_link_for_tc = ol;
   thisAgent->output_link_tc_num = get_new_tc_number(thisAgent);
   add_id_to_output_link_tc(thisAgent, ol->link_wme->value);
 }
 
-/* --------------------------------------------------------------------
+/**
                     Building the list of IO_Wme's
 
    These routines create and destroy the list of io_wme's in the TC
@@ -634,7 +629,7 @@ void calculate_output_link_tc_info(agent* thisAgent, output_link* ol) {
    deallocate_io_wme_list() are the main entry points.  The TC info
    must have already been calculated for the given output link before
    get_io_wmes_for_output_link() is called.
--------------------------------------------------------------------- */
+*/
 
 void add_wme_to_collected_io_wmes(agent* thisAgent, wme* w) {
   io_wme* New;
@@ -679,13 +674,13 @@ void deallocate_io_wme_list(agent* thisAgent, io_wme* iw) {
   }
 }
 
-/* --------------------------------------------------------------------
+/**
                            Do Output Cycle
 
    This routine is called from the top-level sequencer, and it performs
    the whole output phase.  It scans through the list of existing output
    links, and takes the appropriate action on each one that's changed.
--------------------------------------------------------------------- */
+*/
 
 /* Struct used to pass output data to callback functions */
 
@@ -699,11 +694,11 @@ void do_output_cycle(agent* thisAgent) {
 
     switch (ol->status) {
       case UNCHANGED_OL_STATUS:
-        /* --- output link is unchanged, so do nothing --- */
+        /* output link is unchanged, so do nothing */
         break;
 
       case NEW_OL_STATUS:
-        /* --- calculate tc, and call the output function --- */
+        /* calculate tc, and call the output function */
         calculate_output_link_tc_info(thisAgent, ol);
         iw_list = get_io_wmes_for_output_link(thisAgent, ol);
         output_call_data.mode = ADDED_OUTPUT_COMMAND;
@@ -733,7 +728,7 @@ void do_output_cycle(agent* thisAgent) {
         break;
 
       case MODIFIED_BUT_SAME_TC_OL_STATUS:
-        /* --- don't have to redo the TC, but do call the output function --- */
+        /* don't have to redo the TC, but do call the output function */
         iw_list = get_io_wmes_for_output_link(thisAgent, ol);
         output_call_data.mode = MODIFIED_OUTPUT_COMMAND;
         output_call_data.outputs = iw_list;
@@ -762,7 +757,7 @@ void do_output_cycle(agent* thisAgent) {
         break;
 
       case MODIFIED_OL_STATUS:
-        /* --- redo the TC, and call the output function */
+        /* redo the TC, and call the output function */
         remove_output_link_tc_info(thisAgent, ol);
         calculate_output_link_tc_info(thisAgent, ol);
         iw_list = get_io_wmes_for_output_link(thisAgent, ol);
@@ -793,7 +788,7 @@ void do_output_cycle(agent* thisAgent) {
         break;
 
       case REMOVED_OL_STATUS:
-        /* --- call the output function, and free output_link structure --- */
+        /* call the output function, and free output_link structure */
         remove_output_link_tc_info(thisAgent, ol); /* sets ids_in_tc to NIL */
         iw_list = get_io_wmes_for_output_link(thisAgent,
                                               ol); /* gives just the link wme */
@@ -828,7 +823,7 @@ void do_output_cycle(agent* thisAgent) {
   } /* end of for ol */
 }
 
-/* --------------------------------------------------------------------
+/**
                           Get Output Value
 
    This is a simple utility function for use in users' output functions.
@@ -839,7 +834,7 @@ void do_output_cycle(agent* thisAgent) {
    "don't care" by giving NULL (0) pointers for them instead of pointers
    to symbols.  If no matching wme is found, the function returns a
    NULL pointer.
--------------------------------------------------------------------- */
+*/
 
 Symbol* get_output_value(io_wme* outputs, Symbol* id, Symbol* attr) {
   io_wme* iw;
@@ -852,17 +847,16 @@ Symbol* get_output_value(io_wme* outputs, Symbol* id, Symbol* attr) {
   return NIL;
 }
 
-/* ====================================================================
-
+/**
    Utilities that used to be part of text I/O, but we still need
    them now that text I/O is gone.
 
    Get_next_io_symbol_from_text_input_line() is used by the "accept"
    RHS function.
 
-==================================================================== */
+*/
 
-/* --------------------------------------------------------------------
+/**
                     Parsing a Line of Text Input
 
    Get_next_io_symbol_from_text_input_line (char **text_read_position) is
@@ -871,7 +865,7 @@ Symbol* get_output_value(io_wme* outputs, Symbol* id, Symbol* attr) {
    text_read_position to point to the next character not yet read.
    If end-of-line is reached without any symbol being read, NIL is
    returned.
--------------------------------------------------------------------- */
+*/
 
 bool tio_constituent_char[256];
 bool tio_whitespace[256];
@@ -887,7 +881,7 @@ Symbol* get_io_symbol_from_tio_constituent_string(agent* thisAgent,
       input_string, strlen(input_string), &possible_id, &possible_var,
       &possible_sc, &possible_ic, &possible_fc, &rereadable);
 
-  /* --- check whether it's an integer --- */
+  /* check whether it's an integer */
   if (possible_ic) {
     errno = 0;
     int_val = strtol(input_string, NULL, 10);
@@ -899,7 +893,7 @@ Symbol* get_io_symbol_from_tio_constituent_string(agent* thisAgent,
     return get_io_int_constant(thisAgent, int_val);
   }
 
-  /* --- check whether it's a floating point number --- */
+  /* check whether it's a floating point number */
   if (possible_fc) {
     errno = 0;
     float_val = strtod(input_string, NULL);
@@ -911,7 +905,7 @@ Symbol* get_io_symbol_from_tio_constituent_string(agent* thisAgent,
     return get_io_float_constant(thisAgent, float_val);
   }
 
-  /* --- otherwise it must be a symbolic constant --- */
+  /* otherwise it must be a symbolic constant */
   return get_io_str_constant(thisAgent, input_string);
 }
 
@@ -925,18 +919,18 @@ Symbol* get_next_io_symbol_from_text_input_line(agent* thisAgent,
 
   ch = *text_read_position;
 
-  /* --- scan past any whitespace --- */
+  /* scan past any whitespace */
   while (tio_whitespace[static_cast<unsigned char>(*ch)]) {
     ch++;
   }
 
-  /* --- if end of line, return NIL --- */
+  /* if end of line, return NIL */
   if ((*ch == '\n') || (*ch == 0)) {
     *text_read_position = ch;
     return NIL;
   }
 
-  /* --- if not a constituent character, return single-letter symbol --- */
+  /* if not a constituent character, return single-letter symbol */
   if (!tio_constituent_char[static_cast<unsigned char>(*ch)]) {
     input_string[0] = *ch++;
     input_string[1] = 0;
@@ -944,23 +938,22 @@ Symbol* get_next_io_symbol_from_text_input_line(agent* thisAgent,
     return get_io_str_constant(thisAgent, input_string);
   }
 
-  /* --- read string of constituents --- */
+  /* read string of constituents */
   input_lexeme_length = 0;
   while (tio_constituent_char[static_cast<unsigned char>(*ch)]) {
     input_string[input_lexeme_length++] = *ch++;
   }
 
-  /* --- return the appropriate kind of symbol --- */
+  /* return the appropriate kind of symbol */
   input_string[input_lexeme_length] = 0;
   *text_read_position = ch;
   return get_io_symbol_from_tio_constituent_string(thisAgent, input_string);
 }
 
-/* ====================================================================
-
+/**
                    Initialization for Soar I/O
 
-==================================================================== */
+*/
 
 char extra_tio_constituents[] = "+-._";
 
@@ -972,7 +965,7 @@ void init_soar_io(agent* thisAgent) {
   thisAgent->memoryManager->init_memory_pool(MP_io_wme, sizeof(io_wme),
                                              "io wme");
 
-  /* --- setup constituent_char array --- */
+  /* setup constituent_char array */
   for (i = 0; i < 256; i++) {
     tio_constituent_char[i] = (isalnum(i) != 0);
   }
@@ -980,7 +973,7 @@ void init_soar_io(agent* thisAgent) {
     tio_constituent_char[static_cast<int>(extra_tio_constituents[i])] = true;
   }
 
-  /* --- setup whitespace array --- */
+  /* setup whitespace array */
   for (i = 0; i < 256; i++) {
     tio_whitespace[i] = (isspace(i) != 0);
   }

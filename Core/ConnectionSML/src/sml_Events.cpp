@@ -1,12 +1,10 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // Map event ids to and from strings
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : March 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : March 2005
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 
@@ -14,10 +12,10 @@
 
 using namespace sml;
 
-/*************************************************************
+/**
  * @brief    Initialize the mappings in the constructor.
  *           We should only do this once ever.
- *************************************************************/
+ */
 Events::Events() {
   // Kernel events
   RegisterEvent(smlEVENT_BEFORE_SHUTDOWN, "before-shutdown");
@@ -103,9 +101,9 @@ Events::Events() {
   RegisterEvent(smlEVENT_CLIENT_MESSAGE, "client-message");
 }
 
-/*************************************************************
+/**
  * @brief Register a mapping from an event ID to its string form
- *************************************************************/
+ */
 void Events::RegisterEvent(int id, char const* pStr) {
   // Neither the id nor the name should be in use already
   assert(InternalConvertToEvent(pStr) == smlEVENT_INVALID_EVENT);

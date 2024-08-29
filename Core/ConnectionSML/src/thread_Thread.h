@@ -1,15 +1,13 @@
-/////////////////////////////////////////////////////////////////
 // Thread class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Represents a thread.  To use this class
 // derive from it and implement the "Run" method.
 //
 // Then create an instance of your class and call "Start".
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef THREAD_THREAD_H
 #define THREAD_THREAD_H

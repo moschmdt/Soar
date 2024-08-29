@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ClientSocket class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // Creates a socket by connecting to a server at a known
 // IP address and port number.
 //
-/////////////////////////////////////////////////////////////////
 #include <stdio.h>
 
 #include <cassert>
@@ -21,15 +19,12 @@
 
 using namespace sock;
 
-//////////////////////////////////////////////////////////////////////
 // Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 ClientSocket::ClientSocket() {}
 
 ClientSocket::~ClientSocket() {}
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ConvertAddress
 //
 // Return type    : static in_addr*
@@ -42,7 +37,6 @@ ClientSocket::~ClientSocket() {}
 //                  until next call.  (This is gethostbyname's approach
 //                  so we have just extended it).
 //
-/////////////////////////////////////////////////////////////////////
 static in_addr* ConvertAddress(char const* pNetAddress) {
   static in_addr address;
 
@@ -70,7 +64,6 @@ static in_addr* ConvertAddress(char const* pNetAddress) {
 const char* kLocalHost =
     "127.0.0.1";  // Special IP address meaning "this machine"
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ClientSocket::ConnectToServer
 //
 // Return type    : bool
@@ -79,7 +72,6 @@ const char* kLocalHost =
 //
 // Description    : Connect to a server
 //
-/////////////////////////////////////////////////////////////////////
 bool ClientSocket::ConnectToServer(char const* pNetAddress, int port) {
   CTDEBUG_ENTER_METHOD("ClientSocket::ConnectToServer");
 

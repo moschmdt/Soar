@@ -7,8 +7,7 @@
  *
  *  file:  soar_module.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef SOAR_MODULE_H
 #define SOAR_MODULE_H
@@ -30,9 +29,7 @@
 // separates this functionality
 // just for Soar modules
 namespace soar_module {
-/////////////////////////////////////////////////////////////
 // Utility functions
-/////////////////////////////////////////////////////////////
 
 void print_ambiguous_commands(agent* thisAgent, const std::string badCommand,
                               const std::list<std::string> matched_name_list);
@@ -40,9 +37,7 @@ wme* add_module_wme(agent* thisAgent, Symbol* id, Symbol* attr, Symbol* value,
                     bool isSingleton = false);
 void remove_module_wme(agent* thisAgent, wme* w);
 
-///////////////////////////////////////////////////////////////////////////
 // Predicates
-///////////////////////////////////////////////////////////////////////////
 
 // a functor for validating parameter values
 template <typename T>
@@ -126,9 +121,7 @@ class agent_predicate : public predicate<T> {
   agent_predicate(agent* new_agent) : thisAgent(new_agent) {}
 };
 
-///////////////////////////////////////////////////////////////////////////
 // Common for params, stats, timers, etc.
-///////////////////////////////////////////////////////////////////////////
 
 class named_object {
  private:
@@ -236,9 +229,7 @@ class object_container {
   }
 };
 
-///////////////////////////////////////////////////////////////////////////
 // Parameters
-///////////////////////////////////////////////////////////////////////////
 
 // all parameters have a name and
 // can be manipulated generically
@@ -706,15 +697,11 @@ class path_param : public soar_module::string_param {
   virtual void set_value(const char* new_value) { value->assign(new_value); }
 };
 
-///////////////////////////////////////////////////////////////////////////
 // Parameter Container
-///////////////////////////////////////////////////////////////////////////
 
 typedef object_container<param> param_container;
 
-///////////////////////////////////////////////////////////////////////////
 // Statistics
-///////////////////////////////////////////////////////////////////////////
 
 // all statistics have a name and
 // can be retrieved generically
@@ -784,9 +771,7 @@ class primitive_stat : public statistic {
 typedef primitive_stat<int64_t> integer_stat;
 typedef primitive_stat<double> decimal_stat;
 
-///////////////////////////////////////////////////////////////////////////
 // Statistic Containers
-///////////////////////////////////////////////////////////////////////////
 
 class stat_container : public object_container<statistic> {
  public:
@@ -802,9 +787,7 @@ class stat_container : public object_container<statistic> {
   }
 };
 
-///////////////////////////////////////////////////////////////////////////
 // timers
-///////////////////////////////////////////////////////////////////////////
 
 class timer : public named_object {
  public:
@@ -867,9 +850,7 @@ class timer : public named_object {
   }
 };
 
-///////////////////////////////////////////////////////////////////////////
 // Timer Containers
-///////////////////////////////////////////////////////////////////////////
 
 class timer_container : public object_container<timer> {
  public:
@@ -885,7 +866,6 @@ class timer_container : public object_container<timer> {
   }
 };
 
-///////////////////////////////////////////////////////////////////////////
 // Object Store Management
 //
 // Model:
@@ -898,7 +878,6 @@ class timer_container : public object_container<timer> {
 // A) Templated object store (internally maintains pointers to type T)
 // B) Bounded history (template parameter N)
 // C) Subclasses implement decay
-///////////////////////////////////////////////////////////////////////////
 
 template <class T, int N>
 class object_memory {
@@ -1182,14 +1161,12 @@ class object_memory {
   object_set forgotten;
 };
 
-///////////////////////////////////////////////////////////////////////////
 // Base-Level Activation (BLA) Object Store Management
 //
 // Notes:
 // - Approximation of decay time depends upon an estimate of
 //   max reference/time step (template parameter R)
 // - Smallest activation is bounded by activation_low constant
-///////////////////////////////////////////////////////////////////////////
 
 template <class T, int N, unsigned int R>
 class bla_object_memory : public object_memory<T, N> {

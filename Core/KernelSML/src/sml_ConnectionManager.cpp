@@ -1,16 +1,14 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ConnectionManager class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Used by a server (the kernel in our case usually) to manager
 // a listener socket and then keep a list of connections that
 // come in over that listener.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <time.h>  // To get clock
 
@@ -58,11 +56,11 @@ void ConnectionManager::StopReceiverThread() {
   }
 }
 
-/*************************************************************
+/**
  * @brief Turning this on means we'll start dumping output about messages
  *        being sent and received.  Currently this only applies to remote
  *connections.
- *************************************************************/
+ */
 void ConnectionManager::SetTraceCommunications(bool state) {
   m_bTraceCommunications = state;
 

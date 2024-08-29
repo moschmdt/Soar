@@ -1,4 +1,4 @@
-/*
+/**
  * smem_clI_commands.cpp
  *
  *  Created on: Sep 5, 2016
@@ -406,7 +406,7 @@ bool SMem_Manager::CLI_query(const char* ltms_str, std::string** err_msg,
     delete prohibit;
   }
 
-  /*
+  /**
    * Below is the clean-up
    */
   if (root_cue_id != NIL) {

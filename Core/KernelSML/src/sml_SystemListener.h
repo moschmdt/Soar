@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // SystemListener class file.
 //
-// Author: Doug Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Doug Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // This class's HandleEvent method is called when
 // specific events occur within the kernel:
@@ -18,8 +17,7 @@
  *      smlEVENT_AFTER_RHS_FUNCTION_REMOVED,
  *      smlEVENT_BEFORE_RHS_FUNCTION_EXECUTED,
  *      smlEVENT_AFTER_RHS_FUNCTION_EXECUTED,
- */////////////////////////////////////////////////////////////////
-
+ */
 #ifndef SYSTEM_LISTENER_H
 #define SYSTEM_LISTENER_H
 

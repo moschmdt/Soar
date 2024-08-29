@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    X11/GLX
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,27 +24,22 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//========================================================================
 // Note: Only Linux joystick input is supported at the moment. Other
 // systems will behave as if there are no joysticks connected.
-//========================================================================
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
 #ifdef _GLFW_USE_LINUX_JOYSTICKS
 
-//------------------------------------------------------------------------
 // Here are the Linux joystick driver v1.x interface definitions that we
 // use (we do not want to rely on <linux/joystick.h>):
-//------------------------------------------------------------------------
 
 #include <sys/ioctl.h>
 #include <fcntl.h>
@@ -73,9 +66,7 @@ struct js_event {
 #endif // _GLFW_USE_LINUX_JOYSTICKS
 
 
-//========================================================================
 // Initialize joystick interface
-//========================================================================
 
 void _glfwInitJoysticks( void )
 {
@@ -180,9 +171,7 @@ void _glfwInitJoysticks( void )
 }
 
 
-//========================================================================
 // Close all opened joystick handles
-//========================================================================
 
 void _glfwTerminateJoysticks( void )
 {
@@ -208,9 +197,7 @@ void _glfwTerminateJoysticks( void )
 }
 
 
-//========================================================================
 // Empty joystick event queue
-//========================================================================
 
 static void pollJoystickEvents( void )
 {
@@ -264,13 +251,11 @@ static void pollJoystickEvents( void )
 }
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Determine joystick capabilities
-//========================================================================
 
 int _glfwPlatformGetJoystickParam( int joy, int param )
 {
@@ -299,9 +284,7 @@ int _glfwPlatformGetJoystickParam( int joy, int param )
 }
 
 
-//========================================================================
 // Get joystick axis positions
-//========================================================================
 
 int _glfwPlatformGetJoystickPos( int joy, float *pos, int numaxes )
 {
@@ -332,9 +315,7 @@ int _glfwPlatformGetJoystickPos( int joy, float *pos, int numaxes )
 }
 
 
-//========================================================================
 // Get joystick button states
-//========================================================================
 
 int _glfwPlatformGetJoystickButtons( int joy, unsigned char *buttons,
     int numbuttons )
@@ -364,4 +345,3 @@ int _glfwPlatformGetJoystickButtons( int joy, unsigned char *buttons,
 
     return numbuttons;
 }
-

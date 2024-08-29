@@ -7,8 +7,7 @@
  *
  *  file:  soar_rand.h
  *
- * =======================================================================
- *  The ANSI rand and srand functions (at least the implementations
+ *  *  The ANSI rand and srand functions (at least the implementations
  *  provided with Visual Studio) cause problems for us, mostly because
  *  of threading issues (see bug 595).
  *  This is a replacement random number generator that doesn't suffer
@@ -17,8 +16,7 @@
  *  Usage: SoarRand() will return a double in [0,1].
  *         SoarRand.RandInt(n) will return an integer in [0,n].
  *         See implementation for complete list of available functions.
- * =======================================================================
- */
+ *  */
 
 #ifndef SOAR_RAND_H
 #define SOAR_RAND_H

@@ -11,9 +11,6 @@
 #include "cli_Options.h"
 #include "cli_Parser.h"
 
-// #include "misc.h"
-// #include "sml_Events.h"
-
 namespace cli {
 
 class WMCommand : public cli::ParserCommand {

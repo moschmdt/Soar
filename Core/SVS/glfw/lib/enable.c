@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,18 +24,15 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Enable (show) mouse cursor
-//========================================================================
 
 static void enableMouseCursor( void )
 {
@@ -72,9 +67,7 @@ static void enableMouseCursor( void )
     _glfwWin.mouseLock = GL_FALSE;
 }
 
-//========================================================================
 // Disable (hide) mouse cursor
-//========================================================================
 
 static void disableMouseCursor( void )
 {
@@ -91,18 +84,14 @@ static void disableMouseCursor( void )
 }
 
 
-//========================================================================
 // Enable sticky keys
-//========================================================================
 
 static void enableStickyKeys( void )
 {
     _glfwInput.StickyKeys = 1;
 }
 
-//========================================================================
 // Disable sticky keys
-//========================================================================
 
 static void disableStickyKeys( void )
 {
@@ -121,18 +110,14 @@ static void disableStickyKeys( void )
 }
 
 
-//========================================================================
 // Enable sticky mouse buttons
-//========================================================================
 
 static void enableStickyMouseButtons( void )
 {
     _glfwInput.StickyMouseButtons = 1;
 }
 
-//========================================================================
 // Disable sticky mouse buttons
-//========================================================================
 
 static void disableStickyMouseButtons( void )
 {
@@ -151,9 +136,7 @@ static void disableStickyMouseButtons( void )
 }
 
 
-//========================================================================
 // Enable system keys
-//========================================================================
 
 static void enableSystemKeys( void )
 {
@@ -168,9 +151,7 @@ static void enableSystemKeys( void )
     _glfwWin.sysKeysDisabled = GL_FALSE;
 }
 
-//========================================================================
 // Disable system keys
-//========================================================================
 
 static void disableSystemKeys( void )
 {
@@ -186,18 +167,14 @@ static void disableSystemKeys( void )
 }
 
 
-//========================================================================
 // Enable key repeat
-//========================================================================
 
 static void enableKeyRepeat( void )
 {
     _glfwInput.KeyRepeat = 1;
 }
 
-//========================================================================
 // Disable key repeat
-//========================================================================
 
 static void disableKeyRepeat( void )
 {
@@ -205,18 +182,14 @@ static void disableKeyRepeat( void )
 }
 
 
-//========================================================================
 // Enable automatic event polling
-//========================================================================
 
 static void enableAutoPollEvents( void )
 {
     _glfwWin.autoPollEvents = 1;
 }
 
-//========================================================================
 // Disable automatic event polling
-//========================================================================
 
 static void disableAutoPollEvents( void )
 {
@@ -225,13 +198,11 @@ static void disableAutoPollEvents( void )
 
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Enable certain GLFW/window/system functions.
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwEnable( int token )
 {
@@ -267,9 +238,7 @@ GLFWAPI void GLFWAPIENTRY glfwEnable( int token )
 }
 
 
-//========================================================================
 // Disable certain GLFW/window/system functions.
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwDisable( int token )
 {
@@ -303,4 +272,3 @@ GLFWAPI void GLFWAPIENTRY glfwDisable( int token )
             break;
     }
 }
-

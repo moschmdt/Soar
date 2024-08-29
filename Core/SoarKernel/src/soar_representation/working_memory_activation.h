@@ -7,8 +7,7 @@
  *
  *  file:  wma.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef WMA_H
 #define WMA_H
@@ -19,9 +18,7 @@
 #include "kernel.h"
 #include "soar_module.h"
 
-//////////////////////////////////////////////////////////
 // WMA Constants
-//////////////////////////////////////////////////////////
 
 /**
  * This is the size of the reference history.
@@ -52,9 +49,7 @@
  */
 #define WMA_FORGOTTEN_CYCLE 0
 
-//////////////////////////////////////////////////////////
 // WMA Parameters
-//////////////////////////////////////////////////////////
 
 class wma_activation_param;
 class wma_decay_param;
@@ -107,9 +102,7 @@ class wma_activation_predicate : public soar_module::agent_predicate<T> {
   bool operator()(T val);
 };
 
-//////////////////////////////////////////////////////////
 // WMA Statistics
-//////////////////////////////////////////////////////////
 
 class wma_stat_container : public soar_module::stat_container {
  public:
@@ -118,9 +111,7 @@ class wma_stat_container : public soar_module::stat_container {
   wma_stat_container(agent* new_agent);
 };
 
-//////////////////////////////////////////////////////////
 // WMA Timers
-//////////////////////////////////////////////////////////
 
 class wma_timer_container : public soar_module::timer_container {
  public:
@@ -142,9 +133,7 @@ class wma_timer : public soar_module::timer {
   wma_timer(const char* new_name, agent* new_agent, timer_level new_level);
 };
 
-//////////////////////////////////////////////////////////
 // WMA Types
-//////////////////////////////////////////////////////////
 
 typedef uint64_t wma_reference;
 typedef uint64_t wma_d_cycle;
@@ -195,16 +184,12 @@ typedef struct wma_decay_element_struct {
 
 enum wma_go_action { wma_histories, wma_forgetting };
 
-//////////////////////////////////////////////////////////
 // Parameter Functions
-//////////////////////////////////////////////////////////
 
 // shortcut for determining if WMA is enabled
 extern bool wma_enabled(agent* thisAgent);
 
-//////////////////////////////////////////////////////////
 // Add/Remove Decay Element/Set
-//////////////////////////////////////////////////////////
 
 // generic call to activate a wme
 extern void wma_activate_wme(agent* thisAgent, wme* w,
@@ -218,9 +203,7 @@ extern void wma_remove_decay_element(agent* thisAgent, wme* w);
 // Removes an o-support set from an existing preference
 extern void wma_remove_pref_o_set(agent* thisAgent, preference* pref);
 
-//////////////////////////////////////////////////////////
 // Updating Activation
-//////////////////////////////////////////////////////////
 
 /**
  * Given a preference, this routine increments the
@@ -241,9 +224,7 @@ extern void wma_activate_wmes_tested_in_prods(agent* thisAgent);
  */
 extern void wma_go(agent* thisAgent, wma_go_action go_action);
 
-//////////////////////////////////////////////////////////
 // Retrieving Activation
-//////////////////////////////////////////////////////////
 
 /**
  * Retrieve wme activation exact/approximate

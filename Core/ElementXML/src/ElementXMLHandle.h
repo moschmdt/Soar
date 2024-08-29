@@ -1,10 +1,8 @@
-/////////////////////////////////////////////////////////////////
 // ElementXML Handle file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef ELEMENT_XML_HANDLE_H
 #define ELEMENT_XML_HANDLE_H
@@ -19,7 +17,8 @@ extern "C" {
  * users */
 /** a typesafe way to pass ElementXML_Handle's in and out.  In fact it's a
  * pointer */
-/** to a class, but that's not the client's business--to the client this is an */
+/** to a class, but that's not the client's business--to the client this is an
+ */
 /** arbitrary handle.  If this is ever a problem, it can be typedef'd to a long.
  */
 struct ElementXML_InterfaceStruct {

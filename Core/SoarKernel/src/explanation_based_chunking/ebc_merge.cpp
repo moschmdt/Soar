@@ -50,7 +50,7 @@ condition* Explanation_Based_Chunker::get_previously_seen_cond(
  *              equality tests for all three elements of the condition.  At this
  *              point the conditions are variablized, so it is merging based
  *              on the unified variables, not the wmes matched.
- * -- */
+ * */
 
 void Explanation_Based_Chunker::merge_conditions() {
   int64_t current_cond = 1, cond_diff, new_num_conds,
@@ -64,9 +64,9 @@ void Explanation_Based_Chunker::merge_conditions() {
       if (found_cond) {
         merge_values_in_conds(found_cond, cond);
 
-        /* -- Delete the redundant condition -- */
+        /* -- Delete the redundant condition */
         if (last_cond) {
-          /* -- Not at the head of the list -- */
+          /* -- Not at the head of the list */
           last_cond->next = cond->next;
           deallocate_condition(thisAgent, cond);
           if (last_cond->next) {
@@ -76,14 +76,14 @@ void Explanation_Based_Chunker::merge_conditions() {
         } else {
           /* -- At the head of the list.  This probably can never
            *    occur since the head of the list will never be found
-           *    as a previously seen condition.  -- */
+           *    as a previously seen condition.  */
           m_lhs = cond->next;
           deallocate_condition(thisAgent, cond);
           if (m_lhs->next) {
             m_lhs->next->prev = m_lhs;
           }
           /* -- This will cause last_cond to be set to  NULL, indicating we're
-           *    at the head of the list -- */
+           *    at the head of the list */
           cond = NULL;
         }
       } else {

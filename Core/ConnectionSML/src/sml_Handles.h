@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // SML Handles file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // This file just defines a few "handle" types.  These are actually pointers
 // to objects created in one DLL and passed to another.  They are all
@@ -13,7 +12,6 @@
 // of type safety on the interfaces.  If they ever prove to be a problem,
 // typedef them to just be an int.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_HANDLES_H
 #define SML_HANDLES_H

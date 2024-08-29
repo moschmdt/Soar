@@ -90,7 +90,6 @@ class SparseMapBase<Derived, ReadOnlyAccessors>
   /** \copydoc SparseCompressedBase::isCompressed */
   bool isCompressed() const { return m_innerNonZeros == 0; }
 
-  //----------------------------------------
   // direct access interface
   /** \copydoc SparseMatrix::valuePtr */
   inline const Scalar* valuePtr() const { return m_values; }
@@ -100,7 +99,6 @@ class SparseMapBase<Derived, ReadOnlyAccessors>
   inline const StorageIndex* outerIndexPtr() const { return m_outerIndex; }
   /** \copydoc SparseMatrix::innerNonZeroPtr */
   inline const StorageIndex* innerNonZeroPtr() const { return m_innerNonZeros; }
-  //----------------------------------------
 
   /** \copydoc SparseMatrix::coeff */
   inline Scalar coeff(Index row, Index col) const {
@@ -172,7 +170,6 @@ class SparseMapBase<Derived, WriteAccessors>
   using Base::operator=;
 
  public:
-  //----------------------------------------
   // direct access interface
   using Base::innerIndexPtr;
   using Base::innerNonZeroPtr;
@@ -186,7 +183,6 @@ class SparseMapBase<Derived, WriteAccessors>
   inline StorageIndex* outerIndexPtr() { return Base::m_outerIndex; }
   /** \copydoc SparseMatrix::innerNonZeroPtr */
   inline StorageIndex* innerNonZeroPtr() { return Base::m_innerNonZeros; }
-  //----------------------------------------
 
   /** \copydoc SparseMatrix::coeffRef */
   inline Scalar& coeffRef(Index row, Index col) {

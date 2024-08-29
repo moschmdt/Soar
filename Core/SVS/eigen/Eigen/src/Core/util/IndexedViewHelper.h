@@ -103,9 +103,7 @@ const T& makeIndexedViewCompatible(const T& x, Index /**size*/, Q) {
   return x;
 }
 
-//--------------------------------------------------------------------------------
 // Handling of a single Index
-//--------------------------------------------------------------------------------
 
 struct SingleRange {
   enum { SizeAtCompileTime = 1 };
@@ -145,9 +143,7 @@ makeIndexedViewCompatible(const T& id, Index size, SpecializedType) {
   return eval_expr_given_size(id, size);
 }
 
-//--------------------------------------------------------------------------------
 // Handling of all
-//--------------------------------------------------------------------------------
 
 struct all_t {
   all_t() {}

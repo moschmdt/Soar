@@ -1,21 +1,19 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  agent.cpp
  *
- * =======================================================================
- *  Initialization for the agent structure.  Also the cleanup routine
+ *  *  Initialization for the agent structure.  Also the cleanup routine
  *  when an agent is destroyed.  These routines are usually replaced
  *  by the same-named routines in the Tcl interface file soarAgent.c
  *  The versions in this file are used only when not linking in Tcl.
  *  HOWEVER, this code should be maintained, and the agent structure
  *  must be kept up to date.
- * =======================================================================
- */
+ *  */
 
 #include "agent.h"
 
@@ -71,15 +69,14 @@
 
 #include <map>
 
-/* ===================================================================
-
+/**
                            Initialization Function
 
-=================================================================== */
+*/
 void init_soar_agent(agent* thisAgent) {
   thisAgent->rhs_functions = NIL;
 
-  /* --- initialize everything --- */
+  /* initialize everything */
   init_production_utilities(thisAgent);
   init_built_in_rhs_functions(thisAgent);
   init_rete(thisAgent);
@@ -156,7 +153,7 @@ void init_soar_agent(agent* thisAgent) {
   thisAgent->EpMem->epmem_params->exclusions->set_value("epmem");
   thisAgent->EpMem->epmem_params->exclusions->set_value("smem");
 
-  /* --- add default object trace formats --- */
+  /* add default object trace formats */
   add_trace_format(thisAgent, false, FOR_ANYTHING_TF, NIL,
                    "%id %ifdef[(%v[name])]");
   add_trace_format(thisAgent, false, FOR_STATES_TF, NIL,
@@ -169,7 +166,7 @@ void init_soar_agent(agent* thisAgent) {
                      "%id (evaluate-object %o[object])");
     thisAgent->symbolManager->symbol_remove_ref(&evaluate_object_sym);
   }
-  /* --- add default stack trace formats --- */
+  /* add default stack trace formats */
   add_trace_format(thisAgent, true, FOR_STATES_TF, NIL,
                    "%right[6,%dc]: %rsd[   ]==>S: %cs");
   add_trace_format(thisAgent, true, FOR_OPERATORS_TF, NIL,
@@ -332,10 +329,8 @@ agent* create_soar_agent(char* agent_name) /* loop index */
   return thisAgent;
 }
 
-/*
-===============================
+/**
 
-===============================
 */
 void destroy_soar_agent(agent* delete_agent) {
   delete delete_agent->visualizationManager;

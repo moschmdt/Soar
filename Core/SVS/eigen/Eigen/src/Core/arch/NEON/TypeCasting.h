@@ -15,9 +15,7 @@ namespace Eigen {
 
 namespace internal {
 
-//==============================================================================
 // pcast, SrcType = float
-//==============================================================================
 template <>
 struct type_casting_traits<float, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 1, TgtCoeffRatio = 1 };
@@ -167,9 +165,7 @@ EIGEN_STRONG_INLINE Packet8uc pcast<Packet2f, Packet8uc>(const Packet2f& a,
   return vmovn_u16(vcombine_u16(ab_u16, cd_u16));
 }
 
-//==============================================================================
 // pcast, SrcType = int8_t
-//==============================================================================
 template <>
 struct type_casting_traits<numext::int8_t, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 1, TgtCoeffRatio = 4 };
@@ -296,9 +292,7 @@ EIGEN_STRONG_INLINE Packet4uc pcast<Packet4c, Packet4uc>(const Packet4c& a) {
   return static_cast<Packet4uc>(a);
 }
 
-//==============================================================================
 // pcast, SrcType = uint8_t
-//==============================================================================
 template <>
 struct type_casting_traits<numext::uint8_t, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 1, TgtCoeffRatio = 4 };
@@ -429,9 +423,7 @@ EIGEN_STRONG_INLINE Packet4c pcast<Packet4uc, Packet4c>(const Packet4uc& a) {
   return static_cast<Packet4c>(a);
 }
 
-//==============================================================================
 // pcast, SrcType = int16_t
-//==============================================================================
 template <>
 struct type_casting_traits<numext::int16_t, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 1, TgtCoeffRatio = 2 };
@@ -552,9 +544,7 @@ EIGEN_STRONG_INLINE Packet8uc pcast<Packet4s, Packet8uc>(const Packet4s& a,
       vcombine_u16(vreinterpret_u16_s16(a), vreinterpret_u16_s16(b)));
 }
 
-//==============================================================================
 // pcast, SrcType = uint16_t
-//==============================================================================
 template <>
 struct type_casting_traits<numext::uint16_t, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 1, TgtCoeffRatio = 2 };
@@ -673,9 +663,7 @@ EIGEN_STRONG_INLINE Packet8c pcast<Packet4us, Packet8c>(const Packet4us& a,
   return vreinterpret_s8_u8(pcast<Packet4us, Packet8uc>(a, b));
 }
 
-//==============================================================================
 // pcast, SrcType = int32_t
-//==============================================================================
 template <>
 struct type_casting_traits<numext::int32_t, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 1, TgtCoeffRatio = 1 };
@@ -811,9 +799,7 @@ EIGEN_STRONG_INLINE Packet8uc pcast<Packet2i, Packet8uc>(const Packet2i& a,
   return vmovn_u16(vcombine_u16(ab_u16, cd_u16));
 }
 
-//==============================================================================
 // pcast, SrcType = uint32_t
-//==============================================================================
 template <>
 struct type_casting_traits<numext::uint32_t, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 1, TgtCoeffRatio = 1 };
@@ -943,9 +929,7 @@ EIGEN_STRONG_INLINE Packet8c pcast<Packet2ui, Packet8c>(const Packet2ui& a,
   return vreinterpret_s8_u8(pcast<Packet2ui, Packet8uc>(a, b, c, d));
 }
 
-//==============================================================================
 // pcast, SrcType = int64_t
-//==============================================================================
 template <>
 struct type_casting_traits<numext::int64_t, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 2, TgtCoeffRatio = 1 };
@@ -1051,9 +1035,7 @@ EIGEN_STRONG_INLINE Packet16uc pcast<Packet2l, Packet16uc>(
   return vcombine_u8(vmovn_u16(abcd_u16), vmovn_u16(efgh_u16));
 }
 
-//==============================================================================
 // pcast, SrcType = uint64_t
-//==============================================================================
 template <>
 struct type_casting_traits<numext::uint64_t, float> {
   enum { VectorizedCast = 1, SrcCoeffRatio = 2, TgtCoeffRatio = 1 };
@@ -1155,9 +1137,7 @@ EIGEN_STRONG_INLINE Packet16c pcast<Packet2ul, Packet16c>(
       pcast<Packet2ul, Packet16uc>(a, b, c, d, e, f, g, h));
 }
 
-//==============================================================================
 // preinterpret
-//==============================================================================
 template <>
 EIGEN_STRONG_INLINE Packet2f
 preinterpret<Packet2f, Packet2i>(const Packet2i& a) {
@@ -1288,9 +1268,7 @@ preinterpret<Packet2ul, Packet2l>(const Packet2l& a) {
 
 #if EIGEN_ARCH_ARM64
 
-//==============================================================================
 // pcast/preinterpret, Double
-//==============================================================================
 
 template <>
 struct type_casting_traits<double, double> {

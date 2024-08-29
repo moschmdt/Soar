@@ -1,14 +1,12 @@
-/////////////////////////////////////////////////////////////////
 // ListenerSocket class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // A server application creates a listener socket on a specific port.
 // Clients then connect through this port to create a socket which is
 // actually used to send data.
 //
-/////////////////////////////////////////////////////////////////
 #ifndef CT_LISTENER_SOCKET_H
 #define CT_LISTENER_SOCKET_H
 

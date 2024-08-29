@@ -8,7 +8,6 @@
 
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : Sleep
 //
 // Argument       : int secs
@@ -17,7 +16,6 @@
 //
 // Description    : Sleep for the specified seconds and milliseconds
 //
-/////////////////////////////////////////////////////////////////////
 void sml::Sleep(int secs, int msecs) {
   assert(msecs < 1000 &&
          "Specified milliseconds too large; use seconds argument to specify "
@@ -42,14 +40,12 @@ void sml::Sleep(int secs, int msecs) {
 #endif  // not _WIN32
 }
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : sml::ReportSystemErrorMessage
 //
 // Return type    : void
 //
 // Description    : Get the text of the most recent system error
 //
-/////////////////////////////////////////////////////////////////////
 void sml::ReportSystemErrorMessage() {
   int error = ERROR_NUMBER;
 
@@ -69,16 +65,14 @@ void sml::ReportSystemErrorMessage() {
 #endif
 }
 
-/////////////////////////////////////////////////////////////////
 // Debug stuff
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // Some handy methods for displaying debug output and for
 // tracking entry and exit from functions.
 //
-/////////////////////////////////////////////////////////////////
 
 static FILE* pTraceFile = 0;
 
@@ -163,7 +157,7 @@ void sml::PrintDebugMethod(char const* pMethodName, char const* pStr) {
   // called soon enough that the active window is the frame of the
   // test app.  This will be true almost always (unless break at
   // the first line in the debugger for instance).
-  /*
+  /**
   static HWND s_OutputWnd = NULL ;
 
   if (s_OutputWnd == NULL)
@@ -201,7 +195,7 @@ void PrintDebugSimple(char const* pStr) {
 
   if (pTraceFile) {
     // Dump to trace file and flush immediately (so if we crash we'll be up to
-    // date)
+    // @date)
     fprintf(pTraceFile, "%s\n", pStr);
     fflush(pTraceFile);
   }
@@ -231,4 +225,3 @@ void PrintDebugSimple(char const* pStr) {
 #endif  // _WINDOWS
 
 ///// End debug stuff
-////////////////////////////

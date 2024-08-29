@@ -7,15 +7,13 @@
  *
  *  file:  agent.h
  *
- * =======================================================================
- *  Initialization for the agent structure.  Also the cleanup routine
+ *  *  Initialization for the agent structure.  Also the cleanup routine
  *  when an agent is destroyed.  These routines are usually replaced
  *  by the same-named routines in the Tcl interface file soarAgent.c
  *  The versions in this file are used only when not linking in Tcl.
  *  HOWEVER, this code should be maintained, and the agent structure
  *  must be kept up to date.
- * =======================================================================
- */
+ *  */
 
 #ifndef AGENT_H
 #define AGENT_H
@@ -47,7 +45,7 @@ class svs_interface;
 #endif
 
 typedef struct EXPORT agent_struct {
-  /** -- Rete stuff: These are used for statistics in rete.cpp -- */
+  /** Rete stuff: These are used for statistics in rete.cpp */
   uint64_t actual[256], if_no_merging[256], if_no_sharing[256];
 
   uint64_t current_retesave_amindex;
@@ -68,10 +66,8 @@ typedef struct EXPORT agent_struct {
   test id_test_to_match;
   tc_number current_tc_number;
 
-  /////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////
-
-  /** Hash tables for alpha memories, and for entries in left & right memories */
+  /** Hash tables for alpha memories, and for entries in left & right memories
+   */
   void* left_ht;
   void* right_ht;
   hash_table*(alpha_hash_tables[16]);
@@ -121,42 +117,42 @@ typedef struct EXPORT agent_struct {
   /** Some output manager settings for this agent */
   AgentOutput_Info* output_settings;
 
-  /** ----------------------- Top-level stuff -------------------------- */
+  /** Top-level stuff */
 
-  /** --- headers of dll's of all productions of each type --- */
+  /** headers of dll's of all productions of each type */
   production* all_productions_of_type[NUM_PRODUCTION_TYPES];
   uint64_t num_productions_of_type[NUM_PRODUCTION_TYPES];
 
-  /** --- stuff for "input-period" command --- */
-  /** --- in Soar8, input runs once at beginning of D cycle, no matter what */
+  /** stuff for "input-period" command */
+  /** in Soar8, input runs once at beginning of D cycle, no matter what */
   int input_period;      /** AGR REW1 */
   bool input_cycle_flag; /** AGR REW1 */
 
-  /** --- current top level phase --- */
+  /** current top level phase */
   enum top_level_phase current_phase;
 
-  /** --- to interrupt at the end of the current phase, set stop_soar to true
-   and reason_for_stopping to some appropriate string --- */
+  /** to interrupt at the end of the current phase, set stop_soar to true
+   and reason_for_stopping to some appropriate string */
   bool stop_soar;
   const char* reason_for_stopping;
 
-  /** --- the RHS action (halt) sets this true --- */
+  /** the RHS action (halt) sets this true */
   bool system_halted;
 
-  /** --- list of productions whose firings are being traced --- */
+  /** list of productions whose firings are being traced */
   cons* productions_being_traced;
 
-  /** --- various user-settable system parameters --- */
+  /** various user-settable system parameters */
   int64_t trace_settings[HIGHEST_SYSPARAM_NUMBER + 1];
 
-  /** --- parameters for running Soar --- */
-  /**  --- the code loops go_number times over the go_type phases --- */
+  /** parameters for running Soar */
+  /** the code loops go_number times over the go_type phases */
   int64_t go_number;              /** How many times to "go" */
   Symbol* go_slot_attr;           /** The context slot checked */
   goal_stack_level go_slot_level; /** The goal stack level checked */
   enum go_type_enum go_type;      /** The phase type used */
 
-  /** --- Top-level Statistics --- */
+  /** Top-level Statistics */
 
   /** running total of WM sizes at end of phases */
   double cumulative_wm_size;
@@ -181,8 +177,8 @@ typedef struct EXPORT agent_struct {
   uint64_t e_cycles_this_d_cycle;            /** # of EC's run this DC */
   uint64_t num_existing_wmes;                /** current WM size */
   uint64_t production_firing_count;          /** # of prod. firings */
-  uint64_t start_dc_production_firing_count; /** # of prod. firings this decision
-                                                cycle */
+  uint64_t start_dc_production_firing_count; /** # of prod. firings this
+                                                decision cycle */
   uint64_t
       max_dc_production_firing_count_value; /** max # of prod. firings per dc */
   uint64_t
@@ -222,7 +218,7 @@ typedef struct EXPORT agent_struct {
   /** State for new waterfall model */
   uint64_t inner_e_cycle_count; /** # of inner elaboration cycles run so far */
 
-  /** ----------------------- Timing statistics -------------------------- */
+  /** Timing statistics */
 
   /**
   When the compile flag NO_TIMING_STUFF is off, statistics will be collected on
@@ -365,33 +361,34 @@ typedef struct EXPORT agent_struct {
 #endif  // DETAILED_TIMING_STATS
 #endif  // NO_TIMING_STUFF
 
-  /** ----------------------- Firer stuff -------------------------- */
+  /** Firer stuff */
 
   instantiation* newly_created_instantiations;
   inst_list newly_deleted_instantiations;  // instantiations from NCI that are
                                            // flagged for deallocation before
                                            // they are asserted
 
-  /** production_being_fired -- during firing, points to the prod. being fired */
+  /** production_being_fired -- during firing, points to the prod. being fired
+   */
   production* production_being_fired;
 
   uint64_t max_rhs_unbound_variables;
   Symbol** rhs_variable_bindings;
 
-  /** ==================================================================
+  /**
      Decider stuff
-     =================================================================== */
+     */
 
   uint64_t current_wme_timetag;
   cons* wmes_to_add;
   cons* wmes_to_remove;
 
-  /** ---------------------------------------------------------------------
+  /**
      Top_goal and bottom_goal point to the top and bottom goal identifiers,
      respectively.  (If there is no goal stack at all, they're both NIL.)
      Top_state points to the top state (symbol) if there is a top state, and
      is NIL of there isn't any top state selected.
-  --------------------------------------------------------------------- */
+  */
 
   Symbol* bottom_goal;
   Symbol* top_goal;
@@ -413,7 +410,7 @@ typedef struct EXPORT agent_struct {
   cons* promoted_ids;
   int link_update_mode;
 
-  /** ----------------------- Trace Formats -------------------------- */
+  /** Trace Formats */
 
   struct trace_format_struct*(object_tf_for_anything[3]);
   struct hash_table_struct*(object_tr_ht[3]);
@@ -424,17 +421,17 @@ typedef struct EXPORT agent_struct {
 
   cons* wme_filter_list; /** kjh(CUSP-B2) */
 
-  /** ----------------------- RHS Function Stuff -------------------------- */
+  /** RHS Function Stuff */
 
-  /** --- "make-constant-symbol" counter --- */
+  /** "make-constant-symbol" counter */
   uint64_t mcs_counter;
 
-  /** ----------------------- O support stuff -------------------------- */
+  /** O support stuff */
 
   tc_number o_support_tc;
   preference* rhs_prefs_from_instantiation;
 
-  /** ----------------------- I/O stuff -------------------------- */
+  /** I/O stuff */
 
   io_wme* collected_io_wmes;
   struct output_link_struct* existing_output_links;
@@ -452,7 +449,7 @@ typedef struct EXPORT agent_struct {
 
   Symbol* prev_top_state;
 
-  /** ------------------- Info about the agent itself ---------------------- */
+  /** Info about the agent itself */
 
   char* name; /** name of this Soar agent */
 

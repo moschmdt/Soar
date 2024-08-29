@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    X11 (Unix)
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,18 +24,15 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Enable system keys
-//========================================================================
 
 void _glfwPlatformEnableSystemKeys( void )
 {
@@ -48,9 +43,7 @@ void _glfwPlatformEnableSystemKeys( void )
     }
 }
 
-//========================================================================
 // Disable system keys
-//========================================================================
 
 void _glfwPlatformDisableSystemKeys( void )
 {
@@ -61,4 +54,3 @@ void _glfwPlatformDisableSystemKeys( void )
         _glfwWin.keyboardGrabbed = GL_TRUE;
     }
 }
-

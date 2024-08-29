@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // DataSender class
 //
-// Author: Bob Marinier
-// Date  : 5/2007
+// @author: Bob Marinier
+// @date  : 5/2007
 //
 // Represents an abstract data sender.  It is based on the original Socket
 // class, but allows us to add other kinds of connections (e.g. named pipes,
@@ -20,7 +19,6 @@
 // The server is passed a new data sender when it checks for incoming
 // connections on the listener data sender.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef DATA_SENDER_H
 #define DATA_SENDER_H

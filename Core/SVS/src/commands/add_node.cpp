@@ -1,4 +1,4 @@
-/**********************************************************
+/**
  *
  * File: commands/add_node.cpp
  * Contains:
@@ -13,7 +13,7 @@
  *     ^rotation <vec3> [Optional] - rotation of the new node
  *     ^scale <vec3> [Optional] - scale of the new node
  *     ^tags <tags> [Optional] - any att/val pairs underneath added as tags
- **********************************************************/
+ */
 #include <map>
 #include <string>
 

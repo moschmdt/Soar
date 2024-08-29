@@ -142,9 +142,9 @@ test copy_test(agent* thisAgent, test t, bool pUseUnifiedIdentitySet,
   return new_ct;
 }
 
-/* ----------------------------------------------------------------
+/**
    Deallocates a test.
----------------------------------------------------------------- */
+*/
 
 void deallocate_test(agent* thisAgent, test t) {
   cons *c, *next_c;
@@ -261,7 +261,7 @@ bool add_test_merge_disjunctions(agent* thisAgent, test* dest_test_address,
       return true;
     }
   }
-  /* --- now add add_test to the conjunct list --- */
+  /* now add add_test to the conjunct list */
   allocate_cons(thisAgent, &c);
   c->first = new_test;
   c->rest = destination->data.conjunct_list;
@@ -270,12 +270,12 @@ bool add_test_merge_disjunctions(agent* thisAgent, test* dest_test_address,
   return true;
 }
 
-/* ----------------------------------------------------------------
+/**
    Destructively modifies *dest_test_address, always returning a
    conjunct test that contains (at least) new_test.
    dest_test_address need not be a conjunctive test nor even be
    non-null.
----------------------------------------------------------------- */
+*/
 bool add_test(agent* thisAgent, test* dest_test_address, test new_test,
               bool merge_disjunctions) {
   test destination = 0;  //, original = 0;
@@ -312,7 +312,7 @@ bool add_test(agent* thisAgent, test* dest_test_address, test new_test,
     destination->eq_test = new_test->eq_test;
   }
 
-  /* --- now add add_test to the conjunct list --- */
+  /* now add add_test to the conjunct list */
   allocate_cons(thisAgent, &c);
   c->first = new_test;
   c->rest = destination->data.conjunct_list;
@@ -321,10 +321,10 @@ bool add_test(agent* thisAgent, test* dest_test_address, test new_test,
   return true;
 }
 
-/* ----------------------------------------------------------------
+/**
    Same as add_test(), only has no effect if the second
    test is already included in the first one.
----------------------------------------------------------------- */
+*/
 
 void add_test_if_not_already_there(agent* thisAgent, test* t, test add_me,
                                    bool neg, bool merge_disjunctions) {
@@ -350,11 +350,11 @@ void add_test_if_not_already_there(agent* thisAgent, test* t, test add_me,
   add_test(thisAgent, t, add_me, merge_disjunctions);
 }
 
-/* ----------------------------------------------------------------
+/**
    Returns true iff the two tests are identical.
    If neg is true, ignores order of members in conjunctive tests
    and assumes variables are all equal.
----------------------------------------------------------------- */
+*/
 
 bool tests_are_equal(test t1, test t2, bool neg) {
   cons *c1, *c2;
@@ -446,7 +446,7 @@ bool tests_are_equal(test t1, test t2, bool neg) {
   }
 }
 
-/* ----------------------------------------------------------------
+/**
  * tests_identical
  *
  * Requires: Two non-conjunctive, non-blank tests
@@ -455,7 +455,7 @@ bool tests_are_equal(test t1, test t2, bool neg) {
  *           or have the same type for tests without referents
  * Notes:    Unlike tests_are_equal, this function doesn't do anything
  *       special for negations or variables.
-  ---------------------------------------------------------------- */
+ */
 
 bool tests_identical(test t1, test t2, bool considerIdentity) {
   cons *c1, *c2;
@@ -497,9 +497,9 @@ bool tests_identical(test t1, test t2, bool considerIdentity) {
   }
 }
 
-/* ----------------------------------------------------------------
+/**
    Returns a hash value for the given test.
----------------------------------------------------------------- */
+*/
 
 uint32_t hash_test(agent* thisAgent, test t) {
   cons* c;
@@ -557,10 +557,10 @@ uint32_t hash_test(agent* thisAgent, test t) {
   return 0; /* unreachable, but without it, gcc -Wall warns here */
 }
 
-/* ----------------------------------------------------------------
+/**
    Looks for goal or impasse tests (as directed by the two flag
    parameters) in the given test, and returns true if one is found.
----------------------------------------------------------------- */
+*/
 
 bool test_includes_goal_or_impasse_id_test(test t, bool look_for_goal,
                                            bool look_for_impasse) {
@@ -596,14 +596,13 @@ test find_eq_test(test t) {
   return NULL;
 }
 
-/* =====================================================================
-
+/**
    Finding all variables from tests, conditions, and condition lists
 
    These routines collect all the variables in tests, etc.  Their
    "var_list" arguments should either be NIL or else should point to
    the header of the list of marked variables being constructed.
-===================================================================== */
+*/
 
 void add_all_variables_in_test(agent* thisAgent, test t, tc_number tc,
                                cons** var_list) {
@@ -702,10 +701,10 @@ void add_bound_variable_with_identity(agent* thisAgent, Symbol* pSym,
   return;
 }
 
-/* -----------------------------------------------------------------
+/**
    Find first letter of test, or '*' if nothing appropriate.
    (See comments on first_letter_from_symbol for more explanation.)
------------------------------------------------------------------ */
+*/
 
 char first_letter_from_test(test t) {
   if (!t) return '*';
@@ -724,12 +723,12 @@ char first_letter_from_test(test t) {
   }
 }
 
-/* ----------------------------------------------------------------------
+/**
                       Add Gensymmed Equality Test
 
    This routine destructively modifies a given test, adding to it a test
    for equality with a new gensym variable.
----------------------------------------------------------------------- */
+*/
 
 void add_gensymmed_equality_test(agent* thisAgent, test* t, char first_letter) {
   Symbol* New;
@@ -744,7 +743,7 @@ void add_gensymmed_equality_test(agent* thisAgent, test* t, char first_letter) {
   add_test(thisAgent, t, eq_test);
 }
 
-/* ----------------------------------------------------------------------
+/**
                       Add Rete Test List to Tests
 
    Given the additional Rete tests (besides the hashed equality test) at
@@ -752,7 +751,7 @@ void add_gensymmed_equality_test(agent* thisAgent, test* t, char first_letter) {
    the conditions being reconstructed.  This procedure does this -- it
    destructively modifies the given currently-being-reconstructed-cond
    by adding any necessary extra tests to its three field tests.
----------------------------------------------------------------------- */
+*/
 
 void add_rete_test_list_to_tests(agent* thisAgent,
                                  condition* cond, /* current cond */
@@ -785,10 +784,10 @@ void add_rete_test_list_to_tests(agent* thisAgent,
       test_type =
           relational_test_type_to_test_type(kind_of_relational_test(rt->type));
       if (!rt->data.variable_referent.levels_up) {
-        /* --- before calling var_bound_in_reconstructed_conds, make sure
+        /* before calling var_bound_in_reconstructed_conds, make sure
            there's an equality test in the referent location (add one if
            there isn't one already there), otherwise there'd be no variable
-           there to test against --- */
+           there to test against */
         if (rt->data.variable_referent.field_num == 0) {
           if (!cond->data.tests.id_test || !cond->data.tests.id_test->eq_test) {
             add_gensymmed_equality_test(thisAgent, &(cond->data.tests.id_test),
@@ -832,13 +831,13 @@ void add_rete_test_list_to_tests(agent* thisAgent,
   }
 }
 
-/* ----------------------------------------------------------------------
+/**
                       Add Hash Info to ID Test
 
    This routine adds an equality test to the id field test in a given
    condition, destructively modifying that id test.  The equality test
    is the one appropriate for the given hash location (field_num/levels_up).
----------------------------------------------------------------------- */
+*/
 
 void add_hash_info_to_id_test(agent* thisAgent, condition* cond, byte field_num,
                               rete_node_level levels_up) {
@@ -880,7 +879,7 @@ cons* delete_test_from_conjunct(agent* thisAgent, test* t, cons* pDeleteItem) {
   cons *prev, *next;
   next = pDeleteItem->rest;
 
-  /* -- Fix links in conjunct list -- */
+  /* -- Fix links in conjunct list */
   if ((*t)->data.conjunct_list == pDeleteItem) {
     // Change head of conjunct list to point to rest
     (*t)->data.conjunct_list = pDeleteItem->rest;
@@ -904,7 +903,7 @@ cons* delete_test_from_conjunct(agent* thisAgent, test* t, cons* pDeleteItem) {
     free_cons(thisAgent, old_conjunct->data.conjunct_list);
     old_conjunct->data.conjunct_list = NULL;
     deallocate_test(thisAgent, old_conjunct);
-    /* -- There are no remaining tests in conjunct list, so return NULL --*/
+    /* -- There are no remaining tests in conjunct list, so return NULL */
     return NULL;
   } else {
     (*t)->eq_test = find_eq_test(*t);

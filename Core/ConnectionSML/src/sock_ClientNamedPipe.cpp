@@ -1,17 +1,15 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ClientNamedPipe class
 //
-// Author: Bob Marinier
-// Date  : 5/2007
+// @author: Bob Marinier
+// @date  : 5/2007
 //
 // Based on ClientSocket
 //
 // Creates a named pipe by connecting to a server at a known
 // pipe name.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifdef ENABLE_NAMED_PIPES
 
@@ -22,15 +20,12 @@
 
 using namespace sock;
 
-//////////////////////////////////////////////////////////////////////
 // Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 ClientNamedPipe::ClientNamedPipe() {}
 
 ClientNamedPipe::~ClientNamedPipe() {}
 
-/////////////////////////////////////////////////////////////////////
 // Function name  : ClientNamedPipe::ConnectToServer
 //
 // Return type    : bool
@@ -38,7 +33,6 @@ ClientNamedPipe::~ClientNamedPipe() {}
 //
 // Description    : Connect to a server
 //
-/////////////////////////////////////////////////////////////////////
 bool ClientNamedPipe::ConnectToServer(char const* pPipeName) {
   CTDEBUG_ENTER_METHOD("ClientNamedPipe::ConnectToServer");
 

@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // EventManager class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // This class manages a list of connections which are interested
 // in being notified when a particular event occurs in the kernel.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef EVENT_MANAGER_H
 #define EVENT_MANAGER_H

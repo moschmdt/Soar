@@ -3,7 +3,7 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** ======================================================================
+/**
                                 trace.h
 
    Object and stack trace formats are managed by this module.
@@ -34,7 +34,7 @@
    allow %dc and %ec escapes (this flag should normally be true for
    watch 0 traces but false during a "print -stack" command).  It prints
    the stack trace for that context object.
-====================================================================== */
+*/
 
 #ifndef TRACE_H
 #define TRACE_H

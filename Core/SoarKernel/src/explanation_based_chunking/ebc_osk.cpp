@@ -8,7 +8,7 @@
 #include "symbol.h"
 #include "test.h"
 
-/* ------------------------------------------------------------------
+/**
                   Add a preference to a slot's OSK prefs
    This function adds a preference to a slots's context dependent
    preference set, checking to first see whether the pref is already
@@ -16,7 +16,7 @@
 structs in create_instatiation.  Those copies of the OSK prefs are used to
    backtrace through all relevant local evaluation rules that led to the
    selection of the operator that produced a result.
------------------------------------------------------------------- */
+*/
 void Explanation_Based_Chunker::add_to_OSK(slot* pSlot, preference* pPref,
                                            bool unique_value) {
   bool already_exists = false;
@@ -70,7 +70,7 @@ void Explanation_Based_Chunker::add_to_OSK(slot* pSlot, preference* pPref,
   }
 }
 
-/* --------------------------------------------------------------------------
+/**
                  Build context-dependent preference set
 
   This function will copy the OSK prefs from a slot to the backtrace info for
@@ -81,7 +81,7 @@ void Explanation_Based_Chunker::add_to_OSK(slot* pSlot, preference* pPref,
  will just copy them directly from the prohibits list so that there is no
   additional overhead.
 
- --------------------------------------------------------------------------*/
+ */
 
 void Explanation_Based_Chunker::copy_proposal_OSK(instantiation* inst,
                                                   cons* newOSK) {

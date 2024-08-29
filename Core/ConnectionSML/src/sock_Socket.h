@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // Socket class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : ~2001
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : ~2001
 //
 // Represents a socket.
 //
@@ -18,7 +17,6 @@
 // The server is passed a new socket when it checks for incoming connections
 // on the listener socket.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef CT_SOCKET_H
 #define CT_SOCKET_H
@@ -38,7 +36,6 @@
 namespace sock {
 
 // Define NON_BLOCKING to make all sockets non-blocking sockets.
-// #define NON_BLOCKING
 
 // Useful utility functions.
 uint32_t GetLocalIP();

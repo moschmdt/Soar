@@ -1,4 +1,4 @@
-/***************************************************
+/**
  *
  * File: filters/occlusion.cpp
  *
@@ -24,7 +24,7 @@
  *    (designed for extract_once)
  *    It may work for moving occluders, but will not recalculate the view lines
  *    if object a moves
- ****************************************************************/
+ */
 
 #include <cassert>
 #include <iostream>

@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // ReceiverThread class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // Listens for incoming remote commands sent from external
 // processes (e.g. commands from a debugger).
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef RECEIVER_THREAD_H
 #define RECEIVER_THREAD_H

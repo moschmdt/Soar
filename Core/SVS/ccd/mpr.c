@@ -1,6 +1,6 @@
-/***
+/**
  * libccd
- * ---------------------------------
+ *
  * Copyright (c)2010,2011 Daniel Fiser <danfis@danfis.cz>
  *
  *
@@ -98,7 +98,7 @@ _ccd_inline int portalReachTolerance(const ccd_simplex_t *portal,
 
 /** Returns true if portal expanded by new point v4 could possibly contain
  *  origin, dir is direction in which v4 was obtained. */
-_ccd_inline int portalCanEncapsuleOrigin(const ccd_simplex_t *portal,   
+_ccd_inline int portalCanEncapsuleOrigin(const ccd_simplex_t *portal,
                                          const ccd_support_t *v4,
                                          const ccd_vec3_t *dir);
 
@@ -367,7 +367,7 @@ static void findPenetrSegment(const void *obj1, const void *obj2, const ccd_t *c
                               ccd_simplex_t *portal,
                               ccd_real_t *depth, ccd_vec3_t *dir, ccd_vec3_t *pos)
 {
-    /*
+    /**
     ccd_vec3_t vec;
     ccd_real_t k;
     */
@@ -380,7 +380,7 @@ static void findPenetrSegment(const void *obj1, const void *obj2, const ccd_t *c
     ccdVec3Add(pos, &ccdSimplexPoint(portal, 1)->v2);
     ccdVec3Scale(pos, CCD_REAL(0.5));
 
-    /*
+    /**
     ccdVec3Sub2(&vec, &ccdSimplexPoint(portal, 1)->v,
                       &ccdSimplexPoint(portal, 0)->v);
     k  = CCD_SQRT(ccdVec3Len2(&ccdSimplexPoint(portal, 0)->v));
@@ -531,7 +531,7 @@ _ccd_inline int portalReachTolerance(const ccd_simplex_t *portal,
     return ccdEq(dot1, ccd->mpr_tolerance) || dot1 < ccd->mpr_tolerance;
 }
 
-_ccd_inline int portalCanEncapsuleOrigin(const ccd_simplex_t *portal,   
+_ccd_inline int portalCanEncapsuleOrigin(const ccd_simplex_t *portal,
                                          const ccd_support_t *v4,
                                          const ccd_vec3_t *dir)
 {

@@ -1,4 +1,4 @@
-/*
+/**
  * variablization_manager_merge.cpp
  *
  *  Created on: Jul 25, 2013
@@ -138,7 +138,7 @@ void Explanation_Based_Chunker::print_constraints(TraceMode mode) {
   outputManager->printa_sf(thisAgent, "------------------------------------\n");
 }
 /* -- A utility function to print all data stored in the variablization manager.
- * Used only for debugging -- */
+ * Used only for debugging */
 
 void Explanation_Based_Chunker::print_variablization_table(TraceMode mode) {
   if (!thisAgent->outputManager->is_trace_enabled(mode)) return;

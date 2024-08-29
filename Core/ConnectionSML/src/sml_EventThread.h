@@ -1,8 +1,7 @@
-/////////////////////////////////////////////////////////////////
 // EventThread class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : January 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : January 2005
 //
 // This thread can be used by a client to keep it alive to incoming
 // events even when the main client is sleeping.
@@ -14,7 +13,6 @@
 // client until it wakes up.  This thread is one way to make sure the
 // client remains responsive.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_EVENT_THREAD_H
 #define SML_EVENT_THREAD_H

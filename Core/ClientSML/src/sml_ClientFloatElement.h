@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // FloatElement class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // Working memory element that has a floating point value.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_FLOAT_ELEMENT_H
 #define SML_FLOAT_ELEMENT_H

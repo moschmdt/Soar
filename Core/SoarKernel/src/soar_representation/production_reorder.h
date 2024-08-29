@@ -3,10 +3,10 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** =======================================================================
+/**
                                 reorder.h
    Need to add comments here
-======================================================================= */
+*/
 
 #ifndef REORDER_H
 #define REORDER_H

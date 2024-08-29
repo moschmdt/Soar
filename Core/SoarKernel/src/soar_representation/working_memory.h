@@ -1,4 +1,4 @@
-/** =======================================================================
+/**
                                 wmem.h
 
                 Working Memory Management and Utility Routines
@@ -26,7 +26,7 @@
    Find_name_of_object() is a utility function for finding the value of
    the ^name attribute on a given object (symbol).  It returns the name,
    or NIL if the object has no name.
-======================================================================= */
+*/
 
 #ifndef WMEM_H
 #define WMEM_H
@@ -129,7 +129,7 @@ inline Symbol* get_wme_element(wme* w, WME_Field f) {
   return NULL;
 }
 
-/** ------------------------------------------------------------------------
+/**
                       Working Memory Elements (WMEs)
 
    Fields in a WME:
@@ -189,5 +189,5 @@ inline Symbol* get_wme_element(wme* w, WME_Field f) {
       +1 if the wme is currently in WM
       +1 for each instantiation condition that points to it (bt.wme)
    We deallocate a wme when its reference count goes to 0.
------------------------------------------------------------------------- */
+*/
 #endif

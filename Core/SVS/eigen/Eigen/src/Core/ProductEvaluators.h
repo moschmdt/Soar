@@ -223,7 +223,6 @@ struct Assignment<
   }
 };
 
-//----------------------------------------
 // Catch "Dense ?= xpr + Product<>" expression to save one temporary
 // FIXME we could probably enable these rules for any product, i.e., not only
 // Dense and DefaultProduct
@@ -283,8 +282,6 @@ EIGEN_CATCH_ASSIGN_XPR_OP_PRODUCT(add_assign_op, scalar_difference_op,
                                   sub_assign_op);
 EIGEN_CATCH_ASSIGN_XPR_OP_PRODUCT(sub_assign_op, scalar_difference_op,
                                   add_assign_op);
-
-//----------------------------------------
 
 template <typename Lhs, typename Rhs>
 struct generic_product_impl<Lhs, Rhs, DenseShape, DenseShape, InnerProduct> {
@@ -561,7 +558,7 @@ struct generic_product_impl<Lhs, Rhs, DenseShape, DenseShape,
             typename Scalar>
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void eval_dynamic_impl(
       Dst& dst, const LhsT& lhs, const RhsT& rhs, const Func& func,
-      const Scalar& s /** == 1 */, false_type) {
+      const Scalar& s /** 1 */, false_type) {
     EIGEN_UNUSED_VARIABLE(s);
     eigen_internal_assert(s == Scalar(1));
     call_restricted_packet_assignment_no_alias(dst, lhs.lazyProduct(rhs), func);

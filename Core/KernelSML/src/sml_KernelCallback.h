@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // KernelCallback class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : March 2007
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : March 2007
 //
 // This class handles the interface between SML events and
 // kernel callbacks.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef KERNEL_CALLBACK_H
 #define KERNEL_CALLBACK_H

@@ -48,7 +48,7 @@ void unserialize(int& v, std::istream& is) {
   }
 }
 
-/*
+/**
  It's impossible to get an exact decimal representation of floating point
  numbers, so I use hexadecimal floating point representation instead. This
  gives up on readability but prevents rounding errors in the
@@ -66,7 +66,7 @@ void serialize(double v, std::ostream& os) {
   os << buf;
 }
 
-/*
+/**
  The stream operator >> doesn't recognize hex float format, so use strtod
  instead.
 */
@@ -78,7 +78,7 @@ void unserialize(double& v, std::istream& is) {
   }
 }
 
-/*
+/**
  Puts std::string in " ". Represent literal "'s with ""
 */
 void serialize(const char* s, std::ostream& os) {

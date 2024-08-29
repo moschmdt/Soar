@@ -1,7 +1,6 @@
-/** =======================================================================
+/**
                                  xml.h
- * =======================================================================
- *
+ *  *
  * Contains methods for generating XML objects in response to kernel commands.
  *
  * The commands are modelled after the existing kernel functions which are tied
@@ -21,7 +20,7 @@ created
  * really for XML trace output to the debugger, not for results from commands).
  * This new approach is more efficient to both create and to subsequently use.
 
-======================================================================= */
+*/
 
 #ifndef SOAR_XML_H
 #define SOAR_XML_H

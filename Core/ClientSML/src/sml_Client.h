@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // Client SML headers.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : Sept 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : Sept 2004
 //
 // This header file pulls in all of the headers required
 // to use the ClientSML classes.
 //
-/////////////////////////////////////////////////////////////////
 #ifndef SML_CLIENT_SML_H
 #define SML_CLIENT_SML_H
 

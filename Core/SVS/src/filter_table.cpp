@@ -172,7 +172,7 @@ void filter_table_entry::proxy_use_sub(const std::vector<std::string>& args,
        << std::endl;
   }
 }
-/*
+/**
 Example input:
 
 (<ot> ^type on-top ^a <ota> ^b <otb>)

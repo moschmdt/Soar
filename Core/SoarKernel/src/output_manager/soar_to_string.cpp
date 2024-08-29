@@ -1,11 +1,11 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "COPYING" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*------------------------------------------------------------------
+/**
              soar_to_string.cpp
------------------------------------------------------------------- */
+*/
 
 #include <vector>
 
@@ -262,11 +262,11 @@ void Output_Manager::rhs_value_to_string(rhs_value rv, std::string& destString,
   if (rhs_value_is_null(rv)) {
     destString += '#';
   } else if (rhs_value_is_unboundvar(rv)) {
-    /* -- unbound variable -- */
+    /* -- unbound variable */
     destString += "<unbound-variable>";
 
   } else if (rhs_value_is_symbol(rv)) {
-    /* -- rhs symbol -- */
+    /* -- rhs symbol */
     rsym = rhs_value_to_rhs_symbol(rv);
     if (this->m_print_actual_effective ||
         (!pEmptyStringForNullIdentity && (!rsym->inst_identity))) {
@@ -298,7 +298,7 @@ void Output_Manager::rhs_value_to_string(rhs_value rv, std::string& destString,
       }
     }
   } else if (rhs_value_is_reteloc(rv)) {
-    /* -- rete location (cannot get symbol without token information) -- */
+    /* -- rete location (cannot get symbol without token information) */
     if (tok && w) {
       sym =
           get_symbol_from_rete_loc(rhs_value_to_reteloc_levels_up(rv),
@@ -312,7 +312,7 @@ void Output_Manager::rhs_value_to_string(rhs_value rv, std::string& destString,
       destString += "[RETE-loc]";
     }
   } else {
-    /* -- function call -- */
+    /* -- function call */
     fl = rhs_value_to_funcall_list(rv);
     rf = static_cast<rhs_function_struct*>(fl->first);
 

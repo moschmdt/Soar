@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ClientAnalyzedXML class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : September 2005
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : September 2005
 //
 // Represents an XML message that has been analyzed to identify
 // where parameters and other important values occur within the message.
@@ -14,7 +13,6 @@
 //
 // It's a subset of the functionality offered by AnalyzeXML.
 //
-/////////////////////////////////////////////////////////////////
 #include <cassert>
 
 #include "sml_AnalyzeXML.h"
@@ -89,24 +87,24 @@ void ClientAnalyzedXML::DeleteString(char* pString) {
   return AnalyzeXML::DeleteString(pString);
 }
 
-/*************************************************************
+/**
  * @brief Look up an argument by name.  Returns NULL if not found.
- *************************************************************/
+ */
 char const* ClientAnalyzedXML::GetArgString(char const* pArgName) const {
   return m_pAnalyzeXML->GetArgString(pArgName);
 }
 
-/*************************************************************
+/**
  * @brief As "GetArgString" but parsed as a boolean.
- *************************************************************/
+ */
 bool ClientAnalyzedXML::GetArgBool(char const* pArgName,
                                    bool defaultValue) const {
   return m_pAnalyzeXML->GetArgBool(pArgName, defaultValue);
 }
 
-/*************************************************************
+/**
  * @brief As "GetArgString" but parsed as an int.
- *************************************************************/
+ */
 int ClientAnalyzedXML::GetArgInt(char const* pArgName, int defaultValue) const {
   return m_pAnalyzeXML->GetArgInt(pArgName, defaultValue);
 }
@@ -116,9 +114,9 @@ long long ClientAnalyzedXML::GetArgInt(char const* pArgName,
   return m_pAnalyzeXML->GetArgInt(pArgName, static_cast<int64_t>(defaultValue));
 }
 
-/*************************************************************
+/**
  * @brief As "GetArgString" but parsed as an float (double).
- *************************************************************/
+ */
 double ClientAnalyzedXML::GetArgFloat(char const* pArgName,
                                       double defaultValue) const {
   return m_pAnalyzeXML->GetArgFloat(pArgName, defaultValue);

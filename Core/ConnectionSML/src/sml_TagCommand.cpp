@@ -1,15 +1,13 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // TagCommand class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // Represents an SML node which represents a command and has
 // the tag <command>.
 //
-/////////////////////////////////////////////////////////////////
 
 #include "sml_TagCommand.h"
 

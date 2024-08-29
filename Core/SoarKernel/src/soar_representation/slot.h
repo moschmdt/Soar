@@ -3,7 +3,7 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** ---------------------------------------------------------------------
+/**
                                slot.h
 
    Find_slot() looks for an existing slot for a given id/attr pair, and
@@ -24,7 +24,7 @@
    of the same production firing, for example).  At the end of the phase,
    we call remove_garbage_slots(), which scans through each marked slot
    and garbage collects it if it has no wmes or preferences.
---------------------------------------------------------------------- */
+*/
 
 #ifndef TEMPMEM_H
 #define TEMPMEM_H

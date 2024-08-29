@@ -1,18 +1,16 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  run_soar.cpp
  *
- * =======================================================================
- *  Routines for initializing Soar, signal handling (ctrl-c interrupt),
+ *  *  Routines for initializing Soar, signal handling (ctrl-c interrupt),
  *  exiting Soar (cleanup and error msgs), setting sysparams, and
  *  the core routines for "running" Soar (do_one_top_level_phase, etc.)
- * =======================================================================
- */
+ *  */
 
 #include "run_soar.h"
 
@@ -56,17 +54,15 @@ extern void determine_highest_active_production_level_in_stack_propose(
 extern void determine_highest_active_production_level_in_stack_apply(
     agent* thisAgent);
 
-/* ===================================================================
-
-                            Exiting Soar
-
-   Abort_with_fatal_error(msg) terminates Soar, closing
-   the log file before exiting.  It also prints
-   an error message and tries to write a file before exiting.
-
-   No longer actually aborts.  Allows debugging in many cases.
-=================================================================== */
-
+/**
+ *  Exiting Soar
+ *
+ *  Abort_with_fatal_error(msg) terminates Soar, closing
+ *  the log file before exiting.  It also prints
+ *  an error message and tries to write a file before exiting.
+ *
+ *  No longer actually aborts.  Allows debugging in many cases.
+ */
 void abort_with_fatal_error(agent* thisAgent, const char* msg) {
   const char* warning =
       "Soar cannot recover from this error. \nData is still available for "
@@ -87,8 +83,7 @@ void abort_with_fatal_error(agent* thisAgent, const char* msg) {
   //    fclose(f);
 }
 
-/* -- A version for use when the current agent variable is not available == */
-
+/*  A version for use when the current agent variable is not available */
 void abort_with_fatal_error_noagent(const char* msg) {
   FILE* f;
   const char* warning =
@@ -105,62 +100,13 @@ void abort_with_fatal_error_noagent(const char* msg) {
   fprintf(f, "%s", warning);
   fclose(f);
 }
-/* ===================================================================
-
-                        Signal Handling
+/**
+   Signal Handling
 
    Setup things so control_c_handler() gets control whenever the program
    receives a SIGINT (e.g., from a ctrl-c at the keyboard).  The handler
    just sets the stop_soar flag.
-=================================================================== */
-
-/* This is deprecated. -AJC (8/9/02) */
-// char * c_interrupt_msg = "*** Ctrl-C Interrupt ***";
-
-/* AGR 581  The variable the_signal is not used at all, so I thought I
-   would remove it.  Unfortunately, the signal command at the end of this
-   function requires a function name that has a single integer parameter.
-   It's probably some unix thing.  So I left the variable in the parameter
-   list and instead changed the calling functions to use a parameter.
-   94.11.15 (although this was done a month or two earlier--this comment
-   was placed here in retrospect.)  */
-
-/* Removed these because they are deprecated -AJC (8/6/02) */
-
-// void control_c_handler (int the_signal) {
-///* Windows 3.1 can't do ^C handling */
-// #ifndef _WINDOWS
-//
-//   cons * c;
-//   agent * the_agent;
-///*
-//  for(c = thisKernel->all_soar_agents; c != NIL; c = c->rest) {
-//    the_agent = ((agent *) c->first);
-//    the_agent->stop_soar = true;
-//    the_agent->reason_for_stopping =  c_interrupt_msg;
-//  }
-//*/
-//  /* --- reinstall this signal handler -- some brain-damaged OS's uninstall
-//     it after delivering the signal --- */
-//  signal (SIGINT, control_c_handler);
-//
-// #endif
-
-// void setup_signal_handling (void) {
-// #ifndef _WINDOWS
-//   if (signal(SIGINT, control_c_handler) == SIG_ERR) {
-//     fprintf(stderr, "setup_signal_handling: unable to install signal
-//     handler.\n"); fprintf(stderr, "                       Ctrl-C will not
-//     interrupt Soar.\n");
-//   }
-//
-// #endif /* _WINDOWS */
-
-/* ===================================================================
-
-                            Sysparams
-
-=================================================================== */
+*/
 
 void set_trace_setting(agent* thisAgent, int param_number, int64_t new_value) {
   if ((param_number < 0) || (param_number > HIGHEST_SYSPARAM_NUMBER)) {
@@ -182,20 +128,19 @@ void init_trace_settings(agent* thisAgent) {
     thisAgent->trace_settings[i] = 0;
   }
 
-  /* --- set all params to zero, except the following: --- */
+  /* set all params to zero, except the following: */
   thisAgent->trace_settings[TRACE_CONTEXT_DECISIONS_SYSPARAM] = true;
   thisAgent->trace_settings[TRACE_FIRINGS_WME_TRACE_TYPE_SYSPARAM] =
       NONE_WME_TRACE;
 }
 
-/* ===================================================================
-
-                     Adding and Removing Pwatchs
+/**
+   Adding and Removing Pwatchs
 
    Productions_being_traced is a (consed) list of all productions
    on which a pwatch has been set.  Pwatchs are added/removed via
    calls to add_pwatch() and remove_pwatch().
-=================================================================== */
+*/
 /* list of production structures */
 
 void add_pwatch(agent* thisAgent, production* prod) {
@@ -221,14 +166,13 @@ void remove_pwatch(agent* thisAgent, production* prod) {
                            remove_pwatch_test_fn, prod));
 }
 
-/* ===================================================================
-
-                         Reinitializing Soar
+/**
+   Reinitializing Soar
 
    Reset_statistics() resets all the statistics (except the firing counts
    on each individual production).  Reinitialize_soar() does all the
    work for an init-soar.
-=================================================================== */
+*/
 
 void reset_production_firing_counts(agent* thisAgent) {
   int t;
@@ -380,8 +324,7 @@ void reinitialize_soar(agent* thisAgent) {
   thisAgent->stats_db = new soar_module::sqlite_database();
 }
 
-/* ===================================================================
-
+/**
                             Running Soar
 
    Do_one_top_level_phase() runs Soar one top-level phase.  Note that
@@ -406,7 +349,7 @@ void reinitialize_soar(agent* thisAgent) {
        goal_stack_level level):  this runs Soar for n selections of the
        given slot at the given level, or until the goal stack is popped
        so that level no longer exists.
-=================================================================== */
+*/
 
 void do_one_top_level_phase(agent* thisAgent) {
   //  Symbol *iterate_goal_sym;  kjc commented /* RCHONG: end 10.11 */
@@ -485,8 +428,6 @@ void do_one_top_level_phase(agent* thisAgent) {
       thisAgent->current_phase = PROPOSE_PHASE;
 
       break; /* END of INPUT PHASE */
-
-      /////////////////////////////////////////////////////////////////////////////////
 
     case PROPOSE_PHASE: /* added in 8.6 to clarify Soar8 decision cycle */
 
@@ -610,7 +551,6 @@ void do_one_top_level_phase(agent* thisAgent) {
 
       break; /* END of Soar8 PROPOSE PHASE */
 
-    /////////////////////////////////////////////////////////////////////////////////
     case PREFERENCE_PHASE:
       /* starting with 8.6.0, PREFERENCE_PHASE is only Soar 7 mode -- applyPhase
        * not valid here */
@@ -649,7 +589,6 @@ void do_one_top_level_phase(agent* thisAgent) {
        */
       break; /* END of Soar7 PREFERENCE PHASE */
 
-    /////////////////////////////////////////////////////////////////////////////////
     case WM_PHASE:
       /* starting with 8.6.0, WM_PHASE is only Soar 7 mode; see PROPOSE and
        * APPLY */
@@ -688,7 +627,6 @@ void do_one_top_level_phase(agent* thisAgent) {
 
       break; /* END of Soar7 WM PHASE */
 
-    /////////////////////////////////////////////////////////////////////////////////
     case APPLY_PHASE: /* added in 8.6 to clarify Soar8 decision cycle */
 
 #ifndef NO_TIMING_STUFF
@@ -807,7 +745,6 @@ void do_one_top_level_phase(agent* thisAgent) {
 
       break; /* END of Soar8 APPLY PHASE */
 
-    /////////////////////////////////////////////////////////////////////////////////
     case OUTPUT_PHASE:
 
       if (thisAgent->trace_settings[TRACE_PHASES_SYSPARAM]) {
@@ -999,7 +936,6 @@ void do_one_top_level_phase(agent* thisAgent) {
       thisAgent->WM->wma_d_cycle_count++;
       break;
 
-    /////////////////////////////////////////////////////////////////////////////////
     case DECIDE_PHASE:
       /* not yet cleaned up for 8.6.0 release */
 
@@ -1070,15 +1006,13 @@ void do_one_top_level_phase(agent* thisAgent) {
 
       break; /* end DECIDE phase */
 
-      /////////////////////////////////////////////////////////////////////////////////
-
     default:  // 2/24/05: added default case to quell gcc compile warning
       assert(false && "Invalid phase enumeration value!");
       break;
 
   } /* end switch stmt for current_phase */
 
-  /* --- update WM size statistics --- */
+  /* update WM size statistics */
   if (thisAgent->num_wmes_in_rete > thisAgent->max_wm_size) {
     thisAgent->max_wm_size = thisAgent->num_wmes_in_rete;
   }
@@ -1361,13 +1295,12 @@ void run_for_n_selections_of_slot_at_level(agent* thisAgent, int64_t n,
 #endif
 }
 
-/* ===================================================================
-
+/**
              Loading the Initialization File ".init.soar"
 
    This routine looks for a file ".init.soar" in either the current
    directory or $HOME, and if found, loads it.
-=================================================================== */
+*/
 
 extern char* getenv();
 

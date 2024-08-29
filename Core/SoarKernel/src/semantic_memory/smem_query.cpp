@@ -1,4 +1,4 @@
-/*
+/**
  *  * smem_query.cpp
  *
  *  Created on: Aug 21, 2016
@@ -380,9 +380,7 @@ uint64_t SMem_Manager::process_query(
     if (query_level == qry_full) {
       match_ids = &(temp_list);
     }
-    ////////////////////////////////////////////////////////////////////////////
     timers->query->start();
-    ////////////////////////////////////////////////////////////////////////////
 
     // prepare query stats
     {
@@ -724,9 +722,7 @@ uint64_t SMem_Manager::process_query(
             thisAgent->symbolManager->soarSymbols.smem_sym_success, negquery);
       }
 
-      ////////////////////////////////////////////////////////////////////////////
       timers->query->stop();
-      ////////////////////////////////////////////////////////////////////////////
       if (needFullSearch && mathQuery != NIL) {
         install_memory(state, king_id, NIL,
                        (settings->activate_on_query->get_value() == on),
@@ -747,14 +743,10 @@ uint64_t SMem_Manager::process_query(
             thisAgent->symbolManager->soarSymbols.smem_sym_failure, negquery);
       }
 
-      ////////////////////////////////////////////////////////////////////////////
       timers->query->stop();
-      ////////////////////////////////////////////////////////////////////////////
     }
   } else {
-    ////////////////////////////////////////////////////////////////////////////
     timers->query->stop();
-    ////////////////////////////////////////////////////////////////////////////
   }
 
   if (!all_king_ids.empty()) {

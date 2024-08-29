@@ -1,12 +1,10 @@
-/////////////////////////////////////////////////////////////////
 // CommandLineInterface class file.
 //
-// Author: Jonathan Voigt, voigtjr@gmail.com
-// Date  : 2004
+// @author: Jonathan Voigt, voigtjr@gmail.com
+// @date  : 2004
 //
 // This is the main header for the command line interface module.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef COMMAND_LINE_INTERFACE_H
 #define COMMAND_LINE_INTERFACE_H
@@ -376,26 +374,25 @@ class CommandLineInterface : public sml::KernelCallback {
 }  // namespace cli
 
 /**
-* This procedure parses a string to determine if it is a
-*      lexeme for an identifier or context variable.
-*
-*      Many interface routines take identifiers as arguments.
-*      These ids can be given as normal ids, or as special variables
-*      such as <s> for the current state, etc.  This routine reads
-*      (without consuming it) an identifier or context variable,
-*      and returns a pointer (Symbol *) to the id.  (In the case of
-*      context variables, the instantiated variable is returned.  If
-*      any error occurs (e.g., no such id, no instantiation of the
-*      variable), an error message is printed and NIL is returned.
-*
-* Results:
-* Pointer to a symbol for the variable or NIL.
-*
-* Side effects:
-* None.
-*
-===============================
-*/
+ * This procedure parses a string to determine if it is a
+ *      lexeme for an identifier or context variable.
+ *
+ *      Many interface routines take identifiers as arguments.
+ *      These ids can be given as normal ids, or as special variables
+ *      such as <s> for the current state, etc.  This routine reads
+ *      (without consuming it) an identifier or context variable,
+ *      and returns a pointer (Symbol *) to the id.  (In the case of
+ *      context variables, the instantiated variable is returned.  If
+ *      any error occurs (e.g., no such id, no instantiation of the
+ *      variable), an error message is printed and NIL is returned.
+ *
+ * Results:
+ * Pointer to a symbol for the variable or NIL.
+ *
+ * Side effects:
+ * None.
+ *
+ */
 namespace soar {
 class Lexeme;
 }

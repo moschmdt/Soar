@@ -21,7 +21,7 @@ Soar_Instance::Soar_Instance() {
 void Soar_Instance::init_Soar_Instance(sml::Kernel* pKernel) {
   m_Kernel = pKernel;
 
-  /* -- Sets up the Output Manager -- */
+  /* -- Sets up the Output Manager */
   m_Output_Manager = &Output_Manager::Get_OM();
 }
 
@@ -51,7 +51,7 @@ void Soar_Instance::Register_Library(sml::Kernel* pKernel, const char* pLibName,
   std::string lLibName(pLibName);
   std::transform(lLibName.begin(), lLibName.end(), lLibName.begin(), ::tolower);
 
-  /* -- Store library information -- */
+  /* -- Store library information */
   std::unordered_map<std::string, Soar_Loaded_Library*>::iterator iter =
       (*m_loadedLibraries).find(lLibName);
   if (iter == (*m_loadedLibraries).end()) {
@@ -78,14 +78,14 @@ std::string Soar_Instance::Message_Library(std::string& pMessage) {
   std::string resultString("CLI extension command failed.");
   Soar_Loaded_Library* libraryInfo;
 
-  /* -- Convert command to lower case -- */
+  /* -- Convert command to lower case */
   std::string lFullCommand(pMessage);
   std::transform(lFullCommand.begin(), lFullCommand.end(), lFullCommand.begin(),
                  ::tolower);
 
   /* -- Compose the library name = CLI extension name + SoarLib.
    *    Note that the LoadExternalLibrary command will take care of any
-   * platform-specific extensions. -- */
+   * platform-specific extensions. */
   std::string lCLIExtensionName =
       lFullCommand.substr(0, lFullCommand.find(' '));
   std::string lMessage = lFullCommand.substr(lCLIExtensionName.size() + 1,
@@ -107,7 +107,7 @@ std::string Soar_Instance::Message_Library(std::string& pMessage) {
     }
   }
   /* -- A new library will register itself, so it will now have a
-   *    libraryInfo entry even if it was not found above. -- */
+   *    libraryInfo entry even if it was not found above. */
   libraryInfo = (*m_loadedLibraries)[lCLIExtensionName.c_str()];
 
   if (((lMessage == "on") && libraryInfo->isOn) ||
@@ -160,7 +160,7 @@ void Soar_Instance::Register_Soar_AgentSML(char* pAgentName,
   }
 
   /* -- If only agent, make sure it's the default agent for soar debug printing.
-   * -- */
+   * */
   if (m_agent_table->size() == 1) {
     m_Output_Manager->set_default_agent(pSoarAgentSML->GetSoarAgent());
   }
@@ -169,12 +169,12 @@ void Soar_Instance::Register_Soar_AgentSML(char* pAgentName,
 void Soar_Instance::Delete_Agent(char* pAgentName) {
   bool update_OM = false;
 
-  /* -- Update the Output Manager with the agent we're deleting -- */
+  /* -- Update the Output Manager with the agent we're deleting */
   if (!strcmp(m_Output_Manager->get_default_agent()->name, pAgentName)) {
     update_OM = true;
   }
 
-  /* -- Delete agent from agent table -- */
+  /* -- Delete agent from agent table */
   std::unordered_map<std::string, sml::AgentSML*>::iterator iter =
       (*m_agent_table).find(pAgentName);
   if (iter != (*m_agent_table).end()) {
@@ -231,7 +231,7 @@ void configure_agent_for_unit_tests(agent* testAgent) {
   }
 }
 /* -- The following is a bit of a hack used to get Tcl access
- *    to Soar data structures via SWIG proxy functions. -- */
+ *    to Soar data structures via SWIG proxy functions. */
 
 Soar_Instance* getSoarInstance() {
   return &(Soar_Instance::Get_Soar_Instance());

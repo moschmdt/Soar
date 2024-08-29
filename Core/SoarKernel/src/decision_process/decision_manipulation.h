@@ -7,8 +7,7 @@
  *
  *  file:  decision_manipulation.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef DECISION_MANIPULATION_H
 #define DECISION_MANIPULATION_H
@@ -17,18 +16,14 @@
 
 #include "kernel.h"
 
-//////////////////////////////////////////////////////////
 // select types
-//////////////////////////////////////////////////////////
 
 typedef struct select_info_struct {
   bool select_enabled;
   std::string select_operator;
 } select_info;
 
-//////////////////////////////////////////////////////////
 // select functions
-//////////////////////////////////////////////////////////
 
 // initialization of select per agent
 void select_init(agent* thisAgent);
@@ -43,9 +38,7 @@ const char* select_get_operator(agent* thisAgent);
 preference* select_force(agent* thisAgent, preference* candidates,
                          bool reinit = true);
 
-//////////////////////////////////////////////////////////
 // predict functions
-//////////////////////////////////////////////////////////
 
 // initialization of predict per agent
 void predict_init(agent* thisAgent);

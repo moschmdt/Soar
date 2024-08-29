@@ -1,14 +1,12 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // ArgMap class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : August 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : August 2004
 //
 // Used to store a mapping between argument names (for a command)
 // and <arg> tags in an SML document.
-/////////////////////////////////////////////////////////////////
 
 #include "ElementXML.h"
 #include "ElementXMLInterface.h"

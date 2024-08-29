@@ -1,15 +1,13 @@
-/////////////////////////////////////////////////////////////////
 // ClientNamedPipe class
 //
-// Author: Bob Marinier
-// Date  : 5/2007
+// @author: Bob Marinier
+// @date  : 5/2007
 //
 // Based on ClientSocket.
 //
 // Creates a named pipe by connecting to a server at a known
 // pipe name.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef CLIENT_NAMED_PIPE_H
 #define CLIENT_NAMED_PIPE_H
@@ -23,7 +21,6 @@ class ClientNamedPipe : public NamedPipe {
   ClientNamedPipe();
   virtual ~ClientNamedPipe();
 
-  /////////////////////////////////////////////////////////////////////
   // Function name  : ClientNamedPipe::ConnectToServer
   //
   // Return type    : bool
@@ -31,7 +28,6 @@ class ClientNamedPipe : public NamedPipe {
   //
   // Description    : Connect to a server
   //
-  /////////////////////////////////////////////////////////////////////
   bool ConnectToServer(char const* pipeName);
 };
 

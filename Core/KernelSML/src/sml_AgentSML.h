@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // AgentSML class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : September 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : September 2004
 //
 // This class is used to keep track of information needed by SML
 // (Soar Markup Language) on an agent by agent basis.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef SML_AGENT_SML_H
 #define SML_AGENT_SML_H

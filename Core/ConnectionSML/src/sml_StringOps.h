@@ -1,15 +1,13 @@
-/////////////////////////////////////////////////////////////////
 // StringOps
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : July 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : July 2004
 //
 // It's often useful to abstract over the string operations,
 // in case a particular library fails to provide the normal implementation
 // or we decide to switch functions later (e.g. from case sensitive to
 // case insensitive matching).
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef STRING_OPS_H
 #define STRING_OPS_H

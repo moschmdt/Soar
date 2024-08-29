@@ -1,4 +1,4 @@
-/*
+/**
  * visualize_wm.cpp
  *
  *  Created on: Apr 29, 2016
@@ -179,7 +179,7 @@ void WM_Visualization_Map::add_wmes_of_id(Symbol* id, int depth, int maxdepth,
   depth = id->id->depth;
   id->tc_num = tc;
 
-  /* --- first, count all direct augmentations of this id --- */
+  /* first, count all direct augmentations of this id */
   num_attr = 0;
   for (w = id->id->impasse_wmes; w != NIL; w = w->next) {
     num_attr++;
@@ -196,7 +196,7 @@ void WM_Visualization_Map::add_wmes_of_id(Symbol* id, int depth, int maxdepth,
     }
   }
 
-  /* --- next, construct the array of wme pointers and sort them --- */
+  /* next, construct the array of wme pointers and sort them */
   list = (wme**)thisAgent->memoryManager->allocate_memory(
       num_attr * sizeof(wme*), MISCELLANEOUS_MEM_USAGE);
   attr = 0;
@@ -249,7 +249,7 @@ void WM_Visualization_Map::mark_depths_augs_of_id(Symbol* id, int depth,
   id->tc_num = tc;
   if (depth <= 1) return;
 
-  /* --- call this routine recursively for children --- */
+  /* call this routine recursively for children */
   for (w = id->id->input_wmes; w != NIL; w = w->next) {
     mark_depths_augs_of_id(w->attr, depth - 1, tc);
     mark_depths_augs_of_id(w->value, depth - 1, tc);

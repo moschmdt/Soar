@@ -1,10 +1,9 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // RemoteConnection class
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // This class represents a logical connection between two entities that are
 // communicating via SML over a socket. For example, an environment (the client)
@@ -15,7 +14,6 @@
 // class.  But for now, be aware that if you're changing something here you
 // should probably also be changing it there.
 //
-/////////////////////////////////////////////////////////////////
 
 #include <cassert>
 
@@ -45,7 +43,7 @@ RemoteConnection::~RemoteConnection() {
   }
 }
 
-/*************************************************************
+/**
  * @brief Adds the message to a queue of responses which we're waiting
  *        to pair with the commands that triggered them.
  *
@@ -56,7 +54,7 @@ RemoteConnection::~RemoteConnection() {
  *        as they are responses to commands that have come out of the
  *        expected order.  This can only happen when multiple threads
  *        submit commands.
- *************************************************************/
+ */
 void RemoteConnection::AddResponseToList(ElementXML* pResponse) {
   if (pResponse == NULL) {
     return;
@@ -102,14 +100,14 @@ void RemoteConnection::AddResponseToList(ElementXML* pResponse) {
   }
 }
 
-/*************************************************************
+/**
  * @brief    Searches the list of responses to see if there's already
  *           been a response generated for this particular message ID.
  *
  * The list of messages has a fixed maximum size, so this lookup is
  * a constant time operation.  If the client is only issuing
  * calls on a single thread, the list will always be empty.
- *************************************************************/
+ */
 ElementXML* RemoteConnection::IsResponseInList(char const* pID) {
   soar_thread::Lock lock(&m_ListMutex);
 
@@ -130,10 +128,10 @@ ElementXML* RemoteConnection::IsResponseInList(char const* pID) {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief    Returns true if the given response message is
  *           an acknowledgement for a message with the given ID.
- *************************************************************/
+ */
 bool RemoteConnection::DoesResponseMatch(ElementXML* pResponse,
                                          char const* pID) {
   if (!pResponse || !pID) {
@@ -159,7 +157,7 @@ bool RemoteConnection::DoesResponseMatch(ElementXML* pResponse,
   return false;
 }
 
-/*************************************************************
+/**
  * @brief Send a message to the other side of this connection.
  *
  * For an remote connection this is done by sending the command
@@ -169,7 +167,7 @@ bool RemoteConnection::DoesResponseMatch(ElementXML* pResponse,
  * the other side to read from the socket and execute the command.
  * To get a response call GetResponseForID()
  * and wait for the response to occur.
- *************************************************************/
+ */
 void RemoteConnection::SendMsg(ElementXML* pMsg) {
   ClearError();
 
@@ -200,10 +198,10 @@ void RemoteConnection::SendMsg(ElementXML* pMsg) {
   }
 }
 
-/*************************************************************
+/**
  * @brief    Look for a response to the given message (based on its ID).
  *           Optionally, wait for that response to come in.
- *************************************************************/
+ */
 ElementXML* RemoteConnection::GetResponseForID(char const* pID, bool wait) {
   ElementXML* pResponse = NULL;
 
@@ -278,11 +276,11 @@ ElementXML* RemoteConnection::GetResponseForID(char const* pID, bool wait) {
   return NULL;
 }
 
-/*************************************************************
+/**
  * @brief    Retrieve any messages we've been sent and process them.
  *
  *           Returns true if at least one message has been read.
- *************************************************************/
+ */
 bool RemoteConnection::ReceiveMessages(bool allMessages) {
   return ReceiveMessages(allMessages, 0, 0);
 }

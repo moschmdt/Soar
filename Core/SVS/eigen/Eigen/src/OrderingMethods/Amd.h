@@ -62,7 +62,7 @@ StorageIndex cs_tdfs(StorageIndex j, StorageIndex k, StorageIndex* head,
                      StorageIndex* stack) {
   StorageIndex i, p, top = 0;
   if (!head || !next || !post || !stack) return (-1); /** check inputs */
-  stack[0] = j;                                       /** place j on the stack */
+  stack[0] = j;    /** place j on the stack */
   while (top >= 0) /** while (stack is not empty) */
   {
     p = stack[top]; /** p = top of stack */
@@ -123,7 +123,7 @@ void minimum_degree_ordering(
   StorageIndex* hhead = W + 7 * (n + 1);
   StorageIndex* last = perm.indices().data(); /** use P as workspace for last */
 
-  /** --- Initialize quotient graph ---------------------------------------- */
+  /** Initialize quotient graph */
   StorageIndex* Cp = C.outerIndexPtr();
   StorageIndex* Ci = C.innerIndexPtr();
   for (k = 0; k < n; k++) len[k] = Cp[k + 1] - Cp[k];
@@ -142,7 +142,7 @@ void minimum_degree_ordering(
   }
   mark = internal::cs_wclear<StorageIndex>(0, 0, w, n); /** clear w */
 
-  /** --- Initialize degree lists ------------------------------------------ */
+  /** Initialize degree lists */
   for (i = 0; i < n; i++) {
     bool has_diag = false;
     for (p = Cp[i]; p < Cp[i + 1]; ++p)
@@ -179,7 +179,7 @@ void minimum_degree_ordering(
 
   while (nel < n) /** while (selecting pivots) do */
   {
-    /** --- Select node of minimum approximate degree -------------------- */
+    /** Select node of minimum approximate degree */
     for (k = -1; mindeg < n && (k = head[mindeg]) == -1; mindeg++) {
     }
     if (next[k] != -1) last[next[k]] = -1;
@@ -188,7 +188,7 @@ void minimum_degree_ordering(
     nvk = nv[k];            /** # of nodes k represents */
     nel += nvk;             /** nv[k] nodes of A eliminated */
 
-    /** --- Garbage collection ------------------------------------------- */
+    /** Garbage collection */
     if (elenk > 0 && cnz + mindeg >= nzmax) {
       for (j = 0; j < n; j++) {
         if ((p = Cp[j]) >= 0) /** j is a live node or element */
@@ -209,7 +209,7 @@ void minimum_degree_ordering(
       cnz = q; /** Ci[cnz...nzmax-1] now free */
     }
 
-    /** --- Construct new element ---------------------------------------- */
+    /** Construct new element */
     dk = 0;
     nv[k] = -nvk; /** flag k as in Lk */
     p = Cp[k];
@@ -250,7 +250,7 @@ void minimum_degree_ordering(
     len[k] = pk2 - pk1;
     elen[k] = -2; /** k is now an element */
 
-    /** --- Find set differences ----------------------------------------- */
+    /** Find set differences */
     mark = internal::cs_wclear<StorageIndex>(mark, lemax, w,
                                              n); /** clear w if necessary */
     for (pk = pk1; pk < pk2; pk++)               /** scan 1: find |Le\Lk| */
@@ -271,7 +271,7 @@ void minimum_degree_ordering(
       }
     }
 
-    /** --- Degree update ------------------------------------------------ */
+    /** Degree update */
     for (pk = pk1; pk < pk2; pk++) /** scan2: degree update */
     {
       i = Ci[pk]; /** consider node i in Lk */
@@ -315,8 +315,9 @@ void minimum_degree_ordering(
         nv[i] = 0;
         elen[i] = -1; /** node i is dead */
       } else {
-        degree[i] = std::min<StorageIndex>(degree[i], d); /** update degree(i) */
-        Ci[pn] = Ci[p3];      /** move first node to end */
+        degree[i] =
+            std::min<StorageIndex>(degree[i], d); /** update degree(i) */
+        Ci[pn] = Ci[p3];                          /** move first node to end */
         Ci[p3] = Ci[p1];      /** move 1st el. to end of Ei */
         Ci[p1] = k;           /** add k as 1st element in of Ei */
         len[i] = pn - p1 + 1; /** new len of adj. list of node i */
@@ -331,7 +332,7 @@ void minimum_degree_ordering(
     mark = internal::cs_wclear<StorageIndex>(mark + lemax, lemax, w,
                                              n); /** clear w */
 
-    /** --- Supernode detection ------------------------------------------ */
+    /** Supernode detection */
     for (pk = pk1; pk < pk2; pk++) {
       i = Ci[pk];
       if (nv[i] >= 0) continue; /** skip if i is dead */
@@ -365,7 +366,7 @@ void minimum_degree_ordering(
       }
     }
 
-    /** --- Finalize new element------------------------------------------ */
+    /** Finalize new element*/
     for (p = pk1, pk = pk1; pk < pk2; pk++) /** finalize Lk */
     {
       i = Ci[pk];
@@ -390,7 +391,7 @@ void minimum_degree_ordering(
     if (elenk != 0) cnz = p; /** free unused space in Lk */
   }
 
-  /** --- Postordering ----------------------------------------------------- */
+  /** Postordering */
   for (i = 0; i < n; i++) Cp[i] = amd_flip(Cp[i]); /** fix assembly tree */
   for (j = 0; j <= n; j++) head[j] = -1;
   for (j = n; j >= 0; j--) /** place unordered nodes in lists */

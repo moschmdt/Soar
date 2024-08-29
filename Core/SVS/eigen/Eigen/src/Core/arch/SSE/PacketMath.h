@@ -1824,7 +1824,7 @@ EIGEN_STRONG_INLINE double pmadd(const double& a, const double& b,
 // Packet math for Eigen::half
 // Disable the following code since it's broken on too many platforms /
 // compilers.
-// #elif defined(EIGEN_VECTORIZE_SSE) && (!EIGEN_ARCH_x86_64) &&
+
 // (!EIGEN_COMP_MSVC)
 #if 0
 

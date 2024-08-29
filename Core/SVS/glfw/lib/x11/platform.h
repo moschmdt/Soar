@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    X11/GLX
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,7 +24,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #ifndef _platform_h_
 #define _platform_h_
@@ -215,18 +212,13 @@ typedef const GLubyte *(APIENTRY *PFNGLGETSTRINGIPROC)(GLenum, GLuint);
 
 #endif /**GL_VERSION_3_0*/
 
-//========================================================================
 // Global variables (GLFW internals)
-//========================================================================
 
-//------------------------------------------------------------------------
 // Window structure
-//------------------------------------------------------------------------
 typedef struct _GLFWwin_struct _GLFWwin;
 
 struct _GLFWwin_struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // User callback functions
   GLFWwindowsizefun windowSizeCallback;
   GLFWwindowclosefun windowCloseCallback;
@@ -275,8 +267,7 @@ struct _GLFWwin_struct {
 
   PFNGLGETSTRINGIPROC GetStringi;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // Platform specific window resources
   Colormap colormap;         // Window colormap
   Window window;             // Window
@@ -342,12 +333,9 @@ struct _GLFWwin_struct {
 
 GLFWGLOBAL _GLFWwin _glfwWin;
 
-//------------------------------------------------------------------------
 // User input status (most of this should go in _GLFWwin)
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Mouse status
   int MousePosX, MousePosY;
   int WheelPos;
@@ -362,27 +350,22 @@ GLFWGLOBAL struct {
   int StickyMouseButtons;
   int KeyRepeat;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // Platform specific internal variables
   int MouseMoved, CursorPosX, CursorPosY;
 
 } _glfwInput;
 
-//------------------------------------------------------------------------
 // Library global data
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Window opening hints
   _GLFWhints hints;
 
   // Initial desktop mode
   GLFWvidmode desktopMode;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   Display *display;
 
   struct {
@@ -417,14 +400,11 @@ GLFWGLOBAL struct {
 #endif
 } _glfwLibrary;
 
-//------------------------------------------------------------------------
 // Thread record (one for each thread)
-//------------------------------------------------------------------------
 typedef struct _GLFWthread_struct _GLFWthread;
 
 struct _GLFWthread_struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Pointer to previous and next threads in linked list
   _GLFWthread *Previous, *Next;
 
@@ -432,28 +412,23 @@ struct _GLFWthread_struct {
   GLFWthread ID;
   GLFWthreadfun Function;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // System side thread information
 #ifdef _GLFW_HAS_PTHREAD
   pthread_t PosixID;
 #endif
 };
 
-//------------------------------------------------------------------------
 // General thread information
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
-  // ========= PLATFORM INDEPENDENT MANDATORY PART =========================
-
+  //  PLATFORM INDEPENDENT MANDATORY PART
   // Next thread ID to use (increments for every created thread)
   GLFWthread NextID;
 
   // First thread in linked list (always the main thread)
   _GLFWthread First;
 
-  // ========= PLATFORM SPECIFIC PART ======================================
-
+  //  PLATFORM SPECIFIC PART
   // Critical section lock
 #ifdef _GLFW_HAS_PTHREAD
   pthread_mutex_t CriticalSection;
@@ -461,9 +436,7 @@ GLFWGLOBAL struct {
 
 } _glfwThrd;
 
-//------------------------------------------------------------------------
 // Joystick information & state
-//------------------------------------------------------------------------
 GLFWGLOBAL struct {
   int Present;
   int fd;
@@ -473,10 +446,8 @@ GLFWGLOBAL struct {
   unsigned char *Button;
 } _glfwJoy[GLFW_JOYSTICK_LAST + 1];
 
-//========================================================================
 // Macros for encapsulating critical code sections (i.e. making parts
 // of GLFW thread safe)
-//========================================================================
 
 // Thread list management
 #ifdef _GLFW_HAS_PTHREAD
@@ -489,9 +460,7 @@ GLFWGLOBAL struct {
 #define LEAVE_THREAD_CRITICAL_SECTION
 #endif
 
-//========================================================================
 // Prototypes for platform specific internal functions
-//========================================================================
 
 // Time
 void _glfwInitTimer(void);

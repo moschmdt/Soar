@@ -3,7 +3,7 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** ====================================================================
+/**
                             rhs_functions.h
 
    The system maintains a list of available RHS functions.  Functions
@@ -26,7 +26,7 @@
 
    Init_built_in_rhs_functions() should be called at system startup time
    to setup all the built-in functions.
-==================================================================== */
+*/
 
 #ifndef RHS_FUNCTIONS_H
 #define RHS_FUNCTIONS_H
@@ -53,7 +53,7 @@ typedef struct rhs_function_struct {
   struct rhs_function_struct* next;
   Symbol* name;
   rhs_function_routine f;
-  int num_args_expected; /** -1 means it can take any number of args */
+  int num_args_expected; /**1 means it can take any number of args */
   bool can_be_rhs_value;
   bool can_be_stand_alone_action;
   bool literalize_arguments;

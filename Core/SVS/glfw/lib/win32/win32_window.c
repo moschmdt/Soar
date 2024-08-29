@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Win32/WGL
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,24 +24,21 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
 // We use versioned window class names in order not to cause conflicts
 // between applications using different versions of GLFW
 #define _GLFW_WNDCLASSNAME "GLFW27"
 
 
-//========================================================================
 // Enable/disable minimize/restore animations
-//========================================================================
 
 static int setMinMaxAnimations( int enable )
 {
@@ -67,11 +62,9 @@ static int setMinMaxAnimations( int enable )
 }
 
 
-//========================================================================
 // Focus the window and bring it to the top of the stack
 // Due to some nastiness with how Win98/ME/2k/XP handles SetForegroundWindow,
 // we have to go through some really bizarre measures to achieve this
-//========================================================================
 
 static void setForegroundWindow( HWND hWnd )
 {
@@ -129,10 +122,8 @@ static void setForegroundWindow( HWND hWnd )
 }
 
 
-//========================================================================
 // Returns the specified attribute of the specified pixel format
 // NOTE: Do not call this unless we have found WGL_ARB_pixel_format
-//========================================================================
 
 static int getPixelFormatAttrib(int pixelFormat, int attrib)
 {
@@ -148,9 +139,7 @@ static int getPixelFormatAttrib(int pixelFormat, int attrib)
 }
 
 
-//========================================================================
 // Return a list of available and usable framebuffer configs
-//========================================================================
 
 static _GLFWfbconfig *getFBConfigs( unsigned int *found )
 {
@@ -302,9 +291,7 @@ static _GLFWfbconfig *getFBConfigs( unsigned int *found )
 }
 
 
-//========================================================================
 // Creates an OpenGL context on the specified device context
-//========================================================================
 
 static GLboolean createContext( HDC dc, const _GLFWwndconfig* wndconfig, int pixelFormat )
 {
@@ -399,9 +386,7 @@ static GLboolean createContext( HDC dc, const _GLFWwndconfig* wndconfig, int pix
 }
 
 
-//========================================================================
 // Translates a Windows key to the corresponding GLFW key
-//========================================================================
 
 static int translateKey( WPARAM wParam, LPARAM lParam )
 {
@@ -605,9 +590,7 @@ static int translateKey( WPARAM wParam, LPARAM lParam )
 }
 
 
-//========================================================================
 // Translates a Windows key to Unicode
-//========================================================================
 
 static void translateChar( DWORD wParam, DWORD lParam, int action )
 {
@@ -667,9 +650,7 @@ static void translateChar( DWORD wParam, DWORD lParam, int action )
 }
 
 
-//========================================================================
 // Window callback function (handles window events)
-//========================================================================
 
 static LRESULT CALLBACK windowProc( HWND hWnd, UINT uMsg,
                                     WPARAM wParam, LPARAM lParam )
@@ -980,9 +961,7 @@ static LRESULT CALLBACK windowProc( HWND hWnd, UINT uMsg,
 }
 
 
-//========================================================================
 // Translate client window size to full window size (including window borders)
-//========================================================================
 
 static void getFullWindowSize( int clientWidth, int clientHeight,
                                int *fullWidth, int *fullHeight )
@@ -1004,9 +983,7 @@ static void getFullWindowSize( int clientWidth, int clientHeight,
 }
 
 
-//========================================================================
 // Initialize WGL-specific extensions
-//========================================================================
 
 static void initWGLExtensions( void )
 {
@@ -1074,9 +1051,7 @@ static void initWGLExtensions( void )
 }
 
 
-//========================================================================
 // Registers the GLFW window class
-//========================================================================
 
 static ATOM registerWindowClass( void )
 {
@@ -1102,9 +1077,7 @@ static ATOM registerWindowClass( void )
 }
 
 
-//========================================================================
 // Returns the closest matching pixel format, or zero on error
-//========================================================================
 
 static int choosePixelFormat( const _GLFWfbconfig *fbconfig )
 {
@@ -1138,9 +1111,7 @@ static int choosePixelFormat( const _GLFWfbconfig *fbconfig )
 }
 
 
-//========================================================================
 // Creates the GLFW window and rendering context
-//========================================================================
 
 static int createWindow( const _GLFWwndconfig *wndconfig,
                          const _GLFWfbconfig *fbconfig )
@@ -1166,7 +1137,7 @@ static int createWindow( const _GLFWwndconfig *wndconfig,
         // Here's a trick for helping us getting window focus
         // (SetForegroundWindow doesn't work properly under
         // Win98/ME/2K/.NET/+)
-        /*
+        /**
         if( _glfwLibrary.Sys.WinVer != _GLFW_WIN_95 &&
             _glfwLibrary.Sys.WinVer != _GLFW_WIN_NT4 &&
             _glfwLibrary.Sys.WinVer != _GLFW_WIN_XP )
@@ -1261,9 +1232,7 @@ static int createWindow( const _GLFWwndconfig *wndconfig,
 }
 
 
-//========================================================================
 // Destroys the GLFW window and rendering context
-//========================================================================
 
 static void destroyWindow( void )
 {
@@ -1296,14 +1265,12 @@ static void destroyWindow( void )
 
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Here is where the window is created, and the OpenGL rendering context is
 // created
-//========================================================================
 
 int _glfwPlatformOpenWindow( int width, int height,
                              const _GLFWwndconfig *wndconfig,
@@ -1439,9 +1406,7 @@ int _glfwPlatformOpenWindow( int width, int height,
 }
 
 
-//========================================================================
 // Properly kill the window / video display
-//========================================================================
 
 void _glfwPlatformCloseWindow( void )
 {
@@ -1461,9 +1426,7 @@ void _glfwPlatformCloseWindow( void )
 }
 
 
-//========================================================================
 // Set the window title
-//========================================================================
 
 void _glfwPlatformSetWindowTitle( const char *title )
 {
@@ -1471,9 +1434,7 @@ void _glfwPlatformSetWindowTitle( const char *title )
 }
 
 
-//========================================================================
 // Set the window size.
-//========================================================================
 
 void _glfwPlatformSetWindowSize( int width, int height )
 {
@@ -1548,9 +1509,7 @@ void _glfwPlatformSetWindowSize( int width, int height )
 }
 
 
-//========================================================================
 // Set the window position
-//========================================================================
 
 void _glfwPlatformSetWindowPos( int x, int y )
 {
@@ -1559,9 +1518,7 @@ void _glfwPlatformSetWindowPos( int x, int y )
 }
 
 
-//========================================================================
 // Window iconification
-//========================================================================
 
 void _glfwPlatformIconifyWindow( void )
 {
@@ -1586,9 +1543,7 @@ void _glfwPlatformIconifyWindow( void )
 }
 
 
-//========================================================================
 // Window un-iconification
-//========================================================================
 
 void _glfwPlatformRestoreWindow( void )
 {
@@ -1619,9 +1574,7 @@ void _glfwPlatformRestoreWindow( void )
 }
 
 
-//========================================================================
 // Swap buffers (double-buffering)
-//========================================================================
 
 void _glfwPlatformSwapBuffers( void )
 {
@@ -1629,9 +1582,7 @@ void _glfwPlatformSwapBuffers( void )
 }
 
 
-//========================================================================
 // Set double buffering swap interval
-//========================================================================
 
 void _glfwPlatformSwapInterval( int interval )
 {
@@ -1642,9 +1593,7 @@ void _glfwPlatformSwapInterval( int interval )
 }
 
 
-//========================================================================
 // Write back window parameters into GLFW window structure
-//========================================================================
 
 void _glfwPlatformRefreshWindowParams( void )
 {
@@ -1740,9 +1689,7 @@ void _glfwPlatformRefreshWindowParams( void )
 }
 
 
-//========================================================================
 // Poll for new window and input events
-//========================================================================
 
 void _glfwPlatformPollEvents( void )
 {
@@ -1814,9 +1761,7 @@ void _glfwPlatformPollEvents( void )
 }
 
 
-//========================================================================
 // Wait for new window and input events
-//========================================================================
 
 void _glfwPlatformWaitEvents( void )
 {
@@ -1826,9 +1771,7 @@ void _glfwPlatformWaitEvents( void )
 }
 
 
-//========================================================================
 // Hide mouse cursor (lock it)
-//========================================================================
 
 void _glfwPlatformHideMouseCursor( void )
 {
@@ -1850,9 +1793,7 @@ void _glfwPlatformHideMouseCursor( void )
 }
 
 
-//========================================================================
 // Show mouse cursor (unlock it)
-//========================================================================
 
 void _glfwPlatformShowMouseCursor( void )
 {
@@ -1866,9 +1807,7 @@ void _glfwPlatformShowMouseCursor( void )
 }
 
 
-//========================================================================
 // Set physical mouse cursor position
-//========================================================================
 
 void _glfwPlatformSetMouseCursorPos( int x, int y )
 {
@@ -1884,4 +1823,3 @@ void _glfwPlatformSetMouseCursorPos( int x, int y )
 
     SetCursorPos( pos.x, pos.y );
 }
-

@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Any
 // API version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2002-2006 Marcus Geelnard
 // Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
@@ -26,7 +24,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
@@ -43,18 +40,16 @@
 
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
 static int Max(int a, int b)
 {
     return (a > b) ? a : b;
 }
 
-//========================================================================
 // Clear all open window hints
-//========================================================================
 
 void _glfwClearWindowHints( void )
 {
@@ -63,9 +58,7 @@ void _glfwClearWindowHints( void )
 }
 
 
-//========================================================================
 // Handle the input tracking part of window deactivation
-//========================================================================
 
 void _glfwInputDeactivation( void )
 {
@@ -91,9 +84,7 @@ void _glfwInputDeactivation( void )
 }
 
 
-//========================================================================
 // Clear all input state
-//========================================================================
 
 void _glfwClearInput( void )
 {
@@ -130,9 +121,7 @@ void _glfwClearInput( void )
 }
 
 
-//========================================================================
 // Register keyboard activity
-//========================================================================
 
 void _glfwInputKey( int key, int action )
 {
@@ -169,9 +158,7 @@ void _glfwInputKey( int key, int action )
 }
 
 
-//========================================================================
 // Register (keyboard) character activity
-//========================================================================
 
 void _glfwInputChar( int character, int action )
 {
@@ -224,9 +211,7 @@ void _glfwInputChar( int character, int action )
 }
 
 
-//========================================================================
 // Register mouse button clicks
-//========================================================================
 
 void _glfwInputMouseClick( int button, int action )
 {
@@ -251,10 +236,8 @@ void _glfwInputMouseClick( int button, int action )
 }
 
 
-//========================================================================
 // Return the available framebuffer config closest to the desired values
 // This is based on the manual GLX Visual selection from 2.6
-//========================================================================
 
 const _GLFWfbconfig *_glfwChooseFBConfig( const _GLFWfbconfig *desired,
                                           const _GLFWfbconfig *alternatives,
@@ -416,13 +399,11 @@ const _GLFWfbconfig *_glfwChooseFBConfig( const _GLFWfbconfig *desired,
 }
 
 
-//************************************************************************
-//****                    GLFW user functions                         ****
-//************************************************************************
+//**
+//**                    GLFW user functions                         ****
+//**
 
-//========================================================================
 // Create the GLFW window and its associated context
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwOpenWindow( int width, int height,
     int redbits, int greenbits, int bluebits, int alphabits,
@@ -606,9 +587,7 @@ GLFWAPI int GLFWAPIENTRY glfwOpenWindow( int width, int height,
 }
 
 
-//========================================================================
 // Set hints for opening the window
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwOpenWindowHint( int target, int hint )
 {
@@ -667,9 +646,7 @@ GLFWAPI void GLFWAPIENTRY glfwOpenWindowHint( int target, int hint )
 }
 
 
-//========================================================================
 // Properly kill the window / video display
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwCloseWindow( void )
 {
@@ -687,9 +664,7 @@ GLFWAPI void GLFWAPIENTRY glfwCloseWindow( void )
 }
 
 
-//========================================================================
 // Set the window title
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetWindowTitle( const char *title )
 {
@@ -703,9 +678,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetWindowTitle( const char *title )
 }
 
 
-//========================================================================
 // Get the window size
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwGetWindowSize( int *width, int *height )
 {
@@ -725,9 +698,7 @@ GLFWAPI void GLFWAPIENTRY glfwGetWindowSize( int *width, int *height )
 }
 
 
-//========================================================================
 // Set the window size
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetWindowSize( int width, int height )
 {
@@ -751,9 +722,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetWindowSize( int width, int height )
 }
 
 
-//========================================================================
 // Set the window position
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetWindowPos( int x, int y )
 {
@@ -768,9 +737,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetWindowPos( int x, int y )
 }
 
 
-//========================================================================
 // Window iconification
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwIconifyWindow( void )
 {
@@ -784,9 +751,7 @@ GLFWAPI void GLFWAPIENTRY glfwIconifyWindow( void )
 }
 
 
-//========================================================================
 // Window un-iconification
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwRestoreWindow( void )
 {
@@ -803,9 +768,7 @@ GLFWAPI void GLFWAPIENTRY glfwRestoreWindow( void )
 }
 
 
-//========================================================================
 // Swap buffers (double-buffering) and poll any new events
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSwapBuffers( void )
 {
@@ -824,9 +787,7 @@ GLFWAPI void GLFWAPIENTRY glfwSwapBuffers( void )
 }
 
 
-//========================================================================
 // Set double buffering swap interval (0 = vsync off)
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSwapInterval( int interval )
 {
@@ -840,9 +801,7 @@ GLFWAPI void GLFWAPIENTRY glfwSwapInterval( int interval )
 }
 
 
-//========================================================================
 // Get window parameter
-//========================================================================
 
 GLFWAPI int GLFWAPIENTRY glfwGetWindowParam( int param )
 {
@@ -918,9 +877,7 @@ GLFWAPI int GLFWAPIENTRY glfwGetWindowParam( int param )
 }
 
 
-//========================================================================
 // Set callback function for window size changes
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetWindowSizeCallback( GLFWwindowsizefun cbfun )
 {
@@ -940,9 +897,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetWindowSizeCallback( GLFWwindowsizefun cbfun )
     }
 }
 
-//========================================================================
 // Set callback function for window close events
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetWindowCloseCallback( GLFWwindowclosefun cbfun )
 {
@@ -956,9 +911,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetWindowCloseCallback( GLFWwindowclosefun cbfun )
 }
 
 
-//========================================================================
 // Set callback function for window refresh events
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwSetWindowRefreshCallback( GLFWwindowrefreshfun cbfun )
 {
@@ -972,9 +925,7 @@ GLFWAPI void GLFWAPIENTRY glfwSetWindowRefreshCallback( GLFWwindowrefreshfun cbf
 }
 
 
-//========================================================================
 // Poll for new window and input events
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwPollEvents( void )
 {
@@ -988,9 +939,7 @@ GLFWAPI void GLFWAPIENTRY glfwPollEvents( void )
 }
 
 
-//========================================================================
 // Wait for new window and input events
-//========================================================================
 
 GLFWAPI void GLFWAPIENTRY glfwWaitEvents( void )
 {
@@ -1002,4 +951,3 @@ GLFWAPI void GLFWAPIENTRY glfwWaitEvents( void )
     // Poll for new events
     _glfwPlatformWaitEvents();
 }
-

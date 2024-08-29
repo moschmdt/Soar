@@ -55,9 +55,9 @@ namespace Colamd {
 #define COLAMD_NDEBUG
 #endif /** NDEBUG */
 
-/** ========================================================================== */
-/** === Knob and statistics definitions ====================================== */
-/** ========================================================================== */
+/** */
+/** Knob and statistics definitions */
+/** */
 
 /** size of the knobs [ ] array.  Only knobs [0..1] are currently used. */
 const int NKnobs = 20;
@@ -101,16 +101,16 @@ enum Status {
   ErrorOutOfMemory = -10,
   ErrorInternalError = -999
 };
-/** ========================================================================== */
-/** === Definitions ========================================================== */
-/** ========================================================================== */
+/** */
+/** Definitions */
+/** */
 
 template <typename IndexType>
 IndexType ones_complement(const IndexType r) {
   return (-(r)-1);
 }
 
-/** -------------------------------------------------------------------------- */
+/** */
 const int Empty = -1;
 
 /** Row and column status */
@@ -119,11 +119,11 @@ enum RowColumnStatus { Alive = 0, Dead = -1 };
 /** Column status */
 enum ColumnStatus { DeadPrincipal = -1, DeadNonPrincipal = -2 };
 
-/** ========================================================================== */
-/** === Colamd reporting mechanism =========================================== */
-/** ========================================================================== */
+/** */
+/** Colamd reporting mechanism */
+/** */
 
-// == Row and Column structures ==
+//  Row and Column structures ==
 template <typename IndexType>
 struct ColStructure {
   IndexType start; /** index for A of first row in this column, or Dead */
@@ -183,9 +183,9 @@ struct RowStructure {
   inline void kill() { shared2.mark = Dead; }
 };
 
-/** ========================================================================== */
-/** === Colamd recommended memory size ======================================= */
-/** ========================================================================== */
+/** */
+/** Colamd recommended memory size */
+/** */
 
 /**
   The recommended length Alen of the array A passed to colamd is given by
@@ -254,7 +254,7 @@ template <typename IndexType>
 static inline IndexType clear_mark(IndexType n_row,
                                    RowStructure<IndexType> Row[]);
 
-/** === No debugging ========================================================= */
+/** No debugging */
 
 #define COLAMD_DEBUG0(params) ;
 #define COLAMD_DEBUG1(params) ;
@@ -310,7 +310,7 @@ inline IndexType recommended(IndexType nnz, IndexType n_row, IndexType n_col) {
  */
 
 static inline void set_defaults(double knobs[NKnobs]) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   int i;
 
@@ -346,7 +346,7 @@ template <typename IndexType>
 static bool compute_ordering(IndexType n_row, IndexType n_col, IndexType Alen,
                              IndexType *A, IndexType *p, double knobs[NKnobs],
                              IndexType stats[NStats]) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   IndexType i;        /** loop index */
   IndexType nnz;      /** nonzeros in A */
@@ -363,7 +363,7 @@ static bool compute_ordering(IndexType n_row, IndexType n_col, IndexType Alen,
   IndexType max_deg;            /** maximum row degree */
   double default_knobs[NKnobs]; /** default knobs array */
 
-  /** === Check the input arguments ======================================== */
+  /** Check the input arguments */
 
   if (!stats) {
     COLAMD_DEBUG0(("colamd: stats not present\n"));
@@ -422,14 +422,14 @@ static bool compute_ordering(IndexType n_row, IndexType n_col, IndexType Alen,
     return (false);
   }
 
-  /** === If no knobs, set default knobs =================================== */
+  /** If no knobs, set default knobs */
 
   if (!knobs) {
     set_defaults(default_knobs);
     knobs = default_knobs;
   }
 
-  /** === Allocate the Row and Col arrays from array A ===================== */
+  /** Allocate the Row and Col arrays from array A */
 
   Col_size = colamd_c(n_col);
   Row_size = colamd_r(n_row);
@@ -449,7 +449,7 @@ static bool compute_ordering(IndexType n_row, IndexType n_col, IndexType Alen,
   Col = (ColStructure<IndexType> *)&A[Alen];
   Row = (RowStructure<IndexType> *)&A[Alen + Col_size];
 
-  /** === Construct the row and column data structures ===================== */
+  /** Construct the row and column data structures */
 
   if (!Colamd::init_rows_cols(n_row, n_col, Row, Col, A, p, stats)) {
     /** input matrix is invalid */
@@ -457,21 +457,21 @@ static bool compute_ordering(IndexType n_row, IndexType n_col, IndexType Alen,
     return (false);
   }
 
-  /** === Initialize scores, kill dense rows/columns ======================= */
+  /** Initialize scores, kill dense rows/columns */
 
   Colamd::init_scoring(n_row, n_col, Row, Col, A, p, knobs, &n_row2, &n_col2,
                        &max_deg);
 
-  /** === Order the supercolumns =========================================== */
+  /** Order the supercolumns */
 
   ngarbage = Colamd::find_ordering(n_row, n_col, Alen, Row, Col, A, p, n_col2,
                                    max_deg, 2 * nnz);
 
-  /** === Order the non-principal columns ================================== */
+  /** Order the non-principal columns */
 
   Colamd::order_children(n_col, Col, p);
 
-  /** === Return statistics in stats ======================================= */
+  /** Return statistics in stats */
 
   stats[Colamd::DenseRow] = n_row - n_row2;
   stats[Colamd::DenseCol] = n_col - n_col2;
@@ -480,15 +480,15 @@ static bool compute_ordering(IndexType n_row, IndexType n_col, IndexType Alen,
   return (true);
 }
 
-/** ========================================================================== */
-/** === NON-USER-CALLABLE ROUTINES: ========================================== */
-/** ========================================================================== */
+/** */
+/** NON-USER-CALLABLE ROUTINES: */
+/** */
 
 /** There are no user-callable routines beyond this point in the file */
 
-/** ========================================================================== */
-/** === init_rows_cols ======================================================= */
-/** ========================================================================== */
+/** */
+/** init_rows_cols */
+/** */
 
 /**
   Takes the column form of the matrix in A and creates the row form of the
@@ -501,8 +501,8 @@ static bool compute_ordering(IndexType n_row, IndexType n_col, IndexType Alen,
 template <typename IndexType>
 static IndexType init_rows_cols /** returns true if OK, or false otherwise */
     (
-        /** === Parameters
-           ======================================================= */
+        /** Parameters
+         */
 
         IndexType n_row,               /** number of rows of A */
         IndexType n_col,               /** number of columns of A */
@@ -512,7 +512,7 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
         IndexType p[],          /** pointers to columns in A, of size n_col+1 */
         IndexType stats[NStats] /** colamd statistics */
     ) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   IndexType col;      /** a column index */
   IndexType row;      /** a row index */
@@ -522,7 +522,7 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
   IndexType *rp_end;  /** a pointer to the end of a row */
   IndexType last_row; /** previous row */
 
-  /** === Initialize columns, and check column pointers ==================== */
+  /** Initialize columns, and check column pointers */
 
   for (col = 0; col < n_col; col++) {
     Col[col].start = p[col];
@@ -547,7 +547,7 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
 
   /** p [0..n_col] no longer needed, used as "head" in subsequent routines */
 
-  /** === Scan columns, compute row degrees, and check row indices ========= */
+  /** Scan columns, compute row degrees, and check row indices */
 
   stats[Info3] = 0; /** number of duplicate or unsorted row indices*/
 
@@ -600,7 +600,7 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
     }
   }
 
-  /** === Compute row pointers ============================================= */
+  /** Compute row pointers */
 
   /** row form of the matrix starts directly after the column */
   /** form of matrix in A */
@@ -613,7 +613,7 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
     Row[row].shared2.mark = -1;
   }
 
-  /** === Create row form ================================================== */
+  /** Create row form */
 
   if (stats[Status] == OkButJumbled) {
     /** if cols jumbled, watch for repeated row indices */
@@ -639,19 +639,19 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
     }
   }
 
-  /** === Clear the row marks and set row degrees ========================== */
+  /** Clear the row marks and set row degrees */
 
   for (row = 0; row < n_row; row++) {
     Row[row].shared2.mark = 0;
     Row[row].shared1.degree = Row[row].length;
   }
 
-  /** === See if we need to re-create columns ============================== */
+  /** See if we need to re-create columns */
 
   if (stats[Status] == OkButJumbled) {
     COLAMD_DEBUG0(("colamd: reconstructing column form, matrix jumbled\n"));
 
-    /** === Compute col pointers ========================================= */
+    /** Compute col pointers */
 
     /** col form of the matrix starts at A [0]. */
     /** Note, we may have a gap between the col form and the row */
@@ -666,7 +666,7 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
       p[col] = Col[col].start;
     }
 
-    /** === Re-create col form =========================================== */
+    /** Re-create col form */
 
     for (row = 0; row < n_row; row++) {
       rp = &A[Row[row].start];
@@ -677,14 +677,14 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
     }
   }
 
-  /** === Done.  Matrix is not (or no longer) jumbled ====================== */
+  /** Done.  Matrix is not (or no longer) jumbled */
 
   return (true);
 }
 
-/** ========================================================================== */
-/** === init_scoring ========================================================= */
-/** ========================================================================== */
+/** */
+/** init_scoring */
+/** */
 
 /**
   Kills dense or empty columns and rows, calculates an initial score for
@@ -692,7 +692,7 @@ static IndexType init_rows_cols /** returns true if OK, or false otherwise */
 */
 template <typename IndexType>
 static void init_scoring(
-    /** === Parameters ======================================================= */
+    /** Parameters */
 
     IndexType n_row,               /** number of rows of A */
     IndexType n_col,               /** number of columns of A */
@@ -705,7 +705,7 @@ static void init_scoring(
     IndexType *p_n_col2,           /** number of non-dense, non-empty columns */
     IndexType *p_max_deg           /** maximum row degree */
 ) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   IndexType c;               /** a column index */
   IndexType r, row;          /** a row index */
@@ -723,7 +723,7 @@ static void init_scoring(
   IndexType max_deg;         /** maximum row degree */
   IndexType next_col;        /** Used to add to degree list.*/
 
-  /** === Extract knobs ==================================================== */
+  /** Extract knobs */
 
   dense_row_count = numext::maxi(
       IndexType(0),
@@ -737,7 +737,7 @@ static void init_scoring(
   n_col2 = n_col;
   n_row2 = n_row;
 
-  /** === Kill empty columns =============================================== */
+  /** Kill empty columns */
 
   /** Put the empty columns at the end in their natural order, so that LU */
   /** factorization can proceed as far as possible. */
@@ -751,7 +751,7 @@ static void init_scoring(
   }
   COLAMD_DEBUG1(("colamd: null columns killed: %d\n", n_col - n_col2));
 
-  /** === Kill dense columns =============================================== */
+  /** Kill dense columns */
 
   /** Put the dense columns at the end, in their natural order */
   for (c = n_col - 1; c >= 0; c--) {
@@ -775,7 +775,7 @@ static void init_scoring(
   COLAMD_DEBUG1(
       ("colamd: Dense and null columns killed: %d\n", n_col - n_col2));
 
-  /** === Kill dense and empty rows ======================================== */
+  /** Kill dense and empty rows */
 
   for (r = 0; r < n_row; r++) {
     deg = Row[r].shared1.degree;
@@ -791,7 +791,7 @@ static void init_scoring(
   }
   COLAMD_DEBUG1(("colamd: Dense and null rows killed: %d\n", n_row - n_row2));
 
-  /** === Compute initial column scores ==================================== */
+  /** Compute initial column scores */
 
   /** At this point the row degrees are accurate.  They reflect the number */
   /** of "live" (non-dense) columns in each row.  No empty rows exist. */
@@ -846,7 +846,7 @@ static void init_scoring(
   /** yet).  Rows may contain dead columns, but all live rows contain at */
   /** least one live column. */
 
-  /** === Initialize degree lists ========================================== */
+  /** Initialize degree lists */
 
   /** clear the hash buckets */
   for (c = 0; c <= n_col; c++) {
@@ -861,7 +861,7 @@ static void init_scoring(
       COLAMD_DEBUG4(("place %d score %d minscore %d ncol %d\n", c,
                      Col[c].shared2.score, min_score, n_col));
 
-      /** === Add columns score to DList =============================== */
+      /** Add columns score to DList */
 
       score = Col[c].shared2.score;
 
@@ -888,16 +888,16 @@ static void init_scoring(
     }
   }
 
-  /** === Return number of remaining columns, and max row degree =========== */
+  /** Return number of remaining columns, and max row degree */
 
   *p_n_col2 = n_col2;
   *p_n_row2 = n_row2;
   *p_max_deg = max_deg;
 }
 
-/** ========================================================================== */
-/** === find_ordering ======================================================== */
-/** ========================================================================== */
+/** */
+/** find_ordering */
+/** */
 
 /**
   Order the principal columns of the supercolumn form of the matrix
@@ -907,8 +907,8 @@ static void init_scoring(
 template <typename IndexType>
 static IndexType find_ordering /** return the number of garbage collections */
     (
-        /** === Parameters
-           ======================================================= */
+        /** Parameters
+         */
 
         IndexType n_row,               /** number of rows of A */
         IndexType n_col,               /** number of columns of A */
@@ -921,7 +921,7 @@ static IndexType find_ordering /** return the number of garbage collections */
         IndexType max_deg,             /** Maximum row degree */
         IndexType pfree /** index of first free slot (2*nnz on entry) */
     ) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   IndexType k;                /** current pivot ordering step */
   IndexType pivot_col;        /** current pivot column */
@@ -956,7 +956,7 @@ static IndexType find_ordering /** return the number of garbage collections */
   IndexType next_col;      /** Used by Dlist operations. */
   IndexType ngarbage;      /** number of garbage collections performed */
 
-  /** === Initialization and clear mark ==================================== */
+  /** Initialization and clear mark */
 
   max_mark = INT_MAX - n_col; /** INT_MAX defined in <limits.h> */
   tag_mark = Colamd::clear_mark(n_row, Row);
@@ -964,10 +964,10 @@ static IndexType find_ordering /** return the number of garbage collections */
   ngarbage = 0;
   COLAMD_DEBUG1(("colamd: Ordering, n_col2=%d\n", n_col2));
 
-  /** === Order the columns ================================================ */
+  /** Order the columns */
 
   for (k = 0; k < n_col2; /** 'k' is incremented below */) {
-    /** === Select pivot column, and order it ============================ */
+    /** Select pivot column, and order it */
 
     /** make sure degree list isn't empty */
     COLAMD_ASSERT(min_score >= 0);
@@ -1000,7 +1000,7 @@ static IndexType find_ordering /** return the number of garbage collections */
     k += pivot_col_thickness;
     COLAMD_ASSERT(pivot_col_thickness > 0);
 
-    /** === Garbage_collection, if necessary ============================= */
+    /** Garbage_collection, if necessary */
 
     needed_memory = numext::mini(pivot_col_score, n_col - k);
     if (pfree + needed_memory >= Alen) {
@@ -1012,7 +1012,7 @@ static IndexType find_ordering /** return the number of garbage collections */
       tag_mark = Colamd::clear_mark(n_row, Row);
     }
 
-    /** === Compute pivot row pattern ==================================== */
+    /** Compute pivot row pattern */
 
     /** get starting location for this new merged row */
     pivot_row_start = pfree;
@@ -1057,7 +1057,7 @@ static IndexType find_ordering /** return the number of garbage collections */
     Col[pivot_col].shared1.thickness = pivot_col_thickness;
     max_deg = numext::maxi(max_deg, pivot_row_degree);
 
-    /** === Kill all rows used to construct pivot row ==================== */
+    /** Kill all rows used to construct pivot row */
 
     /** also kill pivot row, temporarily */
     cp = &A[Col[pivot_col].start];
@@ -1069,7 +1069,7 @@ static IndexType find_ordering /** return the number of garbage collections */
       Row[row].kill();
     }
 
-    /** === Select a row index to use as the new pivot row =============== */
+    /** Select a row index to use as the new pivot row */
 
     pivot_row_length = pfree - pivot_row_start;
     if (pivot_row_length > 0) {
@@ -1083,7 +1083,7 @@ static IndexType find_ordering /** return the number of garbage collections */
     }
     COLAMD_ASSERT(Col[pivot_col].length > 0 || pivot_row_length == 0);
 
-    /** === Approximate degree computation =============================== */
+    /** Approximate degree computation */
 
     /** Here begins the computation of the approximate degree.  The column */
     /** score is the sum of the pivot row "length", plus the size of the */
@@ -1102,7 +1102,7 @@ static IndexType find_ordering /** return the number of garbage collections */
     /** monotonically non-decreasing, from the length of the original */
     /** column on input to colamd. */
 
-    /** === Compute set differences ====================================== */
+    /** Compute set differences */
 
     COLAMD_DEBUG3(("** Computing set differences phase. **\n"));
 
@@ -1122,7 +1122,7 @@ static IndexType find_ordering /** return the number of garbage collections */
       COLAMD_ASSERT(col_thickness > 0);
       Col[col].shared1.thickness = col_thickness;
 
-      /** === Remove column from degree list =========================== */
+      /** Remove column from degree list */
 
       cur_score = Col[col].shared2.score;
       prev_col = Col[col].shared3.prev;
@@ -1139,7 +1139,7 @@ static IndexType find_ordering /** return the number of garbage collections */
         Col[next_col].shared3.prev = prev_col;
       }
 
-      /** === Scan the column ========================================== */
+      /** Scan the column */
 
       cp = &A[Col[col].start];
       cp_end = cp + Col[col].length;
@@ -1172,7 +1172,7 @@ static IndexType find_ordering /** return the number of garbage collections */
       }
     }
 
-    /** === Add up set differences for each column ======================= */
+    /** Add up set differences for each column */
 
     COLAMD_DEBUG3(("** Adding set differences phase. **\n"));
 
@@ -1215,7 +1215,7 @@ static IndexType find_ordering /** return the number of garbage collections */
       /** recompute the column's length */
       Col[col].length = (IndexType)(new_cp - &A[Col[col].start]);
 
-      /** === Further mass elimination ================================= */
+      /** Further mass elimination */
 
       if (Col[col].length == 0) {
         COLAMD_DEBUG4(("further mass elimination. Col: %d\n", col));
@@ -1228,7 +1228,7 @@ static IndexType find_ordering /** return the number of garbage collections */
         /** increment order count by column thickness */
         k += Col[col].shared1.thickness;
       } else {
-        /** === Prepare for supercolumn detection ==================== */
+        /** Prepare for supercolumn detection */
 
         COLAMD_DEBUG4(("Preparing supercol detection for Col: %d.\n", col));
 
@@ -1262,17 +1262,17 @@ static IndexType find_ordering /** return the number of garbage collections */
 
     /** The approximate external column degree is now computed.  */
 
-    /** === Supercolumn detection ======================================== */
+    /** Supercolumn detection */
 
     COLAMD_DEBUG3(("** Supercolumn detection phase. **\n"));
 
     Colamd::detect_super_cols(Col, A, head, pivot_row_start, pivot_row_length);
 
-    /** === Kill the pivotal column ====================================== */
+    /** Kill the pivotal column */
 
     Col[pivot_col].kill_principal();
 
-    /** === Clear mark =================================================== */
+    /** Clear mark */
 
     tag_mark += (max_deg + 1);
     if (tag_mark >= max_mark) {
@@ -1280,7 +1280,7 @@ static IndexType find_ordering /** return the number of garbage collections */
       tag_mark = Colamd::clear_mark(n_row, Row);
     }
 
-    /** === Finalize the new pivot row, and column scores ================ */
+    /** Finalize the new pivot row, and column scores */
 
     COLAMD_DEBUG3(("** Finalize scores phase. **\n"));
 
@@ -1319,7 +1319,7 @@ static IndexType find_ordering /** return the number of garbage collections */
       /** store updated score */
       Col[col].shared2.score = cur_score;
 
-      /** === Place column back in degree list ========================= */
+      /** Place column back in degree list */
 
       COLAMD_ASSERT(min_score >= 0);
       COLAMD_ASSERT(min_score <= n_col);
@@ -1338,7 +1338,7 @@ static IndexType find_ordering /** return the number of garbage collections */
       min_score = numext::mini(min_score, cur_score);
     }
 
-    /** === Resurrect the new pivot row ================================== */
+    /** Resurrect the new pivot row */
 
     if (pivot_row_degree > 0) {
       /** update pivot row length to reflect any cols that were killed */
@@ -1351,14 +1351,14 @@ static IndexType find_ordering /** return the number of garbage collections */
     }
   }
 
-  /** === All principal columns have now been ordered ====================== */
+  /** All principal columns have now been ordered */
 
   return (ngarbage);
 }
 
-/** ========================================================================== */
-/** === order_children ======================================================= */
-/** ========================================================================== */
+/** */
+/** order_children */
+/** */
 
 /**
   The find_ordering routine has ordered all of the principal columns (the
@@ -1374,20 +1374,20 @@ static IndexType find_ordering /** return the number of garbage collections */
 */
 template <typename IndexType>
 static inline void order_children(
-    /** === Parameters ======================================================= */
+    /** Parameters */
 
     IndexType n_col,               /** number of columns of A */
     ColStructure<IndexType> Col[], /** of size n_col+1 */
     IndexType p[] /** p [0 ... n_col-1] is the column permutation*/
 ) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   IndexType i;      /** loop counter for all columns */
   IndexType c;      /** column index */
   IndexType parent; /** index of column's parent */
   IndexType order;  /** column's order */
 
-  /** === Order each non-principal column ================================== */
+  /** Order each non-principal column */
 
   for (i = 0; i < n_col; i++) {
     /** find an un-ordered non-principal column */
@@ -1426,16 +1426,16 @@ static inline void order_children(
     }
   }
 
-  /** === Generate the permutation ========================================= */
+  /** Generate the permutation */
 
   for (c = 0; c < n_col; c++) {
     p[Col[c].shared2.order] = c;
   }
 }
 
-/** ========================================================================== */
-/** === detect_super_cols ==================================================== */
-/** ========================================================================== */
+/** */
+/** detect_super_cols */
+/** */
 
 /**
   Detects supercolumns by finding matches between columns in the hash buckets.
@@ -1467,7 +1467,7 @@ static inline void order_children(
 */
 template <typename IndexType>
 static void detect_super_cols(
-    /** === Parameters ======================================================= */
+    /** Parameters */
 
     ColStructure<IndexType> Col[], /** of size n_col+1 */
     IndexType A[],                 /** row indices of A */
@@ -1475,7 +1475,7 @@ static void detect_super_cols(
     IndexType row_start,           /** pointer to set of columns to check */
     IndexType row_length           /** number of columns to check */
 ) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   IndexType hash;        /** hash value for a column */
   IndexType *rp;         /** pointer to a row */
@@ -1491,7 +1491,7 @@ static void detect_super_cols(
   IndexType head_column; /** first column in hash bucket or degree list */
   IndexType first_col;   /** first column in hash bucket */
 
-  /** === Consider each column in the row ================================== */
+  /** Consider each column in the row */
 
   rp = &A[row_start];
   rp_end = rp + row_length;
@@ -1505,7 +1505,7 @@ static void detect_super_cols(
     hash = Col[col].shared3.hash;
     COLAMD_ASSERT(hash <= n_col);
 
-    /** === Get the first column in this hash bucket ===================== */
+    /** Get the first column in this hash bucket */
 
     head_column = head[hash];
     if (head_column > Empty) {
@@ -1514,7 +1514,7 @@ static void detect_super_cols(
       first_col = -(head_column + 2);
     }
 
-    /** === Consider each column in the hash bucket ====================== */
+    /** Consider each column in the hash bucket */
 
     for (super_c = first_col; super_c != Empty;
          super_c = Col[super_c].shared4.hash_next) {
@@ -1525,7 +1525,7 @@ static void detect_super_cols(
       /** prev_c is the column preceding column c in the hash bucket */
       prev_c = super_c;
 
-      /** === Compare super_c with all columns after it ================ */
+      /** Compare super_c with all columns after it */
 
       for (c = Col[super_c].shared4.hash_next; c != Empty;
            c = Col[c].shared4.hash_next) {
@@ -1561,7 +1561,7 @@ static void detect_super_cols(
           continue;
         }
 
-        /** === Got it!  two columns are identical =================== */
+        /** Got it!  two columns are identical */
 
         COLAMD_ASSERT(Col[c].shared2.score == Col[super_c].shared2.score);
 
@@ -1575,7 +1575,7 @@ static void detect_super_cols(
       }
     }
 
-    /** === Empty this hash bucket ======================================= */
+    /** Empty this hash bucket */
 
     if (head_column > Empty) {
       /** corresponding degree list "hash" is not empty */
@@ -1587,9 +1587,9 @@ static void detect_super_cols(
   }
 }
 
-/** ========================================================================== */
-/** === garbage_collection =================================================== */
-/** ========================================================================== */
+/** */
+/** garbage_collection */
+/** */
 
 /**
   Defragments and compacts columns and rows in the workspace A.  Used when
@@ -1602,8 +1602,8 @@ static void detect_super_cols(
 template <typename IndexType>
 static IndexType garbage_collection /** returns the new value of pfree */
     (
-        /** === Parameters
-           ======================================================= */
+        /** Parameters
+         */
 
         IndexType n_row,               /** number of rows */
         IndexType n_col,               /** number of columns */
@@ -1612,7 +1612,7 @@ static IndexType garbage_collection /** returns the new value of pfree */
         IndexType A[],                 /** A [0 ... Alen-1] holds the matrix */
         IndexType *pfree               /** &A [0] ... pfree is in use */
     ) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   IndexType *psrc;  /** source pointer */
   IndexType *pdest; /** destination pointer */
@@ -1621,7 +1621,7 @@ static IndexType garbage_collection /** returns the new value of pfree */
   IndexType c;      /** a column index */
   IndexType length; /** length of a row or column */
 
-  /** === Defragment the columns =========================================== */
+  /** Defragment the columns */
 
   pdest = &A[0];
   for (c = 0; c < n_col; c++) {
@@ -1642,7 +1642,7 @@ static IndexType garbage_collection /** returns the new value of pfree */
     }
   }
 
-  /** === Prepare to defragment the rows =================================== */
+  /** Prepare to defragment the rows */
 
   for (r = 0; r < n_row; r++) {
     if (Row[r].is_alive()) {
@@ -1661,7 +1661,7 @@ static IndexType garbage_collection /** returns the new value of pfree */
     }
   }
 
-  /** === Defragment the rows ============================================== */
+  /** Defragment the rows */
 
   psrc = pdest;
   while (psrc < pfree) {
@@ -1691,14 +1691,14 @@ static IndexType garbage_collection /** returns the new value of pfree */
   /** ensure we found all the rows */
   COLAMD_ASSERT(debug_rows == 0);
 
-  /** === Return the new value of pfree ==================================== */
+  /** Return the new value of pfree */
 
   return ((IndexType)(pdest - &A[0]));
 }
 
-/** ========================================================================== */
-/** === clear_mark =========================================================== */
-/** ========================================================================== */
+/** */
+/** clear_mark */
+/** */
 
 /**
   Clears the Row [].shared2.mark array, and returns the new tag_mark.
@@ -1707,14 +1707,14 @@ static IndexType garbage_collection /** returns the new value of pfree */
 template <typename IndexType>
 static inline IndexType clear_mark /** return the new value for tag_mark */
     (
-        /** === Parameters
-           ======================================================= */
+        /** Parameters
+         */
 
         IndexType n_row, /** number of rows in A */
         RowStructure<IndexType>
             Row[] /** Row [0 ... n_row-1].shared2.mark is set to zero */
     ) {
-  /** === Local variables ================================================== */
+  /** Local variables */
 
   IndexType r;
 

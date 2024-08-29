@@ -1,11 +1,9 @@
-/*************************************************************************
+/**
  *
  *  file:  decision_manipulation.cpp
  *
- * =======================================================================
- * Description  :  Predict/Select functionality
- * =======================================================================
- */
+ *  * Description  :  Predict/Select functionality
+ *  */
 
 #include "decision_manipulation.h"
 
@@ -16,17 +14,17 @@
 #include "soar_rand.h"
 #include "symbol.h"
 
-/***************************************************************************
+/**
  * Function     : select_init
- **************************************************************************/
+ */
 void select_init(agent* thisAgent) {
   thisAgent->select->select_enabled = false;
   thisAgent->select->select_operator.clear();
 }
 
-/***************************************************************************
+/**
  * Function     : select_next_operator
- **************************************************************************/
+ */
 void select_next_operator(agent* thisAgent, const char* operator_id) {
   select_init(thisAgent);
   std::string& op = thisAgent->select->select_operator;
@@ -41,9 +39,9 @@ void select_next_operator(agent* thisAgent, const char* operator_id) {
   *iter = static_cast<char>(toupper(*iter));
 }
 
-/***************************************************************************
+/**
  * Function     : select_get_operator
- **************************************************************************/
+ */
 const char* select_get_operator(agent* thisAgent) {
   if (!thisAgent->select->select_enabled) {
     return NULL;
@@ -52,9 +50,9 @@ const char* select_get_operator(agent* thisAgent) {
   return thisAgent->select->select_operator.c_str();
 }
 
-/***************************************************************************
+/**
  * Function     : select_force
- **************************************************************************/
+ */
 preference* select_force(agent* thisAgent, preference* candidates,
                          bool reinit) {
   preference* return_val = NULL;
@@ -92,17 +90,17 @@ preference* select_force(agent* thisAgent, preference* candidates,
   return return_val;
 }
 
-/***************************************************************************
+/**
  * Function     : predict_init
- **************************************************************************/
+ */
 void predict_init(agent* thisAgent) {
   thisAgent->predict_seed = 0;
   (*thisAgent->prediction) = "";
 }
 
-/***************************************************************************
+/**
  * Function     : predict_srand_store_snapshot
- **************************************************************************/
+ */
 void predict_srand_store_snapshot(agent* thisAgent) {
   uint32_t storage_val = 0;
 
@@ -113,9 +111,9 @@ void predict_srand_store_snapshot(agent* thisAgent) {
   thisAgent->predict_seed = storage_val;
 }
 
-/***************************************************************************
+/**
  * Function     : predict_srand_restore_snapshot
- **************************************************************************/
+ */
 void predict_srand_restore_snapshot(agent* thisAgent, bool clear_snapshot) {
   if (thisAgent->predict_seed) {
     SoarSeedRNG(thisAgent->predict_seed);
@@ -126,16 +124,16 @@ void predict_srand_restore_snapshot(agent* thisAgent, bool clear_snapshot) {
   }
 }
 
-/***************************************************************************
+/**
  * Function     : predict_set
- **************************************************************************/
+ */
 void predict_set(agent* thisAgent, const char* prediction) {
   (*thisAgent->prediction) = prediction;
 }
 
-/***************************************************************************
+/**
  * Function     : predict_get
- **************************************************************************/
+ */
 const char* predict_get(agent* thisAgent) {
   predict_srand_store_snapshot(thisAgent);
   do_decide_phase(thisAgent, true);

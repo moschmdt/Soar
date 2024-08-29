@@ -49,7 +49,6 @@
 
 /** socket support stuff */
 
-///////
 // This maps some constants to values that can be used on any platform
 #ifndef SUN_LEN
 /** This system is not POSIX.1g.         */
@@ -96,7 +95,6 @@
 // Leave it with original Windows value just so we can compile.
 #define NET_NOTINITIALISED 10093
 //
-///////
 
 #define NET_SD_BOTH SHUT_RDWR
 

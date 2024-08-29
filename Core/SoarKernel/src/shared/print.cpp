@@ -1,17 +1,15 @@
-/*************************************************************************
+/**
  * PLEASE SEE THE FILE "license.txt" (INCLUDED WITH THIS SOFTWARE PACKAGE)
  * FOR LICENSE AND COPYRIGHT INFORMATION.
- *************************************************************************/
+ */
 
-/*************************************************************************
+/**
  *
  *  file:  print.cpp
  *
- * =======================================================================
- *  These are the routines that support printing Soar data structures.
+ *  *  These are the routines that support printing Soar data structures.
  *
- * =======================================================================
- */
+ *  */
 
 #include "print.h"
 
@@ -38,7 +36,7 @@
 
 using namespace soar_TraceNames;
 
-/* ------------------------------------------------------------------------
+/**
                 String to Escaped String Conversion
            {Symbol, Test, RHS Value} to String Conversion
 
@@ -58,7 +56,7 @@ using namespace soar_TraceNames;
 
    Rhs_value_to_string() takes an rhs_value and produces a string
    representation.  The rhs_value MUST NOT be a reteloc.
------------------------------------------------------------------------ */
+*/
 
 const std::string string_to_escaped_string(const char* s,
                                            char first_and_last_char) {
@@ -111,7 +109,7 @@ char preference_to_char(byte type) {
   return 0; /* unreachable, but without it, gcc -Wall warns here */
 }
 
-/* ------------------------------------------------------------------
+/**
                         Print Condition List
 
    This prints a list of conditions.  The "indent" parameter tells
@@ -121,7 +119,7 @@ char preference_to_char(byte type) {
    if true, indicates that the condition list should be printed in
    internal format--one condition per line, without grouping all the
    conditions for the same id into one line.
------------------------------------------------------------------- */
+*/
 
 bool pick_conds_with_matching_id_test(dl_cons* dc, agent* thisAgent) {
   condition* cond;
@@ -133,10 +131,8 @@ bool pick_conds_with_matching_id_test(dl_cons* dc, agent* thisAgent) {
                          false);
 }
 
-/*
-==============================
+/**
 
-==============================
 */
 #define PRINT_CONDITION_LIST_TEMP_SIZE 10000
 void print_condition_list(agent* thisAgent, condition* conds, int indent,
@@ -153,7 +149,7 @@ void print_condition_list(agent* thisAgent, condition* conds, int indent,
     return;
   }
 
-  /* --- build dl_list of all the actions --- */
+  /* build dl_list of all the actions */
   conds_not_yet_printed = NIL;
   tail_of_conds_not_yet_printed = NIL;
 
@@ -170,7 +166,7 @@ void print_condition_list(agent* thisAgent, condition* conds, int indent,
   }
   tail_of_conds_not_yet_printed->next = NIL;
 
-  /* --- main loop: find all conds for first id, print them together --- */
+  /* main loop: find all conds for first id, print them together */
   bool did_one_line_already = false;
   while (conds_not_yet_printed) {
     if (did_one_line_already) {
@@ -193,13 +189,13 @@ void print_condition_list(agent* thisAgent, condition* conds, int indent,
       continue;
     }
 
-    /* --- normal pos/neg conditions --- */
+    /* normal pos/neg conditions */
     removed_goal_test = removed_impasse_test = false;
     id_test = copy_test(thisAgent, c->data.tests.id_test, false, false, true,
                         &removed_goal_test, &removed_impasse_test);
     thisAgent->id_test_to_match = copy_test(thisAgent, id_test->eq_test);
 
-    /* --- collect all cond's whose id test matches this one --- */
+    /* collect all cond's whose id test matches this one */
     conds_for_this_id = dc;
     dc->prev = NIL;
     if (internal) {
@@ -209,7 +205,7 @@ void print_condition_list(agent* thisAgent, condition* conds, int indent,
                                           pick_conds_with_matching_id_test);
     }
 
-    /* --- print the collected cond's all together --- */
+    /* print the collected cond's all together */
     thisAgent->outputManager->printa(thisAgent, " (");
     xml_begin_tag(thisAgent, kTagCondition);
 
@@ -237,7 +233,7 @@ void print_condition_list(agent* thisAgent, condition* conds, int indent,
       thisAgent->memoryManager->free_with_pool(MP_dl_cons, dc);
 
       {
-        /* --- build and print attr/value test for condition c --- */
+        /* build and print attr/value test for condition c */
         char temp[PRINT_CONDITION_LIST_TEMP_SIZE], *ch;
 
         memset(temp, 0, PRINT_CONDITION_LIST_TEMP_SIZE);
@@ -293,7 +289,7 @@ void print_condition_list(agent* thisAgent, condition* conds, int indent,
   } /* end of while (conds_not_yet_printed) */
 }
 
-/* ------------------------------------------------------------------
+/**
                         Print Action List
 
    This prints a list of actions.  The "indent" parameter tells how
@@ -304,7 +300,7 @@ void print_condition_list(agent* thisAgent, condition* conds, int indent,
    internal format--one action per line, without grouping all the
    actions for the same id into one line.
    Note:  the actions MUST NOT contain any reteloc's.
------------------------------------------------------------------- */
+*/
 
 bool pick_actions_with_matching_id(dl_cons* dc, agent* thisAgent) {
   action* a;
@@ -330,7 +326,7 @@ void print_action_list(agent* thisAgent, action* actions, int indent,
 
   did_one_line_already = false;
 
-  /* --- build dl_list of all the actions --- */
+  /* build dl_list of all the actions */
   actions_not_yet_printed = NIL;
   tail_of_actions_not_yet_printed = NIL;
   for (a = actions; a != NIL; a = a->next) {
@@ -347,7 +343,7 @@ void print_action_list(agent* thisAgent, action* actions, int indent,
   tail_of_actions_not_yet_printed->next = NIL;
 
   std::string lStr;
-  /* --- main loop: find all actions for first id, print them together --- */
+  /* main loop: find all actions for first id, print them together */
   while (actions_not_yet_printed) {
     if (did_one_line_already) {
       thisAgent->outputManager->printa(thisAgent, "\n");
@@ -369,8 +365,8 @@ void print_action_list(agent* thisAgent, action* actions, int indent,
       continue;
     }
 
-    /* --- normal make actions --- */
-    /* --- collect all actions whose id matches the first action's id --- */
+    /* normal make actions */
+    /* collect all actions whose id matches the first action's id */
     actions_for_this_id = dc;
     thisAgent->action_id_to_match = rhs_value_to_symbol(a->id);
     dc->prev = NIL;
@@ -381,7 +377,7 @@ void print_action_list(agent* thisAgent, action* actions, int indent,
                                           pick_actions_with_matching_id);
     }
 
-    /* --- print the collected actions all together --- */
+    /* print the collected actions all together */
     thisAgent->outputManager->printa_sf(thisAgent, "(%y",
                                         thisAgent->action_id_to_match);
     xml_begin_tag(thisAgent, kTagAction);
@@ -394,7 +390,7 @@ void print_action_list(agent* thisAgent, action* actions, int indent,
       thisAgent->memoryManager->free_with_pool(MP_dl_cons, dc);
 
       {
-        /* --- build and print attr/value test for action a --- */
+        /* build and print attr/value test for action a */
         char temp[PRINT_ACTION_LIST_TEMP_SIZE], *ch;
 
         ch = temp;
@@ -446,18 +442,18 @@ void print_action_list(agent* thisAgent, action* actions, int indent,
   } /* end of while (actions_not_yet_printed) */
 }
 
-/* ------------------------------------------------------------------
+/**
                          Print Production
 
    This prints a production.  The "internal" parameter, if true,
    indicates that the LHS and RHS should be printed in internal format.
------------------------------------------------------------------- */
+*/
 
 void print_production(agent* thisAgent, production* p, bool internal) {
   condition *top, *bottom;
   action* rhs;
 
-  /*
+  /**
   --- print "sp" and production name ---
   */
   thisAgent->outputManager->printa_sf(thisAgent, "sp {%y\n", p->name);
@@ -465,7 +461,7 @@ void print_production(agent* thisAgent, production* p, bool internal) {
   xml_begin_tag(thisAgent, kTagProduction);
   xml_att_val(thisAgent, kProduction_Name, p->name);
 
-  /*
+  /**
   --- print optional documention string ---
   */
   if (p->documentation) {
@@ -475,7 +471,7 @@ void print_production(agent* thisAgent, production* p, bool internal) {
     xml_att_val(thisAgent, kProductionDocumentation, temp.c_str());
   }
 
-  /*
+  /**
   --- print any flags ---
   */
   switch (p->type) {
@@ -519,7 +515,7 @@ void print_production(agent* thisAgent, production* p, bool internal) {
     thisAgent->outputManager->printa(thisAgent, "    :interrupt\n");
   }
 
-  /*
+  /**
   --- print the LHS and RHS ---
   */
   p_node_to_conditions_and_rhs(thisAgent, p->p_node, NIL, NIL, &top, &bottom,
@@ -542,7 +538,7 @@ void print_production(agent* thisAgent, production* p, bool internal) {
   deallocate_action_list(thisAgent, rhs);
 }
 
-/* ------------------------------------------------------------------
+/**
                        Other Printing Utilities
 
    Print_condition() prints a single condition.  Print_action() prints
@@ -559,7 +555,7 @@ void print_production(agent* thisAgent, production* p, bool internal) {
    wme (including the timetag).  Print_instantiation_with_wmes() prints
    an instantiation's production name and the wmes it matched, using a
    given wme_trace_type (e.g., TIMETAG_WME_TRACE).
------------------------------------------------------------------- */
+*/
 
 void print_condition(agent* thisAgent, condition* cond) {
   condition *old_next, *old_prev;
@@ -783,9 +779,9 @@ void print_instantiation_with_wmes(agent* thisAgent, instantiation* inst,
   }
 }
 
-/***************************************************************************
+/**
  * Function     : print_list_of_conditions
- **************************************************************************/
+ */
 
 void print_list_of_conditions(agent* thisAgent, condition* cond) {
   while (cond != NULL) {
@@ -852,10 +848,8 @@ void print_phase(agent* thisAgent, const char* s, bool end_of_phase) {
   return;
 }
 
-/*
-===========================
+/**
 
-===========================
 */
 bool wme_filter_component_match(Symbol* filterComponent, Symbol* wmeComponent) {
   if ((filterComponent->symbol_type == STR_CONSTANT_SYMBOL_TYPE) &&
@@ -866,10 +860,8 @@ bool wme_filter_component_match(Symbol* filterComponent, Symbol* wmeComponent) {
   return (filterComponent == wmeComponent);
 }
 
-/*
-===========================
+/**
 
-===========================
 */
 extern "C" bool passes_wme_filtering(agent* thisAgent, wme* w, bool isAdd) {
   cons* c;
@@ -891,8 +883,7 @@ extern "C" bool passes_wme_filtering(agent* thisAgent, wme* w, bool isAdd) {
   return true; /* no defined filters match -> w passes */
 }
 
-/*
-=================================================================================
+/**
 
                                 print_trace
 
@@ -900,7 +891,6 @@ extern "C" bool passes_wme_filtering(agent* thisAgent, wme* w, bool isAdd) {
   points to an enabled sysparam.  Accepts format strings. Use INVALID_SYSPARAM
   (or 0) as the index to force print.
 
-=================================================================================
 */
 extern void print_sysparam_trace(agent* thisAgent, int64_t sysParamIndex,
                                  const char* format, ...) {

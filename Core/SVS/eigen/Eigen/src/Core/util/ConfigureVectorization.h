@@ -11,7 +11,6 @@
 #ifndef EIGEN_CONFIGURE_VECTORIZATION_H
 #define EIGEN_CONFIGURE_VECTORIZATION_H
 
-//------------------------------------------------------------------------------------------
 // Static and dynamic alignment control
 //
 // The main purpose of this section is to define EIGEN_MAX_ALIGN_BYTES and
@@ -23,7 +22,6 @@
 //
 // This section also defines macros EIGEN_ALIGN_TO_BOUNDARY(N) and the shortcuts
 // EIGEN_ALIGN{8,16,32,_MAX} to be used to declare statically aligned buffers.
-//------------------------------------------------------------------------------------------
 
 /** EIGEN_ALIGN_TO_BOUNDARY(n) forces data to be n-byte aligned. This is used to
  * satisfy SIMD requirements. However, we do that EVEN if vectorization
@@ -196,8 +194,6 @@
 #ifndef EIGEN_UNALIGNED_VECTORIZE
 #define EIGEN_UNALIGNED_VECTORIZE 1
 #endif
-
-//----------------------------------------------------------------------
 
 // if alignment is disabled, then disable vectorization. Note:
 // EIGEN_MAX_ALIGN_BYTES is the proper check, it takes into account both the

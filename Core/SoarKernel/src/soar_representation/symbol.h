@@ -3,14 +3,14 @@
  * FOR LICENSE AND COPYRIGHT INFORMATION.
  */
 
-/** =======================================================================
+/**
                              symtab.h
 
    Soar uses five kinds of symbols:  symbolic constants, integer
    constants, floating-point constants, identifiers, and variables.
    We use five resizable hash tables, one for each kind of symbol.
 
-======================================================================= */
+*/
 
 #ifndef SYMTAB_H
 #define SYMTAB_H
@@ -143,8 +143,8 @@ struct strSymbol : public Symbol {
   char* cached_rereadable_print_str;
 
   struct {
-    bool possible; /** Used by EBC to quickly determine if a WMEs attribute makes
-                      it eligible to be a singleton */
+    bool possible; /** Used by EBC to quickly determine if a WMEs attribute
+                      makes it eligible to be a singleton */
     singleton_element_type id_type;
     singleton_element_type value_type;
   } singleton;
@@ -177,7 +177,7 @@ struct idSymbol : public Symbol {
 
   bool allow_bottom_up_chunks;
 
-  /** --- ownership, promotion, demotion, & garbage collection stuff --- */
+  /** ownership, promotion, demotion, & garbage collection stuff */
   bool could_be_a_link_from_below;
   goal_stack_level level;
   goal_stack_level promotion_level;
@@ -186,10 +186,10 @@ struct idSymbol : public Symbol {
 
   struct slot_struct* slots; /** dll of slots for this identifier */
 
-  /** --- fields used only on goals and impasse identifiers --- */
+  /** fields used only on goals and impasse identifiers */
   struct wme_struct* impasse_wmes;
 
-  /** --- fields used only on goals --- */
+  /** fields used only on goals */
   Symbol *higher_goal, *lower_goal;
   struct slot_struct* operator_slot;
   struct preference_struct* preferences_from_goal;
@@ -210,7 +210,7 @@ struct idSymbol : public Symbol {
   struct ms_change_struct* ms_i_assertions;
   struct ms_change_struct* ms_retractions;
 
-  /** --- fields used for Soar I/O stuff --- */
+  /** fields used for Soar I/O stuff */
   cons* associated_output_links;
   struct wme_struct* input_wmes;
 
@@ -269,8 +269,8 @@ inline bool get_symbol_value(Symbol* sym, double& v) {
   return false;
 }
 
-/** -- mark_if_unmarked set the tc number to the new tc and add the symbol to the
- * list passed in -- */
+/** mark_if_unmarked set the tc number to the new tc and add the symbol to the
+ * list passed in */
 
 template <typename P, typename T>
 void push(agent* thisAgent, P item, T*& list_header);
@@ -284,47 +284,37 @@ inline void Symbol::mark_if_unmarked(agent* thisAgent, tc_number tc,
   }
 }
 
-/** -- Functions related to symbols.  Descriptions in symtab.cpp -- */
+/** Functions related to symbols.  Descriptions in symtab.cpp */
 
 char first_letter_from_symbol(Symbol* sym);
 bool make_string_rereadable(std::string& pStr);
 
-/** -- This function returns a numeric value from a symbol -- */
+/** This function returns a numeric value from a symbol */
 double get_number_from_symbol(Symbol* sym);
 
-/** -----------------------------------------------------------------
+/**
  *
  *                  Symbol Struct Variables
  *
- * =====================
- * Common to all 5 types
- * =====================
- * symbol_type                 Indicates which of the five kinds of symbols
+ *  * Common to all 5 types
+ *  * symbol_type                 Indicates which of the five kinds of symbols
  * reference_count             Current reference count for this symbol
  * next_in_hash_table          Next item in hash bucket
  * hash_id                     Used for hashing in the rete (and elsewhere)
  * retesave_symindex           Used for rete fastsave/fastload
  * tc_num                      Used for transitive closure/marking
- * =====================
- * Floating-point constants
- * =====================
- * value      The floating point value of the symbol.
- * =====================
- * Integer constants
- * =====================
- * value      The integer value value of the symbol. (int64_t).
- * =====================
- * String constants
- * =====================
- * name                        A null-terminated string giving its name
+ *  * Floating-point constants
+ *  * value      The floating point value of the symbol.
+ *  * Integer constants
+ *  * value      The integer value value of the symbol. (int64_t).
+ *  * String constants
+ *  * name                        A null-terminated string giving its name
  * production                  When string is used for a production name, this
  *                             points to the production structure.  NIL
  * otherwise
- * =====================
- * Variables
- * =====================
- * name                        Points to null-terminated string giving its name
- * tc_num                      Used for transitive closure computations
+ *  * Variables
+ *  * name                        Points to null-terminated string giving its
+ * name tc_num                      Used for transitive closure computations
  * current_binding_value       When productions are fired, this indicates
  *                             the variable's binding
  * gensym_number               Used by the variable generator to prevent certain
@@ -332,10 +322,8 @@ double get_number_from_symbol(Symbol* sym);
  * rete_binding_locations      Used temporarily by the Rete, while adding
  *                             productions, to store a list of places where this
  *                             variable is bound and/or tested
- * =====================
- * Identifiers
- * =====================
- * isa_goal, isa_impasse       Whether this is the identifier of a goal or
+ *  * Identifiers
+ *  * isa_goal, isa_impasse       Whether this is the identifier of a goal or
  * attribute impasse isa_operator                How many (normal or acceptable
  * preference) wmes contain
  *                             (^operator <this-id>). The tracing code uses this
@@ -345,9 +333,9 @@ double get_number_from_symbol(Symbol* sym);
  * in here to mark ID for things like transitive closures variablization When
  * variablizing chunks, this points to the variable to which this bound id gets
  * replaced with
- * ---------------
+ *
  * Link/Level Info
- * ---------------
+ *
  * could_be_a_link_from_below  true if there might be a link to this id from
  * some other id lower in the goal stack. level                       Current
  * goal_stack_level of this id link_count                  How many links there
@@ -355,9 +343,9 @@ double get_number_from_symbol(Symbol* sym);
  * to be promoted as soon as ownership info is updated. unknown_level If the
  * goal_stack_level of this id is known, this is NIL. If the level isn't known,
  * it points to a dl_cons in a dl_list used by the demotion routines.
- * --------------
+ *
  * For goals only
- * --------------
+ *
  * allow_bottom_up_chunks      For goals, true iff no chunk has yet been built
  * for a subgoal of this goal gds                         For goals, its goal's
  * dependency set higher_goal                 For goals, superstate of this goal
@@ -367,9 +355,9 @@ double get_number_from_symbol(Symbol* sym);
  * the operator slot of this goal preferences_from_goal       For goals, DLL of
  * all preferences supported by this goal. This is needed so we can remove
  * o-supported preferences when the goal goes away.
- * --------------------------
+ *
  * Find out if only for goals
- * --------------------------
+ *
  * did_PE
  * saved_firing_type           The firing type that must be restored if
  * Waterfall processing returns to this level. See consistency.cpp.
@@ -377,6 +365,6 @@ double get_number_from_symbol(Symbol* sym);
  * ms_i_assertions             DLL of i-assertions at this level
  * ms_retractions              DLL of all retractions at this level
  * associated_output_links     Used by the output module
- * input_wmes                  DLL of wmes added by input functions --*/
+ * input_wmes                  DLL of wmes added by input functions */
 
 #endif

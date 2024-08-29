@@ -1,17 +1,15 @@
 #include "portability.h"
 
-/////////////////////////////////////////////////////////////////
 // RhsListener class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : October 2004
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : October 2004
 //
 // This class's HandleEvent method is called when
 // specific events occur within the kernel:
-/*
+/**
  *      smlEVENT_RHS_USER_FUNCTION
  */
-/////////////////////////////////////////////////////////////////
 
 #include "sml_AgentSML.h"
 #include "sml_Connection.h"

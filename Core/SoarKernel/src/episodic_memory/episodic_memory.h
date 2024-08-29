@@ -7,8 +7,7 @@
  *
  *  file:  episodic_memory.h
  *
- * =======================================================================
- */
+ *  */
 
 #ifndef EPISODIC_MEMORY_H
 #define EPISODIC_MEMORY_H
@@ -23,9 +22,7 @@
 #include "soar_db.h"
 #include "soar_module.h"
 
-//////////////////////////////////////////////////////////
 // EpMem Parameters
-//////////////////////////////////////////////////////////
 
 class epmem_path_param;
 
@@ -54,9 +51,6 @@ class epmem_param_container : public soar_module::param_container {
   // experimental
   enum gm_ordering_choices { gm_order_undefined, gm_order_dfs, gm_order_mcv };
   enum merge_choices { merge_none, merge_add };
-
-  ////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////
 
   soar_module::boolean_param* learning;
 
@@ -108,9 +102,7 @@ class epmem_db_predicate : public soar_module::agent_predicate<T> {
   bool operator()(T val);
 };
 
-//////////////////////////////////////////////////////////
 // EpMem Statistics
-//////////////////////////////////////////////////////////
 
 typedef soar_module::primitive_stat<epmem_time_id> epmem_time_id_stat;
 typedef soar_module::primitive_stat<epmem_node_id> epmem_node_id_stat;
@@ -191,9 +183,7 @@ class epmem_mem_high_stat : public soar_module::integer_stat {
   int64_t get_value();
 };
 
-//////////////////////////////////////////////////////////
 // EpMem Timers
-//////////////////////////////////////////////////////////
 
 class epmem_timer_container : public soar_module::timer_container {
  public:
@@ -245,9 +235,7 @@ class epmem_timer : public soar_module::timer {
   epmem_timer(const char* new_name, agent* new_agent, timer_level new_level);
 };
 
-//////////////////////////////////////////////////////////
 // EpMem Statements
-//////////////////////////////////////////////////////////
 
 class epmem_common_statement_container
     : public soar_module::sqlite_statement_container {
@@ -347,9 +335,7 @@ class epmem_graph_statement_container
   void create_graph_indices();
 };
 
-//////////////////////////////////////////////////////////
 // Common Types
-//////////////////////////////////////////////////////////
 
 // represents a vector of times
 typedef std::vector<epmem_time_id> epmem_time_list;
@@ -373,9 +359,7 @@ typedef struct epmem_rit_state_struct {
   soar_module::sqlite_statement* add_query;
 } epmem_rit_state;
 
-//////////////////////////////////////////////////////////
 // Soar Integration Types
-//////////////////////////////////////////////////////////
 
 // data associated with each state
 typedef struct epmem_data_struct {
@@ -455,16 +439,12 @@ typedef struct epmem_edge_struct {
 
 } epmem_edge;
 
-//////////////////////////////////////////////////////////
 // Parameter Functions (see cpp for comments)
-//////////////////////////////////////////////////////////
 
 // shortcut for determining if EpMem is enabled
 extern bool epmem_enabled(agent* thisAgent);
 
-//////////////////////////////////////////////////////////
 // Soar Functions (see cpp for comments)
-//////////////////////////////////////////////////////////
 
 // init, end
 extern void epmem_attach(agent* thisAgent);
@@ -488,9 +468,7 @@ extern void epmem_print_episode(agent* thisAgent, epmem_time_id memory_id,
 
 extern epmem_hash_id epmem_temporal_hash(agent* thisAgent, Symbol* sym,
                                          bool add_on_fail = true);
-//////////////////////////////////////////////////////////
 // Episodic Memory Search
-//////////////////////////////////////////////////////////
 
 // defined below
 typedef struct epmem_triple_struct epmem_triple;

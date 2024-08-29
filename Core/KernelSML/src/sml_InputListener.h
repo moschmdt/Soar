@@ -1,13 +1,11 @@
-/////////////////////////////////////////////////////////////////
 // InputListener class file.
 //
-// Author: Douglas Pearson, www.threepenny.net
-// Date  : May 2007
+// @author: Douglas Pearson, www.threepenny.net
+// @date  : May 2007
 //
 // This class's OnKernelEvent method is called when
 // the agent's input phase callback is called.
 //
-/////////////////////////////////////////////////////////////////
 
 #ifndef INPUT_LISTENER_H
 #define INPUT_LISTENER_H

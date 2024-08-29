@@ -7,11 +7,10 @@
  *
  *  file:  consistency.h
  *
- * =======================================================================
- *
+ *  *
  * Source code for Operand2/Waterfall specific functions in the kernel.
  *
- * ======================================================================= */
+ * */
 
 #ifndef CONSISTENCY_H
 #define CONSISTENCY_H

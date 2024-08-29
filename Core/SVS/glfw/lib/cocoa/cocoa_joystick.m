@@ -1,9 +1,7 @@
-//========================================================================
 // GLFW - An OpenGL framework
 // Platform:    Cocoa/NSOpenGL
 // API Version: 2.7
 // WWW:         http://www.glfw.org/
-//------------------------------------------------------------------------
 // Copyright (c) 2009-2010 Camilla Berglund <elmindreda@elmindreda.org>
 //
 // This software is provided 'as-is', without any express or implied
@@ -25,7 +23,6 @@
 // 3. This notice may not be removed or altered from any source
 //    distribution.
 //
-//========================================================================
 
 #include "internal.h"
 
@@ -43,9 +40,7 @@
 #include <Kernel/IOKit/hidsystem/IOHIDUsageTables.h>
 
 
-//------------------------------------------------------------------------
 // Joystick state
-//------------------------------------------------------------------------
 
 typedef struct
 {
@@ -85,9 +80,7 @@ typedef struct
 void GetElementsCFArrayHandler( const void* value, void* parameter );
 
 
-//========================================================================
 // Adds an element to the specified joystick
-//========================================================================
 
 static void addJoystickElement( _glfwJoystick* joystick, CFTypeRef refElement )
 {
@@ -187,9 +180,7 @@ static void addJoystickElement( _glfwJoystick* joystick, CFTypeRef refElement )
 }
 
 
-//========================================================================
 // Adds an element to the specified joystick
-//========================================================================
 
 void GetElementsCFArrayHandler( const void* value, void* parameter )
 {
@@ -200,9 +191,7 @@ void GetElementsCFArrayHandler( const void* value, void* parameter )
 }
 
 
-//========================================================================
 // Returns the value of the specified element of the specified joystick
-//========================================================================
 
 static long getElementValue( _glfwJoystick* joystick, _glfwJoystickElement* element )
 {
@@ -234,9 +223,7 @@ static long getElementValue( _glfwJoystick* joystick, _glfwJoystickElement* elem
 }
 
 
-//========================================================================
 // Removes the specified joystick
-//========================================================================
 
 static void removeJoystick( _glfwJoystick* joystick )
 {
@@ -281,9 +268,7 @@ static void removeJoystick( _glfwJoystick* joystick )
 }
 
 
-//========================================================================
 // Callback for user-initiated joystick removal
-//========================================================================
 
 static void removalCallback( void* target, IOReturn result, void* refcon, void* sender )
 {
@@ -291,9 +276,7 @@ static void removalCallback( void* target, IOReturn result, void* refcon, void* 
 }
 
 
-//========================================================================
 // Polls for joystick events and updates GFLW state
-//========================================================================
 
 static void pollJoystickEvents( void )
 {
@@ -331,13 +314,11 @@ static void pollJoystickEvents( void )
 }
 
 
-//************************************************************************
-//****                  GLFW internal functions                       ****
-//************************************************************************
+//**
+//**                  GLFW internal functions                       ****
+//**
 
-//========================================================================
 // Initialize joystick interface
-//========================================================================
 
 void _glfwInitJoysticks( void )
 {
@@ -487,9 +468,7 @@ void _glfwInitJoysticks( void )
 }
 
 
-//========================================================================
 // Close all opened joystick handles
-//========================================================================
 
 void _glfwTerminateJoysticks( void )
 {
@@ -503,13 +482,11 @@ void _glfwTerminateJoysticks( void )
 }
 
 
-//************************************************************************
-//****               Platform implementation functions                ****
-//************************************************************************
+//**
+//**               Platform implementation functions                ****
+//**
 
-//========================================================================
 // Determine joystick capabilities
-//========================================================================
 
 int _glfwPlatformGetJoystickParam( int joy, int param )
 {
@@ -539,9 +516,7 @@ int _glfwPlatformGetJoystickParam( int joy, int param )
 }
 
 
-//========================================================================
 // Get joystick axis positions
-//========================================================================
 
 int _glfwPlatformGetJoystickPos( int joy, float *pos, int numaxes )
 {
@@ -593,9 +568,7 @@ int _glfwPlatformGetJoystickPos( int joy, float *pos, int numaxes )
 }
 
 
-//========================================================================
 // Get joystick button states
-//========================================================================
 
 int _glfwPlatformGetJoystickButtons( int joy, unsigned char *buttons, int numbuttons )
 {
@@ -645,4 +618,3 @@ int _glfwPlatformGetJoystickButtons( int joy, unsigned char *buttons, int numbut
 
     return button;
 }
-
