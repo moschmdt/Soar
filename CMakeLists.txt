@@ -6,6 +6,7 @@ project(soar
 find_package(SQLite3 REQUIRED)
 
 include(GNUInstallDirs)
+add_subdirectory(Java/Debugger)
 
 # Add your source files
 set(SOURCES
