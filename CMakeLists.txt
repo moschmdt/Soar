@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
-project(Soar VERSION 9.6.3)
+project(soar
+  VERSION 9.6.3
+  LANGUAGES CXX)
 
 
 include(GNUInstallDirs)
@@ -42,8 +44,8 @@ file(GLOB_RECURSE HEADERS
 add_compile_definitions(NO_SVS)
 
 # Add executable/library target
-add_library(Soar SHARED ${SOURCES})
-target_include_directories(Soar PUBLIC
+add_library(soar SHARED ${SOURCES})
+target_include_directories(soar PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/CLI/src>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/ClientSML/src>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/ConnectionSML/src>
@@ -65,17 +67,20 @@ target_include_directories(Soar PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/visualizer>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/shared>
 )
-set_target_properties(Soar
+set_target_properties(soar
     PROPERTIES
     PUBLIC_HEADER "${HEADERS}"
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED True
     CMAKE_EXPORT_COMPILE_COMMANDS True)
 
-add_compile_options((-Wall -Wextra -Wpedantic))
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+  add_compile_options(-Wall -Wextra -Wpedantic -fsanitize=address -fno-omit-frame-pointer)
+  add_link_options(-fsanitize=address)
+endif()
 
 # This only sets up the install structure, but no installation happens yet.
-install(TARGETS Soar
+install(TARGETS soar
     EXPORT SoarTargets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -88,14 +93,14 @@ install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(EXPORT SoarTargets
     FILE SoarTargets.cmake
-    NAMESPACE Soar::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Soar
+    NAMESPACE soar::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/soar
 )
 
 include(CMakePackageConfigHelpers)
 configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
   "${CMAKE_CURRENT_BINARY_DIR}/SoarConfig.cmake"
-  INSTALL_DESTINATION "lib/cmake/Soar"
+  INSTALL_DESTINATION "lib/cmake/soar"
   NO_SET_AND_CHECK_MACRO
   NO_CHECK_REQUIRED_COMPONENTS_MACRO
   )
@@ -109,4 +114,4 @@ export(EXPORT SoarTargets
   FILE "${CMAKE_CURRENT_BINARY_DIR}/SoarTargets.cmake"
 )
 
-add_library(Soar::Soar ALIAS Soar)
+add_library(soar::soar ALIAS soar)
