@@ -12,7 +12,6 @@
 
 #include "TestHelpers.hpp"
 #include "portability.h"
-#include "portable-dirent.h"
 #include "sml_ClientAnalyzedXML.h"
 
 std::string SoarHelper::ResourceDirectory = "./SoarUnitTests/";

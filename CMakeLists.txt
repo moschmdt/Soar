@@ -132,3 +132,7 @@ export(EXPORT SoarTargets
 )
 
 add_library(soar::soar ALIAS soar)
+
+if(BUILD_TESTING)
+  add_subdirectory(UnitTests)
+endif()
