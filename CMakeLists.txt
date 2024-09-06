@@ -44,8 +44,8 @@ file(GLOB_RECURSE HEADERS
 add_compile_definitions(NO_SVS)
 
 # Add executable/library target
-add_library(soar SHARED ${SOURCES})
-target_include_directories(soar PUBLIC
+add_library(${PROJECT_NAME} SHARED ${SOURCES})
+target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/CLI/src>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/ClientSML/src>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/ConnectionSML/src>
@@ -67,12 +67,28 @@ target_include_directories(soar PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/visualizer>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/shared>
 )
-set_target_properties(soar
+set_target_properties(${PROJECT_NAME}
     PROPERTIES
-    PUBLIC_HEADER "${HEADERS}"
-    CXX_STANDARD 17
-    CXX_STANDARD_REQUIRED True
-    CMAKE_EXPORT_COMPILE_COMMANDS True)
+    PUBLIC_HEADER "${HEADERS}")
+
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  target_compile_options(${PROJECT_NAME} PRIVATE
+    -Wall
+    -Wpedantic
+    -Wunused-function
+    -Wunused-variable
+    -Wunused-parameter
+    -fsanitize=address -fno-omit-frame-pointer)
+endif()
+
+set(CXX_STANDARD_REQUIRED True)
+
+target_compile_features(${PROJECT_NAME} INTERFACE
+  cxx_std_17
+  )
+
+set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   add_compile_options(-Wall -Wextra -Wpedantic -fsanitize=address -fno-omit-frame-pointer)
@@ -80,7 +96,7 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
 endif()
 
 # This only sets up the install structure, but no installation happens yet.
-install(TARGETS soar
+install(TARGETS ${PROJECT_NAME}
     EXPORT SoarTargets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -99,15 +115,15 @@ install(EXPORT SoarTargets
 
 include(CMakePackageConfigHelpers)
 configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/SoarConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/soarConfig.cmake"
   INSTALL_DESTINATION "lib/cmake/soar"
   NO_SET_AND_CHECK_MACRO
   NO_CHECK_REQUIRED_COMPONENTS_MACRO
   )
 
 install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/SoarConfig.cmake
-  DESTINATION lib/cmake/MathFunctions
+  ${CMAKE_CURRENT_BINARY_DIR}/soarConfig.cmake
+  DESTINATION lib/cmake/soar
   )
 
 export(EXPORT SoarTargets
