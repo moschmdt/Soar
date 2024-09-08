@@ -24,12 +24,12 @@ void FunctionalTestHarness::runTestSetup(std::string testName) {
 
   std::string path = SoarHelper::GetResource(sourceName);
 
-  if (path.size() == 0) {
+  if (path.empty()) {
     sourceName = testName + ".soar";
     path = SoarHelper::GetResource(sourceName);
   }
 
-  if (path.size() == 0 && testName.find("test") == 0) {
+  if (path.empty() && testName.find("test") == 0) {
     sourceName = testName.substr(std::string("test").size(), -1) + ".soar";
     path = SoarHelper::GetResource(sourceName);
   }
