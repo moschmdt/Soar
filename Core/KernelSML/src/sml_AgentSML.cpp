@@ -11,6 +11,8 @@
 //
 /////////////////////////////////////////////////////////////////
 
+#include <numeric>
+
 #include "agent.h"
 #include "decide.h"
 #include "decider.h"
