@@ -4,6 +4,8 @@ project(soar
   LANGUAGES CXX)
 
 
+find_package(SQLite3 REQUIRED)
+
 include(GNUInstallDirs)
 
 # Add your source files
@@ -13,7 +15,6 @@ set(SOURCES
     Core/ElementXML/ElementXML.cxx
     Core/KernelSML/KernelSML.cxx
     Core/SoarKernel/SoarKernel.cxx
-    Core/SoarKernel/sqlite/sqlite3.c
     Core/shared/shared.cxx
     Core/CLI/CommandLineInterface.cxx
 )
@@ -24,7 +25,6 @@ file(GLOB_RECURSE HEADERS
     "Core/ConnectionSML/src/*.h"
     "Core/ElementXML/src/*.h"
     "Core/KernelSML/src/*.h"
-    "Core/SoarKernel/sqlite/*.h"
     "Core/SoarKernel/src/debug_code/*.h"
     "Core/SoarKernel/src/decision_process/*.h"
     "Core/SoarKernel/src/episodic_memory/*.h"
@@ -66,10 +66,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/soar_representation>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/visualizer>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/shared>
+    $<INSTALL_INTERFACE:include/soar>
 )
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
     PUBLIC_HEADER "${HEADERS}")
+
+target_link_libraries(${PROJECT_NAME} SQLite::SQLite3)
 
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -84,7 +87,7 @@ endif()
 
 set(CXX_STANDARD_REQUIRED True)
 
-target_compile_features(${PROJECT_NAME} INTERFACE
+target_compile_features(${PROJECT_NAME} PUBLIC
   cxx_std_17
   )
 
@@ -132,6 +135,4 @@ export(EXPORT SoarTargets
 
 add_library(soar::soar ALIAS soar)
 
-if(BUILD_TESTING)
-  add_subdirectory(UnitTests)
-endif()
+add_subdirectory(UnitTests)

@@ -52,13 +52,18 @@ class FunctionalTestHarness : public TestCategory {
  public:
   /**
    * Sources rules
-   * @param testName the test to perform
+   * @param testName The test to perform
    * @throws SoarException
    */
   void runTestSetup(std::string testName);
 
-  // this function assumes some other function has set up the agent (like
-  // runTestSetup)
+  /**
+   * @brief This function assumes some other function has set up the agent (like
+   * runTestSetup)
+   *
+   * @param testName
+   * @param expectedDecisions
+   */
   void runTestExecute(std::string testName, int expectedDecisions);
 
  protected:
@@ -76,13 +81,13 @@ class FunctionalTestHarness : public TestCategory {
   ::Symbol* succeededHandler();
 
   /**
-   * Set up the agent with RHS functions common to these
+   * @brief Set up the agent with RHS functions common to these
    * FunctionalTests.
    */
   void installRHS();
 
   /**
-   * Remove the RHS functions we added to prevent memory leaks
+   * @brief Remove the RHS functions we added to prevent memory leaks
    */
   void removeRHS();
 };

@@ -32,7 +32,6 @@
       #X, [this]() { this->X(); } /*std::bind(&test_type::X, this)*/, Y, \
       m_TestCategory_tests);
 
-bool isfile(const char* path);
 void setCWDToEnv();
 void printDebugInformation(std::stringstream& output, sml::Agent* agent);
 
