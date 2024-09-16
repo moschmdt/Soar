@@ -9,8 +9,8 @@
 #ifndef AgentTest_cpp
 #define AgentTest_cpp
 
-#include "SoarHelper.hpp"
-#include "TestCategory.hpp"
+#include "../SoarHelpers/SoarHelper.hpp"
+#include "../TestHarness/TestCategory.hpp"
 #include "sml_ClientAgent.h"
 #include "sml_ClientKernel.h"
 

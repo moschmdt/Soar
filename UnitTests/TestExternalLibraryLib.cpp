@@ -30,9 +30,7 @@ RHS_EXPORT const char *sml_InitLibrary(Kernel *pKernel, int argc, char **argv) {
 }  // extern "C"
 #endif
 
-//
 // Stuff to use the library as a standard client (i.e. as an executable)
-//
 
 void MyShutdownHandler(smlSystemEventId id, void *pUserData, Kernel *pKernel) {
   pKernel->SetConnectionInfo("RHSemotion", sml_Names::kStatusClosing,

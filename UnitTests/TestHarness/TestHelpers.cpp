@@ -34,16 +34,6 @@
 #include <exception>
 #include <sstream>
 
-bool isfile(const char* path) {
-#ifdef _WIN32
-  DWORD a = GetFileAttributes(path);
-  return a != INVALID_FILE_ATTRIBUTES && !(a & FILE_ATTRIBUTE_DIRECTORY);
-#else
-  struct stat st;
-  return (stat(path, &st) == 0 && !S_ISDIR(st.st_mode));
-#endif
-}
-
 void setCWDToEnv() {
   if (getenv("LIBSOAR") != nullptr) {
     if (chdir(getenv("LIBSOAR")) != 0) {
@@ -67,7 +57,7 @@ void printDebugInformation(std::stringstream& output, sml::Agent* agent) {
   //
   //	output << "============================================================"
   //<< std::endl << std::endl; 	output << agent->ExecuteCommandLine("print -d
-  //100 s1") << std::endl << std::endl; 	output <<
+  // 100 s1") << std::endl << std::endl; 	output <<
   //"============================================================" << std::endl
   //<< std::endl;
   //
