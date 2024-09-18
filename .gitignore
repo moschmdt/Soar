@@ -2,6 +2,9 @@
 # Or via: git config --global alias.ignore '!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi'
 # then git ignore c++,c,python,java,windows,archives,xcode,visualstudio,osx,linux
 
+vcpkg_installed/*
+CMakeUserPresets.json
+
 ### C++ ###
 # Compiled Object files
 *.slo
