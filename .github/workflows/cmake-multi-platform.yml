@@ -49,6 +49,9 @@ jobs:
             c_compiler: cl
           - os: macos-latest
             c_compiler: cl
+          # gcc no default setup on macos-latest. Skip for now.
+          - os: macos-latest
+            c_compiler: gcc
 
     steps:
       - uses: actions/checkout@v4
