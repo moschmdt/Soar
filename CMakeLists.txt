@@ -84,7 +84,8 @@ endif()
 
 set(CXX_STANDARD_REQUIRED True)
 
-target_compile_features(${PROJECT_NAME} INTERFACE
+# Set the C++ standard for this and all downstream targets
+target_compile_features(${PROJECT_NAME} PUBLIC
   cxx_std_17
   )
 
