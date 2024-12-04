@@ -74,7 +74,7 @@ def __get_brew_tcl_install_info_mac(env) -> Optional[TclInstallInfo]:
         install_info = TclInstallInfo(
             home=home_dir,
             lib_dir=home_dir / "lib",
-            include_dir=home_dir / "include" / prefix,
+            include_dir=home_dir / "include" / "tcl-tk",
             dyn_lib_name="libtcl8.6.dylib",
             include_lib_name="tcl8.6",
         )
