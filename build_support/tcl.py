@@ -57,19 +57,30 @@ def __get_tcl_from_local_dir_mac(env, local_compiled_dir=None, tcl_suffix=None) 
     return install_info
 
 def __get_brew_tcl_install_info_mac(env) -> Optional[TclInstallInfo]:
-    try:
-        brew_installed_dir = (
-            subprocess.check_output(["brew", "--prefix", "tcl-tk"]).decode().strip()
-        )
-    except subprocess.CalledProcessError:
-        print(f"{env['INDENT']}Tcl not brew-installed: {msg}")
+    # TODO: Tcl 9 is out! Can we support that? https://github.com/SoarGroup/Soar/issues/524
+    prefix_candidates = ["tcl-tk", "tcl-tk@8"]
+
+    brew_installed_dir = None
+    for prefix in prefix_candidates:
+        print(f"Checking prefix {prefix}")
+        try:
+            brew_installed_dir = (
+                subprocess.check_output(["brew", "--prefix", prefix]).decode().strip()
+            )
+        except subprocess.CalledProcessError:
+            print(f"{env['INDENT']}Could not locate Tcl at brew prefix {prefix}")
+        else:
+            break
+
+    if brew_installed_dir is None:
+        print(f"{env['INDENT']}Tcl not brew-installed")
         return None
 
     home_dir = Path(brew_installed_dir)
     install_info = TclInstallInfo(
         home=home_dir,
         lib_dir=home_dir / "lib",
-        include_dir=home_dir / "include" / "tcl-tk",
+        include_dir=home_dir / "include" / prefix,
         dyn_lib_name="libtcl8.6.dylib",
         include_lib_name="tcl8.6",
     )
@@ -82,27 +93,20 @@ def __get_brew_tcl_install_info_mac(env) -> Optional[TclInstallInfo]:
 
 
 def __get_system_tcl_install_info_mac(env) -> Optional[TclInstallInfo]:
-    valid = False
-    candidate_paths = [
-        Path("/Library/Frameworks/Tcl.framework/Versions/Current"),
-        Path("/System/Library/Frameworks/Tcl.framework/Versions/Current"),
-    ]
-
-    for tcl_home in candidate_paths:
-        install_info = TclInstallInfo(
-            home=tcl_home,
-            lib_dir=tcl_home,
-            include_dir=tcl_home / "Headers",
-            dyn_lib_name="Tcl",
-            include_lib_name="Tcl",
-            using_framework=True,
-        )
-        valid, msg = install_info.is_valid()
-        if not valid:
-            print(f"{env['INDENT']}Candidate system Tcl not found: {msg}")
-            continue
-        return install_info
-    return None
+    tcl_home = Path("/Library/Frameworks/Tcl.framework/Versions/Current")
+    install_info = TclInstallInfo(
+        home=tcl_home,
+        lib_dir=tcl_home,
+        include_dir=tcl_home / "Headers",
+        dyn_lib_name="Tcl",
+        include_lib_name="Tcl",
+        using_framework=True,
+    )
+    valid, msg = install_info.is_valid()
+    if not valid:
+        print(f"{env['INDENT']}System Tcl not found: {msg}")
+        return None
+    return install_info
 
 
 def __prepare_for_compiling_with_tcl_mac(env, tcl_path_override, tcl_suffix):
