@@ -98,11 +98,18 @@ jobs:
           PYTHONUTF8: 1
         run: python3 TestPythonSML.py
 
+      # different install directory for macos-latest, since tcl-tk default in homebrew is now 9.0
+      - name: SML Tcl tests (macos-latest)
+        if: matrix.os == 'macos-latest'
+        working-directory: ./out
+        run: $(brew --prefix tcl-tk@8)/bin/tclsh TestTclSML.tcl
+
       - name: SML Tcl tests
+        if: matrix.os != 'macos-latest'
         working-directory: ./out
         run: tclsh TestTclSML.tcl
 
-        # TODO: run additional tests for CSharp
+      # TODO: run additional tests for CSharp
 
       # reports JUnit test results as GitHub PR check.
       - name: publish test report
