@@ -82,20 +82,27 @@ def __get_brew_tcl_install_info_mac(env) -> Optional[TclInstallInfo]:
 
 
 def __get_system_tcl_install_info_mac(env) -> Optional[TclInstallInfo]:
-    tcl_home = Path("/Library/Frameworks/Tcl.framework/Versions/Current")
-    install_info = TclInstallInfo(
-        home=tcl_home,
-        lib_dir=tcl_home,
-        include_dir=tcl_home / "Headers",
-        dyn_lib_name="Tcl",
-        include_lib_name="Tcl",
-        using_framework=True,
-    )
-    valid, msg = install_info.is_valid()
-    if not valid:
-        print(f"{env['INDENT']}System Tcl not found: {msg}")
-        return None
-    return install_info
+    valid = False
+    candidate_paths = [
+        Path("/Library/Frameworks/Tcl.framework/Versions/Current"),
+        Path("/System/Library/Frameworks/Tcl.framework/Versions/Current"),
+    ]
+
+    for tcl_home in candidate_paths:
+        install_info = TclInstallInfo(
+            home=tcl_home,
+            lib_dir=tcl_home,
+            include_dir=tcl_home / "Headers",
+            dyn_lib_name="Tcl",
+            include_lib_name="Tcl",
+            using_framework=True,
+        )
+        valid, msg = install_info.is_valid()
+        if not valid:
+            print(f"{env['INDENT']}Candidate system Tcl not found: {msg}")
+            continue
+        return install_info
+    return None
 
 
 def __prepare_for_compiling_with_tcl_mac(env, tcl_path_override, tcl_suffix):
