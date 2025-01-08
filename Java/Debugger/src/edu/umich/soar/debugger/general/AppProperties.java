@@ -12,10 +12,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.logging.Logger;
+
+import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class AppProperties extends java.util.Properties
 {
@@ -26,6 +30,8 @@ public class AppProperties extends java.util.Properties
     protected final String m_Header;
 
     protected final String kVersion = "Version";
+
+    private static final Logger LOGGER = Logger.getLogger(AppProperties.class.getName());
 
     /**
      * The filename is just a filename--not a full path. The file is stored
@@ -146,7 +152,6 @@ public class AppProperties extends java.util.Properties
             // File doesn't exist. No properties to load, so we're done.
             return false;
         }
-
     }
 
     public void Save() throws java.io.IOException {
@@ -162,8 +167,13 @@ public class AppProperties extends java.util.Properties
         try (FileOutputStream output = new FileOutputStream(tempPath.toFile())) {
             this.store(output, this.m_Header);
         }
-
-        Files.move(tempPath, finalPath, StandardCopyOption.REPLACE_EXISTING);
+        try {
+            Files.move(tempPath, finalPath, REPLACE_EXISTING, ATOMIC_MOVE);
+        } catch (AtomicMoveNotSupportedException e) {
+            LOGGER.warning(
+                "Cannot write " + finalPath + " atomically (" + e.getMessage() + "); falling back to non-atomic write");
+            Files.move(tempPath, finalPath, REPLACE_EXISTING);
+        }
     }
 
     public String getFilename()
