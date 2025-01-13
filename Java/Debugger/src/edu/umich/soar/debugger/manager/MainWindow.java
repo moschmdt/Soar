@@ -524,8 +524,7 @@ public class MainWindow
             if (showErrors) {
                 m_Frame.ShowMessageBox("Error loading file: " + filename, msg);
             }
-            System.out.println("Error loading layout from file: " + filename + " "
-                + msg);
+            System.err.println(msg);
 
             return false;
         }
