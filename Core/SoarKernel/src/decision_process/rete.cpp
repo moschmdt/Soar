@@ -3715,7 +3715,9 @@ void update_max_rhs_unbound_variables(agent* thisAgent, uint64_t num_for_new_pro
    initial instantiation of the production.  This routine returns
    DUPLICATE_PRODUCTION if the production was a duplicate; else
    NO_REFRACTED_INST if no refracted inst. was given; else either
-   REFRACTED_INST_MATCHED or REFRACTED_INST_DID_NOT_MATCH.
+   REFRACTED_INST_MATCHED or REFRACTED_INST_DID_NOT_MATCH. In the case
+   of duplicate justifications, the previous one is excised before adding
+   the new one in its place.
 
    The initial refracted instantiation is provided so the initial
    instantiation of a newly-build chunk doesn't get fired.  We handle
@@ -3728,8 +3730,6 @@ void update_max_rhs_unbound_variables(agent* thisAgent, uint64_t num_for_new_pro
    tentative_retractions.  If not, there was a match (and the p-node's
    activation routine filled in the token info on the instantiation for
    us).  If so, there was no match for the refracted instantiation.
-
-   BUGBUG should we check for duplicate justifications?
 --------------------------------------------------------------------- */
 
 byte add_production_to_rete(agent* thisAgent, production* p, condition* lhs_top, instantiation* refracted_inst, bool warn_on_duplicates, production* &duplicate_rule, bool ignore_rhs)
@@ -3802,18 +3802,38 @@ byte add_production_to_rete(agent* thisAgent, production* p, condition* lhs_top,
         }
         /* --- duplicate production found --- */
         duplicate_rule = p_node->b.p.prod;
+        // For o-supported justifications, we have to excise the original and
+        // add the duplicate so that the RHS is re-applied. For i-supported justifications,
+        // this should have a negligible effect. Since support calculations are done elsewhere,
+        // we save some work by not checking it here and simply always doing the excise/replace
+        // for duplicates.
+        if (p->type == JUSTIFICATION_PRODUCTION_TYPE) {
+            if (warn_on_duplicates)
+            {
+                std::stringstream output;
+                output << "\nExcising justification "
+                    << duplicate_rule->name->to_string(true)
+                    << " to replace with duplicate "
+                    << p->name->to_string(true)
+                    << " ";
+                xml_generate_warning(thisAgent, output.str().c_str());
+                thisAgent->outputManager->printa(thisAgent, output.str().c_str());
+            }
+            excise_production(thisAgent, duplicate_rule, false, true);
+            // After the excision, p_node and its ancestors may no longer exist, so we recurse
+            // to add the new production to the rete, which will add new p_nodes as needed.
+            return add_production_to_rete(thisAgent, p, lhs_top, refracted_inst, warn_on_duplicates, duplicate_rule, ignore_rhs);
+        }
         if (warn_on_duplicates)
         {
             std::stringstream output;
             output << "\nIgnoring "
                    << p->name->to_string(true)
                    << " because it is a duplicate of "
-                   << p_node->b.p.prod->name->to_string(true)
+                   << duplicate_rule->name->to_string(true)
                    << " ";
             xml_generate_warning(thisAgent, output.str().c_str());
-
-            thisAgent->outputManager->printa_sf(thisAgent, "Ignoring %y because it is a duplicate of %y\n",
-                               p->name, p_node->b.p.prod->name);
+            thisAgent->outputManager->printa(thisAgent, output.str().c_str());
         }
         thisAgent->symbolManager->deallocate_symbol_list_removing_references(rhs_unbound_vars_for_new_prod);
         return DUPLICATE_PRODUCTION;
