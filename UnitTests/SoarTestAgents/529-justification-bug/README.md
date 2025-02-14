@@ -1,4 +1,4 @@
-# Regression Test Agent for Issue #529
+# Regression Test Agent for Issue [#529](https://github.com/SoarGroup/Soar/issues/529)
 
 This simple agent triggers the creation of two duplicate justifications with o-support. Soar should apply the RHS changes both times, but it previously would only apply the changes once (though it did run the RHS functions both times).
 
