@@ -201,7 +201,7 @@ typedef struct beta_memory_node_data_struct
     struct rete_node_struct* first_linked_child;
 } beta_memory_node_data;
 
-/* --- data for cn and cn_partner nodes only --- */
+/* --- data for cn (conjunctive negation) and cn_partner nodes only --- */
 typedef struct cn_node_data_struct
 {
     struct rete_node_struct* partner;    /* cn, cn_partner point to each other */
