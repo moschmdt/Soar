@@ -26,8 +26,6 @@ class cliproxy
         {
             list_children(0, os);
         }
-        // return true if path should be uppercased before looking up children
-        virtual bool proxy_uppercase_paths() {return false;}
 
         std::string help_text;
         std::vector<std::string> args_help;

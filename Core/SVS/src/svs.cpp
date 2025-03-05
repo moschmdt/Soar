@@ -519,7 +519,9 @@ void svs::proxy_get_children(std::map<std::string, cliproxy*>& c)
 
     for (size_t j = 0, jend = state_stack.size(); j < jend; ++j)
     {
-        c[state_stack[j]->get_name()] = state_stack[j];
+        // Make sure the state_id is uppercase
+        std::string state_id = to_uppercase(state_stack[j]->get_name());
+        c[state_id] = state_stack[j];
     }
 }
 

@@ -20,7 +20,6 @@ cliproxy::~cliproxy() {}
 
 void cliproxy::proxy_use(const std::string& path, const std::vector<std::string>& args, std::ostream& os)
 {
-
     if (path.empty() || path == ".")
     {
         if (args.size() > 0 && args[0] == "help")
@@ -43,16 +42,17 @@ void cliproxy::proxy_use(const std::string& path, const std::vector<std::string>
 
         partition(path, child, rest);
 
-        if(proxy_uppercase_paths()) {
-            // uppercase child
-            std::transform(child.begin(), child.end(), child.begin(), ::toupper);
-        }
-
         proxy_get_children(c);
         if (has(c, child))
         {
             c[child]->proxy_use(rest, args, os);
         }
+        // Try also matching an upper case verison
+        // (Allows state ids to be case insensitive)
+        else if(has(c, to_uppercase(child))) 
+        {
+            c[to_uppercase(child)]->proxy_use(rest, args, os);
+        } 
         else
         {
             os << "path not found" << std::endl;
