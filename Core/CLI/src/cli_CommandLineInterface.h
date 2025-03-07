@@ -23,7 +23,6 @@
 
 #include <bitset>
 #include <cstdlib>
-#include <filesystem>
 #include <list>
 #include <map>
 #include <sstream>
@@ -140,7 +139,7 @@ namespace cli
             /**
              * @brief Returns the directory that was the current working directory when this CLI was created
              */
-            std::filesystem::path GetHome() { return m_HomeDirectory; };
+            std::string GetHome() { return m_HomeDirectory; };
 
             /*************************************************************
             * @brief Returns true if the given command should always be echoed (to any listeners)
@@ -332,7 +331,7 @@ namespace cli
             bool                    m_callbacks_were_enabled;
             bool                    m_console_was_enabled;
             bool                    m_output_was_enabled;
-            std::filesystem::path   m_HomeDirectory;
+            std::string   m_HomeDirectory;
     };
 } // namespace cli
 

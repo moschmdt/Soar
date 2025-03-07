@@ -23,7 +23,7 @@ bool CommandLineInterface::DoCD(const std::string* pDirectory)
 {
     if (!pDirectory) {
         // cd $HOME, analogous to a POSIX system
-        std::string homePath = GetHome().string();
+        std::string homePath = GetHome();
         return DoCD(&homePath);
     }
 
