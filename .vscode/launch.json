@@ -24,8 +24,13 @@
         {
             "name": "Debug Soar CLI",
             "type": "cppdbg",
-            "request": "attach",
-            "program": "${workspaceRoot}/out/soar",
+            "request": "launch",
+            "program": "${workspaceFolder}/out/soar",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/out",
+            "environment": [],
+            "externalConsole": true,
             "MIMode": "gdb",
             "osx": {
                 "MIMode": "lldb",
