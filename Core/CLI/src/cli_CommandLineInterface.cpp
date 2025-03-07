@@ -89,6 +89,8 @@ EXPORT CommandLineInterface::CommandLineInterface()
     m_Parser.AddCommand(new cli::WMCommand(*this));
     m_Parser.AddCommand(new cli::SVSCommand(*this));
 
+    m_HomeDirectory = std::filesystem::current_path();
+
     Soar_Instance::Get_Soar_Instance().Set_CLI(this);
 }
 

@@ -21,6 +21,12 @@ using namespace sml;
 
 bool CommandLineInterface::DoCD(const std::string* pDirectory)
 {
+    if (!pDirectory) {
+        // cd $HOME, analogous to a POSIX system
+        std::string homePath = GetHome().string();
+        return DoCD(&homePath);
+    }
+
     if (chdir(pDirectory->c_str()))
     {
         return SetError("Error changing to " + *pDirectory);
@@ -53,13 +59,13 @@ bool CommandLineInterface::DoDirs()
 {
 
     StringStack tempStack;
-    
+
     std::string cwd;
     if (!GetCurrentWorkingDirectory(cwd))
     {
         return false;
     }
-    
+
     // cwd is top of stack
     if (m_RawOutput)
     {
@@ -69,7 +75,7 @@ bool CommandLineInterface::DoDirs()
     {
         AppendArgTagFast(sml_Names::kParamDirectory, sml_Names::kTypeString, cwd);
     }
-    
+
     // print rest of stack making a new one
     while (m_DirectoryStack.size())
     {
@@ -81,11 +87,11 @@ bool CommandLineInterface::DoDirs()
         {
             AppendArgTagFast(sml_Names::kParamDirectory, sml_Names::kTypeString, m_DirectoryStack.top());
         }
-        
+
         tempStack.push(m_DirectoryStack.top());
         m_DirectoryStack.pop();
     }
-    
+
     // put the old stack back together
     while (tempStack.size())
     {
