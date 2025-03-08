@@ -6,7 +6,6 @@
 #include <cassert>
 
 #include <iostream>
-#include <filesystem>
 #include <fstream>
 #include <cctype>
 
@@ -90,7 +89,7 @@ EXPORT CommandLineInterface::CommandLineInterface()
     m_Parser.AddCommand(new cli::WMCommand(*this));
     m_Parser.AddCommand(new cli::SVSCommand(*this));
 
-    m_HomeDirectory = std::filesystem::current_path().string();
+    GetCurrentWorkingDirectory(m_HomeDirectory);
 
     Soar_Instance::Get_Soar_Instance().Set_CLI(this);
 }
@@ -363,6 +362,7 @@ EXPORT void CommandLineInterface::SetKernel(sml::KernelSML* pKernelSML)
     m_pKernelSML = pKernelSML;
 }
 
+// TODO: migrate to std::filesystem::path once supported everywhere
 bool CommandLineInterface::GetCurrentWorkingDirectory(std::string& directory)
 {
     // Pull an arbitrary buffer size of 1024 out of a hat and use it
