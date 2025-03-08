@@ -401,6 +401,11 @@ void MiscTests::test529JustificationBug()
     SoarHelper::init_check_to_find_refcount_leaks(agent);
 }
 
+void MiscTests::test494Cd()
+{
+    agent->ExecuteCommandLine("cd");
+}
+
 //void MiscTests::testSoarDebugger()
 //{
 //	bool result = agent->SpawnDebugger();
