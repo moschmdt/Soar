@@ -653,7 +653,8 @@ namespace soar
 
             /**
              * Read a word enclosed in braces. Brace levels must match unless
-             * braces are escaped.
+             * braces are escaped. Escaping behavior is different from in quoted strings, allowing
+             * most backslashes to be included in the word.
              */
             void read_braces(std::vector< std::string >& argv)
             {
