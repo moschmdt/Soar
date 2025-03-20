@@ -221,8 +221,8 @@ public class FoldingTextView extends AbstractComboView implements
         m_FoldingText.getTextWindow().addKeyListener(new KeyAdapter()
         {
             // If the user tries to type into the main text window, move the
-            // focus down
-            // to the combo box where they can usefully type.
+            // focus down to the combo box where they can usefully type.
+            // This also handled for the paste action in the paste override later.
             @Override
             public void keyPressed(KeyEvent e)
             {
@@ -967,6 +967,13 @@ public class FoldingTextView extends AbstractComboView implements
     protected void appendText(String text)
     {
         appendText(text, TraceType.kTopLevel);
+    }
+
+    @Override
+    public void paste() {
+        // Only the command window can have text input, so we send paste there.
+        // This is handled for arbitrary key inputs in a key listener registered above.
+        m_CommandCombo.paste();
     }
 
     /************************************************************************
