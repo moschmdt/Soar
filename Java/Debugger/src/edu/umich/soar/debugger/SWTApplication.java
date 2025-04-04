@@ -11,23 +11,15 @@
  ********************************************************************************************/
 package edu.umich.soar.debugger;
 
+import edu.umich.soar.debugger.doc.Document;
 import org.apache.commons.cli.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
-
 import sml.Agent;
 import sml.Kernel;
-import edu.umich.soar.debugger.doc.Document;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,66 +30,7 @@ import java.util.List;
  ************************************************************************/
 public class SWTApplication
 {
-
-    static Display display;
-
-    static Shell shell;
-
-    static CoolBar coolBar;
-
-    static Menu chevronMenu = null;
-
-    int m_OffsetY;
-
-    int m_MinY;
-
-    int m_MaxY;
-
     private static final HelpFormatter HELP_FORMATTER = new HelpFormatter();
-
-    // This is just a little place for me to easily test SWT concepts
-    public void startTest(String[] args) {
-        final Display display = new Display();
-        Shell shell = new Shell(display);
-        shell.setLayout(new FillLayout());
-
-        // The container lets us control the layout of the controls
-        // within this window
-        Composite container = new Composite(shell, SWT.NULL);
-
-        RowLayout layout = new RowLayout(SWT.HORIZONTAL);
-        // layout.wrap = true ;
-        layout.fill = true;
-        container.setLayout(layout);
-
-        for (int i = 0; i < 10; i++)
-        {
-            Button button = new Button(container, SWT.PUSH);
-            button.setText("Button " + i);
-        }
-
-        shell.pack();
-        shell.open();
-        while (!shell.isDisposed())
-        {
-            if (!display.readAndDispatch())
-                display.sleep();
-        }
-        display.dispose();
-    }
-
-    /*
-     * private void clearClipboard() { Clipboard clipboard = new
-     * Clipboard(display); String textData = ""; // Copying an empty string to
-     * the clipboard to erase it TextTransfer textTransfer =
-     * TextTransfer.getInstance(); clipboard.setContents(new Object[]{textData},
-     * new Transfer[]{textTransfer}); clipboard.dispose(); }
-     */
-
-    public void startApp(String[] args) throws Exception
-    {
-        startApp(args, null);
-    }
 
     public Options getCommandLineOptions() {
         Options options = new Options();
