@@ -8,5 +8,5 @@ Version: 9.6.3
 Built-By: Nathan Glenn
 Copyright: (c) The Regents of the University of Michigan, 2010
 Main-Class: edu.umich.soar.debugger.Application
-Class-Path: . soar-smljava.jar swt.jar swtgraphics2d.jar sml.jar soar-debugger-api.jar commons-cli-1.9.0
+Class-Path: . soar-smljava.jar swt.jar swtgraphics2d.jar sml.jar soar-debugger-api.jar commons-cli-1.9.0.jar
 
