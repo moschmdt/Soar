@@ -1370,14 +1370,14 @@ int64_t compute_y_point(int64_t current_y, int64_t heading, int64_t speed, int64
 }
 
 /* --------------------------------------------------------------------
-                                predict-x
+                                extrapolate-x-position
 
  Takes 4 integer args: x1,heading(degrees),speed (distance/tick),elapsed_time(tick))
  Assuming coordinate system where positive y is south and positive x is east
  and returns integer x position (rounded to nearest int)
 -------------------------------------------------------------------- */
 
-Symbol* predict_x_position_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
+Symbol* extrapolate_x_position_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
 {
     Symbol* arg;
     int64_t current_x;
@@ -1387,7 +1387,7 @@ Symbol* predict_x_position_rhs_function_code(agent* thisAgent, cons* args, void*
 
     if (!args)
     {
-        thisAgent->outputManager->printa(thisAgent, "Error: 'predict-x' function called with no arguments\n");
+        thisAgent->outputManager->printa(thisAgent, "Error: 'extrapolate-x-position' function called with no arguments\n");
         return NIL;
     }
 
@@ -1398,7 +1398,7 @@ Symbol* predict_x_position_rhs_function_code(agent* thisAgent, cons* args, void*
         arg = static_cast<Symbol*>(c->first);
         if (arg->symbol_type != INT_CONSTANT_SYMBOL_TYPE)
         {
-            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int(%y) passed to predict-x function.\n", arg);
+            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int(%y) passed to extrapolate-x-position function.\n", arg);
             return NIL;
         }
         else
@@ -1409,7 +1409,7 @@ Symbol* predict_x_position_rhs_function_code(agent* thisAgent, cons* args, void*
 
     if (count != 4)
     {
-        thisAgent->outputManager->printa(thisAgent, "Error: 'predict-x' takes exactly 4 arguments.\n");
+        thisAgent->outputManager->printa(thisAgent, "Error: 'extrapolate-x-position' takes exactly 4 arguments.\n");
         return NIL;
     }
 
@@ -1429,13 +1429,13 @@ Symbol* predict_x_position_rhs_function_code(agent* thisAgent, cons* args, void*
 }
 
 /* --------------------------------------------------------------------
-                                predict-y
+                                extrapolate-y-position
 
  Takes 4 integer args: y1,heading(degrees),speed (distance/tick),elapsed_time(tick))
   Assuming coordinate system where positive y is south and positive x is east
  and returns integer y position (rounded to nearest int)
 -------------------------------------------------------------------- */
-Symbol* predict_y_position_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
+Symbol* extrapolate_y_position_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
 {
     Symbol* arg;
     int64_t current_y;
@@ -1445,7 +1445,7 @@ Symbol* predict_y_position_rhs_function_code(agent* thisAgent, cons* args, void*
 
     if (!args)
     {
-        thisAgent->outputManager->printa(thisAgent, "Error: 'predict-y' function called with no arguments\n");
+        thisAgent->outputManager->printa(thisAgent, "Error: 'extrapolate-y-position' function called with no arguments\n");
         return NIL;
     }
 
@@ -1455,7 +1455,7 @@ Symbol* predict_y_position_rhs_function_code(agent* thisAgent, cons* args, void*
         arg = static_cast<Symbol*>(c->first);
         if (arg->symbol_type != INT_CONSTANT_SYMBOL_TYPE)
         {
-            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int(%y) passed to predict-y function.\n", arg);
+            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int(%y) passed to extrapolate-y-position function.\n", arg);
             return NIL;
         }
         else
@@ -1466,7 +1466,7 @@ Symbol* predict_y_position_rhs_function_code(agent* thisAgent, cons* args, void*
 
     if (count != 4)
     {
-        thisAgent->outputManager->printa(thisAgent, "Error: 'predict-y' takes exactly 4 arguments.\n");
+        thisAgent->outputManager->printa(thisAgent, "Error: 'extrapolate-y-position' takes exactly 4 arguments.\n");
         return NIL;
     }
 
@@ -2048,12 +2048,12 @@ double calculate_distance(Point p1, Point p2) {
 }
 
 /* --------------------------------------------------------------------
-                                compute_closest_intercept
+                                select_point_closest_to_vector
 
  Takes 3 args: point{x,y,id}, heading(int compass degrees),array of points
  and returns string id of nearest intercept
 -------------------------------------------------------------------- */
-char * compute_closest_intercept(Point starting, int heading, const std::vector<Point>& points)
+char * select_point_closest_to_vector(Point starting, int heading, const std::vector<Point>& points)
 {
     double min_angle_diff = DBL_MAX;
     char nonvalid[] = "no_valid_point";
@@ -2137,7 +2137,7 @@ Symbol* compute_haversine_formula_rhs_function_code(agent* thisAgent, cons* args
 
     if (!args)
     {
-        thisAgent->outputManager->printa(thisAgent, "Error: 'compute-haversine-formula' function called with no arguments\n");
+        thisAgent->outputManager->printa(thisAgent, "Error: 'haversine' function called with no arguments\n");
         return NIL;
     }
 
@@ -2149,7 +2149,7 @@ Symbol* compute_haversine_formula_rhs_function_code(agent* thisAgent, cons* args
         //all 4 args are floats, but could be int
         if (arg->symbol_type != FLOAT_CONSTANT_SYMBOL_TYPE && arg->symbol_type != INT_CONSTANT_SYMBOL_TYPE)
         {
-            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int/float (%y) passed to compute-closest-intercept function.\n", arg);
+            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int/float (%y) passed to haversine function.\n", arg);
             return NIL;
         }
         count = count + 1;
@@ -2157,7 +2157,7 @@ Symbol* compute_haversine_formula_rhs_function_code(agent* thisAgent, cons* args
 
     if (count != 4)
     {
-        thisAgent->outputManager->printa(thisAgent, "Error: 'compute-haversine-formula' takes exactly 4 arguments.\n");
+        thisAgent->outputManager->printa(thisAgent, "Error: 'haversine' takes exactly 4 arguments.\n");
         return NIL;
     }
 
@@ -2177,7 +2177,7 @@ Symbol* compute_haversine_formula_rhs_function_code(agent* thisAgent, cons* args
 }
 
 /* --------------------------------------------------------------------
-                                compute_closest_intercept
+                                select_point_closest_to_vector
 
  Takes 4 args: x1(int),y1(int),heading(int compass degrees),set of x,y points with id)
  set = points.point <p> (<p> ^x <xpos> ^y <ypos> ^id |str-id|)
@@ -2186,7 +2186,7 @@ Symbol* compute_haversine_formula_rhs_function_code(agent* thisAgent, cons* args
 -------------------------------------------------------------------- */
 
 
-Symbol* compute_closest_intercept_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
+Symbol* select_point_closest_to_vector_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
 {
     Symbol* arg;
     int64_t current_x;
@@ -2198,7 +2198,7 @@ Symbol* compute_closest_intercept_rhs_function_code(agent* thisAgent, cons* args
 
     if (!args)
     {
-        thisAgent->outputManager->printa(thisAgent, "Error: 'compute-closest-intercept' function called with no arguments\n");
+        thisAgent->outputManager->printa(thisAgent, "Error: 'select-point-closest-to-vector' function called with no arguments\n");
         return NIL;
     }
 
@@ -2210,7 +2210,7 @@ Symbol* compute_closest_intercept_rhs_function_code(agent* thisAgent, cons* args
         //first 3 args are ints
         if (count < 3 && (arg->symbol_type != INT_CONSTANT_SYMBOL_TYPE))
         {
-            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int (%y) passed to compute-closest-intercept function.\n", arg);
+            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int (%y) passed to select-point-closest-to-vector function.\n", arg);
             return NIL;
         }
         else
@@ -2221,7 +2221,7 @@ Symbol* compute_closest_intercept_rhs_function_code(agent* thisAgent, cons* args
 
     if (count != 4)
     {
-        thisAgent->outputManager->printa(thisAgent, "Error: 'compute-closest-intercept' takes exactly 4 arguments.\n");
+        thisAgent->outputManager->printa(thisAgent, "Error: 'select-point-closest-to-vector' takes exactly 4 arguments.\n");
         return NIL;
     }
 
@@ -2238,7 +2238,7 @@ Symbol* compute_closest_intercept_rhs_function_code(agent* thisAgent, cons* args
 
     Symbol* points_arg = static_cast<Symbol*>(args->rest->rest->rest->first);
     if (points_arg->symbol_type != IDENTIFIER_SYMBOL_TYPE) {
-      thisAgent->outputManager->printa_sf(thisAgent, "Error: non-symbol (%y) passed to compute-closest-intercept function for points\n",points_arg);
+      thisAgent->outputManager->printa_sf(thisAgent, "Error: non-symbol (%y) passed to select-point-closest-to-vector function for points\n",points_arg);
       return NIL;
     }
 
@@ -2260,7 +2260,7 @@ Symbol* compute_closest_intercept_rhs_function_code(agent* thisAgent, cons* args
     for (wme* curwmeA = pointslot->wmes; curwmeA != 0; curwmeA = curwmeA->next) {
         Symbol* next_point = curwmeA->value;
         if (next_point->symbol_type != IDENTIFIER_SYMBOL_TYPE) {
-            thisAgent->outputManager->printa_sf(thisAgent, "Error: non-symbol (%y) passed to compute-closest-intercept function for a point\n",next_point);
+            thisAgent->outputManager->printa_sf(thisAgent, "Error: non-symbol (%y) passed to select-point-closest-to-vector function for a point\n",next_point);
             return NIL;
         }
         wme* wme_x = get_wmes_for_named_slot(next_point, x_symbol);
@@ -2284,7 +2284,7 @@ Symbol* compute_closest_intercept_rhs_function_code(agent* thisAgent, cons* args
 
     char starting_name[] = "starting";
     Point starting = {current_x, current_y, starting_name};
-    return thisAgent->symbolManager->make_str_constant(compute_closest_intercept(starting, heading, points));
+    return thisAgent->symbolManager->make_str_constant(select_point_closest_to_vector(starting, heading, points));
 }
 
 /*
@@ -2666,10 +2666,10 @@ void init_built_in_rhs_math_functions(agent* thisAgent)
     add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("round-off"), round_off_air_rhs_function_code, 2, true, false, 0, true);
     add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("compute-heading"), compute_heading_rhs_function_code, 4, true, false, 0, true);
     add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("compute-range"), compute_range_rhs_function_code, 4, true, false, 0, true);
-    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("predict-x"), predict_x_position_rhs_function_code, 4, true, false, 0, true);
-    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("predict-y"), predict_y_position_rhs_function_code, 4, true, false, 0, true);
-    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("compute-closest-intercept"), compute_closest_intercept_rhs_function_code, 4, true, false, 0, true);
-    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("haversine-formula"), compute_haversine_formula_rhs_function_code, 4, true, false, 0, true);
+    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("extrapolate-x-position"), extrapolate_x_position_rhs_function_code, 4, true, false, 0, true);
+    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("extrapolate-y-position"), extrapolate_y_position_rhs_function_code, 4, true, false, 0, true);
+    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("select-point-closest-to-vector"), select_point_closest_to_vector_rhs_function_code, 4, true, false, 0, true);
+    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("haversine"), compute_haversine_formula_rhs_function_code, 4, true, false, 0, true);
 
 
     /* RHS special purpose functions for Michigan Dice app*/
@@ -2716,10 +2716,10 @@ void remove_built_in_rhs_math_functions(agent* thisAgent)
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("compute-heading"));
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("compute-range"));
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("compute-dice-probability"));
-    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("predict-x"));
-    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("predict-y"));
-    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("compute-closest-intercept"));
-    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("haversine-formula"));
+    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("extrapolate-x-position"));
+    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("extrapolate-y-position"));
+    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("select-point-closest-to-vector"));
+    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("haversine"));
 
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("rand-int"));
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("rand-float"));
