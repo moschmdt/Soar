@@ -2085,6 +2085,96 @@ char * compute_closest_intercept(Point starting, int heading, const std::vector<
     return nearest_point.id;
 }
 
+/* --------------------------------------------------------------------
+                                compute_haversine_formula
+
+ Takes 4 args: lat1, long1, lat2, long2
+ and returns double of distance between latitude, longitude points in kilometeres
+-------------------------------------------------------------------- */
+double compute_haversine_formula(double lat1, double lon1, double lat2, double lon2)
+{
+    // Radius of Earth in kilometers
+    const double R = 6371.0;
+
+    // Convert degrees to radians
+    const double DEG_TO_RAD = M_PI / 180.0;
+    double lat_1 = lat1 * DEG_TO_RAD;
+    double long_1 = lon1 * DEG_TO_RAD;
+    double lat_2 = lat2 * DEG_TO_RAD;
+    double long_2 = lon2 * DEG_TO_RAD;
+
+    // Differences
+    double dLat = lat_2 - lat_1;
+    double dLon = long_2 - long_1;
+
+    // Haversine formula
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+               cos(lat_1) * cos(lat_2) *
+               sin(dLon / 2) * sin(dLon / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    // Distance in kilometers
+    double distance = R * c;
+
+    return distance;
+}
+
+
+/* --------------------------------------------------------------------
+                                compute_haversine_formula
+
+ Takes 4 args: lat1(double),long1(double),lat2(double),long2(double)
+ and returns double of distance between the two points in kilometers
+-------------------------------------------------------------------- */
+
+Symbol* compute_haversine_formula_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
+{
+    Symbol* arg;
+    double lat_1, long_1, lat_2, long_2;
+
+    int count;
+    cons* c;
+
+    if (!args)
+    {
+        thisAgent->outputManager->printa(thisAgent, "Error: 'compute-haversine-formula' function called with no arguments\n");
+        return NIL;
+    }
+
+    count = 0;
+
+    for (c = args; c != NIL; c = c->rest)
+    {
+        arg = static_cast<Symbol*>(c->first);
+        //all 4 args are floats, but could be int
+        if (arg->symbol_type != FLOAT_CONSTANT_SYMBOL_TYPE && arg->symbol_type != INT_CONSTANT_SYMBOL_TYPE)
+        {
+            thisAgent->outputManager->printa_sf(thisAgent, "Error: non int/float (%y) passed to compute-closest-intercept function.\n", arg);
+            return NIL;
+        }
+        count = count + 1;
+    }
+
+    if (count != 4)
+    {
+        thisAgent->outputManager->printa(thisAgent, "Error: 'compute-haversine-formula' takes exactly 4 arguments.\n");
+        return NIL;
+    }
+
+    arg = static_cast<Symbol*>(args->first);
+    lat_1 = (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) ? static_cast<double>(arg->ic->value) : arg->fc->value;
+
+    arg = static_cast<Symbol*>(args->rest->first);
+    long_1  = (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) ? static_cast<double>(arg->ic->value) : arg->fc->value;
+    
+    arg = static_cast<Symbol*>(args->rest->rest->first);
+    lat_2  = (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) ? static_cast<double>(arg->ic->value) : arg->fc->value;
+
+    arg = static_cast<Symbol*>(args->rest->rest->rest->first);
+    long_2  = (arg->symbol_type == INT_CONSTANT_SYMBOL_TYPE) ? static_cast<double>(arg->ic->value) : arg->fc->value;
+
+    return thisAgent->symbolManager->make_float_constant(compute_haversine_formula(lat_1, long_1, lat_2, long_2));
+}
 
 /* --------------------------------------------------------------------
                                 compute_closest_intercept
@@ -2094,6 +2184,7 @@ char * compute_closest_intercept(Point starting, int heading, const std::vector<
   Assuming coordinate system where positive y is south and positive x is east
  and returns string id of nearest intercept
 -------------------------------------------------------------------- */
+
 
 Symbol* compute_closest_intercept_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
 {
@@ -2578,6 +2669,7 @@ void init_built_in_rhs_math_functions(agent* thisAgent)
     add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("predict-x"), predict_x_position_rhs_function_code, 4, true, false, 0, true);
     add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("predict-y"), predict_y_position_rhs_function_code, 4, true, false, 0, true);
     add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("compute-closest-intercept"), compute_closest_intercept_rhs_function_code, 4, true, false, 0, true);
+    add_rhs_function(thisAgent, thisAgent->symbolManager->make_str_constant("haversine-formula"), compute_haversine_formula_rhs_function_code, 4, true, false, 0, true);
 
 
     /* RHS special purpose functions for Michigan Dice app*/
@@ -2627,6 +2719,7 @@ void remove_built_in_rhs_math_functions(agent* thisAgent)
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("predict-x"));
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("predict-y"));
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("compute-closest-intercept"));
+    remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("haversine-formula"));
 
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("rand-int"));
     remove_rhs_function(thisAgent, thisAgent->symbolManager->find_str_constant("rand-float"));
