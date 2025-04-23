@@ -384,11 +384,11 @@ void MiscTests::testLocationPredictionRhs()
     agent->RunSelf(1);
     std::string result = agent->ExecuteCommandLine("p s1");
     // Should contain "^new-x-position 17"
-    no_agent_assertTrue_msg("predict-x failed: " + result, result.find("^new-x-position 17") != std::string::npos);
+    no_agent_assertTrue_msg("extrapolate-x-position failed: " + result, result.find("^new-x-position 17") != std::string::npos);
     // Should contain ^new-y-position 10
-    no_agent_assertTrue_msg("predict-y failed: " + result, result.find("^new-y-position 10") != std::string::npos);
+    no_agent_assertTrue_msg("extrapolate-y-position failed: " + result, result.find("^new-y-position 10") != std::string::npos);
     // Should contain ^predicted-destination southeast-location
-    no_agent_assertTrue_msg("compute-closest-intercept failed: " + result, result.find("^predicted-destination southeast-location") != std::string::npos);
+    no_agent_assertTrue_msg("select-point-closest-to-vector failed: " + result, result.find("^predicted-destination southeast-location") != std::string::npos);
 }
 
 
