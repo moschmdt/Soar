@@ -2097,7 +2097,7 @@ double compute_haversine_formula(double lat1, double lon1, double lat2, double l
     const double R = 6371.0;
 
     // Convert degrees to radians
-    const double DEG_TO_RAD = M_PI / 180.0;
+    const double DEG_TO_RAD = PI / 180.0;
     double lat_1 = lat1 * DEG_TO_RAD;
     double long_1 = lon1 * DEG_TO_RAD;
     double lat_2 = lat2 * DEG_TO_RAD;
