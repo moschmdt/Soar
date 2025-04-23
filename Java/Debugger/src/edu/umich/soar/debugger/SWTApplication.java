@@ -11,20 +11,17 @@
  ********************************************************************************************/
 package edu.umich.soar.debugger;
 
+import edu.umich.soar.debugger.doc.Document;
+import org.apache.commons.cli.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
-
 import sml.Agent;
 import sml.Kernel;
-import edu.umich.soar.debugger.doc.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /************************************************************************
  *
@@ -33,141 +30,74 @@ import edu.umich.soar.debugger.doc.Document;
  ************************************************************************/
 public class SWTApplication
 {
+    private static final HelpFormatter HELP_FORMATTER = new HelpFormatter();
 
-    static Display display;
-
-    static Shell shell;
-
-    static CoolBar coolBar;
-
-    static Menu chevronMenu = null;
-
-    int m_OffsetY;
-
-    int m_MinY;
-
-    int m_MaxY;
-
-    // This is just a little place for me to easily test SWT concepts
-    public void startTest(String[] args) {
-        final Display display = new Display();
-        Shell shell = new Shell(display);
-        shell.setLayout(new FillLayout());
-
-        // The container lets us control the layout of the controls
-        // within this window
-        Composite container = new Composite(shell, SWT.NULL);
-
-        RowLayout layout = new RowLayout(SWT.HORIZONTAL);
-        // layout.wrap = true ;
-        layout.fill = true;
-        container.setLayout(layout);
-
-        for (int i = 0; i < 10; i++)
-        {
-            Button button = new Button(container, SWT.PUSH);
-            button.setText("Button " + i);
-        }
-
-        shell.pack();
-        shell.open();
-        while (!shell.isDisposed())
-        {
-            if (!display.readAndDispatch())
-                display.sleep();
-        }
-        display.dispose();
-    }
-
-    /*
-     * private void clearClipboard() { Clipboard clipboard = new
-     * Clipboard(display); String textData = ""; // Copying an empty string to
-     * the clipboard to erase it TextTransfer textTransfer =
-     * TextTransfer.getInstance(); clipboard.setContents(new Object[]{textData},
-     * new Transfer[]{textTransfer}); clipboard.dispose(); }
-     */
-
-    // Returns true if a given option appears in the list
-    // (Use this for simple flags like -remote)
-    private boolean hasOption(String[] args, String option)
-    {
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase(option))
-                return true;
-        }
-
-        return false;
-    }
-
-    // Returns the next argument after the matching option.
-    // (Use this for parameters like -port ppp)
-    private String getOptionValue(String[] args, String option)
-    {
-        for (int i = 0; i < args.length - 1; i++)
-        {
-            if (args[i].equalsIgnoreCase(option))
-                return args[i + 1];
-        }
-
-        return null;
-    }
-
-    // Command line options:
-    // -remote => use a remote connection (with default ip and port values)
-    // -ip xxx => use this IP value (implies remote connection)
-    // -port ppp => use this port (implies remote connection)
-    // Without any remote options we start a local kernel
-    //
-    // -agent <name> => on a remote connection select this agent as initial
-    // agent
-    // -agent <name> => on a local connection use this as the name of the
-    // initial agent
-    //
-    // -source "<path>" => load this file of productions on launch (only valid
-    // for local kernel)
-    // -quitonfinish => when combined with source causes the debugger to exit
-    // after sourcing that one file
-    // -listen ppp => use this port to listen for remote connections (only valid
-    // for a local kernel)
-    //
-    // -maximize => start with maximized window
-    // -width <width> => start with this window width
-    // -height <height> => start with this window height
-    // -x <x> -y <y> => start with this window position
-    // -cascade => cascade each window that starts (offseting from the -x <x> -y
-    // <y> if given). This option now always on.
-    // (Providing width/height/x/y => not a maximized window)
-    public void startApp(String[] args) throws Exception
-    {
-        startApp(args, null);
+    public Options getCommandLineOptions() {
+        Options options = new Options();
+        options.addOption("remote", false, "Open a remote connection to a running kernel. Connect to localhost on Soar's default port unless otherwise specified. If no remote options are set, start a local kernel.");
+        options.addOption("ip", true, "Open a remote connection to a running kernel using at this IP address.");
+        options.addOption("port", true, "Open a remote connection to a running kernel using at this port.");
+        options.addOption("agent", true, "On a remote connection, select the specified agent as the initial agent; on a local connection, assign the specified name to the initial agent.");
+        options.addOption("source", true, "Source the specified .soar file on launch (only valid for local kernel).");
+        options.addOption("quitonfinish", false, "When combined with -source, exit the debugger after sourcing the specified file.");
+        options.addOption("listen", true, "Listen on the specified port for remote connections (only valid for a local kernel).");
+        options.addOption("maximize", false, "Start with a maximized window.");
+        options.addOption("width", true, "Start with this window width.");
+        options.addOption("height", true, "Start with this window height.");
+        options.addOption("x", true, "Start with this window x position.");
+        options.addOption("y", true, "Start with this window y position.");
+        options.addOption("layout", true, "Path to a layout XML file to initialize the debugger window with. A default is loaded if not specified, and this default is updated to the current settings whenever the debugger is closed.");
+        options.addOption("help", false, "Print this help message and exit.");
+        return options;
     }
 
     public void startApp(String[] args, Display display) {
+
+        List<String> startupErrors = new ArrayList<>();
+        boolean hasCommandLineError = false;
+
+        Options cmdConfig = getCommandLineOptions();
+        CommandLineParser parser = new DefaultParser();
+        CommandLine cmd;
+        try {
+            cmd = parser.parse(cmdConfig, args);
+        } catch (ParseException e) {
+            System.err.println(e.getMessage());
+            startupErrors.add(e.getMessage());
+            hasCommandLineError = true;
+            cmd = new CommandLine() {
+            };
+        }
+
+        if(cmd.hasOption("help")) {
+            printHelp(cmdConfig);
+            return;
+        }
+
         // The document manages the Soar process
         Document m_Document = new Document();
 
         // Check for command line options
-        boolean remote = hasOption(args, "-remote");
-        String ip = getOptionValue(args, "-ip");
-        String port = getOptionValue(args, "-port");
-        String agentName = getOptionValue(args, "-agent");
-        String source = getOptionValue(args, "-source");
-        boolean quitOnFinish = hasOption(args, "-quitonfinish");
-        String listen = getOptionValue(args, "-listen");
-        boolean cascade = hasOption(args, "-cascade");
-        String layout = getOptionValue(args, "-layout");
+        boolean remote = cmd.hasOption("remote");
+        String ip = cmd.getOptionValue("ip");
+        String port = cmd.getOptionValue("port");
+        String agentName = cmd.getOptionValue("agent");
+        String source = cmd.getOptionValue("source");
+        boolean quitOnFinish = cmd.hasOption("quitonfinish");
+        String listen = cmd.getOptionValue("listen");
+        String layout = cmd.getOptionValue("layout");
 
         // quitOnFinish is only valid if sourcing a file
         if (source == null)
             quitOnFinish = false;
 
-        boolean maximize = hasOption(args, "-maximize");
+        boolean maximize = cmd.hasOption("maximize");
 
         // Remote args
         if (ip != null || port != null)
+        {
             remote = true;
-
-        String errorMsg = null;
+        }
 
         int portNumber = Kernel.GetDefaultPort();
         if (port != null)
@@ -178,8 +108,10 @@ public class SWTApplication
             }
             catch (NumberFormatException e)
             {
-                errorMsg = "Passed invalid port value " + port;
-                System.out.println(errorMsg);
+                String errorMsg = "Passed invalid port value " + port;
+                System.err.println(errorMsg);
+                startupErrors.add(errorMsg);
+                hasCommandLineError = true;
             }
         }
 
@@ -190,10 +122,11 @@ public class SWTApplication
             {
                 listenPort = Integer.parseInt(listen);
             }
-            catch (NumberFormatException e)
-            {
-                errorMsg = "Passed invalid listen value " + listen;
-                System.out.println(errorMsg);
+            catch (NumberFormatException e) {
+                String errorMsg = "Passed invalid listen value " + listen;
+                startupErrors.add(errorMsg);
+                System.err.println(errorMsg);
+                hasCommandLineError = true;
             }
         }
 
@@ -203,15 +136,13 @@ public class SWTApplication
             m_Document.getAppProperties()
                     .setAppProperty("Window.Max", maximize);
 
-        m_Document.getAppProperties().setAppProperty("Window.Cascade", cascade);
-
-        String[] options = new String[] { "-width", "-height", "-x", "-y" };
+        String[] numericLayoutOptions = new String[] { "-width", "-height", "-x", "-y" };
         String[] props = new String[] { "Window.width", "Window.height",
                 "Window.x", "Window.y" };
 
-        for (int i = 0; i < options.length; i++)
+        for (int i = 0; i < numericLayoutOptions.length; i++)
         {
-            String value = getOptionValue(args, options[i]);
+            String value = cmd.getOptionValue(numericLayoutOptions[i]);
             if (value != null)
             {
                 try
@@ -226,8 +157,11 @@ public class SWTApplication
                 }
                 catch (NumberFormatException e)
                 {
-                    System.out.println("Passed invalid value " + value
-                            + " for option " + options[i]);
+                    String errorMsg = "Passed invalid value " + value
+                        + " for option " + numericLayoutOptions[i];
+                    System.err.println(errorMsg);
+                    startupErrors.add(errorMsg);
+                    hasCommandLineError = true;
                 }
             }
         }
@@ -274,21 +208,28 @@ public class SWTApplication
             // Start a remote connection
             try
             {
+                System.err.println("Starting remote connection...");
                 m_Document.remoteConnect(ip, portNumber, agentName);
             }
             catch (Exception e)
             {
-                errorMsg = e.getMessage();
+                e.printStackTrace();
+                startupErrors.add(e.getMessage());
             }
+        }
+
+        if (hasCommandLineError) {
+            printHelp(cmdConfig);
         }
 
         shell.open();
 
-        // We delay any error message until after the shell has been opened
-        if (errorMsg != null)
-            MainFrame.ShowMessageBox(shell,
-                    "Error connecting to remote kernel", errorMsg, SWT.OK);
-
+        // We show all of the accumulated errors upon opening the application
+        if (!startupErrors.isEmpty())
+        {
+            String errorMessage = String.join("\n", startupErrors);
+            MainFrame.ShowMessageBox(shell, "Command line argument errors", errorMessage, SWT.ERROR);
+        }
         if (!owned)
         {
             m_Document.pumpMessagesTillClosed(display);
@@ -297,4 +238,7 @@ public class SWTApplication
         }
     }
 
+    private static void printHelp(Options cmdConfig) {
+        HELP_FORMATTER.printHelp("SoarJavaDebugger", cmdConfig);
+    }
 }

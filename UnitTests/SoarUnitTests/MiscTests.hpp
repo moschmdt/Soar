@@ -66,6 +66,15 @@ public:
 	TEST(testProductionPrinting, -1)
     void testProductionPrinting();
 
+    TEST(testLocationPredictionRhs, -1)
+    void testLocationPredictionRhs();
+
+    TEST(test529JustificationBug, -1)
+    void test529JustificationBug();
+
+    TEST(test494Cd, -1)
+    void test494Cd();
+
 	// If you would like to test the Soar Debugger Spawning, uncomment below.
 	// It may or may not work but should unless you're running without a GUI.
 //	TEST(testSoarDebugger, -1)

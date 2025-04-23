@@ -442,8 +442,6 @@ inline Symbol* epmem_reverse_hash(agent* thisAgent, epmem_hash_id s_id_lookup, b
 
 inline void epmem_reverse_hash_print(agent* thisAgent, epmem_hash_id s_id_lookup, std::string& dest, byte sym_type = 255)
 {
-    Symbol* return_val = NULL;
-
     // This may be faster than including type lookup in edges?  Might want to check later.
 
     if (sym_type == 255)
@@ -472,7 +470,6 @@ inline void epmem_reverse_hash_print(agent* thisAgent, epmem_hash_id s_id_lookup
             break;
 
         default:
-            return_val = NULL;
             break;
     }
 }

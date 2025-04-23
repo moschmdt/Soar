@@ -28,6 +28,8 @@ public class Application
             // version too)
             SWTApplication swtApp = new SWTApplication();
 
+
+
             swtApp.startApp(args, display);
 
             if (display == null)

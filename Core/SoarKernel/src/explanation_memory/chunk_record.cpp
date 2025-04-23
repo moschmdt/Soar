@@ -90,7 +90,6 @@ void chunk_record::record_chunk_contents(production* pProduction, condition* lhs
     chunkInstantiation  = thisAgent->explanationMemory->add_instantiation(pChunkInstantiation, 0, true);
 
     instantiation_record* lResultInstRecord, *lNewInstRecord;
-    instantiation* lNewInst;
 
     /* The following creates instantiations records for all instantiation involved in the backtrace.
      *
@@ -101,7 +100,6 @@ void chunk_record::record_chunk_contents(production* pProduction, condition* lhs
 
     for (auto it = backtraced_instantiations->begin(); it != backtraced_instantiations->end(); it++)
     {
-        lNewInst = (*it);
         lNewInstRecord = thisAgent->explanationMemory->add_instantiation((*it), chunkID);
         backtraced_inst_records->push_back(lNewInstRecord);
     }

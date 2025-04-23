@@ -42,6 +42,9 @@ bool is_nan(double x);
 bool is_inf(double x);
 bool approx_equal(double a, double b, double thresh);
 
+std::string to_uppercase(const std::string& s);
+std::string to_lowercase(const std::string& s);
+
 std::istream& get_nonblank_line(std::istream& is, std::string& line);
 
 void sample(int k, int low, int high, std::vector<int>& output);

@@ -517,16 +517,14 @@ public class MainWindow
 
             return true;
         }
-        catch (Exception e)
-        {
-            String msg = e.toString();
+        catch (Exception e) {
+            String msg = "Error loading layout from file: " + filename + "\n" + e;
 
             // Report any errors to the user.
-            if (showErrors)
+            if (showErrors) {
                 m_Frame.ShowMessageBox("Error loading file: " + filename, msg);
-            else
-                System.out.println("Error loading file: " + filename + " "
-                        + msg);
+            }
+            System.err.println(msg);
 
             return false;
         }

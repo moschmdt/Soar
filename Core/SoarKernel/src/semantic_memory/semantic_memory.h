@@ -65,6 +65,7 @@ class SMem_Manager
 
         /* Methods for smem CLI commands*/
         uint64_t    lti_exists(uint64_t pLTI_ID);
+        uint64_t    get_lti_with_alias(const std::string& lti_alias);
         bool        CLI_add(const char* str_to_LTMs, std::string** err_msg);
         bool        CLI_query(const char* ltms, std::string** err_msg, std::string** result_message, uint64_t number_to_retrieve);
         bool        CLI_remove(const char* ltms, std::string** err_msg, std::string** result_message, bool force = false);
@@ -160,6 +161,10 @@ class SMem_Manager
         double          lti_activate(uint64_t pLTI_ID, bool add_access, uint64_t num_edges = SMEM_ACT_MAX, double touches = 1, bool increment_timer = true);
         double          lti_calc_base(uint64_t pLTI_ID, int64_t time_now, uint64_t n = 0, uint64_t activations_first = 0);
         id_set          print_LTM(uint64_t pLTI_ID, double lti_act, std::string* return_val, std::list<uint64_t>* history = NIL);
+
+        /* Methods for LTI aliases */
+        uint64_t        add_new_lti_with_alias(const std::string& lti_alias);
+        uint64_t        get_or_add_lti_with_alias(const std::string& lti_alias);
 
         /* Methods for retrieving an LTM structure to be installed in STM */
         void            add_triple_to_recall_buffer(symbol_triple_list& my_list, Symbol* id, Symbol* attr, Symbol* value);

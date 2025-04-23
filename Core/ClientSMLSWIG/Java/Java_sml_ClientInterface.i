@@ -47,8 +47,8 @@
     try {
         System.loadLibrary("Java_sml_ClientInterface");
     } catch (UnsatisfiedLinkError e) {
-      System.err.println("Native code library failed to load. \n" + e);
-      throw e ;
+      // IMPORTANT: do *not* re-throw e! This will cause the JVM to exit without giving the client a chance to load the library with System.load().
+      System.err.println("WARNING: Could not load native Java/Soar bindings from your library path.\nClient will need to load them from a specific path using System.load(<path>).\nFailing to do this will lead to additional java.lang.UnsatisfiedLinkErrors below. Original error:\n" + e);
     }
   }
 

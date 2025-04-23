@@ -1,7 +1,4 @@
-import os
 import sys
-import urllib
-import hashlib
 import platform
 
 depjars = [
@@ -9,6 +6,7 @@ depjars = [
 	'lib/jfreechart-1.0.6.jar',
 	'lib/jfreechart-1.0.6-swt.jar',
 	'lib/swtgraphics2d.jar',
+    'lib/commons-cli-1.9.0.jar'
 ]
 
 def get_swt_path():

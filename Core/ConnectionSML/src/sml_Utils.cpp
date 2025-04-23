@@ -22,12 +22,12 @@ void sml::Sleep(int secs, int msecs)
 {
     assert(msecs < 1000 && "Specified milliseconds too large; use seconds argument to specify part of time >= 1000 milliseconds");
 #ifdef _WIN32
-    
+
     // Use the Windows API Sleep function (need to specify the Global namespace to distinguish from sml::Sleep)
     ::Sleep((secs * 1000) + msecs) ;
-    
+
 #else // not _WIN32
-    
+
     // if sleep 0 is requested, then don't sleep at all (an actual sleep 0 is very slow on Linux, and probably OS X, too)
     if (msecs || secs)
     {
@@ -36,7 +36,7 @@ void sml::Sleep(int secs, int msecs)
         sleeptime.tv_nsec = msecs * 1000000;
         nanosleep(&sleeptime, 0);
     }
-    
+
 #endif // not _WIN32
 }
 
@@ -51,9 +51,9 @@ void sml::Sleep(int secs, int msecs)
 void sml::ReportSystemErrorMessage()
 {
     int error = ERROR_NUMBER ;
-    
+
     char* message;
-    
+
 #ifdef _WIN32
     FormatMessage(
         FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -65,13 +65,13 @@ void sml::ReportSystemErrorMessage()
 #else
     message = strerror(error);
 #endif // _WIN32
-        
-    //PrintDebugFormat("Error: %s", message);
-    
+
+    PrintDebugFormat("Error: %s", message);
+
 #ifdef _WIN32
     LocalFree(message);
 #endif
-    
+
 }
 
 /////////////////////////////////////////////////////////////////
@@ -128,25 +128,25 @@ void sml::PrintDebugFormat(char const* pFormat, ...)
 {
     va_list args;
     va_start(args, pFormat);
-    
+
     char szBuffer[10000];
-    
+
     int nBuf = VSNPRINTF(szBuffer, sizeof(szBuffer), pFormat, args);
-    
+
     // was there an error? was the expanded string too long?
     if (nBuf < 0)
     {
         strcpy(szBuffer, "** Debug message too long for PrintDebugFormat's buffer **") ;
     }
-    
+
 #ifdef DEBUG_CALLS
     CTDebugEnterMethod::PrintStackTrace() ;
-    
+
     PrintDebugMethod(CTDebugEnterMethod::GetCurrentMethodName(), szBuffer) ;
 #else
     PrintDebugSimple(szBuffer) ;
 #endif
-    
+
     va_end(args);
 }
 
@@ -154,7 +154,7 @@ void sml::PrintDebug(char const* pStr)
 {
 #ifdef DEBUG_CALLS
     CTDebugEnterMethod::PrintStackTrace() ;
-    
+
     PrintDebugMethod(CTDebugEnterMethod::GetCurrentMethodName(), pStr) ;
 #else
     PrintDebugSimple(pStr) ;
@@ -174,27 +174,27 @@ void sml::PrintDebugMethod(char const* pMethodName, char const* pStr)
     // the first line in the debugger for instance).
     /*
     static HWND s_OutputWnd = NULL ;
-    
+
     if (s_OutputWnd == NULL)
         s_OutputWnd = ::GetActiveWindow() ;
-    
+
     if (s_OutputWnd)
     {
         // Text that is our string indent
         char szIndent[1024];
         szIndent[0]='\0';
-    
+
         // Add the debug string
         TCHAR textDebugString[1024] ;
         wsprintf(textDebugString, "%s%s %s\r\n", szIndent, pMethodName, pStr) ;
-    
+
         // Ask the view to display this string
         // Note: Must use SendMessage or text will go out of scope.
         // Also s_OutputWnd must be in the same process as us.
         SendMessage(s_OutputWnd, WM_USER+1, (WPARAM)textDebugString, NULL) ;
     }
     */
-    
+
     // We add a newline which may be O/S specific.
     OutputDebugString(pMethodName) ;
     OutputDebugString(" ") ;
@@ -209,7 +209,7 @@ void PrintDebugSimple(char const* pStr)
     {
         pTraceFile = fopen("smltrace.txt", "w") ;
     }
-    
+
     if (pTraceFile)
     {
         // Dump to trace file and flush immediately (so if we crash we'll be up to date)
@@ -217,7 +217,7 @@ void PrintDebugSimple(char const* pStr)
         fflush(pTraceFile) ;
     }
 #endif
-    
+
     fprintf(stderr, pStr) ;
     fprintf(stderr, "\n") ;
     fflush(stderr) ;

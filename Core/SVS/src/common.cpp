@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 #include <cassert>
 #include "common.h"
 
@@ -53,6 +54,22 @@ void strip(std::string& s, const std::string& whitespace)
     }
     size_t end = s.find_last_not_of(whitespace) + 1;
     s = s.substr(begin, end - begin);
+}
+
+// Return an upper case verison of the given string
+std::string to_uppercase(const std::string& s)
+{
+    std::string result = s;
+    std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+    return result;
+}
+
+// Return an lower case verison of the given string
+std::string to_lowercase(const std::string& s)
+{
+    std::string result = s;
+    std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+    return result;
 }
 
 std::istream& get_nonblank_line(std::istream& is, std::string& line)

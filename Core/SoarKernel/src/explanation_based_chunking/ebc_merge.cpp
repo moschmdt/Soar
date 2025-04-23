@@ -57,10 +57,8 @@ condition* Explanation_Based_Chunker::get_previously_seen_cond(condition* pCond)
 
 void Explanation_Based_Chunker::merge_conditions()
 {
-    int64_t current_cond = 1, cond_diff, new_num_conds, old_num_conds = count_conditions(m_lhs);
-
     condition* found_cond, *next_cond, *last_cond = NULL;
-    for (condition* cond = m_lhs; cond; ++current_cond)
+    for (condition* cond = m_lhs; cond;)
     {
         next_cond = cond->next;
         if (cond->type == POSITIVE_CONDITION)
@@ -119,8 +117,6 @@ void Explanation_Based_Chunker::merge_conditions()
         last_cond = cond;
         cond = next_cond;
     }
-    new_num_conds = count_conditions(m_lhs);
-    cond_diff = old_num_conds - new_num_conds;
 
     clear_merge_map();
 }

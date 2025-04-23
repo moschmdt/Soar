@@ -3300,7 +3300,6 @@ void do_preference_phase(agent* thisAgent)
         production* prod = 0;
         struct token_struct* tok = 0;
         wme* w = 0;
-        bool once = true;
         while (postpone_assertion(thisAgent, &prod, &tok, &w))
         {
             assertionsExist = true;
@@ -3315,7 +3314,6 @@ void do_preference_phase(agent* thisAgent)
 
             if (shouldCreateInstantiation(thisAgent, prod, tok, w))
             {
-                once = false;
                 consume_last_postponed_assertion(thisAgent);
                 create_instantiation(thisAgent, prod, tok, w);
             }

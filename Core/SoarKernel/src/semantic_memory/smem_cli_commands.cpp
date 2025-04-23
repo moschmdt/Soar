@@ -277,16 +277,28 @@ bool SMem_Manager::CLI_query(const char* ltms_str, std::string** err_msg, std::s
                     }
                     else if (lexer.current_lexeme.type == AT_LEXEME)
                     {
-                        lexer.get_lexeme();
+                        lexer.get_lexeme(); // consume the @ symbol
+
+                        // Look up the LTI's id (either integer value or string alias)
                         uint64_t value_id = 0;
-                        if (lexer.current_lexeme.type != INT_CONSTANT_LEXEME)
+                        if (lexer.current_lexeme.type == INT_CONSTANT_LEXEME)
+                        {
+                            value_id = lexer.current_lexeme.int_val;
+                        }
+                        else if (lexer.current_lexeme.type == STR_CONSTANT_LEXEME)
+                        {
+                            std::string lti_alias = lexer.current_lexeme.string();
+                            value_id = get_lti_with_alias(lti_alias);
+                        }
+                        else 
                         {
                             good_cue = false;
-                            (*err_msg)->append("Error: @ must be followed by an integer to be a long-term identifier.\n");
+                            (*err_msg)->append("Error: @ must be followed by an integer or string alias to be a long-term identifier.\n");
                             break;
                         }
-                        value_id = lti_exists(lexer.current_lexeme.int_val);
-                        if (value_id == NIL)
+
+                        // Make sure the LTI exists
+                        if (!lti_exists(value_id))
                         {
                             good_cue = false;
                             (*err_msg)->append("Error: LTI was not found.\n");
@@ -296,7 +308,7 @@ bool SMem_Manager::CLI_query(const char* ltms_str, std::string** err_msg, std::s
                         {
                             /* Not sure what we'd want to use here.  Will create an identifier for now with lti_id */
                             value = thisAgent->symbolManager->make_new_identifier('L', 1);
-                            value->id->LTI_ID = lexer.current_lexeme.int_val;
+                            value->id->LTI_ID = value_id;
                             value->id->smem_valid = smem_validation;
                         }
                         lexer.get_lexeme();
@@ -496,13 +508,19 @@ bool SMem_Manager::CLI_remove(const char* ltms_str, std::string** err_msg, std::
     {
         lti_id = lexer.current_lexeme.int_val;
     }
+    else if (lexer.current_lexeme.type == STR_CONSTANT_LEXEME)
+    {
+        // String constant, use a look-up table to convert string alias to id
+        const std::string lti_alias = lexer.current_lexeme.string();
+        lti_id = get_lti_with_alias(lti_alias);
+    }
     else
     {
         good_command = false;
-        (*err_msg)->append("Error: The lti id must be an integer.\n");
+        (*err_msg)->append("Error: The lti id must be an integer or string alias.\n");
     }
 
-    if (!lti_exists(lti_id))
+    if (good_command && !lti_exists(lti_id))
     {
         good_command = false;
         (*err_msg)->append("Error: No LTI found for that id.\n");
@@ -669,17 +687,26 @@ bool SMem_Manager::CLI_remove(const char* ltms_str, std::string** err_msg, std::
                         else if (lexer.current_lexeme.type == AT_LEXEME)
                         {
                             lexer.get_lexeme();
+
+                            uint64_t value_id;
                             if (lexer.current_lexeme.type == INT_CONSTANT_LEXEME)
                             {
-                                value = get_current_iSTI_for_LTI(lexer.current_lexeme.int_val, NO_WME_LEVEL);
-                                lexer.get_lexeme();
+                                value_id = lexer.current_lexeme.int_val;
+                            }
+                            else if (lexer.current_lexeme.type == STR_CONSTANT_LEXEME)
+                            {
+                                // String constant, use a look-up table to convert string alias to id
+                                const std::string lti_alias = lexer.current_lexeme.string();
+                                value_id = get_lti_with_alias(lti_alias);
                             }
                             else
                             {
-                                (*err_msg)->append("Error: '@' should be followed by an integer lti id.\n");
+                                (*err_msg)->append("Error: '@' should be followed by an integer lti id or string alias.\n");
                                 good_command = false;
                                 break;
                             }
+                            value = get_current_iSTI_for_LTI(value_id, NO_WME_LEVEL);
+                            lexer.get_lexeme();
                         }
                         else
                         {
@@ -844,10 +871,20 @@ bool SMem_Manager::parse_add_clause(soar::Lexer* lexer, str_to_ltm_map* str_to_L
         {
             lexer->get_lexeme();
 
-            good_at = (lexer->current_lexeme.type == INT_CONSTANT_LEXEME);
+            good_at = (lexer->current_lexeme.type == INT_CONSTANT_LEXEME || lexer->current_lexeme.type == STR_CONSTANT_LEXEME);
             if (good_at)
             {
-                l_ltm->lti_id = lexer->current_lexeme.int_val;
+                if (lexer->current_lexeme.type == INT_CONSTANT_LEXEME) 
+                {
+                    // Integer constant, just use number as id
+                    l_ltm->lti_id = static_cast<uint64_t>(lexer->current_lexeme.int_val);
+                } 
+                else 
+                {
+                    // String constant, use a look-up table to convert string alias to id
+                    const std::string lti_alias = lexer->current_lexeme.string();
+                    l_ltm->lti_id = get_or_add_lti_with_alias(lti_alias);
+                }
             }
         }
 
@@ -858,7 +895,10 @@ bool SMem_Manager::parse_add_clause(soar::Lexer* lexer, str_to_ltm_map* str_to_L
                 l_ltm_name.append(lexer->current_lexeme.string());
                 l_ltm->lti_id = NIL;
             } else {
-                good_at = ((lexer->current_lexeme.type == INT_CONSTANT_LEXEME) || (lexer->current_lexeme.type == IDENTIFIER_LEXEME));
+                good_at = ((lexer->current_lexeme.type == INT_CONSTANT_LEXEME) 
+                        || (lexer->current_lexeme.type == STR_CONSTANT_LEXEME) 
+                        || (lexer->current_lexeme.type == IDENTIFIER_LEXEME)); // Is this possible? 
+
                 get_lti_name(l_ltm->lti_id, l_ltm_name);
             }
             if (good_at)
@@ -968,39 +1008,41 @@ bool SMem_Manager::parse_add_clause(soar::Lexer* lexer, str_to_ltm_map* str_to_L
                                 }
                                 else if ((lexer->current_lexeme.type == AT_LEXEME) || (lexer->current_lexeme.type == VARIABLE_LEXEME))
                                 {
-                                    bool mistakenLTI = false;
+                                    uint64_t given_lti_id = 0;  // When the author gives a specific LTI id value (either @1343 or @red)
+                                    if (lexer->current_lexeme.type == VARIABLE_LEXEME)
+                                    {
+                                        temp_key2.assign(lexer->current_lexeme.string());
+                                    }
+
+                                    good_at = false;
                                     if (lexer->current_lexeme.type == AT_LEXEME)
                                     {
                                         lexer->get_lexeme();
-                                        if (lexer->current_lexeme.type == STR_CONSTANT_LEXEME)
+                                        if (lexer->current_lexeme.type == INT_CONSTANT_LEXEME) 
                                         {
-                                            std::string fixedString("|@");
-                                            fixedString.append(lexer->current_lexeme.string());
-                                            fixedString.push_back('|');
-                                            l_ltm_value = new ltm_value;
-                                            l_ltm_value->val_const.val_type = value_const_t;
-                                            l_ltm_value->val_const.val_value = thisAgent->symbolManager->make_str_constant(fixedString.c_str());
-                                            mistakenLTI = true;
-                                        } else {
-                                            good_at = (lexer->current_lexeme.type == INT_CONSTANT_LEXEME);
+                                            // Integer constant, just use number as id
+                                            given_lti_id = static_cast<uint64_t>(lexer->current_lexeme.int_val);
+                                            good_at = true;
+                                        } 
+                                        else if (lexer->current_lexeme.type == STR_CONSTANT_LEXEME)
+                                        {
+                                            // String constant, use a look-up table to convert string alias to id
+                                            const std::string lti_alias = lexer->current_lexeme.string();
+                                            given_lti_id = get_or_add_lti_with_alias(lti_alias);
+                                            good_at = true;
+                                        }
+
+                                        if (good_at && given_lti_id != 0) {
+                                            temp_key2.clear();
+                                            get_lti_name(given_lti_id, temp_key2);
                                         }
                                     }
-
-                                    if (good_at && !mistakenLTI)
+                                    
+                                    if (good_at || (lexer->current_lexeme.type == VARIABLE_LEXEME))
                                     {
                                         // create new value
                                         l_ltm_value = new ltm_value;
                                         l_ltm_value->val_lti.val_type = value_lti_t;
-
-                                        // get key
-                                        if (lexer->current_lexeme.type == VARIABLE_LEXEME)
-                                        {
-                                            temp_key2.assign(lexer->current_lexeme.string());
-                                        } else {
-                                            assert ((lexer->current_lexeme.type == INT_CONSTANT_LEXEME) || (lexer->current_lexeme.type == IDENTIFIER_LEXEME));
-                                            temp_key2.clear();
-                                            get_lti_name(static_cast<uint64_t>(lexer->current_lexeme.int_val), temp_key2);
-                                        }
 
                                         // search for an existing ltm
                                         str_to_ltm_map::iterator p = str_to_LTMs->find((temp_key2));
@@ -1017,9 +1059,9 @@ bool SMem_Manager::parse_add_clause(soar::Lexer* lexer, str_to_ltm_map* str_to_L
                                             l_ltm_temp->slots = NIL;
                                             //                                        l_ltm_temp->soar_id = NIL;
 
-                                            if (lexer->current_lexeme.type == INT_CONSTANT_LEXEME)
+                                            if (given_lti_id != 0)
                                             {
-                                                l_ltm_temp->lti_id = static_cast<uint64_t>(lexer->current_lexeme.int_val);
+                                                l_ltm_temp->lti_id = given_lti_id;
                                                 /* May want to verify that this is a legitimate id in the smem database */
                                                 //l_ltm_temp->lti_id = lti_exists(static_cast<uint64_t>(lexer->current_lexeme.int_val));
                                                 //if (l_ltm_temp->lti_id == NIL)

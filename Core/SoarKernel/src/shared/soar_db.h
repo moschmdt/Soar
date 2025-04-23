@@ -341,11 +341,11 @@ namespace soar_module
 
                 //asm("int $3");
 
-                #ifdef DEBUG_SQL_ERRORS
+                // #ifdef DEBUG_SQL_ERRORS
                     fprintf(stderr, "SoarDB| Unexpected sqlite result!  result = %d. error = %d (%s)\n", sqlite_res, sqlite3_errcode(my_db->get_db()),
                             sqlite3_errmsg(my_db->get_db()));
                     fprintf(stderr, "SoarDB|...in SQL statement: %s\n", sql);
-                #endif
+                // #endif
             }
             virtual bool _prep()
             {
@@ -513,7 +513,7 @@ namespace soar_module
                 for (std::list<const char*>::iterator p = structures->begin(); p != structures->end(); p++)
                 {
                     temp_stmt = new sqlite_statement(my_db, (*p));
-                    exec_result execute_result = err;
+                    [[maybe_unused]] exec_result execute_result = err;
 
                     temp_stmt->prepare();
                     assert(temp_stmt->get_status() == ready);

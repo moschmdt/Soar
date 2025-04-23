@@ -92,7 +92,8 @@ public class SoarCommands
 
     public String getChangeDirectoryCommand(String arg)
     {
-        return "cd \"" + arg + "\"";
+        // It's important to use braces because they preserve backslashes, which are used in Windows paths.
+        return "cd {" + arg + "}";
     }
 
     public String getExciseCommand(String arg)

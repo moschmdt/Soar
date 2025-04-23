@@ -100,7 +100,7 @@ namespace cli
             EXPORT bool DoCommand(sml::Connection* pConnection, sml::AgentSML* pAgent, const char* pCommandLine, bool echoResults, bool rawOutput, soarxml::ElementXML* pResponse);
 
             bool DoAlias(std::vector< std::string >* argv = 0, bool doRemove = false);
-            bool DoCD(const std::string* pDirectory = 0);
+            bool DoCD(const std::string* pDirectory = nullptr);
             bool DoChunk(const std::string* pArg1 = 0, const std::string* pArg2 = 0, const std::string* pArg3 = 0, const std::string* pArg4 = 0, bool doRemove = false, bool doClear = false);
             bool DoDebug(std::vector< std::string >* argv = 0);
             bool DoDecide(std::vector<std::string>& argv, const std::string& pCmd);
@@ -135,6 +135,11 @@ namespace cli
             bool DoWM(std::vector<std::string>& argv, const std::string& pCmd);
 
             EXPORT std::string ExpandCommand(const char* pCommand);
+
+            /**
+             * @brief Returns the directory that was the current working directory when this CLI was created
+             */
+            std::string GetHome() { return m_HomeDirectory; };
 
             /*************************************************************
             * @brief Returns true if the given command should always be echoed (to any listeners)
@@ -183,7 +188,6 @@ namespace cli
             // utility for kernel SML
             bool IsLogOpen();
             bool IsSourcingFile() { return !m_SourceFileStack.empty(); }
-            std::string Get_First_Sourced_File() { return m_first_sourced_file; }
             bool GetCurrentWorkingDirectory(std::string& directory);
 
         private:
@@ -327,7 +331,7 @@ namespace cli
             bool                    m_callbacks_were_enabled;
             bool                    m_console_was_enabled;
             bool                    m_output_was_enabled;
-            std::string             m_first_sourced_file;
+            std::string   m_HomeDirectory;
     };
 } // namespace cli
 

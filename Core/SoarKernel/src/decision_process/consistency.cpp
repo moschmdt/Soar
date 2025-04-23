@@ -88,12 +88,12 @@ void remove_operator_if_necessary(agent* thisAgent, slot* s, wme* w)
 bool decision_consistent_with_current_preferences(agent* thisAgent, Symbol* goal, slot* s)
 {
     byte current_impasse_type, new_impasse_type;
-    Symbol* current_impasse_attribute;
     wme* current_operator;
     preference* candidates, *cand;
-    bool operator_in_slot, goal_is_impassed;
+    bool operator_in_slot;
 
 #ifdef DEBUG_CONSISTENCY_CHECK
+    Symbol* current_impasse_attribute;
     if (s->isa_context_slot)
     {
         printf("    slot (s)  isa context slot: ");
@@ -124,10 +124,9 @@ bool decision_consistent_with_current_preferences(agent* thisAgent, Symbol* goal
     if (goal->id->lower_goal)
     {
         /* the goal is impassed */
-        goal_is_impassed = true;
         current_impasse_type      = type_of_existing_impasse(thisAgent, goal);
-        current_impasse_attribute = attribute_of_existing_impasse(thisAgent, goal);
 #ifdef DEBUG_CONSISTENCY_CHECK
+        current_impasse_attribute = attribute_of_existing_impasse(thisAgent, goal);
         printf("    Goal is impassed:  Impasse type: %d: ", current_impasse_type);
         thisAgent->outputManager->printa_sf(thisAgent, "    Impasse attribute: [%y]\n", current_impasse_attribute);
 #endif
@@ -150,10 +149,9 @@ bool decision_consistent_with_current_preferences(agent* thisAgent, Symbol* goal
     }
     else
     {
-        goal_is_impassed = false;
         current_impasse_type      = NONE_IMPASSE_TYPE;
-        current_impasse_attribute = NIL;
 #ifdef DEBUG_CONSISTENCY_CHECK
+        current_impasse_attribute = NIL;
         printf("    Goal is not impassed: ");
 #endif
     }

@@ -260,10 +260,6 @@ public class MainFrame
     public static int ShowMessageBox(Shell shell, String title, String text,
             int style)
     {
-        // Only show messages once the shell itself is going
-        if (!shell.isVisible())
-            return SWT.CANCEL;
-
         if (title == null)
             title = "Error";
         if (text == null)

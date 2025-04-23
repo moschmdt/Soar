@@ -57,28 +57,34 @@ def __get_tcl_from_local_dir_mac(env, local_compiled_dir=None, tcl_suffix=None) 
     return install_info
 
 def __get_brew_tcl_install_info_mac(env) -> Optional[TclInstallInfo]:
-    try:
-        brew_installed_dir = (
-            subprocess.check_output(["brew", "--prefix", "tcl-tk"]).decode().strip()
+    # TODO: Tcl 9 is out! Can we support that? https://github.com/SoarGroup/Soar/issues/524
+    prefix_candidates = ["tcl-tk@8", "tcl-tk"]
+
+    for prefix in prefix_candidates:
+        print(f"{env['INDENT']}Checking brew prefix {prefix}...")
+        try:
+            brew_installed_dir = (
+                subprocess.check_output(["brew", "--prefix", prefix]).decode().strip()
+            )
+        except subprocess.CalledProcessError:
+            print(f"{env['INDENT']}Could not locate Tcl at brew prefix {prefix}")
+            continue
+
+        home_dir = Path(brew_installed_dir)
+        install_info = TclInstallInfo(
+            home=home_dir,
+            lib_dir=home_dir / "lib",
+            include_dir=home_dir / "include" / "tcl-tk",
+            dyn_lib_name="libtcl8.6.dylib",
+            include_lib_name="tcl8.6",
         )
-    except subprocess.CalledProcessError:
-        print(f"{env['INDENT']}Tcl not brew-installed: {msg}")
-        return None
+        valid, msg = install_info.is_valid()
+        if not valid:
+            print(f"{env['INDENT']}Brew-installed Tcl could not be loaded from prefix {prefix}: {msg}")
+            continue
+        return install_info
 
-    home_dir = Path(brew_installed_dir)
-    install_info = TclInstallInfo(
-        home=home_dir,
-        lib_dir=home_dir / "lib",
-        include_dir=home_dir / "include" / "tcl-tk",
-        dyn_lib_name="libtcl8.6.dylib",
-        include_lib_name="tcl8.6",
-    )
-    valid, msg = install_info.is_valid()
-    if not valid:
-        print(f"{env['INDENT']}Brew-installed Tcl could not be loaded: {msg}")
-        return None
-
-    return install_info
+    return None
 
 
 def __get_system_tcl_install_info_mac(env) -> Optional[TclInstallInfo]:

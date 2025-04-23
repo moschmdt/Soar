@@ -163,8 +163,6 @@ void SoarDecider::get_run_result_string(std::string &runResultStr)
 {
     uint64_t now_dc, now_fc, now_cl;
     uint64_t dc_delta, fc_delta, cl_delta;
-    bool result_started, result_finished;
-    result_started = result_finished = false;
     now_dc = thisAgent->d_cycle_count;
     now_fc = thisAgent->production_firing_count;
     now_cl = thisAgent->num_productions_of_type[CHUNK_PRODUCTION_TYPE];

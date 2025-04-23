@@ -1047,12 +1047,10 @@ bool AgentSML::AddIdInputWME(char const* pID, char const* pAttribute, char const
     std::string idValue ;
     uint64_t idValueNumber = 0 ;
     char idValueLetter = 0;
-    bool didntFindId = true;
 
     if (ConvertID(pValue, &idValue))
     {
         // we found a kernel side mapping, shared id
-        didntFindId = false;    // for sanity check below
         idValueLetter = idValue[0];
         from_c_string(idValueNumber, idValue.substr(1).c_str());
     }

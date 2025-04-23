@@ -221,8 +221,8 @@ public class FoldingTextView extends AbstractComboView implements
         m_FoldingText.getTextWindow().addKeyListener(new KeyAdapter()
         {
             // If the user tries to type into the main text window, move the
-            // focus down
-            // to the combo box where they can usefully type.
+            // focus down to the combo box where they can usefully type.
+            // This also handled for the paste action in the paste override later.
             @Override
             public void keyPressed(KeyEvent e)
             {
@@ -613,6 +613,12 @@ public class FoldingTextView extends AbstractComboView implements
         m_FoldingText.getTextWindow().copy();
     }
 
+    @Override
+    public void selectAll()
+    {
+        m_FoldingText.getTextWindow().selectAll();
+    }
+
     /************************************************************************
      *
      * Search for the next occurance of 'text' in this view and place the
@@ -745,10 +751,12 @@ public class FoldingTextView extends AbstractComboView implements
     protected ParseSelectedText.SelectedObject getCurrentSelection(int mouseX,
                                                                    int mouseY)
     {
-        // Switchfrom screen coords to coords based on the text window
+        // Switch from screen coords to coords based on the text window
         Point pt = m_FoldingText.getTextWindow().toControl(mouseX, mouseY);
         mouseX = pt.x;
         mouseY = pt.y;
+
+//        System.out.println("Received right-click at (" + mouseX + "," + mouseY + ")");
 
         int line = m_FoldingText.getLine(mouseY);
         if (line == -1)
@@ -959,6 +967,13 @@ public class FoldingTextView extends AbstractComboView implements
     protected void appendText(String text)
     {
         appendText(text, TraceType.kTopLevel);
+    }
+
+    @Override
+    public void paste() {
+        // Only the command window can have text input, so we send paste there.
+        // This is handled for arbitrary key inputs in a key listener registered above.
+        m_CommandCombo.paste();
     }
 
     /************************************************************************

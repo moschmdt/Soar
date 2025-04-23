@@ -12,6 +12,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Logger;
+
+import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class AppProperties extends java.util.Properties
 {
@@ -22,6 +30,8 @@ public class AppProperties extends java.util.Properties
     protected final String m_Header;
 
     protected final String kVersion = "Version";
+
+    private static final Logger LOGGER = Logger.getLogger(AppProperties.class.getName());
 
     /**
      * The filename is just a filename--not a full path. The file is stored
@@ -142,14 +152,28 @@ public class AppProperties extends java.util.Properties
             // File doesn't exist. No properties to load, so we're done.
             return false;
         }
-
     }
 
-    public void Save() throws java.io.IOException
-    {
+    public void Save() throws java.io.IOException {
+        // write to a temp file first, then make the final changes via a rename.
+        // this prevents us from overwriting the file with an incomplete config,
+        // as could be the case if we hit an IO exception in the middle of writing
+        // the file.
         File filePath = this.GetFilePath();
-        FileOutputStream output = new FileOutputStream(filePath);
-        this.store(output, this.m_Header);
+        String tempFilename = filePath.getAbsolutePath() + ".temp";
+        Path tempPath = Paths.get(tempFilename);
+        Path finalPath = filePath.toPath();
+
+        try (FileOutputStream output = new FileOutputStream(tempPath.toFile())) {
+            this.store(output, this.m_Header);
+        }
+        try {
+            Files.move(tempPath, finalPath, REPLACE_EXISTING, ATOMIC_MOVE);
+        } catch (AtomicMoveNotSupportedException e) {
+            LOGGER.warning(
+                "Cannot write " + finalPath + " atomically (" + e.getMessage() + "); falling back to non-atomic write");
+            Files.move(tempPath, finalPath, REPLACE_EXISTING);
+        }
     }
 
     public String getFilename()
