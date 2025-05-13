@@ -17,20 +17,20 @@ soar-vars.bat in root
 */
 #define MAJOR_VERSION_NUMBER 9
 #define MINOR_VERSION_NUMBER 6
-#define MICRO_VERSION_NUMBER 3
-#define GREEK_VERSION_NUMBER 0
+#define MICRO_VERSION_NUMBER 4
+#define GREEK_VERSION_NUMBER "_alpha"
 inline const char* VERSION_STRING()
 {
-    return _soar_xstr(MAJOR_VERSION_NUMBER) "." _soar_xstr(MINOR_VERSION_NUMBER) "."  _soar_xstr(MICRO_VERSION_NUMBER);
+    return _soar_xstr(MAJOR_VERSION_NUMBER) "." _soar_xstr(MINOR_VERSION_NUMBER) "."  _soar_xstr(MICRO_VERSION_NUMBER) _soar_xstr(GREEK_VERSION_NUMBER);
 }
 
 #define SML_MAJOR_VERSION_NUMBER 9
 #define SML_MINOR_VERSION_NUMBER 6
-#define SML_MICRO_VERSION_NUMBER 3
-#define SML_GREEK_VERSION_NUMBER 0
+#define SML_MICRO_VERSION_NUMBER 4
+#define SML_GREEK_VERSION_NUMBER "_alpha"
 inline const char* SML_VERSION_STRING()
 {
-    return _soar_xstr(SML_MAJOR_VERSION_NUMBER) "." _soar_xstr(SML_MINOR_VERSION_NUMBER) "."  _soar_xstr(SML_MICRO_VERSION_NUMBER);
+    return _soar_xstr(SML_MAJOR_VERSION_NUMBER) "." _soar_xstr(SML_MINOR_VERSION_NUMBER) "."  _soar_xstr(SML_MICRO_VERSION_NUMBER) _soar_xstr(GREEK_VERSION_NUMBER);
 }
 
 #endif // SOARVERSION_H
