@@ -26,7 +26,7 @@ from build_support.tcl import prepare_for_compiling_with_tcl
 
 join = os.path.join
 
-SOAR_VERSION = "9.6.4_alpha"
+SOAR_VERSION = "9.6.4a1"
 CPP_STD_VERSION = "c++17"
 
 soarversionFile = open('soarversion', 'w')
