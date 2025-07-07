@@ -283,8 +283,8 @@ jobs:
       fail-fast: true
       matrix:
         os: [
-            # 20.04 to preserve compatibility with testing stage
-            ubuntu-20.04,
+            # Note that this version must match what we use at the testing stage
+            ubuntu-24.04,
             # latest available X86_64 target
             macos-13,
             # latest is ARM
@@ -334,8 +334,8 @@ jobs:
         with:
           package-dir: Core/ClientSMLSWIG/Python/
 
-      - name: Ensure unit tests built (ubuntu-20.04)
-        if: matrix.os == 'ubuntu-20.04'
+      - name: Ensure unit tests built (ubuntu-24.04)
+        if: matrix.os == 'ubuntu-24.04'
         # On Ubuntu, we run cibuildwheel inside docker containers, which don't retain the outputs.
         # However, we want out/SoarUnitTests/ to be availible for future tests, so we build it again here.
         run: python scons/scons.py tests
@@ -369,8 +369,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          # linux target which supports all python versions we want to install for
-          - ubuntu-20.04
+          # The Linux target has to be chosen so that we have support for all python versions we want to install for
+          - ubuntu-24.04
             # latest available X86_64 target
           - macos-13
             # latest is ARM
