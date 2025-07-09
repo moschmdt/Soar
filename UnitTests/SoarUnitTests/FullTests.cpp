@@ -18,8 +18,17 @@
 #include "sml_ClientKernel.h"
 #include "soar_instance.h"
 
-#include <filesystem>
 #include <functional>
+
+// Platform-specific includes for directory operations
+#ifdef _WIN32
+#include <sys/stat.h>
+#include <direct.h>
+#include <errno.h>
+#else
+#include <sys/stat.h>
+#include <errno.h>
+#endif
 
 bool g_Cancel = false;
 
@@ -1661,8 +1670,24 @@ void FullTests_Parent::testCommandToFile()
     if (workingDirectory) {
         resourceDirectory = workingDirectory;
     } else {
-        // Ensure the resource directory exists
-        std::filesystem::create_directories(resourceDirectory);
+        // Ensure the resource directory exists (cross-platform alternative to std::filesystem::create_directories)
+#ifdef _WIN32
+        // Windows: use _mkdir
+        struct _stat st = {0};
+        if (_stat(resourceDirectory.c_str(), &st) == -1) {
+            if (_mkdir(resourceDirectory.c_str()) != 0 && errno != EEXIST) {
+                perror("Failed to create resource directory");
+            }
+        }
+#else
+        // Unix/Linux/macOS: use mkdir
+        struct stat st = {0};
+        if (stat(resourceDirectory.c_str(), &st) == -1) {
+            if (mkdir(resourceDirectory.c_str(), 0755) != 0 && errno != EEXIST) {
+                perror("Failed to create resource directory");
+            }
+        }
+#endif
     }
 
     std::string command = "command-to-file \"" + resourceDirectory + "testCommandToFile-output.soar\" print --rl --full";
