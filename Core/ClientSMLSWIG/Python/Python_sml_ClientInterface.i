@@ -35,6 +35,7 @@
 		~PythonUserData () {
 			PyGILState_STATE gstate;
 			gstate = PyGILState_Ensure(); /* Get the thread.  No Python API allowed before this point. */
+			Py_DECREF(func);
 			Py_DECREF(userdata);
 			PyGILState_Release(gstate); /* Release the thread. No Python API allowed beyond this point. */
 		}
@@ -47,8 +48,15 @@
         std::cerr << "Uncaught Python exception in " << type << " callback id = " << id << ". Exiting." << std::endl;
 		PyObject *excType, *excValue, *excTraceback;
 		PyErr_Fetch(&excType, &excValue, &excTraceback);
-		PyErr_NormalizeException(&excType, &excValue, &excTraceback);
-		PyTraceBack_Print(excTraceback, PySys_GetObject("stderr"));
+		if (excType) {
+			PyErr_NormalizeException(&excType, &excValue, &excTraceback);
+			if (excTraceback) {
+				PyTraceBack_Print(excTraceback, PySys_GetObject("stderr"));
+			}
+			Py_XDECREF(excType);
+			Py_XDECREF(excValue);
+			Py_XDECREF(excTraceback);
+		}
 		exit(1);
 	}
 
@@ -253,7 +261,14 @@
 		}
 
 		PyObject* unicode = PyUnicode_AsUTF8String (result);
-		std::string res = PyBytes_AsString(unicode);
+		if (!unicode) {
+			Py_DECREF(result);
+			PyGILState_Release(gstate);
+			return "";
+		}
+
+		const char* bytes = PyBytes_AsString(unicode);
+		std::string res = bytes ? bytes : "";
 
 		Py_DECREF(unicode);
 		Py_DECREF(result);
@@ -307,7 +322,14 @@
 		}
 
 		PyObject* unicode = PyUnicode_AsUTF8String (result);
-		std::string res = PyBytes_AsString(unicode);
+		if (!unicode) {
+			Py_DECREF(result);
+			PyGILState_Release(gstate);
+			return "";
+		}
+
+		const char* bytes = PyBytes_AsString(unicode);
+		std::string res = bytes ? bytes : "";
 
 		Py_DECREF(unicode);
 		Py_DECREF(result);
@@ -321,6 +343,7 @@
 		PythonUserData* pud = new PythonUserData();
 		PyGILState_STATE gstate;
 		gstate = PyGILState_Ensure(); /* Get the thread.  No Python API allowed before this point. */
+		Py_INCREF(func);
 		Py_INCREF(userData);
 		PyGILState_Release(gstate); /* Release the thread. No Python API allowed beyond this point. */
 
