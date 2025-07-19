@@ -253,7 +253,7 @@ jobs:
 
       # reports JUnit test results as GitHub PR check.
       - name: publish test report
-        uses: mikepenz/action-junit-report@v3
+        uses: mikepenz/action-junit-report@v5
         # always run even if the previous step fails
         if: always()
         with:
