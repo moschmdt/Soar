@@ -87,12 +87,12 @@ next-version = "smallest"
 
 [tool.versioningit.format]
 # For "distance" (development releases) we cannot use the local identifier, as pypi does not accept those.
-# Instead, we encode everything in in .dev
+# Instead, we encode the distance in .dev, and the build time in a 4th version component.
 distance = "{next_version}.{committer_date:%Y%m%d%H%M}.dev{distance}"
 
-dirty = "{base_version}.dev{build_date:%Y%m%d%H%M}.{vcs}{rev}.{branch}.dirty"
+dirty = "{base_version}+dirty{build_date:%Y%m%d.%H%M}"
 
-distance-dirty = "{next_version}.dev{distance}{build_date:%Y%m%d%H%M}{vsc}{rev}{branch}"
+distance-dirty = "{next_version}.dev{distance}+{vcs}{rev}.{branch}.dirty{build_date:%Y%m%d.%H%M}"
 
 [tool.versioningit.tag2version]
 rmprefix = "releases/"
