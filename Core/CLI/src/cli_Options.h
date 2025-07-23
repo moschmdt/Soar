@@ -25,6 +25,27 @@ namespace cli
                 m_Argument = 0;
                 m_NonOptionArguments = 0;
             }
+
+            bool IsNegativeNumber(const std::string& str) {
+                if (str.empty() || str[0] != '-') return false; // Must start with '-'
+
+                bool hasDecimal = false;
+                bool hasDigit = false;
+
+                for (char ch : str.substr(1))
+                { // start at (1) to skip '-' character
+                    if (std::isdigit(ch))
+                    { 
+                        hasDigit = true;
+                    } else if (ch == '.' && !hasDecimal) { // allow only one decimal point
+                        hasDecimal = true; 
+                    } else { // Invalid character found
+                        return false; 
+                    }
+                }
+
+                return hasDigit;
+            }
             
             bool ProcessOptions(std::vector<std::string>& argv, OptionsData* options)
             {
@@ -42,7 +63,13 @@ namespace cli
                         ++m_NonOptionArguments;
                         continue;
                     }
-                    
+
+                    if (IsNegativeNumber(argv[m_Argument]))
+                    {
+                        ++m_NonOptionArguments;
+                        continue;
+                    }
+
                     if (argv[m_Argument][0] == '-')
                     {
                         if (argv[m_Argument][1] == '-')
