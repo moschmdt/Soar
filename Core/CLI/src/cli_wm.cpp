@@ -424,6 +424,12 @@ bool CommandLineInterface::DoAddWME(const std::string& id, std::string attribute
                 pValue = thisAgent->symbolManager->make_float_constant(lexeme.float_val);
                 break;
             case IDENTIFIER_LEXEME:
+                pValue = thisAgent->symbolManager->find_identifier(lexeme.id_letter, lexeme.id_number);
+                if (!pValue)
+                {
+                    pValue = thisAgent->symbolManager->make_new_identifier(lexeme.id_letter, pId->id->level, lexeme.id_number);
+                }
+                break;
             case VARIABLE_LEXEME:
                 pValue = read_identifier_or_context_variable(thisAgent, &lexeme);
                 if (!pValue)
