@@ -140,7 +140,7 @@ jobs:
     runs-on: [windows-latest]
     env:
       TCL_HOME: c:\progra~1\tcl
-      TCL_DOWNLOAD_URL: https://kumisystems.dl.sourceforge.net/project/tcl/Tcl/8.6.13/tcl8613-src.zip
+      TCL_DOWNLOAD_URL: https://master.dl.sourceforge.net/project/tcl/Tcl/8.6.13/tcl8613-src.zip
       EXPECTED_TCL_HASH: 8999fcafab2d85473280e0bf6e390480496dfd53
 
     steps:
