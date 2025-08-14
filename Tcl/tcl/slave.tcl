@@ -310,11 +310,6 @@ proc source {args} {
     
   }
 
-  # File should be only value left in args left 
-  set numArgsLeft [llength $args]
-  if { $numArgsLeft != 1 } {
-    error "Unhandled input arguments for tcl proc 'source'. args: $args"
-  }
   set fname [lindex $args 0]
 
   set dir [file dir $fname]
@@ -325,7 +320,7 @@ proc source {args} {
 
   # Source the file in the global scope and catch any errors so
   # we can properly clean up the directory stack with popd
-  if { [catch {uplevel #0 builtInSource -encoding $encodingArg $file} errorMessage] } {
+  if { [catch {uplevel #0 builtInSource -encoding $encodingArg {*}$args} errorMessage] } {
     popd
     if { [string first "\nError in file" $errorMessage] == 0} {
       error "$errorMessage"
