@@ -280,27 +280,58 @@ proc reconfigureOutput {} {
 # is to perform the proper directory change when sourcing the file which is not
 # done by sml::Agent::LoadProductions.
 rename source builtInSource
-proc source {fname args} {
+proc source {args} {
   global _agentName last_file verbose
+  
+  set numArgs [llength $args]
+
+  set fname {}
+  set verbose 0
+
+  # Use tcl's default encoding arg
+  set encodingArg [encoding system] 
+  
+  if { $numArgs > 1 } { 
+    # Get each argument from args,remove it and its value
+
+    set verboseIndex [lsearch -exact $args "-v"]
+    if { $verboseIndex != -1 } {
+      set verbose 1
+      set args [lreplace $args $verboseIndex $verboseIndex]
+    }
+
+    set encodingIndex [lsearch -exact $args -encoding]
+    if { $encodingIndex != -1 } { 
+      set encodingArg [ lindex $args [expr $encodingIndex + 1 ]]
+      set args [lreplace $args $encodingIndex $encodingIndex]
+      # Call twice, once for flag, once for value 
+      set args [lreplace $args $encodingIndex $encodingIndex]
+    } 
+    
+  }
+
+  # File should be only value left in args left 
+  set numArgsLeft [llength $args]
+  if { $numArgsLeft != 1 } {
+    error "Unhandled input arguments for tcl proc 'source'. args: $args"
+  }
+  set fname [lindex $args 0]
+
   set dir [file dir $fname]
   set file [file tail $fname]
   set last_file $file
-
-  if { $args != "" && [string first "-v" $args] != -1 } {
-	  set verbose "true"
-  }
-  
+    
   pushd $dir
 
   # Source the file in the global scope and catch any errors so
   # we can properly clean up the directory stack with popd
-  if { [catch {uplevel #0 builtInSource $file} errorMessage] } {
+  if { [catch {uplevel #0 builtInSource -encoding $encodingArg $file} errorMessage] } {
     popd
-	if { [string first "\nError in file" $errorMessage] == 0} {
-		error "$errorMessage"
-	} else {
-		error "\nError in file [pwd]/$file: \n$errorMessage"
-	}
+    if { [string first "\nError in file" $errorMessage] == 0} {
+      error "$errorMessage"
+    } else {
+      error "\nError in file [pwd]/$file: \n$errorMessage"
+    }
   }
   
   popd
