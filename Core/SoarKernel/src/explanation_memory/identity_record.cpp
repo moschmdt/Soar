@@ -51,6 +51,7 @@ void identity_record::add_identity_mapping(uint64_t pI_ID, IDSet_Mapping_Type pT
         case IDS_literalized_RHS_literal:
         case IDS_literalized_RHS_function_arg:
         case IDS_literalized_RHS_function_compare:
+        case IDS_literalized_constant_match:
             thisAgent->explanationMemory->increment_stat_identities_literalized();
             break;
         default:
@@ -264,6 +265,9 @@ void identity_record::print_mapping_list(identity_mapping_list* pMapList, bool p
                 break;
             case IDS_literalized_RHS_function_compare:
                 outputManager->printa_sf(thisAgent, "%-| Variable in another rule tested result of RHS function");
+                break;
+            case IDS_literalized_constant_match:
+                outputManager->printa_sf(thisAgent, "%-| Variable literalized due to constant match test ($)");
                 break;
             default:
                 assert(false);

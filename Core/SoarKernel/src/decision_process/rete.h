@@ -271,6 +271,7 @@ typedef struct rete_node_struct
 #define RELATIONAL_SAME_TYPE_RETE_TEST        0x06
 #define RELATIONAL_SMEM_LINK_TEST             0x07
 #define RELATIONAL_SMEM_LINK_NOT_TEST         0x08
+#define RELATIONAL_CONSTANT_MATCH_TEST        0x09
 
 /* --- types of tests found at beta nodes --- */
 #define CONSTANT_RELATIONAL_RETE_TEST 0x00
@@ -465,6 +466,9 @@ inline TestType relational_test_type_to_test_type(byte test_type)
         case RELATIONAL_SMEM_LINK_NOT_TEST:
             return SMEM_LINK_NOT_TEST;
             break;
+        case RELATIONAL_CONSTANT_MATCH_TEST:
+            return CONSTANT_MATCH_TEST;
+            break;
         default:
             break;
     }
@@ -499,6 +503,9 @@ inline byte test_type_to_relational_test_type(byte test_type)
             break;
         case SMEM_LINK_NOT_TEST:
             return RELATIONAL_SMEM_LINK_NOT_TEST;
+            break;
+        case CONSTANT_MATCH_TEST:
+            return RELATIONAL_CONSTANT_MATCH_TEST;
             break;
         default:
             break;

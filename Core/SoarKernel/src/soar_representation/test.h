@@ -50,6 +50,7 @@ typedef struct test_struct
     uint64_t        inst_identity;
     uint64_t        chunk_inst_identity;
     Identity*       identity;
+    bool            force_literalize;
 } test_info;
 
 /* --- Note that the test typedef is a *pointer* to a test struct. A test is

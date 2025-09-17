@@ -67,6 +67,7 @@ void Explanation_Based_Chunker::add_to_grounds(condition* cond)
     if ((cond->bt.wme_->chunker_bt_last_ground_cond != cond) && ebc_settings[SETTING_EBC_LEARNING_ON])
     {
         check_for_singleton_unification(cond);
+        check_for_constant_match_literalization(cond);
     }
     push(thisAgent, (cond), grounds);
 }

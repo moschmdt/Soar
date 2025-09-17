@@ -417,6 +417,11 @@ test parse_relational_test(agent* thisAgent, Lexer* lexer)
             if (!lexer->get_lexeme()) return NULL;
             break;
 
+        case DOLLAR_LEXEME:
+            test_type = CONSTANT_MATCH_TEST;
+            if (!lexer->get_lexeme()) return NULL;
+            break;
+
         case STR_CONSTANT_LEXEME:
         case INT_CONSTANT_LEXEME:
         case FLOAT_CONSTANT_LEXEME:

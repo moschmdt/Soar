@@ -2926,6 +2926,7 @@ void add_rete_tests_for_test(agent* thisAgent, test t,
             break;
         case SMEM_LINK_TEST:
         case SMEM_LINK_NOT_TEST:
+        case CONSTANT_MATCH_TEST:
         case NOT_EQUAL_TEST:
         case LESS_TEST:
         case GREATER_TEST:
@@ -4607,6 +4608,16 @@ bool constant_smem_link_not_rete_test_routine(agent* /*thisAgent*/, rete_test* r
     return static_cast<bool>(!s1->is_lti() ||  !s2->is_int() || (s1->id->LTI_ID != s2->ic->value));
 }
 
+bool constant_constant_match_rete_test_routine(agent* /*thisAgent*/, rete_test* rt, token* /*left*/,
+        wme* w)
+{
+    Symbol* s1, *s2;
+
+    s1 = field_from_wme(w, rt->right_field_num);
+    s2 = rt->data.constant_referent;
+    return static_cast<bool>(s1 == s2 && s1->is_constant());
+}
+
 bool variable_equal_rete_test_routine(agent* /*thisAgent*/, rete_test* rt, token* left, wme* w)
 {
     Symbol* s1, *s2;
@@ -4814,6 +4825,28 @@ bool variable_smem_link_not_rete_test_routine(agent* /*thisAgent*/, rete_test* r
         return_val = true;
     }
     return return_val;
+}
+
+bool variable_constant_match_rete_test_routine(agent* /*thisAgent*/, rete_test* rt, token* left,
+        wme* w)
+{
+    Symbol* s1, *s2;
+    int i;
+
+    s1 = field_from_wme(w, rt->right_field_num);
+
+    if (rt->data.variable_referent.levels_up != 0)
+    {
+        i = rt->data.variable_referent.levels_up - 1;
+        while (i != 0)
+        {
+            left = left->parent;
+            i--;
+        }
+        w = left->w;
+    }
+    s2 = field_from_wme(w, rt->data.variable_referent.field_num);
+    return static_cast<bool>(s1 == s2 && s1->is_constant());
 }
 
 
@@ -9553,6 +9586,9 @@ void init_rete(agent* thisAgent)
     rete_test_routines[CONSTANT_RELATIONAL_RETE_TEST +
                        RELATIONAL_SMEM_LINK_NOT_TEST] =
                            constant_smem_link_not_rete_test_routine;
+    rete_test_routines[CONSTANT_RELATIONAL_RETE_TEST +
+                       RELATIONAL_CONSTANT_MATCH_TEST] =
+                           constant_constant_match_rete_test_routine;
     rete_test_routines[VARIABLE_RELATIONAL_RETE_TEST +
                        RELATIONAL_EQUAL_RETE_TEST] =
                            variable_equal_rete_test_routine;
@@ -9580,4 +9616,7 @@ void init_rete(agent* thisAgent)
     rete_test_routines[VARIABLE_RELATIONAL_RETE_TEST +
                            RELATIONAL_SMEM_LINK_NOT_TEST] =
                                variable_smem_link_not_rete_test_routine;
+    rete_test_routines[VARIABLE_RELATIONAL_RETE_TEST +
+                       RELATIONAL_CONSTANT_MATCH_TEST] =
+                           variable_constant_match_rete_test_routine;
     }

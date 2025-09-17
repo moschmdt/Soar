@@ -113,6 +113,7 @@ test copy_test(agent* thisAgent, test t, bool pUseUnifiedIdentitySet, bool pStri
             new_ct = make_test(thisAgent, t->data.referent, t->type);
             new_ct->inst_identity = t->inst_identity;
             new_ct->chunk_inst_identity = t->chunk_inst_identity;
+            new_ct->force_literalize = t->force_literalize;
             if (t->type == EQUALITY_TEST)
             {
                 new_ct->eq_test = new_ct;
@@ -935,6 +936,7 @@ test make_test(agent* thisAgent, Symbol* sym, TestType test_type)
     new_ct->inst_identity = new_ct->chunk_inst_identity = LITERAL_VALUE;
     new_ct->identity = NULL_IDENTITY_SET;
     new_ct->eq_test = (test_type == EQUALITY_TEST) ? new_ct : NULL;
+    new_ct->force_literalize = (test_type == CONSTANT_MATCH_TEST);
     if (sym) thisAgent->symbolManager->symbol_add_ref(sym);
     return new_ct;
 }

@@ -133,6 +133,9 @@ const char* Output_Manager::test_type_to_string(byte test_type)
         case SAME_TYPE_TEST:
             return "<=>";
             break;
+        case CONSTANT_MATCH_TEST:
+            return "$";
+            break;
         case CONJUNCTIVE_TEST:
             return "{ }";
             break;
@@ -177,6 +180,7 @@ void Output_Manager::test_to_string(test t, std::string &destString, bool show_e
         case SAME_TYPE_TEST:
         case SMEM_LINK_TEST:
         case SMEM_LINK_NOT_TEST:
+        case CONSTANT_MATCH_TEST:
             destString += test_type_to_string(t->type);
             destString += ' ';
             destString += t->data.referent->to_string(true);

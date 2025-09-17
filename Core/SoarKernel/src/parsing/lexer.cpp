@@ -232,6 +232,11 @@ void Lexer::lex_tilde () {
   current_lexeme.type = TILDE_LEXEME;
 }
 
+void Lexer::lex_dollar () {
+  store_and_advance();
+  current_lexeme.type = DOLLAR_LEXEME;
+}
+
 void Lexer::lex_up_arrow () {
   store_and_advance();
   current_lexeme.type = UP_ARROW_LEXEME;
@@ -643,6 +648,9 @@ bool Lexer::init ()
       break;
     case '.':
       lexer_routines[(int)'.'] = &Lexer::lex_period;
+      break;
+    case '$':
+      lexer_routines[(int)'$'] = &Lexer::lex_dollar;
       break;
     case '"':
       lexer_routines[(int)'"'] = &Lexer::lex_quote;
