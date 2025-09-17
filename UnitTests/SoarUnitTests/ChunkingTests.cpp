@@ -46,6 +46,7 @@ void ChunkingTests::Literalization_of_NC_and_NCC()                    { check_ch
 void ChunkingTests::Literalization_with_BT_Constraints()              { check_chunk("Literalization_with_BT_Constraints", 8, 1); }
 void ChunkingTests::Literalization_with_BT_Constraints2()             { check_chunk("Literalization_with_BT_Constraints2", 8, 2); }
 void ChunkingTests::Literalization_with_Constraints()                 { check_chunk("Literalization_with_Constraints", 8, 1); }
+void ChunkingTests::Constant_Match_Literalization()                   { check_chunk("Constant_Match_Literalization", 8, 1); }
 void ChunkingTests::Maintain_Instantiation_Specific_Identity()        { check_chunk("Maintain_Instantiation_Specific_Identity", 8, 1); }
 void ChunkingTests::Max_Chunks()                                      { check_chunk("Max_Chunks", 8, 0); }
 void ChunkingTests::Max_Dupes()                                       { check_chunk("Max_Dupes", 8, 0); }
