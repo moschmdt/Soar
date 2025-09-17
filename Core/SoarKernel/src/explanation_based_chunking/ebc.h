@@ -267,6 +267,7 @@ class Explanation_Based_Chunker
         void unify_lhs_rhs_connection(condition* lhs_cond, identity_set_quadruple &rhs_id_sets, const rhs_quadruple rhs_funcs);
         void check_for_singleton_unification(condition* pCond);
         void check_for_constant_match_literalization(condition* pCond);
+        int count_conjunctive_tests(test t);
         bool has_constant_match_test(test t);
         void literalize_constant_match_tests(test t, uint64_t inst_id);
         void literalize_RHS_function_args(const rhs_value rv, uint64_t inst_id);

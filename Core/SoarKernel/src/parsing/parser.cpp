@@ -419,7 +419,17 @@ test parse_relational_test(agent* thisAgent, Lexer* lexer)
 
         case DOLLAR_LEXEME:
             test_type = CONSTANT_MATCH_TEST;
+            // Debug output
+            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
+            {
+                thisAgent->outputManager->printa_sf(thisAgent, "\n[PARSER DEBUG] Found DOLLAR_LEXEME, setting test_type to CONSTANT_MATCH_TEST (%d)", (int)CONSTANT_MATCH_TEST);
+            }
             if (!lexer->get_lexeme()) return NULL;
+            // Debug output for next token
+            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
+            {
+                thisAgent->outputManager->printa_sf(thisAgent, "\n[PARSER DEBUG] After DOLLAR_LEXEME, next token type: %d", (int)lexer->current_lexeme.type);
+            }
             break;
 
         case STR_CONSTANT_LEXEME:
@@ -448,6 +458,11 @@ test parse_relational_test(agent* thisAgent, Lexer* lexer)
                 return NULL;
             }
             t = make_test(thisAgent, referent, test_type);
+            // Debug output
+            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
+            {
+                thisAgent->outputManager->printa_sf(thisAgent, "\n[PARSER DEBUG] Created test with type %d for symbol", (int)test_type);
+            }
             thisAgent->symbolManager->symbol_remove_ref(&referent);
             return t;
 
