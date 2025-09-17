@@ -135,17 +135,6 @@ void Explanation_Based_Chunker::unify_lhs_rhs_connection(condition* lhs_cond, id
  *           first condition that matched. */
 void Explanation_Based_Chunker::check_for_singleton_unification(condition* pCond)
 {
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] check_for_singleton_unification called for WME: " 
-                << "(" << pCond->bt.wme_->id->to_string() 
-                << " ^" << pCond->bt.wme_->attr->to_string() 
-                << " " << pCond->bt.wme_->value->to_string() << ")";
-        message << "\n[DEBUG]   WME is singleton: " << (wme_is_a_singleton(pCond->bt.wme_) ? "yes" : "no");
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-    }
-
     if (wme_is_a_singleton(pCond->bt.wme_))
     {
         condition* last_cond = pCond->bt.wme_->chunker_bt_last_ground_cond;
@@ -177,16 +166,6 @@ void Explanation_Based_Chunker::check_for_singleton_unification(condition* pCond
             Identity* pCondIDSet = get_joined_identity(pCond->data.tests.value_test->eq_test->identity);
             Identity* pLCondIDSet = get_joined_identity(last_cond->data.tests.value_test->eq_test->identity);
             
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-            {
-                std::ostringstream message;
-                message << "\n[DEBUG] Singleton unification identities:";
-                message << "\n[DEBUG]   Current condition identity: " << (pCondIDSet ? std::to_string(pCondIDSet->get_identity()) : "NULL");
-                message << "\n[DEBUG]   Last condition identity: " << (pLCondIDSet ? std::to_string(pLCondIDSet->get_identity()) : "NULL");
-                message << "\n[DEBUG]   Same identity? " << (pCondIDSet == pLCondIDSet ? "yes" : "no");
-                thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            }
-            
             if (pCondIDSet != pLCondIDSet)
             {
                 thisAgent->explanationMemory->add_identity_set_mapping(pCond->inst->i_id, IDS_unified_with_singleton, pCond->data.tests.value_test->eq_test->identity, last_cond->data.tests.value_test->eq_test->identity);
@@ -198,44 +177,14 @@ void Explanation_Based_Chunker::check_for_singleton_unification(condition* pCond
 
 void Explanation_Based_Chunker::check_for_constant_match_literalization(condition* pCond)
 {
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] check_for_constant_match_literalization called for condition";
-        
-        // Add detailed test structure analysis
-        message << "\n[DEBUG] Condition test structure:";
-        message << "\n[DEBUG]   id_test type: " << (int)(pCond->data.tests.id_test ? pCond->data.tests.id_test->type : -1);
-        message << "\n[DEBUG]   attr_test type: " << (int)(pCond->data.tests.attr_test ? pCond->data.tests.attr_test->type : -1);  
-        message << "\n[DEBUG]   value_test type: " << (int)(pCond->data.tests.value_test ? pCond->data.tests.value_test->type : -1);
-        
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        xml_generate_verbose(thisAgent, message.str().c_str());
-    }
-    
     // Check if this condition has any constant match tests that need literalization
     test tests[] = {pCond->data.tests.id_test, pCond->data.tests.attr_test, pCond->data.tests.value_test};
     
     for (int i = 0; i < 3; i++)
     {
         test t = tests[i];
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] Checking field " << i << " (0=id, 1=attr, 2=value) for constant match tests";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
-        
         if (t && has_constant_match_test(t))
         {
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-            {
-                std::ostringstream message;
-                message << "\n[CONSTANT_MATCH DEBUG] Found constant match test in condition, field " << i << " - calling literalize_constant_match_tests";
-                thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                xml_generate_verbose(thisAgent, message.str().c_str());
-            }
             // Find all tests that need literalization due to constant match
             literalize_constant_match_tests(t, pCond->inst->i_id);
         }
@@ -243,75 +192,22 @@ void Explanation_Based_Chunker::check_for_constant_match_literalization(conditio
 }
 
 // Helper function to count tests in a conjunctive test
-int Explanation_Based_Chunker::count_conjunctive_tests(test t)
-{
-    if (!t || t->type != CONJUNCTIVE_TEST) return 0;
-    
-    int count = 0;
-    for (cons* c = t->data.conjunct_list; c; c = c->rest)
-    {
-        count++;
-    }
-    return count;
-}
-
-// External function defined in ebc_constraints.cpp
-extern const char* get_test_type_name(int test_type);
-
 // Helper function to check if a test has CONSTANT_MATCH_TEST
 bool Explanation_Based_Chunker::has_constant_match_test(test t)
 {
     if (!t) return false;
     
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] has_constant_match_test: checking " << get_test_type_name(t->type) 
-               << " (type=" << (int)t->type << "), force_literalize=" << (t->force_literalize ? "true" : "false");
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        xml_generate_verbose(thisAgent, message.str().c_str());
-    }
-    
     if (t->type == CONSTANT_MATCH_TEST && t->force_literalize)
     {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] has_constant_match_test: FOUND CONSTANT_MATCH_TEST!";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
         return true;
     }
     
     if (t->type == CONJUNCTIVE_TEST)
-    {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] has_constant_match_test: checking CONJUNCTIVE_TEST with " << count_conjunctive_tests(t) << " sub-tests";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
-        
+    {        
         int test_index = 0;
         for (cons* c = t->data.conjunct_list; c; c = c->rest, test_index++)
         {
             test sub_test = static_cast<test>(c->first);
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-            {
-                std::ostringstream message;
-                message << "\n[DEBUG] has_constant_match_test: sub-test[" << test_index << "] " 
-                       << get_test_type_name(sub_test->type) << " (type=" << (int)sub_test->type << ")"
-                       << ", force_literalize=" << (sub_test->force_literalize ? "true" : "false");
-                if (sub_test->data.referent)
-                {
-                    message << ", referent=" << sub_test->data.referent->to_string();
-                }
-                thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                xml_generate_verbose(thisAgent, message.str().c_str());
-            }
-            
             if (has_constant_match_test(sub_test))
             {
                 return true;
@@ -327,34 +223,11 @@ void Explanation_Based_Chunker::literalize_constant_match_tests(test t, uint64_t
 {
     if (!t) 
     {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] literalize_constant_match_tests: test is NULL";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
         return;
-    }
-    
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] literalize_constant_match_tests called for test type " << (int)t->type << ", inst_id=" << inst_id;
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        xml_generate_verbose(thisAgent, message.str().c_str());
     }
     
     if (t->type == CONJUNCTIVE_TEST)
     {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] Processing conjunctive test";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
-        
         // First pass: collect all symbols that have constant match constraints
         std::set<Symbol*> constrained_symbols;
         for (cons* c = t->data.conjunct_list; c; c = c->rest)
@@ -363,14 +236,6 @@ void Explanation_Based_Chunker::literalize_constant_match_tests(test t, uint64_t
             if (sub_test && sub_test->type == CONSTANT_MATCH_TEST && sub_test->force_literalize)
             {
                 constrained_symbols.insert(sub_test->data.referent);
-                
-                if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-                {
-                    std::ostringstream message;
-                    message << "\n[DEBUG] Found CONSTANT_MATCH_TEST for symbol: " << sub_test->data.referent->to_string();
-                    thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                    xml_generate_verbose(thisAgent, message.str().c_str());
-                }
             }
         }
         
@@ -382,14 +247,6 @@ void Explanation_Based_Chunker::literalize_constant_match_tests(test t, uint64_t
             {
                 if (constrained_symbols.find(sub_test->data.referent) != constrained_symbols.end())
                 {
-                    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-                    {
-                        std::ostringstream message;
-                        message << "\n[DEBUG] Literalizing EQUALITY_TEST for symbol: " << sub_test->data.referent->to_string();
-                        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                        xml_generate_verbose(thisAgent, message.str().c_str());
-                    }
-                    
                     thisAgent->explanationMemory->add_identity_set_mapping(inst_id, IDS_literalized_constant_match, sub_test->identity, NULL);
                     sub_test->identity->literalize();
                 }

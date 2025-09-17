@@ -28,17 +28,11 @@
 #include "soar_TraceNames.h"
 #include "symbol.h"
 #include "symbol_manager.h"
-#include "xml.h"
-
-#include <sstream>
 #include "test.h"
 #include "working_memory.h"
 #include "xml.h"
 
 #include <stdlib.h>
-
-// External function defined in ebc_constraints.cpp
-extern const char* get_test_type_name(int test_type);
 
 using namespace soar_TraceNames;
 
@@ -73,63 +67,24 @@ void Explanation_Based_Chunker::add_to_grounds(condition* cond)
         // Run identity analysis for first condition that matches this WME
         if (ebc_settings[SETTING_EBC_LEARNING_ON])
         {
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-            {
-                std::ostringstream message;
-                message << "\n[IDENTITY DEBUG] Processing first WME ground condition for identity analysis: " 
-                       << cond->bt.wme_->id->to_string() << " ^" << cond->bt.wme_->attr->to_string() << " " << cond->bt.wme_->value->to_string();
-                thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                xml_generate_verbose(thisAgent, message.str().c_str());
-            }
-            
             check_for_constant_match_literalization(cond);
-            
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-            {
-                std::ostringstream message;
-                message << "\n[IDENTITY DEBUG] Completed identity analysis for first WME";
-                thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                xml_generate_verbose(thisAgent, message.str().c_str());
-            }
         }
     }
     if ((cond->bt.wme_->chunker_bt_last_ground_cond != cond) && ebc_settings[SETTING_EBC_LEARNING_ON])
     {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[IDENTITY DEBUG] Processing duplicate WME ground condition for identity analysis: " 
-                   << cond->bt.wme_->id->to_string() << " ^" << cond->bt.wme_->attr->to_string() << " " << cond->bt.wme_->value->to_string();
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
-        
         check_for_singleton_unification(cond);
         check_for_constant_match_literalization(cond);
-        
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[IDENTITY DEBUG] Completed identity analysis for duplicate WME";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
     }
     push(thisAgent, (cond), grounds);
 }
 
 void Explanation_Based_Chunker::add_to_locals(condition* cond)
 {
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] add_to_locals called for condition with wme: " << cond->bt.wme_->id->to_string() << " ^" << cond->bt.wme_->attr->to_string() << " " << cond->bt.wme_->value->to_string();
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        xml_generate_verbose(thisAgent, message.str().c_str());
-    }
-    
     // Check if this local condition has constant match tests
-    check_for_constant_match_literalization(cond);
+    if (ebc_settings[SETTING_EBC_LEARNING_ON])
+    {
+        check_for_constant_match_literalization(cond);
+    }
     
     push(thisAgent, (cond), locals);
 }
@@ -162,38 +117,6 @@ void Explanation_Based_Chunker::backtrace_through_instantiation(preference* pPre
         thisAgent->outputManager->printa_sf(thisAgent, "%y\n", inst->prod ? inst->prod_name : thisAgent->symbolManager->soarSymbols.architecture_inst_symbol);
         xml_begin_tag(thisAgent, kTagBacktrace);
         xml_att_val(thisAgent, kProduction_Name, inst->prod ? inst->prod_name: thisAgent->symbolManager->soarSymbols.architecture_inst_symbol);
-    }
-
-    // Debug output to show all conditions in this instantiation
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[INSTANTIATION DEBUG] Backtracing through instantiation of " 
-               << (inst->prod ? inst->prod_name->to_string() : "architecture");
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        xml_generate_verbose(thisAgent, message.str().c_str());
-        
-        // Count and list all conditions
-        int condition_count = 0;
-        for (condition* temp_c = inst->top_of_instantiated_conditions; temp_c != NIL; temp_c = temp_c->next)
-        {
-            condition_count++;
-        }
-        
-        message.str("");
-        message << "\n[INSTANTIATION DEBUG] This instantiation has " << condition_count << " conditions:";
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        xml_generate_verbose(thisAgent, message.str().c_str());
-        
-        int cond_index = 0;
-        for (condition* temp_c = inst->top_of_instantiated_conditions; temp_c != NIL; temp_c = temp_c->next, cond_index++)
-        {
-            message.str("");
-            message << "\n[INSTANTIATION DEBUG] Condition[" << cond_index << "] type=" << (int)temp_c->type 
-                   << " wme: " << temp_c->bt.wme_->id->to_string() << " ^" << temp_c->bt.wme_->attr->to_string() << " " << temp_c->bt.wme_->value->to_string();
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
     }
 
     if (trace_cond && ebc_settings[SETTING_EBC_LEARNING_ON])
@@ -247,95 +170,18 @@ void Explanation_Based_Chunker::backtrace_through_instantiation(preference* pPre
     {
         if (c->type == POSITIVE_CONDITION)
         {
-            // Show constant match test structure when found
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM] && c->data.tests.value_test->type == CONJUNCTIVE_TEST)
-            {
-                bool has_constant_match = false;
-                for (cons* sub_c = c->data.tests.value_test->data.conjunct_list; sub_c; sub_c = sub_c->rest)
-                {
-                    test sub_test = static_cast<test>(sub_c->first);
-                    if (sub_test->type == CONSTANT_MATCH_TEST && sub_test->force_literalize)
-                    {
-                        has_constant_match = true;
-                        break;
-                    }
-                }
-                
-                if (has_constant_match)
-                {
-                    std::ostringstream message;
-                    message << "\n[CONSTANT_MATCH DEBUG] Found CONSTANT_MATCH_TEST in condition: " 
-                           << c->bt.wme_->id->to_string() << " ^" << c->bt.wme_->attr->to_string() << " " << c->bt.wme_->value->to_string();
-                    message << "\n[CONSTANT_MATCH DEBUG] Conjunctive test has:";
-                    int sub_index = 0;
-                    for (cons* sub_c = c->data.tests.value_test->data.conjunct_list; sub_c; sub_c = sub_c->rest, sub_index++)
-                    {
-                        test sub_test = static_cast<test>(sub_c->first);
-                        message << "\n[CONSTANT_MATCH DEBUG]   [" << sub_index << "] " << get_test_type_name(sub_test->type);
-                        if (sub_test->type == CONSTANT_MATCH_TEST)
-                        {
-                            message << " *** FORCE_LITERALIZE=" << (sub_test->force_literalize ? "TRUE" : "false") << " ***";
-                        }
-                        if (sub_test->data.referent)
-                        {
-                            message << " referent=" << sub_test->data.referent->to_string();
-                        }
-                    }
-                    thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                    xml_generate_verbose(thisAgent, message.str().c_str());
-                }
-            }
-            
-            /* Check operationality */
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-            {
-                std::ostringstream message;
-                message << "\n[BACKTRACE DEBUG] POSITIVE_CONDITION - checking operationality";
-                thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                xml_generate_verbose(thisAgent, message.str().c_str());
-            }
-            
             /* Check operationality */
             if (c->data.tests.id_test->eq_test->data.referent->id->level <= m_goal_level)
             {
-                if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-                {
-                    std::ostringstream message;
-                    message << "\n[BACKTRACE DEBUG] Operational condition - goal level check passed";
-                    thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                    xml_generate_verbose(thisAgent, message.str().c_str());
-                }
-                
                 if (c->bt.wme_->tc != grounds_tc)                   /* First time we've seen something matching this wme*/
                 {
-                    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-                    {
-                        std::ostringstream message;
-                        message << "\n[BACKTRACE DEBUG] First time seeing WME - calling add_to_grounds";
-                        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                        xml_generate_verbose(thisAgent, message.str().c_str());
-                    }
                     add_to_grounds(c);
                 }
                 else if (ebc_settings[SETTING_EBC_LEARNING_ON])     /* Another condition that matches the same wme */
                 {
-                    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-                    {
-                        std::ostringstream message;
-                        message << "\n[BACKTRACE DEBUG] Duplicate WME with learning on - calling add_to_grounds";
-                        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                        xml_generate_verbose(thisAgent, message.str().c_str());
-                    }
                     add_to_grounds(c);
                 }
             } else {                                                /* A local sub-state WME */
-                if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-                {
-                    std::ostringstream message;
-                    message << "\n[BACKTRACE DEBUG] Local sub-state WME - caching constraints and adding to locals";
-                    thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                    xml_generate_verbose(thisAgent, message.str().c_str());
-                }
                 if (ebc_settings[SETTING_EBC_LEARNING_ON])
                     cache_constraints_in_cond(c);
                 add_to_locals(c);
@@ -343,13 +189,6 @@ void Explanation_Based_Chunker::backtrace_through_instantiation(preference* pPre
         }
         else
         {
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-            {
-                std::ostringstream message;
-                message << "\n[BACKTRACE DEBUG] NON-POSITIVE condition type " << (int)c->type << " - adding to negated set";
-                thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                xml_generate_verbose(thisAgent, message.str().c_str());
-            }
             add_to_chunk_cond_set(&negated_set, make_chunk_cond_for_negated_condition(c));
             if (thisAgent->trace_settings[TRACE_BACKTRACING_SYSPARAM]) push(thisAgent, c, negateds_to_print);
         }
