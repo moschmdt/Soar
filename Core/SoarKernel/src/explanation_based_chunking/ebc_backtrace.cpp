@@ -30,7 +30,6 @@
 #include "symbol_manager.h"
 #include "test.h"
 #include "working_memory.h"
-#include "xml.h"
 
 #include <stdlib.h>
 
