@@ -8,35 +8,6 @@
 #include "print.h"
 #include "test.h"
 #include "working_memory.h"
-#include "xml.h"
-
-#include <sstream>
-
-// Helper function to get test type name for debugging  
-const char* get_test_type_name(int test_type)
-{
-    switch (test_type)
-    {
-        case 0: return "UNINITIALIZED_TEST";
-        case 1: return "NOT_EQUAL_TEST";
-        case 2: return "LESS_TEST";
-        case 3: return "GREATER_TEST";
-        case 4: return "LESS_OR_EQUAL_TEST";
-        case 5: return "GREATER_OR_EQUAL_TEST";
-        case 6: return "SAME_TYPE_TEST";
-        case 7: return "DISJUNCTION_TEST";
-        case 8: return "CONJUNCTIVE_TEST";
-        case 9: return "GOAL_ID_TEST";
-        case 10: return "IMPASSE_ID_TEST";
-        case 11: return "EQUALITY_TEST";
-        case 12: return "SMEM_LINK_TEST";
-        case 13: return "SMEM_LINK_NOT_TEST";
-        case 14: return "SMEM_LINK_UNARY_TEST";
-        case 15: return "SMEM_LINK_UNARY_NOT_TEST";
-        case 16: return "CONSTANT_MATCH_TEST";
-        default: return "UNKNOWN_TEST";
-    }
-}
 
 void Explanation_Based_Chunker::clear_cached_constraints()
 {
@@ -55,43 +26,13 @@ void Explanation_Based_Chunker::cache_constraints_in_test(test t)
     test ctest;
     constraint* new_constraint = NULL;
 
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] cache_constraints_in_test called for conjunctive test";
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        xml_generate_verbose(thisAgent, message.str().c_str());
-    }
-
     int constraint_index = 0;
     for (cons* c = t->data.conjunct_list; c != NIL; c = c->rest, constraint_index++)
     {
         ctest = static_cast<test>(c->first);
         
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] cache_constraints_in_test: examining constraint[" << constraint_index << "] " 
-                   << get_test_type_name(ctest->type) << " (type=" << (int)ctest->type << ")"
-                   << ", force_literalize=" << (ctest->force_literalize ? "true" : "false");
-            if (ctest->data.referent)
-            {
-                message << ", referent=" << ctest->data.referent->to_string();
-            }
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
-        
         if (test_can_be_transitive_constraint(ctest))
         {
-            if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-            {
-                std::ostringstream message;
-                message << "\n[DEBUG] cache_constraints_in_test: caching constraint[" << constraint_index << "] as transitive constraint";
-                thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                xml_generate_verbose(thisAgent, message.str().c_str());
-            }
-
             thisAgent->memoryManager->allocate_with_pool(MP_constraints, &new_constraint);
             new_constraint->eq_test = t->eq_test;
             new_constraint->constraint_test = ctest;
@@ -103,46 +44,16 @@ void Explanation_Based_Chunker::cache_constraints_in_test(test t)
 
 void Explanation_Based_Chunker::cache_constraints_in_cond(condition* c)
 {
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] cache_constraints_in_cond called for condition with wme: " 
-                << c->bt.wme_->id->to_string() << " ^" << c->bt.wme_->attr->to_string() << " " << c->bt.wme_->value->to_string();
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        xml_generate_verbose(thisAgent, message.str().c_str());
-    }
-
     if (c->data.tests.id_test->type == CONJUNCTIVE_TEST) 
     {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] cache_constraints_in_cond: caching id_test conjunctive constraints";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
         cache_constraints_in_test(c->data.tests.id_test);
     }
     if (c->data.tests.attr_test->type == CONJUNCTIVE_TEST) 
     {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] cache_constraints_in_cond: caching attr_test conjunctive constraints";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
         cache_constraints_in_test(c->data.tests.attr_test);
     }
     if (c->data.tests.value_test->type == CONJUNCTIVE_TEST) 
     {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] cache_constraints_in_cond: caching value_test conjunctive constraints";
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-            xml_generate_verbose(thisAgent, message.str().c_str());
-        }
         cache_constraints_in_test(c->data.tests.value_test);
     }
 }

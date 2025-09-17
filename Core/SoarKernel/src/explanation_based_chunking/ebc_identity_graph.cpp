@@ -135,15 +135,6 @@ void Explanation_Based_Chunker::join_identities(Identity* lFromJoinSet, Identity
 
     if (lFromJoinSet == lToJoinSet) return;
 
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] join_identities called:";
-        message << "\n[DEBUG]   From identity: " << lFromJoinSet->get_identity() << " (literalized: " << (lFromJoinSet->literalized() ? "yes" : "no") << ")";
-        message << "\n[DEBUG]   To identity: " << lToJoinSet->get_identity() << " (literalized: " << (lToJoinSet->literalized() ? "yes" : "no") << ")";
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-    }
-
     thisAgent->explanationMemory->increment_stat_identities_joined();
     lFromJoinSet->touch();
     lToJoinSet->touch();
@@ -173,12 +164,6 @@ void Explanation_Based_Chunker::join_identities(Identity* lFromJoinSet, Identity
             lPreviouslyJoinedIdentity->joined_identity = lToJoinSet;
             if (lPreviouslyJoinedIdentity->literalized()) 
             {
-                if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-                {
-                    std::ostringstream message;
-                    message << "\n[DEBUG] Propagating literalization from identity " << lPreviouslyJoinedIdentity->get_identity() << " to " << lToJoinSet->get_identity();
-                    thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                }
                 lToJoinSet->literalize();
             }
         }
@@ -192,24 +177,11 @@ void Explanation_Based_Chunker::join_identities(Identity* lFromJoinSet, Identity
     /* Propagate literalization and constraint info */
     if (lFromJoinSet->literalized())
     {
-        if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-        {
-            std::ostringstream message;
-            message << "\n[DEBUG] Propagating literalization from joined identity " << lFromJoinSet->get_identity() << " to " << lToJoinSet->get_identity();
-            thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-        }
         lToJoinSet->literalize();
     }
 
     /* Point super_join to joined identity set */
     lFromJoinSet->joined_identity = lToJoinSet;
-    
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] join_identities completed - final target literalized: " << (lToJoinSet->literalized() ? "yes" : "no");
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-    }
 }
 
 void Explanation_Based_Chunker::update_identities_in_test(test t, instantiation* pInst)
@@ -232,12 +204,6 @@ void Explanation_Based_Chunker::update_identities_in_test(test t, instantiation*
             default:
                 if (t->inst_identity)
                 {
-                    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-                    {
-                        std::ostringstream message;
-                        message << "\n[DEBUG] Setting identity for test type " << (int)t->type << " with inst_identity " << t->inst_identity;
-                        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-                    }
                     set_test_identity(thisAgent, t, get_identity_for_id(t->inst_identity));
                 }
                 break;
@@ -245,19 +211,6 @@ void Explanation_Based_Chunker::update_identities_in_test(test t, instantiation*
 }
 void Explanation_Based_Chunker::update_identities_in_cond(condition* pCond, instantiation* pInst)
 {
-    if (thisAgent->trace_settings[TRACE_CHUNKS_WARNINGS_SYSPARAM])
-    {
-        std::ostringstream message;
-        message << "\n[DEBUG] update_identities_in_cond called for instantiation " << pInst->i_id;
-        if (pCond->bt.wme_)
-        {
-            message << " WME: (" << pCond->bt.wme_->id->to_string() 
-                    << " ^" << pCond->bt.wme_->attr->to_string() 
-                    << " " << pCond->bt.wme_->value->to_string() << ")";
-        }
-        thisAgent->outputManager->printa_sf(thisAgent, message.str().c_str());
-    }
-
     update_identities_in_test(pCond->data.tests.id_test, pInst);
     update_identities_in_test(pCond->data.tests.attr_test, pInst);
     update_identities_in_test(pCond->data.tests.value_test, pInst);
