@@ -58,7 +58,8 @@ enum lexer_token_type {
   PERIOD_LEXEME,                     /**< "." */
   QUOTED_STRING_LEXEME,              /**< string in double quotes */
   DOLLAR_STRING_LEXEME,              /**< string for shell escape */
-  DOLLAR_LEXEME,                     /**< "$" for constant match test */
+  DOLLAR_LEXEME,                     /**< "$" for shorthand constant match test */
+  DOUBLE_DOLLAR_LEXEME,              /**< "$$" for longhand constant match test */
   NULL_LEXEME                        /**< Initial value */
 };
 

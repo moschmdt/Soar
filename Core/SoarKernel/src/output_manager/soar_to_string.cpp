@@ -163,6 +163,38 @@ void Output_Manager::test_to_string(test t, std::string &destString, bool show_e
             destString += t->data.referent->to_string(true);
             break;
         case CONJUNCTIVE_TEST:
+            // Check if this is exactly the pattern {<x> $$ <x>} - if so, print as $ <x>
+            if (t->data.conjunct_list && t->data.conjunct_list->rest && !t->data.conjunct_list->rest->rest) 
+            {
+                // Exactly two tests in the conjunctive list
+                test first_test = static_cast<test>(t->data.conjunct_list->first);
+                test second_test = static_cast<test>(t->data.conjunct_list->rest->first);
+                
+                // Check if one is EQUALITY_TEST and one is CONSTANT_MATCH_TEST with same referent
+                bool is_shorthand_pattern = false;
+                Symbol* referent = nullptr;
+                
+                if (first_test && second_test) {
+                    if (first_test->type == EQUALITY_TEST && second_test->type == CONSTANT_MATCH_TEST &&
+                        first_test->data.referent == second_test->data.referent) {
+                        is_shorthand_pattern = true;
+                        referent = first_test->data.referent;
+                    } else if (first_test->type == CONSTANT_MATCH_TEST && second_test->type == EQUALITY_TEST &&
+                        first_test->data.referent == second_test->data.referent) {
+                        is_shorthand_pattern = true;
+                        referent = first_test->data.referent;
+                    }
+                }
+                
+                if (is_shorthand_pattern && referent) {
+                    // Print as shorthand: $ <variable>
+                    destString += "$ ";
+                    destString += referent->to_string(true);
+                    break;
+                }
+            }
+            
+            // Default conjunctive test printing
             destString += "{ ";
             for (c = t->data.conjunct_list; c != NIL; c = c->rest)
             {

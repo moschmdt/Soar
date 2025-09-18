@@ -234,7 +234,14 @@ void Lexer::lex_tilde () {
 
 void Lexer::lex_dollar () {
   store_and_advance();
-  current_lexeme.type = DOLLAR_LEXEME;
+  
+  // Check if the next character is also '$' for double dollar
+  if (current_char == '$') {
+    store_and_advance(); // consume the second '$'
+    current_lexeme.type = DOUBLE_DOLLAR_LEXEME;
+  } else {
+    current_lexeme.type = DOLLAR_LEXEME;
+  }
 }
 
 void Lexer::lex_up_arrow () {
