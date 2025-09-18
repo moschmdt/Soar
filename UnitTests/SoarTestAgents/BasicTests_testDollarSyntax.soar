@@ -1,0 +1,50 @@
+# Simple test for $ syntax variations  
+# Tests three different forms and their printing:
+# 1. Shorthand: $ <x> (should print as $ <x>)
+# 2. Longhand: {<x> $$ <x>} (should print as $ <x> - gets shortened by smart printing)
+# 3. Complex conjunctive: {<x> $$ <x> < 5} (should print as {<x> $$ <x> < 5} - can't be shortened)
+
+sp {init
+    (state <s> ^superstate nil)
+-->
+    (<s> ^value 3
+         ^name test)
+    (write (crlf) |=== Testing Dollar Syntax Printing ===|)
+    (write (crlf) |Printing test-shorthand rule:|)
+    (write (cmd print test-shorthand))
+    (write (crlf) |Printing test-longhand rule:|)  
+    (write (cmd print test-longhand))
+    (write (crlf) |Printing test-complex-conjunctive rule:|)
+    (write (cmd print test-complex-conjunctive))
+    (write (crlf) |=== End Printing Test ===|)
+}
+
+sp {test-shorthand
+    (state <s> ^value $ <x>)
+-->
+    (<s> ^result-shorthand <x>)
+}
+
+sp {test-longhand
+    (state <s> ^name {<y> $$ <y>})
+-->
+    (<s> ^result-longhand <y>)
+}
+
+sp {test-complex-conjunctive
+    (state <s> ^value {<z> $$ <z> < 5})
+-->
+    (<s> ^result-complex <z>)
+}
+
+sp {test-complete
+    (state <s> ^result-shorthand <a>
+               ^result-longhand <b>  
+               ^result-complex <c>)
+-->
+    (write (crlf) |All tests completed successfully!|)
+    (write (crlf) |Shorthand result: | <a>)
+    (write (crlf) |Longhand result: | <b>)
+    (write (crlf) |Complex result: | <c>)
+    (halt)
+}

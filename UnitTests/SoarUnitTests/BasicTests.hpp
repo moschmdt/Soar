@@ -21,6 +21,9 @@ public:
 	
 	TEST(testInitialState, -1)
 	void testInitialState();
+	
+	TEST(testDollarSyntax, -1)
+	void testDollarSyntax();
 };
 
 #endif /* BasicTests_cpp */

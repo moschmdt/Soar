@@ -134,7 +134,7 @@ const char* Output_Manager::test_type_to_string(byte test_type)
             return "<=>";
             break;
         case CONSTANT_MATCH_TEST:
-            return "$";
+            return "$$";
             break;
         case CONJUNCTIVE_TEST:
             return "{ }";
