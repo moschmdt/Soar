@@ -45,7 +45,7 @@ sp {propose*test
 sp {apply-bt1
     (state <s> ^operator
                ^superstate <ss>)
-    (<ss> ^foo {<x> $ <x>}
+    (<ss> ^foo {<x> $$ <x>}
           ^foo2 {<> homer <z>})
     -->
     (<s> ^continue1 true)
