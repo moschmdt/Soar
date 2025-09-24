@@ -1386,7 +1386,7 @@ void deallocate_instantiation(agent* thisAgent, instantiation*& inst)
                  * rete.cpp.  But if removing the preference will remove the instantiation, we
                  * need to excise it now so that the rete doesn't try to later */
                 excise_production(thisAgent, lDelInst->prod, false, true);
-            } else {
+            } else if (lDelInst->prod->type == JUSTIFICATION_PRODUCTION_TYPE) {
                 production_remove_ref(thisAgent, lDelInst->prod);
             }
         }
