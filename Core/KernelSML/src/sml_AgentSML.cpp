@@ -1318,20 +1318,22 @@ bool AgentSML::StopCaptureInput()
     return good;
 }
 
-std::string::size_type AgentSML::findDelimReplaceEscape(std::string& line, std::string::size_type lpos)
-{
-    std::string::size_type epos;
-    std::string::size_type rpos;
-    while ((epos = line.find(CAPTURE_ESCAPE, lpos)) < (rpos = line.find(CAPTURE_SEPARATOR, lpos)))
-    {
-        line.erase(epos, CAPTURE_ESCAPE.length());
-        if (rpos >= line.length())
-        {
-            return std::string::npos;
+std::string::size_type AgentSML::findDelimReplaceEscape(std::string& line, std::string::size_type lpos) {
+    while (lpos < line.length()) {
+        if (line[lpos] == CAPTURE_SEPARATOR[0]) {
+           if (lpos >= CAPTURE_ESCAPE.length() && 
+               line.substr(lpos - CAPTURE_ESCAPE.length(), CAPTURE_ESCAPE.length()) == CAPTURE_ESCAPE) {
+                 // Replace the escaped space sequence with a normal space character
+                 line.erase(lpos - CAPTURE_ESCAPE.length(), CAPTURE_ESCAPE.length());
+                 lpos += 1;
+                 continue;
+            } else {
+                 return lpos;
+            }
         }
-        lpos = rpos;
+        lpos++;
     }
-    return rpos;
+    return std::string::npos;
 }
 
 bool AgentSML::StartReplayInput(const std::string& pathname)

@@ -18,6 +18,7 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
 
 #include "SoarHelper.hpp"
 #include "handlers.hpp"
@@ -424,3 +425,57 @@ void MiscTests::test494Cd()
 //
 //	assertTrue(result);
 //}
+
+void MiscTests::testPerceptReplayEscape()
+{
+	// Test percept replay with escaped spaces and regex patterns
+	// Demonstrates GitHub issue with findDelimReplaceEscape function
+	
+	// Test 1: Simple case that should always work
+	std::ofstream testFile1("test_simple.spr");
+	testFile1 << "12345" << std::endl;  // seed
+	testFile1 << "1 -1 add-wme I1 simple basic string" << std::endl;  // no escapes
+	testFile1.close();
+	
+	agent->ExecuteCommandLine("load percepts --open test_simple.spr");
+	bool simpleCase = agent->GetLastCommandLineResult();
+	agent->ExecuteCommandLine("load percepts --close");
+	std::remove("test_simple.spr");
+	
+	// Reset agent state between tests (following test_clog pattern)
+	tearDown(false);
+	setUp();
+	
+	// Test 2: Escaped spaces (intended functionality)
+	std::ofstream testFile2("test_escaped.spr");
+	testFile2 << "67890" << std::endl;  // seed
+	testFile2 << "1 -1 add-wme I1 name\\ with\\ spaces value string" << std::endl;  // escaped spaces
+	testFile2.close();
+	
+	agent->ExecuteCommandLine("load percepts --open test_escaped.spr");
+	bool escapedCase = agent->GetLastCommandLineResult();
+	agent->ExecuteCommandLine("load percepts --close");
+	std::remove("test_escaped.spr");
+	
+	// Reset again for third test
+	tearDown(false);
+	setUp();
+	
+	// Test 3: Regex patterns (the main bug case)
+	std::ofstream testFile3("test_regex.spr");
+	testFile3 << "11111" << std::endl;  // seed
+	testFile3 << "1 -1 add-wme I1 pattern \\d+\\w+ string" << std::endl;  // regex patterns
+	testFile3.close();
+	
+	agent->ExecuteCommandLine("load percepts --open test_regex.spr");
+	bool regexCase = agent->GetLastCommandLineResult();
+	agent->ExecuteCommandLine("load percepts --close");
+	std::remove("test_regex.spr");
+	
+	// Test assertions
+	assertTrue_msg("Simple percept loading should work", simpleCase);
+	assertTrue_msg("Escaped spaces should work", escapedCase);
+	assertTrue_msg("Regex patterns should be preserved", regexCase);
+	
+	SoarHelper::init_check_to_find_refcount_leaks(agent);
+}
