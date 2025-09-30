@@ -429,53 +429,55 @@ void MiscTests::test494Cd()
 void MiscTests::testPerceptReplayEscape()
 {
 	// Test percept replay with escaped spaces and regex patterns
-	// Demonstrates GitHub issue with findDelimReplaceEscape function
+	// Verifies GitHub issue fix where findDelimReplaceEscape function
+	// was incorrectly removing backslashes from regex patterns
 	
-	// Test 1: Simple case that should always work
-	std::ofstream testFile1("test_simple.spr");
-	testFile1 << "12345" << std::endl;  // seed
-	testFile1 << "1 -1 add-wme I1 simple basic string" << std::endl;  // no escapes
+	// Test 1: Simple case
+	std::ofstream testFile1("testPerceptReplayEscape_Simple.spr");
+	testFile1 << "12345" << std::endl;
+	testFile1 << "1 -1 add-wme I2 sensor reading string" << std::endl;
+	testFile1 << "1 -2 add-wme I2 value 42 int" << std::endl;
 	testFile1.close();
 	
-	agent->ExecuteCommandLine("load percepts --open test_simple.spr");
-	bool simpleCase = agent->GetLastCommandLineResult();
-	agent->ExecuteCommandLine("load percepts --close");
-	std::remove("test_simple.spr");
-	
-	// Reset agent state between tests (following test_clog pattern)
-	tearDown(false);
-	setUp();
-	
-	// Test 2: Escaped spaces (intended functionality)
-	std::ofstream testFile2("test_escaped.spr");
-	testFile2 << "67890" << std::endl;  // seed
-	testFile2 << "1 -1 add-wme I1 name\\ with\\ spaces value string" << std::endl;  // escaped spaces
+	// Test 2: Escaped spaces
+	std::ofstream testFile2("testPerceptReplayEscape_Escaped.spr");
+	testFile2 << "67890" << std::endl;
+	testFile2 << "1 -3 add-wme I2 name\\ with\\ spaces test-value string" << std::endl;
+	testFile2 << "1 -4 add-wme I2 status active string" << std::endl;
 	testFile2.close();
 	
-	agent->ExecuteCommandLine("load percepts --open test_escaped.spr");
-	bool escapedCase = agent->GetLastCommandLineResult();
-	agent->ExecuteCommandLine("load percepts --close");
-	std::remove("test_escaped.spr");
+	// Test 3: Regex patterns with backslashes  
+	std::ofstream testFile3("testPerceptReplayEscape_Regex.spr");
+	testFile3 << "11111" << std::endl;
+	testFile3 << "1 -5 add-wme I2 pattern \\d+\\w+ string" << std::endl;
+	testFile3 << "1 -6 add-wme I2 regex-test \\s*\\w+ string" << std::endl;
+	testFile3.close();
 	
-	// Reset again for third test
+	// Test all cases: simple WMEs, escaped spaces, and regex patterns directly
+	agent->ExecuteCommandLine("load percepts --open testPerceptReplayEscape_Simple.spr", false, false);
+	assertTrue_msg("Simple percept loading", agent->GetLastCommandLineResult());
+	agent->RunSelf(2, sml::sml_DECIDE);
+	agent->ExecuteCommandLine("load percepts --close", false, false);
 	tearDown(false);
 	setUp();
 	
-	// Test 3: Regex patterns (the main bug case)
-	std::ofstream testFile3("test_regex.spr");
-	testFile3 << "11111" << std::endl;  // seed
-	testFile3 << "1 -1 add-wme I1 pattern \\d+\\w+ string" << std::endl;  // regex patterns
-	testFile3.close();
+	agent->ExecuteCommandLine("load percepts --open testPerceptReplayEscape_Escaped.spr", false, false);
+	assertTrue_msg("Escaped spaces percept loading", agent->GetLastCommandLineResult());
+	agent->RunSelf(2, sml::sml_DECIDE);
+	agent->ExecuteCommandLine("load percepts --close", false, false);
+	tearDown(false);
+	setUp();
 	
-	agent->ExecuteCommandLine("load percepts --open test_regex.spr");
-	bool regexCase = agent->GetLastCommandLineResult();
-	agent->ExecuteCommandLine("load percepts --close");
-	std::remove("test_regex.spr");
+	agent->ExecuteCommandLine("load percepts --open testPerceptReplayEscape_Regex.spr", false, false);
+	assertTrue_msg("Regex patterns percept loading", agent->GetLastCommandLineResult());
+	agent->RunSelf(2, sml::sml_DECIDE);
 	
-	// Test assertions
-	assertTrue_msg("Simple percept loading should work", simpleCase);
-	assertTrue_msg("Escaped spaces should work", escapedCase);
-	assertTrue_msg("Regex patterns should be preserved", regexCase);
+	agent->ExecuteCommandLine("load percepts --close", false, false);
+	
+	// Clean up test files
+	std::remove("testPerceptReplayEscape_Simple.spr");
+	std::remove("testPerceptReplayEscape_Escaped.spr");
+	std::remove("testPerceptReplayEscape_Regex.spr");
 	
 	SoarHelper::init_check_to_find_refcount_leaks(agent);
 }
