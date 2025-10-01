@@ -442,35 +442,93 @@ void MiscTests::testPerceptReplayEscape()
 	// Test 2: Escaped spaces
 	std::ofstream testFile2("testPerceptReplayEscape_Escaped.spr");
 	testFile2 << "67890" << std::endl;
-	testFile2 << "1 -3 add-wme I2 name\\ with\\ spaces test-value string" << std::endl;
-	testFile2 << "1 -4 add-wme I2 status active string" << std::endl;
+	testFile2 << "1 -1 add-wme I2 name\\ with\\ spaces test-value string" << std::endl;
+	testFile2 << "1 -2 add-wme I2 status active string" << std::endl;
 	testFile2.close();
 	
 	// Test 3: Regex patterns with backslashes  
 	std::ofstream testFile3("testPerceptReplayEscape_Regex.spr");
 	testFile3 << "11111" << std::endl;
-	testFile3 << "1 -5 add-wme I2 pattern \\d+\\w+ string" << std::endl;
-	testFile3 << "1 -6 add-wme I2 regex-test \\s*\\w+ string" << std::endl;
+	testFile3 << "1 -1 add-wme I2 pattern \\d+\\w+ string" << std::endl;
+	testFile3 << "1 -2 add-wme I2 regex-test \\s*\\w+ string" << std::endl;
 	testFile3.close();
 	
 	// Test all cases: simple WMEs, escaped spaces, and regex patterns directly
-	agent->ExecuteCommandLine("load percepts --open testPerceptReplayEscape_Simple.spr", false, false);
-	assertTrue_msg("Simple percept loading", agent->GetLastCommandLineResult());
-	agent->RunSelf(2, sml::sml_DECIDE);
+	// Test 1: Simple case
+	agent->ExecuteCommandLine("load percepts -o testPerceptReplayEscape_Simple.spr");
+	agent->Commit();
+	agent->RunSelf(2);
+	
+	// Synchronize input link so SML can see the loaded percepts
+	agent->SynchronizeInputLink();
+	
+	// Check input link WMEs directly via SML
+	sml::Identifier* pInputLink = agent->GetInputLink();
+	
+	// // Print I2 state for debugging
+	// std::string i2State = agent->ExecuteCommandLine("p <s> -d 10");
+	// std::cout << "S1 State: " << i2State << std::endl;
+	
+	sml::WMElement* pSensor = pInputLink->FindByAttribute("sensor", 0);
+	sml::WMElement* pValue = pInputLink->FindByAttribute("value", 0);
+	assertTrue_msg("Should find sensor WME", pSensor != nullptr);
+	assertTrue_msg("Should find value WME", pValue != nullptr);
+	if (pSensor && pValue) {
+		assertTrue_msg("Sensor value should be 'reading'", std::string(pSensor->GetValueAsString()) == "reading");
+		assertTrue_msg("Value should be 42", std::string(pValue->GetValueAsString()) == "42");
+	}
+	
 	agent->ExecuteCommandLine("load percepts --close", false, false);
 	tearDown(false);
 	setUp();
 	
-	agent->ExecuteCommandLine("load percepts --open testPerceptReplayEscape_Escaped.spr", false, false);
-	assertTrue_msg("Escaped spaces percept loading", agent->GetLastCommandLineResult());
+	// Test 2: Escaped spaces silently
+	agent->ExecuteCommandLine("load percepts --open testPerceptReplayEscape_Escaped.spr");
 	agent->RunSelf(2, sml::sml_DECIDE);
+	agent->Commit();
+	
+	// Synchronize input link so SML can see the loaded percepts
+	agent->SynchronizeInputLink();
+	
+	// Check that escaped spaces were converted to regular spaces
+	sml::Identifier* pInputLink2 = agent->GetInputLink();
+	sml::WMElement* pNameSpaces = pInputLink2->FindByAttribute("name with spaces", 0);
+	sml::WMElement* pStatus = pInputLink2->FindByAttribute("status", 0);
+	assertTrue_msg("Should find 'name with spaces' WME (escaped spaces converted)", pNameSpaces != nullptr);
+	assertTrue_msg("Should find status WME", pStatus != nullptr);
+	if (pNameSpaces && pStatus) {
+		assertTrue_msg("Name with spaces value should be 'test-value'", std::string(pNameSpaces->GetValueAsString()) == "test-value");
+		assertTrue_msg("Status should be 'active'", std::string(pStatus->GetValueAsString()) == "active");
+	}
+	
 	agent->ExecuteCommandLine("load percepts --close", false, false);
 	tearDown(false);
 	setUp();
 	
-	agent->ExecuteCommandLine("load percepts --open testPerceptReplayEscape_Regex.spr", false, false);
-	assertTrue_msg("Regex patterns percept loading", agent->GetLastCommandLineResult());
+	// Test 3: Regex patterns silently
+	agent->ExecuteCommandLine("load percepts --open testPerceptReplayEscape_Regex.spr");
 	agent->RunSelf(2, sml::sml_DECIDE);
+	agent->Commit();
+	
+	// Synchronize input link so SML can see the loaded percepts
+	agent->SynchronizeInputLink();
+	
+	// Check that regex patterns with backslashes were preserved
+	sml::Identifier* pInputLink3 = agent->GetInputLink();
+	sml::WMElement* pPattern = pInputLink3->FindByAttribute("pattern", 0);
+	sml::WMElement* pRegexTest = pInputLink3->FindByAttribute("regex-test", 0);
+	assertTrue_msg("Should find pattern WME", pPattern != nullptr);
+	assertTrue_msg("Should find regex-test WME", pRegexTest != nullptr);
+	if (pPattern && pRegexTest) {
+		std::string patternValue = pPattern->GetValueAsString();
+		std::string regexValue = pRegexTest->GetValueAsString();
+		// Regex patterns should preserve backslashes
+		assertTrue_msg("Pattern should contain backslashes", patternValue.find("\\") != std::string::npos);
+		assertTrue_msg("Regex-test should contain backslashes", regexValue.find("\\") != std::string::npos);
+		// Specifically check for the regex patterns (they should contain d+ and s*)
+		assertTrue_msg("Pattern should contain 'd+'", patternValue.find("d+") != std::string::npos);
+		assertTrue_msg("Regex-test should contain 's*'", regexValue.find("s*") != std::string::npos);
+	}
 	
 	agent->ExecuteCommandLine("load percepts --close", false, false);
 	
