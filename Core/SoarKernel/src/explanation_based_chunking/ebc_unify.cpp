@@ -11,6 +11,8 @@
 #include "test.h"
 #include "working_memory.h"
 
+#include <set>
+
 void Explanation_Based_Chunker::unify_lhs_rhs_connection(condition* lhs_cond, identity_set_quadruple &rhs_id_sets, const rhs_quadruple rhs_funcs)
 {
     test lId = 0, lAttr = 0, lValue = 0;
@@ -163,11 +165,98 @@ void Explanation_Based_Chunker::check_for_singleton_unification(condition* pCond
         {
             Identity* pCondIDSet = get_joined_identity(pCond->data.tests.value_test->eq_test->identity);
             Identity* pLCondIDSet = get_joined_identity(last_cond->data.tests.value_test->eq_test->identity);
+            
             if (pCondIDSet != pLCondIDSet)
             {
                 thisAgent->explanationMemory->add_identity_set_mapping(pCond->inst->i_id, IDS_unified_with_singleton, pCond->data.tests.value_test->eq_test->identity, last_cond->data.tests.value_test->eq_test->identity);
                 join_identities(pCond->data.tests.value_test->eq_test->identity, last_cond->data.tests.value_test->eq_test->identity);
             }
+        }
+    }
+}
+
+void Explanation_Based_Chunker::check_for_constant_match_literalization(condition* pCond)
+{
+    // Check if this condition has any constant match tests that need literalization
+    test tests[] = {pCond->data.tests.id_test, pCond->data.tests.attr_test, pCond->data.tests.value_test};
+    
+    for (int i = 0; i < 3; i++)
+    {
+        test t = tests[i];
+        if (t && has_constant_match_test(t))
+        {
+            // Find all tests that need literalization due to constant match
+            literalize_constant_match_tests(t, pCond->inst->i_id);
+        }
+    }
+}
+
+// Helper function to count tests in a conjunctive test
+// Helper function to check if a test has CONSTANT_MATCH_TEST
+bool Explanation_Based_Chunker::has_constant_match_test(test t)
+{
+    if (!t) return false;
+    
+    if (t->type == CONSTANT_MATCH_TEST && t->force_literalize)
+    {
+        return true;
+    }
+    
+    if (t->type == CONJUNCTIVE_TEST)
+    {        
+        int test_index = 0;
+        for (cons* c = t->data.conjunct_list; c; c = c->rest, test_index++)
+        {
+            test sub_test = static_cast<test>(c->first);
+            if (has_constant_match_test(sub_test))
+            {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+// Helper function to literalize tests with constant match
+void Explanation_Based_Chunker::literalize_constant_match_tests(test t, uint64_t inst_id)
+{
+    if (!t) 
+    {
+        return;
+    }
+    
+    if (t->type == CONJUNCTIVE_TEST)
+    {
+        // First pass: collect all symbols that have constant match constraints
+        std::set<Symbol*> constrained_symbols;
+        for (cons* c = t->data.conjunct_list; c; c = c->rest)
+        {
+            test sub_test = static_cast<test>(c->first);
+            if (sub_test && sub_test->type == CONSTANT_MATCH_TEST && sub_test->force_literalize)
+            {
+                constrained_symbols.insert(sub_test->data.referent);
+            }
+        }
+        
+        // Second pass: literalize all equality tests for constrained symbols
+        for (cons* c = t->data.conjunct_list; c; c = c->rest)
+        {
+            test sub_test = static_cast<test>(c->first);
+            if (sub_test && sub_test->type == EQUALITY_TEST && sub_test->identity)
+            {
+                if (constrained_symbols.find(sub_test->data.referent) != constrained_symbols.end())
+                {
+                    thisAgent->explanationMemory->add_identity_set_mapping(inst_id, IDS_literalized_constant_match, sub_test->identity, NULL);
+                    sub_test->identity->literalize();
+                }
+            }
+        }
+        
+        // Recursively process nested conjunctive tests
+        for (cons* c = t->data.conjunct_list; c; c = c->rest)
+        {
+            literalize_constant_match_tests(static_cast<test>(c->first), inst_id);
         }
     }
 }

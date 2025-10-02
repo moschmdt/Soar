@@ -59,6 +59,7 @@ public:
     TEST(Literalization_with_BT_Constraints, -1);
     TEST(Literalization_with_BT_Constraints2, -1);
     TEST(Literalization_with_Constraints, -1);
+    TEST(Constant_Match_Literalization, -1);
     TEST(Ungrounded_in_BT_Constraint, -1);
     TEST(Ungrounded_Mixed, -1);
     TEST(Ungrounded_Relational_Constraint, -1);
@@ -150,6 +151,7 @@ public:
     void Literalization_with_BT_Constraints();
     void Literalization_with_BT_Constraints2();
     void Literalization_with_Constraints();
+    void Constant_Match_Literalization();
     void Maintain_Instantiation_Specific_Identity();
     void Max_Chunks();
     void Max_Dupes();

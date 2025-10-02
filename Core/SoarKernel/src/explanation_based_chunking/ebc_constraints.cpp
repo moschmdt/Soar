@@ -26,12 +26,13 @@ void Explanation_Based_Chunker::cache_constraints_in_test(test t)
     test ctest;
     constraint* new_constraint = NULL;
 
-    for (cons* c = t->data.conjunct_list; c != NIL; c = c->rest)
+    int constraint_index = 0;
+    for (cons* c = t->data.conjunct_list; c != NIL; c = c->rest, constraint_index++)
     {
         ctest = static_cast<test>(c->first);
+        
         if (test_can_be_transitive_constraint(ctest))
         {
-
             thisAgent->memoryManager->allocate_with_pool(MP_constraints, &new_constraint);
             new_constraint->eq_test = t->eq_test;
             new_constraint->constraint_test = ctest;
@@ -43,9 +44,18 @@ void Explanation_Based_Chunker::cache_constraints_in_test(test t)
 
 void Explanation_Based_Chunker::cache_constraints_in_cond(condition* c)
 {
-    if (c->data.tests.id_test->type == CONJUNCTIVE_TEST) cache_constraints_in_test(c->data.tests.id_test);
-    if (c->data.tests.attr_test->type == CONJUNCTIVE_TEST) cache_constraints_in_test(c->data.tests.attr_test);
-    if (c->data.tests.value_test->type == CONJUNCTIVE_TEST) cache_constraints_in_test(c->data.tests.value_test);
+    if (c->data.tests.id_test->type == CONJUNCTIVE_TEST) 
+    {
+        cache_constraints_in_test(c->data.tests.id_test);
+    }
+    if (c->data.tests.attr_test->type == CONJUNCTIVE_TEST) 
+    {
+        cache_constraints_in_test(c->data.tests.attr_test);
+    }
+    if (c->data.tests.value_test->type == CONJUNCTIVE_TEST) 
+    {
+        cache_constraints_in_test(c->data.tests.value_test);
+    }
 }
 
 void Explanation_Based_Chunker::invert_relational_test(test* pEq_test, test* pRelational_test)

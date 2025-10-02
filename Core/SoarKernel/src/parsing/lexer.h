@@ -58,6 +58,8 @@ enum lexer_token_type {
   PERIOD_LEXEME,                     /**< "." */
   QUOTED_STRING_LEXEME,              /**< string in double quotes */
   DOLLAR_STRING_LEXEME,              /**< string for shell escape */
+  DOLLAR_LEXEME,                     /**< "$" for shorthand constant match test */
+  DOUBLE_DOLLAR_LEXEME,              /**< "$$" for longhand constant match test */
   NULL_LEXEME                        /**< Initial value */
 };
 
@@ -239,6 +241,7 @@ namespace soar
         void lex_constituent_string ();
         void lex_vbar ();
         void lex_quote ();
+        void lex_dollar ();
 
         bool determine_type_of_constituent_string ();
         void record_position_of_start_of_lexeme();

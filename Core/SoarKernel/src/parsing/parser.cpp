@@ -417,6 +417,50 @@ test parse_relational_test(agent* thisAgent, Lexer* lexer)
             if (!lexer->get_lexeme()) return NULL;
             break;
 
+        case DOLLAR_LEXEME:
+        {
+            // Shorthand $ <x> expands to conjunctive test {<x> $$ <x>}
+            if (!lexer->get_lexeme()) return NULL;  // consume $ token
+            
+            // Read the variable/constant that follows
+            Symbol* shorthand_referent;
+            switch (lexer->current_lexeme.type)
+            {
+                case STR_CONSTANT_LEXEME:
+                case INT_CONSTANT_LEXEME:
+                case FLOAT_CONSTANT_LEXEME:
+                case VARIABLE_LEXEME:
+                case IDENTIFIER_LEXEME:
+                    shorthand_referent = make_symbol_for_lexeme(thisAgent, &(lexer->current_lexeme), false);
+                    if (!lexer->get_lexeme())
+                    {
+                        thisAgent->symbolManager->symbol_remove_ref(&shorthand_referent);
+                        return NULL;
+                    }
+                    break;
+                default:
+                    thisAgent->outputManager->printa_sf(thisAgent, "Expected variable or constant after $ in shorthand test\n");
+                    return NULL;
+            }
+            
+            // Create conjunctive test {<x> $$ <x>}
+            test equality_test = make_test(thisAgent, shorthand_referent, EQUALITY_TEST);
+            test constant_match_test = make_test(thisAgent, shorthand_referent, CONSTANT_MATCH_TEST);
+            
+            // Build conjunctive test
+            test conjunctive = make_test(thisAgent, NIL, CONJUNCTIVE_TEST);
+            add_test(thisAgent, &conjunctive, equality_test);
+            add_test(thisAgent, &conjunctive, constant_match_test);
+            
+            thisAgent->symbolManager->symbol_remove_ref(&shorthand_referent);
+            return conjunctive;
+        }
+
+        case DOUBLE_DOLLAR_LEXEME:
+            test_type = CONSTANT_MATCH_TEST;
+            if (!lexer->get_lexeme()) return NULL;
+            break;
+
         case STR_CONSTANT_LEXEME:
         case INT_CONSTANT_LEXEME:
         case FLOAT_CONSTANT_LEXEME:

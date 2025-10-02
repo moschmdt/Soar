@@ -164,6 +164,7 @@ enum IDSet_Mapping_Type {
     IDS_literalized_LHS_literal,
     IDS_literalized_RHS_function_arg,
     IDS_literalized_RHS_function_compare,
+    IDS_literalized_constant_match,
 };
 
 enum IDSet_Deallocation_Type {
@@ -385,6 +386,7 @@ enum TestType
     SMEM_LINK_NOT_TEST = 13,
     SMEM_LINK_UNARY_TEST = 14,
     SMEM_LINK_UNARY_NOT_TEST = 15,
+    CONSTANT_MATCH_TEST = 16,
     NUM_TEST_TYPES
 };
 

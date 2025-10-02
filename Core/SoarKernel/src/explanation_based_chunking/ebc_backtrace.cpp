@@ -30,7 +30,6 @@
 #include "symbol_manager.h"
 #include "test.h"
 #include "working_memory.h"
-#include "xml.h"
 
 #include <stdlib.h>
 
@@ -63,16 +62,29 @@ void Explanation_Based_Chunker::add_to_grounds(condition* cond)
     {
         (cond)->bt.wme_->tc = grounds_tc;
         cond->bt.wme_->chunker_bt_last_ground_cond = cond;
+        
+        // Run identity analysis for first condition that matches this WME
+        if (ebc_settings[SETTING_EBC_LEARNING_ON])
+        {
+            check_for_constant_match_literalization(cond);
+        }
     }
     if ((cond->bt.wme_->chunker_bt_last_ground_cond != cond) && ebc_settings[SETTING_EBC_LEARNING_ON])
     {
         check_for_singleton_unification(cond);
+        check_for_constant_match_literalization(cond);
     }
     push(thisAgent, (cond), grounds);
 }
 
 void Explanation_Based_Chunker::add_to_locals(condition* cond)
 {
+    // Check if this local condition has constant match tests
+    if (ebc_settings[SETTING_EBC_LEARNING_ON])
+    {
+        check_for_constant_match_literalization(cond);
+    }
+    
     push(thisAgent, (cond), locals);
 }
 

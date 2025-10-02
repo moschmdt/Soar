@@ -162,7 +162,10 @@ void Explanation_Based_Chunker::join_identities(Identity* lFromJoinSet, Identity
         {
             lPreviouslyJoinedIdentity = *it;
             lPreviouslyJoinedIdentity->joined_identity = lToJoinSet;
-            if (lPreviouslyJoinedIdentity->literalized()) lToJoinSet->literalize();
+            if (lPreviouslyJoinedIdentity->literalized()) 
+            {
+                lToJoinSet->literalize();
+            }
         }
         lToJoinSet->merged_identities->splice(lToJoinSet->merged_identities->begin(), (*lFromJoinSet->merged_identities));
         delete lFromJoinSet->merged_identities;
@@ -172,7 +175,10 @@ void Explanation_Based_Chunker::join_identities(Identity* lFromJoinSet, Identity
     lToJoinSet->merged_identities->push_back(lFromJoinSet);
 
     /* Propagate literalization and constraint info */
-    if (lFromJoinSet->literalized()) lToJoinSet->literalize();
+    if (lFromJoinSet->literalized())
+    {
+        lToJoinSet->literalize();
+    }
 
     /* Point super_join to joined identity set */
     lFromJoinSet->joined_identity = lToJoinSet;
