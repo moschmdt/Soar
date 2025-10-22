@@ -417,6 +417,9 @@ public class MainWindow
         // Reset the default text font (once all windows have been created)
         // as part of "the default layout".
         m_Frame.setTextFont(MainFrame.kDefaultFontData);
+        
+        // Force layout refresh to ensure all panes are visible (especially important on macOS)
+        m_Window.getParent().layout(true);
     }
 
     /********************************************************************************************

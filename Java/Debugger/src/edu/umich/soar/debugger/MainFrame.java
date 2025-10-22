@@ -810,6 +810,22 @@ public class MainFrame
         // Make sure our menus are enabled correctly
         updateMenus();
         updateTitle();
+        
+        // Log system info for debugging macOS issues
+        logSystemInfo();
+        
+        // Force layout refresh on macOS to address visibility issues
+        if (edu.umich.soar.debugger.general.OSName.isMacOS()) {
+            getDisplay().asyncExec(() -> {
+                if (!getShell().isDisposed()) {
+                    getShell().layout(true, true);
+                    if (getMainWindow() != null && getMainWindow().getWindow() != null 
+                        && !getMainWindow().getWindow().isDisposed()) {
+                        getMainWindow().getWindow().layout(true, true);
+                    }
+                }
+            });
+        }
     }
 
     private void install(String[] resources)
@@ -1187,6 +1203,24 @@ public class MainFrame
         }
 
     };
+    
+    /**
+     * Log system information to help debug macOS SWT issues
+     */
+    private void logSystemInfo() {
+        if (edu.umich.soar.debugger.general.OSName.isMacOS()) {
+            System.out.println("=== Soar Debugger System Info ===");
+            System.out.println("OS Name: " + System.getProperty("os.name"));
+            System.out.println("OS Version: " + System.getProperty("os.version"));
+            System.out.println("OS Arch: " + System.getProperty("os.arch"));
+            System.out.println("Java Version: " + System.getProperty("java.version"));
+            System.out.println("Java Vendor: " + System.getProperty("java.vendor"));
+            System.out.println("Java Runtime: " + System.getProperty("java.runtime.name"));
+            System.out.println("SWT Version: " + org.eclipse.swt.SWT.getVersion());
+            System.out.println("SWT Platform: " + org.eclipse.swt.SWT.getPlatform());
+            System.out.println("=== End System Info ===");
+        }
+    }
 
     private class MainFrameSoarChangeListener implements SoarChangeListener {
         @Override

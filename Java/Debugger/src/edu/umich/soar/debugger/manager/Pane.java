@@ -189,6 +189,14 @@ public class Pane
         }
 
         m_Views.add(view);
+        
+        // Force layout update after adding view (helps with macOS visibility issues)
+        if (m_Pane != null && !m_Pane.isDisposed()) {
+            m_Pane.layout(true);
+            if (m_Pane.getParent() != null && !m_Pane.getParent().isDisposed()) {
+                m_Pane.getParent().layout(true);
+            }
+        }
     }
 
     /**
