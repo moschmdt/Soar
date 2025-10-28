@@ -893,7 +893,7 @@ Symbol* int_rhs_function_code(agent* thisAgent, cons* args, void* /*user_data*/)
         int64_t int_val;
 
         errno = 0;
-        int_val = strtol(sym->to_string(false, false, NIL, 0), NULL, 10);
+        int_val = strtoll(sym->to_string(false, false, NIL, 0), NULL, 10);
         if (errno)
         {
             thisAgent->outputManager->printa_sf(thisAgent, "Error: bad integer (%y) given to 'int' RHS function\n",

@@ -135,7 +135,7 @@ bool Lexer::determine_type_of_constituent_string () {
     if (possible_ic) {
         errno = 0;
         current_lexeme.type = INT_CONSTANT_LEXEME;
-        current_lexeme.int_val = strtol (current_lexeme.string(),NULL,10);
+        current_lexeme.int_val = strtoll (current_lexeme.string(),NULL,10);
         if (errno) {
             thisAgent->outputManager->printa(thisAgent, "Error: bad integer (probably too large)\n");
             current_lexeme.int_val = 0;
