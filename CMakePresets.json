@@ -65,7 +65,10 @@
                 "SWIG_PYTHON": "OFF",
                 "SWIG_JAVA": "ON",
                 "SVS": "OFF",
-                "CLI": "ON"
+                "CLI": "ON",
+                "BUILD_TESTS": "ON",
+                "TEST_CI_ENABLED": "OFF",
+                "BUILD_PERFORMANCE_TESTS": "OFF"
             }
         },
         {
@@ -77,7 +80,10 @@
                 "SWIG_PYTHON": "ON",
                 "SWIG_JAVA": "ON",
                 "SVS": "OFF",
-                "CLI": "ON"
+                "CLI": "ON",
+                "BUILD_TESTS": "ON",
+                "TEST_CI_ENABLED": "OFF",
+                "BUILD_PERFORMANCE_TESTS": "OFF"
             }
         },
         {
