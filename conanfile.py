@@ -1,7 +1,7 @@
 # This file defines the cmake toolchain with the required dependencies to build
 # Soar. The Python version is used instead of the pure text version since the
 # user presets file must be changed.
-# 
+#
 # Conan documentation: https://docs.conan.io/2/
 
 from conan import ConanFile
@@ -18,9 +18,10 @@ class soarRecipe(ConanFile):
 
     def layout(self):
         cmake_layout(self)
-    
+
     def requirements(self):
-        self.requires("sqlite3/3.40.0")
+        self.requires("sqlite3/3.50.4")
+
 
     def generate(self):
         deps = CMakeDeps(self)

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WorkingMemoryTree</class>
+ <widget class="QWidget" name="WorkingMemoryTree">
+  <property name="windowTitle">
+   <string>Working Memory</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

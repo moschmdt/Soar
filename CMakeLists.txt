@@ -189,6 +189,8 @@ if(SWIG_PYTHON OR SWIG_JAVA)
   add_subdirectory(Core/ClientSMLSWIG)
 endif()
 
+add_subdirectory(QtDebugger)
+
 if(BUILD_TESTS)
   message(STATUS "Soar: Building tests")
   include(CTest)

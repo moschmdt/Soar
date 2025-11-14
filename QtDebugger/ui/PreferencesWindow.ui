@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PreferencesWindow</class>
+ <widget class="QWidget" name="PreferencesWindow">
+  <property name="windowTitle">
+   <string>Preferences</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -59,8 +59,8 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "BUILD_TESTS": "ON",
                 "BUILD_PERFORMANCE_TESTS": "OFF",
-                "SWIG_PYTHON": "ON",
-                "SWIG_JAVA": "ON",
+                "SWIG_PYTHON": "OFF",
+                "SWIG_JAVA": "OFF",
                 "ASAN": "OFF",
                 "SVS": "OFF",
                 "CLI": "ON"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProductionsWindow</class>
+ <widget class="QWidget" name="ProductionsWindow">
+  <property name="windowTitle">
+   <string>Productions</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

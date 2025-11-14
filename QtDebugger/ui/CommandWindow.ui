@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CommandWindow</class>
+ <widget class="QWidget" name="CommandWindow">
+  <property name="windowTitle">
+   <string>Commands</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
