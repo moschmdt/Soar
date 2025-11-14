@@ -39,12 +39,12 @@ if(SWIG_PYTHON)
     # Configure SWIG for Python
     set_property(SOURCE Python/Python_sml_ClientInterface.i PROPERTY CPLUSPLUS ON)
 
-    # Set Python-specific SWIG flags
-    set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -python)
+    # Set Python-specific SWIG flags using target properties
+    set(PYTHON_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -python)
 
     # Add include directories to SWIG flags
     foreach(dir ${SWIG_INCLUDE_DIRS})
-        list(APPEND CMAKE_SWIG_FLAGS -I${dir})
+        list(APPEND PYTHON_SWIG_FLAGS -I${dir})
     endforeach()
 
     # Set output directory
@@ -56,6 +56,9 @@ if(SWIG_PYTHON)
         LANGUAGE python
         SOURCES Python/Python_sml_ClientInterface.i
     )
+
+    # Set Python-specific SWIG flags for this target
+    set_property(TARGET soar_sml_python PROPERTY SWIG_COMPILE_OPTIONS ${PYTHON_SWIG_FLAGS})
 
     # Set properties for the SWIG module
     set_target_properties(soar_sml_python PROPERTIES
@@ -110,16 +113,16 @@ if(SWIG_JAVA)
     set_property(SOURCE Java/Java_sml_ClientInterface.i PROPERTY CPLUSPLUS ON)
     set_property(SOURCE Java/Java_sml_ClientInterface.i PROPERTY SWIG_MODULE_NAME sml)
 
-    # Set Java-specific SWIG flags
-    set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -java)
+    # Set Java-specific SWIG flags using target properties
+    set(JAVA_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -java)
 
     # Add include directories to SWIG flags
     foreach(dir ${SWIG_INCLUDE_DIRS})
-        list(APPEND CMAKE_SWIG_FLAGS -I${dir})
+        list(APPEND JAVA_SWIG_FLAGS -I${dir})
     endforeach()
 
     # Add Java directory to SWIG flags
-    list(APPEND CMAKE_SWIG_FLAGS -I${CMAKE_CURRENT_SOURCE_DIR}/Java)
+    list(APPEND JAVA_SWIG_FLAGS -I${CMAKE_CURRENT_SOURCE_DIR}/Java)
 
     # Set output directory for Java files
     set(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/java")
@@ -138,10 +141,12 @@ if(SWIG_JAVA)
         SOURCES Java/Java_sml_ClientInterface.i
     )
 
+    # Set Java-specific SWIG flags for this target
+    set_property(TARGET soar_sml_java PROPERTY SWIG_COMPILE_OPTIONS ${JAVA_SWIG_FLAGS})
+
     # Set properties for the SWIG module
     set_target_properties(soar_sml_java PROPERTIES
         OUTPUT_NAME "Java_sml_ClientInterface"
-        PREFIX ""
     )
 
     # Link against soar library and JNI

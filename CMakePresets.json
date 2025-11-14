@@ -29,6 +29,23 @@
                 "BUILD_SHARED_LIBS": "ON",
                 "CMAKE_BUILD_TYPE": "Debug",
                 "BUILD_TESTS": "ON",
+                "SWIG_PYTHON": "ON",
+                "SWIG_JAVA": "ON",
+                "ASAN": "OFF",
+                "SVS": "OFF",
+                "CLI": "ON"
+            }
+        },
+        {
+            "name": "Release-shared",
+            "displayName": "Release Shared Configuration",
+            "inherits": "conan-release",
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": "ON",
+                "CMAKE_BUILD_TYPE": "Release",
+                "BUILD_TESTS": "ON",
+                "SWIG_PYTHON": "ON",
+                "SWIG_JAVA": "ON",
                 "ASAN": "OFF",
                 "SVS": "OFF",
                 "CLI": "ON"
@@ -116,6 +133,13 @@
             "inherits": "conan-debug"
         },
         {
+            "name": "Release-shared",
+            "displayName": "Build Release Shared",
+            "configurePreset": "Release-shared",
+            "configuration": "release",
+            "inherits": "conan-release"
+        },
+        {
             "name": "Debug-test",
             "displayName": "Build Debug Test",
             "configurePreset": "Debug-test",
@@ -178,9 +202,26 @@
             }
         },
         {
+            "name": "Debug-shared",
+            "displayName": "Test Debug Shared",
+            "configurePreset": "Debug-shared",
+            "inherits": "conan-debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
             "name": "Release-test",
             "displayName": "Test Release",
             "configurePreset": "Release-test",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "Release-shared",
+            "displayName": "Test Release Shared",
+            "configurePreset": "Release-shared",
             "output": {
                 "outputOnFailure": true
             }
@@ -191,6 +232,12 @@
             "name": "Release-test",
             "displayName": "Package Release Test",
             "configurePreset": "Release-test",
+            "packageDirectory": "${sourceDir}/"
+        },
+        {
+            "name": "Release-shared",
+            "displayName": "Package Release Shared",
+            "configurePreset": "Release-shared",
             "packageDirectory": "${sourceDir}/"
         }
     ],

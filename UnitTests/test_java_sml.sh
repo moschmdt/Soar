@@ -43,6 +43,8 @@ fi
 NATIVE_LIB=""
 if [ -f "${JAVA_LIBRARY_DIR}/libJava_sml_ClientInterface.so" ]; then
     NATIVE_LIB="${JAVA_LIBRARY_DIR}/libJava_sml_ClientInterface.so"
+elif [ -f "${JAVA_LIBRARY_DIR}/Java_sml_ClientInterface.so" ]; then
+    NATIVE_LIB="${JAVA_LIBRARY_DIR}/Java_sml_ClientInterface.so"
 elif [ -f "${JAVA_LIBRARY_DIR}/libJava_sml_ClientInterface.dylib" ]; then
     NATIVE_LIB="${JAVA_LIBRARY_DIR}/libJava_sml_ClientInterface.dylib"
 elif [ -f "${JAVA_LIBRARY_DIR}/Java_sml_ClientInterface.dll" ]; then
