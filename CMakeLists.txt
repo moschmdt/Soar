@@ -192,7 +192,11 @@ endif()
 if(BUILD_TESTS)
   message(STATUS "Soar: Building tests")
   include(CTest)
-  add_subdirectory(PerformanceTests)
+
+  if(NOT DEFINED BUILD_PERFORMANCE_TESTS OR BUILD_PERFORMANCE_TESTS)
+    add_subdirectory(PerformanceTests)
+  endif()
+
   add_subdirectory(UnitTests)
 endif()
 

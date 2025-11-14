@@ -103,7 +103,7 @@ if(SWIG_JAVA)
     message(STATUS "Soar SWIG: Building Java bindings")
 
     # Find Java and JNI
-    find_package(Java REQUIRED COMPONENTS Development)
+    find_package(Java REQUIRED COMPONENTS Development Runtime)
     find_package(JNI REQUIRED)
 
     # Configure SWIG for Java
@@ -140,7 +140,8 @@ if(SWIG_JAVA)
 
     # Set properties for the SWIG module
     set_target_properties(soar_sml_java PROPERTIES
-        OUTPUT_NAME "sml"
+        OUTPUT_NAME "Java_sml_ClientInterface"
+        PREFIX ""
     )
 
     # Link against soar library and JNI
@@ -159,6 +160,26 @@ if(SWIG_JAVA)
         target_compile_options(soar_sml_java PRIVATE -Wno-unused -fno-strict-aliasing)
     endif()
 
+    # Create a script to compile Java files and create JAR
+    set(COMPILE_JAVA_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/compile_java.sh")
+    file(WRITE "${COMPILE_JAVA_SCRIPT}"
+        "#!/bin/bash
+set -e
+cd \"${CMAKE_SWIG_OUTDIR}\"
+mkdir -p classes
+${Java_JAVAC_EXECUTABLE} -d classes *.java
+${Java_JAR_EXECUTABLE} cf sml.jar -C classes .
+echo \"Java compilation and JAR creation completed\"
+")
+
+    add_custom_command(
+        TARGET soar_sml_java POST_BUILD
+        COMMAND chmod +x "${COMPILE_JAVA_SCRIPT}"
+        COMMAND "${COMPILE_JAVA_SCRIPT}"
+        COMMENT "Compiling Java files and creating JAR"
+        VERBATIM
+    )
+
     # Install Java files
     install(TARGETS soar_sml_java
         LIBRARY DESTINATION java
@@ -168,5 +189,10 @@ if(SWIG_JAVA)
     install(DIRECTORY "${CMAKE_SWIG_OUTDIR}/"
         DESTINATION java
         FILES_MATCHING PATTERN "*.java"
+    )
+
+    # Install JAR file
+    install(FILES "${CMAKE_SWIG_OUTDIR}/sml.jar"
+        DESTINATION java
     )
 endif()
