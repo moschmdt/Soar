@@ -44,7 +44,7 @@ between both build systems.
 | SVS                               | ✅     | ❌     |
 | SWIG                              | ✅     | ❌     |
 | Python package soar-sml           | ✅     | ❌     |
-| Generate compile commands         | ✅     | ❌     |
+| Generate compile commands         | ✅     | ✅     |
 | Release                           | ✅     | ✅     |
 | Debug                             | ✅     | ✅     |
 | Debug with address sanitizer      | ❌     | ✅     |

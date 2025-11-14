@@ -3,6 +3,9 @@ project(soar
   VERSION 9.6.3
   LANGUAGES CXX)
 
+# Generate compile_commands.json for IDE support and static analysis tools
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(SQLite3 REQUIRED)
 
 # All options should be turned off by default to avoid building unnecessary
