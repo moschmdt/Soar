@@ -20,7 +20,21 @@ import time
 
 # Add the python build directory to the path
 SCRIPT_DIR = Path(__file__).parent.absolute()
-BUILD_DIR = SCRIPT_DIR.parent / "build" / "Debug"
+
+# Try to detect build directory from environment or common locations
+BUILD_DIR = None
+if "SOAR_BUILD_DIR" in os.environ:
+    BUILD_DIR = Path(os.environ["SOAR_BUILD_DIR"])
+else:
+    # Try common build directory patterns
+    for build_type in ["Release", "Debug"]:
+        candidate = SCRIPT_DIR.parent / "build" / build_type
+        if candidate.exists():
+            BUILD_DIR = candidate
+            break
+    if BUILD_DIR is None:
+        BUILD_DIR = SCRIPT_DIR.parent / "build" / "Debug"  # fallback
+
 PYTHON_BUILD_DIR = BUILD_DIR / "Core" / "ClientSMLSWIG" / "python"
 PYTHON_LIBRARY_DIR = BUILD_DIR / "Core" / "ClientSMLSWIG"
 
@@ -32,6 +46,10 @@ try:
     import Python_sml_ClientInterface
     from Python_sml_ClientInterface import *
     print(f"[OK] Successfully imported Python_sml_ClientInterface from {PYTHON_BUILD_DIR}")
+    print(f"Script directory: {SCRIPT_DIR}")
+    print(f"Build directory: {BUILD_DIR}")
+    print(f"Agent directory: {BUILD_DIR / 'UnitTests' / 'SoarTestAgents'}")
+    print(f"Python build directory: {PYTHON_BUILD_DIR}")
 except ImportError as e:
     print(f"[ERROR] Failed to import Python_sml_ClientInterface: {e}")
     print(f"Python path: {sys.path}")
