@@ -40,9 +40,12 @@ between both build systems.
 | Soar CLI                          | ✅     | ✅     |
 | Unit tests                        | ✅     | ✅     |
 | Performance tests                 | ✅     | ✅     |
-| Exnternal lib test                | ✅     | ✅     |
+| External lib test                 | ✅     | ✅     |
 | SVS                               | ✅     | ❌     |
-| SWIG                              | ✅     | ✅     |
+| SWIG Python                       | ✅     | ✅     |
+| SWIG Java                         | ✅     | ✅     |  
+| SWIG C#                           | ✅     | ❌     |  
+| SWIG TCL                          | ✅     | ❌     |  
 | Python package soar-sml           | ✅     | ❌     |
 | Generate compile commands         | ✅     | ✅     |
 | Release                           | ✅     | ✅     |
