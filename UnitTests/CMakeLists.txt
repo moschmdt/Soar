@@ -46,4 +46,17 @@ if(BUILD_TESTING)
     if(SVS)
         add_test(NAME test_svs COMMAND test_soar -c SvsTests)
     endif()
+
+    # Python SML Interface Test
+    if(SWIG_PYTHON)
+        add_test(NAME test_python_sml
+            COMMAND ${Python3_EXECUTABLE} test_python_sml.py
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/UnitTests
+        )
+
+        # Set environment for the test
+        set_tests_properties(test_python_sml PROPERTIES
+            ENVIRONMENT "PYTHONPATH=${CMAKE_INSTALL_PREFIX}/python"
+        )
+    endif()
 endif()
