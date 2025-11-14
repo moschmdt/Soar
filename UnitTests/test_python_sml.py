@@ -18,20 +18,22 @@ import re
 import sys
 import time
 
-# Add the python install directory to the path
+# Add the python build directory to the path
 SCRIPT_DIR = Path(__file__).parent.absolute()
 BUILD_DIR = SCRIPT_DIR.parent / "build" / "Debug"
-PYTHON_INSTALL_DIR = SCRIPT_DIR.parent / "install" / "python"
+PYTHON_BUILD_DIR = BUILD_DIR / "Core" / "ClientSMLSWIG" / "python"
+PYTHON_LIBRARY_DIR = BUILD_DIR / "Core" / "ClientSMLSWIG"
 
 # Add Python SML module to path
-sys.path.insert(0, str(PYTHON_INSTALL_DIR))
+sys.path.insert(0, str(PYTHON_BUILD_DIR))
+sys.path.insert(0, str(PYTHON_LIBRARY_DIR))
 
 try:
     import Python_sml_ClientInterface
     from Python_sml_ClientInterface import *
-    print(f"✅ Successfully imported Python_sml_ClientInterface from {PYTHON_INSTALL_DIR}")
+    print(f"[OK] Successfully imported Python_sml_ClientInterface from {PYTHON_BUILD_DIR}")
 except ImportError as e:
-    print(f"❌ Failed to import Python_sml_ClientInterface: {e}")
+    print(f"[ERROR] Failed to import Python_sml_ClientInterface: {e}")
     print(f"Python path: {sys.path}")
     sys.exit(1)
 
@@ -269,7 +271,7 @@ if __name__ == '__main__':
     print(f"Script directory: {SCRIPT_DIR}")
     print(f"Build directory: {BUILD_DIR}")
     print(f"Agent directory: {AGENT_DIR}")
-    print(f"Python install directory: {PYTHON_INSTALL_DIR}")
+    print(f"Python build directory: {PYTHON_BUILD_DIR}")
     
     # Check that required directories exist
     if not BUILD_DIR.exists():
@@ -280,8 +282,8 @@ if __name__ == '__main__':
         print(f"❌ Agent directory does not exist: {AGENT_DIR}")
         sys.exit(1)
     
-    if not PYTHON_INSTALL_DIR.exists():
-        print(f"❌ Python install directory does not exist: {PYTHON_INSTALL_DIR}")
+    if not PYTHON_BUILD_DIR.exists():
+        print(f"[ERROR] Python build directory does not exist: {PYTHON_BUILD_DIR}")
         sys.exit(1)
     
     # Run tests
