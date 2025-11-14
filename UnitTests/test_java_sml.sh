@@ -6,7 +6,26 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BUILD_DIR="${SCRIPT_DIR}/../build/Debug"
+
+# Try to detect build directory from environment or common locations
+if [ -n "${SOAR_BUILD_DIR}" ]; then
+    BUILD_DIR="${SOAR_BUILD_DIR}"
+else
+    # Try common build directory patterns
+    for build_type in Release Debug; do
+        candidate="${SCRIPT_DIR}/../build/${build_type}"
+        if [ -d "${candidate}" ]; then
+            BUILD_DIR="${candidate}"
+            break
+        fi
+    done
+    
+    # Fallback to Debug if nothing found
+    if [ -z "${BUILD_DIR}" ]; then
+        BUILD_DIR="${SCRIPT_DIR}/../build/Debug"
+    fi
+fi
+
 JAVA_BUILD_DIR="${BUILD_DIR}/Core/ClientSMLSWIG/java"
 JAVA_LIBRARY_DIR="${BUILD_DIR}/Core/ClientSMLSWIG"
 
@@ -15,7 +34,7 @@ echo "Build directory: ${BUILD_DIR}"
 
 # Check if required files exist
 if [ ! -f "${JAVA_BUILD_DIR}/sml.jar" ]; then
-    echo "[ERROR] sml.jar not found at ${JAVA_BUILD_DIR}/sml.jar"
+    echo "Error:  sml.jar not found at ${JAVA_BUILD_DIR}/sml.jar"
     echo "Make sure Java SWIG bindings are built."
     exit 1
 fi

@@ -63,7 +63,7 @@ if(BUILD_TESTING)
 
         # Set environment to use build directory instead of install directory
         set_tests_properties(test_python_sml PROPERTIES
-            ENVIRONMENT "PYTHONPATH=${PYTHON_BUILD_DIR}:${PYTHON_LIBRARY_DIR}"
+            ENVIRONMENT "PYTHONPATH=${PYTHON_BUILD_DIR}:${PYTHON_LIBRARY_DIR};SOAR_BUILD_DIR=${CMAKE_BINARY_DIR}"
         )
     endif()
 
@@ -74,6 +74,11 @@ if(BUILD_TESTING)
         add_test(NAME test_java_sml
             COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/test_java_sml.sh
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        )
+
+        # Set environment to use correct build directory
+        set_tests_properties(test_java_sml PROPERTIES
+            ENVIRONMENT "SOAR_BUILD_DIR=${CMAKE_BINARY_DIR}"
         )
     endif()
 endif()
