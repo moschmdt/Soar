@@ -38,7 +38,6 @@ if(SWIG_PYTHON)
 
     # Configure SWIG for Python
     set_property(SOURCE Python/Python_sml_ClientInterface.i PROPERTY CPLUSPLUS ON)
-    set_property(SOURCE Python/Python_sml_ClientInterface.i PROPERTY SWIG_MODULE_NAME soar_sml)
 
     # Set Python-specific SWIG flags
     set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -python)
@@ -60,8 +59,8 @@ if(SWIG_PYTHON)
 
     # Set properties for the SWIG module
     set_target_properties(soar_sml_python PROPERTIES
-        OUTPUT_NAME "__soar_sml"
-        SUFFIX "${Python3_SOABI}${CMAKE_SHARED_LIBRARY_SUFFIX}"
+        OUTPUT_NAME "Python_sml_ClientInterface"
+        SUFFIX "${CMAKE_SHARED_LIBRARY_SUFFIX}"
     )
 
     # Link against soar library and Python
@@ -90,7 +89,7 @@ if(SWIG_PYTHON)
         LIBRARY DESTINATION python
     )
 
-    install(FILES "${CMAKE_SWIG_OUTDIR}/soar_sml.py"
+    install(FILES "${CMAKE_SWIG_OUTDIR}/Python_sml_ClientInterface.py"
         DESTINATION python
     )
 
