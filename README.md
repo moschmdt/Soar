@@ -42,7 +42,7 @@ between both build systems.
 | Performance tests                 | ✅     | ✅     |
 | Exnternal lib test                | ✅     | ✅     |
 | SVS                               | ✅     | ❌     |
-| SWIG                              | ✅     | ❌     |
+| SWIG                              | ✅     | ✅     |
 | Python package soar-sml           | ✅     | ❌     |
 | Generate compile commands         | ✅     | ✅     |
 | Release                           | ✅     | ✅     |

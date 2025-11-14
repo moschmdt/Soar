@@ -45,6 +45,42 @@
             }
         },
         {
+            "name": "Debug-swig-python",
+            "displayName": "Debug with Python SWIG",
+            "inherits": "conan-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "SWIG_PYTHON": "ON",
+                "SWIG_JAVA": "OFF",
+                "SVS": "OFF",
+                "CLI": "ON"
+            }
+        },
+        {
+            "name": "Debug-swig-java",
+            "displayName": "Debug with Java SWIG",
+            "inherits": "conan-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "SWIG_PYTHON": "OFF",
+                "SWIG_JAVA": "ON",
+                "SVS": "OFF",
+                "CLI": "ON"
+            }
+        },
+        {
+            "name": "Debug-swig-both",
+            "displayName": "Debug with Python and Java SWIG",
+            "inherits": "conan-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "SWIG_PYTHON": "ON",
+                "SWIG_JAVA": "ON",
+                "SVS": "OFF",
+                "CLI": "ON"
+            }
+        },
+        {
             "name": "Debug-test-asan",
             "displayName": "Debug Test with ASAN",
             "inherits": "conan-debug",
@@ -85,6 +121,27 @@
             "configurePreset": "Release-test",
             "configuration": "release",
             "inherits": "conan-release"
+        },
+        {
+            "name": "Debug-swig-python",
+            "displayName": "Build Debug with Python SWIG",
+            "configurePreset": "Debug-swig-python",
+            "configuration": "debug",
+            "inherits": "conan-debug"
+        },
+        {
+            "name": "Debug-swig-java",
+            "displayName": "Build Debug with Java SWIG",
+            "configurePreset": "Debug-swig-java",
+            "configuration": "debug",
+            "inherits": "conan-debug"
+        },
+        {
+            "name": "Debug-swig-both",
+            "displayName": "Build Debug with Python and Java SWIG",
+            "configurePreset": "Debug-swig-both",
+            "configuration": "debug",
+            "inherits": "conan-debug"
         }
     ],
     "testPresets": [
