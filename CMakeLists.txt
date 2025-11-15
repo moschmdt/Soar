@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 project(soar
-  VERSION 9.6.3
+  VERSION 9.6.4
   LANGUAGES CXX)
 
 # Generate compile_commands.json for IDE support and static analysis tools

@@ -384,7 +384,7 @@ void MainWindow::aboutSoar() {
       this, "About Soar Debugger",
       "Soar Debugger\n\n"
       "A Qt-based debugger for the Soar cognitive architecture.\n"
-      "Version: 9.6.3\n\n"
+      "Version: 9.6.4\n\n"
       "Copyright (c) University of Michigan");
 }
 
