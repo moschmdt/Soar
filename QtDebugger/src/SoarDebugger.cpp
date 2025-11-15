@@ -35,11 +35,16 @@ void SoarDebugger::shutdown() {
   m_agents.clear();
 
   for (SoarAgent *agent : agentsCopy) {
-    if (agent && m_kernel) {
-      try {
-        m_kernel->DestroyAgent(agent->smlAgent());
-      } catch (...) {
-        // Ignore exceptions during shutdown
+    if (agent) {
+      // Remove callbacks BEFORE destroying the SML agent
+      agent->removeCallbacks();
+
+      if (m_kernel) {
+        try {
+          m_kernel->DestroyAgent(agent->smlAgent());
+        } catch (...) {
+          // Ignore exceptions during shutdown
+        }
       }
       delete agent; // Delete immediately, not later
     }

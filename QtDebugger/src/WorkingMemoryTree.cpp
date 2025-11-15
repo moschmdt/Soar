@@ -8,15 +8,22 @@
 
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
 
 WorkingMemoryTree::WorkingMemoryTree(SoarAgent *agent, QWidget *parent)
-    : QWidget(parent), m_agent(agent), m_tree(nullptr),
+    : QWidget(parent), m_agent(agent), m_tree(nullptr), m_commandEdit(nullptr),
       m_refreshButton(nullptr), m_expandButton(nullptr),
-      m_collapseButton(nullptr) {
+      m_collapseButton(nullptr), m_printCommand("print -d 3 <s>") {
   createLayout();
-  refresh();
+  populateTree();
+
+  // Auto-refresh when working memory changes
+  if (m_agent) {
+    connect(m_agent, &SoarAgent::workingMemoryChanged, this,
+            &WorkingMemoryTree::refresh);
+  }
 }
 
 void WorkingMemoryTree::createLayout() {
@@ -50,6 +57,22 @@ void WorkingMemoryTree::createLayout() {
 
   layout->addLayout(headerLayout);
 
+  // Command input row
+  QHBoxLayout *commandLayout = new QHBoxLayout();
+  QLabel *cmdLabel = new QLabel("Command:");
+  commandLayout->addWidget(cmdLabel);
+
+  m_commandEdit = new QLineEdit();
+  m_commandEdit->setText(m_printCommand);
+  m_commandEdit->setPlaceholderText("e.g., print --depth 3 <s>");
+  connect(m_commandEdit, &QLineEdit::textChanged, this,
+          &WorkingMemoryTree::updateCommand);
+  connect(m_commandEdit, &QLineEdit::returnPressed, this,
+          &WorkingMemoryTree::refresh);
+  commandLayout->addWidget(m_commandEdit);
+
+  layout->addLayout(commandLayout);
+
   // Tree widget
   m_tree = new QTreeWidget();
   m_tree->setHeaderLabel("Working Memory Elements");
@@ -70,13 +93,13 @@ void WorkingMemoryTree::populateTree() {
   if (!m_agent)
     return;
 
-  // Get the root state from the agent
-  QString result = m_agent->executeCommand("print --depth 3 s1");
+  // Use the configured print command
+  QString result = m_agent->executeCommand(m_printCommand);
 
   // For now, just display the raw output in a single node
   // TODO: Parse the WM structure properly using SML API
   QTreeWidgetItem *rootItem = new QTreeWidgetItem(m_tree);
-  rootItem->setText(0, "State S1");
+  rootItem->setText(0, "Working Memory");
 
   if (!result.isEmpty()) {
     QStringList lines = result.split('\n');
@@ -89,6 +112,10 @@ void WorkingMemoryTree::populateTree() {
   }
 
   m_tree->expandToDepth(1);
+}
+
+void WorkingMemoryTree::updateCommand() {
+  m_printCommand = m_commandEdit->text();
 }
 
 void WorkingMemoryTree::addWMEToTree(QTreeWidgetItem *parent, void *identifier,

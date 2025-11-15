@@ -15,6 +15,12 @@ OutputWindow::OutputWindow(SoarAgent *agent, QWidget *parent)
       m_clearButton(nullptr), m_autoScrollCheckbox(nullptr),
       m_autoScroll(true) {
   createLayout();
+
+  // Connect to agent's output signal if agent is provided
+  if (m_agent) {
+    connect(m_agent, &SoarAgent::outputReceived, this,
+            &OutputWindow::appendOutput);
+  }
 }
 
 OutputWindow::~OutputWindow() {}

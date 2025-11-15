@@ -45,6 +45,16 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: brew install swig
 
+      - name: Install Qt6 (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qt6-base-dev qt6-base-dev-tools libqt6core6 libqt6gui6 libqt6widgets6
+
+      - name: Install Qt6 (macOS)
+        if: matrix.os == 'macos-latest'
+        run: brew install qt@6
+
       - name: Install dependencies
         run: |
           conan install . --build=missing -s build_type=Release

@@ -60,6 +60,9 @@ MainWindow::MainWindow(SoarDebugger *debugger, QWidget *parent)
   QSettings settings;
   restoreGeometry(settings.value("geometry").toByteArray());
   restoreState(settings.value("windowState").toByteArray());
+
+  // Create default agent if started normally (not from source code)
+  QTimer::singleShot(100, this, &MainWindow::createDefaultAgent);
 }
 
 MainWindow::~MainWindow() {
@@ -477,4 +480,27 @@ SoarAgent *MainWindow::getCurrentAgent() {
     }
   }
   return nullptr;
+}
+
+void MainWindow::createDefaultAgent() {
+  // Only create default agent if no agents exist and no command-line args
+  // (command-line args would indicate being opened from source code)
+  QStringList args = QCoreApplication::arguments();
+
+  // Check if we have any agents already
+  if (!m_debugger->getAllAgents().isEmpty()) {
+    return;
+  }
+
+  // If opened with specific arguments (other than just the program name),
+  // assume it's being called from source code and don't auto-create
+  if (args.size() > 1) {
+    return;
+  }
+
+  // Create a default agent named "soar"
+  SoarAgent *agent = m_debugger->createAgent("soar");
+  if (agent) {
+    m_statusLabel->setText("Default agent 'soar' created");
+  }
 }
