@@ -104,6 +104,12 @@ void MainWindow::createCentralWidget() {
   m_centralSplitter->setStretchFactor(0, 0);
   m_centralSplitter->setStretchFactor(1, 1);
 
+  // Set initial sizes: 200px for tree, rest for tabs
+  m_centralSplitter->setSizes(QList<int>() << 200 << 600);
+
+  // Make splitter handle more subtle
+  m_centralSplitter->setHandleWidth(1);
+
   // Create output window (hidden by default, each agent has its own)
   m_outputWindow = new OutputWindow(nullptr, this);
   m_outputWindow->hide();

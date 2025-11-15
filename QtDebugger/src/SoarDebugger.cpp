@@ -204,6 +204,9 @@ void SoarDebugger::destroyAgent(SoarAgent *agent) {
     // Emit signal before deleting the agent object
     emit agentDestroyed(agent);
 
+    // Remove callbacks BEFORE destroying SML agent
+    agent->removeCallbacks();
+
     // Destroy the SML agent
     if (smlAgent) {
       m_kernel->DestroyAgent(smlAgent);

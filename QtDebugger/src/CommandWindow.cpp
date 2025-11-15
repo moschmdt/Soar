@@ -40,8 +40,9 @@ void CommandWindow::createLayout() {
   m_outputDisplay = new QTextEdit();
   m_outputDisplay->setReadOnly(true);
   m_outputDisplay->setFont(QFont("Courier New", 10));
-  m_outputDisplay->setMaximumHeight(100);
-  layout->addWidget(m_outputDisplay);
+  m_outputDisplay->setMinimumHeight(60);
+  layout->addWidget(m_outputDisplay,
+                    1); // Stretch factor 1 to grow with available space
 
   // Command input
   QHBoxLayout *cmdLayout = new QHBoxLayout();
