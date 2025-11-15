@@ -16,22 +16,27 @@ public:
 
 public slots:
   void refresh();
-  void expandAll();
-  void collapseAll();
   void updateCommand();
+  void onItemClicked(QTreeWidgetItem *item, int column);
+  void goBack();
 
 private:
   void createLayout();
   void populateTree();
   void addWMEToTree(QTreeWidgetItem *parent, void *identifier, int depth = 0);
+  void parseAndBuildTree();
+  QString makeIdentifierClickable(const QString &text);
+  void navigateToIdentifier(const QString &identifier);
 
   SoarAgent *m_agent;
   QTreeWidget *m_tree;
   QLineEdit *m_commandEdit;
+  QPushButton *m_backButton;
   QPushButton *m_refreshButton;
-  QPushButton *m_expandButton;
-  QPushButton *m_collapseButton;
   QString m_printCommand;
+  QMap<QString, QTreeWidgetItem *> m_identifierMap;
+  QStringList m_commandHistory;
+  int m_historyIndex;
 };
 
 #endif // WORKING_MEMORY_TREE_H
