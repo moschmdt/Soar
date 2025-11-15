@@ -17,6 +17,7 @@ public:
 public slots:
   void executeCommand();
   void clearOutput();
+  void openCliDocumentation();
 
 protected:
   bool eventFilter(QObject *obj, QEvent *event) override;

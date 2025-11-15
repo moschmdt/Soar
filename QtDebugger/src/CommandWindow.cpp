@@ -1,12 +1,14 @@
 #include "CommandWindow.h"
 #include "SoarAgent.h"
 
+#include <QDesktopServices>
 #include <QFont>
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QPushButton>
 #include <QScrollBar>
+#include <QUrl>
 #include <QVBoxLayout>
 
 CommandWindow::CommandWindow(SoarAgent *agent, QWidget *parent)
@@ -52,11 +54,14 @@ void CommandWindow::createLayout() {
           &CommandWindow::executeCommand);
   cmdLayout->addWidget(m_commandLine);
 
-  QPushButton *executeButton = new QPushButton("Execute");
-  executeButton->setMaximumWidth(80);
-  connect(executeButton, &QPushButton::clicked, this,
-          &CommandWindow::executeCommand);
-  cmdLayout->addWidget(executeButton);
+  // Info button for CLI documentation
+  QPushButton *infoButton = new QPushButton("ℹ");
+  infoButton->setMaximumWidth(30);
+  infoButton->setToolTip("Open Soar CLI Documentation");
+  infoButton->setStyleSheet("font-size: 14pt; font-weight: bold;");
+  connect(infoButton, &QPushButton::clicked, this,
+          &CommandWindow::openCliDocumentation);
+  cmdLayout->addWidget(infoButton);
 
   layout->addLayout(cmdLayout);
 }
@@ -87,7 +92,15 @@ void CommandWindow::executeCommand() {
       m_outputDisplay->verticalScrollBar()->maximum());
 }
 
-void CommandWindow::clearOutput() { m_outputDisplay->clear(); }
+void CommandWindow::clearOutput() {
+  if (m_outputDisplay) {
+    m_outputDisplay->clear();
+  }
+}
+
+void CommandWindow::openCliDocumentation() {
+  QDesktopServices::openUrl(QUrl("https://soar.eecs.umich.edu/reference/cli/"));
+}
 
 bool CommandWindow::eventFilter(QObject *obj, QEvent *event) {
   if (obj == m_commandLine && event->type() == QEvent::KeyPress) {
