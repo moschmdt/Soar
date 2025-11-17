@@ -197,9 +197,10 @@ void MainWindow::createMenus() {
   // Help menu
   m_helpMenu = menuBar()->addMenu("&Help");
 
-  m_aboutSoarAction = new QAction("&About Soar Debugger", this);
+  m_aboutSoarAction = new QAction("&About", this);
   m_aboutSoarAction->setStatusTip("About this application");
-  connect(m_aboutSoarAction, &QAction::triggered, this, &MainWindow::aboutSoar);
+  connect(m_aboutSoarAction, &QAction::triggered, this,
+          &MainWindow::showLicense);
   m_helpMenu->addAction(m_aboutSoarAction);
 
   m_aboutQtAction = new QAction("About &Qt", this);
@@ -387,11 +388,56 @@ void MainWindow::showAgentTree() {
 
 void MainWindow::aboutSoar() {
   QMessageBox::about(
-      this, "About Soar Debugger",
+      this, "About",
       "Soar Debugger\n\n"
       "A Qt-based debugger for the Soar cognitive architecture.\n"
       "Version: 9.6.4\n\n"
       "Copyright (c) University of Michigan");
+}
+
+void MainWindow::showLicense() {
+  QMessageBox licenseBox(this);
+  licenseBox.setWindowTitle("About");
+  licenseBox.setTextFormat(Qt::RichText);
+  licenseBox.setText(
+      "<h2>Soar Debugger</h2>"
+      "A Qt-based debugger for the Soar cognitive architecture."
+      "<p><b>Version:</b> 9.6.4</p>"
+      "<p><b>Copyright:</b> University of Michigan</p>"
+      "<hr>"
+      "<h3>License Information</h3>"
+      "<p>The Soar license is available at:<br>"
+      "<a "
+      "href='https://github.com/SoarGroup/Soar/blob/"
+      "0aceb9cb986ed999e415c0a7b4a58f2f0098d09c/LICENSE.md'>"
+      "https://github.com/SoarGroup/Soar/blob/"
+      "0aceb9cb986ed999e415c0a7b4a58f2f0098d09c/LICENSE.md</a></p>"
+      "<p>The Soar Debugger links to the Qt library under the terms of the "
+      "GNU Lesser General Public License (LGPL) version 3. The Soar source "
+      "code is available at:<br>"
+      "<a "
+      "href='https://github.com/SoarGroup/Soar'>https://github.com/SoarGroup/"
+      "Soar</a></p>"
+      "<hr>"
+      "<h3>LGPL Notice</h3>"
+      "<p>This program uses Qt, which is free software licensed under the "
+      "GNU Lesser General Public License (LGPL) version 3.</p>"
+      "<p>This program is free software: you can redistribute it and/or modify "
+      "it under the terms of the GNU Lesser General Public License as "
+      "published by the Free Software Foundation, either version 3 of the "
+      "License, or (at your option) any later version.</p>"
+      "<p>This program is distributed in the hope that it will be useful, "
+      "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+      "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "
+      "GNU Lesser General Public License for more details.</p>"
+      "<p>You should have received a copy of the GNU Lesser General Public "
+      "License "
+      "along with this program. If not, see "
+      "<a "
+      "href='https://www.gnu.org/licenses/'>https://www.gnu.org/licenses/</"
+      "a>.</p>");
+  licenseBox.setStandardButtons(QMessageBox::Ok);
+  licenseBox.exec();
 }
 
 void MainWindow::aboutQt() { QMessageBox::aboutQt(this); }

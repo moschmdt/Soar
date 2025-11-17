@@ -48,6 +48,7 @@ private slots:
 
   // Help menu
   void aboutSoar();
+  void showLicense();
   void aboutQt();
 
   // Debugger events
@@ -106,6 +107,7 @@ private:
   QAction *m_showAgentTreeAction;
 
   QAction *m_aboutSoarAction;
+  QAction *m_licenseAction;
   QAction *m_aboutQtAction;
 
   // Toolbars
