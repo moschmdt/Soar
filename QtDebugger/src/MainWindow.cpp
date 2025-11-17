@@ -5,8 +5,10 @@
 #include "SoarDebugger.h"
 
 #include <QApplication>
+#include <QClipboard>
 #include <QCloseEvent>
 #include <QDialog>
+#include <QFont>
 #include <QHBoxLayout>
 #include <QInputDialog>
 #include <QLabel>
@@ -18,7 +20,9 @@
 #include <QSpinBox>
 #include <QSplitter>
 #include <QStatusBar>
+#include <QSysInfo>
 #include <QTabWidget>
+#include <QTextEdit>
 #include <QTimer>
 #include <QToolBar>
 #include <QTreeWidget>
@@ -202,6 +206,15 @@ void MainWindow::createMenus() {
   connect(m_aboutSoarAction, &QAction::triggered, this,
           &MainWindow::showLicense);
   m_helpMenu->addAction(m_aboutSoarAction);
+
+  m_diagnosticsAction = new QAction("&Diagnostic Info", this);
+  m_diagnosticsAction->setStatusTip(
+      "Show diagnostic information for bug reports");
+  connect(m_diagnosticsAction, &QAction::triggered, this,
+          &MainWindow::showDiagnostics);
+  m_helpMenu->addAction(m_diagnosticsAction);
+
+  m_helpMenu->addSeparator();
 
   m_aboutQtAction = new QAction("About &Qt", this);
   m_aboutQtAction->setStatusTip("About Qt");
@@ -401,7 +414,7 @@ void MainWindow::showLicense() {
   licenseBox.setTextFormat(Qt::RichText);
   licenseBox.setText(
       "<h2>Soar Debugger</h2>"
-      "A Qt-based debugger for the Soar cognitive architecture."
+      "<p>A Qt-based debugger for the Soar cognitive architecture.</p>"
       "<p><b>Version:</b> 9.6.4</p>"
       "<p><b>Copyright:</b> University of Michigan</p>"
       "<hr>"
@@ -438,6 +451,85 @@ void MainWindow::showLicense() {
       "a>.</p>");
   licenseBox.setStandardButtons(QMessageBox::Ok);
   licenseBox.exec();
+}
+
+void MainWindow::showDiagnostics() {
+  QString diagnosticInfo;
+  diagnosticInfo += "Soar Debugger Diagnostic Information\n\n";
+
+  // Soar version
+  diagnosticInfo += "Soar Version: 9.6.4\n";
+
+  // Qt version
+  diagnosticInfo += QString("Qt Version: %1\n").arg(qVersion());
+
+  // OS information
+#ifdef Q_OS_WIN
+  diagnosticInfo += "Operating System: Windows\n";
+#elif defined(Q_OS_MAC)
+  diagnosticInfo += "Operating System: macOS\n";
+#elif defined(Q_OS_LINUX)
+  diagnosticInfo += "Operating System: Linux\n";
+#else
+  diagnosticInfo += "Operating System: Unknown\n";
+#endif
+
+  // System info
+  diagnosticInfo +=
+      QString("OS Version: %1\n").arg(QSysInfo::prettyProductName());
+  diagnosticInfo += QString("Kernel: %1\n").arg(QSysInfo::kernelVersion());
+  diagnosticInfo +=
+      QString("CPU Architecture: %1\n").arg(QSysInfo::currentCpuArchitecture());
+  diagnosticInfo += QString("Build ABI: %1\n").arg(QSysInfo::buildAbi());
+
+  // Debugger info
+  if (m_debugger && m_debugger->isKernelRunning()) {
+    diagnosticInfo += "\nKernel Status: Running\n";
+
+    // Get kernel info
+    auto kernel = m_debugger->kernel();
+    if (kernel) {
+      diagnosticInfo +=
+          QString("Soar Kernel Version: %1\n")
+              .arg(QString::fromStdString(kernel->GetSoarKernelVersion()));
+    }
+  } else {
+    diagnosticInfo += "\nKernel Status: Not Running\n";
+  }
+
+  // Create a dialog with scrollable text
+  QDialog dialog(this);
+  dialog.setWindowTitle("Diagnostic Information");
+  dialog.resize(500, 400);
+
+  QVBoxLayout *layout = new QVBoxLayout(&dialog);
+
+  QLabel *headerLabel =
+      new QLabel("Copy this information when reporting issues:");
+  layout->addWidget(headerLabel);
+
+  QTextEdit *textEdit = new QTextEdit();
+  textEdit->setPlainText(diagnosticInfo);
+  textEdit->setReadOnly(true);
+  textEdit->setFont(QFont("Courier", 10));
+  layout->addWidget(textEdit);
+
+  QHBoxLayout *buttonLayout = new QHBoxLayout();
+  buttonLayout->addStretch();
+
+  QPushButton *copyButton = new QPushButton("Copy to Clipboard");
+  connect(copyButton, &QPushButton::clicked, [textEdit]() {
+    QApplication::clipboard()->setText(textEdit->toPlainText());
+  });
+  buttonLayout->addWidget(copyButton);
+
+  QPushButton *okButton = new QPushButton("OK");
+  connect(okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+  buttonLayout->addWidget(okButton);
+
+  layout->addLayout(buttonLayout);
+
+  dialog.exec();
 }
 
 void MainWindow::aboutQt() { QMessageBox::aboutQt(this); }
