@@ -1,5 +1,4 @@
 #include "AgentWindow.h"
-#include "CommandWindow.h"
 #include "OutputWindow.h"
 #include "ProductionsWindow.h"
 #include "SoarAgent.h"
@@ -12,8 +11,7 @@
 AgentWindow::AgentWindow(SoarAgent *agent, QWidget *parent)
     : QWidget(parent), m_agent(agent), m_mainSplitter(nullptr),
       m_leftSplitter(nullptr), m_rightSplitter(nullptr), m_wmTree(nullptr),
-      m_productionsWindow(nullptr), m_commandWindow(nullptr),
-      m_outputWindow(nullptr) {
+      m_productionsWindow(nullptr), m_outputWindow(nullptr) {
   setWindowTitle(QString("Agent: %1").arg(agent->name()));
   createLayout();
 }
@@ -39,20 +37,12 @@ void AgentWindow::createLayout() {
   m_leftSplitter->setStretchFactor(0, 1);
   m_leftSplitter->setStretchFactor(1, 1);
 
-  // Right side: vertical splitter for command window and output
-  m_rightSplitter = new QSplitter(Qt::Vertical, m_mainSplitter);
+  // Right side: Combined command and output window
+  m_outputWindow = new OutputWindow(m_agent, m_mainSplitter);
 
-  m_outputWindow = new OutputWindow(m_agent, m_rightSplitter);
-  m_commandWindow = new CommandWindow(m_agent, m_rightSplitter);
-
-  m_rightSplitter->addWidget(m_outputWindow);
-  m_rightSplitter->addWidget(m_commandWindow);
-  m_rightSplitter->setStretchFactor(0, 3);
-  m_rightSplitter->setStretchFactor(1, 1);
-
-  // Add left and right to main splitter
+  // Add left and output window to main splitter
   m_mainSplitter->addWidget(m_leftSplitter);
-  m_mainSplitter->addWidget(m_rightSplitter);
+  m_mainSplitter->addWidget(m_outputWindow);
   m_mainSplitter->setStretchFactor(0, 1);
   m_mainSplitter->setStretchFactor(1, 1);
 

@@ -7,7 +7,6 @@
 class SoarAgent;
 class WorkingMemoryTree;
 class ProductionsWindow;
-class CommandWindow;
 class OutputWindow;
 
 /**
@@ -35,7 +34,6 @@ private:
   // Component widgets
   WorkingMemoryTree *m_wmTree;
   ProductionsWindow *m_productionsWindow;
-  CommandWindow *m_commandWindow;
   OutputWindow *m_outputWindow;
 };
 
