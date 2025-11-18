@@ -4,6 +4,8 @@
 #include "SoarAgent.h"
 #include "SoarDebugger.h"
 
+#include "sml_Client.h"
+
 #include <QApplication>
 #include <QClipboard>
 #include <QCloseEvent>
@@ -60,13 +62,17 @@ MainWindow::MainWindow(SoarDebugger *debugger, QWidget *parent)
   updateActions();
   updateStatusBar();
 
+  // Now that signals are connected, start the local kernel and create default
+  // agent
+  if (m_debugger->startLocalKernel()) {
+    // Create default agent - createAgent will emit agentCreated signal
+    m_debugger->createAgent("soar");
+  }
+
   // Restore settings
   QSettings settings;
   restoreGeometry(settings.value("geometry").toByteArray());
   restoreState(settings.value("windowState").toByteArray());
-
-  // Create default agent if started normally (not from source code)
-  QTimer::singleShot(100, this, &MainWindow::createDefaultAgent);
 }
 
 MainWindow::~MainWindow() {
@@ -336,9 +342,18 @@ void MainWindow::connectToRemote() {
     QString host = hostEdit->text();
     int port = portSpinBox->value();
 
+    // Stop local kernel if running
+    m_debugger->stopKernel();
+
+    // Show a message while connecting
+    m_statusLabel->setText(
+        QString("Connecting to %1:%2...").arg(host).arg(port));
+    QApplication::processEvents(); // Process UI events to update status
+
     if (m_debugger->connectToRemoteKernel(host, port)) {
       m_statusLabel->setText(QString("Connected to %1:%2").arg(host).arg(port));
     } else {
+      m_statusLabel->setText("Connection failed");
       QMessageBox::warning(
           this, "Connection Failed",
           QString("Failed to connect to remote kernel at %1:%2")
@@ -624,27 +639,4 @@ SoarAgent *MainWindow::getCurrentAgent() {
     }
   }
   return nullptr;
-}
-
-void MainWindow::createDefaultAgent() {
-  // Only create default agent if no agents exist and no command-line args
-  // (command-line args would indicate being opened from source code)
-  QStringList args = QCoreApplication::arguments();
-
-  // Check if we have any agents already
-  if (!m_debugger->getAllAgents().isEmpty()) {
-    return;
-  }
-
-  // If opened with specific arguments (other than just the program name),
-  // assume it's being called from source code and don't auto-create
-  if (args.size() > 1) {
-    return;
-  }
-
-  // Create a default agent named "soar"
-  SoarAgent *agent = m_debugger->createAgent("soar");
-  if (agent) {
-    m_statusLabel->setText("Default agent 'soar' created");
-  }
 }

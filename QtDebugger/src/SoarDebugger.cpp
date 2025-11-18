@@ -1,4 +1,5 @@
 #include "SoarDebugger.h"
+#include "DocumentThread.h"
 #include "SoarAgent.h"
 
 // Include SML headers directly
@@ -11,7 +12,7 @@
 
 SoarDebugger::SoarDebugger(QObject *parent)
     : QObject(parent), m_kernel(nullptr), m_messageTimer(new QTimer(this)),
-      m_isLocalKernel(false) {
+      m_documentThread(new DocumentThread(this)), m_isLocalKernel(false) {
   // Set up message pumping timer
   m_messageTimer->setSingleShot(false);
   m_messageTimer->setInterval(50); // 20 FPS
@@ -21,8 +22,8 @@ SoarDebugger::SoarDebugger(QObject *parent)
 SoarDebugger::~SoarDebugger() { shutdown(); }
 
 bool SoarDebugger::initialize() {
-  // Start with a local kernel by default
-  return startLocalKernel();
+  // Don't start kernel here - MainWindow will do it after connecting signals
+  return true;
 }
 
 void SoarDebugger::shutdown() {
@@ -61,20 +62,20 @@ bool SoarDebugger::startLocalKernel(int port) {
   }
 
   try {
-    // Create kernel in current thread
-    m_kernel.reset(sml::Kernel::CreateKernelInCurrentThread(
-        port == -1 ? sml::Kernel::kUseAnyPort : port));
+    qInfo() << "Starting local Soar kernel on port" << port;
+
+    // Create kernel in new thread (like Java debugger)
+    // This allows remote environments to connect to us
+    m_kernel = sml::Kernel::CreateKernelInNewThread(
+        port == -1 ? sml::Kernel::kUseAnyPort : port);
 
     if (!m_kernel) {
       qCritical() << "Failed to create Soar kernel";
       return false;
     }
 
-    m_isLocalKernel = true;
-    m_messageTimer->start();
-
     qInfo() << "Soar kernel started on port" << m_kernel->GetListenerPort();
-    emit kernelStarted();
+    m_isLocalKernel = true;
 
     return true;
 
@@ -91,9 +92,14 @@ bool SoarDebugger::connectToRemoteKernel(const QString &host, int port) {
   }
 
   try {
-    // Create remote connection
-    m_kernel.reset(sml::Kernel::CreateRemoteConnection(
-        true, host.toUtf8().constData(), port));
+    qInfo() << "Attempting to connect to remote kernel at" << host << ":"
+            << port;
+
+    // Create remote connection to existing kernel (like Java debugger)
+    // Explicitly ask not to be sent output link changes (performance boost)
+    bool ignoreOutput = true;
+    m_kernel = sml::Kernel::CreateRemoteConnection(
+        true, host.toUtf8().constData(), port, ignoreOutput);
 
     if (!m_kernel) {
       qCritical() << "Failed to connect to remote kernel at" << host << ":"
@@ -101,24 +107,32 @@ bool SoarDebugger::connectToRemoteKernel(const QString &host, int port) {
       return false;
     }
 
+    qInfo() << "Remote connection created, checking for errors...";
+
     // Test the connection
     if (m_kernel->HadError()) {
-      QString error = m_kernel->GetLastErrorDescription();
+      QString error = QString::fromUtf8(m_kernel->GetLastErrorDescription());
       qCritical() << "Kernel connection error:" << error;
-      m_kernel.reset();
+      delete m_kernel;
+      m_kernel = nullptr;
       return false;
     }
 
-    m_isLocalKernel = false;
-    m_messageTimer->start();
+    // Verify connection by getting version
+    // std::string version = m_kernel->GetSoarKernelVersion();
+    // u qInfo() << "Connected to remote kernel version:"
+    //           << QString::fromStdString(version);
 
-    qInfo() << "Connected to remote kernel at" << host << ":" << port;
-    emit kernelStarted();
+    m_isLocalKernel = false;
 
     return true;
 
   } catch (const std::exception &e) {
     qCritical() << "Exception connecting to remote kernel:" << e.what();
+    if (m_kernel) {
+      delete m_kernel;
+      m_kernel = nullptr;
+    }
     return false;
   }
 }
@@ -129,14 +143,22 @@ void SoarDebugger::stopKernel() {
   }
 
   m_messageTimer->stop();
+  m_documentThread->setConnected(false);
 
   try {
     if (m_isLocalKernel) {
-      // Shutdown can block, but we need to do it
+      // For local kernels, shutdown properly
+      qInfo() << "Shutting down local kernel";
       m_kernel->Shutdown();
+      delete m_kernel;
+    } else {
+      // For remote connections, just close the connection
+      // Don't shutdown the remote kernel (it's still running remotely)
+      qInfo() << "Closing remote connection";
+      delete m_kernel;
     }
 
-    m_kernel.reset();
+    m_kernel = nullptr;
     m_isLocalKernel = false;
 
     qInfo() << "Soar kernel stopped";
@@ -144,14 +166,59 @@ void SoarDebugger::stopKernel() {
 
   } catch (const std::exception &e) {
     qWarning() << "Exception stopping kernel:" << e.what();
-    // Force reset even if exception occurred
-    m_kernel.reset();
+    // Force cleanup even if exception occurred
+    if (m_kernel) {
+      delete m_kernel;
+      m_kernel = nullptr;
+    }
     m_isLocalKernel = false;
   } catch (...) {
     qWarning() << "Unknown exception stopping kernel";
-    m_kernel.reset();
+    if (m_kernel) {
+      delete m_kernel;
+      m_kernel = nullptr;
+    }
     m_isLocalKernel = false;
   }
+}
+
+void SoarDebugger::setupKernel() {
+  if (!m_kernel) {
+    return;
+  }
+
+  qInfo() << "Setting up kernel connection";
+
+  // Set the kernel on the document thread
+  m_documentThread->setKernel(m_kernel);
+
+  // Start document thread for async command execution
+  m_documentThread->setConnected(true);
+
+  // For remote connections, we need to pump messages
+  if (!m_isLocalKernel) {
+    qInfo() << "Starting message pump for remote connection";
+    m_messageTimer->start();
+
+    // For remote connections, wrap any existing agents
+    int numAgents = m_kernel->GetNumberAgents();
+    if (numAgents > 0) {
+      qInfo() << "Remote kernel has" << numAgents << "existing agents";
+      for (int i = 0; i < numAgents; i++) {
+        sml::Agent *smlAgent = m_kernel->GetAgentByIndex(i);
+        if (smlAgent) {
+          QString agentName = QString::fromUtf8(smlAgent->GetAgentName());
+          qInfo() << "Wrapping existing agent:" << agentName;
+          SoarAgent *agent = new SoarAgent(smlAgent, this);
+          agent->setDocumentThread(m_documentThread);
+          m_agents.append(agent);
+          emit agentCreated(agent);
+        }
+      }
+    }
+  }
+
+  emit kernelStarted();
 }
 
 SoarAgent *SoarDebugger::createAgent(const QString &name) {
@@ -176,6 +243,7 @@ SoarAgent *SoarDebugger::createAgent(const QString &name) {
 
     // Create our wrapper
     SoarAgent *agent = new SoarAgent(smlAgent, this);
+    agent->setDocumentThread(m_documentThread);
     m_agents.append(agent);
 
     qInfo() << "Created agent:" << name;

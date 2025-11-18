@@ -12,11 +12,11 @@ if(NOT BUILD_QT_DEBUGGER)
 endif()
 
 # Find Qt6
-find_package(Qt6 COMPONENTS Core Widgets QUIET)
+find_package(Qt6 COMPONENTS Core Widgets Concurrent QUIET)
 
 if(NOT Qt6_FOUND)
     message(STATUS "Qt6 not found, trying Qt5")
-    find_package(Qt5 COMPONENTS Core Widgets QUIET)
+    find_package(Qt5 COMPONENTS Core Widgets Concurrent QUIET)
 
     if(NOT Qt5_FOUND)
         message(STATUS "Neither Qt6 nor Qt5 found, skipping Qt debugger")
@@ -41,6 +41,7 @@ set(SOURCES
     src/MainWindow.cpp
     src/AgentWindow.cpp
     src/SoarDebugger.cpp
+    src/DocumentThread.cpp
     src/OutputWindow.cpp
     src/CommandWindow.cpp
     src/TracesWindow.cpp
@@ -54,6 +55,7 @@ set(HEADERS
     src/MainWindow.h
     src/AgentWindow.h
     src/SoarDebugger.h
+    src/DocumentThread.h
     src/OutputWindow.h
     src/CommandWindow.h
     src/TracesWindow.h
@@ -80,9 +82,9 @@ add_executable(soar_qt_debugger ${SOURCES} ${HEADERS} ${UI_FILES})
 
 # Link Qt libraries
 if(QT_VERSION_MAJOR EQUAL 6)
-    target_link_libraries(soar_qt_debugger Qt6::Core Qt6::Widgets)
+    target_link_libraries(soar_qt_debugger Qt6::Core Qt6::Widgets Qt6::Concurrent)
 else()
-    target_link_libraries(soar_qt_debugger Qt5::Core Qt5::Widgets)
+    target_link_libraries(soar_qt_debugger Qt5::Core Qt5::Widgets Qt5::Concurrent)
 endif()
 
 # Link Soar libraries

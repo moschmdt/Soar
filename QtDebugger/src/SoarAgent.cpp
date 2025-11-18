@@ -1,4 +1,5 @@
 #include "SoarAgent.h"
+#include "DocumentThread.h"
 
 #include "sml_Client.h"
 #include "sml_ClientAgent.h"
@@ -9,7 +10,7 @@
 
 SoarAgent::SoarAgent(sml::Agent *smlAgent, QObject *parent)
     : QObject(parent), m_smlAgent(smlAgent), m_printCallbackId(-1),
-      m_updateCallbackId(-1) {
+      m_updateCallbackId(-1), m_isRunning(false), m_documentThread(nullptr) {
   setupCallbacks();
 }
 
@@ -22,94 +23,94 @@ QString SoarAgent::name() const {
   return QString();
 }
 
-bool SoarAgent::isRunning() const {
-  if (!m_smlAgent)
-    return false;
-  // Use command line to check if agent is running
-  // For now just return false as this is a stub
-  return false;
-}
+bool SoarAgent::isRunning() const { return m_isRunning; }
 
 QString SoarAgent::executeCommand(const QString &command) {
-  if (!m_smlAgent) {
-    return "Error: No agent";
+  if (!m_smlAgent)
+    return QString();
+
+  // Check if this is a run command
+  QString cmd = command.trimmed().toLower();
+  bool isRunCommand = cmd.startsWith("run") || cmd.startsWith("step") ||
+                      cmd.startsWith("d") || cmd.startsWith("e");
+
+  // Use document thread for run commands (async)
+  if (isRunCommand && m_documentThread) {
+    m_isRunning = true;
+    emit runStarted();
+    m_documentThread->executeCommand(m_smlAgent, command);
+    return QString(); // Async, no immediate result
   }
 
+  // Synchronous execution for non-run commands
   try {
     const char *result =
         m_smlAgent->ExecuteCommandLine(command.toUtf8().constData());
-
-    // Emit workingMemoryChanged for commands that modify WM
-    QString cmd = command.trimmed().toLower();
-    if (cmd.startsWith("run") || cmd.startsWith("step") ||
-        cmd.startsWith("init-soar") || cmd.startsWith("excise") ||
-        cmd.startsWith("sp ") || cmd.startsWith("learn")) {
-      emit workingMemoryChanged();
-    }
-
-    return QString::fromUtf8(result ? result : "");
+    QString output = QString::fromUtf8(result ? result : "");
+    return output;
   } catch (const std::exception &e) {
-    return QString("Exception: %1").arg(e.what());
+    return QString("Error: %1").arg(e.what());
   }
 }
 
 bool SoarAgent::runStep(int count) {
-  if (!m_smlAgent)
+  if (!m_smlAgent || !m_documentThread)
     return false;
 
-  QString command = QString("run %1").arg(count);
-  const char *result =
-      m_smlAgent->ExecuteCommandLine(command.toUtf8().constData());
-
-  // Check if command executed successfully (non-null result)
-  return (result != nullptr);
+  m_isRunning = true;
+  emit runStarted();
+  m_documentThread->runAllAgents(count);
+  return true;
 }
 
 bool SoarAgent::runTilDecision() {
-  if (!m_smlAgent)
+  if (!m_smlAgent || !m_documentThread)
     return false;
 
-  const char *result = m_smlAgent->ExecuteCommandLine("run --decision");
-  return (result != nullptr);
+  m_isRunning = true;
+  emit runStarted();
+  // 1 decision = 1 step
+  m_documentThread->runAllAgents(1);
+  return true;
 }
 
 bool SoarAgent::runTilHalt() {
-  if (!m_smlAgent)
+  if (!m_smlAgent || !m_documentThread)
     return false;
 
-  const char *result = m_smlAgent->ExecuteCommandLine("run");
-  return (result != nullptr);
+  m_isRunning = true;
+  emit runStarted();
+  m_documentThread->runAllForever();
+  return true;
 }
 
 bool SoarAgent::runTilElaboration() {
-  if (!m_smlAgent)
+  if (!m_smlAgent || !m_documentThread)
     return false;
 
-  const char *result = m_smlAgent->ExecuteCommandLine("run --elaboration");
-  return (result != nullptr);
+  m_isRunning = true;
+  emit runStarted();
+  // For elaboration, use command line for now (less common)
+  executeCommand("run --elaboration");
+  return true;
 }
 
 bool SoarAgent::runTilOutput() {
-  if (!m_smlAgent)
+  if (!m_smlAgent || !m_documentThread)
     return false;
 
-  const char *result = m_smlAgent->ExecuteCommandLine("run --output");
-  return (result != nullptr);
+  m_isRunning = true;
+  emit runStarted();
+  m_documentThread->runAllTilOutput();
+  return true;
 }
 
 bool SoarAgent::stop() {
-  if (!m_smlAgent) {
+  if (!m_smlAgent || !m_documentThread)
     return false;
-  }
 
-  try {
-    m_smlAgent->StopSelf();
-    emit runStopped();
-    return true;
-  } catch (const std::exception &e) {
-    qWarning() << "Exception in stop:" << e.what();
-    return false;
-  }
+  m_documentThread->stopAllAgents();
+  return true;
 }
 
 bool SoarAgent::initSoar() {
@@ -284,6 +285,27 @@ void SoarAgent::updateHandler(sml::smlUpdateEventId eventId, void *userData,
   if (self) {
     emit self->workingMemoryChanged();
   }
+}
+
+void SoarAgent::setDocumentThread(DocumentThread *thread) {
+  if (m_documentThread) {
+    disconnect(m_documentThread, nullptr, this, nullptr);
+  }
+
+  m_documentThread = thread;
+
+  if (m_documentThread) {
+    connect(m_documentThread, &DocumentThread::runCompleted, this,
+            &SoarAgent::onCommandCompleted);
+  }
+}
+
+void SoarAgent::onCommandCompleted(const QString &result) {
+  Q_UNUSED(result);
+
+  // Run command completed
+  m_isRunning = false;
+  emit runStopped();
 }
 
 void SoarAgent::onPrintEvent() {

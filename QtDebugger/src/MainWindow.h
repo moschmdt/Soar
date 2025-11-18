@@ -69,7 +69,6 @@ private:
   void createCentralWidget();
   void updateActions();
   void updateStatusBar();
-  void createDefaultAgent();
   SoarAgent *getCurrentAgent();
 
   SoarDebugger *m_debugger;

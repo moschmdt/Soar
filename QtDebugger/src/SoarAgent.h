@@ -7,6 +7,9 @@
 #include <sml_Client.h>
 #include <sml_Events.h>
 
+// Forward declaration
+class DocumentThread;
+
 // Forward declare SML classes
 namespace sml {
 class Agent;
@@ -38,6 +41,9 @@ public:
   bool stop();
   bool initSoar();
 
+  // Set document thread for async execution
+  void setDocumentThread(DocumentThread *thread);
+
   // Working memory access
   QStringList getWorkingMemory();
   QStringList getPreferences(const QString &object = QString());
@@ -62,11 +68,14 @@ signals:
 
 private slots:
   void onPrintEvent();
+  void onCommandCompleted(const QString &result);
 
 private:
   sml::Agent *m_smlAgent;
   int m_printCallbackId;
   int m_updateCallbackId;
+  bool m_isRunning;
+  DocumentThread *m_documentThread;
 
   void setupCallbacks();
 
