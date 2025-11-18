@@ -43,9 +43,9 @@ between both build systems.
 | External lib test                 | ✅     | ✅     |
 | SVS                               | ✅     | ❌     |
 | SWIG Python                       | ✅     | ✅     |
-| SWIG Java                         | ✅     | ✅     |  
-| SWIG C#                           | ✅     | ❌     |  
-| SWIG TCL                          | ✅     | ❌     |  
+| SWIG Java                         | ✅     | ✅     |
+| SWIG C#                           | ✅     | ❌     |
+| SWIG TCL                          | ✅     | ❌     |
 | Python package soar-sml           | ✅     | ❌     |
 | Generate compile commands         | ✅     | ✅     |
 | Release                           | ✅     | ✅     |
@@ -55,7 +55,8 @@ between both build systems.
 | MacOS                             | ✅     | ✅     |
 | Linux                             | ✅     | ✅     |
 | Windows                           | ✅     | ❌     |
-| Java builds (Debugger)            | ✅     | ❌     |
+| Debugger (Java)                   | ✅     | ❌     |
+| Debugger (CPP)                    | ❌     | ✅     |
 
 ### Prerequisites
 

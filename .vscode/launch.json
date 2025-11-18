@@ -5,12 +5,29 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Qt Soar Debugger",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/QtDebugger/SoarDebugger",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+        },
+        {
             "name": "Debug UnitTests",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/out/UnitTests",
             // "args": ["-e", "PRIMS_Sanity1", "-e", "PRIMS_Sanity2", "-f", "testSmemArithmetic", "-l", "-c", "FullTestsClientThread"],
-            "args": ["-e", "PRIMS_Sanity1","-c", "MiscTests"],
+            "args": [
+                "-e",
+                "PRIMS_Sanity1",
+                "-c",
+                "MiscTests"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/out",
             "environment": [],
@@ -57,7 +74,12 @@
             "type": "python",
             "request": "launch",
             "program": "scons/scons.py",
-			"args": ["--scu", "--dbg", "all", "performance_tests"],
+            "args": [
+                "--scu",
+                "--dbg",
+                "all",
+                "performance_tests"
+            ],
             "console": "integratedTerminal",
             "justMyCode": false
         },
