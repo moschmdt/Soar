@@ -1555,10 +1555,29 @@ bool Agent::SpawnDebugger(int port, const char *debuggerPath)
     }
     else
     {
-        // No path specified - assume SoarDebugger is installed as a system application
-        // and is available in PATH, so just use the executable name
-        found_path = DEBUGGER_EXE;
-        std::cout << "SpawnDebugger: Using system-installed debugger: " << found_path << std::endl;
+        // No path specified - search for SoarDebugger in system PATH
+        std::cout << "SpawnDebugger: Searching for debugger in system PATH..." << std::endl;
+        
+        try
+        {
+            boost::filesystem::path debugger_path = bp::search_path(DEBUGGER_EXE);
+            
+            if (debugger_path.empty())
+            {
+                std::cerr << "SpawnDebugger: Could not find '" << DEBUGGER_EXE 
+                          << "' in system PATH\n";
+                std::cerr << "Please install the debugger or provide an explicit path\n";
+                return false;
+            }
+            
+            found_path = debugger_path.string();
+            std::cout << "SpawnDebugger: Found debugger at: " << found_path << std::endl;
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "SpawnDebugger: Error searching PATH: " << e.what() << std::endl;
+            return false;
+        }
     }
 
     // Use kernel port if not specified

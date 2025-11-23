@@ -100,6 +100,7 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC
   SQLite::SQLite3
   Boost::headers
+  Boost::filesystem
 )
 
 set_target_properties(${PROJECT_NAME}_lib
