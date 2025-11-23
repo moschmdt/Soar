@@ -13,6 +13,7 @@
 #include "TokenizerTest.cpp"
 #include "wma/WmaFunctionalTests.cpp"
 #include "ExampleTests.cpp"
+#include "DebuggerTest.cpp"
 #include "testMain.cpp"
 #include "TestHelpers.cpp"
 #include "TestRunner.cpp"

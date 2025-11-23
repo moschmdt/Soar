@@ -21,6 +21,9 @@ class soarRecipe(ConanFile):
 
     def requirements(self):
         self.requires("sqlite3/3.50.4")
+        # Boost 1.85.0 is the last version with boost::process
+        # Boost 1.86+ removed boost::process (it was experimental)
+        self.requires("boost/1.85.0")
         # Qt removed - install system Qt for QtDebugger instead due to missing support
         # self.requires("qt/6.8.3")
 

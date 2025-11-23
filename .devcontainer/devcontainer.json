@@ -19,7 +19,8 @@
 				"ms-vscode.cmake-tools",
 				"josetr.cmake-language-support-vscode",
 				"ms-vscode.cpptools",
-				"ms-python.python"
+				"ms-python.python",
+				"github.copilot-chat"
 			]
 		}
 	},

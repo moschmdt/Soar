@@ -25,6 +25,7 @@
 #include "BuiltinRHSTests.hpp"
 #include "ChunkingTests.hpp"
 #include "ChunkingDemoTests.hpp"
+#include "DebuggerTest.hpp"
 #include "ElementXMLTest.hpp"
 #include "EpMemFunctionalTests.hpp"
 #include "ExternalLibraryTest.hpp"
@@ -46,7 +47,7 @@
 
 #if defined(_WIN32) || defined(WIN32)
 #include <sstream>
-std::string OS = static_cast<std::ostringstream&>(std::ostringstream() << "Microsoft C/C++ " << _MSC_FULL_VER).str();
+std::string OS = static_cast<std::ostringstream &>(std::ostringstream() << "Microsoft C/C++ " << _MSC_FULL_VER).str();
 #elif defined(__APPLE__)
 std::string OS = "OS X";
 #elif defined(__linux__)
@@ -59,38 +60,42 @@ std::string OS = "Unknown OS";
 
 void usage(std::string arg0)
 {
-    std::cout << "Soar Unit Tests" << std::endl << std::endl;
-    std::cout << "Usage: " << arg0 << " [options]" << std::endl << std::endl;
+    std::cout << "Soar Unit Tests" << std::endl
+              << std::endl;
+    std::cout << "Usage: " << arg0 << " [options]" << std::endl
+              << std::endl;
     std::cout << "OPTIONS:" << std::endl;
-    std::cout << "\t" << "-c --category"                    << "\t\t\t\t" << "Run only these categories." << std::endl;
-    std::cout << "\t" << "   --list-categories"             << "\t\t\t" << "Prints a list of all test categories" << std::endl;
-    std::cout << "\t" << "-t --test"                        << "\t\t\t\t" << "Run only these tests." << std::endl;
-    std::cout << "\t" << "   --list-tests"                  << "\t\t\t\t" << "Prints a list of all test names" << std::endl;
-    std::cout << "\t" << "-E --exclude-category"            << "\t\t\t" << "Exclude this category." << std::endl;
-    std::cout << "\t" << "-e --exclude-test"                << "\t\t\t" << "Exclude this test." << std::endl;
-    std::cout << "\t" << "-F --expected-failure-category"   << "\t\t" << "Ignore failures in this category." << std::endl;
-    std::cout << "\t" << "-f --expected-failure-test"       << "\t\t" << "Ignore this test failing." << std::endl;
-    std::cout << "\t" << "-n --no-refcount-leak-check"      << "\t\t" << "Do not init-soar and check for refcount leaks." << std::endl;
-    std::cout << "\t" << "-a --after-action-reports"        << "\t\t" << "Generate reports for each agent trial." << std::endl;
-    std::cout << "\t" << "-l --logs"                        << "\t\t\t\t" << "Record logs of agent trials." << std::endl;
-    std::cout << "\t" << "-x --no-explainer"                << "\t\t\t" << "Run learning agents with explainer on." << std::endl;
-    std::cout << "\t" << "-r --run-debug-mode"              << "\t\t\t" << "Don't force strict unit test settings." << std::endl;
-    std::cout << "\t" << "-h --help"                        << "\t\t\t\t" << "This help message." << std::endl;
-    std::cout << "\t" << "-s --silent"                      << "\t\t\t\t" << "Always return 0.  Read Test.xml for results." << std::endl;
+    std::cout << "\t" << "-c --category" << "\t\t\t\t" << "Run only these categories." << std::endl;
+    std::cout << "\t" << "   --list-categories" << "\t\t\t" << "Prints a list of all test categories" << std::endl;
+    std::cout << "\t" << "-t --test" << "\t\t\t\t" << "Run only these tests." << std::endl;
+    std::cout << "\t" << "   --list-tests" << "\t\t\t\t" << "Prints a list of all test names" << std::endl;
+    std::cout << "\t" << "-E --exclude-category" << "\t\t\t" << "Exclude this category." << std::endl;
+    std::cout << "\t" << "-e --exclude-test" << "\t\t\t" << "Exclude this test." << std::endl;
+    std::cout << "\t" << "-F --expected-failure-category" << "\t\t" << "Ignore failures in this category." << std::endl;
+    std::cout << "\t" << "-f --expected-failure-test" << "\t\t" << "Ignore this test failing." << std::endl;
+    std::cout << "\t" << "-n --no-refcount-leak-check" << "\t\t" << "Do not init-soar and check for refcount leaks." << std::endl;
+    std::cout << "\t" << "-a --after-action-reports" << "\t\t" << "Generate reports for each agent trial." << std::endl;
+    std::cout << "\t" << "-l --logs" << "\t\t\t\t" << "Record logs of agent trials." << std::endl;
+    std::cout << "\t" << "-x --no-explainer" << "\t\t\t" << "Run learning agents with explainer on." << std::endl;
+    std::cout << "\t" << "-r --run-debug-mode" << "\t\t\t" << "Don't force strict unit test settings." << std::endl;
+    std::cout << "\t" << "-h --help" << "\t\t\t\t" << "This help message." << std::endl;
+    std::cout << "\t" << "-s --silent" << "\t\t\t\t" << "Always return 0.  Read Test.xml for results." << std::endl;
     std::cout << std::endl;
 }
 
-void print_categories(const std::vector<TestCategory*>& tests) {
+void print_categories(const std::vector<TestCategory *> &tests)
+{
     std::cout << "Registered Test Categories" << std::endl;
-    for (TestCategory* category : tests) 
+    for (TestCategory *category : tests)
     {
         std::cout << "> " << category->getCategoryName() << std::endl;
     }
 }
 
-void print_test_names(const std::vector<TestCategory*>& tests) {
+void print_test_names(const std::vector<TestCategory *> &tests)
+{
     std::cout << "Registered Tests" << std::endl;
-    for (TestCategory* category : tests) 
+    for (TestCategory *category : tests)
     {
         std::cout << "===== " << category->getCategoryName() << " ======" << std::endl;
         for (TestCategory::TestCategory_test test : category->getTests())
@@ -101,7 +106,7 @@ void print_test_names(const std::vector<TestCategory*>& tests) {
     }
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     std::vector<std::string> runCategories;
     std::vector<std::string> runTests;
@@ -113,10 +118,10 @@ int main(int argc, char** argv)
     bool list_categories = false;
     bool list_tests = false;
 
-    #if defined(_WIN32) || defined(WIN32)
+#if defined(_WIN32) || defined(WIN32)
     // Allows printing emoji ✅
     SetConsoleOutputCP(CP_UTF8);
-    #endif
+#endif
 
     for (int index = 1; index < argc; ++index)
     {
@@ -125,7 +130,7 @@ int main(int argc, char** argv)
         std::string parameter = "";
 
         if (index + 1 < argc)
-            parameter = argv[index+1];
+            parameter = argv[index + 1];
 
         if (argument == "--listener")
         {
@@ -216,7 +221,7 @@ int main(int argc, char** argv)
     std::mutex mutex;
     std::unique_lock<std::mutex> lock(mutex);
 
-    std::vector<TestCategory*> tests;
+    std::vector<TestCategory *> tests;
 
     TEST_DECLARATION(AgentTest);
     TEST_DECLARATION(AliasTest);
@@ -224,6 +229,7 @@ int main(int argc, char** argv)
     TEST_DECLARATION(BuiltinRHSTests);
     TEST_DECLARATION(ChunkingDemoTests);
     TEST_DECLARATION(ChunkingTests);
+    TEST_DECLARATION(DebuggerTest);
     TEST_DECLARATION(EpMemFunctionalTests);
     TEST_DECLARATION(ElementXMLTest);
     TEST_DECLARATION(ExternalLibraryTest);
@@ -241,13 +247,13 @@ int main(int argc, char** argv)
     TEST_DECLARATION(WmaFunctionalTests);
 
     // Support options to print a list of categories or tests, then exit
-    if (list_categories) 
+    if (list_categories)
     {
         print_categories(tests);
         exit(0);
     }
 
-    if (list_tests) 
+    if (list_tests)
     {
         print_test_names(tests);
         exit(0);
@@ -258,9 +264,10 @@ int main(int argc, char** argv)
     size_t testCount = 0;
     size_t skipCount = 0;
 
-    struct failure {
-            std::string name;
-            std::string output;
+    struct failure
+    {
+        std::string name;
+        std::string output;
     };
 
     std::vector<failure> failedTests;
@@ -269,8 +276,7 @@ int main(int argc, char** argv)
     std::ofstream xml("TestResults.xml");
     xml << "<testsuite tests=\"" << tests.size() << "\">" << std::endl;
 
-
-    for (TestCategory* category : tests)
+    for (TestCategory *category : tests)
     {
         if (runCategories.size() > 0 && std::find(runCategories.begin(), runCategories.end(), category->getCategoryName()) == runCategories.end())
         {
@@ -301,13 +307,13 @@ int main(int argc, char** argv)
             std::cout << std::get<2>(test) << ": ";
             std::cout.flush();
 
-            std::function<void ()> function = std::get<0>(test);
+            std::function<void()> function = std::get<0>(test);
             uint64_t timeout = std::get<1>(test) - 1000;
 
-            TestRunner* runner = new TestRunner(category, function, &variable);
+            TestRunner *runner = new TestRunner(category, function, &variable);
             xml << "\t<testcase classname=\"" << category->getCategoryName() << " - " << OS << "\" name=\"" << std::get<2>(test) << "\"";
 
-            std::thread (&TestRunner::run, runner).detach();
+            std::thread(&TestRunner::run, runner).detach();
 
             uint64_t timeElapsed = 0;
 
@@ -353,7 +359,7 @@ int main(int argc, char** argv)
                 ++expectedFailureCount;
 
                 // status="ignored" with the failure message would be more correct,
-                //but our reporting tool can't currently handle this.
+                // but our reporting tool can't currently handle this.
                 xml << " status=\"disabled\" />" << std::endl;
                 // << "\t\t" << "<failure type=\"Test Failure\">" << runner->failureMessage << "</failure>" << std::endl
                 // << "\t</testcase>" << std::endl;
@@ -373,7 +379,8 @@ int main(int argc, char** argv)
 
             std::mutex mutex;
             std::unique_lock<std::mutex> lock(mutex);
-            variable.wait(lock, [runner]{ return runner->done == true; });
+            variable.wait(lock, [runner]
+                          { return runner->done == true; });
 
             if (runner->kill)
             {
@@ -384,7 +391,8 @@ int main(int argc, char** argv)
             if (ShowTestOutput && runner->failed)
             {
                 std::cout << std::get<2>(test) << " Output:" << std::endl;
-                std::cout << runner->output.str() << "================================================" << std::endl << std::endl;
+                std::cout << runner->output.str() << "================================================" << std::endl
+                          << std::endl;
                 std::cout.flush();
             }
 
@@ -402,13 +410,15 @@ int main(int argc, char** argv)
     xml << "</testsuite>" << std::endl;
     xml.close();
 
-    std::cout << "================================================" << std::endl << std::endl;
+    std::cout << "================================================" << std::endl
+              << std::endl;
     std::cout << "Completed " << successCount << "/" << testCount << " successfully. " << testCount - successCount - expectedFailureCount << " failed unexpectedly. " << expectedFailureCount << " failed as expected. " << skipCount << " tests skipped." << std::endl;
     std::cout.flush();
 
     if (failedTests.size() > 0)
     {
-        std::cout << "Failed Tests: " << std::endl << std::endl;
+        std::cout << "Failed Tests: " << std::endl
+                  << std::endl;
 
         for (auto test : failedTests)
         {

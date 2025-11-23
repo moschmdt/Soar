@@ -50,6 +50,8 @@ if(BUILD_TESTING)
         add_test(NAME test_svs COMMAND test_soar -c SvsTests)
     endif()
 
+    add_test(NAME qt_debugger_test COMMAND test_soar -c DebuggerTest)
+
     # Python SML Interface Test
     if(SWIG_PYTHON)
         # Define path to Python build artifacts
