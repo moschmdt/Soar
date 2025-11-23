@@ -21,6 +21,8 @@ class soarRecipe(ConanFile):
 
     def requirements(self):
         self.requires("sqlite3/3.50.4")
+        # Qt removed - install system Qt for QtDebugger instead due to missing support
+        # self.requires("qt/6.8.3")
 
 
     def generate(self):

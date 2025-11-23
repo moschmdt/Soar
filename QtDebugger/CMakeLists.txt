@@ -11,8 +11,12 @@ if(NOT BUILD_QT_DEBUGGER)
     return()
 endif()
 
-# Find Qt6
-find_package(Qt6 COMPONENTS Core Widgets QUIET)
+# Find Qt6 - add Wayland support on Linux
+if(UNIX AND NOT APPLE)
+    find_package(Qt6 COMPONENTS Core Widgets WaylandClient QUIET)
+else()
+    find_package(Qt6 COMPONENTS Core Widgets QUIET)
+endif()
 
 if(NOT Qt6_FOUND)
     message(STATUS "Qt6 not found, trying Qt5")
@@ -27,7 +31,12 @@ if(NOT Qt6_FOUND)
     message(STATUS "Using Qt5 for debugger")
 else()
     set(QT_VERSION_MAJOR 6)
-    message(STATUS "Using Qt6 for debugger")
+
+    if(UNIX AND NOT APPLE)
+        message(STATUS "Using Qt6 for debugger with Wayland support (Linux)")
+    else()
+        message(STATUS "Using Qt6 for debugger")
+    endif()
 endif()
 
 # Set up Qt
@@ -81,8 +90,14 @@ add_executable(soar_qt_debugger ${SOURCES} ${HEADERS} ${UI_FILES})
 # Link Qt libraries
 if(QT_VERSION_MAJOR EQUAL 6)
     target_link_libraries(soar_qt_debugger Qt6::Core Qt6::Widgets)
-else()
-    target_link_libraries(soar_qt_debugger Qt5::Core Qt5::Widgets)
+
+    # Add Wayland support on Linux
+    if(UNIX AND NOT APPLE)
+        target_link_libraries(soar_qt_debugger Qt6::WaylandClient)
+
+        # Force Wayland platform on Linux
+        target_compile_definitions(soar_qt_debugger PRIVATE QT_QPA_PLATFORM=wayland)
+    endif()
 endif()
 
 # Link Soar libraries
@@ -92,7 +107,7 @@ target_link_libraries(soar_qt_debugger soar_lib)
 target_include_directories(soar_qt_debugger PRIVATE
     src
     ${CMAKE_CURRENT_BINARY_DIR} # For generated files
-    ${CMAKE_SOURCE_DIR}/Core/ClientSML/src  # SML source headers
+    ${CMAKE_SOURCE_DIR}/Core/ClientSML/src # SML source headers
 )
 
 # Set properties
