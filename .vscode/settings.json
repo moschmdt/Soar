@@ -81,6 +81,9 @@
         "algorithm": "cpp"
     },
     "openInGitHub.defaultBranch": "development",
+    "[cpp]": {
+        "editor.defaultFormatter": "xaver.clang-format"
+    },
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
     },
