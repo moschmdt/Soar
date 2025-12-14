@@ -4,6 +4,7 @@ project(soar
   LANGUAGES CXX)
 
 find_package(SQLite3 REQUIRED)
+find_package(spdlog REQUIRED)
 
 # All options should be turned off by default to avoid building unnecessary
 # components in downstream projects relying on cmake's FetchContent module.
@@ -90,7 +91,7 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/shared>
   $<INSTALL_INTERFACE:include/soar>
 )
-target_link_libraries(${PROJECT_NAME}_lib PUBLIC SQLite::SQLite3)
+target_link_libraries(${PROJECT_NAME}_lib PUBLIC SQLite::SQLite3 spdlog::spdlog)
 
 set_target_properties(${PROJECT_NAME}_lib
   PROPERTIES
