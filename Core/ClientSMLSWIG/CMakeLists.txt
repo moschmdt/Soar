@@ -39,22 +39,21 @@ if(SWIG_PYTHON)
     # Configure SWIG for Python
     set_property(SOURCE Python/Python_sml_ClientInterface.i PROPERTY CPLUSPLUS ON)
 
-    # Set Python-specific SWIG flags using target properties
-    set(PYTHON_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -python)
+    # Set Python-specific SWIG flags (language flag added automatically by swig_add_library)
+    set(PYTHON_SWIG_FLAGS ${CMAKE_SWIG_FLAGS})
 
     # Add include directories to SWIG flags
     foreach(dir ${SWIG_INCLUDE_DIRS})
         list(APPEND PYTHON_SWIG_FLAGS -I${dir})
     endforeach()
 
-    # Set output directory
-    set(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/python")
-
     # Create the SWIG module
     swig_add_library(soar_sml_python
-        TYPE SHARED
+        TYPE MODULE
         LANGUAGE python
         SOURCES Python/Python_sml_ClientInterface.i
+        OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/python"
+        OUTFILE_DIR "${CMAKE_CURRENT_BINARY_DIR}"
     )
 
     # Set Python-specific SWIG flags for this target
@@ -63,7 +62,6 @@ if(SWIG_PYTHON)
     # Set properties for the SWIG module
     set_target_properties(soar_sml_python PROPERTIES
         OUTPUT_NAME "Python_sml_ClientInterface"
-        SUFFIX "${CMAKE_SHARED_LIBRARY_SUFFIX}"
     )
 
     # Link against soar library and Python
@@ -82,7 +80,6 @@ if(SWIG_PYTHON)
 
     if(APPLE)
         set_target_properties(soar_sml_python PROPERTIES
-            LINK_FLAGS "-bundle -flat_namespace -undefined suppress"
             SUFFIX ".so"
         )
     endif()
@@ -92,7 +89,7 @@ if(SWIG_PYTHON)
         LIBRARY DESTINATION python
     )
 
-    install(FILES "${CMAKE_SWIG_OUTDIR}/Python_sml_ClientInterface.py"
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/python/Python_sml_ClientInterface.py"
         DESTINATION python
     )
 
@@ -113,8 +110,8 @@ if(SWIG_JAVA)
     set_property(SOURCE Java/Java_sml_ClientInterface.i PROPERTY CPLUSPLUS ON)
     set_property(SOURCE Java/Java_sml_ClientInterface.i PROPERTY SWIG_MODULE_NAME sml)
 
-    # Set Java-specific SWIG flags using target properties
-    set(JAVA_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -java)
+    # Set Java-specific SWIG flags (language flag added automatically by swig_add_library)
+    set(JAVA_SWIG_FLAGS ${CMAKE_SWIG_FLAGS})
 
     # Add include directories to SWIG flags
     foreach(dir ${SWIG_INCLUDE_DIRS})
@@ -124,13 +121,10 @@ if(SWIG_JAVA)
     # Add Java directory to SWIG flags
     list(APPEND JAVA_SWIG_FLAGS -I${CMAKE_CURRENT_SOURCE_DIR}/Java)
 
-    # Set output directory for Java files
-    set(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/java")
-
     # Copy JavaCallbackByHand.h to the build directory
     configure_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/Java/JavaCallbackByHand.h"
-        "${CMAKE_SWIG_OUTDIR}/JavaCallbackByHand.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/java/JavaCallbackByHand.h"
         COPYONLY
     )
 
@@ -139,6 +133,8 @@ if(SWIG_JAVA)
         TYPE SHARED
         LANGUAGE java
         SOURCES Java/Java_sml_ClientInterface.i
+        OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/java"
+        OUTFILE_DIR "${CMAKE_CURRENT_BINARY_DIR}"
     )
 
     # Set Java-specific SWIG flags for this target
@@ -149,6 +145,13 @@ if(SWIG_JAVA)
         OUTPUT_NAME "Java_sml_ClientInterface"
     )
 
+    # On macOS, use .dylib extension for JNI libraries (not .jnilib)
+    if(APPLE)
+        set_target_properties(soar_sml_java PROPERTIES
+            SUFFIX ".dylib"
+        )
+    endif()
+
     # Link against soar library and JNI
     target_link_libraries(soar_sml_java soar_lib ${JNI_LIBRARIES})
 
@@ -157,7 +160,7 @@ if(SWIG_JAVA)
         ${JNI_INCLUDE_DIRS}
         ${SWIG_INCLUDE_DIRS}
         ${CMAKE_CURRENT_SOURCE_DIR}/Java
-        ${CMAKE_SWIG_OUTDIR}
+        ${CMAKE_CURRENT_BINARY_DIR}/java
     )
 
     # Platform-specific settings
@@ -170,7 +173,7 @@ if(SWIG_JAVA)
     file(WRITE "${COMPILE_JAVA_SCRIPT}"
         "#!/bin/bash
 set -e
-cd \"${CMAKE_SWIG_OUTDIR}\"
+cd \"${CMAKE_CURRENT_BINARY_DIR}/java\"
 mkdir -p classes
 ${Java_JAVAC_EXECUTABLE} -d classes *.java
 ${Java_JAR_EXECUTABLE} cf sml.jar -C classes .
@@ -191,13 +194,13 @@ echo \"Java compilation and JAR creation completed\"
     )
 
     # Install generated Java source files
-    install(DIRECTORY "${CMAKE_SWIG_OUTDIR}/"
+    install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/java/"
         DESTINATION java
         FILES_MATCHING PATTERN "*.java"
     )
 
     # Install JAR file
-    install(FILES "${CMAKE_SWIG_OUTDIR}/sml.jar"
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/java/sml.jar"
         DESTINATION java
     )
 endif()
