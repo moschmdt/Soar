@@ -13,8 +13,16 @@ find_package(SQLite3 REQUIRED)
 # FetchContent does not allow to set options for dependencies.
 option(BUILD_TESTS "Build tests" OFF)
 option(CLI "Build Soar command line interface" OFF)
-option(SWIG_PYTHON "Build Python SWIG bindings" ON)
-option(SWIG_JAVA "Build Java SWIG bindings" ON)
+option(SWIG "Build all SWIG bindings" OFF)
+option(SWIG_PYTHON "Build Python SWIG bindings" OFF)
+option(SWIG_JAVA "Build Java SWIG bindings" OFF)
+option(SWIG_JAVASCRIPT "Build JavaScript SWIG bindings" OFF)
+
+if(SWIG)
+  set(SWIG_PYTHON ON CACHE BOOL "Build Python SWIG bindings" FORCE)
+  set(SWIG_JAVA ON CACHE BOOL "Build Java SWIG bindings" FORCE)
+  set(SWIG_JAVASCRIPT ON CACHE BOOL "Build JavaScript SWIG bindings" FORCE)
+endif()
 
 # ASAN only works in debug mode.
 option(ASAN "Enable AddressSanitizer" OFF)
@@ -184,7 +192,7 @@ if(CLI)
   add_subdirectory(SoarCLI)
 endif()
 
-if(SWIG_PYTHON OR SWIG_JAVA)
+if(SWIG OR SWIG_PYTHON OR SWIG_JAVA OR SWIG_JAVASCRIPT)
   message(STATUS "Soar: Building SWIG language bindings")
   add_subdirectory(Core/ClientSMLSWIG)
 endif()

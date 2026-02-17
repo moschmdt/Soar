@@ -2,11 +2,19 @@
 cmake_minimum_required(VERSION 3.23)
 
 # Options for different language bindings
+option(SWIG "Build all SWIG bindings" OFF)
 option(SWIG_PYTHON "Build Python SWIG bindings" OFF)
 option(SWIG_JAVA "Build Java SWIG bindings" OFF)
+option(SWIG_JAVASCRIPT "Build JavaScript SWIG bindings" OFF)
+
+if(SWIG)
+    set(SWIG_PYTHON ON CACHE BOOL "Build Python SWIG bindings" FORCE)
+    set(SWIG_JAVA ON CACHE BOOL "Build Java SWIG bindings" FORCE)
+    set(SWIG_JAVASCRIPT ON CACHE BOOL "Build JavaScript SWIG bindings" FORCE)
+endif()
 
 # Find SWIG (required for all bindings)
-if(SWIG_PYTHON OR SWIG_JAVA)
+if(SWIG OR SWIG_PYTHON OR SWIG_JAVA OR SWIG_JAVASCRIPT)
     find_package(SWIG REQUIRED)
     include(${SWIG_USE_FILE})
 
@@ -26,6 +34,151 @@ if(SWIG_PYTHON OR SWIG_JAVA)
         ${CMAKE_CURRENT_SOURCE_DIR}/../KernelSML/src
         ${CMAKE_CURRENT_SOURCE_DIR}/../shared
         ${CMAKE_CURRENT_SOURCE_DIR}/../SoarKernel/src/shared
+    )
+endif()
+
+# JavaScript bindings (via SWIG JavaScript + Node backend)
+if(SWIG_JAVASCRIPT)
+    message(STATUS "Soar SWIG: Building JavaScript bindings")
+
+    find_program(NODE_EXECUTABLE node)
+    if(NOT NODE_EXECUTABLE)
+        message(FATAL_ERROR "SWIG_JAVASCRIPT is ON, but Node.js executable was not found. Install Node.js or disable SWIG_JAVASCRIPT.")
+    endif()
+
+    # Node.js core headers (for node_api.h)
+    execute_process(
+        COMMAND ${NODE_EXECUTABLE} -p "require('path').join(require('path').dirname(process.execPath), '..', 'include', 'node')"
+        OUTPUT_VARIABLE NODE_INCLUDE_DIR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    if(NOT EXISTS "${NODE_INCLUDE_DIR}/node_api.h")
+        find_path(NODE_INCLUDE_DIR node_api.h
+            PATHS
+                /opt/homebrew/include/node
+                /usr/local/include/node
+                /usr/include/node
+            NO_DEFAULT_PATH
+        )
+    endif()
+    if(NOT NODE_INCLUDE_DIR)
+        message(FATAL_ERROR "SWIG_JAVASCRIPT is ON, but node_api.h was not found. Install Node.js development headers.")
+    endif()
+
+    # node-addon-api headers (for napi.h used by SWIG -napi backend)
+    execute_process(
+        COMMAND ${NODE_EXECUTABLE} -p "try { require('node-addon-api').include } catch(e) { '' }"
+        OUTPUT_VARIABLE NODE_ADDON_API_INCLUDE_DIR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    string(REPLACE "\"" "" NODE_ADDON_API_INCLUDE_DIR "${NODE_ADDON_API_INCLUDE_DIR}")
+
+    if(NOT NODE_ADDON_API_INCLUDE_DIR)
+        unset(NODE_ADDON_API_INCLUDE_DIR)
+        unset(NODE_ADDON_API_INCLUDE_DIR CACHE)
+
+        set(NODE_ADDON_API_HINTS
+            /opt/homebrew/lib/node_modules/node-addon-api
+            /usr/local/lib/node_modules/node-addon-api
+            /usr/lib/node_modules/node-addon-api
+            /opt/homebrew/lib/node_modules/@vscode/vsce/node_modules/node-addon-api
+        )
+
+        execute_process(
+            COMMAND npm root -g
+            OUTPUT_VARIABLE NODE_GLOBAL_ROOT
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET
+        )
+        if(NODE_GLOBAL_ROOT)
+            list(APPEND NODE_ADDON_API_HINTS
+                "${NODE_GLOBAL_ROOT}/node-addon-api"
+                "${NODE_GLOBAL_ROOT}/@vscode/vsce/node_modules/node-addon-api"
+            )
+            find_path(NODE_ADDON_API_INCLUDE_DIR napi.h
+                PATHS ${NODE_ADDON_API_HINTS}
+                NO_DEFAULT_PATH
+            )
+        else()
+            find_path(NODE_ADDON_API_INCLUDE_DIR napi.h
+                PATHS ${NODE_ADDON_API_HINTS}
+                NO_DEFAULT_PATH
+            )
+        endif()
+    endif()
+
+    if(NOT NODE_ADDON_API_INCLUDE_DIR)
+        message(FATAL_ERROR "SWIG_JAVASCRIPT is ON, but node-addon-api headers (napi.h) were not found. Install with 'npm install -g node-addon-api' or disable SWIG_JAVASCRIPT.")
+    endif()
+
+    set(JAVASCRIPT_SWIG_FLAGS ${CMAKE_SWIG_FLAGS})
+    list(APPEND JAVASCRIPT_SWIG_FLAGS -javascript -napi)
+
+    foreach(dir ${SWIG_INCLUDE_DIRS})
+        list(APPEND JAVASCRIPT_SWIG_FLAGS -I${dir})
+    endforeach()
+
+    list(APPEND JAVASCRIPT_SWIG_FLAGS -I${CMAKE_CURRENT_SOURCE_DIR}/JS)
+    list(APPEND JAVASCRIPT_SWIG_FLAGS -I${NODE_INCLUDE_DIR})
+    list(APPEND JAVASCRIPT_SWIG_FLAGS -I${NODE_ADDON_API_INCLUDE_DIR})
+
+    set(JAVASCRIPT_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/javascript")
+    set(JAVASCRIPT_INTERFACE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/JS/JavaScript_sml_ClientInterface.i")
+    set(JAVASCRIPT_COMMON_INTERFACE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/sml_ClientInterface.i")
+    set(JAVASCRIPT_WRAP_FILE "${CMAKE_CURRENT_BINARY_DIR}/JavaScript_sml_ClientInterfaceJAVASCRIPT_wrap.cxx")
+
+    add_custom_command(
+        OUTPUT ${JAVASCRIPT_WRAP_FILE}
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${JAVASCRIPT_OUTPUT_DIR}"
+        COMMAND ${SWIG_EXECUTABLE} ${JAVASCRIPT_SWIG_FLAGS}
+                -outdir "${JAVASCRIPT_OUTPUT_DIR}"
+                -o "${JAVASCRIPT_WRAP_FILE}"
+                "${JAVASCRIPT_INTERFACE_FILE}"
+        DEPENDS ${JAVASCRIPT_INTERFACE_FILE} ${JAVASCRIPT_COMMON_INTERFACE_FILE}
+        COMMENT "Generating JavaScript SWIG wrapper sources"
+        VERBATIM
+    )
+
+    add_custom_target(soar_sml_javascript ALL
+        DEPENDS ${JAVASCRIPT_WRAP_FILE}
+    )
+
+    add_library(soar_sml_javascript_node MODULE ${JAVASCRIPT_WRAP_FILE})
+    add_dependencies(soar_sml_javascript_node soar_sml_javascript)
+
+    target_link_libraries(soar_sml_javascript_node PRIVATE soar_lib)
+    target_include_directories(soar_sml_javascript_node PRIVATE
+        ${NODE_INCLUDE_DIR}
+        ${NODE_ADDON_API_INCLUDE_DIR}
+        ${SWIG_INCLUDE_DIRS}
+    )
+    target_compile_features(soar_sml_javascript_node PRIVATE cxx_std_20)
+
+    set_target_properties(soar_sml_javascript_node PROPERTIES
+        OUTPUT_NAME "JavaScript_sml_ClientInterface"
+        PREFIX ""
+        SUFFIX ".node"
+        LIBRARY_OUTPUT_DIRECTORY "${JAVASCRIPT_OUTPUT_DIR}"
+    )
+
+    if(APPLE)
+        target_link_options(soar_sml_javascript_node PRIVATE -undefined dynamic_lookup)
+    endif()
+
+    install(FILES
+        ${JAVASCRIPT_WRAP_FILE}
+        DESTINATION javascript
+        OPTIONAL
+    )
+
+    install(TARGETS soar_sml_javascript_node
+        LIBRARY DESTINATION javascript
+        RUNTIME DESTINATION javascript
+    )
+
+    install(FILES
+        JS/JavaScript_sml_ClientInterface.js
+        DESTINATION javascript
     )
 endif()
 

@@ -81,4 +81,16 @@ if(BUILD_TESTING)
             ENVIRONMENT "SOAR_BUILD_DIR=${CMAKE_BINARY_DIR}"
         )
     endif()
+
+    # JavaScript SML Interface Test
+    if(SWIG_JAVASCRIPT)
+        add_test(NAME test_javascript_sml
+            COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/test_javascript_sml.sh
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        )
+
+        set_tests_properties(test_javascript_sml PROPERTIES
+            ENVIRONMENT "SOAR_BUILD_DIR=${CMAKE_BINARY_DIR}"
+        )
+    endif()
 endif()

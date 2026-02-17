@@ -2,13 +2,16 @@
 
 [SWIG](https://www.swig.org/) is a tool for connecting C/C++ libraries to to
 other languages. We currently use it to generate bindings for the SML client
-library to Java, Python, C#, and Tcl.
+library to Java, Python, C#, Tcl, and TypeScript.
+
+In CMake, `SWIG=ON` enables all available SWIG language bindings
+(`SWIG_PYTHON`, `SWIG_JAVA`, and `SWIG_JAVASCRIPT`).
 
 ## Files
 
-* `*.i`` files contain directives for SWIG. `sml_ClientInterface.i` in the
+- `*.i`` files contain directives for SWIG. `sml_ClientInterface.i` in the
   top-level directory contains directives common to each target language.
-* `*CallbackByHand.h` files contain manually-written C wrappers related to
+- `*CallbackByHand.h` files contain manually-written C wrappers related to
   callback functions. These could not be generated automatically by SWIG (TODO:
   why?).
 
@@ -51,3 +54,12 @@ TODO
 ### Tcl
 
 TODO
+
+### JavaScript
+
+JavaScript bindings are generated through SWIG's JavaScript backend using the
+Node.js backend (`-node`). In CMake builds, enable this with
+`SWIG_JAVASCRIPT=ON`. This generates and installs:
+
+- `JavaScript_sml_ClientInterface.js` (Node loader shim)
+- `JavaScript_sml_ClientInterfaceJAVASCRIPT_wrap.cxx` (native wrapper source)
