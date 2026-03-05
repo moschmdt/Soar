@@ -3,6 +3,9 @@ project(soar
   VERSION 9.6.3
   LANGUAGES CXX)
 
+# Generate compile_commands.json for IDE support and static analysis tools
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(SQLite3 REQUIRED)
 
 # All options should be turned off by default to avoid building unnecessary
@@ -10,6 +13,16 @@ find_package(SQLite3 REQUIRED)
 # FetchContent does not allow to set options for dependencies.
 option(BUILD_TESTS "Build tests" OFF)
 option(CLI "Build Soar command line interface" OFF)
+option(SWIG "Build all SWIG bindings" OFF)
+option(SWIG_PYTHON "Build Python SWIG bindings" OFF)
+option(SWIG_JAVA "Build Java SWIG bindings" OFF)
+option(SWIG_JAVASCRIPT "Build JavaScript SWIG bindings" OFF)
+
+if(SWIG)
+  set(SWIG_PYTHON ON CACHE BOOL "Build Python SWIG bindings" FORCE)
+  set(SWIG_JAVA ON CACHE BOOL "Build Java SWIG bindings" FORCE)
+  set(SWIG_JAVASCRIPT ON CACHE BOOL "Build JavaScript SWIG bindings" FORCE)
+endif()
 
 # ASAN only works in debug mode.
 option(ASAN "Enable AddressSanitizer" OFF)
@@ -68,6 +81,7 @@ endif()
 
 # Add executable/library target
 add_library(${PROJECT_NAME}_lib ${SOURCES})
+set_target_properties(${PROJECT_NAME}_lib PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(${PROJECT_NAME}_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/CLI/src>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/ClientSML/src>
@@ -178,10 +192,19 @@ if(CLI)
   add_subdirectory(SoarCLI)
 endif()
 
+if(SWIG OR SWIG_PYTHON OR SWIG_JAVA OR SWIG_JAVASCRIPT)
+  message(STATUS "Soar: Building SWIG language bindings")
+  add_subdirectory(Core/ClientSMLSWIG)
+endif()
+
 if(BUILD_TESTS)
   message(STATUS "Soar: Building tests")
   include(CTest)
-  add_subdirectory(PerformanceTests)
+
+  if(NOT DEFINED BUILD_PERFORMANCE_TESTS OR BUILD_PERFORMANCE_TESTS)
+    add_subdirectory(PerformanceTests)
+  endif()
+
   add_subdirectory(UnitTests)
 endif()
 
