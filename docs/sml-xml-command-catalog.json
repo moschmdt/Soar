@@ -1,0 +1,452 @@
+{
+    "$schema": "./sml-xml-command-catalog.schema.json",
+    "schemaVersion": "1.0.0",
+    "sourceOfTruth": {
+        "buildCommandMapFile": "Core/KernelSML/src/sml_KernelSMLHandlers.cpp",
+        "handlerFile": "Core/KernelSML/src/sml_KernelSMLHandlers.cpp",
+        "namesFile": "Core/ConnectionSML/src/sml_Names.cpp"
+    },
+    "commands": [
+        {
+            "name": "create_agent",
+            "handler": "HandleCreateAgent",
+            "agentContext": "none",
+            "arguments": [
+                {
+                    "param": "name",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Agent name to create."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Creates a new agent and emits creation events."
+        },
+        {
+            "name": "destroy_agent",
+            "handler": "HandleDestroyAgent",
+            "agentContext": "required",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Destroys the targeted agent context."
+        },
+        {
+            "name": "get_input_link",
+            "handler": "HandleGetInputLink",
+            "agentContext": "required",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns input-link identifier string for the agent."
+        },
+        {
+            "name": "input",
+            "handler": "HandleInput",
+            "agentContext": "required",
+            "arguments": [
+                {
+                    "param": "command-children",
+                    "required": true,
+                    "type": "xml-subtree",
+                    "notes": "Input WME add/remove structure under <command>."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Applies queued input changes from XML child tags."
+        },
+        {
+            "name": "cmdline",
+            "handler": "HandleCommandLine",
+            "agentContext": "optional",
+            "arguments": [
+                {
+                    "param": "line",
+                    "required": true,
+                    "type": "string",
+                    "notes": "CLI command line to execute."
+                },
+                {
+                    "param": "echo",
+                    "required": false,
+                    "type": "bool",
+                    "notes": "Echo command/results to listeners."
+                },
+                {
+                    "param": "nofilter",
+                    "required": false,
+                    "type": "bool",
+                    "notes": "Bypass command filters when true."
+                }
+            ],
+            "commandAttributes": [
+                {
+                    "name": "output",
+                    "required": false,
+                    "allowedValues": [
+                        "raw",
+                        "structured"
+                    ],
+                    "notes": "Controls response formatting preference."
+                }
+            ],
+            "responseShape": "mixed",
+            "notes": "Primary execution path for CLI-style operations (step, run, print, etc.)."
+        },
+        {
+            "name": "check_for_incoming_commands",
+            "handler": "HandleCheckForIncomingCommands",
+            "agentContext": "none",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns boolean indicating whether at least one message was processed."
+        },
+        {
+            "name": "get_agent_list",
+            "handler": "HandleGetAgentList",
+            "agentContext": "none",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "structured-result",
+            "notes": "Returns <result output=\"structured\"><name>...</name>*.</result>."
+        },
+        {
+            "name": "register_for_event",
+            "handler": "HandleRegisterForEvent",
+            "agentContext": "optional",
+            "arguments": [
+                {
+                    "param": "eventid",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Event identifier string."
+                },
+                {
+                    "param": "name",
+                    "required": false,
+                    "type": "string",
+                    "notes": "Required for some event classes (e.g., RHS/function registrations)."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Registers callback routing for event delivery."
+        },
+        {
+            "name": "unregister_for_event",
+            "handler": "HandleRegisterForEvent",
+            "agentContext": "optional",
+            "arguments": [
+                {
+                    "param": "eventid",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Event identifier string."
+                },
+                {
+                    "param": "name",
+                    "required": false,
+                    "type": "string",
+                    "notes": "Used for event classes that key by name."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Uses same handler as register with unregister command name dispatch."
+        },
+        {
+            "name": "fire_event",
+            "handler": "HandleFireEvent",
+            "agentContext": "none",
+            "arguments": [
+                {
+                    "param": "eventid",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Only specific system events are acted on."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Explicitly triggers selected system events."
+        },
+        {
+            "name": "suppress_event",
+            "handler": "HandleSuppressEvent",
+            "agentContext": "none",
+            "arguments": [
+                {
+                    "param": "eventid",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Event to suppress."
+                },
+                {
+                    "param": "value",
+                    "required": false,
+                    "type": "bool",
+                    "notes": "Default true when omitted."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Currently used for suppressing select system events (e.g., system stop)."
+        },
+        {
+            "name": "set_interrupt_check_rate",
+            "handler": "HandleSetInterruptCheckRate",
+            "agentContext": "none",
+            "arguments": [
+                {
+                    "param": "value",
+                    "required": false,
+                    "type": "int",
+                    "notes": "Default 1 when omitted."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Controls interrupt check frequency."
+        },
+        {
+            "name": "version",
+            "handler": "HandleGetVersion",
+            "agentContext": "none",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns Soar version string."
+        },
+        {
+            "name": "shutdown",
+            "handler": "HandleShutdown",
+            "agentContext": "none",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Initiates kernel shutdown and deletes agents."
+        },
+        {
+            "name": "is_running",
+            "handler": "HandleIsSoarRunning",
+            "agentContext": "none",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns boolean raw result."
+        },
+        {
+            "name": "get_connections",
+            "handler": "HandleGetConnections",
+            "agentContext": "none",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "structured-result",
+            "notes": "Returns connection metadata tags under structured result."
+        },
+        {
+            "name": "set_connection_info",
+            "handler": "HandleSetConnectionInfo",
+            "agentContext": "none",
+            "arguments": [
+                {
+                    "param": "name",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Connection display name."
+                },
+                {
+                    "param": "status",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Connection status value."
+                },
+                {
+                    "param": "agent-status",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Agent status value."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "Sets per-connection metadata fields."
+        },
+        {
+            "name": "get_all_input",
+            "handler": "HandleGetAllInput",
+            "agentContext": "required",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "structured-result",
+            "notes": "Returns input-link WME tree in result children."
+        },
+        {
+            "name": "get_all_output",
+            "handler": "HandleGetAllOutput",
+            "agentContext": "required",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "structured-result",
+            "notes": "Returns output-link data using command/wme tags in response body."
+        },
+        {
+            "name": "get_run_state",
+            "handler": "HandleGetRunState",
+            "agentContext": "required",
+            "arguments": [
+                {
+                    "param": "value",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Expected values include phase, decision, runstate."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns selected runtime metric as string."
+        },
+        {
+            "name": "is_production_loaded",
+            "handler": "HandleIsProductionLoaded",
+            "agentContext": "required",
+            "arguments": [
+                {
+                    "param": "name",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Production name to test."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns boolean raw result."
+        },
+        {
+            "name": "send_client_message",
+            "handler": "HandleSendClientMessage",
+            "agentContext": "required",
+            "arguments": [
+                {
+                    "param": "name",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Message type."
+                },
+                {
+                    "param": "message",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Payload text."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Routes a client message through kernel mediation."
+        },
+        {
+            "name": "on_run_list",
+            "handler": "HandleWasAgentOnRunList",
+            "agentContext": "required",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns boolean raw result."
+        },
+        {
+            "name": "last_run_result",
+            "handler": "HandleGetResultOfLastRun",
+            "agentContext": "required",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns integer run result code."
+        },
+        {
+            "name": "initial_time_tag",
+            "handler": "HandleGetInitialTimeTag",
+            "agentContext": "none",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Allocates and returns starting client-side timetag range value."
+        },
+        {
+            "name": "convert_identifier",
+            "handler": "HandleConvertIdentifier",
+            "agentContext": "required",
+            "arguments": [
+                {
+                    "param": "name",
+                    "required": true,
+                    "type": "string",
+                    "notes": "Client-side identifier to convert."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns mapped identifier or empty string if unavailable."
+        },
+        {
+            "name": "get_listener_port",
+            "handler": "HandleGetListenerPort",
+            "agentContext": "none",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns active listener port as integer string."
+        },
+        {
+            "name": "svs_input",
+            "handler": "HandleSVSInput",
+            "agentContext": "required",
+            "arguments": [
+                {
+                    "param": "line",
+                    "required": true,
+                    "type": "string",
+                    "notes": "SVS input command string."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "none",
+            "notes": "No-op when SVS is disabled at build/runtime."
+        },
+        {
+            "name": "svs_output",
+            "handler": "HandleSVSOutput",
+            "agentContext": "required",
+            "arguments": [],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns SVS output string (possibly empty)."
+        },
+        {
+            "name": "svs_query",
+            "handler": "HandleSVSQuery",
+            "agentContext": "required",
+            "arguments": [
+                {
+                    "param": "line",
+                    "required": true,
+                    "type": "string",
+                    "notes": "SVS query string."
+                }
+            ],
+            "commandAttributes": [],
+            "responseShape": "raw-result",
+            "notes": "Returns query result string; empty when unavailable."
+        }
+    ],
+    "declaredButNotMapped": [
+        "get_output_link",
+        "run",
+        "output",
+        "stop_on_output",
+        "event",
+        "output_init"
+    ]
+}
