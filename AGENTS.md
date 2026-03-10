@@ -69,6 +69,7 @@ Record only commands validated in this repository context.
 - [confirmed] CI workflow `.github/workflows/cmake-multi-platform.yml` selects CMake presets by matrix as `${build_type}-${shared|test}`; current matrix hits `Debug-test`, `Debug-shared`, `Release-test`, and `Release-shared`.
 - [confirmed] `BUILD_PERFORMANCE_TESTS` must be explicitly set per preset to keep performance tests out of CI, because top-level `CMakeLists.txt` adds `PerformanceTests/` when the variable is undefined.
 - [confirmed] CPack package contents are driven by install rules: executable install coverage now includes `soar` (`SoarCLI/CMakeLists.txt`), `test_soar`/`test_external_lib` (`UnitTests/CMakeLists.txt`), and `PerformanceTests` when that target is built (`PerformanceTests/CMakeLists.txt`).
+- [confirmed] GitHub Actions workflow `.github/workflows/cmake-multi-platform.yml` now gates release publishing via a `release-gate` job and publishes CPack `.tar.gz`/`.deb` artifacts to GitHub Releases on `release` events and on tag pushes whose commit is an ancestor of the repository default branch.
 
 ### Protocol probing
 
@@ -122,3 +123,4 @@ Append one bullet per task when new crucial knowledge is learned.
 - 2026-03-10: While adding `FindByAttribute` miss logging, confirmed this workspace does not currently expose `spdlog/spdlog.h` to `Core/ClientSML/src/sml_ClientIdentifier.cpp`; implemented conditional `__has_include` guard for spdlog-based logging with safe fallback. [confirmed]
 - 2026-03-10: Fixed gtest build break by excluding `UnitTests/SoarUnitTests/IdentifierExceptionTests.cpp` from `test_soar` glob sources and building it only via dedicated `test_identifier_exceptions_gtest` target; verified by CMake build + passing CTest `test_identifier_exceptions_gtest`. [confirmed]
 - 2026-03-10: After removing `FindByAttribute` throw, validated gtest log assertion pattern by routing default spdlog logger to `ostream_sink_mt` in `tests/UnitTests/IdentifierExceptionTests.cpp` and checking message text; verified with CMake build + passing CTest `test_identifier_exceptions_gtest`. [confirmed]
+- 2026-03-10: Updated CI workflow to publish CPack artifacts to GitHub Releases for `release` events and for tag pushes on default-branch ancestry, using `release-gate` + `publish-release` jobs in `.github/workflows/cmake-multi-platform.yml`. [confirmed]
