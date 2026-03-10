@@ -66,6 +66,9 @@ Record only commands validated in this repository context.
 - [confirmed] A configured build tree exists under `build/Debug/`.
 - [needs-validation] Preferred VS Code workflow for CMake tasks should use CMake Tools integration for build/test execution.
 - [confirmed] Top-level `CMakeLists.txt` builds a unified `soar_lib` from `ClientSML`, `ConnectionSML`, `ElementXML`, `KernelSML`, and `SoarKernel` sources.
+- [confirmed] CI workflow `.github/workflows/cmake-multi-platform.yml` selects CMake presets by matrix as `${build_type}-${shared|test}`; current matrix hits `Debug-test`, `Debug-shared`, `Release-test`, and `Release-shared`.
+- [confirmed] `BUILD_PERFORMANCE_TESTS` must be explicitly set per preset to keep performance tests out of CI, because top-level `CMakeLists.txt` adds `PerformanceTests/` when the variable is undefined.
+- [confirmed] CPack package contents are driven by install rules: executable install coverage now includes `soar` (`SoarCLI/CMakeLists.txt`), `test_soar`/`test_external_lib` (`UnitTests/CMakeLists.txt`), and `PerformanceTests` when that target is built (`PerformanceTests/CMakeLists.txt`).
 
 ### Protocol probing
 
@@ -93,6 +96,7 @@ Add concrete pitfalls here as they are discovered.
 - [confirmed] The API supports both embedded and remote modes; using `CreateKernelInNewThread/CreateKernelInCurrentThread` embeds kernel code in-process, while `CreateRemoteConnection` communicates via socket/XML to an external kernel process. Confusing these modes can lead to incorrect deployment assumptions.
 - [confirmed] Remote SML socket transport uses length-prefixed XML frames (not newline-delimited XML); adapters must implement exact framing to avoid desynchronization.
 - [confirmed] `SoarCLI` flags are easy to misuse: `-n` disables ANSI color (it does not set port), and without `-l` the kernel runs in current-thread mode where remote requests may not be serviced while idle, causing socket client timeouts.
+- [confirmed] In CI release jobs, `cpack --preset Release-test|Release-shared` can include `UnitTests` binaries because they are now installed; `PerformanceTests` binaries are still excluded in CI because CI-used configure presets set `BUILD_PERFORMANCE_TESTS=OFF`.
 
 ## Open Questions
 
@@ -113,3 +117,4 @@ Append one bullet per task when new crucial knowledge is learned.
 - 2026-03-03: Fixed probe `get_agent_list` parsing to read `<name>` character data (now returns `agents=['soar']`) and validated remote `cmdline` execution for `step`, `print <s>`, and `run 1`. [confirmed]
 - 2026-03-03: Confirmed `KernelSML::BuildCommandMap()` is the protocol source of truth for supported client->kernel SML `command` names (more reliable than constant declarations alone). [confirmed]
 - 2026-03-03: Added machine-readable SML command catalog schema + instance under `docs/` to support downstream agent/tool generation workflows. [confirmed]
+- 2026-03-10: Updated CI-used CMake presets (`Debug-test`, `Debug-shared`, `Release-test`, `Release-shared`) to explicitly set `BUILD_PERFORMANCE_TESTS=OFF`; added install rules for `test_soar`, `test_external_lib`, and `PerformanceTests` so CPack can include those executables when built. [confirmed]
