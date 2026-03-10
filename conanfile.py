@@ -1,7 +1,7 @@
 # This file defines the cmake toolchain with the required dependencies to build
 # Soar. The Python version is used instead of the pure text version since the
 # user presets file must be changed.
-# 
+#
 # Conan documentation: https://docs.conan.io/2/
 
 from conan import ConanFile
@@ -18,9 +18,11 @@ class soarRecipe(ConanFile):
 
     def layout(self):
         cmake_layout(self)
-    
+
     def requirements(self):
         self.requires("sqlite3/3.40.0")
+        self.requires("spdlog/1.17.0")
+        self.requires("gtest/1.17.0")
 
     def generate(self):
         deps = CMakeDeps(self)
@@ -29,7 +31,7 @@ class soarRecipe(ConanFile):
         # The cmake user presets file must be changed from the default,
         # otherwise cyclic imports with toolchain file CMakePresets.json will
         # occur
-        tc.user_presets_path = 'ConanPresets.json'
+        tc.user_presets_path = "ConanPresets.json"
         tc.generate()
 
     def build(self):

@@ -97,6 +97,7 @@ Add concrete pitfalls here as they are discovered.
 - [confirmed] Remote SML socket transport uses length-prefixed XML frames (not newline-delimited XML); adapters must implement exact framing to avoid desynchronization.
 - [confirmed] `SoarCLI` flags are easy to misuse: `-n` disables ANSI color (it does not set port), and without `-l` the kernel runs in current-thread mode where remote requests may not be serviced while idle, causing socket client timeouts.
 - [confirmed] In CI release jobs, `cpack --preset Release-test|Release-shared` can include `UnitTests` binaries because they are now installed; `PerformanceTests` binaries are still excluded in CI because CI-used configure presets set `BUILD_PERFORMANCE_TESTS=OFF`.
+- [confirmed] `UnitTests/CMakeLists.txt` globs all `SoarUnitTests/*.cpp` into `test_soar`; any gtest-only source in that folder must be explicitly removed from `TEST_SOURCES` or `test_soar` will compile it without gtest include/link settings.
 
 ## Open Questions
 
@@ -118,3 +119,6 @@ Append one bullet per task when new crucial knowledge is learned.
 - 2026-03-03: Confirmed `KernelSML::BuildCommandMap()` is the protocol source of truth for supported client->kernel SML `command` names (more reliable than constant declarations alone). [confirmed]
 - 2026-03-03: Added machine-readable SML command catalog schema + instance under `docs/` to support downstream agent/tool generation workflows. [confirmed]
 - 2026-03-10: Updated CI-used CMake presets (`Debug-test`, `Debug-shared`, `Release-test`, `Release-shared`) to explicitly set `BUILD_PERFORMANCE_TESTS=OFF`; added install rules for `test_soar`, `test_external_lib`, and `PerformanceTests` so CPack can include those executables when built. [confirmed]
+- 2026-03-10: While adding `FindByAttribute` miss logging, confirmed this workspace does not currently expose `spdlog/spdlog.h` to `Core/ClientSML/src/sml_ClientIdentifier.cpp`; implemented conditional `__has_include` guard for spdlog-based logging with safe fallback. [confirmed]
+- 2026-03-10: Fixed gtest build break by excluding `UnitTests/SoarUnitTests/IdentifierExceptionTests.cpp` from `test_soar` glob sources and building it only via dedicated `test_identifier_exceptions_gtest` target; verified by CMake build + passing CTest `test_identifier_exceptions_gtest`. [confirmed]
+- 2026-03-10: After removing `FindByAttribute` throw, validated gtest log assertion pattern by routing default spdlog logger to `ostream_sink_mt` in `tests/UnitTests/IdentifierExceptionTests.cpp` and checking message text; verified with CMake build + passing CTest `test_identifier_exceptions_gtest`. [confirmed]

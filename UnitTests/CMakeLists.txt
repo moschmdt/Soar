@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 project(test_soar
     LANGUAGES CXX)
 
+
 file(GLOB TEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/TestHarness/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SoarHelpers/*.cpp
