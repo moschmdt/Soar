@@ -68,7 +68,7 @@ file(GLOB_RECURSE HEADERS
   "Core/SoarKernel/src/visualizer/*.h"
   "Core/shared/Export.h"
   "Core/shared/build_time_date.h"
-  "Core/shared/soarversion.h"
+  "${CMAKE_CURRENT_BINARY_DIR}/Core/shared/soarversion.h"
   "Core/shared/tokenizer.h"
   "Core/shared/soar_TraceNames.h"
   "Core/shared/portability.h"
@@ -79,6 +79,12 @@ if(NOT SVS)
   message(STATUS "Soar: Disabling SVS")
   add_compile_definitions(NO_SVS)
 endif()
+
+# Generate soarversion.h from the CMake project version
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Core/shared/soarversion.h.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/Core/shared/soarversion.h"
+)
 
 # Add executable/library target
 add_library(${PROJECT_NAME}_lib ${SOURCES})
@@ -103,6 +109,7 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/soar_representation>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/visualizer>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/shared>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/Core/shared>
   $<INSTALL_INTERFACE:include/soar>
 )
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC SQLite::SQLite3 spdlog::spdlog)
@@ -119,7 +126,7 @@ target_compile_features(${PROJECT_NAME}_lib PUBLIC
   cxx_std_17
 )
 
-if($<CONFIG:DEBUG>)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
   target_compile_options(${PROJECT_NAME}_lib PRIVATE $<$<CXX_COMPILER_ID:Clang,AppleClang,GNU>: -Wall -Wpedantic>)
 
   target_compile_options(${PROJECT_NAME}_lib PRIVATE $<$<CXX_COMPILER_ID:MSVC>: /Wall /permissive>)
@@ -221,7 +228,14 @@ list(APPEND CPACK_GENERATOR "TGZ")
 
 if(UNIX AND NOT APPLE)
   list(APPEND CPACK_GENERATOR "DEB")
+
+  # Automatically detect shared-library runtime deps (used when the shared
+  # library or CLI binary is packaged).
   set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+
+  # Consumers linking against the static archive need the dev packages for
+  # SQLite3 and spdlog, because those symbols are not embedded in the archive.
+  set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsqlite3-dev, libspdlog-dev")
 endif()
 
 # Include CPack module - MUST be included last!

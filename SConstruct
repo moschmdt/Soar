@@ -26,7 +26,7 @@ from build_support.tcl import prepare_for_compiling_with_tcl
 
 join = os.path.join
 
-SOAR_VERSION = "9.6.4"
+SOAR_VERSION = "9.6.5"
 CPP_STD_VERSION = "c++17"
 
 soarversionFile = open('soarversion', 'w')
@@ -445,4 +445,3 @@ if COMMAND_LINE_TARGETS == ['list']:
 for a in DEF_TARGETS:
     if a in all_aliases:
         Default(a)
-

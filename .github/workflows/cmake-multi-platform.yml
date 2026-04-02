@@ -56,7 +56,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         build_type: [Release, Debug]
-        build_shared_libs: [ON, OFF]
+        library_type: [shared, static]
 
     steps:
       - uses: actions/checkout@v4
@@ -87,18 +87,18 @@ jobs:
       # reason, we use the cmake --preset command.
       - name: Configure CMake
         run: >
-          cmake --preset ${{ matrix.build_type }}-${{ matrix.build_shared_libs == 'ON' && 'shared' || 'test' }}
+          cmake --preset ${{ matrix.build_type }}-${{ matrix.library_type}}
 
       - name: Build
-        run: cmake --build --preset ${{ matrix.build_type }}-${{ matrix.build_shared_libs == 'ON' && 'shared' || 'test' }}
+        run: cmake --build --preset ${{ matrix.build_type }}-${{ matrix.library_type}}
 
       # - name: Test
-      #   run: ctest --preset ${{ matrix.build_type }}-${{ matrix.build_shared_libs == 'ON' && 'shared' || 'test' }}
+      #   run: ctest --preset ${{ matrix.build_type }}-${{ matrix.library_type == 'ON' && 'shared' || 'test' }}
 
       - name: Package
         if: ${{ matrix.build_type == 'Release' && needs.release-gate.outputs.should_release == 'true' }}
         run: |
-          cpack --preset ${{ matrix.build_type }}-${{ matrix.build_shared_libs == 'ON' && 'shared' || 'test' }}
+          cpack --preset ${{ matrix.build_type }}-${{ matrix.library_type}}
 
       # Packages are put in the current working directory to prevent path
       # incompatibilities between Windows and Linux/Mac
@@ -106,19 +106,63 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ matrix.build_type == 'Release' && needs.release-gate.outputs.should_release == 'true' }}
         with:
-          name: ${{ matrix.os }}-${{ matrix.build_type }}-${{ matrix.build_shared_libs == 'ON' && 'shared' || 'static' }}.tar.gz
+          name: ${{ matrix.os }}-${{ matrix.build_type }}-${{ matrix.library_type }}.tar.gz
           path: |
             soar-*.tar.gz
       - name: Upload Debian
         uses: actions/upload-artifact@v4
         if: ${{ matrix.build_type == 'Release' &&  (matrix.os == 'ubuntu-latest') && needs.release-gate.outputs.should_release == 'true' }}
         with:
-          name: ${{ matrix.os }}-${{ matrix.build_type }}-${{ matrix.build_shared_libs == 'ON' && 'shared' || 'static' }}.deb
+          name: ${{ matrix.os }}-${{ matrix.build_type }}-${{ matrix.library_type }}.deb
           path: |
             soar-*.deb
 
+  integration-test:
+    needs: release-gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.13
+
+      - name: Install Conan
+        run: pip install conan
+
+      - name: Configure Conan
+        run: conan profile detect
+
+      - name: Install dependencies
+        run: conan install . --build=missing -s build_type=Release
+
+      - name: Configure and build
+        run: |
+          cmake --preset Release-test
+          cmake --build --preset Release-test
+
+      - name: Install to staging prefix
+        run: cmake --install build/Release --prefix /tmp/soar-staging
+
+      - name: Install system dev dependencies
+        run: sudo apt-get install -y libsqlite3-dev libspdlog-dev
+
+      - name: Configure integration test
+        run: |
+          cmake -S tests/Integration \
+                -B /tmp/soar_integration_build \
+                -Dsoar_DIR=/tmp/soar-staging/lib/cmake/soar \
+                -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build integration test
+        run: cmake --build /tmp/soar_integration_build
+
+      - name: Run integration test
+        run: ctest --test-dir /tmp/soar_integration_build --output-on-failure
+
   publish-release:
-    needs: [release-gate, build-nix]
+    needs: [release-gate, build-nix, integration-test]
     if: ${{ needs.release-gate.outputs.should_release == 'true' }}
     runs-on: ubuntu-latest
     permissions:
