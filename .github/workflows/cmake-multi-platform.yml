@@ -139,8 +139,8 @@ jobs:
 
       - name: Configure and build
         run: |
-          cmake --preset Release-test
-          cmake --build --preset Release-test
+          cmake --preset Release-shared
+          cmake --build --preset Release-shared
 
       - name: Install to staging prefix
         run: cmake --install build/Release --prefix /tmp/soar-staging
