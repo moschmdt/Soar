@@ -1,4 +1,4 @@
-#include "soar/sml_Client.h"
+#include "sml_Client.h"
 
 #include <cassert>
 #include <cstdio>

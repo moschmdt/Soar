@@ -137,29 +137,8 @@ jobs:
       - name: Install dependencies
         run: conan install . --build=missing -s build_type=Release
 
-      - name: Configure and build
-        run: |
-          cmake --preset Release-shared
-          cmake --build --preset Release-shared
-
-      - name: Install to staging prefix
-        run: cmake --install build/Release --prefix /tmp/soar-staging
-
-      - name: Install system dev dependencies
-        run: sudo apt-get install -y libsqlite3-dev libspdlog-dev
-
-      - name: Configure integration test
-        run: |
-          cmake -S tests/Integration \
-                -B /tmp/soar_integration_build \
-                -Dsoar_DIR=/tmp/soar-staging/lib/cmake/soar \
-                -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build integration test
-        run: cmake --build /tmp/soar_integration_build
-
-      - name: Run integration test
-        run: ctest --test-dir /tmp/soar_integration_build --output-on-failure
+      - name: Run integration tests
+        run: bash integration.sh
 
   publish-release:
     needs: [release-gate, build-nix, integration-test]
