@@ -188,15 +188,15 @@
     "packagePresets": [
         {
             "name": "Release-static",
-            "displayName": "Package Release Test",
+            "displayName": "Package Release Static",
             "configurePreset": "Release-static",
-            "packageDirectory": "${sourceDir}/"
+            "packageDirectory": "package-static/"
         },
         {
             "name": "Release-shared",
             "displayName": "Package Release Shared",
             "configurePreset": "Release-shared",
-            "packageDirectory": "${sourceDir}/"
+            "packageDirectory": "package-shared/"
         }
     ],
     "workflowPresets": [
