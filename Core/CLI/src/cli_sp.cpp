@@ -14,46 +14,47 @@
 #include "sml_AgentSML.h"
 
 #include "agent.h"
-#include "production.h"
-#include "symbol.h"
-#include "rete.h"
 #include "parser.h"
+#include "production.h"
+#include "rete.h"
+#include "symbol.h"
 
 using namespace cli;
 
-bool CommandLineInterface::DoSP(const std::string& productionString)
-{
-    // Load the production
-    agent* thisAgent = m_pAgentSML->GetSoarAgent();
+bool CommandLineInterface::DoSP(const std::string &productionString) {
+  // Load the production
+  agent *thisAgent = m_pAgentSML->GetSoarAgent();
 
-    production* p;
-    unsigned char rete_addition_result = 0;
-    p = parse_production(thisAgent, productionString.c_str(), &rete_addition_result);
+  production *p;
+  unsigned char rete_addition_result = 0;
+  p = parse_production(thisAgent, productionString.c_str(),
+                       &rete_addition_result);
 
-    if (!p)
-    {
-        // There was an error, but duplicate production is just a warning
-        if (rete_addition_result != DUPLICATE_PRODUCTION)
-        {
-            return SetError("Production addition failed.");
-        }
-        // production ignored
-        m_NumProductionsIgnored += 1;
+  if (!p) {
+    // There was an error, but duplicate production is just a warning
+    if (rete_addition_result != DUPLICATE_PRODUCTION) {
+      return SetError("Production addition failed.");
     }
-    else
-    {
-        if (!m_SourceFileStack.empty())
-        {
-            p->filename = make_memory_block_for_string(thisAgent, m_SourceFileStack.top().c_str());
-        }
-
-        // production was sourced
-        m_NumProductionsSourced += 1;
-        if (m_RawOutput)
-        {
-            m_Result << '*';
-        }
+    // production ignored (duplicate)
+    if (!m_CheckMode) {
+      m_NumProductionsIgnored += 1;
     }
-    return true;
+  } else {
+    if (m_CheckMode) {
+      // Check mode: validate syntax only, do not permanently load
+      excise_production(thisAgent, p, false);
+    } else {
+      if (!m_SourceFileStack.empty()) {
+        p->filename = make_memory_block_for_string(
+            thisAgent, m_SourceFileStack.top().c_str());
+      }
+    }
+
+    // production was sourced/checked
+    m_NumProductionsSourced += 1;
+    if (m_RawOutput && !m_CheckMode) {
+      m_Result << '*';
+    }
+  }
+  return true;
 }
-
