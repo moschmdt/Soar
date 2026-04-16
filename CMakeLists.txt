@@ -8,6 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(SQLite3 REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 # All options should be turned off by default to avoid building unnecessary
 # components in downstream projects relying on cmake's FetchContent module.
@@ -58,6 +59,7 @@ file(GLOB_RECURSE HEADERS
   "Core/SoarKernel/src/episodic_memory/*.h"
   "Core/SoarKernel/src/explanation_based_chunking/*.h"
   "Core/SoarKernel/src/explanation_memory/*.h"
+  "Core/SoarKernel/src/operator_explanation/*.h"
   "Core/SoarKernel/src/interface/*.h"
   "Core/SoarKernel/src/output_manager/*.h"
   "Core/SoarKernel/src/parsing/*.h"
@@ -100,6 +102,7 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/episodic_memory>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/explanation_based_chunking>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/explanation_memory>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/operator_explanation>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/interface>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/output_manager>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Core/SoarKernel/src/parsing>
@@ -112,7 +115,7 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/Core/shared>
   $<INSTALL_INTERFACE:include/soar>
 )
-target_link_libraries(${PROJECT_NAME}_lib PUBLIC SQLite::SQLite3 spdlog::spdlog)
+target_link_libraries(${PROJECT_NAME}_lib PUBLIC SQLite::SQLite3 spdlog::spdlog nlohmann_json::nlohmann_json)
 
 set_target_properties(${PROJECT_NAME}_lib
   PROPERTIES

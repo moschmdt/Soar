@@ -1,3 +1,4 @@
+Agents/
 # Created by https://www.gitignore.io via https://www.gitignore.io/api/c++,c,python,java,windows,archives,xcode,visualstudio,osx,linux
 # Or via: git config --global alias.ignore '!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi'
 # then git ignore c++,c,python,java,windows,archives,xcode,visualstudio,osx,linux

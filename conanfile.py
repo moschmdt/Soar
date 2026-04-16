@@ -23,6 +23,7 @@ class soarRecipe(ConanFile):
         self.requires("sqlite3/3.40.0")
         self.requires("spdlog/1.17.0")
         self.requires("gtest/1.17.0")
+        self.requires("nlohmann_json/3.12.0")
 
     def generate(self):
         deps = CMakeDeps(self)

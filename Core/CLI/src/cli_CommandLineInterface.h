@@ -107,7 +107,8 @@ public:
   bool DoEcho(const std::vector<std::string> &argv, bool echoNewline);
   bool DoEpMem(const char pOp = 0, const std::string *pAttr = 0,
                const std::string *pVal = 0, const epmem_time_id memory_id = 0);
-  bool DoExplain(const std::string *pArg = 0, const std::string *pArg2 = 0);
+  bool DoExplain(const std::string *pArg = 0, const std::string *pArg2 = 0,
+                 bool json = false);
   bool DoGP(const std::string &productionString);
   bool DoHelp(const std::vector<std::string> &argv);
   bool DoLearn(const LearnBitset &options);
