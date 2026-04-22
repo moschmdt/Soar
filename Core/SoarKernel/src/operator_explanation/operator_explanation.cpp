@@ -699,7 +699,9 @@ void OperatorExplanationManager::print_decisions(
 void OperatorExplanationManager::print_decisions_json(
     agent *thisAgent, const std::string &name) const {
   if (!stmts) {
-    thisAgent->outputManager->printa_sf(thisAgent, "{\"decisions\":[]}");
+    thisAgent->outputManager->printa_sf(
+        thisAgent,
+        "{\"decisions\":[],\"error\":\"No explanation data recorded yet.\"}");
     return;
   }
 
@@ -810,5 +812,5 @@ void OperatorExplanationManager::print_decisions_json(
   }
 
   std::string output = root.dump();
-  thisAgent->outputManager->printa_sf(thisAgent, output.c_str());
+  thisAgent->outputManager->printa_sf(thisAgent, "%s", output.c_str());
 }
